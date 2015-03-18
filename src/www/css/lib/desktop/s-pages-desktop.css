@@ -1,0 +1,239 @@
+
+/* FRONT */
+#content .scene.front {padding-bottom: 30px;
+	-o-user-select: none;
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+#content .scene.front a {cursor: default;}
+#content .scene.front .active a {cursor: pointer;}
+
+#content .scene.front h1 {font-size: 100px;}
+#content .scene.front h2 {font-size: 60px;}
+#content .scene.front h3 {font-size: 30px;}
+#content .scene.front p {font-size: 22px;}
+
+#content .scene.front .long .s2,
+#content .scene.front .long .s2 a {font-size: 32px; color: #01939a;}
+#content .scene.front .wake .s2,
+#content .scene.front .wake .s2 a {font-size: 34px; color: #bf7230;}
+#content .scene.front .tyrant .s2,
+#content .scene.front .tyrant .s2 a {font-size: 30px; color: #01939a;}
+#content .scene.front .goal .s2,
+#content .scene.front .goal .s2 a {font-size: 34px; color: #bf7230;}
+#content .scene.front .idleness .s2,
+#content .scene.front .idleness .s2 {font-size: 34px; color: #01939a;}
+
+#content .scene.front .content,
+#content .scene.front .content a {font-size: 34px; color: #01939a;}
+#content .scene.front .slaves .s2,
+#content .scene.front .slaves .s2 a {font-size: 30px; color: #bf7230;}
+
+
+#content .scene.front h1,
+#content .scene.front h2,
+#content .scene.front h3,
+#content .scene.front p {position: absolute; top: 0; left: 0; padding: 0 5px; opacity: 0; width: auto;}
+#content .scene.front h1 {padding: 0 10px;}
+
+
+
+/* ARTICLES */
+#content .scene ul.articles {padding: 0;}
+#content .scene.articles ul.articles {padding: 20px 0 30px;}
+#content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #dedede; position: relative;}
+#content .scene ul.articles li.article:first-child {border-top: none;}
+#content .scene ul.articles li.article h3 {font-size: 24px; line-height: 1em; padding-bottom: 5px;
+	font-family: "PT Serif", Times, serif;
+}
+#content .scene ul.articles li.article p {font-size: 16px;}
+#content .scene ul.articles li.article > svg.checkmark {position: absolute; top: 14px; left: 25px;}
+#content .scene ul.articles li.article > svg.checkmark line {stroke: #666666; stroke-width: 3px;}
+
+
+
+/* ARTICLE */
+#content .scene.article div.intro {padding-bottom: 20px; border-bottom: 1px solid #dedede; margin-bottom: 40px;}
+#content .scene.article div.intro p {font-size: 13px; color: #cccccc;}
+#content .scene.article div.article {padding-bottom: 30px;}
+#content .scene .article ul.tags {padding-bottom: 10px;}
+#content .scene .article ul.tags a {color: #dedede;}
+
+#content .scene.article div.sharing {padding: 0; position: relative; height: 40px;}
+#content .scene.article div.sharing p {padding: 0; z-index: 2; position: absolute; top: 22px; left: 100px; display: none; font-size: 11px; color: #999999;}
+#content .scene.article div.sharing h3 {position: absolute; top: 0px; left: 100px; padding: 0; display: none;}
+#content .scene.article div.sharing.hover {z-index: 2;}
+#content .scene.article div.sharing.hover h3,
+#content .scene.article div.sharing.hover p {display: block;}
+#content .scene.article div.sharing svg {z-index: 0; margin-left: 50px; position: absolute; width: 500px; height: 300px; top: -130px;}
+#content .scene.article div.sharing svg rect {cursor: pointer;}
+#content .scene.article div.sharing svg circle.primary {stroke: #666666; fill: #ffffff;}
+#content .scene.article div.sharing svg circle {fill: #ededed; stroke: #999999; stroke-width: 1px;}
+#content .scene.article div.sharing svg line.primary {stroke: #666666;}
+#content .scene.article div.sharing svg line {stroke: #cccccc; stroke-width: 1px;}
+#content .scene.article div.sharing svg rect.primary {fill: #ff0000;}
+
+
+
+/* RELATED */
+#content .scene div.related {border-top: 1px solid #ccdbcd; padding-top: 40px; position: relative; z-index: 1;}
+#content .scene.articles div.related {border: none;}
+#content .scene div.related ul.articles {padding: 0;}
+#content .scene div.related li.article:first-child {border-top: none;}
+
+
+
+/* COMMENTS */
+#content .scene div.comments {padding-bottom: 15px; position: relative; z-index: 1;}
+#content .scene div.comments h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
+#content .scene div.comments h2:hover {color: #00c90d;}
+#content .scene div.comments h2 svg.arrow {position: absolute; top: 6px; right: 55px;}
+#content .scene div.comments h2 svg.arrow line {stroke: #dedede; stroke-width: 3px;}
+#content .scene div.comments h2:hover svg.arrow line {stroke: #00c90d;}
+
+#content .scene div.comments > p,
+#content .scene div.comments ul.comments,
+#content .scene div.comments ul.actions {display: none;}
+
+#content .scene div.comments.open h2 {color: #00c90d;}
+#content .scene div.comments.open > p,
+#content .scene div.comments.open ul.comments,
+#content .scene div.comments.open ul.actions {display: block;}
+
+#content .scene div.comments > p {color: #999999; font-size: 13px; padding-bottom: 25px;}
+#content .scene div.comments ul.comments {padding: 0; margin: 0;}
+#content .scene div.comments ul.comments > li {padding-bottom: 10px; padding-left: 0;}
+#content .scene div.comments ul.comments > li ul.info {padding-bottom: 0; margin: 0; list-style: none;}
+#content .scene div.comments ul.comments > li ul.info li {display: inline-block; vertical-align: top; color: #999999; font-size: 12px; padding-bottom: 0; padding-left: 0;}
+#content .scene div.comments ul.comments > li ul.info li.user:after {content: ",\00a0";}
+#content .scene div.comments ul.comments > li p.comment {padding-bottom: 15px; font-size: 13px;}
+#content .scene div.comments .field {padding-bottom: 10px;}
+
+
+
+/* TODOS */
+#content .scene div.todos {padding-bottom: 15px; position: relative; z-index: 1;}
+#content .scene div.todos h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
+#content .scene div.todos h2:hover {color: #00c90d;}
+#content .scene div.todos h2 svg.arrow {position: absolute; top: 6px; right: 55px;}
+#content .scene div.todos h2 svg.arrow line {stroke: #dedede; stroke-width: 3px;}
+#content .scene div.todos h2:hover svg.arrow line {stroke: #00c90d;}
+
+#content .scene div.todos > p,
+#content .scene div.todos ul.todos,
+#content .scene div.todos ul.actions {display: none;}
+
+#content .scene div.todos.open h2 {color: #00c90d;}
+#content .scene div.todos.open > p,
+#content .scene div.todos.open ul.todos,
+#content .scene div.todos.open ul.actions {display: block;}
+
+
+#content .scene div.todos > p {color: #999999; font-size: 13px; padding-bottom: 25px;}
+#content .scene div.todos ul.todos {padding-bottom: 18px;}
+#content .scene div.todos ul.todos {list-style-position: outside; list-style-type: disc; margin-left: 15px; width: 485px;}
+#content .scene div.todos ul.todos li {font-size: 14px; padding-bottom: 7px; padding-left: 3px;}
+#content .scene div.todos .field {padding-bottom: 10px;}
+
+
+/* QnAs */
+#content .scene div.qnas {padding-bottom: 15px; position: relative; z-index: 1;}
+#content .scene div.qnas h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
+#content .scene div.qnas h2:hover {color: #00c90d;}
+#content .scene div.qnas h2 svg.arrow {position: absolute; top: 6px; right: 55px;}
+#content .scene div.qnas h2 svg.arrow line {stroke: #dedede; stroke-width: 3px;}
+#content .scene div.qnas h2:hover svg.arrow line {stroke: #00c90d;}
+
+#content .scene div.qnas > p,
+#content .scene div.qnas ul.qnas,
+#content .scene div.qnas ul.actions {display: none;}
+
+#content .scene div.qnas.open h2 {color: #00c90d;}
+#content .scene div.qnas.open > p,
+#content .scene div.qnas.open ul.qnas,
+#content .scene div.qnas.open ul.actions {display: block;}
+
+#content .scene div.qnas > p {color: #999999; font-size: 13px; padding-bottom: 25px;}
+#content .scene div.qnas ul.qnas {padding: 0; margin: 0;}
+#content .scene div.qnas ul.qnas > li {padding-bottom: 10px; padding-left: 0;}
+#content .scene div.qnas ul.qnas > li ul.info {padding-bottom: 0; margin: 0; list-style: none;}
+#content .scene div.qnas ul.qnas > li ul.info li {display: inline-block; vertical-align: top; color: #999999; font-size: 12px; padding-bottom: 0; padding-left: 0;}
+#content .scene div.qnas ul.qnas > li ul.info li.user:after {content: ",\00a0";}
+#content .scene div.qnas ul.qnas > li p.question {padding-bottom: 15px; font-size: 13px;}
+#content .scene div.qnas .field {padding-bottom: 10px;}
+
+
+
+/* READSTATE */
+#content .scene div.readstate div {margin-left: 50px; margin-bottom: 40px; padding: 10px; position: relative; z-index: 1; border-radius: 5px; border: 1px solid #dedede; width: 478px;}
+#content .scene div.readstate p {font-size: 13px; color: #dedede; padding: 0 50px 0 0; width: auto;}
+#content .scene div.readstate:hover p {color: #26962d;}
+#content .scene div.readstate div {cursor: pointer;}
+#content .scene div.readstate svg {position: absolute; top: 11px; right: 10px;}
+#content .scene div.readstate svg line {stroke: #dedede; stroke-width: 3px;}
+#content .scene div.readstate.is_read svg line {stroke: #666666;}
+
+
+
+/* ABOUT */
+#content .scene.about div.comments {margin-top: 20px;}
+
+
+
+/* STOP */
+#content .scene.stop {}
+
+#content .scene.stop ul.topics {padding: 10px 0 0; border-bottom: 1px solid #dedede; margin-bottom: 40px;}
+
+#content .scene.stop li.topic {border-top: 1px solid #dedede; padding-top: 10px; position: relative;}
+#content .scene.stop li.topic:first-child {border: none;}
+#content .scene.stop li.topic h1 {display: none;}
+
+#content .scene.stop li.topic > svg.checkmark {position: absolute; top: 14px; left: 25px;}
+#content .scene.stop li.topic > svg.checkmark line {stroke: #666666; stroke-width: 3px;}
+
+#content .scene.stop li.topic > h3 {position: relative;}
+#content .scene.stop li.topic > h3 svg.arrow {position: absolute; top: 7px; right: 55px;}
+#content .scene.stop li.topic > h3 svg.arrow line {stroke: #dedede; stroke-width: 3px;}
+#content .scene.stop li.topic > h3:hover svg.arrow line {stroke: #00c90d;}
+
+
+#content .scene.stop li.topic > h3 a {display: block;}
+
+#content .scene.stop li.topic div.topic {display: none;}
+#content .scene.stop li.topic.open div.topic {display: block;}
+
+
+#content .scene.stop .topic div.problem {padding-top: 20px;}
+#content .scene.stop .topic div.solution {padding-top: 20px;}
+#content .scene.stop .topic div.details {}
+#content .scene.stop .topic div.details h3.clickable {color: #00c90d; cursor: pointer; padding-bottom: 40px; position: underline; position: relative;}
+#content .scene.stop .topic div.details h3.clickable svg.arrow {position: absolute; top: 7px; right: 55px;}
+#content .scene.stop .topic div.details h3.clickable svg.arrow line {stroke: #dedede; stroke-width: 3px;}
+
+#content .scene.stop .topic div.details h3.clickable:hover {text-decoration: underline;}
+#content .scene.stop .topic div.details h3.clickable:hover svg.arrow line {stroke: #00c90d;}
+
+
+#content .scene.stop .topic div.details div.description,
+#content .scene.stop .topic div.details div.todos,
+#content .scene.stop .topic div.details div.comments {display: none;}
+
+#content .scene.stop .topic div.details.open h3 {padding-bottom: 10px;}
+#content .scene.stop .topic div.details.open div.description {padding-bottom: 40px;}
+
+#content .scene.stop .topic div.details.open div.description,
+#content .scene.stop .topic div.details.open div.todos,
+#content .scene.stop .topic div.details.open div.comments {display: block;}
+
+
+#content .scene.stop .topic div.related {border: none; padding-top: 20px; padding-bottom: 15px; position: relative; z-index: 1;}
+#content .scene.stop .topic div.related h2 {font-size: 16px; padding-bottom: 25px;}
+#content .scene.stop .topic div.related ul.articles {list-style: none; margin: 0;}
+#content .scene.stop .topic div.related ul.articles li {padding: 0; border: none;}
+#content .scene.stop .topic div.related ul.articles li h3 {font-size: 16px;}
+#content .scene.stop .topic div.related ul.articles li p {font-size: 14px;}
+

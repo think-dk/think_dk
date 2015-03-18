@@ -1,0 +1,53 @@
+/* LOGIN */
+#content .login form {display: none;}
+
+
+/* FRONT */
+#content .scene.front h1 {font-size: 100px;}
+#content .scene.front h1 a,
+#content .scene.front h2 a,
+#content .scene.front h2 span {font-family: "PT Serif", Times, serif;}
+#content .scene.front h2 {font-size: 60px;}
+#content .scene.front h3 {font-size: 22px;}
+#content .scene.front p {font-size: 22px; padding-bottom: 10px;}
+
+#content .scene.front .long .s2,
+#content .scene.front .long .s2 a {/*font-size: 32px;*/ color: #01939a;}
+#content .scene.front .wake .s2,
+#content .scene.front .wake .s2 a {/*font-size: 34px;*/ color: #bf7230;}
+#content .scene.front .tyrant .s2,
+#content .scene.front .tyrant .s2 a {/*font-size: 30px;*/ color: #01939a;}
+#content .scene.front .goal .s2,
+#content .scene.front .goal .s2 a {/*font-size: 34px;*/ color: #bf7230;}
+#content .scene.front .idleness .s2,
+#content .scene.front .idleness .s2 {/*font-size: 34px;*/ color: #01939a;}
+
+#content .scene.front .content,
+#content .scene.front .content a {/*font-size: 34px;*/ color: #01939a;}
+#content .scene.front .slaves .s2,
+#content .scene.front .slaves .s2 a {/*font-size: 30px;*/ color: #bf7230;}
+
+#content .scene.front .bills {padding-bottom: 40px;}
+#content .scene.front .idleness {padding-bottom: 0px;}
+#content .scene.front .everything {padding-bottom: 40px;}
+
+
+/* ARTICLES */
+#content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #ccdbcd;}
+#content .scene ul.articles li.article h3 {font-size: 24px; line-height: 1em; padding-bottom: 5px;
+	font-family: "PT Serif", Times, serif;
+}
+#content .scene ul.articles li.article p {font-size: 16px;}
+
+
+/* ARTICLE */
+#content .scene.article div.intro {padding-bottom: 20px; border-bottom: 1px solid #dedede; margin-bottom: 40px;}
+#content .scene.article div.intro p {font-size: 13px; color: #cccccc;}
+#content .scene.article div.article {padding-bottom: 50px;}
+#content .scene .article ul.tags {padding-bottom: 10px;}
+#content .scene .article ul.tags a {color: #dedede;}
+#content .scene .article ul.tags a:hover {color: #00c90d;}
+
+
+/* ARTICLE COMMENTS */
+#content .scene.article div.comments {display: none;}

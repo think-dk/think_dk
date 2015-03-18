@@ -1,0 +1,38 @@
+/*
+#00c90d - PRIMARY LIGHT
+#26962d - PRIMARY DARK
+#ccdbcd - BORDER
+*/
+
+* {color: #26962d;}
+
+body {}
+
+#header .logo {color: #00c90d;}
+#navigation ul li a {color: #00c90d;}
+
+#content .scene a {color: #00c90d;}
+#content .scene hr {border-color: #ccdbcd;}
+
+#content ul.actions input.button.primary,
+#content ul.actions a.button.primary,
+#content .scene .pagination .next,
+#content .scene .pagination .previous {background-color: #00c90d;}
+#content ul.actions input.button.primary:hover,
+#content ul.actions a.button.primary:hover,
+#content .scene .pagination .next:hover,
+#content .scene .pagination .previous:hover {background-color: #26962d;}
+
+#footer {border-color: #ccdbcd;}
+
+.terms_notification .accept,
+.terms_notification .details {color: #00c90d;}
+.terms_notification {border-color: #26962d;}
+
+
+/* LOCAL */
+
+.front #header .logo,
+.stop #navigation ul li.stop a,
+.whatis #navigation ul li.whatis a {color: #26962d;}
+

@@ -1,0 +1,8 @@
+body.article #navigation .article a,
+body.target #navigation .target a,
+body.topic #navigation .topic a {padding-left: 35px; color: #ffffff;}
+
+
+
+#content .topicEdit fieldset h3 {border-top: 1px solid #aaaaaa; font-size: 0.8em; margin: 20px 0 20px; padding-bottom: 10px; padding-top: 7px; text-transform: uppercase;}
+#content .topicEdit fieldset .field.html {border-top: none; border-bottom: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0;}

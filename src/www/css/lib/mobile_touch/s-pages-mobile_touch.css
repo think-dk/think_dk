@@ -1,0 +1,135 @@
+/* LOGIN */
+#content .terms_notification {display: none;}
+
+
+/* FRONT */
+#content .scene.front {
+	-o-user-select: none;
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+#content .scene.front a {cursor: default;}
+#content .scene.front .active a {cursor: pointer;}
+
+#content .scene.front h1 {font-size: 65px; padding: 0 5px 10px;}
+#content .scene.front h2 {font-size: 50px; padding: 10px 5px 10px;}
+#content .scene.front h3 {font-size: 26px; padding: 0 5px 5px;}
+#content .scene.front p {font-size: 20px; padding: 0 5px 0px;}
+
+#content .scene.front .long .s2,
+#content .scene.front .long .s2 a {font-size: 28px; color: #01939a;}
+#content .scene.front .now {font-size: 38px;}
+#content .scene.front .wake .s2,
+#content .scene.front .wake .s2 a {font-size: 28px; color: #bf7230;}
+#content .scene.front .tyrant .s2,
+#content .scene.front .tyrant .s2 a {font-size: 30px; color: #01939a;}
+#content .scene.front .goal .s2,
+#content .scene.front .goal .s2 a {font-size: 28px; color: #bf7230;}
+#content .scene.front .idleness .s2,
+#content .scene.front .idleness .s2 {font-size: 28px; color: #01939a;}
+
+#content .scene.front .content,
+#content .scene.front .content a {font-size: 28px; color: #01939a;}
+#content .scene.front .slaves .s2,
+#content .scene.front .slaves .s2 a {font-size: 26px; color: #bf7230;}
+
+#content .scene.front .everything {font-size: 38px;}
+
+
+#content .scene.front h1,
+#content .scene.front h2,
+#content .scene.front h3,
+#content .scene.front p {opacity: 0; text-align: center;}
+#content .scene.front h1 {}
+
+
+/* ARTICLES */
+#content .scene ul.articles {padding: 0;}
+#content .scene.articles ul.articles {padding: 20px 0 30px;}
+
+#content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #ccdbcd;}
+#content .scene ul.articles li.article h3 {font-size: 24px; line-height: 1em; padding-bottom: 5px;
+	font-family: "PT Serif", Times, serif;
+}
+#content .scene ul.articles li.article p {font-size: 16px;}
+
+
+/* ARTICLE */
+#content .scene.article {}
+#content .scene.article div.intro {padding-bottom: 10px; border-bottom: 1px solid #dedede; margin-bottom: 30px; margin-top: -20px;}
+#content .scene.article div.intro p {font-size: 13px; color: #cccccc;}
+
+#content .scene.article div.article {}
+#content .scene.article div.article h2 br {display: none;}
+#content .scene .article ul.tags {padding-bottom: 10px;}
+#content .scene .article ul.tags a {color: #dedede;}
+#content .scene .article ul.tags a:active {color: #00c90d;}
+
+
+/* RELATED */
+#content .scene div.related {padding-top: 40px; position: relative; z-index: 1;}
+
+
+/* ARTICLE COMMENTS */
+#content .scene div.comments {display: none;}
+#content .scene div.todos {display: none;}
+#content .scene div.qnas {display: none;}
+
+
+
+
+/* STOP */
+#content .scene.stop ul.topics {padding: 10px 0 0; border-bottom: 1px solid #dedede; margin-bottom: 40px;}
+
+#content .scene.stop li.topic {border-top: 1px solid #dedede; padding-top: 10px; position: relative;}
+#content .scene.stop li.topic:first-child {border: none;}
+#content .scene.stop li.topic h1 {display: none;}
+
+#content .scene.stop li.topic > svg.checkmark {display: none;}
+#content .scene.stop li.topic > svg.checkmark line {stroke: #666666; stroke-width: 2px;}
+
+#content .scene.stop li.topic > h3 {position: relative;}
+#content .scene.stop li.topic > h3 svg.arrow {position: absolute; top: 7px; right: 20px;}
+#content .scene.stop li.topic > h3 svg.arrow line {stroke: #dedede; stroke-width: 3px;}
+#content .scene.stop li.topic > h3:hover svg.arrow line {stroke: #00c90d;}
+
+
+#content .scene.stop li.topic > h3 a {display: block;}
+
+#content .scene.stop li.topic div.topic {display: none;}
+#content .scene.stop li.topic.open div.topic {display: block;}
+
+
+#content .scene.stop .topic div.problem {padding-top: 20px;}
+#content .scene.stop .topic div.solution {padding-top: 20px;}
+#content .scene.stop .topic div.details {}
+#content .scene.stop .topic div.details h3 {font-size: 16px;}
+#content .scene.stop .topic div.details h3.clickable {color: #00c90d; cursor: pointer; padding-bottom: 40px; position: underline; position: relative;}
+#content .scene.stop .topic div.details h3.clickable svg.arrow {position: absolute; top: 7px; right: 20px;}
+#content .scene.stop .topic div.details h3.clickable svg.arrow line {stroke: #dedede; stroke-width: 3px;}
+
+#content .scene.stop .topic div.details h3.clickable:hover {text-decoration: underline;}
+#content .scene.stop .topic div.details h3.clickable:hover svg.arrow line {stroke: #00c90d;}
+
+
+#content .scene.stop .topic div.details div.description,
+#content .scene.stop .topic div.details div.todos,
+#content .scene.stop .topic div.details div.comments {display: none;}
+
+#content .scene.stop .topic div.details.open h3 {padding-bottom: 10px;}
+#content .scene.stop .topic div.details.open div.description {padding-bottom: 40px;}
+
+#content .scene.stop .topic div.details.open div.description,
+#content .scene.stop .topic div.details.open div.todos,
+#content .scene.stop .topic div.details.open div.comments {display: block;}
+
+
+#content .scene.stop .topic div.related {border: none; padding-top: 20px; padding-bottom: 15px; position: relative; z-index: 1;}
+#content .scene.stop .topic div.related h2 {font-size: 16px; padding-bottom: 25px;}
+#content .scene.stop .topic div.related ul.articles {list-style: none; margin: 0;}
+#content .scene.stop .topic div.related ul.articles li {padding: 0; border: none;}
+#content .scene.stop .topic div.related ul.articles li h3 {font-size: 16px;}
+#content .scene.stop .topic div.related ul.articles li p {font-size: 14px;}

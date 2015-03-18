@@ -1,0 +1,36 @@
+/*
+#00c90d - PRIMARY LIGHT
+#26962d - PRIMARY DARK
+#ccdbcd - BORDER
+*/
+
+* {color: #26962d;}
+
+body {}
+
+#header .logo {color: #00c90d;}
+#header .servicenavigation li.navigation div {background: #00c90d;}
+#header .servicenavigation li.navigation.open div {background: #26962d;}
+#navigation ul li {color: #00c90d;}
+
+#content .scene a,
+#content .scene dl.geo.active dd {color: #00c90d;}
+#content .scene hr {border-color: #ccdbcd;}
+
+#content ul.actions input.button.primary,
+#content ul.actions a.button.primary {background-color: #00c90d;}
+#content ul.actions input.button.primary:active,
+#content ul.actions a.button.primary:active {background-color: #26962d;}
+
+#footer {border-color: #ccdbcd;}
+
+.terms_notification .accept,
+.terms_notification .details {color: #00c90d;}
+.terms_notification {border-color: #26962d;}
+
+
+/* LOCAL */
+
+.front #header .logo,
+.plain #navigation ul li.plain,
+.geek #navigation ul li.geek {color: #26962d;}

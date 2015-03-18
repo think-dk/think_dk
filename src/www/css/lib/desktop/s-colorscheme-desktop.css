@@ -1,0 +1,35 @@
+/*
+#00c90d - PRIMARY LIGHT
+#26962d - PRIMARY DARK
+#ccdbcd - BORDER
+*/
+
+* {color: #26962d;}
+
+body {}
+
+#header .logo {color: #00c90d;}
+#navigation ul li {color: #00c90d;}
+
+#content .scene a,
+#content .scene dl.geo.active dd {color: #00c90d;}
+#content .scene hr {border-color: #ccdbcd;}
+
+#content ul.actions input.button.primary,
+#content ul.actions a.button.primary {background-color: #00c90d;}
+
+#footer {border-color: #ccdbcd;}
+
+.terms_notification .accept,
+.terms_notification .details {color: #00c90d;}
+.terms_notification {border-color: #26962d;}
+
+
+/* LOCAL */
+
+.front #header .logo,
+.about #navigation ul li.about,
+.articles #navigation ul li.articles,
+.stop #navigation ul li.stop {color: #26962d;}
+
+
