@@ -42,16 +42,11 @@
 
 
 /* ARTICLES */
-#content .scene ul.articles {padding: 0;}
 #content .scene.articles ul.articles {padding: 20px 0 30px;}
-#content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #dedede; position: relative;}
-#content .scene ul.articles li.article:first-child {border-top: none;}
-#content .scene ul.articles li.article h3 {font-size: 24px; line-height: 1em; padding-bottom: 5px;
+#content .scene ul.articles li.article h3 {font-size: 24px;
 	font-family: "PT Serif", Times, serif;
 }
 #content .scene ul.articles li.article p {font-size: 16px;}
-#content .scene ul.articles li.article > svg.checkmark {position: absolute; top: 14px; left: 25px;}
-#content .scene ul.articles li.article > svg.checkmark line {stroke: #666666; stroke-width: 3px;}
 
 
 
@@ -59,58 +54,11 @@
 #content .scene.article div.intro {padding-bottom: 20px; border-bottom: 1px solid #dedede; margin-bottom: 40px;}
 #content .scene.article div.intro p {font-size: 13px; color: #cccccc;}
 #content .scene.article div.article {padding-bottom: 30px;}
-#content .scene .article ul.tags {padding-bottom: 10px;}
-#content .scene .article ul.tags a {color: #dedede;}
-
-#content .scene.article div.sharing {padding: 0; position: relative; height: 40px;}
-#content .scene.article div.sharing p {padding: 0; z-index: 2; position: absolute; top: 22px; left: 100px; display: none; font-size: 11px; color: #999999;}
-#content .scene.article div.sharing h3 {position: absolute; top: 0px; left: 100px; padding: 0; display: none;}
-#content .scene.article div.sharing.hover {z-index: 2;}
-#content .scene.article div.sharing.hover h3,
-#content .scene.article div.sharing.hover p {display: block;}
-#content .scene.article div.sharing svg {z-index: 0; margin-left: 50px; position: absolute; width: 500px; height: 300px; top: -130px;}
-#content .scene.article div.sharing svg rect {cursor: pointer;}
-#content .scene.article div.sharing svg circle.primary {stroke: #666666; fill: #ffffff;}
-#content .scene.article div.sharing svg circle {fill: #ededed; stroke: #999999; stroke-width: 1px;}
-#content .scene.article div.sharing svg line.primary {stroke: #666666;}
-#content .scene.article div.sharing svg line {stroke: #cccccc; stroke-width: 1px;}
-#content .scene.article div.sharing svg rect.primary {fill: #ff0000;}
 
 
 
 /* RELATED */
-#content .scene div.related {border-top: 1px solid #ccdbcd; padding-top: 40px; position: relative; z-index: 1;}
 #content .scene.articles div.related {border: none;}
-#content .scene div.related ul.articles {padding: 0;}
-#content .scene div.related li.article:first-child {border-top: none;}
-
-
-
-/* COMMENTS */
-#content .scene div.comments {padding-bottom: 15px; position: relative; z-index: 1;}
-#content .scene div.comments h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
-#content .scene div.comments h2:hover {color: #00c90d;}
-#content .scene div.comments h2 svg.arrow {position: absolute; top: 6px; right: 55px;}
-#content .scene div.comments h2 svg.arrow line {stroke: #dedede; stroke-width: 3px;}
-#content .scene div.comments h2:hover svg.arrow line {stroke: #00c90d;}
-
-#content .scene div.comments > p,
-#content .scene div.comments ul.comments,
-#content .scene div.comments ul.actions {display: none;}
-
-#content .scene div.comments.open h2 {color: #00c90d;}
-#content .scene div.comments.open > p,
-#content .scene div.comments.open ul.comments,
-#content .scene div.comments.open ul.actions {display: block;}
-
-#content .scene div.comments > p {color: #999999; font-size: 13px; padding-bottom: 25px;}
-#content .scene div.comments ul.comments {padding: 0; margin: 0;}
-#content .scene div.comments ul.comments > li {padding-bottom: 10px; padding-left: 0;}
-#content .scene div.comments ul.comments > li ul.info {padding-bottom: 0; margin: 0; list-style: none;}
-#content .scene div.comments ul.comments > li ul.info li {display: inline-block; vertical-align: top; color: #999999; font-size: 12px; padding-bottom: 0; padding-left: 0;}
-#content .scene div.comments ul.comments > li ul.info li.user:after {content: ",\00a0";}
-#content .scene div.comments ul.comments > li p.comment {padding-bottom: 15px; font-size: 13px;}
-#content .scene div.comments .field {padding-bottom: 10px;}
 
 
 
@@ -165,16 +113,6 @@
 #content .scene div.qnas ul.qnas > li p.question {padding-bottom: 15px; font-size: 13px;}
 #content .scene div.qnas .field {padding-bottom: 10px;}
 
-
-
-/* READSTATE */
-#content .scene div.readstate div {margin-left: 50px; margin-bottom: 40px; padding: 10px; position: relative; z-index: 1; border-radius: 5px; border: 1px solid #dedede; width: 478px;}
-#content .scene div.readstate p {font-size: 13px; color: #dedede; padding: 0 50px 0 0; width: auto;}
-#content .scene div.readstate:hover p {color: #26962d;}
-#content .scene div.readstate div {cursor: pointer;}
-#content .scene div.readstate svg {position: absolute; top: 11px; right: 10px;}
-#content .scene div.readstate svg line {stroke: #dedede; stroke-width: 3px;}
-#content .scene div.readstate.is_read svg line {stroke: #666666;}
 
 
 

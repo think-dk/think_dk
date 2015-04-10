@@ -33,8 +33,8 @@
 
 
 /* ARTICLES */
-#content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #ccdbcd;}
-#content .scene ul.articles li.article h3 {font-size: 24px; line-height: 1em; padding-bottom: 5px;
+#content .scene ul.articles li.article {border-color: #ccdbcd;}
+#content .scene ul.articles li.article h3 {font-size: 24px;
 	font-family: "PT Serif", Times, serif;
 }
 #content .scene ul.articles li.article p {font-size: 16px;}
@@ -44,10 +44,13 @@
 #content .scene.article div.intro {padding-bottom: 20px; border-bottom: 1px solid #dedede; margin-bottom: 40px;}
 #content .scene.article div.intro p {font-size: 13px; color: #cccccc;}
 #content .scene.article div.article {padding-bottom: 50px;}
-#content .scene .article ul.tags {padding-bottom: 10px;}
-#content .scene .article ul.tags a {color: #dedede;}
+
+
 #content .scene .article ul.tags a:hover {color: #00c90d;}
 
+#content .scene div.related {border-color: #ccdbcd;}
 
-/* ARTICLE COMMENTS */
-#content .scene.article div.comments {display: none;}
+
+/* FEEDBACK ELEMENTS */
+#content .scene div.todos {display: none;}
+#content .scene div.qnas {display: none;}

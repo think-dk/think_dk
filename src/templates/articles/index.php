@@ -17,7 +17,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 
 	<ul class="articles i:articleList">
 <?	foreach($items as $item): ?>
-		<li class="article item_id:<?= $item["item_id"] ?> readstate:<?= $item["readstate"] ?>">
+		<li class="article item_id:<?= $item["item_id"] ?> readstate:<?= $item["readstate"] ? 1 : "" ?>">
 
 <?			if($item["tags"]): ?>
 			<ul class="tags">

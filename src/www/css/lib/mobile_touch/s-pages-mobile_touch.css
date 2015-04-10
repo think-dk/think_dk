@@ -47,34 +47,21 @@
 
 
 /* ARTICLES */
-#content .scene ul.articles {padding: 0;}
-#content .scene.articles ul.articles {padding: 20px 0 30px;}
-
-#content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #ccdbcd;}
-#content .scene ul.articles li.article h3 {font-size: 24px; line-height: 1em; padding-bottom: 5px;
+#content .scene ul.articles li.article {border-color: #ccdbcd;}
+#content .scene ul.articles li.article h3 {font-size: 24px;
 	font-family: "PT Serif", Times, serif;
 }
 #content .scene ul.articles li.article p {font-size: 16px;}
 
 
 /* ARTICLE */
-#content .scene.article {}
 #content .scene.article div.intro {padding-bottom: 10px; border-bottom: 1px solid #dedede; margin-bottom: 30px; margin-top: -20px;}
 #content .scene.article div.intro p {font-size: 13px; color: #cccccc;}
-
-#content .scene.article div.article {}
-#content .scene.article div.article h2 br {display: none;}
-#content .scene .article ul.tags {padding-bottom: 10px;}
-#content .scene .article ul.tags a {color: #dedede;}
 #content .scene .article ul.tags a:active {color: #00c90d;}
 
 
-/* RELATED */
-#content .scene div.related {padding-top: 40px; position: relative; z-index: 1;}
 
-
-/* ARTICLE COMMENTS */
-#content .scene div.comments {display: none;}
+/* FEEDBACK ELEMENTS */
 #content .scene div.todos {display: none;}
 #content .scene div.qnas {display: none;}
 

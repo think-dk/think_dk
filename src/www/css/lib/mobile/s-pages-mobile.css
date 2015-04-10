@@ -9,15 +9,9 @@
 #content .scene.front a {text-decoration: none;}
 
 /* ARTICLES */
-#content .scene ul.articles {padding: 0;}
-
-#content .scene ul.articles li.article {padding: 10px 0 0; border-top: 1px solid #ccdbcd;}
-
-#content .scene.article div.intro {padding-bottom: 5px; border-bottom: 1px solid #dedede; margin-bottom: 20px;}
-#content .scene.article div.intro p {font-size: 12px; color: #cccccc;}
-
-#content .scene .article ul.tags a {color: #dedede;}
+#content .scene ul.articles li.article {border-color: #ccdbcd;}
 
 
-/* ARTICLE COMMENTS */
-#content .scene.article div.comments {display: none;}
+/* FEEDBACK ELEMENTS */
+#content .scene div.todos {display: none;}
+#content .scene div.qnas {display: none;}
