@@ -7,6 +7,8 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/m
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-animation-to.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-fontsReady.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-textscaler.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-svg.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-form-builder.js"></script>');
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-page-desktop.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-login-desktop.js"></script>');
@@ -19,6 +21,7 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/g
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/u-sharing-desktop.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/u-checkmark-desktop.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/u-expandarrow-desktop.js"></script>');
 
 
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-front-desktop.js"></script>');

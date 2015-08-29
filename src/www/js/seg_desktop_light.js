@@ -6725,96 +6725,13 @@ if(String.prototype.substr == undefined || "ABC".substr(-1,1) == "A") {
 
 /*u-settings.js*/
 u.site_name = "think.dk";
-u.addCheckmark = function(node) {
-	node.checkmark = u.svg({
-		"name":"checkmark",
-		"node":node,
-		"class":"checkmark",
-		"title":node.readstate ? ("Læst "+u.date("Y-m-d", node.readstate)) : false,
-		"width":17,
-		"height":17,
-		"shapes":[
-			{
-				"type": "line",
-				"x1": 2,
-				"y1": 8,
-				"x2": 7,
-				"y2": 15
-			},
-			{
-				"type": "line",
-				"x1": 6,
-				"y1": 15,
-				"x2": 12,
-				"y2": 2
-			}
-		]
-	});
-}
-u.removeCheckmark = function(node) {
-	if(node.checkmark) {
-		node.checkmark.parentNode.removeChild(node.checkmark);
-		node.checkmark = false;
-	}
-}
-u.addExpandArrow = function(node) {
-	if(node.collapsearrow) {
-		node.collapsearrow.parentNode.removeChild(node.collapsearrow);
-		node.collapsearrow = false;
-	}
-	node.expandarrow = u.svg({
-		"name":"expandarrow",
-		"node":node,
-		"class":"arrow",
-		"width":17,
-		"height":17,
-		"shapes":[
-			{
-				"type": "line",
-				"x1": 2,
-				"y1": 2,
-				"x2": 7,
-				"y2": 9
-			},
-			{
-				"type": "line",
-				"x1": 6,
-				"y1": 9,
-				"x2": 11,
-				"y2": 2
-			}
-		]
-	});
-}
-u.addCollapseArrow = function(node) {
-	if(node.expandarrow) {
-		node.expandarrow.parentNode.removeChild(node.expandarrow);
-		node.expandarrow = false;
-	}
-	node.collapsearrow = u.svg({
-		"name":"collapsearrow",
-		"node":node,
-		"class":"arrow",
-		"width":17,
-		"height":17,
-		"shapes":[
-			{
-				"type": "line",
-				"x1": 2,
-				"y1": 9,
-				"x2": 7,
-				"y2": 2
-			},
-			{
-				"type": "line",
-				"x1": 6,
-				"y1": 2,
-				"x2": 11,
-				"y2": 9
-			}
-		]
-	});
-}
+u.txt = {};
+u.txt["share"] = "Del artiklen";
+u.txt["not_read"] = "Klik på <em>Tjek</em>-ikonet når du har læst et emne, så husker vi det for dig.";
+u.txt["read"] = "Læst";
+u.txt["add_comment"] = "Tilføj kommentar";
+u.txt["comment"] = "Kommentar";
+u.txt["cancel"] = "Fortryd";
 
 /*ga.js*/
 u.ga_account = 'UA-10756281-1';
@@ -6861,7 +6778,7 @@ Util.Form.customInit["location"] = function(form, field) {
 	for(j = 0; input = field._inputs[j]; j++) {
 		input.field = field;
 		form.fields[input.name] = input;
-		input._label = u.qs("label[for="+input.id+"]", field);
+		input._label = u.qs("label[for='"+input.id+"']", field);
 		input.val = u.f._value;
 		u.e.addEvent(input, "keyup", u.f._updated);
 		u.e.addEvent(input, "change", u.f._changed);
@@ -6932,7 +6849,7 @@ Util.Form.customInit["html"] = function(form, field) {
 	field._input = u.qs("textarea", field);
 	field._input.field = field;
 	form.fields[field._input.name] = field._input;
-	field._input._label = u.qs("label[for="+field._input.id+"]", field);
+	field._input._label = u.qs("label[for='"+field._input.id+"']", field);
 	field._input.val = u.f._value;
 	u.e.addEvent(field._input, "keyup", u.f._updated);
 	u.e.addEvent(field._input, "change", u.f._changed);

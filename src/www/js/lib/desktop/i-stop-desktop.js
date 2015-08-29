@@ -44,6 +44,7 @@ Util.Objects["stop"] = new function() {
 						u.rc(this.node, "open");
 						u.addExpandArrow(this);
 
+						u.deleteNodeCookie(this.node, "state");
 					}
 					else {
 
@@ -56,7 +57,14 @@ Util.Objects["stop"] = new function() {
 						else {
 							u.ac(this.node, "open");
 						}
+
+						u.saveNodeCookie(this.node, "state", "open");
 					}
+				}
+
+				// check prev state
+				if(u.getNodeCookie(node, "state") == "open") {
+					node.header.clicked();
 				}
 
 

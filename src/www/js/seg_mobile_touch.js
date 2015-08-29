@@ -4737,96 +4737,13 @@ Util.videoPlayer = function(_options) {
 
 /*u-settings.js*/
 u.site_name = "think.dk";
-u.addCheckmark = function(node) {
-	node.checkmark = u.svg({
-		"name":"checkmark",
-		"node":node,
-		"class":"checkmark",
-		"title":node.readstate ? ("Læst "+u.date("Y-m-d", node.readstate)) : false,
-		"width":17,
-		"height":17,
-		"shapes":[
-			{
-				"type": "line",
-				"x1": 2,
-				"y1": 8,
-				"x2": 7,
-				"y2": 15
-			},
-			{
-				"type": "line",
-				"x1": 6,
-				"y1": 15,
-				"x2": 12,
-				"y2": 2
-			}
-		]
-	});
-}
-u.removeCheckmark = function(node) {
-	if(node.checkmark) {
-		node.checkmark.parentNode.removeChild(node.checkmark);
-		node.checkmark = false;
-	}
-}
-u.addExpandArrow = function(node) {
-	if(node.collapsearrow) {
-		node.collapsearrow.parentNode.removeChild(node.collapsearrow);
-		node.collapsearrow = false;
-	}
-	node.expandarrow = u.svg({
-		"name":"expandarrow",
-		"node":node,
-		"class":"arrow",
-		"width":17,
-		"height":17,
-		"shapes":[
-			{
-				"type": "line",
-				"x1": 2,
-				"y1": 2,
-				"x2": 7,
-				"y2": 9
-			},
-			{
-				"type": "line",
-				"x1": 6,
-				"y1": 9,
-				"x2": 11,
-				"y2": 2
-			}
-		]
-	});
-}
-u.addCollapseArrow = function(node) {
-	if(node.expandarrow) {
-		node.expandarrow.parentNode.removeChild(node.expandarrow);
-		node.expandarrow = false;
-	}
-	node.collapsearrow = u.svg({
-		"name":"collapsearrow",
-		"node":node,
-		"class":"arrow",
-		"width":17,
-		"height":17,
-		"shapes":[
-			{
-				"type": "line",
-				"x1": 2,
-				"y1": 9,
-				"x2": 7,
-				"y2": 2
-			},
-			{
-				"type": "line",
-				"x1": 6,
-				"y1": 2,
-				"x2": 11,
-				"y2": 9
-			}
-		]
-	});
-}
+u.txt = {};
+u.txt["share"] = "Del artiklen";
+u.txt["not_read"] = "Klik på <em>Tjek</em>-ikonet når du har læst et emne, så husker vi det for dig.";
+u.txt["read"] = "Læst";
+u.txt["add_comment"] = "Tilføj kommentar";
+u.txt["comment"] = "Kommentar";
+u.txt["cancel"] = "Fortryd";
 
 /*ga.js*/
 u.ga_account = 'UA-10756281-1';
@@ -5513,6 +5430,7 @@ Util.Objects["stop"] = new function() {
 					if(u.hc(this.node, "open")) {
 						u.rc(this.node, "open");
 						u.addExpandArrow(this);
+						u.deleteNodeCookie(this.node, "state");
 					}
 					else {
 						u.addCollapseArrow(this);
@@ -5522,7 +5440,11 @@ Util.Objects["stop"] = new function() {
 						else {
 							u.ac(this.node, "open");
 						}
+						u.saveNodeCookie(this.node, "state", "open");
 					}
+				}
+				if(u.getNodeCookie(node, "state") == "open") {
+					node.header.clicked();
 				}
 				node.response = function(response) {
 					this.topic = u.ae(this, u.qs(".scene .topic", response));

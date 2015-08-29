@@ -4833,7 +4833,7 @@ Util.Form.customInit["html"] = function(form, field) {
 	field._input = u.qs("textarea", field);
 	field._input.field = field;
 	form.fields[field._input.name] = field._input;
-	field._input._label = u.qs("label[for="+field._input.id+"]", field);
+	field._input._label = u.qs("label[for='"+field._input.id+"']", field);
 	field._input.val = u.f._value;
 	u.f.textEditor(field);
 	u.f.validate(field._input);
@@ -6320,6 +6320,7 @@ u.f.addField = function(node, _options) {
 	var field_name = "js_name";
 	var field_value = "";
 	var field_class = "";
+	var field_maxlength = "";
 	if(typeof(_options) == "object") {
 		var _argument;
 		for(_argument in _options) {
@@ -6329,6 +6330,7 @@ u.f.addField = function(node, _options) {
 				case "name"			: field_name			= _options[_argument]; break;
 				case "value"		: field_value			= _options[_argument]; break;
 				case "class"		: field_class			= _options[_argument]; break;
+				case "max"			: field_maxlength		= _options[_argument]; break;
 			}
 		}
 	}
@@ -6336,7 +6338,7 @@ u.f.addField = function(node, _options) {
 	var field = u.ae(node, "div", {"class":"field "+field_type+" "+field_class});
 	if(field_type == "string") {
 		var label = u.ae(field, "label", {"for":input_id, "html":field_label});
-		var input = u.ae(field, "input", {"id":input_id, "value":field_value, "name":field_name, "type":"text"});
+		var input = u.ae(field, "input", {"id":input_id, "value":field_value, "name":field_name, "type":"text", "maxlength":field_maxlength});
 	}
 	else if(field_type == "email" || field_type == "number" || field_type == "tel") {
 		var label = u.ae(field, "label", {"for":input_id, "html":field_label});

@@ -4737,96 +4737,13 @@ Util.videoPlayer = function(_options) {
 
 /*u-settings.js*/
 u.site_name = "think.dk";
-u.addCheckmark = function(node) {
-	node.checkmark = u.svg({
-		"name":"checkmark",
-		"node":node,
-		"class":"checkmark",
-		"title":node.readstate ? ("Læst "+u.date("Y-m-d", node.readstate)) : false,
-		"width":17,
-		"height":17,
-		"shapes":[
-			{
-				"type": "line",
-				"x1": 2,
-				"y1": 8,
-				"x2": 7,
-				"y2": 15
-			},
-			{
-				"type": "line",
-				"x1": 6,
-				"y1": 15,
-				"x2": 12,
-				"y2": 2
-			}
-		]
-	});
-}
-u.removeCheckmark = function(node) {
-	if(node.checkmark) {
-		node.checkmark.parentNode.removeChild(node.checkmark);
-		node.checkmark = false;
-	}
-}
-u.addExpandArrow = function(node) {
-	if(node.collapsearrow) {
-		node.collapsearrow.parentNode.removeChild(node.collapsearrow);
-		node.collapsearrow = false;
-	}
-	node.expandarrow = u.svg({
-		"name":"expandarrow",
-		"node":node,
-		"class":"arrow",
-		"width":17,
-		"height":17,
-		"shapes":[
-			{
-				"type": "line",
-				"x1": 2,
-				"y1": 2,
-				"x2": 7,
-				"y2": 9
-			},
-			{
-				"type": "line",
-				"x1": 6,
-				"y1": 9,
-				"x2": 11,
-				"y2": 2
-			}
-		]
-	});
-}
-u.addCollapseArrow = function(node) {
-	if(node.expandarrow) {
-		node.expandarrow.parentNode.removeChild(node.expandarrow);
-		node.expandarrow = false;
-	}
-	node.collapsearrow = u.svg({
-		"name":"collapsearrow",
-		"node":node,
-		"class":"arrow",
-		"width":17,
-		"height":17,
-		"shapes":[
-			{
-				"type": "line",
-				"x1": 2,
-				"y1": 9,
-				"x2": 7,
-				"y2": 2
-			},
-			{
-				"type": "line",
-				"x1": 6,
-				"y1": 2,
-				"x2": 11,
-				"y2": 9
-			}
-		]
-	});
-}
+u.txt = {};
+u.txt["share"] = "Del artiklen";
+u.txt["not_read"] = "Klik på <em>Tjek</em>-ikonet når du har læst et emne, så husker vi det for dig.";
+u.txt["read"] = "Læst";
+u.txt["add_comment"] = "Tilføj kommentar";
+u.txt["comment"] = "Kommentar";
+u.txt["cancel"] = "Fortryd";
 
 /*ga.js*/
 u.ga_account = 'UA-10756281-1';
@@ -4867,38 +4784,112 @@ if(u.ga_account) {
 
 
 /*beta-u-animation-to.js*/
+	u.a.parseSVGPolygon = function(value) {
+		var pairs = value.trim().split(" ");
+		var sets = [];
+		for(x in pairs) {
+			parts = pairs[x].trim().split(",");
+			for(part in parts) {
+				parts[part] = Number(parts[part]);
+			}
+			sets[x] = parts;
+		}
+		return sets;
+	}
+	u.a.parseSVGPath = function(value) {
+		var pairs = {"m":2, "l":2, "a":7, "c":6, "s":4, "q":4, "z":0};
+		value = value.replace(/-/g, " -");
+		value = value.replace(/,/g, " ");
+		value = value.replace(/(m|l|a|c|s|q|M|L|A|C|S|Q)/g, " $1 ");
+		value = value.replace(/  /g, " ");
+		sets = value.match(/(m|l|a|c|s|q|M|L|A|C|S|Q)([0-9 \-\.]+)/g);
+		for(x in sets) {
+			parts = sets[x].trim().split(" ");
+			sets[x] = parts;
+			if(parts && pairs[parts[0].toLowerCase()] == parts.length-1) {
+			}
+			else {
+			}
+		}
+		return sets;
+	}
 	u.a.getInitialValue = function(node, attribute) {
 		var value = (node.getAttribute(attribute) ? node.getAttribute(attribute) : u.gcs(node, attribute)).replace(node._unit[attribute], "")
-		return Number(value.replace(/auto/, 0));
+		if(attribute.match(/^(d|points)$/)) {
+			return value;
+		}
+		else {
+			return Number(value.replace(/auto/, 0));
+		}
 	}
 	u.a.to = function(node, transition, attributes) {
-		var duration = transition.match(/[0-9.]+[ms]+/g);
-		if(duration) {
-			node.duration = duration[0].match("ms") ? parseFloat(duration[0]) : (parseFloat(duration[0]) * 1000);
+		var transition_parts = transition.split(" ");
+		if(transition_parts.length >= 3) {
+			node._target = transition_parts[0];
+			node.duration = transition_parts[1].match("ms") ? parseFloat(transition_parts[1]) : (parseFloat(transition_parts[1]) * 1000);
+			node._ease = transition_parts[2];
+			if(transition_parts.length == 4) {
+				node.delay = transition_parts[3].match("ms") ? parseFloat(transition_parts[3]) : (parseFloat(transition_parts[3]) * 1000);
+			}
 		}
+		var value, d;
 		node._start = {};
 		node._end = {};
 		node._unit = {};
 		for(attribute in attributes) {
-			node._unit[attribute] = attributes[attribute].toString().match(/\%|px/);
-			node._start[attribute] = Number(this.getInitialValue(node, attribute));
-			node._end[attribute] = attributes[attribute].toString().replace(node._unit[attribute], "");
+			if(attribute.match(/^(d)$/)) {
+				node._start[attribute] = this.parseSVGPath(this.getInitialValue(node, attribute));
+				node._end[attribute] = this.parseSVGPath(attributes[attribute]);
+			}
+			else if(attribute.match(/^(points)$/)) {
+				node._start[attribute] = this.parseSVGPolygon(this.getInitialValue(node, attribute));
+				node._end[attribute] = this.parseSVGPolygon(attributes[attribute]);
+			}
+			else {
+				node._unit[attribute] = attributes[attribute].toString().match(/\%|px/);
+				node._start[attribute] = this.getInitialValue(node, attribute);
+				node._end[attribute] = attributes[attribute].toString().replace(node._unit[attribute], "");
+			}
 		}
+		node.easing = u.easings[node._ease];
 		node.transitionTo = function(progress) {
+			var easing = node.easing(progress);
 			for(attribute in attributes) {
-				if(attribute.match(/translate|rotate|scale/)) {
+				if(attribute.match(/^(translate|rotate|scale)$/)) {
 					if(attribute == "translate") {
-						u.a.translate(this, Math.round((this._end_x - this._start_x) * progress), Math.round((this._end_y - this._start_y) * progress))
+						u.a.translate(this, Math.round((this._end_x - this._start_x) * easing), Math.round((this._end_y - this._start_y) * easing))
 					}
 					else if(attribute == "rotate") {
 					}
 				}
-				else if(attribute.match(/x1|y1|x2|y2|r|cx|cy/)) {
-					var new_value = (this._start[attribute] + ((this._end[attribute] - this._start[attribute]) * progress)) +  this._unit[attribute]
+				else if(attribute.match(/^(x1|y1|x2|y2|r|cx|cy|stroke-width)$/)) {
+					var new_value = (this._start[attribute] + ((this._end[attribute] - this._start[attribute]) * easing)) +  this._unit[attribute]
+					this.setAttribute(attribute, new_value);
+				}
+				else if(attribute.match(/^(d)$/)) {
+					var new_value = "";
+					for(x in this._start[attribute]) {
+						for(y in this._start[attribute][x]) {
+							if(parseFloat(this._start[attribute][x][y]) == this._start[attribute][x][y]) {
+								new_value += (Number(this._start[attribute][x][y]) + ((Number(this._end[attribute][x][y]) - Number(this._start[attribute][x][y])) * easing)) + " ";
+							}
+							else {
+								new_value += this._end[attribute][x][y] + " ";
+							}
+						}
+					}
+					this.setAttribute(attribute, new_value);
+				}
+				else if(attribute.match(/^(points)$/)) {
+					var new_value = "";
+					for(x in this._start[attribute]) {
+						new_value += (this._start[attribute][x][0] + ((this._end[attribute][x][0] - this._start[attribute][x][0]) * easing)) + ",";
+						new_value += (this._start[attribute][x][1] + ((this._end[attribute][x][1] - this._start[attribute][x][1]) * easing)) + " ";
+					}
 					this.setAttribute(attribute, new_value);
 				}
 				else {
-					var new_value = (this._start[attribute] + ((this._end[attribute] - this._start[attribute]) * progress)) +  this._unit[attribute]
+					var new_value = (this._start[attribute] + ((this._end[attribute] - this._start[attribute]) * easing)) +  this._unit[attribute]
 					u.as(node, attribute, new_value, false);
 				}
 			}
@@ -4979,157 +4970,6 @@ u.fontsReady = function(node, fonts, _options) {
 	}
 	window["_man_fonts_"+loadkey].checkfonts();
 }
-
-/*u-form-builder.js*/
-u.f.addForm = function(node, _options) {
-	var form_name = "js_form";
-	var form_action = "#";
-	var form_method = "post";
-	var form_class = "";
-	if(typeof(_options) == "object") {
-		var _argument;
-		for(_argument in _options) {
-			switch(_argument) {
-				case "name"			: form_name				= _options[_argument]; break;
-				case "action"		: form_action			= _options[_argument]; break;
-				case "method"		: form_method			= _options[_argument]; break;
-				case "class"		: form_class			= _options[_argument]; break;
-			}
-		}
-	}
-	var form = u.ae(node, "form", {"class":form_class, "name": form_name, "action":form_action, "method":form_method});
-	return form;
-}
-u.f.addFieldset = function(node) {
-	return u.ae(node, "fieldset");
-}
-u.f.addField = function(node, _options) {
-	var field_type = "string";
-	var field_label = "Value";
-	var field_name = "js_name";
-	var field_value = "";
-	var field_class = "";
-	if(typeof(_options) == "object") {
-		var _argument;
-		for(_argument in _options) {
-			switch(_argument) {
-				case "type"			: field_type			= _options[_argument]; break;
-				case "label"		: field_label			= _options[_argument]; break;
-				case "name"			: field_name			= _options[_argument]; break;
-				case "value"		: field_value			= _options[_argument]; break;
-				case "class"		: field_class			= _options[_argument]; break;
-			}
-		}
-	}
-	var input_id = "input_"+field_type+"_"+field_name;
-	var field = u.ae(node, "div", {"class":"field "+field_type+" "+field_class});
-	if(field_type == "string") {
-		var label = u.ae(field, "label", {"for":input_id, "html":field_label});
-		var input = u.ae(field, "input", {"id":input_id, "value":field_value, "name":field_name, "type":"text"});
-	}
-	else if(field_type == "email" || field_type == "number" || field_type == "tel") {
-		var label = u.ae(field, "label", {"for":input_id, "html":field_label});
-		var input = u.ae(field, "input", {"id":input_id, "value":field_value, "name":field_name, "type":field_type});
-	}
-	else if(field_type == "checkbox") {
-		var input = u.ae(field, "input", {"id":input_id, "value":"true", "name":field_name, "type":field_type});
-		var label = u.ae(field, "label", {"for":input_id, "html":field_label});
-	}
-	else if(field_type == "text") {
-		var label = u.ae(field, "label", {"for":input_id, "html":field_label});
-		var input = u.ae(field, "textarea", {"id":input_id, "html":field_value, "name":field_name});
-	}
-	else if(field_type == "select") {
-		u.bug("Select not implemented yet")
-	}
-	else {
-		u.bug("input type not implemented yet")
-	}
-	return field;
-}
-u.f.addAction = function(node, _options) {
-	var action_type = "submit";
-	var action_name = "js_name";
-	var action_value = "";
-	var action_class = "";
-	if(typeof(_options) == "object") {
-		var _argument;
-		for(_argument in _options) {
-			switch(_argument) {
-				case "type"			: action_type			= _options[_argument]; break;
-				case "name"			: action_name			= _options[_argument]; break;
-				case "value"		: action_value			= _options[_argument]; break;
-				case "class"		: action_class			= _options[_argument]; break;
-			}
-		}
-	}
-	var p_ul = node.nodeName.toLowerCase() == "ul" ? node : u.pn(node, {"include":"ul"});
-	if(!p_ul || !u.hc(p_ul, "actions")) {
-		p_ul = u.ae(node, "ul", {"class":"actions"});
-	}
-	var p_li = node.nodeName.toLowerCase() == "li" ? node : u.pn(node, {"include":"li"});
-	if(!p_li || p_ul != p_li.parentNode) {
-		p_li = u.ae(p_ul, "li", {"class":action_name});
-	}
-	else {
-		p_li = node;
-	}
-	var action = u.ae(p_li, "input", {"type":action_type, "class":action_class, "value":action_value, "name":action_name})
-	return action;
-}
-
-
-/*u-svg.js*/
-Util.svg = function(svg_object) {
-	var svg, shape, svg_shape;
-	if(svg_object.name && u._svg_cache && u._svg_cache[svg_object.name]) {
-		svg = u._svg_cache[svg_object.name].cloneNode(true);
-	}
-	if(!svg) {
-		svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-		if(svg_object.title) {
-			svg.setAttributeNS(null, "title", svg_object.title);
-		}
-		if(svg_object.class) {
-			svg.setAttributeNS(null, "class", svg_object.class);
-		}
-		if(svg_object.width) {
-			svg.setAttributeNS(null, "width", svg_object.width);
-		}
-		if(svg_object.height) {
-			svg.setAttributeNS(null, "height", svg_object.height);
-		}
-		if(svg_object.id) {
-			svg.setAttributeNS(null, "id", svg_object.id);
-		}
-		if(svg_object.node) {
-			svg.node = svg_object.node;
-		}
-		for(shape in svg_object.shapes) {
-			Util.svgShape(svg, svg_object.shapes[shape]);
-		}
-		if(svg_object.name) {
-			if(!u._svg_cache) {
-				u._svg_cache = {};
-			}
-			u._svg_cache[svg_object.name] = svg.cloneNode(true);
-		}
-	}
-	if(svg_object.node) {
-		svg_object.node.appendChild(svg);
-	}
-	return svg;
-}
-Util.svgShape = function(svg, svg_object) {
-	svg_shape = document.createElementNS("http://www.w3.org/2000/svg", svg_object["type"]);
-	svg_object["type"] = null;
-	delete svg_object["type"];
-	for(detail in svg_object) {
-		svg_shape.setAttributeNS(null, detail, svg_object[detail]);
-	}
-	return svg.appendChild(svg_shape);
-}
-
 
 /*u-textscaler.js*/
 u.textscaler = function(node, _settings) {
@@ -5277,10 +5117,164 @@ u.textscaler = function(node, _settings) {
 	node.scaleText();
 }
 
+/*u-svg.js*/
+Util.svg = function(svg_object) {
+	var svg, shape, svg_shape;
+	if(svg_object.name && u._svg_cache && u._svg_cache[svg_object.name]) {
+		svg = u._svg_cache[svg_object.name].cloneNode(true);
+	}
+	if(!svg) {
+		svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+		if(svg_object.title) {
+			svg.setAttributeNS(null, "title", svg_object.title);
+		}
+		if(svg_object.class) {
+			svg.setAttributeNS(null, "class", svg_object.class);
+		}
+		if(svg_object.width) {
+			svg.setAttributeNS(null, "width", svg_object.width);
+		}
+		if(svg_object.height) {
+			svg.setAttributeNS(null, "height", svg_object.height);
+		}
+		if(svg_object.id) {
+			svg.setAttributeNS(null, "id", svg_object.id);
+		}
+		if(svg_object.node) {
+			svg.node = svg_object.node;
+		}
+		for(shape in svg_object.shapes) {
+			Util.svgShape(svg, svg_object.shapes[shape]);
+		}
+		if(svg_object.name) {
+			if(!u._svg_cache) {
+				u._svg_cache = {};
+			}
+			u._svg_cache[svg_object.name] = svg.cloneNode(true);
+		}
+	}
+	if(svg_object.node) {
+		svg_object.node.appendChild(svg);
+	}
+	return svg;
+}
+Util.svgShape = function(svg, svg_object) {
+	svg_shape = document.createElementNS("http://www.w3.org/2000/svg", svg_object["type"]);
+	svg_object["type"] = null;
+	delete svg_object["type"];
+	for(detail in svg_object) {
+		svg_shape.setAttributeNS(null, detail, svg_object[detail]);
+	}
+	return svg.appendChild(svg_shape);
+}
+
+
+/*u-form-builder.js*/
+u.f.addForm = function(node, _options) {
+	var form_name = "js_form";
+	var form_action = "#";
+	var form_method = "post";
+	var form_class = "";
+	if(typeof(_options) == "object") {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "name"			: form_name				= _options[_argument]; break;
+				case "action"		: form_action			= _options[_argument]; break;
+				case "method"		: form_method			= _options[_argument]; break;
+				case "class"		: form_class			= _options[_argument]; break;
+			}
+		}
+	}
+	var form = u.ae(node, "form", {"class":form_class, "name": form_name, "action":form_action, "method":form_method});
+	return form;
+}
+u.f.addFieldset = function(node) {
+	return u.ae(node, "fieldset");
+}
+u.f.addField = function(node, _options) {
+	var field_type = "string";
+	var field_label = "Value";
+	var field_name = "js_name";
+	var field_value = "";
+	var field_class = "";
+	var field_maxlength = "";
+	if(typeof(_options) == "object") {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "type"			: field_type			= _options[_argument]; break;
+				case "label"		: field_label			= _options[_argument]; break;
+				case "name"			: field_name			= _options[_argument]; break;
+				case "value"		: field_value			= _options[_argument]; break;
+				case "class"		: field_class			= _options[_argument]; break;
+				case "max"			: field_maxlength		= _options[_argument]; break;
+			}
+		}
+	}
+	var input_id = "input_"+field_type+"_"+field_name;
+	var field = u.ae(node, "div", {"class":"field "+field_type+" "+field_class});
+	if(field_type == "string") {
+		var label = u.ae(field, "label", {"for":input_id, "html":field_label});
+		var input = u.ae(field, "input", {"id":input_id, "value":field_value, "name":field_name, "type":"text", "maxlength":field_maxlength});
+	}
+	else if(field_type == "email" || field_type == "number" || field_type == "tel") {
+		var label = u.ae(field, "label", {"for":input_id, "html":field_label});
+		var input = u.ae(field, "input", {"id":input_id, "value":field_value, "name":field_name, "type":field_type});
+	}
+	else if(field_type == "checkbox") {
+		var input = u.ae(field, "input", {"id":input_id, "value":"true", "name":field_name, "type":field_type});
+		var label = u.ae(field, "label", {"for":input_id, "html":field_label});
+	}
+	else if(field_type == "text") {
+		var label = u.ae(field, "label", {"for":input_id, "html":field_label});
+		var input = u.ae(field, "textarea", {"id":input_id, "html":field_value, "name":field_name});
+	}
+	else if(field_type == "select") {
+		u.bug("Select not implemented yet")
+	}
+	else {
+		u.bug("input type not implemented yet")
+	}
+	return field;
+}
+u.f.addAction = function(node, _options) {
+	var action_type = "submit";
+	var action_name = "js_name";
+	var action_value = "";
+	var action_class = "";
+	if(typeof(_options) == "object") {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "type"			: action_type			= _options[_argument]; break;
+				case "name"			: action_name			= _options[_argument]; break;
+				case "value"		: action_value			= _options[_argument]; break;
+				case "class"		: action_class			= _options[_argument]; break;
+			}
+		}
+	}
+	var p_ul = node.nodeName.toLowerCase() == "ul" ? node : u.pn(node, {"include":"ul"});
+	if(!p_ul || !u.hc(p_ul, "actions")) {
+		p_ul = u.ae(node, "ul", {"class":"actions"});
+	}
+	var p_li = node.nodeName.toLowerCase() == "li" ? node : u.pn(node, {"include":"li"});
+	if(!p_li || p_ul != p_li.parentNode) {
+		p_li = u.ae(p_ul, "li", {"class":action_name});
+	}
+	else {
+		p_li = node;
+	}
+	var action = u.ae(p_li, "input", {"type":action_type, "class":action_class, "value":action_value, "name":action_name})
+	return action;
+}
+
+
 /*i-page-desktop.js*/
 u.bug_console_only = true;
 Util.Objects["page"] = new function() {
 	this.init = function(page) {
+			window.page = page;
 			page.style_tag = document.createElement("style");
 			page.style_tag.setAttribute("media", "all")
 			page.style_tag.setAttribute("type", "text/css")
@@ -5306,6 +5300,10 @@ Util.Objects["page"] = new function() {
 			page.logo.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
 			page.style_tag.sheet.insertRule("#header a.logo {}", 0);
 			page.logo.css_rule = page.style_tag.sheet.cssRules[0];
+			if(u.github_fork) {
+				var github = u.ae(page.hN.service, "li", {"html":'<a href="'+u.github_fork.url+'">'+u.github_fork.text+'</a>', "class":"github"});
+				u.ce(github, {"type":"link"});
+			}
 			page.resized = function() {
 				u.bug("page resized")
 				page.browser_h = u.browserH();
@@ -5436,6 +5434,7 @@ Util.Objects["login"] = new function() {
 		scene.ready = function() {
 			this._form = u.qs("form", this);
 			u.f.init(this._form);
+			this._form.fields["username"].focus();
 			page.cN.scene = this;
 			page.resized();
 		}
@@ -5480,6 +5479,417 @@ Util.Objects["newsletter"] = new function() {
 	}
 }
 
+
+/*i-readstate-desktop.js*/
+Util.Objects["readstate"] = new function() {
+	this.init = function(node) {
+		node.csrf_token = node.getAttribute("data-csrf-token");
+		node.readstate = node.getAttribute("data-readstate");
+		node.update_readstate_url = node.getAttribute("data-readstate-update");
+		node.delete_readstate_url = node.getAttribute("data-readstate-delete");
+		node._not_read = u.txt["not_read"]; 
+		node._read = u.txt["read"];
+		node.parent_li = u.pn(node, {"include":"li"});
+		if(node.update_readstate_url && node.delete_readstate_url && node.csrf_token) {
+			node.div = u.ae(node, "div");
+			if(node.readstate) {
+				u.ac(node, "is_read");
+				node.text = u.ae(node.div, "p", {"html":node._read + " " + u.date("Y-m-d", node.readstate)});
+			}
+			else {
+				node.text = u.ae(node.div, "p", {"html":node._not_read});
+			}
+			u.addCheckmark(node.div);
+			node.div.node = node;
+			u.ce(node.div);
+			node.div.clicked = function() {
+				if(this.node.readstate) {
+					this.response = function(response) {
+						if(response.cms_status == "success" && response.cms_object) {
+							u.rc(this.node, "is_read");
+							this.node.readstate = false;
+							this.node.text.innerHTML = this.node._not_read;
+							this.checkmark.setAttribute("title", "");
+							if(this.node.parent_li) {
+								u.removeCheckmark(this.node.parent_li);
+							}
+						}
+					}
+					u.request(this, this.node.delete_readstate_url, {"method":"post", "params":"csrf-token="+this.node.csrf_token});
+				}
+				else {
+					this.response = function(response) {
+						if(response.cms_status == "success" && response.cms_object) {
+							u.ac(this.node, "is_read");
+							this.node.readstate = true;
+							this.node.text.innerHTML = this.node._read + " " + u.date("Y-m-d", new Date().getTime());
+							if(this.node.parent_li) {
+								u.addCheckmark(this.node.parent_li);
+							}
+						}
+					}
+					u.request(this, this.node.update_readstate_url, {"method":"post", "params":"csrf-token="+this.node.csrf_token});
+				}
+			}
+		}
+	}
+}
+
+/*i-comments-desktop.js*/
+Util.Objects["comments"] = new function() {
+	this.init = function(div) {
+		div.item_id = u.cv(div, "item_id");
+		div.list = u.qs("ul.comments", div);
+		div.comments = u.qsa("li.comment", div.list);
+		div.header = u.qs("h2", div);
+		div.header.div = div;
+		u.addExpandArrow(div.header);
+		u.ce(div.header);
+		div.header.clicked = function() {
+			if(u.hc(this.div, "open")) {
+				u.rc(this.div, "open");
+				u.addExpandArrow(this);
+			}
+			else {
+				u.ac(this.div, "open");
+				u.addCollapseArrow(this);
+			}
+		}
+		div.initComment = function(node) {
+			node.div = this;
+		}
+		div.csrf_token = div.getAttribute("data-csrf-token");
+		div.add_comment_url = div.getAttribute("data-comment-add");
+		if(div.add_comment_url && div.csrf_token) {
+			div.actions = u.ae(div, "ul", {"class":"actions"});
+			div.bn_comment = u.ae(u.ae(div.actions, "li", {"class":"add"}), "a", {"html":u.txt["add_comment"], "class":"button primary comment"});
+			div.bn_comment.div = div;
+			u.ce(div.bn_comment);
+			div.bn_comment.clicked = function() {
+				var actions, bn_add, bn_cancel;
+				u.as(this.div.actions, "display", "none");
+				this.div.form = u.f.addForm(this.div, {"action":this.div.add_comment_url+"/"+this.div.item_id, "class":"add labelstyle:inject"});
+				this.div.form.div = div;
+				u.ae(this.div.form, "input", {"type":"hidden","name":"csrf-token", "value":this.div.csrf_token});
+				u.f.addField(this.div.form, {"type":"text", "name":"comment", "label":u.txt["comment"]});
+				actions = u.ae(this.div.form, "ul", {"class":"actions"});
+				bn_add = u.f.addAction(actions, {"value":u.txt["add_comment"], "class":"button primary update", "name":"add"});
+				bn_add.div = div;
+				bn_cancel = u.f.addAction(actions, {"value":u.txt["cancel"], "class":"button cancel", "type":"button", "name":"cancel"});
+				bn_cancel.div = div;
+				u.f.init(this.div.form);
+				this.div.form.submitted = function() {
+					this.response = function(response) {
+						if(response.cms_status == "success" && response.cms_object) {
+							if(!div.list) {
+								var p = u.qs("p", div);
+								if(p) {
+									p.parentNode.removeChild(p);
+								}
+								div.list = u.ie(div, "ul", {"class":"comments"});
+								div.insertBefore(div.list, div.actions);
+							}
+							var comment_li = u.ae(this.div.list, "li", {"class":"comment comment_id:"+response.cms_object["id"]});
+							var info = u.ae(comment_li, "ul", {"class":"info"});
+							u.ae(info, "li", {"class":"user", "html":response.cms_object["nickname"]});
+							u.ae(info, "li", {"class":"created_at", "html":response.cms_object["created_at"]});
+							u.ae(comment_li, "p", {"class":"comment", "html":response.cms_object["comment"]})
+							this.div.initComment(comment_li);
+							this.parentNode.removeChild(this);
+							u.as(this.div.actions, "display", "");
+						}
+					}
+					u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
+				}
+				u.ce(bn_cancel);
+				bn_cancel.clicked = function(event) {
+					u.e.kill(event);
+					this.div.form.parentNode.removeChild(this.div.form);
+					u.as(this.div.actions, "display", "");
+				}
+			}
+		}
+		var i, node;
+		for(i = 0; node = div.comments[i]; i++) {
+			div.initComment(node);
+		}
+	}
+}
+
+/*u-sharing-desktop.js*/
+u.injectSharing = function(node) {
+	u.bug("sharing")
+	node.sharing = u.ae(node, "div", {"class":"sharing"});
+	node.h3_share = u.ae(node.sharing, "h3", {"html":u.txt["share"]})
+	node.p_share = u.ae(node.sharing, "p", {"html":node.hardlink})
+	u.e.click(node.p_share);
+	node.p_share.clicked = function() {
+		u.selectText(this);
+	}
+	node.sharing.svg = u.svg({
+		"node":node.sharing,
+		"class":"sharing",
+		"width":500,
+		"height":300,
+		"shapes":[
+			{
+				"type": "line",
+				"class": "primary",
+				"x1": 6,
+				"y1": 150,
+				"x2": 22,
+				"y2": 150
+			},
+			{
+				"type": "circle",
+				"class": "primary",
+				"cx": 6,
+				"cy": 150,
+				"r": 5
+			},
+			{
+				"type": "circle",
+				"class": "primary",
+				"cx": 22,
+				"cy": 150,
+				"r": 3
+			}
+		]
+	});
+	node.sharing.svg.drawings = 0;
+	node.sharing.drawCircle = function(svg, cx, cy) {
+		var circle = u.svgShape(svg, {
+			"type": "circle",
+			"cx": cx,
+			"cy": cy,
+			"r":  1,
+		});
+		circle.svg = svg;
+		var new_radius = u.random(2, 5);
+		circle.transitioned = svg._circle_transitioned;
+		u.a.to(circle, "all 100ms linear", {"r":new_radius});
+		return circle;
+	}
+	node.sharing.drawLine = function(svg, x1, y1, x2, y2) {
+		x2 = x2 ? x2 : (x1 + u.random(30, 50));
+		if(!y2) {
+			if(y1 < 150) {
+				y2 = y1 + u.random(-50, 30);
+			}
+			else {
+				y2 = y1 + u.random(-30, 50);
+			}
+		}
+		if(x2 < 490 && y2 > 10 && y2 < 290 && (x2 < 70 || x2 > 450 || (y2 < 130 && y1 < 130) || (y2 > 170 && y1 > 170))) {
+			var line = u.svgShape(svg, {
+				"type": "line",
+				"x1": x1,
+				"y1": y1,
+				"x2": x1,
+				"y2": y1
+			});
+			u.ie(svg, line);
+			line.svg = svg;
+			line.transitioned = svg._line_transitioned;
+			u.a.to(line, "all 150ms linear", {"x2": x2, "y2": y2});
+			return line;
+		}
+		return false;
+	}
+	node.sharing.svg._line_transitioned = function() {
+		this.transitioned = null;
+		if(!this.svg.hide) {
+			var key = u.randomString(4);
+			var cx = Number(this.getAttribute("x2"));
+			var cy = Number(this.getAttribute("y2"));
+			var circle = this.svg.node.drawCircle(this.svg, cx, cy);
+			circle.id = key;
+		}
+	}
+	node.sharing.svg._circle_transitioned = function() {
+		this.transitioned = null;
+		if(!this.svg.hide) {
+			this.svg.drawings++;
+			if(this.svg.drawings < 50) {
+				var x1 = Number(this.getAttribute("cx"));
+				var y1 = Number(this.getAttribute("cy"));
+				var r = Number(this.getAttribute("r"));
+				var line, i;
+				if(r >= 5 && this.svg.drawings < 6) {
+					line = this.svg.node.drawLine(this.svg, x1, y1, x1 + u.random(30, 60), y1 + u.random(-40, -60));
+					line = this.svg.node.drawLine(this.svg, x1, y1, x1 + u.random(50, 60), y1 + u.random(-20, 20));
+					line = this.svg.node.drawLine(this.svg, x1, y1, x1 + u.random(30, 60), y1 + u.random(40, 60));
+				}
+				else if(r >= 4) {
+					line = this.svg.node.drawLine(this.svg, x1, y1, x1 + u.random(20, 70), y1 + u.random(-15, -40));
+					line = this.svg.node.drawLine(this.svg, x1, y1, x1 + u.random(20, 70), y1 + u.random(15, 40));
+				}
+				else if(r >= 3 || this.svg.drawings%2 == 1) {
+					line = this.svg.node.drawLine(this.svg, x1, y1, x1 + u.random(30, 60), y1 + u.random(-40, 40));
+				}
+				else {}
+			}
+		}
+	}
+	node.sharing.button = u.svgShape(node.sharing.svg, {
+		"type": "rect",
+		"class": "share",
+		"x": 0,
+		"y": 130,
+		"width": 40,
+		"height": 40,
+		"fill": "transparent"
+	});
+	node.sharing.button._x1 = 22;
+	node.sharing.button._y1 = 150;
+	node.sharing.button.sharing = node.sharing;
+	node.sharing.button.over = function() {
+		u.t.resetTimer(this.t_hide);
+		u.ac(this.sharing, "hover");
+		this.sharing.drawLine(node.sharing.svg, this._x1, this._y1, u.random(this._x1, 70), this._y1 + u.random(-55, -40));
+		this.sharing.drawLine(node.sharing.svg, this._x1, this._y1, u.random(70, 120), this._y1 + u.random(-20, -15));
+		this.sharing.drawLine(node.sharing.svg, this._x1, this._y1, u.random(70, 120), this._y1 + u.random(15, 20));
+		this.sharing.drawLine(node.sharing.svg, this._x1, this._y1, u.random(this._x1, 70), this._y1 + u.random(40, 55));
+	}
+	node.sharing.button.out = function() {
+		var circles = u.qsa("circle:not(.primary)", this.sharing.svg);
+		var lines = u.qsa("line:not(.primary)", this.sharing.svg);
+		var line, circle, i;
+		u.rc(this.sharing, "hover");
+		this.sharing.svg.hide = true;
+		this.sharing.svg.drawings = 0;
+		for(i = 0; circle = circles[i]; i++) {
+			circle.transitioned = function() {
+				this.transitioned = null;
+				this.svg.removeChild(this);
+			}
+			u.a.to(circle, "all 0.15s linear", {"r":0})
+		}
+		for(i = 0; line = lines[i]; i++) {
+			x1 = Number(line.getAttribute("x1"));
+			y1 = Number(line.getAttribute("y1"));
+			x2 = Number(line.getAttribute("x2"));
+			y2 = Number(line.getAttribute("y2"));
+			new_x = x2 - ((x2-x1)/2);
+			if(y1 < y2) {
+				new_y = y2 - ((y2-y1)/2);
+			}
+			else {
+				new_y = y1 - ((y1-y2)/2);
+			}
+			line.transitioned = function() {
+				this.transitioned = null;
+				this.svg.removeChild(this);
+			}
+			u.a.to(line, "all 0.25s linear", {"x1":new_x, "y1":new_y, "x2":new_x, "y2":new_y})
+		}
+		u.t.setTimer(this.sharing.svg, function() {this.hide = false;}, 250)
+	}
+	node.sharing.autohide = function() {
+		u.t.resetTimer(this.button.t_hide);
+		this.button.t_hide = u.t.setTimer(this.button, this.button.out, 500);
+	}
+	u.e.addEvent(node.sharing.button, "mouseover", node.sharing.button.over);
+	u.e.addEvent(node.sharing, "mouseleave", node.sharing.autohide);
+	if(typeof(node.sharingInjected) == "function") {
+		node.sharingInjected();
+	}
+}
+
+
+/*u-checkmark-desktop.js*/
+u.addCheckmark = function(node) {
+	node.checkmark = u.svg({
+		"name":"checkmark",
+		"node":node,
+		"class":"checkmark",
+		"title":node.readstate ? ("Læst "+u.date("Y-m-d", node.readstate)) : false,
+		"width":17,
+		"height":17,
+		"shapes":[
+			{
+				"type": "line",
+				"x1": 2,
+				"y1": 8,
+				"x2": 7,
+				"y2": 15
+			},
+			{
+				"type": "line",
+				"x1": 6,
+				"y1": 15,
+				"x2": 12,
+				"y2": 2
+			}
+		]
+	});
+}
+u.removeCheckmark = function(node) {
+	if(node.checkmark) {
+		node.checkmark.parentNode.removeChild(node.checkmark);
+		node.checkmark = false;
+	}
+}
+
+/*u-expandarrow-desktop.js*/
+u.addExpandArrow = function(node) {
+	if(node.collapsearrow) {
+		node.collapsearrow.parentNode.removeChild(node.collapsearrow);
+		node.collapsearrow = false;
+	}
+	node.expandarrow = u.svg({
+		"name":"expandarrow",
+		"node":node,
+		"class":"arrow",
+		"width":17,
+		"height":17,
+		"shapes":[
+			{
+				"type": "line",
+				"x1": 2,
+				"y1": 2,
+				"x2": 7,
+				"y2": 9
+			},
+			{
+				"type": "line",
+				"x1": 6,
+				"y1": 9,
+				"x2": 11,
+				"y2": 2
+			}
+		]
+	});
+}
+u.addCollapseArrow = function(node) {
+	if(node.expandarrow) {
+		node.expandarrow.parentNode.removeChild(node.expandarrow);
+		node.expandarrow = false;
+	}
+	node.collapsearrow = u.svg({
+		"name":"collapsearrow",
+		"node":node,
+		"class":"arrow",
+		"width":17,
+		"height":17,
+		"shapes":[
+			{
+				"type": "line",
+				"x1": 2,
+				"y1": 9,
+				"x2": 7,
+				"y2": 2
+			},
+			{
+				"type": "line",
+				"x1": 6,
+				"y1": 2,
+				"x2": 11,
+				"y2": 9
+			}
+		]
+	});
+}
 
 /*i-front-desktop.js*/
 Util.Objects["front"] = new function() {
@@ -5931,183 +6341,7 @@ Util.Objects["article"] = new function() {
 				var hardlink = u.qs("dd.hardlink", article);
 				article.hardlink = hardlink ? hardlink.innerHTML : false;
 				if(article.hardlink) {
-					var article_body = u.qs(".articlebody", article);
-					var injection_position = u.ns(article_body);
-					article.sharing = u.ae(article, "div", {"class":"sharing"});
-					if(injection_position) {
-						article.insertBefore(article.sharing, injection_position);
-					}
-					article.h3_share = u.ae(article.sharing, "h3", {"html":"Del artiklen"})
-					article.p_share = u.ae(article.sharing, "p", {"html":article.hardlink})
-					u.e.click(article.p_share);
-					article.p_share.clicked = function() {
-						u.selectText(this);
-					}
-					article.sharing.svg = u.svg({
-						"node":article.sharing,
-						"class":"sharing",
-						"width":500,
-						"height":300,
-						"shapes":[
-							{
-								"type": "line",
-								"class": "primary",
-								"x1": 6,
-								"y1": 150,
-								"x2": 22,
-								"y2": 150
-							},
-							{
-								"type": "circle",
-								"class": "primary",
-								"cx": 6,
-								"cy": 150,
-								"r": 5
-							},
-							{
-								"type": "circle",
-								"class": "primary",
-								"cx": 22,
-								"cy": 150,
-								"r": 3
-							}
-						]
-					});
-					article.sharing.svg.drawings = 0;
-					article.sharing.drawCircle = function(svg, cx, cy) {
-						var circle = u.svgShape(svg, {
-							"type": "circle",
-							"cx": cx,
-							"cy": cy,
-							"r":  1,
-						});
-						circle.svg = svg;
-						var new_radius = u.random(2, 5);
-						circle.transitioned = svg._circle_transitioned;
-						u.a.to(circle, "all linear 100ms", {"r":new_radius});
-						return circle;
-					}
-					article.sharing.drawLine = function(svg, x1, y1, x2, y2) {
-						x2 = x2 ? x2 : (x1 + u.random(30, 50));
-						if(!y2) {
-							if(y1 < 150) {
-								y2 = y1 + u.random(-50, 30);
-							}
-							else {
-								y2 = y1 + u.random(-30, 50);
-							}
-						}
-						if(x2 < 490 && y2 > 10 && y2 < 290 && (x2 < 70 || x2 > 450 || (y2 < 130 && y1 < 130) || (y2 > 170 && y1 > 170))) {
-							var line = u.svgShape(svg, {
-								"type": "line",
-								"x1": x1,
-								"y1": y1,
-								"x2": x1,
-								"y2": y1
-							});
-							u.ie(svg, line);
-							line.svg = svg;
-							line.transitioned = svg._line_transitioned;
-							u.a.to(line, "all linear 150ms", {"x2": x2, "y2": y2});
-							return line;
-						}
-						return false;
-					}
-					article.sharing.svg._line_transitioned = function() {
-						this.transitioned = null;
-						if(!this.svg.hide) {
-							var key = u.randomString(4);
-							var cx = Number(this.getAttribute("x2"));
-							var cy = Number(this.getAttribute("y2"));
-							var circle = this.svg.node.drawCircle(this.svg, cx, cy);
-							circle.id = key;
-						}
-					}
-					article.sharing.svg._circle_transitioned = function() {
-						this.transitioned = null;
-						if(!this.svg.hide) {
-							this.svg.drawings++;
-							if(this.svg.drawings < 50) {
-								var x1 = Number(this.getAttribute("cx"));
-								var y1 = Number(this.getAttribute("cy"));
-								var r = Number(this.getAttribute("r"));
-								var line, i;
-								if(r >= 5 && this.svg.drawings < 6) {
-									line = this.svg.node.drawLine(this.svg, x1, y1, x1 + u.random(30, 60), y1 + u.random(-40, -60));
-									line = this.svg.node.drawLine(this.svg, x1, y1, x1 + u.random(50, 60), y1 + u.random(-20, 20));
-									line = this.svg.node.drawLine(this.svg, x1, y1, x1 + u.random(30, 60), y1 + u.random(40, 60));
-								}
-								else if(r >= 4) {
-									line = this.svg.node.drawLine(this.svg, x1, y1, x1 + u.random(20, 70), y1 + u.random(-15, -40));
-									line = this.svg.node.drawLine(this.svg, x1, y1, x1 + u.random(20, 70), y1 + u.random(15, 40));
-								}
-								else if(r >= 3 || this.svg.drawings%2 == 1) {
-									line = this.svg.node.drawLine(this.svg, x1, y1, x1 + u.random(30, 60), y1 + u.random(-40, 40));
-								}
-								else {}
-							}
-						}
-					}
-					article.sharing.button = u.svgShape(article.sharing.svg, {
-						"type": "rect",
-						"class": "share",
-						"x": 0,
-						"y": 130,
-						"width": 40,
-						"height": 40,
-						"fill": "transparent"
-					});
-					article.sharing.button._x1 = 22;
-					article.sharing.button._y1 = 150;
-					article.sharing.button.sharing = article.sharing;
-					article.sharing.button.over = function() {
-						u.t.resetTimer(this.t_hide);
-						u.ac(this.sharing, "hover");
-						this.sharing.drawLine(article.sharing.svg, this._x1, this._y1, u.random(this._x1, 70), this._y1 + u.random(-55, -40));
-						this.sharing.drawLine(article.sharing.svg, this._x1, this._y1, u.random(70, 120), this._y1 + u.random(-20, -15));
-						this.sharing.drawLine(article.sharing.svg, this._x1, this._y1, u.random(70, 120), this._y1 + u.random(15, 20));
-						this.sharing.drawLine(article.sharing.svg, this._x1, this._y1, u.random(this._x1, 70), this._y1 + u.random(40, 55));
-					}
-					article.sharing.button.out = function() {
-						var circles = u.qsa("circle:not(.primary)", this.sharing.svg);
-						var lines = u.qsa("line:not(.primary)", this.sharing.svg);
-						var line, circle, i;
-						u.rc(this.sharing, "hover");
-						this.sharing.svg.hide = true;
-						this.sharing.svg.drawings = 0;
-						for(i = 0; circle = circles[i]; i++) {
-							circle.transitioned = function() {
-								this.transitioned = null;
-								this.svg.removeChild(this);
-							}
-							u.a.to(circle, "all linear 0.15s", {"r":0})
-						}
-						for(i = 0; line = lines[i]; i++) {
-							x1 = Number(line.getAttribute("x1"));
-							y1 = Number(line.getAttribute("y1"));
-							x2 = Number(line.getAttribute("x2"));
-							y2 = Number(line.getAttribute("y2"));
-							new_x = x2 - ((x2-x1)/2);
-							if(y1 < y2) {
-								new_y = y2 - ((y2-y1)/2);
-							}
-							else {
-								new_y = y1 - ((y1-y2)/2);
-							}
-							line.transitioned = function() {
-								this.transitioned = null;
-								this.svg.removeChild(this);
-							}
-							u.a.to(line, "all linear 0.25s", {"x1":new_x, "y1":new_y, "x2":new_x, "y2":new_y})
-						}
-						u.t.setTimer(this.sharing.svg, function() {this.hide = false;}, 250)
-					}
-					article.sharing.autohide = function() {
-						u.t.resetTimer(this.button.t_hide);
-						this.button.t_hide = u.t.setTimer(this.button, this.button.out, 500);
-					}
-					u.e.addEvent(article.sharing.button, "mouseover", article.sharing.button.over);
-					u.e.addEvent(article.sharing, "mouseleave", article.sharing.autohide);
+					u.injectSharing(article);
 				}
 			}
 			page.cN.scene = this;
@@ -6158,6 +6392,7 @@ Util.Objects["stop"] = new function() {
 					if(u.hc(this.node, "open")) {
 						u.rc(this.node, "open");
 						u.addExpandArrow(this);
+						u.deleteNodeCookie(this.node, "state");
 					}
 					else {
 						u.addCollapseArrow(this);
@@ -6167,7 +6402,11 @@ Util.Objects["stop"] = new function() {
 						else {
 							u.ac(this.node, "open");
 						}
+						u.saveNodeCookie(this.node, "state", "open");
 					}
+				}
+				if(u.getNodeCookie(node, "state") == "open") {
+					node.header.clicked();
 				}
 				node.response = function(response) {
 					this.topic = u.ae(this, u.qs(".scene .topic", response));
@@ -6226,61 +6465,6 @@ Util.Objects["topic"] = new function() {
 	}
 }
 
-/*i-readstate-desktop.js*/
-Util.Objects["readstate"] = new function() {
-	this.init = function(node) {
-		node.csrf_token = node.getAttribute("data-csrf-token");
-		node.readstate = node.getAttribute("data-readstate");
-		node.update_readstate_url = node.getAttribute("data-readstate-update");
-		node.delete_readstate_url = node.getAttribute("data-readstate-delete");
-		node._not_read = "Klik på <em>Tjek</em>-ikonet når du har læst et emne, så husker vi det for dig.";
-		node._read = "Læst";
-		node.parent_li = u.pn(node, {"include":"li"});
-		if(node.update_readstate_url && node.delete_readstate_url && node.csrf_token) {
-			node.div = u.ae(node, "div");
-			if(node.readstate) {
-				u.ac(node, "is_read");
-				node.text = u.ae(node.div, "p", {"html":node._read + " " + u.date("Y-m-d", node.readstate)});
-			}
-			else {
-				node.text = u.ae(node.div, "p", {"html":node._not_read});
-			}
-			u.addCheckmark(node.div);
-			node.div.node = node;
-			u.ce(node.div);
-			node.div.clicked = function() {
-				if(this.node.readstate) {
-					this.response = function(response) {
-						if(response.cms_status == "success" && response.cms_object) {
-							u.rc(this.node, "is_read");
-							this.node.readstate = false;
-							this.node.text.innerHTML = this.node._not_read;
-							this.checkmark.setAttribute("title", "");
-							if(this.node.parent_li) {
-								u.removeCheckmark(this.node.parent_li);
-							}
-						}
-					}
-					u.request(this, this.node.delete_readstate_url, {"method":"post", "params":"csrf-token="+this.node.csrf_token});
-				}
-				else {
-					this.response = function(response) {
-						if(response.cms_status == "success" && response.cms_object) {
-							u.ac(this.node, "is_read");
-							this.node.readstate = true;
-							this.node.text.innerHTML = this.node._read + " " + u.date("Y-m-d", new Date().getTime());
-							if(this.node.parent_li) {
-								u.addCheckmark(this.node.parent_li);
-							}
-						}
-					}
-					u.request(this, this.node.update_readstate_url, {"method":"post", "params":"csrf-token="+this.node.csrf_token});
-				}
-			}
-		}
-	}
-}
-
 /*i-qnas-desktop.js*/
 Util.Objects["qnas"] = new function() {
 	this.init = function(div) {
@@ -6321,7 +6505,7 @@ Util.Objects["qnas"] = new function() {
 				this.div.form.div = div;
 				u.ae(this.div.form, "input", {"type":"hidden","name":"csrf-token", "value":this.div.csrf_token});
 				u.ae(this.div.form, "input", {"type":"hidden","name":"status", "value":"1"});
-				u.f.addField(this.div.form, {"type":"string", "name":"name", "label":"Spørgsmål"});
+				u.f.addField(this.div.form, {"type":"string", "name":"name", "max":15, "label":"Spørgsmål"});
 				actions = u.ae(this.div.form, "ul", {"class":"actions"});
 				bn_add = u.f.addAction(actions, {"value":"Tilføj Spørgsmål", "class":"button primary update", "name":"add"});
 				bn_add.div = div;
@@ -6369,87 +6553,6 @@ Util.Objects["qnas"] = new function() {
 		var i, node;
 		for(i = 0; node = div.qnas[i]; i++) {
 			div.initQna(node);
-		}
-	}
-}
-
-/*i-comments-desktop.js*/
-Util.Objects["comments"] = new function() {
-	this.init = function(div) {
-		div.item_id = u.cv(div, "item_id");
-		div.list = u.qs("ul.comments", div);
-		div.comments = u.qsa("li.comment", div.list);
-		div.header = u.qs("h2", div);
-		div.header.div = div;
-		u.addExpandArrow(div.header);
-		u.ce(div.header);
-		div.header.clicked = function() {
-			if(u.hc(this.div, "open")) {
-				u.rc(this.div, "open");
-				u.addExpandArrow(this);
-			}
-			else {
-				u.ac(this.div, "open");
-				u.addCollapseArrow(this);
-			}
-		}
-		div.initComment = function(node) {
-			node.div = this;
-		}
-		div.csrf_token = div.getAttribute("data-csrf-token");
-		div.add_comment_url = div.getAttribute("data-comment-add");
-		if(div.add_comment_url && div.csrf_token) {
-			div.actions = u.ae(div, "ul", {"class":"actions"});
-			div.bn_comment = u.ae(u.ae(div.actions, "li", {"class":"add"}), "a", {"html":"Tilføj kommentar", "class":"button primary comment"});
-			div.bn_comment.div = div;
-			u.ce(div.bn_comment);
-			div.bn_comment.clicked = function() {
-				var actions, bn_add, bn_cancel;
-				u.as(this.div.actions, "display", "none");
-				this.div.form = u.f.addForm(this.div, {"action":this.div.add_comment_url+"/"+this.div.item_id, "class":"add labelstyle:inject"});
-				this.div.form.div = div;
-				u.ae(this.div.form, "input", {"type":"hidden","name":"csrf-token", "value":this.div.csrf_token});
-				u.f.addField(this.div.form, {"type":"text", "name":"comment", "label":"Kommentar"});
-				actions = u.ae(this.div.form, "ul", {"class":"actions"});
-				bn_add = u.f.addAction(actions, {"value":"Tilføj kommentar", "class":"button primary update", "name":"add"});
-				bn_add.div = div;
-				bn_cancel = u.f.addAction(actions, {"value":"Fortryd", "class":"button cancel", "type":"button", "name":"cancel"});
-				bn_cancel.div = div;
-				u.f.init(this.div.form);
-				this.div.form.submitted = function() {
-					this.response = function(response) {
-						if(response.cms_status == "success" && response.cms_object) {
-							if(!div.list) {
-								var p = u.qs("p", div);
-								if(p) {
-									p.parentNode.removeChild(p);
-								}
-								div.list = u.ie(div, "ul", {"class":"comments"});
-								div.insertBefore(div.list, div.actions);
-							}
-							var comment_li = u.ae(this.div.list, "li", {"class":"comment comment_id:"+response.cms_object["id"]});
-							var info = u.ae(comment_li, "ul", {"class":"info"});
-							u.ae(info, "li", {"class":"user", "html":response.cms_object["nickname"]});
-							u.ae(info, "li", {"class":"created_at", "html":response.cms_object["created_at"]});
-							u.ae(comment_li, "p", {"class":"comment", "html":response.cms_object["comment"]})
-							this.div.initComment(comment_li);
-							this.parentNode.removeChild(this);
-							u.as(this.div.actions, "display", "");
-						}
-					}
-					u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
-				}
-				u.ce(bn_cancel);
-				bn_cancel.clicked = function(event) {
-					u.e.kill(event);
-					this.div.form.parentNode.removeChild(this.div.form);
-					u.as(this.div.actions, "display", "");
-				}
-			}
-		}
-		var i, node;
-		for(i = 0; node = div.comments[i]; i++) {
-			div.initComment(node);
 		}
 	}
 }

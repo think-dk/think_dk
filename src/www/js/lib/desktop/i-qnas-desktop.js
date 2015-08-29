@@ -65,7 +65,7 @@ Util.Objects["qnas"] = new function() {
 
 				u.ae(this.div.form, "input", {"type":"hidden","name":"csrf-token", "value":this.div.csrf_token});
 				u.ae(this.div.form, "input", {"type":"hidden","name":"status", "value":"1"});
-				u.f.addField(this.div.form, {"type":"string", "name":"name", "label":"Spørgsmål"});
+				u.f.addField(this.div.form, {"type":"string", "name":"name", "max":15, "label":"Spørgsmål"});
 //				u.f.addField(this.div.form, {"type":"text", "name":"description", "label":"Beskrivelse"});
 				actions = u.ae(this.div.form, "ul", {"class":"actions"});
 
