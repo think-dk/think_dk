@@ -82,6 +82,7 @@ body.navigation #navigation .navigation a,
 body.shop #navigation .shop a,
 body.tags #navigation .tags a,
 body.user #navigation .user a,
+body.logs #navigation .logs a,
 body.usergroup #navigation .user a {padding-left: 35px; color: #ffffff;}
 
 
@@ -529,6 +530,10 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.profileEdit h1,
 #content .scene.profileContentList h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
 
+
+/*s-logs.css*/
+#content .defaultList.logList h1 {padding-bottom: 74px; border-bottom: 1px solid #bbbbbb;}
+#content .defaultList.logList ul.items > li ul.loglines li {padding: 0 30px; display: block;}
 
 /*s-navigations.css*/
 #content .defaultList.navigationsList ul.items > li h3 {padding-bottom: 16px;}

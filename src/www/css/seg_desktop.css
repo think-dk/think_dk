@@ -557,6 +557,8 @@ body #selection_options ul.actions a.button {background-color: #8c9399; color: #
 #content .scene div.functions .function .body .callbacks dt {width: auto; display: block; text-align: left;}
 #content .scene div.functions .function .body .callbacks dd {width: auto; display: block; padding-left: 20px;}
 #content .scene div.functions .function .body .example {padding: 0 0 20px;}
+#content .scene div.functions .function .body .examples h4 {padding-bottom: 10px;}
+#content .scene div.functions .function .body .example h5 {padding-bottom: 10px; font-size: 13px;}
 #content .scene div.functions .function .body .example p {padding-bottom: 20px;}
 #content .scene div.functions .function .body .uses {overflow: hidden; margin-bottom: 20px; position: relative;}
 #content .scene div.functions .function .body .uses svg {position: absolute; top: 3px; left: 90px; stroke: #999999; stroke-width: 3px;}
