@@ -10,30 +10,48 @@ $IC = new Item();
 
 print '<?xml version="1.0" encoding="UTF-8"?>';
 
-	$items = $IC->getCompleteItem("combined-curated");
 ?>
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
 		<loc>http://think.dk/</loc>
-		<lastmod><?= date("Y-m-d", strtotime($items["modified_at"])) ?></lastmod>
+		<lastmod><?= date("Y-m-d", filemtime(LOCAL_PATH."/templates/pages/about.php")) ?></lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>1</priority>
 	</url>
 <?
 
 
-	// NEWS ITEMS
-	$items = $IC->getItems(array("itemtype" => "news", "status" => 1)); ?>
+	// ARTICLES ITEMS
+	$items = $IC->getItems(array("itemtype" => "article", "status" => 1)); ?>
 	<url>
-		<loc>http://think.dk/journal/</loc>
+		<loc>http://think.dk/articles/</loc>
 		<lastmod><?= date("Y-m-d", strtotime($items[0]["modified_at"])) ?></lastmod>
 		<changefreq>daily</changefreq>
 		<priority>1</priority>
 	</url>
 <? foreach($items as $item): ?>
 	<url>
-		<loc>http://think.dk/article/<?= $item["sindex"] ?></loc>
+		<loc>http://think.dk/articles/<?= $item["sindex"] ?></loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.9</priority>
+	</url>
+<? endforeach; 
+
+
+
+	// ARTICLES ITEMS
+	$items = $IC->getItems(array("itemtype" => "post", "status" => 1)); ?>
+	<url>
+		<loc>http://think.dk/posts/</loc>
+		<lastmod><?= date("Y-m-d", strtotime($items[0]["modified_at"])) ?></lastmod>
+		<changefreq>daily</changefreq>
+		<priority>1</priority>
+	</url>
+<? foreach($items as $item): ?>
+	<url>
+		<loc>http://think.dk/post/<?= $item["sindex"] ?></loc>
 		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>0.9</priority>
@@ -46,31 +64,7 @@ print '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
 	<url>
 		<loc>http://think.dk/about</loc>
-		<lastmod><?= date("Y-m-d", filemtime(LOCAL_PATH."/templates/e-types/about.php")) ?></lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.7</priority>
-	</url>
-	<url>
-		<loc>http://think.dk/competences</loc>
-		<lastmod><?= date("Y-m-d", filemtime(LOCAL_PATH."/templates/e-types/competences.php")) ?></lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.7</priority>
-	</url>
-	<url>
-		<loc>http://think.dk/daily/about</loc>
-		<lastmod><?= date("Y-m-d", filemtime(LOCAL_PATH."/templates/daily/about.php")) ?></lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.7</priority>
-	</url>
-	<url>
-		<loc>http://think.dk/daily/services</loc>
-		<lastmod><?= date("Y-m-d", filemtime(LOCAL_PATH."/templates/daily/services.php")) ?></lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.7</priority>
-	</url>
-	<url>
-		<loc>http://think.dk/playtype</loc>
-		<lastmod><?= date("Y-m-d", filemtime(LOCAL_PATH."/templates/pages/playtype.php")) ?></lastmod>
+		<lastmod><?= date("Y-m-d", filemtime(LOCAL_PATH."/templates/pages/about.php")) ?></lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>0.7</priority>
 	</url>

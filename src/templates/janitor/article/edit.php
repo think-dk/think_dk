@@ -23,6 +23,7 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 				<?= $model->input("subheader", array("value" => $item["subheader"])) ?>
 				<?= $model->input("description", array("class" => "autoexpand short", "value" => $item["description"])) ?>
 				<?= $model->inputHTML("html", array("value" => $item["html"])) ?>
+				<?= $model->input("stop_quote", array("class" => "autoexpand short", "value" => $item["stop_quote"])) ?>
 			</fieldset>
 
 			<?= $JML->editActions($item) ?>

@@ -6,6 +6,7 @@ CREATE TABLE `SITE_DB`.`item_article` (
   `subheader` varchar(100) NOT NULL,
   `description` text NOT NULL,
   `html` text NOT NULL,
+  `stop_quote` text NOT NULL,
 
   `position` int(11) DEFAULT '0',
 

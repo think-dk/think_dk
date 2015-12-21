@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="<?= $this->language() ?>">
 <head>
-	<!-- (c) & (p) parentNode.dk 2009-2015 //-->
+	<!-- (c) & (p) parentNode.dk 2009-2016 //-->
 	<!-- All material protected by copyrightlaws, as if you didnt know //-->
 	<!-- If you want to help build the ultimate frontend-centered platform, visit parentnode.dk -->
 	<title><?= SITE_URL ?> - <?= $this->pageTitle() ?></title>
@@ -11,6 +11,8 @@
 	<meta name="viewport" content="initial-scale=1, user-scalable=no" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+	<?= $this->sharingMetaData() ?>
 
 	<link rel="apple-touch-icon" href="touchicon.png">
 	<link rel="icon" href="favicon.png">
@@ -22,6 +24,8 @@
 	<link type="text/css" rel="stylesheet" media="all" href="/css/seg_<?= $this->segment() ?>.css" />
 	<script type="text/javascript" src="/js/seg_<?= $this->segment() ?>.js"></script>
 <? } ?>
+
+	<?= $this->headerIncludes() ?>
 </head>
 
 <body<?= $HTML->attribute("class", $this->bodyClass()) ?>>

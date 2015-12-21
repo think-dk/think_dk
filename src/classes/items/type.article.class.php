@@ -55,6 +55,13 @@ class TypeArticle extends Itemtype {
 			"allowed_tags" => "p,h2,h3,h4,ul,ol,download,jpg,png,code", //,mp4,vimeo,youtube,code",
 		));
 
+		// Stop Quote
+		$this->addToModel("stop_quote", array(
+			"type" => "text",
+			"label" => "Stop quote",
+			"hint_message" => "How does this relate to Stopknappen"
+		));
+
 		// Files
 		$this->addToModel("mediae", array(
 			"label" => "Add media here",
