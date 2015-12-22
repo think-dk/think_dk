@@ -47,10 +47,10 @@ $related_items = $IC->getRelatedItems($related_pattern);
 <?			if($editing_tag !== false): ?>
 				<li class="editing" title="This post is work in progress"><?= $item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"] ?></li>
 <?			endif; ?>
-				<li><a href="/blog">Posts</a></li>
+				<li><a href="/posts">Posts</a></li>
 <?			foreach($item["tags"] as $tag): ?>
 <?	 			if($tag["context"] == $itemtype): ?>
-			<li itemprop="articleSection"><a href="/blog/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
+			<li itemprop="articleSection"><a href="/posts/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
 <?				endif; ?>
 <?			endforeach; ?>
 <?		endif; ?>
@@ -64,7 +64,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 			<dt class="author">Author</dt>
 			<dd class="author" itemprop="author"><?= $item["user_nickname"] ?></dd>
 			<dt class="hardlink">Hardlink</dt>
-			<dd class="hardlink" itemprop="url"><?= SITE_URL."/blog/".$item["sindex"] ?></dd>
+			<dd class="hardlink" itemprop="url"><?= SITE_URL."/posts/".$item["sindex"] ?></dd>
 		</dl>
 
 		<div class="articlebody" itemprop="articleBody">

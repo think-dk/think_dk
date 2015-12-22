@@ -12,23 +12,19 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" =>
 ?>
 
 <div class="scene posts i:scene">
-	<h1>bLog</h1>
-	<p>
-		Tech stuff all over. It's not really a Blog. <br />You'll figure it out, otherwise read the <a href="http://google.com?q=manual" target="_blank">manual</a>.
-	</p>
+	<h1>News and Posts</h1>
 
 	<div class="categories">
 <?	if($categories): ?>
 		<h2>Categories</h2>
 		<ul class="tags">
 <?		foreach($categories as $tag): ?>
-			<li><a href="/blog/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
+			<li><a href="/posts/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
 <?		endforeach; ?>
 		</ul>
 <?	endif; ?>
 	</div>
 
-	<h2>Posts</h2>
 <?	if($items): ?>
 	<ul class="articles i:articleList">
 <?		foreach($items as $item): ?>
@@ -42,16 +38,16 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" =>
 				if($editing_tag !== false): ?>
 				<li class="editing" title="This post is work in progress"><?= $item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"] ?></li>
 <?				endif; ?>
-				<li><a href="/blog">Posts</a></li>
+				<li><a href="/posts">Posts</a></li>
 <?				foreach($item["tags"] as $item_tag): ?>
 <?	 				if($item_tag["context"] == $itemtype): ?>
-				<li><a href="/blog/tag/<?= urlencode($item_tag["value"]) ?>"><?= $item_tag["value"] ?></a></li>
+				<li><a href="/posts/tag/<?= urlencode($item_tag["value"]) ?>"><?= $item_tag["value"] ?></a></li>
 <?					endif; ?>
 <?				endforeach; ?>
 <?			endif; ?>
 			</ul>
 
-			<h3><a href="/blog/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h3>
+			<h3><a href="/posts/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h3>
 			<p><?= $item["description"] ?></p>
 		</li>
 <?		endforeach; ?>
