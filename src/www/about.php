@@ -13,11 +13,11 @@ $itemtype = "page";
 
 
 $page->bodyClass("about");
-$page->pageTitle("Hvad, Hvem, Hvorfor, Hvordan");
+$page->pageTitle("What, Who, Why");
 
 
 $page->page(array(
-	"templates" => "pages/hvad-er-stopknappen.php"
+	"templates" => "pages/about.php"
 ));
 exit();
 

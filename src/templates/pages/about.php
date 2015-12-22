@@ -2,7 +2,7 @@
 global $itemtype;
 global $IC;
 
-$page = $IC->getItem(array("tags" => "page:om-stopknappen", "extend" => array("tags" => true, "comments" => true, "user" => true)));
+$page = $IC->getItem(array("tags" => "page:about", "extend" => array("tags" => true, "comments" => true, "user" => true)));
 $todo_tag = $IC->getTags(array("item_id" => $page["item_id"], "context" => "todo"));
 
 if($todo_tag) {
