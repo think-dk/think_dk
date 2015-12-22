@@ -140,13 +140,13 @@ $related_items = $IC->getRelatedItems($related_pattern);
 <?					endif; ?>
 <?					foreach($item["tags"] as $tag): ?>
 <?	 					if($tag["context"] == $itemtype): ?>
-					<li itemprop="articleSection"><a href="/blog/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
+					<li itemprop="articleSection"><a href="/posts/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
 <?						endif; ?>
 <?					endforeach; ?>
 				</ul>
 <?				endif; ?>
 
-				<h3><a href="/blog/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h3>
+				<h3><a href="/posts/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h3>
 				<p><?= $item["description"] ?></p>
 
 			</li>

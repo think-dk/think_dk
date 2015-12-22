@@ -18,7 +18,7 @@ $page->pageTitle("Posts");
 
 
 // news list for tags
-// /blog/#sindex#
+// /posts/#sindex#
 if(count($action) == 1) {
 
 	$page->page(array(
@@ -27,8 +27,8 @@ if(count($action) == 1) {
 	exit();
 
 }
-// /blog/tag/#tag#
-// /blog/tag/#tag#/#sindex#/prev|next
+// /posts/tag/#tag#
+// /posts/tag/#tag#/#sindex#/prev|next
 else if(count($action) >= 2 && $action[0] == "tag") {
 
 	$page->page(array(
