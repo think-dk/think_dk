@@ -1,9 +1,7 @@
 
-/*seg_desktop_ie_include.js*/
+/*seg_smartphone_include.js*/
 
-/*seg_desktop_ie_include.js*/
-
-/*seg_desktop_ie.js*/
+/*seg_mobile_touch.js*/
 if(!u || !Util) {
 	var u, Util = u = new function() {};
 	u.version = 0.9;
@@ -4735,4004 +4733,17 @@ Util.videoPlayer = function(_options) {
 	}
 	return player;
 }
-if(u.a.vendor() == "ms") {
-	u.a.transition = function(node, transition) {
-		var duration = transition.match(/[0-9.]+[ms]+/g);
-		if(duration) {
-			node.duration = duration[0].match("ms") ? parseFloat(duration[0]) : (parseFloat(duration[0]) * 1000);
-		}
-		else {
-			node.duration = false;
-			if(transition.match(/none/i)) {
-				node.transitioned = null;
-			}
-		}
-		if(u.support(this.vendor("Transition"))) {
-			node.style[this.vendor("Transition")] = "none";
-		}
-	}
-	u.a.translate = function(node, x, y) {
-		var update_frequency = 25;
-		node._x = node._x ? node._x : 0;
-		node._y = node._y ? node._y : 0;
-		if(node.duration && (node._x != x || node._y != y)) {
-			node.x_start = node._x;
-			node.y_start = node._y;
-			node.translate_transitions = node.duration/update_frequency;
-			node.translate_progress = 0;
-			node.x_change = (x - node.x_start) / node.translate_transitions;
-			node.y_change = (y - node.y_start) / node.translate_transitions;
-			node.translate_transitionTo = function(event) {
-				++this.translate_progress;
-				var new_x = (Number(this.x_start) + Number(this.translate_progress * this.x_change));
-				var new_y = (Number(this.y_start) + Number(this.translate_progress * this.y_change));
-				this.style[u.a.vendor("Transform")] = "translate("+ new_x + "px, " + new_y +"px)";
-				this.offsetHeight;
-				if(this.translate_progress < this.translate_transitions) {
-					this.t_translate_transition = u.t.setTimer(this, this.translate_transitionTo, update_frequency);
-				}
-				else {
-					this.style[u.a.vendor("Transform")] = "translate("+ this._x + "px, " + this._y +"px)";
-					if(typeof(this.transitioned) == "function") {
-						this.transitioned(event);
-					}
-				}
-			}
-			node.translate_transitionTo();
-		}
-		else {
-			node.style[this.vendor("Transform")] = "translate("+ x + "px, " + y +"px)";
-		}
-		node._x = x;
-		node._y = y;
-		node.offsetHeight;
-	}
-	u.a.rotate = function(node, deg) {
-		var update_frequency = 25;
-		node._rotation = node._rotation ? node._rotation : 0;
-		if(node.duration && node._rotation != deg) {
-			node.rotate_start = node._rotation;
-			node.rotate_transitions = node.duration/update_frequency;
-			node.rotate_progress = 0;
-			node.rotate_change = (deg - node.rotate_start) / node.rotate_transitions;
-			node.rotate_transitionTo = function(event) {
-				++this.rotate_progress;
-				var new_deg = (Number(this.rotate_start) + Number(this.rotate_progress * this.rotate_change));
-				this.style["msTransform"] = "rotate("+ new_deg + "deg)";
-				this.offsetHeight;
-				if(this.rotate_progress < this.rotate_transitions) {
-					this.t_rotate_transition = u.t.setTimer(this, this.rotate_transitionTo, update_frequency);
-				}
-				else {
-					this.style[u.a.vendor("Transform")] = "rotate("+ this._rotation + "deg)";
-					if(typeof(this.transitioned) == "function") {
-						this.transitioned(event);
-					}
-				}
-			}
-			node.rotate_transitionTo();
-		}
-		else {
-			node.style[this.vendor("Transform")] = "rotate("+ deg + "deg)";
-		}
-		node._rotation = deg;
-		node.offsetHeight;
-	}
-	u.a.scale = function(node, scale) {
-		var update_frequency = 25;
-		node._scale = node._scale ? node._scale : 0;
-		if(node.duration && node._scale != scale) {
-			node.scale_start = node._scale;
-			node.scale_transitions = node.duration/update_frequency;
-			node.scale_progress = 0;
-			node.scale_change = (scale - node.scale_start) / node.scale_transitions;
-			node.scale_transitionTo = function(event) {
-				++this.scale_progress;
-				var new_scale = (Number(this.scale_start) + Number(this.scale_progress * this.scale_change));
-				this.style[u.a.vendor("Transform")] = "scale("+ new_scale +")";
-				this.offsetHeight;
-				if(this.scale_progress < this.scale_transitions) {
-					this.t_scale_transition = u.t.setTimer(this, this.scale_transitionTo, update_frequency);
-				}
-				else {
-					this.style[u.a.vendor("Transform")] = "scale("+ this._scale +")";
-					if(typeof(this.transitioned) == "function") {
-						this.transitioned(event);
-					}
-				}
-			}
-			node.scale_transitionTo();
-		}
-		else {
-			node.style[this.vendor("Transform")] = "scale("+ scale +")";
-		}
-		node._scale = scale;
-		node.offsetHeight;
-	}
-	u.a.setOpacity = function(node, opacity) {
-		var update_frequency = 25;
-		node._opacity = node._opacity ? node._opacity : u.gcs(node, "opacity");
-		if(node.duration && node._opacity != opacity) {
-			node.opacity_start = node._opacity;
-			node.opacity_transitions = node.duration/update_frequency;
-			node.opacity_change = (opacity - node.opacity_start) / node.opacity_transitions;
-			node.opacity_progress = 0;
-			node.opacity_transitionTo = function(event) {
-				++this.opacity_progress;
-				var new_opacity = (Number(this.opacity_start) + Number(this.opacity_progress * this.opacity_change));
-				u.as(this, "opacity", new_opacity);
-				this.offsetHeight;
-				if(this.opacity_progress < this.opacity_transitions) {
-					this.t_opacity_transition = u.t.setTimer(this, this.opacity_transitionTo, update_frequency);
-				}
-				else {
-					this.style.opacity = this._opacity;
-					if(typeof(this.transitioned) == "function") {
-						this.transitioned(event);
-					}
-				}
-			}
-			node.opacity_transitionTo();
-		}
-		else {
-			node.style.opacity = opacity;
-		}
-		node._opacity = opacity;
-		node.offsetHeight;
-	}
-	u.a.setWidth = function(node, width) {
-		var update_frequency = 25;
-		node._width = node._width ? node._width : u.gcs(node, "width").match("px") ? u.gcs(node, "width").replace("px", "") : 0;
-		if(node.duration && node._width != width) {
-			node.width_start = node._width;
-			node.width_transitions = node.duration/update_frequency;
-			node.width_change = (width - node.width_start) / node.width_transitions;
-			node.width_progress = 0;
-			node.width_transitionTo = function(event) {
-				++this.width_progress;
-				var new_width = (Number(this.width_start) + Number(this.width_progress * this.width_change));
-				u.as(this, "width", new_width+"px");
-				this.offsetHeight;
-				if(this.width_progress < this.width_transitions) {
-					this.t_width_transition = u.t.setTimer(this, this.width_transitionTo, update_frequency);
-				}
-				else {
-					u.as(this, "width", this._width);
-					if(typeof(this.transitioned) == "function") {
-						this.transitioned(event);
-					}
-				}
-			}
-			node.width_transitionTo();
-		}
-		else {
-			var new_width = width.toString().match(/\%|auto/) ? width : width + "px";
-			u.as(node, "width", new_width);
-		}
-		node._width = width;
-		node.offsetHeight;
-	}
-	u.a.setHeight = function(node, height) {
-		var update_frequency = 25;
-		node._height = node._height ? node._height : u.gcs(node, "height").match("px") ? u.gcs(node, "height").replace("px", "") : 0;
-		if(node.duration && node._height != height) {
-			node.height_start = node._height;
-			node.height_transitions = node.duration/update_frequency;
-			node.height_change = (height - node.height_start) / node.height_transitions;
-			node.height_progress = 0;
-			node.height_transitionTo = function(event) {
-				++this.height_progress;
-				var new_height = (Number(this.height_start) + Number(this.height_progress * this.height_change));
-				u.as(this, "height", new_height+"px");
-				this.offsetHeight;
-				if(this.height_progress < this.height_transitions) {
-					this.t_height_transition = u.t.setTimer(this, this.height_transitionTo, update_frequency);
-				}
-				else {
-					u.as(this, "height", this._height);
-					if(typeof(this.transitioned) == "function") {
-						this.transitioned(event);
-					}
-				}
-			}
-			node.height_transitionTo();
-		}
-		else {
-			var new_height = height.toString().match(/\%|auto/) ? height : height + "px";
-			u.as(node, "height", new_height);
-		}
-		node._height = height;
-		node.offsetHeight;
-	}
-	u.a.setBgPos = function(node, x, y) {
-		var update_frequency = 25;
-		var current_bg_x = u.gcs(node, "background-position-x");
-		var current_bg_y = u.gcs(node, "background-position-y");
-		node._bg_x = node._bg_x ? node._bg_x : current_bg_x.match("px") ? current_bg_x.replace("px", "") : x;
-		node._bg_y = node._bg_y ? node._bg_y : current_bg_y.match("px") ? current_bg_y.replace("px", "") : y;
-		if(node.duration && (node._bg_x != x || node._bg_y != y)) {
-			node._bg_same_x = false;
-			node._bg_same_y = false;
-			node.bg_transitions = node.duration/update_frequency;
-			if(node._bg_x != x) {
-				node.bg_start_x = node._bg_x;
-				node.bg_change_x = (x - node.bg_start_x) / node.bg_transitions;
-			}
-			else {
-				node._bg_same_x = true;
-			}
-			if(node._bg_y != y) {
-				node.bg_start_y = node._bg_y;
-				node.bg_change_y = (y - node.bg_start_y) / node.bg_transitions;
-			}
-			else {
-				node._bg_same_y = true;
-			}
-			node.bg_progress = 0;
-			node.bg_transitionTo = function(event) {
-				++this.bg_progress;
-				var new_x, new_y;
-				if(!this._bg_same_x) {
-					new_x = Math.round((Number(this.bg_start_x) + Number(this.bg_progress * this.bg_change_x)));
-				}
-				else {
-					new_x = this._bg_x;
-				}
-				if(!this._bg_same_y) {
-					new_y = Math.round((Number(this.bg_start_y) + Number(this.bg_progress * this.bg_change_y)));
-				}
-				else {
-					new_y = this._bg_y;
-				}
-				var new_bg_x = new_x.toString().match(/\%|top|left|right|center|bottom/) ? new_x : (new_x + "px");
-				var new_bg_y = new_y.toString().match(/\%|top|left|right|center|bottom/) ? new_y : (new_y + "px");
-				u.as(this, "backgroundPosition", new_bg_x + " " + new_bg_y);
-				this.offsetHeight;
-				if(this.bg_progress < this.bg_transitions) {
-					this.t_bg_transition = u.t.setTimer(this, this.bg_transitionTo, update_frequency);
-				}
-				else {
-					var new_bg_x = x.toString().match(/\%|top|left|right|center|bottom/) ? this._bg_x : (this._bg_x + "px");
-					var new_bg_y = y.toString().match(/\%|top|left|right|center|bottom/) ? this._bg_y : (this._bg_y + "px");
-					u.as(this, "backgroundPosition", new_bg_x + " " + new_bg_y);
-					if(typeof(this.transitioned) == "function") {
-						this.transitioned(event);
-					}
-				}
-			}
-			node.bg_transitionTo();
-		}
-		else {
-			var new_bg_x = x.toString().match(/\%|top|left|right|center|bottom/) ? x : (x + "px");
-			var new_bg_y = y.toString().match(/\%|top|left|right|center|bottom/) ? y : (y + "px");
-			u.as(node, "backgroundPosition", new_bg_x + " " + new_bg_y);
-		}
-		node._bg_x = x;
-		node._bg_y = y;
-		node.offsetHeight;
-	}
-	u.a.setBgColor = function(node, color) {
-		var update_frequency = 100;
-		if(isNaN(node._bg_color_r) || isNaN(node._bg_color_g) || isNaN(node._bg_color_b)) {
-			var current_bg_color = u.gcs(node, "background-color");
-			var matches;
-			var current_bg_color_r, current_bg_color_g, current_bg_color_b;
-			var new_bg_color_r = false;
-			var new_bg_color_g = false;
-			var new_bg_color_b = false;
-			if(current_bg_color.match(/#[\da-fA-F]{3,6}/)) {
-				if(current_bg_color.length == 7) {
-					matches = current_bg_color.match(/#([\da-fA-F]{2})([\da-fA-F]{2})([\da-fA-F]{2})/);
-				}
-				else {
-					matches = current_bg_color.match(/#([\da-fA-F]{1}),[ ]?([\da-fA-F]{1}),[ ]?([\da-fA-F]{1})/);
-				}
-				current_bg_color_r = u.hexToNum(matches[1]);
-				current_bg_color_g = u.hexToNum(matches[2]); 
-				current_bg_color_b = u.hexToNum(matches[3]);
-			}
-			else if(current_bg_color.match(/rgb\([\d]{1,3},[ ]?[\d]{1,3},[ ]?[\d]{1,3}\)/)) {
-				matches = current_bg_color.match(/rgb\(([\d]{1,3}),[ ]?([\d]{1,3}),[ ]?([\d]{1,3})\)/);
-				current_bg_color_r = matches[1];
-				current_bg_color_g = matches[2];
-				current_bg_color_b = matches[3];
-			}
-			else if(current_bg_color.match(/rgba\([\d]{1,3},[ ]?[\d]{1,3},[ ]?[\d]{1,3},[ ]?[\d\.]+\)/)) {
-				matches = current_bg_color.match(/rgba\(([\d]{1,3}),[ ]?([\d]{1,3}),[ ]?([\d]{1,3}),[ ]?([\d\.]+)\)/);
-				current_bg_color_r = matches[1];
-				current_bg_color_g = matches[2];
-				current_bg_color_b = matches[3];
-			}
-		}
-		if(color.match(/#[\da-fA-F]{3,6}/)) {
-			if(color.length == 7) {
-				matches = color.match(/#([\da-fA-F]{2})([\da-fA-F]{2})([\da-fA-F]{2})/);
-			}
-			else {
-				matches = color.match(/#([\da-fA-F]{1}),[ ]?([\da-fA-F]{1}),[ ]?([\da-fA-F]{1})/);
-			}
-			new_bg_color_r = u.hexToNum(matches[1]);
-			new_bg_color_g = u.hexToNum(matches[2]);
-			new_bg_color_b = u.hexToNum(matches[3]);
-		}
-		node._bg_color_r = !isNaN(node._bg_color_r) ? node._bg_color_r : !isNaN(current_bg_color_r) ? current_bg_color_r : false;
-		node._bg_color_g = !isNaN(node._bg_color_g) ? node._bg_color_g : !isNaN(current_bg_color_g) ? current_bg_color_g : false;
-		node._bg_color_b = !isNaN(node._bg_color_b) ? node._bg_color_b : !isNaN(current_bg_color_b) ? current_bg_color_b : false;
-		if(node.duration && 
-		node._bg_color_r !== false && 
-		node._bg_color_g !== false && 
-		node._bg_color_b !== false && 
-		new_bg_color_r !== false && 
-		new_bg_color_g !== false && 
-		new_bg_color_b !== false &&
-		(new_bg_color_r != node._bg_color_r ||
-		new_bg_color_g != node._bg_color_g ||
-		new_bg_color_b != node._bg_color_b)) {
-			node.bg_color_r_start = node._bg_color_r;
-			node.bg_color_g_start = node._bg_color_g;
-			node.bg_color_b_start = node._bg_color_b;
-			node.bg_color_transitions = node.duration/update_frequency;
-			node.bg_color_r_change = (new_bg_color_r - node.bg_color_r_start) / node.bg_color_transitions;
-			node.bg_color_g_change = (new_bg_color_g - node.bg_color_g_start) / node.bg_color_transitions;
-			node.bg_color_b_change = (new_bg_color_b - node.bg_color_b_start) / node.bg_color_transitions;
-			node.bg_color_progress = 0;
-			node.bg_color_transitionTo = function(event) {
-				++this.bg_color_progress;
-				var new_bg_color_r = Math.round(Number(this.bg_color_r_start) + Number(this.bg_color_progress * this.bg_color_r_change));
-				var new_bg_color_g = Math.round(Number(this.bg_color_g_start) + Number(this.bg_color_progress * this.bg_color_g_change));
-				var new_bg_color_b = Math.round(Number(this.bg_color_b_start) + Number(this.bg_color_progress * this.bg_color_b_change));
-				var bg_hex_r = u.prefix(u.numToHex(new_bg_color_r), 2);
-				var bg_hex_g = u.prefix(u.numToHex(new_bg_color_g), 2);
-				var bg_hex_b = u.prefix(u.numToHex(new_bg_color_b), 2);
-				u.as(this, "backgroundColor", "#" + bg_hex_r + bg_hex_g + bg_hex_b);
-				this.offsetHeight;
-				if(this.bg_color_progress < this.bg_color_transitions) {
-					this.t_bg_color_transition = u.t.setTimer(this, this.bg_color_transitionTo, update_frequency);
-				}
-				else {
-					u.as(this, "backgroundColor", this._bg_color);
-					if(typeof(this.transitioned) == "function") {
-						this.transitioned(event);
-					}
-				}
-			}
-			node.bg_color_transitionTo();
-		}
-		else {
-			node.style.backgroundColor = color;
-		}
-		node._bg_color = color;
-		node.offsetHeight;
-	}
-	u.a.rotateScale = function(node, deg, scale) {
-		node.style[u.a.vendor("Transform") + "Transform"] = "rotate("+deg+"deg) scale("+scale+")";
-		node._rotation = deg;
-		node._scale = scale;
-		node.offsetHeight;
-	}
-	u.a.scaleRotateTranslate = function(node, scale, deg, x, y) {
-		node.style[u.a.vendor("Transform")] = "scale("+scale+") rotate("+deg+"deg) translate("+x+"px, "+y+"px)";
-		node._rotation = deg;
-		node._scale = scale;
-		node._x = x;
-		node._y = y;
-		node.offsetHeight;
-	}
-}
 
 
-/*u-navigation.js*/
-u.navigation = function(_options) {
-	var callback_navigate = "navigate";
-	var navigation_node = page;
-	if(typeof(_options) == "object") {
-		var argument;
-		for(argument in _options) {
-			switch(argument) {
-				case "callback"       : callback_navigate      = _options[argument]; break;
-				case "node"           : navigation_node        = _options[argument]; break;
-			}
-		}
-	}
-	navigation_node._nav_path = navigation_node._nav_path ? navigation_node._nav_path : u.h.getCleanUrl(location.href, 1);
-	navigation_node._nav_history = navigation_node._nav_history ? navigation_node._nav_history : [];
-	navigation_node._navigate = function(url) {
-		url = u.h.getCleanUrl(url);
-		navigation_node._nav_history.unshift(url);
-		u.stats.pageView(url);
-		if(!this._nav_path || ((this._nav_path != u.h.getCleanHash(location.hash, 1) && !u.h.popstate) || (this._nav_path != u.h.getCleanUrl(location.href, 1) && u.h.popstate))) {
-			if(this.cN && typeof(this.cN.navigate) == "function") {
-				this.cN.navigate(url);
-			}
-		}
-		else {
-			if(this.cN.scene && this.cN.scene.parentNode && typeof(this.cN.scene.navigate) == "function") {
-				this.cN.scene.navigate(url);
-			}
-			else if(this.cN && typeof(this.cN.navigate) == "function") {
-				this.cN.navigate(url);
-			}
-		}
-		if(!u.h.popstate) {
-			this._nav_path = u.h.getCleanHash(location.hash, 1);
-		}
-		else {
-			this._nav_path = u.h.getCleanUrl(location.href, 1);
-		}
-	}
-	navigation_node.navigate = function(url, node) {
-		this.history_node = node ? node : false;
-		if(u.h.popstate) {
-			history.pushState({}, url, url);
-			navigation_node._navigate(url);
-		}
-		else {
-			location.hash = u.h.getCleanUrl(url);
-		}
-	}
-	if(location.hash.length && location.hash.match(/^#!/)) {
-		location.hash = location.hash.replace(/!/, "");
-	}
-	if(!u.h.popstate) {
-		if(location.hash.length < 2) {
-			navigation_node.navigate(location.href, page);
-			navigation_node._nav_path = u.h.getCleanUrl(location.href);
-			u.init(navigation_node.cN);
-		}
-		else if(u.h.getCleanHash(location.hash) != u.h.getCleanUrl(location.href) && location.hash.match(/^#\//)) {
-			navigation_node._nav_path = u.h.getCleanUrl(location.href);
-			navigation_node._navigate(u.h.getCleanHash(location.hash), page);
-		}
-		else {
-			u.init(navigation_node.cN);
-		}
-	}
-	else {
-		if(u.h.getCleanHash(location.hash) != u.h.getCleanUrl(location.href) && location.hash.match(/^#\//)) {
-			navigation_node._nav_path = u.h.getCleanHash(location.hash);
-			navigation_node.navigate(u.h.getCleanHash(location.hash), page);
-		}
-		else {
-			u.init(navigation_node.cN);
-		}
-	}
-	navigation_node._initHistory = function() {
-		u.h.catchEvent(page, {"callback":"_navigate"});
-	}
-	u.t.setTimer(page, navigation_node._initHistory, 100);
-	navigation_node.historyBack = function() {
-		if(this._nav_history.length > 1) {
-			this._nav_history.shift();
-			return this._nav_history.shift();
-		}
-		else {
-			return "/";
-		}
-	}
-}
-
-
-/*u-form-htmleditor.js*/
-Util.Form.customInit["html"] = function(form, field) {
-	field._input = u.qs("textarea", field);
-	field._input.field = field;
-	form.fields[field._input.name] = field._input;
-	field._input._label = u.qs("label[for='"+field._input.id+"']", field);
-	field._input.val = u.f._value;
-	u.f.textEditor(field);
-	u.f.validate(field._input);
-}
-Util.Form.customValidate["html"] = function(iN) {
-	min = Number(u.cv(iN.field, "min"));
-	max = Number(u.cv(iN.field, "max"));
-	min = min ? min : 1;
-	max = max ? max : 10000000;
-	pattern = iN.getAttribute("pattern");
-	if(
-		u.text(iN.field._viewer) &&
-		u.text(iN.field._viewer).length >= min && 
-		u.text(iN.field._viewer).length <= max && 
-		(!pattern || iN.val().match("^"+pattern+"$"))
-	) {
-		u.f.fieldCorrect(iN);
-	}
-	else {
-		u.f.fieldError(iN);
-	}
-}
-u.f.textEditor = function(field) {
-	var hint_has_been_shown = u.getCookie("html-editor-hint-v1", {"path":"/"});
-	if(!hint_has_been_shown) {
-		var editor_hint = u.ie(field, "div", {"class":"html_editor_hint"});
-		var editor_hint_open = u.ae(editor_hint, "div", {"class":"open", "html":"I'd like to know more about the Editor"});
-		var editor_hint_content = u.ae(editor_hint, "div", {"class":"html_editor_hint_content"});
-		editor_hint_open.editor_hint_content = editor_hint_content;
-		u.ce(editor_hint_open);
-		editor_hint_open.clicked = function() {
-			if(this.editor_hint_content.is_shown) {
-				this.innerHTML = "I'd like to know more about the Editor";
-				u.as(editor_hint_content, "display", "none");
-				this.editor_hint_content.is_shown = false;
-			}
-			else {
-				this.innerHTML = "Hide help for now";
-				u.as(editor_hint_content, "display", "block");
-				this.editor_hint_content.is_shown = true;
-			}
-		}
-		u.ae(editor_hint_content, "p", {"html":"If you are new to using the Janitor HTML editor here are a few tips to working better with the editor."});
-		u.ae(editor_hint_content, "p", {"html":"This HTML editor has been developed to maintain a strict control of the design - therefore it looks different from other HTML editors. The features available are aligned with the design of the specific page, and the Editor might not have the same features available in every context."});
-		u.ae(editor_hint_content, "h4", {"html":"General use:"});
-		u.ae(editor_hint_content, "p", {"html":"All HTML nodes can be deleted using the Trashcan in the Right side. The Editor allways requires one node to exist and you cannot delete the last remaining node."});
-		u.ae(editor_hint_content, "p", {"html":"HTML nodes can be re-ordered by dragging the bubble in the Left side."});
-		u.ae(editor_hint_content, "p", {"html":"You can add new nodes by clicking on the + below the editor. The options availble are the ones allowed for the current content type."});
-		u.ae(editor_hint_content, "h4", {"html":"Text nodes:"});
-		u.ae(editor_hint_content, "p", {"html":"&lt;H1&gt;,&lt;H2&gt;,&lt;H3&gt;,&lt;H4&gt;,&lt;H5&gt;,&lt;H6&gt;,&lt;P&gt;,&lt;CODE&gt;"});
-		u.ae(editor_hint_content, "p", {"html":"Text nodes are for headlines and paragraphs - regular text."});
-		u.ae(editor_hint_content, "p", {"html":"You can activate the inline formatting tool by selecting text in your Text node."});
-		u.ae(editor_hint_content, "p", {"html":"If you press ENTER inside a Text node, a new Text node will be created below the current one."});
-		u.ae(editor_hint_content, "p", {"html":"If you press BACKSPACE twice inside an empty Text node it will be deleted"});
-		u.ae(editor_hint_content, "h4", {"html":"List nodes:"});
-		u.ae(editor_hint_content, "p", {"html":"&lt;UL&gt;,&lt;OL&gt;"});
-		u.ae(editor_hint_content, "p", {"html":"There are two types of list nodes: Unordered lists (UL w/ bullets) and Ordered lists (OL w/ numbers). Each of them can have one or many List items."});
-		u.ae(editor_hint_content, "p", {"html":"You can activate the inline formatting tool by selecting text in your List item."});
-		u.ae(editor_hint_content, "p", {"html":"If you press ENTER inside a List item, a new List item will be created below the current one."});
-		u.ae(editor_hint_content, "p", {"html":"If you press BACKSPACE twice inside an empty List item it will be deleted. If it is the last List item in the List node, the List node will be deleted as well."});
-		u.ae(editor_hint_content, "h4", {"html":"File nodes:"});
-		u.ae(editor_hint_content, "p", {"html":"Drag you file to the node or click the node to select your file."});
-		u.ae(editor_hint_content, "p", {"html":"If you add other file-types than PDF's, the file will be zipped on the server and made availble for download as ZIP file."});
-		var editor_hint_close = u.ae(editor_hint_content, "div", {"class":"close", "html":"I got it, don't tell me again"});
-		u.ce(editor_hint_close);
-		editor_hint_close.editor_hint = editor_hint;
-		editor_hint_close.clicked = function() {
-			u.saveCookie("html-editor-hint-v1", 1, {"path":"/"});
-			this.editor_hint.parentNode.removeChild(this.editor_hint);
-		}
-	}
-	field.text_support = "h1,h2,h3,h4,h5,h6,p";
-	field.code_support = "code";
-	field.list_support = "ul,ol";
-	field.media_support = "png,jpg,mp4";
-	field.ext_video_support = "youtube,vimeo";
-	field.file_support = "download"; 
-	field.allowed_tags = u.cv(field, "tags");
-	if(!field.allowed_tags) {
-		u.bug("allowed_tags not specified")
-		return;
-	}
-	field.filterAllowedTags = function(type) {
-		tags = this.allowed_tags.split(",");
-		this[type+"_allowed"] = new Array();
-		var tag, i;
-		for(i = 0; tag = tags[i]; i++) {
-			if(tag.match("^("+this[type+"_support"].split(",").join("|")+")$")) {
-				this[type+"_allowed"].push(tag);
-			}
-		}
-	}
-	field.filterAllowedTags("text");
-	field.filterAllowedTags("list");
-	field.filterAllowedTags("media");
-	field.filterAllowedTags("ext_video");
-	field.filterAllowedTags("file");
-	field.filterAllowedTags("code");
-	field.file_add_action = field.getAttribute("data-file-add");
-	field.file_delete_action = field.getAttribute("data-file-delete");
-	field.media_add_action = field.getAttribute("data-media-add");
-	field.media_delete_action = field.getAttribute("data-media-delete");
-	field.item_id;
-	var item_id_match = field._input.form.action.match(/\/([0-9]+)(\/|$)/);
-	if(item_id_match) {
-		field.item_id = item_id_match[1];
-	}
-	field._viewer = u.ae(field, "div", {"class":"viewer"});
-	field._editor = u.ae(field, "div", {"class":"editor"});
-	field._editor.field = field;
-	field._editor.dropped = function() {
-		this.field.update();
-	}
-	field.addOptions = function() {
-		this.bn_show_raw = u.ae(this._input._label, "span", {"html":"(RAW HTML)"});
-		this.bn_show_raw.field = this;
-		u.ce(this.bn_show_raw);
-		this.bn_show_raw.clicked = function() {
-			if(u.hc(this.field._input, "show")) {
-				u.rc(this.field._input, "show");
-			}
-			else {
-				u.ac(this.field._input, "show");
-			}
-		}
-		this.options = u.ae(this, "ul", {"class":"options"});
-		this.bn_add = u.ae(this.options, "li", {"class":"add", "html":"+"});
-		this.bn_add.field = field;
-		u.ce(this.bn_add);
-		this.bn_add.clicked = function(event) {
-			if(u.hc(this.field.options, "show")) {
-				u.rc(this.field.options, "show");
-				u.rc(this.field, "optionsshown");
-			}
-			else {
-				u.ac(this.field.options, "show");
-				u.ac(this.field, "optionsshown");
-			}
-		}
-		if(this.text_allowed.length) {
-			this.bn_add_text = u.ae(this.options, "li", {"class":"text", "html":"Text ("+this.text_allowed.join(", ")+")"});
-			this.bn_add_text.field = field;
-			u.ce(this.bn_add_text);
-			this.bn_add_text.clicked = function(event) {
-				this.field.addTextTag(this.field.text_allowed[0]);
-				u.rc(this.field.options, "show");
-			}
-		}
-		if(this.list_allowed.length) {
-			this.bn_add_list = u.ae(this.options, "li", {"class":"list", "html":"List ("+this.list_allowed.join(", ")+")"});
-			this.bn_add_list.field = field;
-			u.ce(this.bn_add_list);
-			this.bn_add_list.clicked = function(event) {
-				this.field.addListTag(this.field.list_allowed[0]);
-				u.rc(this.field.options, "show");
-			}
-		}
-		if(this.code_allowed.length) {
-			this.bn_add_code = u.ae(this.options, "li", {"class":"code", "html":"Code"});
-			this.bn_add_code.field = field;
-			u.ce(this.bn_add_code);
-			this.bn_add_code.clicked = function(event) {
-				this.field.addCodeTag(this.field.code_allowed[0]);
-				u.rc(this.field.options, "show");
-			}
-		}
-		if(this.media_allowed.length && this.item_id && this.media_add_action && this.media_delete_action && !u.browser("IE", "<=9")) {
-			this.bn_add_media = u.ae(this.options, "li", {"class":"list", "html":"Media ("+this.media_allowed.join(", ")+")"});
-			this.bn_add_media.field = field;
-			u.ce(this.bn_add_media);
-			this.bn_add_media.clicked = function(event) {
-				this.field.addMediaTag();
-				u.rc(this.field.options, "show");
-			}
-		}
-		else if(this.media_allowed.length) {
-			u.bug("some information is missing to support media upload:\nitem_id="+this.item_id+"\nmedia_add_action="+this.media_add_action+"\nmedia_delete_action="+this.media_delete_action);
-		}
-		if(this.ext_video_allowed.length) {
-			this.bn_add_ext_video = u.ae(this.options, "li", {"class":"video", "html":"External video ("+this.ext_video_allowed.join(", ")+")"});
-			this.bn_add_ext_video.field = field;
-			u.ce(this.bn_add_ext_video);
-			this.bn_add_ext_video.clicked = function(event) {
-				this.field.addExternalVideoTag(this.field.ext_video_allowed[0]);
-				u.rc(this.field.options, "show");
-			}
-		}
-		if(this.file_allowed.length && this.item_id && this.file_add_action && this.file_delete_action && !u.browser("IE", "<=9")) {
-			this.bn_add_file = u.ae(this.options, "li", {"class":"file", "html":"Downloadable file"});
-			this.bn_add_file.field = field;
-			u.ce(this.bn_add_file);
-			this.bn_add_file.clicked = function(event) {
-				this.field.addFileTag();
-				u.rc(this.field.options, "show");
-			}
-		}
-		else if(this.file_allowed.length) {
-			u.bug("some information is missing to support file upload:\nitem_id="+this.item_id+"\nfile_add_action="+this.file_add_action+"\nfile_delete_action="+this.file_delete_action);
-		}
-	}
-	field.update = function() {
-		this.updateViewer();
-		this.updateContent();
-		if(this._input.form && typeof(this._input.form.updated) == "function") {
-			this._input.form.updated(this._input);
-		}
-		if(this._input.form && typeof(this._input.form.changed) == "function") {
-			this._input.form.changed(this._input);
-		}
-	}
-	field.updateViewer = function() {
-		var tags = u.qsa("div.tag", this);
-		var i, tag, j, list, li, lis, div, p, a;
-		this._viewer.innerHTML = "";
-		for(i = 0; tag = tags[i]; i++) {
-			if(u.hc(tag, this.text_allowed.join("|"))) {
-				u.ae(this._viewer, tag._type.val(), {"html":tag._input.val()});
-			}
-			else if(u.hc(tag, this.list_allowed.join("|"))) {
-				list = u.ae(this._viewer, tag._type.val());
-				lis = u.qsa("div.li", tag);
-				for(j = 0; li = lis[j]; j++) {
-					li = u.ae(list, tag._type.val(), {"html":li._input.val()});
-				}
-			}
-			else if(u.hc(tag, this.ext_video_allowed.join("|")) && tag._video_id) {
-				div = u.ae(this._viewer, "div", {"class":tag._type.val()+" video_id:"+tag._video_id});
-			}
-			else if(u.hc(tag, "code")) {
-				div = u.ae(this._viewer, "code", {"html":tag._input.val()});
-			}
-			else if(u.hc(tag, "file") && tag._variant) {
-				div = u.ae(this._viewer, "div", {"class":"file item_id:"+tag._item_id+" variant:"+tag._variant+" name:"+tag._name + " filesize:"+tag._filesize});
-				p = u.ae(div, "p");
-				a = u.ae(p, "a", {"href":"/download/"+tag._item_id+"/"+tag._variant+"/"+tag._name, "html":tag._input.val()});
-			}
-			else if(u.hc(tag, "media") && tag._variant) {
-				div = u.ae(this._viewer, "div", {"class":"media item_id:"+tag._item_id+" variant:"+tag._variant+" name:"+tag._name + " filesize:"+tag._filesize + " format:"+tag._format});
-				p = u.ae(div, "p");
-				a = u.ae(p, "a", {"href":"/images/"+tag._item_id+"/"+tag._variant+"/480x."+tag._format, "html":tag._input.val()});
-			}
-		}
-	}
-	field.updateContent = function() {
-		var tags = u.qsa("div.tag", this);
-		this._input.val("");
-		var i, node, tag, type, value, j, html = "";
-		for(i = 0; tag = tags[i]; i++) {
-			if(u.hc(tag, this.text_allowed.join("|"))) {
-				type = tag._type.val();
-				html += "<"+type+">"+tag._input.val()+"</"+type+">\n";
-			}
-			else if(u.hc(tag, this.list_allowed.join("|"))) {
-				type = tag._type.val();
-				html += "<"+type+">\n";
-				lis = u.qsa("div.li", tag);
-				for(j = 0; li = lis[j]; j++) {
-					html += "\t<li>"+li._input.val()+"</li>\n";
-				}
-				html += "</"+type+">\n";
-			}
-			else if(u.hc(tag, this.ext_video_allowed.join("|")) && tag._video_id) {
-				html += '<div class="'+tag._type.val()+' video_id:'+tag._video_id+'"></div>\n';
-			}
-			else if(u.hc(tag, "code")) {
-				html += '<code>'+tag._input.val()+'</code>'+"\n";
-			}
-			else if(u.hc(tag, "media") && tag._variant) {
-				html += '<div class="media item_id:'+tag._item_id+' variant:'+tag._variant+' name:'+tag._name+' filesize:'+tag._filesize+' format:'+tag._format+'">'+"\n";
-				html += '\t<p><a href="/images/'+tag._item_id+'/'+tag._variant+'/480x.'+tag._format+'">'+tag._input.val()+"</a></p>";
-				html += "</div>\n";
-			}
-			else if(u.hc(tag, "file") && tag._variant) {
-				html += '<div class="file item_id:'+tag._item_id+' variant:'+tag._variant+' name:'+tag._name+' filesize:'+tag._filesize+'">'+"\n";
-				html += '\t<p><a href="/download/'+tag._item_id+'/'+tag._variant+'/'+tag._name+'">'+tag._input.val()+"</a></p>";
-				html += "</div>\n";
-			}
-		}
-		this._input.val(html);
-	}
-	field.createTag = function(allowed_tags, type) {
-		var tag = u.ae(this._editor, "div", {"class":"tag"});
-		tag.field = this;
-		tag._drag = u.ae(tag, "div", {"class":"drag"});
-		tag._drag.field = this;
-		tag._drag.tag = tag;
-		this.createTagSelector(tag, allowed_tags);
-		tag._type.val(type);
-		tag._remove = u.ae(tag, "div", {"class":"remove"});
-		tag._remove.field = this;
-		tag._remove.tag = tag;
-		u.ce(tag._remove);
-		tag._remove.clicked = function() {
-			this.field.deleteTag(this.tag);
-		}
-		return tag;
-	}
-	field.deleteTag = function(tag) {
-		if(u.qsa("div.tag", this).length > 1) {
-			if(u.hc(tag, "file")) {
-				this.deleteFile(tag);
-			}
-			else if(u.hc(tag, "media")) {
-				this.deleteMedia(tag);
-			}
-			tag.parentNode.removeChild(tag);
-			u.sortable(this._editor, {"draggables":"tag", "targets":"editor"});
-			this.update();
-			this._input.form.submit();
-		}
-	}
-	field.createTagSelector = function(tag, allowed_tags) {
-		var i, allowed_tag;
-		tag._type = u.ae(tag, "ul", {"class":"type"});
-		tag._type.field = this;
-		tag._type.tag = tag;
-		for(i = 0; allowed_tag = allowed_tags[i]; i++) {
-			u.ae(tag._type, "li", {"html":allowed_tag, "class":allowed_tag});
-		}
-		tag._type.val = function(value) {
-			if(value !== undefined) {
-				var i, option;
-				for(i = 0; option = this.childNodes[i]; i++) {
-					if(u.text(option) == value) {
-						if(this.selected_option) {
-							u.rc(this.selected_option, "selected");
-							u.rc(this.tag, u.text(this.selected_option));
-						}
-						u.ac(option, "selected");
-						this.selected_option = option;
-						u.ac(this.tag, value);
-						return option;
-					}
-				}
-				u.ac(this.childNodes[0], "selected");
-				this.selected_option = this.childNodes[0];
-				u.ac(this.tag, u.text(this.childNodes[0]));
-				return this.childNodes[0];
-			}
-			else {
-				return u.text(this.selected_option);
-			}
-		}
-		if(allowed_tags.length > 1) {
-			u.ce(tag._type);
-			tag._type.clicked = function(event) {
-				u.t.resetTimer(this.t_autohide);
-				if(u.hc(this, "open")) {
-					u.rc(this, "open");
-					u.rc(this.tag, "focus");
-					u.as(this, "top", 0);
-					if(event.target) {
-						this.val(u.text(event.target));
-					}
-					u.e.removeEvent(this, "mouseout", this.autohide);
-					u.e.removeEvent(this, "mouseover", this.delayautohide);
-					this.field.returnFocus(this.tag);
-					this.field.update();
-				}
-				else {
-					u.ac(this, "open");
-					u.ac(this.tag, "focus");
-					u.as(this, "top", -(this.selected_option.offsetTop) + "px");
-					u.e.addEvent(this, "mouseout", this.autohide);
-					u.e.addEvent(this, "mouseover", this.delayautohide);
-				}
-			}
-			tag._type.hide = function() {
-				u.rc(this, "open");
-				u.rc(this.tag, "focus");
-				u.as(this, "top", 0);
-				u.e.removeEvent(this, "mouseout", this.autohide);
-				u.e.removeEvent(this, "mouseover", this.delayautohide);
-				u.t.resetTimer(this.t_autohide);
-				this.field.returnFocus(this);
-			}
-			tag._type.autohide = function(event) {
-				u.t.resetTimer(this.t_autohide);
-				this.t_autohide = u.t.setTimer(this, this.hide, 800);
-			}
-			tag._type.delayautohide = function(event) {
-				u.t.resetTimer(this.t_autohide);
-			}
-		}
-	}
-	field.addExternalVideoTag = function(type, node) {
-		var tag = this.createTag(this.ext_video_allowed, type);
-		tag._input = u.ae(tag, "div", {"class":"text", "contentEditable":true});
-		tag._input.tag = tag;
-		tag._input.field = this;
-		if(node) {
-			tag._video_id = u.cv(node, "video_id");
-			tag._input.innerHTML = tag._video_id;
-		}
-		tag._input.val = function(value) {
-			if(value !== undefined) {
-				this.innerHTML = value;
-			}
-			return this.innerHTML;
-		}
-		u.e.addEvent(tag._input, "keydown", tag.field._changing_content);
-		u.e.addEvent(tag._input, "keyup", this._changed_ext_video_content);
-		u.e.addEvent(tag._input, "mouseup", this._changed_ext_video_content);
-		u.e.addEvent(tag._input, "focus", tag.field._focused_content);
-		u.e.addEvent(tag._input, "blur", tag.field._blurred_content);
-		u.sortable(this._editor, {"draggables":"tag", "targets":"editor"});
-		return tag;
-	}
-	field._changed_ext_video_content = function(event) {
-		if(this.val() && !this.val().replace(/<br>/, "")) {
-			this.val("");
-		}
-		this.tag._video_id = this.val();
-		this.tag.field.update();
-	}
-	field.addMediaTag = function(node) {
-		var tag = this.createTag(["media"], "media");
-		tag._input = u.ae(tag, "div", {"class":"text"});
-		tag._input.tag = tag;
-		tag._input.field = this;
-		if(node) {
-			tag._name = u.cv(node, "name");
-			tag._item_id = u.cv(node, "item_id");
-			tag._filesize = u.cv(node, "filesize");
-			tag._format = u.cv(node, "format");
-			tag._variant = u.cv(node, "variant");
-			tag._input.contentEditable = true;
-			tag._input.innerHTML = u.qs("a", node).innerHTML;
-			tag._image = u.ie(tag, "img");
-			tag._image.src = "/images/"+tag._item_id+"/"+tag._variant+"/400x."+tag._format;
-			tag._input.val = function(value) {
-				if(value !== undefined) {
-					this.innerHTML = value;
-				}
-				return this.innerHTML;
-			}
-			u.e.addEvent(tag._input, "keydown", tag.field._changing_content);
-			u.e.addEvent(tag._input, "keyup", this._changed_media_content);
-			u.e.addEvent(tag._input, "mouseup", this._changed_media_content);
-			u.e.addEvent(tag._input, "focus", tag.field._focused_content);
-			u.e.addEvent(tag._input, "blur", tag.field._blurred_content);
-			u.ac(tag, "done");
-		}
-		else {
-			tag._text = tag._input;
-			tag._text.tag = tag;
-			tag._text.field = this;
-			tag._label = u.ae(tag._text, "label", {"html":"Drag media here"});
-			tag._input = u.ae(tag._text, "input", {"type":"file", "name":"htmleditor_media[]"});
-			tag._input.tag = tag;
-			tag._input.field = this;
-			tag._input.val = function(value) {return false;}
-			u.e.addEvent(tag._input, "change", this._media_updated);
-			u.e.addEvent(tag._input, "focus", this._focused_content);
-			u.e.addEvent(tag._input, "blur", this._blurred_content);
-			if(u.e.event_pref == "mouse") {
-				u.e.addEvent(tag._input, "mouseenter", u.f._mouseenter);
-				u.e.addEvent(tag._input, "mouseleave", u.f._mouseleave);
-			}
-		}
-		u.sortable(this._editor, {"draggables":"tag", "targets":"editor"});
-		return tag;
-	}
-	field.deleteMedia = function(tag) {
-		var form_data = new FormData();
-		form_data.append("csrf-token", this._input.form.fields["csrf-token"].val());
-		tag.response = function(response) {
-			page.notify(response);
-			if(response.cms_status && response.cms_status == "success") {
-				this.field.update();
-			}
-		}
-		u.request(tag, this.file_delete_action+"/"+tag._item_id+"/"+tag._variant, {"method":"post", "params":form_data});
-	}
-	field._media_updated = function(event) {
-		var form_data = new FormData();
-		form_data.append(this.name, this.files[0], this.value);
-		form_data.append("csrf-token", this.form.fields["csrf-token"].val());
-		this.response = function(response) {
-			page.notify(response);
-			if(response.cms_status && response.cms_status == "success") {
-				this.parentNode.removeChild(this.tag._label);
-				this.parentNode.removeChild(this);
-				this.tag._input = this.tag._text;
-				this.tag._variant = response.cms_object["variant"];
-				this.tag._filesize = response.cms_object["filesize"]
-				this.tag._format = response.cms_object["format"]
-				this.tag._width = response.cms_object["width"]
-				this.tag._height = response.cms_object["height"]
-				this.tag._name = response.cms_object["name"]
-				this.tag._item_id = response.cms_object["item_id"]
-				this.tag._input.contentEditable = true;
-				this.tag._image = u.ie(this.tag, "img");
-				this.tag._image.src = "/images/"+this.tag._item_id+"/"+this.tag._variant+"/400x."+this.tag._format;
-				this.tag._input.innerHTML = this.tag._name + " ("+ u.round((this.tag._filesize/1000), 2) +"Kb)";
-				this.tag._input.val = function(value) {
-					if(value !== undefined) {
-						this.innerHTML = value;
-					}
-					return this.innerHTML;
-				}
-				u.e.addEvent(this.tag._input, "keydown", this.tag.field._changing_content);
-				u.e.addEvent(this.tag._input, "keyup", this.tag.field._changed_media_content);
-				u.e.addEvent(this.tag._input, "mouseup", this.tag.field._changed_media_content);
-				u.e.addEvent(this.tag._input, "focus", this.tag.field._focused_content);
-				u.e.addEvent(this.tag._input, "blur", this.tag.field._blurred_content);
-				u.ac(this.tag, "done");
-				this.tag.field.update();
-				this.tag.field._input.form.submit();
-			}
-		}
-		u.request(this, this.field.media_add_action+"/"+this.field.item_id, {"method":"post", "params":form_data});
-	}
-	field._changed_media_content = function(event) {
-		if(this.val() && !this.val().replace(/<br>/, "")) {
-			this.val("");
-		}
-		this.field.update();
-	}
-	field.addFileTag = function(node) {
-		var tag = this.createTag(["file"], "file");
-		tag._input = u.ae(tag, "div", {"class":"text"});
-		tag._input.tag = tag;
-		tag._input.field = this;
-		if(node) {
-			tag._input.contentEditable = true;
-			tag._variant = u.cv(node, "variant");
-			tag._name = u.cv(node, "name");
-			tag._item_id = u.cv(node, "item_id");
-			tag._filesize = u.cv(node, "filesize");
-			tag._input.innerHTML = u.qs("a", node).innerHTML;
-			tag._input.val = function(value) {
-				if(value !== undefined) {
-					this.innerHTML = value;
-				}
-				return this.innerHTML;
-			}
-			u.e.addEvent(tag._input, "keydown", tag.field._changing_content);
-			u.e.addEvent(tag._input, "keyup", this._changed_file_content);
-			u.e.addEvent(tag._input, "mouseup", this._changed_file_content);
-			u.e.addEvent(tag._input, "focus", tag.field._focused_content);
-			u.e.addEvent(tag._input, "blur", tag.field._blurred_content);
-			u.ac(tag, "done");
-		}
-		else {
-			tag._text = tag._input;
-			tag._text.tag = tag;
-			tag._text.field = this;
-			tag._label = u.ae(tag._text, "label", {"html":"Drag file here"});
-			tag._input = u.ae(tag._text, "input", {"type":"file", "name":"htmleditor_file"});
-			tag._input.tag = tag;
-			tag._input.field = this;
-			tag._input.val = function(value) {return false;}
-			u.e.addEvent(tag._input, "change", this._file_updated);
-			u.e.addEvent(tag._input, "focus", this._focused_content);
-			u.e.addEvent(tag._input, "blur", this._blurred_content);
-			if(u.e.event_pref == "mouse") {
-				u.e.addEvent(tag._input, "mouseenter", u.f._mouseenter);
-				u.e.addEvent(tag._input, "mouseleave", u.f._mouseleave);
-			}
-		}
-		u.sortable(this._editor, {"draggables":"tag", "targets":"editor"});
-		return tag;
-	}
-	field.deleteFile = function(tag) {
-		var form_data = new FormData();
-		form_data.append("csrf-token", this._input.form.fields["csrf-token"].val());
-		tag.response = function(response) {
-			page.notify(response);
-			if(response.cms_status && response.cms_status == "success") {
-				this.field.update();
-			}
-		}
-		u.request(tag, this.file_delete_action+"/"+tag._item_id+"/"+tag._variant, {"method":"post", "params":form_data});
-	}
-	field._file_updated = function(event) {
-		var form_data = new FormData();
-		form_data.append(this.name, this.files[0], this.value);
-		form_data.append("csrf-token", this.form.fields["csrf-token"].val());
-		this.response = function(response) {
-			page.notify(response);
-			if(response.cms_status && response.cms_status == "success") {
-				this.parentNode.removeChild(this.tag._label);
-				this.parentNode.removeChild(this);
-				this.tag._variant = response.cms_object["variant"];
-				this.tag._filesize = response.cms_object["filesize"]
-				this.tag._name = response.cms_object["name"]
-				this.tag._item_id = response.cms_object["item_id"]
-				this.tag._text.contentEditable = true;
-				this.tag._text.innerHTML = this.tag._name + " ("+ u.round((this.tag._filesize/1000), 2) +"Kb)";
-				this.tag._input = this.tag._text;
-				this.tag._input.val = function(value) {
-					if(value !== undefined) {
-						this.innerHTML = value;
-					}
-					return this.innerHTML;
-				}
-				u.e.addEvent(this.tag._input, "keydown", this.tag.field._changing_content);
-				u.e.addEvent(this.tag._input, "keyup", this.tag.field._changed_file_content);
-				u.e.addEvent(this.tag._input, "mouseup", this.tag.field._changed_file_content);
-				u.e.addEvent(this.tag._input, "focus", this.tag.field._focused_content);
-				u.e.addEvent(this.tag._input, "blur", this.tag.field._blurred_content);
-				u.ac(this.tag, "done");
-				this.tag.field.update();
-				this.tag.field._input.form.submit();
-			}
-		}
-		u.request(this, this.field.file_add_action+"/"+this.field.item_id, {"method":"post", "params":form_data});
-	}
-	field._changed_file_content = function(event) {
-		if(this.val() && !this.val().replace(/<br>/, "")) {
-			this.val("");
-		}
-		this.field.update();
-	}
-	field.addCodeTag = function(type, value) {
-		var tag = this.createTag(this.code_allowed, type);
-		tag._input = u.ae(tag, "div", {"class":"text", "contentEditable":true});
-		tag._input.tag = tag;
-		tag._input.field = this;
-		tag._input.val = function(value) {
-			if(value !== undefined) {
-				this.innerHTML = value;
-			}
-			return this.innerHTML;
-		}
-		tag._input.val(u.stringOr(value));
-		u.e.addEvent(tag._input, "keydown", this._changing_code_content);
-		u.e.addEvent(tag._input, "keyup", this._code_updated);
-		u.e.addEvent(tag._input, "mouseup", this._code_updated);
-		u.e.addEvent(tag._input, "focus", this._focused_content);
-		u.e.addEvent(tag._input, "blur", this._blurred_content);
-		if(u.e.event_pref == "mouse") {
-			u.e.addEvent(tag._input, "mouseenter", u.f._mouseenter);
-			u.e.addEvent(tag._input, "mouseleave", u.f._mouseleave);
-		}
-		u.e.addEvent(tag._input, "paste", this._pasted_content);
-		tag.addNew = function() {
-			this.field.addTextItem(this.field.text_allowed[0]);
-		}
-		u.sortable(this._editor, {"draggables":"tag", "targets":"editor"});
-		return tag;
-	}
-	field._changing_code_content = function(event) {
-		if(event.keyCode == 13 || event.keyCode == 9) {
-			u.e.kill(event);
-		}
-		if(event.keyCode == 9 && event.shiftKey) {
-			this.field.backwards_tab = true;
-		}
-	}
-	field._code_updated = function(event) {
-		var selection = window.getSelection(); 
-		if(event.keyCode == 13) {
-			u.e.kill(event);
-			if(selection && selection.isCollapsed) {
-				var br = document.createTextNode("\n");
-				range = selection.getRangeAt(0);
-				range.insertNode(br);
-				range.collapse(false);
-				var selection = window.getSelection();
-				selection.removeAllRanges();
-				selection.addRange(range);
-			}
-		}
-		if(event.keyCode == 9) {
-			u.e.kill(event);
-			if(selection && selection.isCollapsed) {
-				var br = document.createTextNode("\t");
-				range = selection.getRangeAt(0);
-				range.insertNode(br);
-				range.collapse(false);
-				var selection = window.getSelection();
-				selection.removeAllRanges();
-				selection.addRange(range);
-			}
-		}
-		else if(event.keyCode == 8) {
-			if(this.is_deletable) {
-				u.e.kill(event);
-				var all_tags = u.qsa("div.tag", this.field);
-				var prev = this.field.findPreviousInput(this);
-				if(prev) {
-					this.tag.parentNode.removeChild(this.tag);
-					prev.focus();
-				}
-				u.sortable(this.field._editor, {"draggables":"tag", "targets":"editor"});
-			}
-			else if(!this.val() || !this.val().replace(/<br>/, "")) {
-				this.is_deletable = true;
-			}
-			else if(selection.anchorNode != this && selection.anchorNode.innerHTML == "") {
-				selection.anchorNode.parentNode.removeChild(selection.anchorNode);
-			}
-		}
-		else {
-			this.is_deletable = false;
-		}
-		this.field.hideSelectionOptions();
-		if(selection && !selection.isCollapsed) {
-			var node = selection.anchorNode;
-			while(node != this) {
-				if(node.nodeName == "HTML" || !node.parentNode) {
-					break;
-				}
-				node = node.parentNode;
-			}
-			if(node == this) {
-				this.field.showSelectionOptions(this, selection);
-			}
-		}
-		// 	
-		this.field.update();
-	}
-	field.addListTag = function(type, value) {
-		var tag = this.createTag(this.list_allowed, type);
-		this.addListItem(tag, value);
-		u.sortable(this._editor, {"draggables":"tag", "targets":"editor"});
-		return tag;
-	}
-	field.addListItem = function(tag, value) {
-		var li = u.ae(tag, "div", {"class":"li"});
-		li.tag = tag;
-		li.field = this;
-		li._input = u.ae(li, "div", {"class":"text", "contentEditable":true});
-		li._input.li = li;
-		li._input.tag = tag;
-		li._input.field = this;
-		li._input.val = function(value) {
-			if(value !== undefined) {
-				this.innerHTML = value;
-			}
-			return this.innerHTML;
-		}
-		li._input.val(u.stringOr(value));
-		u.e.addEvent(li._input, "keydown", this._changing_content);
-		u.e.addEvent(li._input, "keyup", this._changed_content);
-		u.e.addEvent(li._input, "mouseup", this._changed_content);
-		u.e.addEvent(li._input, "focus", this._focused_content);
-		u.e.addEvent(li._input, "blur", this._blurred_content);
-		if(u.e.event_pref == "mouse") {
-			u.e.addEvent(li._input, "mouseenter", u.f._mouseenter);
-			u.e.addEvent(li._input, "mouseleave", u.f._mouseleave);
-		}
-		u.e.addEvent(li._input, "paste", this._pasted_content);
-		return li;
-	}
-	field.addTextTag = function(type, value) {
-		var tag = this.createTag(this.text_allowed, type);
-		tag._input = u.ae(tag, "div", {"class":"text", "contentEditable":true});
-		tag._input.tag = tag;
-		tag._input.field = this;
-		tag._input.val = function(value) {
-			if(value !== undefined) {
-				this.innerHTML = value;
-			}
-			return this.innerHTML;
-		}
-		tag._input.val(u.stringOr(value));
-		u.e.addEvent(tag._input, "keydown", this._changing_content);
-		u.e.addEvent(tag._input, "keyup", this._changed_content);
-		u.e.addEvent(tag._input, "mouseup", this._changed_content);
-		u.e.addEvent(tag._input, "focus", this._focused_content);
-		u.e.addEvent(tag._input, "blur", this._blurred_content);
-		if(u.e.event_pref == "mouse") {
-			u.e.addEvent(tag._input, "mouseenter", u.f._mouseenter);
-			u.e.addEvent(tag._input, "mouseleave", u.f._mouseleave);
-		}
-		u.e.addEvent(tag._input, "paste", this._pasted_content);
-		tag.addNew = function() {
-			this.field.addTextItem(this.field.text_allowed[0]);
-		}
-		u.sortable(this._editor, {"draggables":"tag", "targets":"editor"});
-		return tag;
-	}
-	field._changing_content = function(event) {
-		if(event.keyCode == 13) {
-			u.e.kill(event);
-		}
-		if(event.keyCode == 9 && event.shiftKey) {
-			this.field.backwards_tab = true;
-		}
-	}
-	field._changed_content = function(event) {
-		var selection = window.getSelection(); 
-		if(event.keyCode == 13) {
-			u.e.kill(event);
-			if(!event.ctrlKey && !event.metaKey) {
-				if(u.hc(this.tag, this.field.list_allowed.join("|"))) {
-					var new_li = this.field.addListItem(this.tag);
-					var next_li = u.ns(this.li);
-					if(next_li) {
-						this.tag.insertBefore(new_li, next_li);
-					}
-					else {
-						this.tag.appendChild(new_li);
-					}
-					new_li._input.focus();
-				}
-				else {
-					var new_tag = this.field.addTextTag(this.field.text_allowed[0]);
-					var next_tag = u.ns(this.tag);
-					if(next_tag) {
-						this.tag.parentNode.insertBefore(new_tag, next_tag);
-					}
-					else {
-						this.tag.parentNode.appendChild(new_tag);
-					}
-					new_tag._input.focus();
-				}
-			}
-			else {
-				if(selection && selection.isCollapsed) {
-					var br = document.createElement("br");
-					range = selection.getRangeAt(0);
-					range.insertNode(br);
-					range.collapse(false);
-					var selection = window.getSelection();
-					selection.removeAllRanges();
-					selection.addRange(range);
-				}
-			}
-		}
-		else if(event.keyCode == 8) {
-			if(this.is_deletable) {
-				u.e.kill(event);
-				var all_tags = u.qsa("div.tag", this.field);
-				var prev = this.field.findPreviousInput(this);
-				if(u.hc(this.tag, this.field.list_allowed.join("|"))) {
-					var all_lis = u.qsa("div.li", this.tag);
-					if(prev || all_tags.length > 1) {
-						this.li._input.blur();
-						this.tag.removeChild(this.li);
-						if(!u.qsa("div.li", this.tag).length) {
-							this.tag.parentNode.removeChild(this.tag);
-						}
-					}
-				}
-				else {
-					if(prev || all_tags.length > 1) {
-						this.tag.parentNode.removeChild(this.tag);
-					}
-				}
-				u.sortable(this.field._editor, {"draggables":"tag", "targets":"editor"});
-				if(prev) {
-					prev.focus();
-				}
-				else {
-					if(u.hc(this.tag, this.field.list_allowed.join("|"))) {
-						var all_lis = u.qsa("div.li", this.tag);
-						all_lis[0]._input.focus();
-					}
-					else {
-						var all_tags = u.qsa("div.tag", this.field);
-						all_tags[0]._input.focus();
-					}
-				}
-			}
-			else if(!this.val() || !this.val().replace(/<br>/, "")) {
-				this.is_deletable = true;
-			}
-			else if(selection.anchorNode != this && selection.anchorNode.innerHTML == "") {
-				selection.anchorNode.parentNode.removeChild(selection.anchorNode);
-			}
-		}
-		else {
-			this.is_deletable = false;
-		}
-		this.field.hideSelectionOptions();
-		if(selection && !selection.isCollapsed) {
-			var node = selection.anchorNode;
-			while(node != this) {
-				if(node.nodeName == "HTML" || !node.parentNode) {
-					break;
-				}
-				node = node.parentNode;
-			}
-			if(node == this) {
-				this.field.showSelectionOptions(this, selection);
-			}
-		}
-		// 	
-		this.field.update();
-	}
-	field._focused_content = function(event) {
-		this.field.is_focused = true;
-		u.ac(this.tag, "focus");
-		u.ac(this.field, "focus");
-		u.as(this.field, "zIndex", this.field._input.form._focus_z_index);
-		u.f.positionHint(this.field);
-		if(this.field.backwards_tab) {
-			this.field.backwards_tab = false;
-			var range = document.createRange();
-			range.selectNodeContents(this);
-			range.collapse(false);
-			var selection = window.getSelection();
-			selection.removeAllRanges();
-			selection.addRange(range);
-		}
-	}
-	field._blurred_content = function() {
-		this.field.is_focused = false;
-		u.rc(this.tag, "focus");
-		u.rc(this.field, "focus");
-		u.as(this.field, "zIndex", this.field._base_z_index);
-		u.f.positionHint(this.field);
-		this.field.hideSelectionOptions();
-	}
-	field._pasted_content = function(event) {
-		u.e.kill(event);
-		var i, node;
-		var paste_content = event.clipboardData.getData("text/plain");
-		if(paste_content !== "") {
-			var selection = window.getSelection();
-			if(!selection.isCollapsed) {
-				selection.deleteFromDocument();
-			}
-			var paste_parts = paste_content.trim().split(/\n\r|\n|\r/g);
-			var text_nodes = [];
-			for(i = 0; text = paste_parts[i]; i++) {
-				text_nodes.push(document.createTextNode(text));
-				if(paste_parts.length && i < paste_parts.length-1) {
-					text_nodes.push(document.createElement("br"));
-				}
-			}
-			for(i = text_nodes.length-1; node = text_nodes[i]; i--) {
-				var range = selection.getRangeAt(0);
-				range.insertNode(node);
-				selection.addRange(range);
-			}
-			selection.collapseToEnd();
-		}
-	}
-	field.findPreviousInput = function(iN) {
-		var prev = false;
-		if(u.hc(iN.tag, this.list_allowed.join("|"))) {
-			prev = u.ps(iN.li, {"exclude":".drag,.remove,.type"});
-		}
-		if(!prev) {
-			prev = u.ps(iN.tag);
-			if(prev && u.hc(prev, this.list_allowed.join("|"))) {
-				var items = u.qsa("div.li", prev);
-				prev = items[items.length-1];
-			}
-			else if(prev && u.hc(prev, "file")) {
-				if(!prev._variant) {
-					var prev_iN = this.findPreviousInput(prev._input);
-					if(prev_iN) {
-						prev = prev_iN.tag;
-					}
-					else {
-						prev = false;
-					}
-				}
-			}
-		}
-		if(!prev) {
-			prev = u.qs("div.tag", this);
-			if(u.hc(prev, this.list_allowed.join("|"))) {
-				prev = u.qs("div.li", prev);
-			}
-			else if(prev && u.hc(prev, "file")) {
-				if(!prev._variant) {
-					var prev_iN = this.findPreviousInput(prev._input);
-					if(prev_iN) {
-						prev = prev_iN.tag;
-					}
-					else {
-						prev = false;
-					}
-				}
-			}
-		}
-		return prev && prev._input != iN ? prev._input : false;
-	}
-	field.returnFocus = function(tag) {
-		if(u.hc(tag, this.text_allowed.join("|"))) {
-			tag._input.focus();
-		}
-		else if(u.hc(tag, "code")) {
-			tag._input.focus();
-		}
-		else if(u.hc(tag, this.list_allowed.join("|"))) {
-			var li = u.qs("div.li", tag);
-			li._input.focus();
-		}
-	}
-	field.hideSelectionOptions = function() {
-		if(this.selection_options && !this.selection_options.is_active) {
-			this.selection_options.parentNode.removeChild(this.selection_options);
-			this.selection_options = null;
-		}
-		this.update();
-	}
-	field.showSelectionOptions = function(node, selection) {
-		var x = u.absX(node);
-		var y = u.absY(node);
-		this.selection_options = u.ae(document.body, "div", {"id":"selection_options"});
-		u.as(this.selection_options, "top", y+"px");
-		u.as(this.selection_options, "left", (x + node.offsetWidth) +"px");
-		var ul = u.ae(this.selection_options, "ul", {"class":"options"});
-		this.selection_options._link = u.ae(ul, "li", {"class":"link", "html":"Link"});
-		this.selection_options._link.field = this;
-		this.selection_options._link.selection = selection;
-		u.ce(this.selection_options._link);
-		this.selection_options._link.inputStarted = function(event) {
-			u.e.kill(event);
-			this.field.selection_options.is_active = true;
-		}
-		this.selection_options._link.clicked = function(event) {
-			u.e.kill(event);
-			this.field.addAnchorTag(this.selection);
-		}
-		this.selection_options._em = u.ae(ul, "li", {"class":"em", "html":"Itallic"});
-		this.selection_options._em.field = this;
-		this.selection_options._em.selection = selection;
-		u.ce(this.selection_options._em);
-		this.selection_options._em.inputStarted = function(event) {
-			u.e.kill(event);
-		}
-		this.selection_options._em.clicked = function(event) {
-			u.e.kill(event);
-			this.field.addEmTag(this.selection);
-		}
-		this.selection_options._strong = u.ae(ul, "li", {"class":"strong", "html":"Bold"});
-		this.selection_options._strong.field = this;
-		this.selection_options._strong.selection = selection;
-		u.ce(this.selection_options._strong);
-		this.selection_options._strong.inputStarted = function(event) {
-			u.e.kill(event);
-		}
-		this.selection_options._strong.clicked = function(event) {
-			u.e.kill(event);
-			this.field.addStrongTag(this.selection);
-		}
-	}
-	field.deleteOption = function(node) {
-		node.over = function(event) {
-			u.t.resetTimer(this.t_out);
-			if(!this.bn_delete) {
-				this.bn_delete = u.ae(document.body, "span", {"class":"delete_selection", "html":"X"});
-				this.bn_delete.node = this;
-				this.bn_delete.over = function(event) {
-					u.t.resetTimer(this.node.t_out);
-				}
-				this.bn_delete.out = function(event) {
-					this.node.t_out = u.t.setTimer(this.node, this.node.reallyout, 300);
-				}
-				u.e.addEvent(this.bn_delete, "mouseover", this.bn_delete.over);
-				u.e.addEvent(this.bn_delete, "mouseout", this.bn_delete.out);
-				u.ce(this.bn_delete);
-				this.bn_delete.clicked = function() {
-					u.e.kill(event);
-					if(this.node.field.selection_options) {
-						this.node.field.selection_options.is_active = false;
-						this.node.field.hideSelectionOptions();
-					}
-					var fragment = document.createTextNode(this.node.innerHTML);
-					this.node.parentNode.replaceChild(fragment, this.node);
-					this.node.reallyout();
-					this.node.field.update();
-				}
-				u.as(this.bn_delete, "top", (u.absY(this)-5)+"px");
-				u.as(this.bn_delete, "left", (u.absX(this)+this.offsetWidth-5)+"px");
-			}
-		}
-		node.out = function(event) {
-			u.t.resetTimer(this.t_out);
-			this.t_out = u.t.setTimer(this, this.reallyout, 300);
-		}
-		node.reallyout = function(event) {
-			if(this.bn_delete) {
-				document.body.removeChild(this.bn_delete);
-				this.bn_delete = null;
-			}
-		}
-		u.e.addEvent(node, "mouseover", node.over);
-		u.e.addEvent(node, "mouseout", node.out);
-	}
-	field.activateInlineFormatting = function(input) {
-		var i, node;
-		var inline_tags = u.qsa("a,strong,em,span", input);
-		for(i = 0; node = inline_tags[i]; i++) {
-			node.field = input.field;
-			this.deleteOption(node);
-		}
-	}
-	field.anchorOptions = function(node) {
-		var form = u.f.addForm(this.selection_options, {"class":"labelstyle:inject"});
-		u.ae(form, "h3", {"html":"Link options"});
-		var fieldset = u.f.addFieldset(form);
-		var input_url = u.f.addField(fieldset, {"label":"url", "name":"url"});
-		var input_target = u.f.addField(fieldset, {"type":"checkbox", "label":"New window?", "name":"target"});
-		var bn_save = u.f.addAction(form, {"value":"Create link", "class":"button"});
-		u.f.init(form);
-		form.a = node;
-		form.field = this;
-		form.submitted = function() {
-			if(this.fields["url"].val() && this.fields["url"].val() != this.fields["url"].default_value) {
-				this.a.href = this.fields["url"].val();
-			}
-			if(this.fields["target"].val() && this.fields["target"].val() != this.fields["target"].default_value) {
-				this.a.target = "_blank";
-			}
-			this.field.selection_options.is_active = false;
-			this.field.hideSelectionOptions();
-		}
-	}
-	field.addAnchorTag = function(selection) {
-		var range, a, url, target;
-		var a = document.createElement("a");
-		a.field = this;
-		range = selection.getRangeAt(0);
-		range.surroundContents(a);
-		selection.removeAllRanges();
-		this.anchorOptions(a);
-		this.deleteOption(a);
-	}
-	field.addStrongTag = function(selection) {
-		var range, a, url, target;
-		var strong = document.createElement("strong");
-		strong.field = this;
-		range = selection.getRangeAt(0);
-		range.surroundContents(strong);
-		selection.removeAllRanges();
-		this.deleteOption(strong);
-		this.hideSelectionOptions();
-	}
-	field.addEmTag = function(selection) {
-		var range, a, url, target;
-		var em = document.createElement("em");
-		em.field = this;
-		range = selection.getRangeAt(0);
-		range.surroundContents(em);
-		selection.removeAllRanges();
-		this.deleteOption(em);
-		this.hideSelectionOptions();
-	}
-	field.spanOptions = function(node) {}
-	field.addSpanTag = function(selection) {
-		var span = document.createElement("span");
-		span.field = this;
-		var range = selection.getRangeAt(0);
-		range.surroundContents(span);
-		selection.removeAllRanges();
-		this.deleteOption(span);
-		this.hideSelectionOptions();
-	}
-	field._viewer.innerHTML = field._input.val();
-	var value, node, i, tag, j, lis, li;
-	var nodes = u.cn(field._viewer, {"exclude":"br"});
-	if(nodes.length) {
-		for(i = 0; node = field._viewer.childNodes[i]; i++) {
-			if(node.nodeName == "#text") {
-				if(node.nodeValue.trim()) {
-					var fragments = node.nodeValue.trim().split(/\n\r\n\r|\n\n|\r\r/g);
-					if(fragments) {
-						for(index in fragments) {
-							value = fragments[index].replace(/\n\r|\n|\r/g, "<br>");
-							tag = field.addTextTag("p", fragments[index]);
-							field.activateInlineFormatting(tag._input);
-						}
-					}
-					else {
-						value = node.nodeValue; 
-						tag = field.addTextTag("p", value);
-						field.activateInlineFormatting(tag._input);
-					}
-				}
-			}
-			else if(node.nodeName.toLowerCase().match(field.text_allowed.join("|"))) {
-				value = node.innerHTML.trim().replace(/(<br>|<br \/>)$/, "").replace(/\n\r|\n|\r/g, "<br>"); 
-				tag = field.addTextTag(node.nodeName.toLowerCase(), value);
-				field.activateInlineFormatting(tag._input);
-			}
-			else if(node.nodeName.toLowerCase() == "code") {
-				// 
-				tag = field.addCodeTag(node.nodeName.toLowerCase(), node.innerHTML);
-				field.activateInlineFormatting(tag._input);
-			}
-			else if(node.nodeName.toLowerCase().match(field.list_allowed.join("|"))) {
-				var lis = u.qsa("li", node);
-				value = lis[0].innerHTML.trim().replace(/(<br>|<br \/>)$/, "").replace(/\n\r|\n|\r/g, "<br>");
-				tag = field.addListTag(node.nodeName.toLowerCase(), value);
-				var li = u.qs("div.li", tag);
-				field.activateInlineFormatting(li._input);
-				if(lis.length > 1) {
-					for(j = 1; li = lis[j]; j++) {
-						value = li.innerHTML.trim().replace(/(<br>|<br \/>)$/, "").replace(/\n\r|\n|\r/g, "<br>");
-						li = field.addListItem(tag, value);
-						field.activateInlineFormatting(li._input);
-					}
-				}
-			}
-			else if(u.hc(node, "youtube|vimeo")) {
-				field.addExternalVideoTag(node.className.match(field.ext_video_allowed.join("|")), node);
-			}
-			else if(u.hc(node, "file")) {
-				field.addFileTag(node);
-			}
-			else if(u.hc(node, "media")) {
-				field.addMediaTag(node);
-			}
-			else if(node.nodeName.toLowerCase().match(/dl|ul|ol/)) {
-				var children = u.cn(node);
-				for(j = 0; child = children[j]; j++) {
-					value = child.innerHTML.replace(/\n\r|\n|\r/g, "");
-					tag = field.addTextTag(field.text_allowed[0], value);
-					field.activateInlineFormatting(tag._input);
-				}
-			}
-			else if(node.nodeName.toLowerCase().match(/h1|h2|h3|h4|h5|code/)) {
-				value = node.innerHTML.replace(/\n\r|\n|\r/g, "");
-				tag = field.addTextTag(field.text_allowed[0], value);
-				field.activateInlineFormatting(tag._input);
-			}
-			else {
-				alert("HTML contains unautorized node:" + node.nodeName + "("+u.nodeId(node)+")" + "\nIt has been altered to conform with SEO and design.");
-			}
-		}
-	}
-	else {
-		value = field._viewer.innerHTML.replace(/\<br[\/]?\>/g, "\n");
-		tag = field.addTextTag(field.text_allowed[0], value);
-		field.activateInlineFormatting(tag._input);
-	}
-	u.sortable(field._editor, {"draggables":"tag", "targets":"editor"});
-	field.updateViewer();
-	field.addOptions();
-}
-
-
-/*u-form-geolocation.js*/
-Util.Form.customInit["location"] = function(form, field) {
-	field._inputs = u.qsa("input", field);
-	field._input = field._inputs[0];
-	for(j = 0; input = field._inputs[j]; j++) {
-		input.field = field;
-		form.fields[input.name] = input;
-		input._label = u.qs("label[for="+input.id+"]", field);
-		input.val = u.f._value;
-		u.e.addEvent(input, "keyup", u.f._updated);
-		u.e.addEvent(input, "change", u.f._changed);
-		u.f.inputOnEnter(input);
-		u.f.activateInput(input);
-	}
-	if(navigator.geolocation) {
-		u.f.geoLocation(field);
-	}
-	u.f.validate(field._input);
-}
-Util.Form.customValidate["location"] = function(iN) {
-	var loc_fields = 0;
-	if(iN.field._input) {
-		loc_fields++;
-		min = 1;
-		max = 255;
-		if(
-			iN.field._input.val().length >= min &&
-			iN.field._input.val().length <= max
-		) {
-			u.f.fieldCorrect(iN.field._input);
-		}
-		else {
-			u.f.fieldError(iN.field._input);
-		}
-	}
-	if(iN.field.lat_input) {
-		loc_fields++;
-		min = -90;
-		max = 90;
-		if(
-			!isNaN(iN.field.lat_input.val()) && 
-			iN.field.lat_input.val() >= min && 
-			iN.field.lat_input.val() <= max
-		) {
-			u.f.fieldCorrect(iN.field.lat_input);
-		}
-		else {
-			u.f.fieldError(iN.field.lat_input);
-		}
-	}
-	if(iN.field.lon_input) {
-		loc_fields++;
-		min = -180;
-		max = 180;
-		if(
-			!isNaN(iN.field.lon_input.val()) && 
-			iN.field.lon_input.val() >= min && 
-			iN.field.lon_input.val() <= max
-		) {
-			u.f.fieldCorrect(iN.field.lon_input);
-		}
-		else {
-			u.f.fieldError(iN.field.lon_input);
-		}
-	}
-	if(u.qsa("input.error", iN.field).length) {
-		u.rc(iN.field, "correct");
-		u.ac(iN.field, "error");
-	}
-	else if(u.qsa("input.correct", iN.field).length == loc_fields) {
-		u.ac(iN.field, "correct");
-		u.rc(iN.field, "error");
-	}
-}
-Util.Form.geoLocation = function(field) {
-	u.ac(field, "geolocation");
-	field.lat_input = u.qs("div.latitude input", field);
-	field.lat_input.autocomplete = "off";
-	field.lat_input.field = field;
-	field.lon_input = u.qs("div.longitude input", field);
-	field.lon_input.autocomplete = "off";
-	field.lon_input.field = field;
-	field.showMap = function() {
-		if(!window._mapsiframe) {
-			var lat = this.lat_input.val() !== "" ? this.lat_input.val() : 0;
-			var lon = this.lon_input.val() !== "" ? this.lon_input.val() : 0;
-			var maps_url = "https://maps.googleapis.com/maps/api/js" + (u.gapi_key ? "?key="+u.gapi_key : "");
-			var html = '<html><head>';
-			html += '<style type="text/css">body {margin: 0;} #map {width: 300px; height: 300px;} #close {width: 25px; height: 25px; position: absolute; top: 0; left: 0; background: #ffffff; z-index: 10; border-bottom-right-radius: 10px; cursor: pointer;}</style>';
-			html += '<script type="text/javascript" src="'+maps_url+'"></script>';
-			html += '<script type="text/javascript">';
-			html += 'var map, marker;';
-			html += 'var initialize = function() {';
-			html += '	window._map_loaded = true;';
-			html += '	var close = document.getElementById("close");';
-			html += '	close.onclick = function() {field.hideMap();};';
-			html += '	var mapOptions = {center: new google.maps.LatLng('+lat+', '+lon+'),zoom: 15, streetViewControl: false, zoomControlOptions: {position: google.maps.ControlPosition.LEFT_CENTER}};';
-			html += '	map = new google.maps.Map(document.getElementById("map"),mapOptions);';
-			html += '	marker = new google.maps.Marker({position: new google.maps.LatLng('+lat+', '+lon+'), draggable:true});';
-			html += '	marker.setMap(map);';
-			html += '	marker.dragend = function(event_type) {';
-			html += '		var lat_marker = Math.round(marker.getPosition().lat()*100000)/100000;';
-			html += '		var lon_marker = Math.round(marker.getPosition().lng()*100000)/100000;';
-			html += '		field.lon_input.val(lon_marker);';
-			html += '		field.lat_input.val(lat_marker);';
-			html += '	};';
-			html += '	marker.addListener("dragend", marker.dragend);';
-			html += '};';
-			html += 'var centerMap = function(lat, lon) {';
-			html += '	var loc = new google.maps.LatLng(lat, lon);';
-			html += '	map.setCenter(loc);';
-			html += '	marker.setPosition(loc);';
-			html += '};';
-			html += 'google.maps.event.addDomListener(window, "load", initialize);';
-			html += '</script>';
-			html += '</head><body><div id="map"></div><div id="close"></div></body></html>';
-			window._mapsiframe = u.ae(document.body, "iframe", {"id":"geolocationmap"});
-			window._mapsiframe.field = this;
-			window._mapsiframe.doc = window._mapsiframe.contentDocument ? window._mapsiframe.contentDocument : window._mapsiframe.contentWindow.document;
-			window._mapsiframe.doc.open();
-			window._mapsiframe.doc.write(html);
-			window._mapsiframe.doc.close();
-		}
-		else {
-		}
-		window._mapsiframe.contentWindow.field = this;
-		u.as(window._mapsiframe, "left", (u.absX(this.bn_geolocation)+this.bn_geolocation.offsetWidth+10)+"px");
-		u.as(window._mapsiframe, "top", (u.absY(this.bn_geolocation) + (this.bn_geolocation.offsetHeight/2) -(window._mapsiframe.offsetHeight/2))+"px");
-	}
-	field.updateMap = function() {
-		if(window._mapsiframe && window._mapsiframe.contentWindow && window._mapsiframe.contentWindow._map_loaded) {
-			window._mapsiframe.contentWindow.centerMap(this.lat_input.val(), this.lon_input.val());
-		}
-	}
-	field.moveMap = function(event) {
-		var factor;
-		if(this._move_direction) {
-			if(event && event.shiftKey) {
-				factor = 0.001;
-			}
-			else {
-				factor = 0.0001;
-			}
-			if(this._move_direction == "38") {
-				this.lat_input.val(u.round(parseFloat(this.lat_input.val())+factor, 6));
-			}
-			else if(this._move_direction == "40") {
-				this.lat_input.val(u.round(parseFloat(this.lat_input.val())-factor, 6));
-			}
-			else if(this._move_direction == "39") {
-				this.lon_input.val(u.round(parseFloat(this.lon_input.val())+factor, 6));
-			}
-			else if(this._move_direction == "37") {
-				this.lon_input.val(u.round(parseFloat(this.lon_input.val())-factor, 6));
-			}
-			this.updateMap();
-		}
-	}
-	field.hideMap = function() {
-		u.t.resetTimer(this.t_hide_map);
-		if(window._mapsiframe) {
-			document.body.removeChild(window._mapsiframe);
-			window._mapsiframe = null;
-		}
-	}
-	field._end_move_map = function(event) {
-		this.field._move_direction = false;
-	}
-	field._start_move_map = function(event) {
-		if(event.keyCode.toString().match(/37|38|39|40/)) {
-			this.field._move_direction = event.keyCode;
-			this.field.moveMap(event);
-		}
-	}
-	u.e.addEvent(field.lat_input, "keydown", field._start_move_map);
-	u.e.addEvent(field.lon_input, "keydown", field._start_move_map);
-	u.e.addEvent(field.lat_input, "keyup", field._end_move_map);
-	u.e.addEvent(field.lon_input, "keyup", field._end_move_map);
-	field.lat_input.updated = field.lon_input.updated = function() {
-		this.field.updateMap();
-	}
-	field.lat_input.focused = field.lon_input.focused = function() {
-		u.t.resetTimer(this.field.t_hide_map);
-		this.field.showMap();
-	}
-	field.lat_input.blurred = field.lon_input.blurred = function() {
-	}
-	field.bn_geolocation = u.ae(field, "div", {"class":"geolocation"});
-	field.bn_geolocation.field = field;
-	u.ce(field.bn_geolocation);
-	field.bn_geolocation.clicked = function() {
-		this.transitioned = function() {
-			var new_scale;
-			if(this._scale == 1.4) {
-				new_scale = 1;
-			}
-			else {
-				new_scale = 1.4;
-			}
-			u.a.scale(this, new_scale);
-		}
-		this.transitioned();
-		window._geoLocationField = this.field;
-		window._foundLocation = function(position) {
-			var lat = position.coords.latitude;
-			var lon = position.coords.longitude;
-			window._geoLocationField.lat_input.val(u.round(lat, 6));
-			window._geoLocationField.lon_input.val(u.round(lon, 6));
-			window._geoLocationField.lat_input.focus();
-			window._geoLocationField.lon_input.focus();
-			u.a.transition(window._geoLocationField.bn_geolocation, "none");
-			u.a.scale(window._geoLocationField.bn_geolocation, 1);
-			window._geoLocationField.showMap();
-			window._geoLocationField.updateMap();
-		}
-		window._noLocation = function() {
-			u.a.transition(window._geoLocationField.bn_geolocation, "none");
-			u.a.scale(window._geoLocationField.bn_geolocation, 1);
-			alert('Could not find location');
-		}
-		navigator.geolocation.getCurrentPosition(window._foundLocation, window._noLocation);
-	}
-}
-
-
-/*u-form-builder.js*/
-u.f.addForm = function(node, _options) {
-	var form_name = "js_form";
-	var form_action = "#";
-	var form_method = "post";
-	var form_class = "";
-	if(typeof(_options) == "object") {
-		var _argument;
-		for(_argument in _options) {
-			switch(_argument) {
-				case "name"			: form_name				= _options[_argument]; break;
-				case "action"		: form_action			= _options[_argument]; break;
-				case "method"		: form_method			= _options[_argument]; break;
-				case "class"		: form_class			= _options[_argument]; break;
-			}
-		}
-	}
-	var form = u.ae(node, "form", {"class":form_class, "name": form_name, "action":form_action, "method":form_method});
-	return form;
-}
-u.f.addFieldset = function(node) {
-	return u.ae(node, "fieldset");
-}
-u.f.addField = function(node, _options) {
-	var field_type = "string";
-	var field_label = "Value";
-	var field_name = "js_name";
-	var field_value = "";
-	var field_class = "";
-	var field_maxlength = "";
-	if(typeof(_options) == "object") {
-		var _argument;
-		for(_argument in _options) {
-			switch(_argument) {
-				case "type"			: field_type			= _options[_argument]; break;
-				case "label"		: field_label			= _options[_argument]; break;
-				case "name"			: field_name			= _options[_argument]; break;
-				case "value"		: field_value			= _options[_argument]; break;
-				case "class"		: field_class			= _options[_argument]; break;
-				case "max"			: field_maxlength		= _options[_argument]; break;
-			}
-		}
-	}
-	var input_id = "input_"+field_type+"_"+field_name;
-	var field = u.ae(node, "div", {"class":"field "+field_type+" "+field_class});
-	if(field_type == "string") {
-		var label = u.ae(field, "label", {"for":input_id, "html":field_label});
-		var input = u.ae(field, "input", {"id":input_id, "value":field_value, "name":field_name, "type":"text", "maxlength":field_maxlength});
-	}
-	else if(field_type == "email" || field_type == "number" || field_type == "tel") {
-		var label = u.ae(field, "label", {"for":input_id, "html":field_label});
-		var input = u.ae(field, "input", {"id":input_id, "value":field_value, "name":field_name, "type":field_type});
-	}
-	else if(field_type == "checkbox") {
-		var input = u.ae(field, "input", {"id":input_id, "value":"true", "name":field_name, "type":field_type});
-		var label = u.ae(field, "label", {"for":input_id, "html":field_label});
-	}
-	else if(field_type == "text") {
-		var label = u.ae(field, "label", {"for":input_id, "html":field_label});
-		var input = u.ae(field, "textarea", {"id":input_id, "html":field_value, "name":field_name});
-	}
-	else if(field_type == "select") {
-		u.bug("Select not implemented yet")
-	}
-	else {
-		u.bug("input type not implemented yet")
-	}
-	return field;
-}
-u.f.addAction = function(node, _options) {
-	var action_type = "submit";
-	var action_name = "js_name";
-	var action_value = "";
-	var action_class = "";
-	if(typeof(_options) == "object") {
-		var _argument;
-		for(_argument in _options) {
-			switch(_argument) {
-				case "type"			: action_type			= _options[_argument]; break;
-				case "name"			: action_name			= _options[_argument]; break;
-				case "value"		: action_value			= _options[_argument]; break;
-				case "class"		: action_class			= _options[_argument]; break;
-			}
-		}
-	}
-	var p_ul = node.nodeName.toLowerCase() == "ul" ? node : u.pn(node, {"include":"ul"});
-	if(!p_ul || !u.hc(p_ul, "actions")) {
-		p_ul = u.ae(node, "ul", {"class":"actions"});
-	}
-	var p_li = node.nodeName.toLowerCase() == "li" ? node : u.pn(node, {"include":"li"});
-	if(!p_li || p_ul != p_li.parentNode) {
-		p_li = u.ae(p_ul, "li", {"class":action_name});
-	}
-	else {
-		p_li = node;
-	}
-	var action = u.ae(p_li, "input", {"type":action_type, "class":action_class, "value":action_value, "name":action_name})
-	return action;
-}
-
-
-/*i-page.js*/
-u.bug_console_only = true;
-Util.Objects["page"] = new function() {
-	this.init = function(page) {
-		u.bug("init page:" + page)
-		var i, node;
-		page.hN = u.qs("#header", page);
-		page.cN = u.qs("#content", page);
-		page.nN = u.qs("#navigation", page);
-		if(page.nN) {
-			page.nN = page.hN.appendChild(page.nN);
-		}
-		page.fN = u.qs("#footer", page);
-		page.resized = function() {
-			if(page.cN && page.cN.scene && typeof(page.cN.scene.resized) == "function") {
-				page.cN.scene.resized();
-			}
-		}
-		page.scrolled = function() {
-			if(page.cN && page.cN.scene && typeof(page.cN.scene.scrolled) == "function") {
-				page.cN.scene.scrolled();
-			}
-		}
-		page.ready = function() {
-			if(!this.is_ready) {
-				this.is_ready = true;
-				u.e.addEvent(window, "resize", page.resized);
-				u.e.addEvent(window, "scroll", page.scrolled);
-				page.initHeader();
-				u.notifier(page);
-				u.navigation();
-			}
-		}
-		page.initHeader = function() {
-			var janitor = u.ie(this.hN, "ul", {"class":"janitor"});
-			u.ae(janitor, u.qs(".servicenavigation .front", page.hN));
-			u.ae(page, u.qs(".servicenavigation", page.hN))
-		}
-		page.svgIcon = function(icon) {
-			var path;
-			if(icon == "youtube") {
-				path = "";
-			}
-		}
-		page.ready();
-	}
-}
-u.e.addDOMReadyEvent(u.init)
-
-
-/*i-form.js*/
-Util.Objects["addPrices"] = new function() {
-	this.init = function(div) {
-		var form = u.qs("form", div);
-		u.f.init(form);
-		var i, field, actions;
-		form.submitted = function(event) {
-			this.response = function(response) {
-				page.notify(response);
-			}
-			u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
-		}
-	}
-}
-Util.Objects["login"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			this._form = u.qs("form", this);
-			u.f.init(this._form);
-			this._form.fields["username"].focus();
-			page.cN.scene = this;
-			page.resized();
-		}
-		scene.ready();
-	}
-}
-
-
-/*i-defaultlist.js*/
-Util.Objects["defaultList"] = new function() {
-	this.init = function(div) {
-		var i, node;
-		div.list = u.qs("ul.items", div);
-		if(!div.list) {
-			div.list = u.ae(div, "ul", {"class":"items"});
-		}
-		div.list.div = div;
-		div.csrf_token = div.getAttribute("data-csrf-token");
-		div.nodes = u.qsa("li.item", div);
-		div.scrolled = function() {
-			var scroll_y = u.scrollY()
-			var browser_h = u.browserH();
-			var i, node, abs_y;
-			for(i = 0; node = this.nodes[i]; i++) {
-				abs_y = u.absY(node);
-				if(!node._ready && abs_y - 200 < scroll_y+browser_h && abs_y + 200 > scroll_y) {
-					this.buildNode(node);
-				}
-			}
-		}
-		div._scrollHandler = function() {
-			u.t.resetTimer(this.t_scroll);
-			this.scrolled();
-		}
-		div.scroll_event_id = u.e.addWindowScrollEvent(div, div._scrollHandler);
-		div.buildNode = function(node) {
-			node._item_id = u.cv(node, "item_id");
-			node._variant = u.cv(node, "variant");
-			node.div = this;
-			node._actions = u.qsa(".actions li", node);
-			var i, action, form, bn_detele, form_disable, form_enable;
-			for(i = 0; action = node._actions[i]; i++) {
-				if(u.hc(action, "status")) {
-					if(!action.childNodes.length) {
-						action.update_status_url = action.getAttribute("data-item-status");
-						if(action.update_status_url) {
-							form_disable = u.f.addForm(action, {"action":action.update_status_url+"/"+node._item_id+"/0", "class":"disable"});
-							u.ae(form_disable, "input", {"type":"hidden","name":"csrf-token", "value":this.csrf_token});
-							u.f.addAction(form_disable, {"value":"Disable", "class":"button status"});
-							form_enable = u.f.addForm(action, {"action":action.update_status_url+"/"+node._item_id+"/1", "class":"enable"});
-							u.ae(form_enable, "input", {"type":"hidden","name":"csrf-token", "value":this.csrf_token});
-							u.f.addAction(form_enable, {"value":"Enable", "class":"button status"});
-						}
-					}
-					else {
-						form_disable = u.qs("form.disable", action);
-						form_enable = u.qs("form.enable", action);
-					}
-					if(form_disable && form_enable) {
-						u.f.init(form_disable);
-						form_disable.submitted = function() {
-							this.response = function(response) {
-								page.notify(response);
-								if(response.cms_status == "success") {
-									u.ac(this.parentNode, "disabled");
-									u.rc(this.parentNode, "enabled");
-								}
-							}
-							u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
-						}
-						u.f.init(form_enable);
-						form_enable.submitted = function() {
-							this.response = function(response) {
-								page.notify(response);
-								if(response.cms_status == "success") {
-									u.rc(this.parentNode, "disabled");
-									u.ac(this.parentNode, "enabled");
-								}
-							}
-							u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
-						}
-					}
-				}
-				else if(u.hc(action, "delete")) {
-					if(!action.childNodes.length) {
-						action.delete_item_url = action.getAttribute("data-item-delete");
-						if(action.delete_item_url) {
-							form = u.f.addForm(action, {"action":action.delete_item_url, "class":"delete"});
-							u.ae(form, "input", {"type":"hidden","name":"csrf-token", "value":this.csrf_token});
-							form.node = node;
-							bn_delete = u.f.addAction(form, {"value":"Delete", "class":"button delete", "name":"delete"});
-						}
-					}
-					else {
-						form = u.qs("form", action);
-						form.node = node;
-					}
-					if(form) {
-						u.f.init(form);
-						form.restore = function(event) {
-							this.actions["delete"].value = "Delete";
-							u.rc(this.actions["delete"], "confirm");
-						}
-						form.submitted = function() {
-							if(!u.hc(this.actions["delete"], "confirm")) {
-								u.ac(this.actions["delete"], "confirm");
-								this.actions["delete"].value = "Confirm";
-								this.t_confirm = u.t.setTimer(this, this.restore, 3000);
-							}
-							else {
-								u.t.resetTimer(this.t_confirm);
-								this.response = function(response) {
-									page.notify(response);
-									if(response.cms_status == "success") {
-										if(response.cms_object && response.cms_object.constraint_error) {
-											this.value = "Delete";
-											u.ac(this, "disabled");
-										}
-										else {
-											this.node.parentNode.removeChild(this.node);
-											this.node.div.scrolled();
-											u.sortable(this.node.div.list, {"targets":"items", "draggables":"draggable"});
-										}
-									}
-								}
-								u.request(this, this.action, {"method":this.method, "params":u.f.getParams(this)});
-							}
-						}
-					}
-				}
-			}
-			node._format = u.cv(node, "format");
-			if(u.hc(node, "image")) {
-				node._width = u.cv(node, "width");
-				node._height = u.cv(node, "height");
-				if(node._format && node._width && node._height) {
-					node._image_src = "/images/"+node._item_id+"/"+(node._variant ? node._variant+"/" : "")+node._width+"x"+node._height+"."+node._format;
-				}
-				else if(node._format && node._width) {
-					node._image_src = "/images/"+node._item_id+"/"+(node._variant ? node._variant+"/" : "")+node._width+"x."+node._format;
-				}
-				else if(node._format && node._height) {
-					node._image_src = "/images/"+node._item_id+"/"+(node._variant ? node._variant+"/" : "")+"x"+node._height+"."+node._format;
-				}
-				else {
-					if(node._width) {
-						node._image_src = "/images/0/missing/"+node._width+"x.png";
-					}
-					else if(node._height) {
-						node._image_src = "/images/0/missing/x"+node._height+".png";
-					}
-				}
-				if(node._image_src) {
-					u.as(node, "backgroundImage", "url("+node._image_src+")");
-				}
-			}
-			if(u.hc(node, "audio")) {
-				var audio = u.ie(node, "div", {"class":"audioplayer"});
-				if(node._format) {
-					if(!page.audioplayer) {
-						page.audioplayer = u.audioPlayer();
-					}
-					audio.scene = this;
-					audio.url = "/audios/"+node._item_id+"/"+node._variant+"/128."+node._format;
-					u.e.click(audio);
-					audio.clicked = function(event) {
-						if(!u.hc(this.parentNode, "playing")) {
-							var node, i;
-							for(i = 0; node = this.scene.nodes[i]; i++) {
-								u.rc(node, "playing");
-							}
-							page.audioplayer.loadAndPlay(this.url);
-							u.ac(this.parentNode, "playing");
-						}
-						else {
-							page.audioplayer.stop();
-							u.rc(this.parentNode, "playing");
-						}
-					}
-				}
-				else {
-					u.ac(audio, "disabled");
-				}
-			}
-			if(u.hc(node, "audio")) {
-				node._video = u.cv(node, "video");
-				if(node._video) {
-				}
-			}
-			node._ready = true;
-		}
-		if(u.hc(div, "taggable")) {
-			u.bug("init taggable")
-			div.add_tag_url = div.getAttribute("data-tag-add");
-			div.delete_tag_url = div.getAttribute("data-tag-delete");
-			div.get_tags_url = div.getAttribute("data-tag-get");
-			if(div.get_tags_url && div.delete_tag_url && div.add_tag_url) {
-				div.tagsResponse = function(response) {
-					if(response.cms_status == "success" && response.cms_object) {
-						this.all_tags = response.cms_object;
-						var i, node, tag, j, bn_add, context, value;
-						for(i = 0; node = this.nodes[i]; i++) {
-							node._tags = u.qs("ul.tags", node);
-							if(!node._tags) {
-								node._tags = u.ae(node, "ul", {"class":"tags"});
-							}
-							node._bn_add = u.ae(node._tags, "li", {"class":"add","html":"+"});
-							node._bn_add.div = this;
-							node._bn_add.node = node;
-							u.e.click(node._bn_add);
-							node._bn_add.clicked = function() {
-								this.div.taggableNode(this.node);
-							}
-						}
-					}
-					else {
-						page.notify(response);
-					}
-				}
-				u.request(div, div.get_tags_url, {"callback":"tagsResponse", "method":"post", "params":"csrf-token=" + div.csrf_token});
-				div.taggableNode = function(node) {
-					u.ac(node, "addtags");
-					node._bn_add.innerHTML = "-";
-					node._bn_add.clicked = function() {
-						this.innerHTML = "+";
-						u.rc(this.node, "addtags");
-						this.node._tag_options.parentNode.removeChild(this.node._tag_options);
-						this.clicked = function() {
-							this.div.taggableNode(this.node);
-						}
-					}
-					node._tag_options = u.ae(node, "div", {"class":"tagoptions"});
-					node._tag_options._field = u.ae(node._tag_options, "div", {"class":"field"});
-					node._tag_options._tagfilter = u.ae(node._tag_options._field, "input", {"class":"filter ignoreinput"});
-					node._tag_options._tagfilter.node = node;
-					node._tag_options._tagfilter.onkeyup = function() {
-						if(this.node._new_tags) {
-							var tags = u.qsa(".tag", this.node._new_tags);
-							var i, tag;
-							for(i = 0; tag = tags[i]; i++) {
-								if(tag.textContent.toLowerCase().match(this.value.toLowerCase())) {
-									u.as(tag, "display", "inline-block");
-								}
-								else {
-									u.as(tag, "display", "none");
-								}
-							}
-						}
-					}
-					node._new_tags = u.ae(node._tag_options, "ul", {"class":"tags"});
-					var itemTags = u.qsa("li:not(.add)", node._tags);
-					var usedTags = {};
-					for(j = 0; tag = itemTags[j]; j++) {
-						tag._context = u.qs(".context", tag).innerHTML;
-						tag._value = u.qs(".value", tag).innerHTML;
-						if(!usedTags[tag._context]) {
-							usedTags[tag._context] = {}
-						}
-						if(!usedTags[tag._context][tag._value]) {
-							usedTags[tag._context][tag._value] = tag;
-						}
-					}
-					for(tag in this.all_tags) {
-						context = this.all_tags[tag].context;
-						value = this.all_tags[tag].value.replace(/ & /, " &amp; ");
-						if(usedTags && usedTags[context] && usedTags[context][value]) {
-							tag_node = usedTags[context][value];
-						}
-						else {
-							tag_node = u.ae(node._new_tags, "li", {"class":"tag"});
-							tag_node._context = context;
-							tag_node._value = value;
-							u.ae(tag_node, "span", {"class":"context", "html":tag_node._context});
-							u.ae(tag_node, "span", {"class":"value", "html":tag_node._value});
-						}
-						tag_node.new_tags = this;
-						tag_node._id = this.all_tags[tag].id;
-						tag_node.node = node;
-						u.e.click(tag_node);
-						tag_node.clicked = function() {
-							if(u.hc(this.node, "addtags")) {
-								if(this.parentNode == this.node._tags) {
-									this.response = function(response) {
-										page.notify(response);
-										if(response.cms_status == "success") {
-											u.ae(this.node._new_tags, this);
-										}
-									}
-									u.request(this, this.node.div.delete_tag_url+"/"+this.node._item_id+"/" + this._id, {"method":"post", "params":"csrf-token=" + this.node.div.csrf_token});
-								}
-								else {
-									this.response = function(response) {
-										page.notify(response);
-										if(response.cms_status == "success") {
-											u.ie(this.node._tags, this);
-										}
-									}
-									u.request(this, this.node.div.add_tag_url+"/"+this.node._item_id, {"method":"post", "params":"tags="+this._id+"&csrf-token=" + this.node.div.csrf_token});
-								}
-							}
-						}
-					}
-				}
-			}
-			else {
-				u.rc(div, "taggable");
-			}
-		}
-		if(u.hc(div, "filters")) {
-			div._filter = u.ie(div, "div", {"class":"filter"});
-			var i, node;
-			for(i = 0; node = div.nodes[i]; i++) {
-				node._c = node.textContent.toLowerCase();
-			}
-			div._filter._field = u.ae(div._filter, "div", {"class":"field"});
-			u.ae(div._filter._field, "label", {"html":"Filter"});
-			div._filter._input = u.ae(div._filter._field, "input", {"class":"filter ignoreinput"});
-			div._filter._input._div = div;
-			div._filter._input.onkeydown = function() {
-				u.t.resetTimer(this._div.t_filter);
-			}
-			div._filter._input.onkeyup = function() {
-				this._div.t_filter = u.t.setTimer(this._div, this._div.filter, 500);
-				u.ac(this._div._filter, "filtering");
-			}
-			div.filter = function() {
-				var i, node;
-				if(this._current_filter != this._filter._input.value.toLowerCase()) {
-					this._current_filter = this._filter._input.value.toLowerCase();
-					for(i = 0; node = this.nodes[i]; i++) {
-						if(node._c.match(this._current_filter)) {
-							u.as(node, "display", "block", false);
-						}
-						else {
-							u.as(node, "display", "none", false);
-						}
-					}
-				}
-				u.rc(this._filter, "filtering");
-				this.scrolled();
-			}
-		}
-		if(u.hc(div, "sortable") && div.list) {
-			div.save_order_url = div.getAttribute("data-item-order");
-			if(div.save_order_url) {
-				u.sortable(div.list, {"targets":"items", "draggables":"draggable"});
-				div.list.picked = function() {}
-				div.list.dropped = function() {
-					var order = new Array();
-					this.nodes = u.qsa("li.item", this);
-					for(i = 0; node = this.nodes[i]; i++) {
-						order.push(u.cv(node, "id"));
-					}
-					this.orderResponse = function(response) {
-						page.notify(response);
-					}
-					u.request(this, this.div.save_order_url, {"callback":"orderResponse", "method":"post", "params":"csrf-token=" + this.div.csrf_token + "&order=" + order.join(",")});
-				}
-			}
-			else {
-				u.rc(div, "sortable");
-			}
-		}
-		div.scrolled();
-	}
-}
-
-
-/*i-defaultedit.js*/
-Util.Objects["defaultEdit"] = new function() {
-	this.init = function(div) {
-		div._item_id = u.cv(div, "item_id");
-		var form = u.qs("form", div);
-		form.div = div;
-		u.f.init(form);
-		form.actions["cancel"].clicked = function(event) {
-			location.href = this.url;
-		}
-		form.submitted = function(iN) {
-			u.t.resetTimer(page.t_autosave);
-			this.response = function(response) {
-				page.notify(response);
-			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this, {"send_as":"formdata"})});
-		}
-		form.updated = function() {
-			this.change_state = true;
-			u.t.resetTimer(page.t_autosave);
-			if(!page.autosave_disabled) {
-				page.t_autosave = u.t.setTimer(this, "autosave", page._autosave_interval);
-			}
-		}
-		form.autosave = function() {
-			if(!page.autosave_disabled && this.change_state) {
-				for(name in this.fields) {
-					if(this.fields[name].field) {
-						if(!this.fields[name].used) {
-							if(u.hc(this.fields[name].field, "required") && !this.fields[name].val()) {
-								return false;
-							}
-						}
-						else {
-							u.f.validate(this.fields[name]);
-						}
-					}
-				}
-				if(!u.qs(".field.error", this)) {
-					this.change_state = false;
-					this.submitted();
-				}
-			}
-			else {
-			}
-		}
-		form.change_state = false;
-		page._autosave_node = form;
-		page._autosave_interval = 3000;
-		page.t_autosave = u.t.setTimer(form, "autosave", page._autosave_interval);
-		form.cancelBackspace = function(event) {
-			if(event.keyCode == 8 && !u.qsa(".field.focus").length) {
-				u.e.kill(event);
-			}
-		}
-		u.e.addEvent(document.body, "keydown", form.cancelBackspace);
-	}
-}
-
-/*i-defaultnew.js*/
-Util.Objects["defaultNew"] = new function() {
-	this.init = function(form) {
-		u.f.init(form);
-		form.actions["cancel"].clicked = function(event) {
-			location.href = this.url;
-		}
-		form.submitted = function(iN) {
-			this.response = function(response) {
-				if(response.cms_status == "success" && response.cms_object) {
-					location.href = this.actions["cancel"].url.replace("\/list", "/edit/"+response.cms_object.item_id);
-				}
-				else {
-					page.notify(response);
-				}
-			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this, {"send_as":"formdata"})});
-		}
-	}
-}
-
-/*i-defaulteditstatus.js*/
-Util.Objects["defaultEditStatus"] = new function() {
-	this.init = function(node) {
-		node._item_id = u.cv(node, "item_id");
-		node.csrf_token = node.getAttribute("data-csrf-token");
-		var action = u.qs("li.status");
-		if(action) {
-			if(!action.childNodes.length) {
-				action.update_status_url = action.getAttribute("data-item-status");
-				if(action.update_status_url) {
-					form_disable = u.f.addForm(action, {"action":action.update_status_url+"/"+node._item_id+"/0", "class":"disable"});
-					u.ae(form_disable, "input", {"type":"hidden","name":"csrf-token", "value":node.csrf_token});
-					u.f.addAction(form_disable, {"value":"Disable", "class":"button status"});
-					form_enable = u.f.addForm(action, {"action":action.update_status_url+"/"+node._item_id+"/1", "class":"enable"});
-					u.ae(form_enable, "input", {"type":"hidden","name":"csrf-token", "value":node.csrf_token});
-					u.f.addAction(form_enable, {"value":"Enable", "class":"button status"});
-				}
-			}
-			else {
-				form_disable = u.qs("form.disable", action);
-				form_enable = u.qs("form.enable", action);
-			}
-			if(form_disable && form_enable) {
-				u.f.init(form_disable);
-				form_disable.submitted = function() {
-					this.response = function(response) {
-						page.notify(response);
-						if(response.cms_status == "success") {
-							u.ac(this.parentNode, "disabled");
-							u.rc(this.parentNode, "enabled");
-						}
-					}
-					u.request(this, this.action, {"method":this.method, "params":u.f.getParams(this)});
-				}
-				u.f.init(form_enable);
-				form_enable.submitted = function() {
-					this.response = function(response) {
-						page.notify(response);
-						if(response.cms_status == "success") {
-							u.rc(this.parentNode, "disabled");
-							u.ac(this.parentNode, "enabled");
-						}
-					}
-					u.request(this, this.action, {"method":this.method, "params":u.f.getParams(this)});
-				}
-			}
-		}
-	}
-}
-
-/*i-defaulteditactions.js*/
-Util.Objects["defaultEditActions"] = new function() {
-	this.init = function(node) {
-		u.bug("defaultEditActions:" + u.nodeId(node));
-		node._item_id = u.cv(node, "item_id");
-		node.csrf_token = node.getAttribute("data-csrf-token");
-		var bn_cancel = u.qs("li.cancel a", node);
-		var bn_delete = u.qs("li.delete", node);
-		if(bn_delete && bn_cancel && bn_cancel.href) {
-			if(!bn_delete.childNodes.length) {
-				bn_delete.delete_item_url = bn_delete.getAttribute("data-item-delete");
-				if(bn_delete.delete_item_url) {
-					form = u.f.addForm(bn_delete, {"action":bn_delete.delete_item_url, "class":"delete"});
-					u.ae(form, "input", {"type":"hidden","name":"csrf-token", "value":node.csrf_token});
-					form.node = node;
-					bn_delete = u.f.addAction(form, {"value":"Delete", "class":"button delete", "name":"delete"});
-				}
-			}
-			else {
-				form = u.qs("form", bn_delete);
-			}
-			if(form) {
-				u.f.init(form);
-				form.cancel_url = bn_cancel.href;
-				form.restore = function(event) {
-					this.actions["delete"].value = "Delete";
-					u.rc(this.actions["delete"], "confirm");
-				}
-				form.submitted = function() {
-					if(!u.hc(this.actions["delete"], "confirm")) {
-						u.ac(this.actions["delete"], "confirm");
-						this.actions["delete"].value = "Confirm";
-						this.t_confirm = u.t.setTimer(this, this.restore, 3000);
-					}
-					else {
-						u.t.resetTimer(this.t_confirm);
-						this.response = function(response) {
-							page.notify(response);
-							if(response.cms_status == "success") {
-								if(response.cms_object && response.cms_object.constraint_error) {
-									this.value = "Delete";
-									u.ac(this, "disabled");
-								}
-								else {
-									location.href = this.cancel_url;
-								}
-							}
-						}
-						u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
-					}
-				}
-			}
-		}
-	}
-}
-
-/*i-defaulttags.js*/
-Util.Objects["defaultTags"] = new function() {
-	this.init = function(div) {
-		div.item_id = u.cv(div, "item_id");
-		div._tags_form = u.qs("form", div);
-		div._tags_form.div = div;
-		u.f.init(div._tags_form);
-		div.csrf_token = div._tags_form.fields["csrf-token"].value;
-		div.add_tag_url = div._tags_form.action;
-		div.delete_tag_url = div.getAttribute("data-tag-delete");
-		div.get_tags_url = div.getAttribute("data-tag-get");
-		div._tags_form.fields["tags"].focused = function() {
-			this.form.div.enableTagging();
-		}
-		div._tags_form.fields["tags"].updated = function() {
-			if(this.form.div._new_tags) {
-				var tags = u.qsa(".tag", this.form.div._new_tags);
-				var i, tag;
-				for(i = 0; tag = tags[i]; i++) {
-					if(tag.textContent.toLowerCase().match(this.value.toLowerCase())) {
-						u.as(tag, "display", "inline-block");
-					}
-					else {
-						u.as(tag, "display", "none");
-					}
-				}
-			}
-		}
-		div._tags_form.submitted = function(iN) {
-			this.response = function(response) {
-				page.notify(response);
-				if(response.cms_status == "success") {
-					var i, tag_node;
-					var new_tags = u.qsa("li", this.div._new_tags);
-					for(i = 0; tag_node = new_tags[i]; i++) {
-						if(tag_node._id == response.cms_object.tag_id) {
-							this.fields["tags"].val("");
-							this.fields["tags"].updated();
-							u.ae(this.div._tags, tag_node);
-							return;
-						}
-					}
-					this.div._tags._alltags.push({"id":response.cms_object.tag_id, "context":response.cms_object.context, "value":response.cms_object.value})
-					tag_node = u.ae(this.div._tags, "li", {"class":"tag"});
-					tag_node._context = response.cms_object.context;
-					tag_node._value = response.cms_object.value;
-					tag_node._id = response.cms_object.id;
-					u.ae(tag_node, "span", {"class":"context", "html":tag_node._context});
-					u.ae(tag_node, "span", {"class":"value", "html":tag_node._value});
-					tag_node.div = this.div;
-					div.activateTag(tag_node);
-					this.fields["tags"].val("");
-					this.fields["tags"].updated();
-				}
-			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
-		}
-		div._tags = u.qs("ul.tags", div);
-		if(!div._tags) {
-			div._tags = u.ae(div._tags, "ul", {"class":"tags"});
-		}
-		div._tags.div = div;
-		div._tags.tagsResponse = function(response) {
-			if(response.cms_status == "success" && response.cms_object) {
-				this._alltags = response.cms_object;
-				this._bn_add = u.ae(this, "li", {"class":"add","html":"+"});
-			}
-			else {
-				page.notify(response);
-				this._alltags = [];
-				this._bn_add = u.ae(this, "li", {"class":"add","html":"?"});
-			}
-			this._bn_add.div = this.div;
-			u.e.click(this._bn_add);
-			this._bn_add.clicked = function() {
-				this.div.enableTagging();
-			}
-		}
-		u.request(div._tags, div.get_tags_url, {"callback":"tagsResponse", "method":"post", "params":"csrf-token=" + div.csrf_token});
-		div.enableTagging = function() {
-			u.bug("enable tagging")
-			if(!this._tag_options) {
-				this._tags._bn_add.innerHTML = "-";
-				this._tags._bn_add.clicked = function() {
-					this.innerHTML = "+";
-					u.rc(this.div, "addtags");
-					this.div._tag_options.parentNode.removeChild(this.div._tag_options);
-					this.div._tag_options = false;
-					this.clicked = function() {
-						this.div.enableTagging();
-					}
-				}
-				u.ac(this, "addtags");
-				this._tag_options = u.ae(this, "div", {"class":"tagoptions"});
-				this._new_tags = u.ae(this._tag_options, "ul", {"class":"tags"});
-				var usedtags = {};
-				var itemTags = u.qsa("li:not(.add)", this._tags);
-				var i, tag_node, tag, context, value;
-				for(i = 0; tag_node = itemTags[i]; i++) {
-					tag_node._context = u.qs(".context", tag_node).innerHTML;
-					tag_node._value = u.qs(".value", tag_node).innerHTML;
-					if(!usedtags[tag_node._context]) {
-						usedtags[tag_node._context] = {}
-					}
-					if(!usedtags[tag_node._context][tag_node._value]) {
-						usedtags[tag_node._context][tag_node._value] = tag_node;
-					}
-				}
-				for(tag in this._tags._alltags) {
-					context = this._tags._alltags[tag].context;
-					value = this._tags._alltags[tag].value.replace(/ & /, " &amp; ");
-					if(usedtags && usedtags[context] && usedtags[context][value]) {
-						tag_node = usedtags[context][value];
-					}
-					else {
-						tag_node = u.ae(this._new_tags, "li", {"class":"tag"});
-						tag_node._context = context;
-						tag_node._value = value;
-						u.ae(tag_node, "span", {"class":"context", "html":tag_node._context});
-						u.ae(tag_node, "span", {"class":"value", "html":tag_node._value});
-					}
-					tag_node._id = this._tags._alltags[tag].id;
-					tag_node.div = this;
-					div.activateTag(tag_node);
-				}
-			}
-		}
-		div.activateTag = function(tag_node) {
-			u.e.click(tag_node);
-			tag_node.clicked = function() {
-				if(u.hc(this.div, "addtags")) {
-					if(this.parentNode == this.div._tags) {
-						this.response = function(response) {
-							page.notify(response);
-							if(response.cms_status == "success") {
-								u.ae(this.div._new_tags, this);
-							}
-						}
-						u.request(this, this.div.delete_tag_url+"/"+this.div.item_id+"/" + this._id, {"method":"post", "params":"csrf-token=" + this.div.csrf_token});
-					}
-					else {
-						this.response = function(response) {
-							page.notify(response);
-							if(response.cms_status == "success") {
-								u.ie(this.div._tags, this)
-							}
-						}
-						u.request(this, this.div.add_tag_url, {"method":"post", "params":"tags="+this._id+"&csrf-token=" + this.div.csrf_token});
-					}
-				}
-			}
-		}
-	}
-}
-
-
-/*i-defaultmedia.js*/
-Util.Objects["addMedia"] = new function() {
-	this.init = function(div) {
-		div.form = u.qs("form.upload", div);
-		div.form.div = div;
-		div.media_list = u.qs("ul.mediae", div);
-		div.item_id = u.cv(div, "item_id");
-		u.f.init(div.form);
-		div.csrf_token = div.form.fields["csrf-token"].val();
-		div.delete_url = div.getAttribute("data-media-delete");
-		div.update_name_url = div.getAttribute("data-media-name");
-		div.save_order_url = div.getAttribute("data-media-order");
-		div.form.file_input = u.qs("input[type=file]", div.form);
-		div.form.file_input.div = div;
-		div.form.file_input.changed = function() {
-			this.form.submit();
-		}
-		div.form.submitted = function() {
-			u.ac(this.file_input.field, "loading");
-			u.rc(this.file_input.field, "focus");
-			var form_data = new FormData(this);
-			this.response = function(response) {
-				page.notify(response);
-				if(response.cms_status == "success" && response.cms_object) {
-					var i, media, node, image;
-					for(i = 0; media = response.cms_object[i]; i++) {
-						if(u.hc(this.div, "variant")) {
-							var existing_variant = u.ge("variant:"+media.variant);
-							if(existing_variant) {
-								existing_variant.parentNode.removeChild(existing_variant);
-							}
-						}
-						var node = u.ie(this.div.media_list, "li", {"class":"media"});
-						node.div = this.div;
-						node.media_list = this.div.media_list;
-						node.media_format = media.format;
-						node.media_variant = media.variant;
-						u.ac(node, "format:"+media.format);
-						u.ac(node, "variant:"+media.variant);
-						u.ac(node, "media_id:"+media.media_id);
-						this.div.addPreview(node);
-						if(u.hc(this.div, "variant")) {
-							node.media_name.innerHTML = media.variant;
-						}
-						else {
-							node.media_name.innerHTML = media.name;
-						}
-						this.div.adjustMediaName(node);
-						if(!u.hc(this.div, "variant") && this.div.update_name_url) {
-							this.div.addUpdateNameForm(node);
-						}
-					}
-					if(this.div.save_order_url) {
-						u.sortable(this.div.media_list);
-					}
-				}
-				u.rc(this.file_input.field, "loading");
-				this.file_input.val("");
-			}
-			u.request(this, this.action, {"method":"post", "params":form_data});
-		}
-		div.addDeleteForm = function(node) {
-			if(!node.delete_form) {
-				node.delete_form = u.f.addForm(node, {"action":this.delete_url+"/"+this.item_id+"/"+u.cv(node, "variant"), "class":"delete"});
-				node.delete_form.node = node;
-				u.ae(node.delete_form, "input", {"type":"hidden", "name":"csrf-token", "value":this.csrf_token});
-				var bn_delete = u.f.addAction(node.delete_form, {"class":"button delete"});
-				node.delete_form.deleted = function() {
-					this.node.parentNode.removeChild(this.node);
-					if(u.hc(this.node.div, "sortable")) {
-						u.sortable(this.node.div.media_list, {"targets":"mediae", "draggables":"media"});
-					}
-					this.node.delete_form = null;
-				}
-				u.o.deleteMedia.init(node.delete_form);
-			}
-		}
-		div.addUpdateNameForm = function(node) {
-			node.media_name.node = node;
-			u.ce(node.media_name);
-			node.media_name.inputStarted = function(event) {
-				u.e.kill(event);
-				this.node.media_list._sorting_disabled = true;
-			}
-			node.media_name.clicked = function(event) {
-				u.ac(this.node, "edit");
-				var input = this.node.update_name_form.fields["name"];
-				var field = input.field;
-				input.focus();
-				var f_w = field.offsetWidth;
-				var f_p_l = parseInt(u.gcs(field, "padding-left"));
-				var f_p_r = parseInt(u.gcs(field, "padding-right"));
-				var i_p_l = parseInt(u.gcs(input, "padding-left"));
-				var i_p_r = parseInt(u.gcs(input, "padding-right"));
-				var i_m_l = parseInt(u.gcs(input, "margin-left"));
-				var i_m_r = parseInt(u.gcs(input, "margin-right"));
-				var i_b_l = parseInt(u.gcs(input, "border-left-width"));
-				var i_b_r = parseInt(u.gcs(input, "border-right-width"));
-				u.as(input, "width", (f_w - f_p_l - f_p_r - i_p_l - i_p_r - i_m_l - i_m_r - i_b_l - i_b_r)+"px");
-			}
-			node.update_name_form = u.f.addForm(node, {"action":this.update_name_url+"/"+this.item_id+"/"+u.cv(node, "variant"), "class":"edit"});
-			node.update_name_form.node = node;
-			var field = u.ae(node.update_name_form, "input", {"type":"hidden", "name":"csrf-token", "value":this.csrf_token});
-			var field = u.f.addField(node.update_name_form, {"type":"string","name":"name", "value":node.media_name.innerHTML});
-			u.f.init(node.update_name_form);
-			node.update_name_form.fields["name"].blurred = function() {
-				u.bug("blurred")
-				this.form.updateName();
-			}
-			node.update_name_form.submitted = function() {}
-			node.update_name_form.updateName = function() {
-				u.rc(this.node, "edit");
-				this.node.media_list._sorting_disabled = false;
-				this.response = function(response) {
-					page.notify(response);
-					if(response.cms_status == "success" && response.cms_object) {
-						this.node.media_name.innerHTML = this.fields["name"].val();
-					}
-					else {
-						this.fields["name"].val(this.node.media_name.innerHTML);
-					}
-				}
-				u.request(this, this.action, {"method":this.method, "params":u.f.getParams(this)});
-			}
-		}
-		div.addPreview = function(node) {
-			if(node.image) {
-				node.image.parentNode.removeChild(node.image);
-				node.image = null;
-			}
-			if(node.video) {
-				node.video.parentNode.removeChild(node.video);
-				node.video = null;
-			}
-			node.is_image = node.media_format.match(/jpg|png|gif/i);
-			node.is_audio = node.media_format.match(/mp3|ogg/i);
-			node.is_video = node.media_format.match(/mov|mp4|ogv|3gp/i);
-			node.is_zip = node.media_format.match(/zip/i);
-			node.is_pdf = node.media_format.match(/pdf/i);
-			if(node.media_format) {
-				node.bn_player = u.qs("a", node);
-				if(!node.bn_player) {
-					node.bn_player = u.ie(node, "a");
-				}
-				node.bn_player.node = node;
-				u.ce(node.bn_player);
-				node.media_name = u.qs("p", node);
-				if(!node.media_name) {
-					node.media_name = u.ae(node, "p");
-				}
-				node.media_name.node = node;
-			}
-			u.rc(node, "image|audio|video|pdf|zip");
-			if(node.is_audio) {
-				u.ac(node, "audio");
-				this.addAudioPreview(node);
-			}
-			else if(node.is_video) {
-				u.ac(node, "video");
-				this.addVideoPreview(node);
-			}
-			else if(node.is_image) {
-				u.ac(node, "image");
-				this.addImagePreview(node);
-			}
-			else if(node.is_pdf) {
-				u.ac(node, "pdf");
-				this.addPdfPreview(node);
-			}
-			else if(node.is_zip) {
-				u.ac(node, "zip");
-				this.addZipPreview(node);
-			}
-		}
-		div.adjustMediaName = function(node) {
-			if(node.media_name) {
-				var n_w = node.offsetWidth;
-				var p_p_l = parseInt(u.gcs(node.media_name, "padding-left"));
-				var p_p_r = parseInt(u.gcs(node.media_name, "padding-right"));
-				u.as(node.media_name, "width", (n_w - p_p_l - p_p_r)+"px");
-			}
-		}
-		div.addImage = function(node) {
-			if(!node.image && node.media_format) {
-				node.image = u.ae(node, "img");
-				var proportion = u.cv(node, "width")/u.cv(node, "height");
-				u.as(node.image, "width", (node.offsetHeight*proportion)+"px");
-				u.as(node.image, "height", node.offsetHeight+"px");
-			}
-		}
-		div.addVideo = function(node) {
-			if(!page.videoplayer) {
-				page.videoplayer = u.videoPlayer();
-			}
-			if(!node.video && node.media_format) {
-				node.video = u.ae(node, page.videoplayer);
-				var proportion = u.cv(node, "width")/u.cv(node, "height");
-				u.as(node.video, "width", (node.offsetHeight*proportion)+"px");
-				u.as(node.video, "height", node.offsetHeight+"px");
-			}
-		}
-		div.addPdfPreview = function(node) {
-			this.addImage(node);
-			if(node.media_format) {
-				this.addDeleteForm(node);
-				node.image.src = "/images/0/pdf/x"+node.offsetHeight+".png?"+u.randomString(4);
-			}
-		}
-		div.addZipPreview = function(node) {
-			this.addImage(node);
-			if(node.media_format) {
-				this.addDeleteForm(node);
-				node.image.src = "/images/0/zip/x"+node.offsetHeight+".png?"+u.randomString(4);
-			}
-		}
-		div.addImagePreview = function(node) {
-			this.addImage(node);
-			if(node.media_format) {
-				this.addDeleteForm(node);
-				node.loaded = function(queue) {
-					this.image.src = queue[0].image.src;
-					this.div.adjustMediaName(this);
-				}
-				u.preloader(node, ["/images/"+this.item_id+"/"+node.media_variant+"/x"+node.offsetHeight+"."+node.media_format+"?"+u.randomString(4)]);
-			}
-		}
-		div.addAudioPreview = function(node) {
-			if(!page.audioplayer) {
-				page.audioplayer = u.audioPlayer();
-			}
-			if(node.media_format) {
-				this.addDeleteForm(node);
-				node.bn_player.url = "/audios/"+this.item_id+"/"+node.media_variant+"/128."+node.media_format+"?"+u.randomString(4);
-				node.bn_player.inputStarted = function(event) {
-					u.e.kill(event);
-					this.node.media_list._sorting_disabled = true;
-				}
-				node.bn_player.clicked = function(event) {
-					if(!u.hc(this, "playing")) {
-						page.audioplayer.loadAndPlay(this.url);
-						u.ac(this, "playing");
-					}
-					else {
-						page.audioplayer.stop();
-						u.rc(this, "playing");
-					}
-					this.node.media_list._sorting_disabled = false;
-				}
-			}
-		}
-		div.addVideoPreview = function(node) {
-			this.addVideo(node);
-			if(node.media_format) {
-				this.addDeleteForm(node);
-				node.bn_player.url = "/videos/"+this.item_id+"/"+node.media_variant+"/x"+node.offsetHeight+"."+node.media_format+"?"+u.randomString(4);
-				node.bn_player.inputStarted = function(event) {
-					u.e.kill(event);
-					this.node.media_list._sorting_disabled = true;
-				}
-				node.bn_player.clicked = function(event) {
-					if(!u.hc(this, "playing")) {
-						this.node.video.loadAndPlay(this.url);
-						u.ac(this, "playing");
-					}
-					else {
-						this.node.video.stop();
-						u.rc(this, "playing");
-					}
-					this.node.media_list._sorting_disabled = false;
-				}
-			}
-		}
-		if(!div.media_list) {
-			u.ae(div, "ul", {"class":"mediae"});
-		}
-		div.media_list.nodes = u.qsa("li.media", div.media_list);
-		div.media_list.div = div;
-		var i, node;
-		for(i = 0; node = div.media_list.nodes[i]; i++) {
-			node.div = div;
-			node.media_list = div.media_list;
-			node.image = u.qs("img", node);
-			node.media_variant = u.cv(node, "variant");
-			node.media_format = u.cv(node, "format");
-			div.addPreview(node);
-			div.adjustMediaName(node);
-			if(!u.hc(div, "variant") && div.update_name_url) {
-				div.addUpdateNameForm(node);
-			}
-		}
-		if(!u.hc(div, "variant") && u.hc(div, "sortable") && div.media_list && div.save_order_url) {
-			u.sortable(div.media_list, {"targets":"mediae", "draggables":"media"});
-			div.media_list.picked = function() {}
-			div.media_list.dropped = function() {
-				var order = new Array();
-				this.nodes = u.qsa("li.media", this);
-				for(i = 0; node = this.nodes[i]; i++) {
-					order.push(u.cv(node, "media_id"));
-				}
-				this.response = function(response) {
-					page.notify(response);
-				}
-				u.request(this, this.div.save_order_url+"/"+this.div.item_id, {"method":"post", "params":"csrf-token=" + this.div.csrf_token + "&order=" + order.join(",")});
-			}
-		}
-		else {
-			u.rc(div, "sortable");
-		}
-	}
-}
-Util.Objects["deleteMedia"] = new function() {
-	this.init = function(form) {
-		u.f.init(form);
-		var bn_delete = u.qs("input.delete", form);
-		if(bn_delete) {
-			bn_delete.org_value = bn_delete.value;
-			u.e.click(bn_delete);
-			bn_delete.restore = function(event) {
-				this.value = this.org_value;
-				u.rc(this, "confirm");
-			}
-			bn_delete.inputStarted = function(event) {
-				u.e.kill(event);
-			}
-			bn_delete.clicked = function(event) {
-				u.e.kill(event);
-				if(!u.hc(this, "confirm")) {
-					u.ac(this, "confirm");
-					this.value = "Confirm";
-					this.t_confirm = u.t.setTimer(this, this.restore, 3000);
-				}
-				else {
-					u.t.resetTimer(this.t_confirm);
-					this.response = function(response) {
-						page.notify(response);
-						if(response.cms_status == "success") {
-							if(response.cms_object && response.cms_object.constraint_error) {
-								this.value = this.org_value;
-								u.ac(this, "disabled");
-							}
-							else {
-								if(typeof(this.form.deleted) == "function") {
-									this.form.deleted();
-								}
-								else {
-									location.reload();
-								}
-							}
-						}
-						else {
-							this.restore();
-						}
-					}
-					u.request(this, this.form.action, {"method":"post", "params" : u.f.getParams(this.form)});
-				}
-			}
-		}
-	}
-}
-Util.Objects["addMediaSingle"] = new function() {
-	this.init = function(div) {
-		div.form = u.qs("form.upload", div);
-		div.form.div = div;
-		div.item_id = u.cv(div, "item_id");
-		div.media_variant = u.cv(div, "variant");
-		div.media_format = u.cv(div, "format");
-		div.media_file = u.qs("div.file", div);
-		div.media_input = u.qs("input[type=file]", div.form);
-		div.media_input_width = div.media_input.offsetWidth+10;
-		div.media_input_height = Math.round(div.media_input_width / (div.media_input.offsetWidth/(div.media_input.offsetHeight+6)));
-		div.addPreview = function() {
-			if(this.image) {
-				this.image.parentNode.removeChild(this.image);
-				this.image = null;
-			}
-			if(this.video) {
-				this.video.parentNode.removeChild(this.video);
-				this.video = null;
-			}
-			this.is_image = this.media_format.match(/jpg|png|gif/i);
-			this.is_audio = this.media_format.match(/mp3|ogg/i);
-			this.is_video = this.media_format.match(/mov|mp4|ogv|3gp/i);
-			this.is_zip = this.media_format.match(/zip/i);
-			this.is_pdf = this.media_format.match(/pdf/i);
-			if(!this.media_file && this.media_format) {
-				this.media_file = u.ae(this, "div", {"class":"file"});
-			}
-			if(this.media_file) {
-				this.media_file.div = this;
-				this.bn_player = u.qs("a", this.media_file);
-				if(!this.bn_player) {
-					this.bn_player = u.ie(this.media_file, "a");
-				}
-				this.bn_player.div = this;
-				u.ce(this.bn_player);
-				this.media_name = u.qs("p", this.media_file);
-				if(!this.media_name) {
-					this.media_name = u.ae(this.media_file, "p");
-				}
-				this.media_name.div = this;
-			}
-			u.rc(this, "image|audio|video|pdf|zip");
-			if(this.is_audio) {
-				u.ac(this, "audio");
-				this.addAudioPreview();
-			}
-			else if(this.is_video) {
-				u.ac(this, "video");
-				this.addVideoPreview();
-			}
-			else if(this.is_image) {
-				u.ac(this, "image");
-				this.addImagePreview();
-			}
-			else if(this.is_pdf) {
-				u.ac(this, "pdf");
-				this.addPdfPreview();
-			}
-			else if(this.is_zip) {
-				u.ac(this, "zip");
-				this.addZipPreview();
-			}
-		}
-		div.addImage = function() {
-			if(!this.image && this.media_format) {
-				this.image = u.ae(this, "img");
-				u.as(this.image, "width", div.media_input_width+"px");
-				u.as(this.image, "height", div.media_input_height+"px");
-			}
-		}
-		div.addVideo = function() {
-			if(!page.videoplayer) {
-				page.videoplayer = u.videoPlayer();
-			}
-			if(!this.video && this.media_format) {
-				this.video = u.ae(this, page.videoplayer);
-				u.as(this.video, "width", div.media_input_width+"px");
-				u.as(this.video, "height", div.media_input_height+"px");
-			}
-		}
-		u.f.init(div.form);
-		div.csrf_token = div.form.fields["csrf-token"].val();
-		div.delete_url = div.getAttribute("data-media-delete");
-		div.form.file_input = u.qs("input[type=file]", div.form);
-		div.form.file_input.div = div;
-		div.form.file_input.changed = function() {
-			this.form.submit();
-		}
-		div.form.submitted = function() {
-			u.ac(this.file_input.field, "loading");
-			u.rc(this.file_input.field, "focus");
-			if(this.div.image) {
-				u.as(this.div.image, "display", "none");
-			}
-			if(this.div.video) {
-				u.as(this.div.video, "display", "none");
-			}
-			if(this.div.media_file) {
-				u.as(this.div.media_file, "display", "none");
-			}
-			var form_data = new FormData(this);
-			this.response = function(response) {
-				page.notify(response);
-				if(this.div.image) {
-					u.as(this.div.image, "display", "block");
-				}
-				if(this.div.video) {
-					u.as(this.div.video, "display", "block");
-				}
-				if(this.div.media_file) {
-					u.as(this.div.media_file, "display", "block");
-				}
-				if(response.cms_status == "success" && response.cms_object) {
-					this.div.media_format = response.cms_object.format;
-					u.rc(this.div, "format:[a-z]*");
-					u.ac(this.div, "format:"+this.div.media_format);
-					this.div.addPreview();
-					this.div.media_name.innerHTML = response.cms_object.name;
-				}
-				u.rc(this.file_input.field, "loading");
-				this.file_input.val("");
-			}
-			u.request(this, this.action, {"method":"post", "params":form_data});
-		}
-		div.addDeleteForm = function() {
-			if(!this.delete_form) {
-				this.delete_form = u.f.addForm(this, {"action":this.delete_url+"/"+this.item_id+"/"+this.media_variant, "class":"delete"});
-				this.delete_form.div = this;
-				u.ae(this.delete_form, "input", {"type":"hidden", "name":"csrf-token", "value":this.csrf_token});
-				this.bn_delete = u.f.addAction(this.delete_form, {"class":"button delete"});
-				this.delete_form.deleted = function() {
-					if(this.div.video) {
-						this.div.video.parentNode.removeChild(this.div.video);
-						this.div.video = false;
-					}
-					if(this.div.image) {
-						this.div.image.parentNode.removeChild(this.div.image);
-						this.div.image = false;
-					}
-					if(this.div.media_file) {
-						this.div.media_file.parentNode.removeChild(this.div.media_file);
-						this.div.media_file = false;
-					}
-					this.parentNode.removeChild(this);
-					this.div.delete_form = null;
-				}
-				u.o.deleteMedia.init(this.delete_form);
-			}
-		}
-		div.addPdfPreview = function() {
-			this.addImage();
-			if(this.media_format) {
-				this.addDeleteForm();
-				this.image.src = "/images/0/pdf/x"+this.media_input_height+".png?"+u.randomString(4);
-			}
-		}
-		div.addZipPreview = function() {
-			this.addImage();
-			if(this.media_format) {
-				this.addDeleteForm();
-				this.image.src = "/images/0/zip/x"+this.media_input_height+".png?"+u.randomString(4);
-			}
-		}
-		div.addImagePreview = function() {
-			this.addImage();
-			if(this.media_format) {
-				this.addDeleteForm();
-				this.image.src = "/images/"+this.item_id+"/"+this.media_variant+"/x"+this.media_input_height+"."+this.media_format+"?"+u.randomString(4);
-			}
-		}
-		div.addAudioPreview = function() {
-			if(!page.audioplayer) {
-				page.audioplayer = u.audioPlayer();
-			}
-			if(this.media_format) {
-				this.addDeleteForm();
-				this.bn_player.url = "/audios/"+this.item_id+"/"+this.media_variant+"/128."+this.media_format+"?"+u.randomString(4);
-				this.bn_player.clicked = function(event) {
-					if(!u.hc(this, "playing")) {
-						page.audioplayer.loadAndPlay(this.url);
-						u.ac(this, "playing");
-					}
-					else {
-						page.audioplayer.stop();
-						u.rc(this, "playing");
-					}
-				}
-			}
-		}
-		div.addVideoPreview = function() {
-			this.addVideo();
-			if(this.media_format) {
-				this.addDeleteForm();
-				this.bn_player.url = "/videos/"+this.item_id+"/"+this.media_variant+"/x"+this.media_input_height+"."+this.media_format+"?"+u.randomString(4);
-				this.bn_player.clicked = function(event) {
-					if(!u.hc(this, "playing")) {
-						this.div.video.loadAndPlay(this.url);
-						u.ac(this, "playing");
-					}
-					else {
-						this.div.video.stop();
-						u.rc(this, "playing");
-					}
-				}
-			}
-		}
-		div.addPreview();
-	}
-}
-
-/*i-defaultcomments.js*/
-Util.Objects["defaultComments"] = new function() {
-	this.init = function(div) {
-		div.item_id = u.cv(div, "item_id");
-		div._comments_form = u.qs("form", div);
-		div._comments_form.div = div;
-		u.f.init(div._comments_form);
-		div.csrf_token = div._comments_form.fields["csrf-token"].value;
-		div.add_comment_url = div._comments_form.action;
-		div.delete_comment_url = div.getAttribute("data-comment-delete");
-		div.update_comment_url = div.getAttribute("data-comment-update");
-		div._comments_form.list = u.qs("ul.comments", div);
-		div.initComment = function(node) {
-			node.div = this;
-			if(this.delete_comment_url || this.update_comment_url) {
-				var actions = u.ae(node, "ul", {"class":"actions"});
-				var li;
-				if(this.update_comment_url) {
-					li = u.ae(actions, "li", {"class":"edit"});
-					bn_edit = u.ae(li, "a", {"html":"Edit", "class":"button edit"});
-					bn_edit.node = node;
-					u.ce(bn_edit);
-					bn_edit.clicked = function() {
-						var actions, bn_cancel, bn_update, form;
-						form = u.f.addForm(this.node, {"action":this.node.div.update_comment_url+"/"+this.node.div.item_id+"/"+u.cv(this.node, "comment_id"), "class":"edit"});
-						u.ae(form, "input", {"type":"hidden","name":"csrf-token", "value":this.node.div.csrf_token});
-						u.f.addField(form, {"type":"text", "name":"comment", "value": u.qs("p.comment", this.node).innerHTML});
-						form.node = node;
-						actions = u.ae(form, "ul", {"class":"actions"});
-						bn_update = u.f.addAction(actions, {"value":"Update", "class":"button primary update", "name":"update"});
-						bn_cancel = u.f.addAction(actions, {"value":"Cancel", "class":"button cancel", "type":"button", "name":"cancel"});
-						u.f.init(form);
-						form.submitted = function() {
-							this.response = function(response) {
-								page.notify(response);
-								if(response.cms_status == "success") {
-									u.qs("p.comment", this.node).innerHTML = this.fields["comment"].val();
-									this.parentNode.removeChild(this);
-								}
-							}
-							u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
-						}
-						u.ce(bn_cancel);
-						bn_cancel.clicked = function(event) {
-							u.e.kill(event);
-							this.form.parentNode.removeChild(this.form);
-						}
-					}
-				}
-				if(this.delete_comment_url) {
-					li = u.ae(actions, "li", {"class":"delete"});
-					var form = u.f.addForm(li, {"action":this.delete_comment_url+"/"+this.item_id+"/"+u.cv(node, "comment_id"), "class":"delete"});
-					u.ae(form, "input", {"type":"hidden","name":"csrf-token", "value":this.csrf_token});
-					form.node = node;
-					bn_delete = u.f.addAction(form, {"value":"Delete", "class":"button delete", "name":"delete"});
-					u.f.init(form);
-					form.restore = function(event) {
-						this.actions["delete"].value = "Delete";
-						u.rc(this.actions["delete"], "confirm");
-					}
-					form.submitted = function() {
-						if(!u.hc(this.actions["delete"], "confirm")) {
-							u.ac(this.actions["delete"], "confirm");
-							this.actions["delete"].value = "Confirm";
-							this.t_confirm = u.t.setTimer(this, this.restore, 3000);
-						}
-						else {
-							u.t.resetTimer(this.t_confirm);
-							this.response = function(response) {
-								page.notify(response);
-								if(response.cms_status == "success") {
-									if(response.cms_object && response.cms_object.constraint_error) {
-										this.value = "Delete";
-										u.ac(this, "disabled");
-									}
-									else {
-										this.node.parentNode.removeChild(this.node);
-									}
-								}
-							}
-							u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
-						}
-					}
-				}
-			}
-		}
-		div._comments_form.submitted = function(iN) {
-			this.response = function(response) {
-				page.notify(response);
-				if(response.cms_status == "success" && response.cms_object) {
-					var comment_li = u.ae(this.list, "li", {"class":"comment comment_id:"+response.cms_object["id"]});
-					var info = u.ae(comment_li, "ul", {"class":"info"});
-					u.ae(info, "li", {"class":"user", "html":response.cms_object["nickname"]});
-					u.ae(info, "li", {"class":"created_at", "html":response.cms_object["created_at"]});
-					u.ae(comment_li, "p", {"class":"comment", "html":response.cms_object["comment"]})
-					this.div.initComment(comment_li);
-					this.fields["comment"].val("");
-				}
-			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
-		}
-		div.comments = u.qsa("li.comment", div._comments_form.list);
-		var i, node;
-		for(i = 0; node = div.comments[i]; i++) {
-			div.initComment(node);
-		}
-	}
-}
-
-
-/*i-navigations.js*/
-Util.Objects["navigationNodes"] = new function() {
-	this.init = function(div) {
-		div.list = u.qs("ul.nodes", div);
-		if(div.list) {
-			div.list.update_order_url = div.getAttribute("data-item-order");
-			div.list.csrf_token = div.getAttribute("data-csrf-token");
-			div.list.nodes = u.qsa("li.item", div.list);
-			var i, node;
-			for(i = 0; node = div.list.nodes[i]; i++) {
-				node.list = div.list;
-				var action = u.qs("li.delete", node);
-				if(action) {
-					form = u.qs("form", action);
-					form.node = node;
-					if(form) {
-						u.f.init(form);
-						if(u.qs("ul.nodes li.item", node)) {
-							u.ac(form.actions["delete"], "disabled");
-						}
-						form.restore = function(event) {
-							this.actions["delete"].value = "Delete";
-							u.rc(this.actions["delete"], "confirm");
-						}
-						form.submitted = function() {
-							if(!u.hc(this.actions["delete"], "confirm")) {
-								u.ac(this.actions["delete"], "confirm");
-								this.actions["delete"].value = "Confirm";
-								this.t_confirm = u.t.setTimer(this, this.restore, 3000);
-							}
-							else {
-								u.t.resetTimer(this.t_confirm);
-								this.response = function(response) {
-									page.notify(response);
-									if(response.cms_status == "success") {
-										this.node.parentNode.removeChild(this.node);
-										this.node.list.updateNodeStructure();
-									}
-								}
-								u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
-							}
-						}
-					}
-				}
-			}
-			div.list.dropped = function(event) {
-				this.updateNodeStructure();
-			}
-			div.list.updateNodeStructure = function() {
-				var structure = this.getStructure();
-				this.response = function(response) {
-					page.notify(response);
-				}
-				u.request(this, this.update_order_url, {"method":"post", "params":"csrf-token="+this.csrf_token+"&structure="+JSON.stringify(structure)});
-				var i, node;
-				this.nodes = u.qsa("li.item", this);
-				for(i = 0; node = this.nodes[i]; i++) {
-					var action = u.qs("li.delete", node);
-					if(action) {
-						form = u.qs("form", action);
-						if(form) {
-							if(u.qs("ul.nodes li.item", node)) {
-								u.ac(form.actions["delete"], "disabled");
-							}
-							else {
-								u.rc(form.actions["delete"], "disabled");
-							}
-						}
-					}
-				}
-			}
-			u.sortable(div.list, {"allow_nesting":true, "targets":"nodes", "draggables":"draggable"});
-		}
-	}
-}
-
-/*i-users.js*/
-Util.Objects["usernames"] = new function() {
-	this.init = function(div) {
-		var form;
-		form = u.qs("form.email", div);
-		u.f.init(form);
-		form.submitted = function(iN) {
-			this.response = function(response) {
-				page.notify(response);
-				if(response.cms_status == "error") {
-					u.f.fieldError(this.fields["email"]);
-				}
-			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
-		}
-		form = u.qs("form.mobile", div);
-		u.f.init(form);
-		form.submitted = function(iN) {
-			this.response = function(response) {
-				page.notify(response);
-				if(response.cms_status == "error") {
-					u.f.fieldError(this.fields["mobile"]);
-				}
-			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
-		}
-	}
-}
-Util.Objects["password"] = new function() {
-	this.init = function(div) {
-		var password_state = u.qs("div.password_state", div);
-		var new_password = u.qs("div.new_password", div);
-		var a_create = u.qs(".password_missing a");
-		var a_change = u.qs(".password_set a");
-		a_create.new_password = new_password;
-		a_change.new_password = new_password;
-		a_create.password_state = password_state;
-		a_change.password_state = password_state;
-		u.ce(a_create);
-		u.ce(a_change);
-		a_create.clicked = a_change.clicked = function() {
-			u.as(this.password_state, "display", "none");
-			u.as(this.new_password, "display", "block");
-		}
-		var form = u.qs("form", div);
-		form.password_state = password_state;
-		form.new_password = new_password;
-		u.f.init(form);
-		form.submitted = function(iN) {
-			this.response = function(response) {
-				if(response.cms_status == "success") {
-					u.ac(this.password_state, "set");
-					u.as(this.password_state, "display", "block");
-					u.as(this.new_password, "display", "none");
-				}
-				page.notify(response);
-			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
-			this.fields["password"].val("");
-		}
-	}
-}
-Util.Objects["newsletters"] = new function() {
-	this.init = function(div) {
-		var i, node;
-		div.newsletters = u.qsa("ul.newsletters > li", div);
-		for(i = 0; node = div.newsletters[i]; i++) {
-			node.li_delete = u.qs("li.delete", node);
-			node.li_subscribe = u.qs("li.subscribe", node);
-			if(node.li_delete) {
-				node.li_delete.form = u.qs("form", node.li_delete)
-				u.f.init(node.li_delete.form);
-				node.li_delete.form.node = node;
-				node.li_delete.form.restore = function(event) {
-					this.actions["delete"].value = "Unsubscribe";
-					u.rc(this.actions["delete"], "confirm");
-				}
-				node.li_delete.form.submitted = function() {
-					if(!u.hc(this.actions["delete"], "confirm")) {
-						u.ac(this.actions["delete"], "confirm");
-						this.actions["delete"].value = "Confirm";
-						this.t_confirm = u.t.setTimer(this, this.restore, 3000);
-					}
-					else {
-						u.t.resetTimer(this.t_confirm);
-						this.response = function(response) {
-							page.notify(response);
-							if(response.cms_status == "success") {
-								u.rc(this.node, "subscribed");
-							}
-							this.restore();
-						}
-						u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
-					}
-				}
-			}
-			if(node.li_subscribe) {
-				node.li_subscribe.form = u.qs("form", node.li_subscribe)
-				u.f.init(node.li_subscribe.form);
-				node.li_subscribe.form.node = node;
-				node.li_subscribe.form.submitted = function() {
-					this.response = function(response) {
-						page.notify(response);
-						if(response.cms_status == "success") {
-							u.ac(this.node, "subscribed");
-						}
-					}
-					u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
-				}
-			}
-		}
-	}
-}
-Util.Objects["accessEdit"] = new function() {
-	this.init = function(div) {
-		div._item_id = u.cv(div, "item_id");
-		var form = u.qs("form", div);
-		u.f.init(form);
-		form.actions["cancel"].clicked = function(event) {
-			location.href = this.url;
-		}
-		form.submitted = function(iN) {
-			this.response = function(response) {
-				page.notify(response);
-			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
-		}
-		var i, group;
-		var groups = u.qsa("li.action", form);
-		for(i = 0; group = groups[i]; i++) {
-			var h3 = u.qs("h3", group);
-			h3.group = group;
-			u.ce(h3)
-			h3.clicked = function() {
-				var i, input;
-				var inputs = u.qsa("input[type=checkbox]", this.group);
-				for(i = 0; input = inputs[i]; i++) {
-					input.val(1);
-				}
-			}
-		}
-	}
-}
-
-/*i-profile-desktop.js*/
-Util.Objects["editProfile"] = new function() {
-	this.init = function(div) {
-		div._item_id = u.cv(div, "item_id");
-		var form = u.qs("form", div);
-		form.div = div;
-		u.f.init(form);
-		form.submitted = function(iN) {
-			this.response = function(response) {
-				if(response.cms_status == "success") {
-					response.cms_message = ["Profile updated"];
-				}
-				else {
-					response.cms_message = ["Profile could not be updated"];
-				}
-				page.notify(response);
-			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this, {"send_as":"formdata"})});
-		}
-	}
-}
-Util.Objects["usernamesProfile"] = new function() {
-	this.init = function(div) {
-		u.bug("init usernamesProfile")
-		var form;
-		form = u.qs("form.email", div);
-		u.f.init(form);
-		form.submitted = function(iN) {
-			this.response = function(response) {
-				if(response.cms_object && response.cms_object.status == "USER_EXISTS") {
-					page.notify({"isJSON":true, "cms_status":"error", "cms_message":["Email already exists"]});
-					u.f.fieldError(this.fields["email"]);
-				}
-				else if(response.cms_status == "error") {
-					page.notify({"isJSON":true, "cms_status":"error", "cms_message":["Email could not be updated"]});
-					u.f.fieldError(this.fields["email"]);
-				}
-				else {
-					page.notify({"isJSON":true, "cms_status":"success", "cms_message":["Email updated"]});
-				}
-			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
-		}
-		form = u.qs("form.mobile", div);
-		u.f.init(form);
-		form.submitted = function(iN) {
-			this.response = function(response) {
-				if(response.cms_object && response.cms_object.status == "USER_EXISTS") {
-					page.notify({"isJSON":true, "cms_status":"error", "cms_message":["Mobile already exists"]});
-					u.f.fieldError(this.fields["mobile"]);
-				}
-				else if(response.cms_status == "error") {
-					page.notify({"isJSON":true, "cms_status":"error", "cms_message":["Mobile could not be updated"]});
-					u.f.fieldError(this.fields["mobile"]);
-				}
-				else {
-					page.notify({"isJSON":true, "cms_status":"success", "cms_message":["Mobile updated"]});
-				}
-			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
-		}
-	}
-}
-Util.Objects["passwordProfile"] = new function() {
-	this.init = function(div) {
-		var password_state = u.qs("div.password_state", div);
-		var new_password = u.qs("div.new_password", div);
-		var a_change = u.qs(".password_set a");
-		a_change.new_password = new_password;
-		a_change.password_state = password_state;
-		u.ce(a_change);
-		a_change.clicked = function() {
-			u.as(this.password_state, "display", "none");
-			u.as(this.new_password, "display", "block");
-		}
-		var form = u.qs("form", div);
-		form.password_state = password_state;
-		form.new_password = new_password;
-		u.f.init(form);
-		form.submitted = function(iN) {
-			this.response = function(response) {
-				if(response.cms_status == "success") {
-					u.ac(this.password_state, "set");
-					u.as(this.password_state, "display", "block");
-					u.as(this.new_password, "display", "none");
-					page.notify({"isJSON":true, "cms_status":"success", "cms_message":"Password updated"});
-				}
-				else {
-					page.notify({"isJSON":true, "cms_status":"error", "cms_message":"Password could not be updated"});
-				}
-			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
-			this.fields["password"].val("");
-		}
-	}
-}
-Util.Objects["addressProfile"] = new function() {
-	this.init = function(form) {
-		u.f.init(form);
-		form.actions["cancel"].clicked = function(event) {
-			location.href = this.url;
-		}
-		form.submitted = function(iN) {
-			this.response = function(response) {
-				if(response.cms_status == "success") {
-					location.href = this.actions["cancel"].url;
-				}
-				else {
-					page.notify({"isJSON":true, "cms_status":"error", "cms_message":"Address could not be updated"});
-				}
-			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
-		}
-	}
-}
-Util.Objects["newslettersProfile"] = new function() {
-	this.init = function(div) {
-		var i, node;
-		div.newsletters = u.qsa("ul.newsletters > li", div);
-		for(i = 0; node = div.newsletters[i]; i++) {
-			node.li_delete = u.qs("li.delete", node);
-			node.li_subscribe = u.qs("li.subscribe", node);
-			if(node.li_delete) {
-				node.li_delete.form = u.qs("form", node.li_delete)
-				u.f.init(node.li_delete.form);
-				node.li_delete.form.node = node;
-				node.li_delete.form.restore = function(event) {
-					this.actions["delete"].value = "Unsubscribe";
-					u.rc(this.actions["delete"], "confirm");
-				}
-				node.li_delete.form.submitted = function() {
-					if(!u.hc(this.actions["delete"], "confirm")) {
-						u.ac(this.actions["delete"], "confirm");
-						this.actions["delete"].value = "Confirm";
-						this.t_confirm = u.t.setTimer(this, this.restore, 3000);
-					}
-					else {
-						u.t.resetTimer(this.t_confirm);
-						this.response = function(response) {
-							if(response.cms_status == "success") {
-								page.notify({"isJSON":true, "cms_status":"success", "cms_message":"Unsubscribed from newsletter"});
-								u.rc(this.node, "subscribed");
-							}
-							else {
-								page.notify({"isJSON":true, "cms_status":"error", "cms_message":"Could not unsubscribe"});
-							}
-							this.restore();
-						}
-						u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
-					}
-				}
-			}
-			if(node.li_subscribe) {
-				node.li_subscribe.form = u.qs("form", node.li_subscribe)
-				u.f.init(node.li_subscribe.form);
-				node.li_subscribe.form.node = node;
-				node.li_subscribe.form.submitted = function() {
-					this.response = function(response) {
-						page.notify(response);
-						if(response.cms_status == "success") {
-							u.ac(this.node, "subscribed");
-							page.notify({"isJSON":true, "cms_status":"success", "cms_message":"Subscribed to newsletter"});
-						}
-						else {
-							page.notify({"isJSON":true, "cms_status":"error", "cms_message":"Could not subscribe to newsletter"});
-						}
-					}
-					u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
-				}
-			}
-		}
-	}
-}
-
-
-/*u-notifier.js*/
-u.notifier = function(node) {
-	var notifications = u.qs("div.notifications", node);
-	if(!notifications) {
-		node.notifications = u.ae(node, "div", {"id":"notifications"});
-	}
-	node.notifications.hide = function() {
-		this.transitioned = function() {
-			u.a.transition(this, "none");
-		}
-		u.a.transition(this, "all 0.5s ease-in-out");
-		u.a.translate(this, 0, -this.offsetHeight);
-	}
-	node.notify = function(response, _options) {
-		var class_name = "message";
-		if(typeof(_options) == "object") {
-			var argument;
-			for(argument in _options) {
-				switch(argument) {
-					case "class"	: class_name	= _options[argument]; break;
-				}
-			}
-		}
-		var output;
-		if(typeof(response) == "object" && response.isJSON) {
-			var message = response.cms_message;
-			var cms_status = response.cms_status;
-			if(typeof(message) == "object") {
-				for(type in message) {
-					if(typeof(message[type]) == "string") {
-						output = u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message[type]});
-					}
-					else if(typeof(message[type]) == "object" && message[type].length) {
-						var node, i;
-						for(i = 0; _message = message[type][i]; i++) {
-							output = u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":_message});
-						}
-					}
-				}
-			}
-			else if(typeof(message) == "string") {
-				output = u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message});
-			}
-		}
-		else if(typeof(response) == "object" && response.isHTML) {
-			var login = u.qs(".scene.login", response);
-			if(login) {
-				if(page.t_autosave) {
-					u.t.resetTimer(page.t_autosave);
-				}
-				var overlay = u.ae(document.body, "div", {"id":"login_overlay"});
-				u.ae(overlay, login);
-				u.as(document.body, "overflow", "hidden");
-				var form = u.qs("form", overlay);
-				form.overlay = overlay;
-				u.ae(form, "input", {"type":"hidden", "name":"ajaxlogin", "value":"true"})
-				u.f.init(form);
-				form.submitted = function() {
-					this.response = function(response) {
-						if(response.isJSON && response.cms_status) {
-							var csrf_token = response.cms_object["csrf-token"];
-							u.bug("new token:" + csrf_token);
-							var data_vars = u.qsa("[data-csrf-token]", page);
-							var input_vars = u.qsa("[name=csrf-token]", page);
-							var dom_vars = u.qsa("*", page);
-							var i, node;
-							for(i = 0; node = data_vars[i]; i++) {
-								u.bug("data:" + u.nodeId(node) + ", " + node.getAttribute("data-csrf-token"));
-								node.setAttribute("data-csrf-token", csrf_token);
-							}
-							for(i = 0; node = input_vars[i]; i++) {
-								u.bug("input:" + u.nodeId(node) + ", " + node.value);
-								node.value = csrf_token;
-							}
-							for(i = 0; node = dom_vars[i]; i++) {
-								if(node.csrf_token) {
-									u.bug("dom:" + u.nodeId(node) + ", " + node.csrf_token);
-									node.csrf_token = csrf_token;
-								}
-							}
-							this.overlay.parentNode.removeChild(this.overlay);
-							u.as(document.body, "overflow", "auto");
-							if(page._autosave_node && page._autosave_interval) {
-								u.t.setTimer(page._autosave_node, "autosave", page._autosave_interval);
-							}
-						}
-						else {
-							alert("login error")
-						}
-					}
-					u.request(this, this.action, {"method":this.method, "params":u.f.getParams(this)});
-				}
-			}
-		}
-		u.t.setTimer(this.notifications, this.notifications.hide, 4500);
-	}
-}
-
+/*u-settings.js*/
+u.site_name = "think.dk";
+u.txt = {};
+u.txt["share"] = "Del artiklen";
+u.txt["not_read"] = "Klik på <em>Tjek</em>-ikonet når du har læst et emne, så husker vi det for dig.";
+u.txt["read"] = "Læst";
+u.txt["add_comment"] = "Tilføj kommentar";
+u.txt["comment"] = "Kommentar";
+u.txt["cancel"] = "Fortryd";
 
 /*ga.js*/
 u.ga_account = 'UA-10756281-1';
@@ -8772,4 +4783,705 @@ if(u.ga_account) {
 }
 
 
+/*u-svg.js*/
+Util.svg = function(svg_object) {
+	var svg, shape, svg_shape;
+	if(svg_object.name && u._svg_cache && u._svg_cache[svg_object.name]) {
+		svg = u._svg_cache[svg_object.name].cloneNode(true);
+	}
+	if(!svg) {
+		svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+		if(svg_object.title) {
+			svg.setAttributeNS(null, "title", svg_object.title);
+		}
+		if(svg_object.class) {
+			svg.setAttributeNS(null, "class", svg_object.class);
+		}
+		if(svg_object.width) {
+			svg.setAttributeNS(null, "width", svg_object.width);
+		}
+		if(svg_object.height) {
+			svg.setAttributeNS(null, "height", svg_object.height);
+		}
+		if(svg_object.id) {
+			svg.setAttributeNS(null, "id", svg_object.id);
+		}
+		if(svg_object.node) {
+			svg.node = svg_object.node;
+		}
+		for(shape in svg_object.shapes) {
+			Util.svgShape(svg, svg_object.shapes[shape]);
+		}
+		if(svg_object.name) {
+			if(!u._svg_cache) {
+				u._svg_cache = {};
+			}
+			u._svg_cache[svg_object.name] = svg.cloneNode(true);
+		}
+	}
+	if(svg_object.node) {
+		svg_object.node.appendChild(svg);
+	}
+	return svg;
+}
+Util.svgShape = function(svg, svg_object) {
+	svg_shape = document.createElementNS("http://www.w3.org/2000/svg", svg_object["type"]);
+	svg_object["type"] = null;
+	delete svg_object["type"];
+	for(detail in svg_object) {
+		svg_shape.setAttributeNS(null, detail, svg_object[detail]);
+	}
+	return svg.appendChild(svg_shape);
+}
 
+
+/*i-page.js*/
+u.bug_force = true;
+u.bug_console_only = true;
+Util.Objects["page"] = new function() {
+	this.init = function(page) {
+		page.hN = u.qs("#header");
+		page.hN.service = u.qs(".servicenavigation", page.hN);
+		u.e.drag(page.hN, page.hN);
+		page.logo = u.ie(page.hN, "a", {"class":"logo", "html":u.eitherOr(u.site_name, "Frontpage")});
+		page.logo.url = '/';
+		page.cN = u.qs("#content", page);
+		page.nN = u.qs("#navigation", page);
+		page.nN.list = u.qs("ul", page.nN);
+		page.nN = u.ie(page.hN, page.nN);
+		page.fN = u.qs("#footer");
+		page.fN.service = u.qs(".servicenavigation", page.fN);
+		page.fN.slogan = u.qs("p", page.fN);
+		u.ce(page.fN.slogan);
+		page.fN.slogan.clicked = function(event) {
+			window.open("http://parentnode.dk");
+		}
+		page.resized = function() {
+			this.calc_height = u.browserH();
+			this.calc_width = u.browserW();
+			this.available_height = this.calc_height - page.hN.offsetHeight - page.fN.offsetHeight;
+			u.as(page.cN, "height", "auto", false);
+			if(this.available_height >= page.cN.offsetHeight) {
+				u.as(page.cN, "height", this.available_height+"px", false);
+			}
+			if(this.calc_width > 1300) {
+				u.ac(page, "fixed");
+			}
+			else {
+				u.rc(page, "fixed");
+			}
+			if(page.cN && page.cN.scene) {
+				if(typeof(page.cN.scene.resized) == "function") {
+					page.cN.scene.resized();
+				}
+			}
+		}
+		page.scrolled = function() {
+			if(page.cN && page.cN.scene && typeof(page.cN.scene.scrolled) == "function") {
+				page.cN.scene.scrolled();
+			}
+		}
+		page.orientationchanged = function() {
+			if(u.hc(page.bn_nav, "open")) {
+				u.as(page.hN, "height", window.innerHeight + "px");
+			}
+		}
+		page.ready = function() {
+			if(!u.hc(this, "ready")) {
+				u.addClass(this, "ready");
+				u.e.addEvent(window, "resize", page.resized);
+				u.e.addEvent(window, "scroll", page.scrolled);
+				u.e.addEvent(window, "orientationchange", page.orientationchanged);
+				this.initNavigation();
+				this.resized();
+				if(!u.getCookie("terms_v1")) {
+					var terms = u.ie(page.cN, "div", {"class":"terms_notification"});
+					u.ae(terms, "h3", {"html":"We love <br />cookies and privacy"});
+					var bn_accept = u.ae(terms, "a", {"class":"accept", "html":"Accept"});
+					bn_accept.terms = terms;
+					u.ce(bn_accept);
+					bn_accept.clicked = function() {
+						this.terms.parentNode.removeChild(this.terms);
+						u.saveCookie("terms_v1", true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
+					}
+					if(!location.href.match(/\/terms/)) {
+						var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details"});
+						bn_details.url = "/terms";
+						u.ce(bn_details, {"type":"link"});
+					}
+				}
+			}
+		}
+		page.initNavigation = function() {
+			this.bn_nav = u.qs(".servicenavigation li.navigation", this.hN);
+			u.ae(this.bn_nav, "div");
+			u.ae(this.bn_nav, "div");
+			u.ae(this.bn_nav, "div");
+			u.ce(this.bn_nav);
+			this.bn_nav.clicked = function(event) {
+				if(u.hc(this, "open")) {
+					u.rc(this, "open");
+					u.as(page.hN, "height", "60px");
+					u.as(page.nN, "display", "none");
+				}
+				else {
+					u.ac(this, "open");
+					u.as(page.hN, "height", window.innerHeight + "px");
+					u.as(page.nN, "display", "block");
+					page.nN.start_drag_y = (window.innerHeight - 100) - page.nN.offsetHeight;
+					page.nN.end_drag_y = page.nN.offsetHeight;
+				}
+			}
+			u.e.drag(this.nN, [0, (window.innerHeight - 100) - this.nN.offsetHeight, this.hN.offsetWidth, this.nN.offsetHeight], {"strict":false, "elastica":200, "vertical_lock":true});
+			var i, node;
+			this.hN.nodes = u.qsa("#navigation li,a.logo", page.hN);
+			for(i = 0; node = this.hN.nodes[i]; i++) {
+				u.ce(node, {"type":"link"});
+				node._mousedover = function() {
+					this.transitioned = function() {
+						this.transitioned = function() {
+							u.a.transition(this, "none");
+						}
+						u.a.transition(this, "all 0.1s ease-in-out");
+						u.a.scale(this, 1.15);
+					}
+					u.a.transition(this, "all 0.1s ease-in-out");
+					u.a.scale(this, 1.22);
+				}
+				node._mousedout = function() {
+					this.transitioned = function() {
+						this.transitioned = function() {
+							u.a.transition(this, "none");
+						}
+						u.a.transition(this, "all 0.1s ease-in-out");
+						u.a.scale(this, 1);
+					}
+					u.a.transition(this, "all 0.1s ease-in-out");
+					u.a.scale(this, 0.9);
+				}
+				if(u.e.event_pref == "mouse") {
+					u.e.addEvent(node, "mouseover", node._mousedover);
+					u.e.addEvent(node, "mouseout", node._mousedout);
+				}
+				else {
+					u.e.addEvent(node, "touchstart", node._mousedover);
+					u.e.addEvent(node, "touchend", node._mousedout);
+				}
+			}
+		}
+		page.ready();
+	}
+}
+u.e.addDOMReadyEvent(u.init);
+
+
+/*i-login.js*/
+Util.Objects["login"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			this._form = u.qs("form", this);
+			u.f.init(this._form);
+			page.cN.scene = this;
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
+
+/*i-signup.js*/
+Util.Objects["signup"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			this._form = u.qs("form", this);
+			u.f.init(this._form);
+			page.cN.scene = this;
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
+
+/*i-newsletter.js*/
+Util.Objects["newsletter"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			this._form = u.qs("form", this);
+			u.f.init(this._form);
+			page.cN.scene = this;
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
+
+/*i-front.js*/
+Util.Objects["front"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			this._h1 = u.qs("h1", this);
+			this._long = u.qs(".long", this);
+			this._long._spans = u.qsa("span", this._long);
+			this._now = u.qs(".now", this);
+			this._time = u.qs(".time", this);
+			this._wake = u.qs(".wake", this);
+			this._wake._spans = u.qsa("span", this._wake);
+			this._realize = u.qs(".realize", this);
+			this._means = u.qs(".means", this);
+			this._tyrant = u.qs(".tyrant", this);
+			this._tyrant._spans = u.qsa("span", this._tyrant);
+			this._goal = u.qs(".goal", this);
+			this._goal._spans = u.qsa("span", this._goal);
+			this._forgotten = u.qs(".forgotten", this);
+			this._bills = u.qs(".bills", this);
+			this._busy = u.qs(".busy", this);
+			this._idleness = u.qs(".idleness", this);
+			this._idleness._spans = u.qsa("span", this._idleness);
+			this._safety = u.qs(".safety", this);
+			this._safety._spans = u.qsa("span", this._safety);
+			this._luxery = u.qs(".luxery", this);
+			this._luxery._spans = u.qsa("span", this._luxery);
+			this._cost = u.qs(".cost", this);
+			this._everything = u.qs(".everything", this);
+			this._content = u.qs(".content", this);
+			this._slaves = u.qs(".slaves", this);
+			this._slaves._spans = u.qsa("span", this._slaves);
+			this._nothing = u.qs(".nothing", this);
+			this._nothing._spans = u.qsa("span", this._nothing);
+			this._except = u.qs(".except", this);
+			this._ability = u.qs(".ability", this);
+			this._think = u.qs(".think", this);
+			u.as(this, "paddingTop", (((u.browserH() - this._h1.offsetHeight)/2) - page.hN.offsetHeight) + "px");
+			u.as(this, "paddingBottom", ((u.browserH() - this._think.offsetHeight)/2) - 0 + "px");
+			this.showAllContent = function() {
+				u.scrollTo(window, {"y":0});
+				var node, i, span;
+				var nodes = u.qsa("p,h1,h2,h3", this);
+				for(i = 0; node = nodes[i]; i++) {
+					node.transitioned = function() {
+						u.ac(this, "active");
+					}
+					if(node._opacity == 0) {
+						u.a.transition(node, "all 0.4s ease-in-out " + (i)*100 + "ms");
+						u.a.setOpacity(node, 1);
+					}
+				}
+				var spans = u.qsa("span", this);
+				for(i = 0; span = spans[i]; i++) {
+					span.transitioned = function() {
+						u.ac(this, "active");
+						u.a.transition(this, "none");
+					}
+					if(span._opacity == 0) {
+						u.a.transition(span, "all 0.4s ease-in-out " + ((i)*100)+((nodes.length)*100));
+						u.a.setOpacity(span, 1);
+					}
+				}
+				// 
+			}
+			scene.sequence = new Array();
+			scene.addSequence = function(sequence) {
+				this.sequence.push(sequence);
+			}
+			scene.nextSequence = function(delay) {
+				if(this.random) {
+					this.playRandom(delay);
+				}
+				else {
+					if(this.sequence.length) {
+						this._sequence = this.sequence.shift();
+						if(delay) {
+							this.t_sequence = u.t.setTimer(this, this._sequence, delay);
+						}
+						else {
+							this._sequence();
+						}
+					}
+				}
+			}
+			scene.show = function(node) {
+				node.transitioned = function() {
+					u.ac(this, "active");
+				}
+				u.a.transition(node, "all 0.5s ease-in");
+				u.a.setOpacity(node, 1);
+				u.scrollTo(window, {"node":node, "offset_y":(u.browserH() - node.offsetHeight)/2});
+			}
+			scene.hide = function(node) {
+				node.transitioned = function() {
+					u.rc(this, "active");
+				}
+				u.a.transition(node, "all 0.3s ease-in");
+				u.a.setOpacity(node, 0);
+			}
+			scene.showSpan = function(span, show_node) {
+				var i, _span;
+				if(show_node) {
+					for(i = 0; _span = span.parentNode._spans[i]; i++) {
+						if(_span != span) {
+							u.a.transition(_span, "none");
+							u.a.setOpacity(_span, 0);
+						}
+					}
+					this.show(span.parentNode);
+				}
+				else {
+					this.show(span);
+				}
+			}
+			scene.addSequence(function() {
+				this.show(this._h1);
+				this.nextSequence(1200);
+			});
+			scene.addSequence(function() {
+				this.showSpan(this._long._spans[0], true);
+				this.nextSequence(100);
+			});
+			scene.addSequence(function() {
+				this.showSpan(this._long._spans[1]);
+				this.nextSequence(800);
+			});
+			scene.addSequence(function() {
+				this.hide(this._h1);
+				this.nextSequence(200);
+			});
+			scene.addSequence(function() {
+				this.showSpan(this._long._spans[2]);
+				this.nextSequence(700);
+			});
+			scene.addSequence(function() {
+				this.show(this._now);
+				this.nextSequence(200);
+			});
+			scene.addSequence(function() {
+				this.hide(this._long._spans[0]);
+				this.nextSequence(200);
+			});
+			scene.addSequence(function() {
+				this.hide(this._long._spans[1]);
+				this.nextSequence(900);
+			});
+			scene.addSequence(function() {
+				this.hide(this._long._spans[2]);
+				this.nextSequence(400);
+			});
+			scene.addSequence(function() {
+				this.show(this._time);
+				this.nextSequence(400);
+			});
+			scene.addSequence(function() {
+				this.hide(this._now);
+				this.nextSequence(1000);
+			});
+			scene.addSequence(function() {
+				this.hide(this._time);
+				this.nextSequence(100);
+			});
+			scene.addSequence(function() {
+				this.showSpan(this._wake._spans[0], true);
+				this.nextSequence(100);
+			});
+			scene.addSequence(function() {
+				this.showSpan(this._wake._spans[1]);
+				this.nextSequence(700);
+			});
+			scene.addSequence(function() {
+				this.hide(this._wake._spans[0]);
+				this.nextSequence(0);
+			});
+			scene.addSequence(function() {
+				this.showSpan(this._wake._spans[2]);
+				this.nextSequence(1000);
+			});
+			scene.addSequence(function() {
+				this.hide(this._wake._spans[1]);
+				this.nextSequence(100);
+			});
+			scene.addSequence(function() {
+				this.show(this._realize);
+				this.nextSequence(400);
+			});
+			scene.addSequence(function() {
+				this.hide(this._wake);
+				this.nextSequence(800);
+			});
+			scene.addSequence(function() {
+				this.show(this._means);
+				this.nextSequence(300);
+			});
+			scene.addSequence(function() {
+				this.hide(this._realize);
+				this.nextSequence(700);
+			});
+			scene.addSequence(function() {
+				this.show(this._tyrant);
+				this.nextSequence(400);
+			});
+			scene.addSequence(function() {
+				this.hide(this._means);
+				this.nextSequence(800);
+			});
+			scene.addSequence(function() {
+				this.hide(this._tyrant._spans[0]);
+				this.nextSequence(600);
+			});
+			scene.addSequence(function() {
+				this.hide(this._tyrant._spans[1]);
+				this.nextSequence(100);
+			});
+			scene.addSequence(function() {
+				this.show(this._goal);
+				this.nextSequence(800);
+			});
+			scene.addSequence(function() {
+				this.show(this._forgotten);
+				this.nextSequence(600);
+			});
+			scene.addSequence(function() {
+				this.hide(this._goal);
+				this.nextSequence(300);
+			});
+			scene.addSequence(function() {
+				this.show(this._bills);
+				this.nextSequence(500);
+			});
+			scene.addSequence(function() {
+				this.hide(this._forgotten);
+				this.nextSequence(900);
+			});
+			scene.addSequence(function() {
+				this.hide(this._bills);
+				this.nextSequence(700);
+			});
+			scene.addSequence(function() {
+				this.show(this._busy);
+				this.nextSequence(800);
+			});
+			scene.addSequence(function() {
+				this.show(this._idleness);
+				this.nextSequence(600);
+			});
+			scene.addSequence(function() {
+				this.hide(this._busy);
+				this.nextSequence(200);
+			});
+			scene.addSequence(function() {
+				this.show(this._safety);
+				this.nextSequence(800);
+			});
+			scene.addSequence(function() {
+				this.hide(this._idleness);
+				this.nextSequence(400);
+			});
+			scene.addSequence(function() {
+				this.hide(this._safety);
+				this.nextSequence(100);
+			});
+			scene.addSequence(function() {
+				this.showSpan(this._luxery._spans[0], true);
+				this.nextSequence(500);
+			});
+			scene.addSequence(function() {
+				this.showSpan(this._luxery._spans[1]);
+				this.nextSequence(900);
+			});
+			scene.addSequence(function() {
+				this.hide(this._luxery._spans[0]);
+				this.nextSequence(300);
+			});
+			scene.addSequence(function() {
+				this.show(this._cost);
+				this.nextSequence(600);
+			});
+			scene.addSequence(function() {
+				this.hide(this._luxery._spans[1]);
+				this.nextSequence(300);
+			});
+			scene.addSequence(function() {
+				this.hide(this._cost);
+				this.nextSequence(100);
+			});
+			scene.addSequence(function() {
+				this.show(this._everything);
+				this.nextSequence(1600);
+			});
+			scene.addSequence(function() {
+				this.hide(this._everything);
+				this.nextSequence(800);
+			});
+			scene.addSequence(function() {
+				this.show(this._content);
+				this.nextSequence(700);
+			});
+			scene.addSequence(function() {
+				this.showSpan(this._slaves._spans[0], true);
+				this.nextSequence(200);
+			});
+			scene.addSequence(function() {
+				this.showSpan(this._slaves._spans[1]);
+				this.nextSequence(1000);
+			});
+			scene.addSequence(function() {
+				this.hide(this._slaves._spans[0]);
+				this.nextSequence(800);
+			});
+			scene.addSequence(function() {
+				this.hide(this._content);
+				this.nextSequence(100);
+			});
+			scene.addSequence(function() {
+				this.hide(this._slaves._spans[1]);
+				this.nextSequence(400);
+			});
+			scene.addSequence(function() {
+				this.showSpan(this._nothing._spans[0], true);
+				this.nextSequence(400);
+			});
+			scene.addSequence(function() {
+				this.showSpan(this._nothing._spans[1]);
+				this.nextSequence(800);
+			});
+			scene.addSequence(function() {
+				this.hide(this._nothing._spans[0]);
+				this.nextSequence(100);
+			});
+			scene.addSequence(function() {
+				this.show(this._except);
+				this.nextSequence(400);
+			});
+			scene.addSequence(function() {
+				this.hide(this._nothing._spans[1]);
+				this.nextSequence(100);
+			});
+			scene.addSequence(function() {
+				this.show(this._ability);
+				this.nextSequence(1400);
+			});
+			scene.addSequence(function() {
+				this.hide(this._except);
+				this.nextSequence(1000);
+			});
+			scene.addSequence(function() {
+				this.hide(this._ability);
+				this.nextSequence(400);
+			});
+			scene.addSequence(function() {
+				this.show(this._think);
+				this.nextSequence(3000);
+			});
+			scene.addSequence(function() {
+				this.hide(this._think);
+				this.nextSequence(500);
+			});
+			scene.addSequence(function() {
+				this.showAllContent();
+			});
+			scene.fontsLoaded = function() {
+				this.nextSequence(1000);
+			}
+			scene.nextSequence(1000);
+			page.cN.scene = this;
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
+
+/*i-stop.js*/
+Util.Objects["stop"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			this.subjects = u.qsa(".topic", this);
+			var i, node;
+			for(i = 0; node = this.subjects[i]; i++) {
+				node.scene = this;
+				node.readstate = u.cv(node, "readstate");
+				if(node.readstate) {
+					u.addCheckmark(node);
+				}
+				node.header = u.qs("h3", node);
+				node.header.node = node;
+				u.addExpandArrow(node.header);
+				u.ce(node.header);
+				node.header.clicked = function() {
+					if(u.hc(this.node, "open")) {
+						u.rc(this.node, "open");
+						u.addExpandArrow(this);
+						u.deleteNodeCookie(this.node, "state");
+					}
+					else {
+						u.addCollapseArrow(this);
+						if(!this.node.topic) {
+							u.request(this.node, this.url);
+						}
+						else {
+							u.ac(this.node, "open");
+						}
+						u.saveNodeCookie(this.node, "state", "open");
+					}
+				}
+				if(u.getNodeCookie(node, "state") == "open") {
+					node.header.clicked();
+				}
+				node.response = function(response) {
+					this.topic = u.ae(this, u.qs(".scene .topic", response));
+					u.init(this.topic);
+					u.ac(this, "open");
+				}
+			}
+			page.cN.scene = this;
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
+
+/*i-topic.js*/
+Util.Objects["topic"] = new function() {
+	this.init = function(node) {
+		node.problem = u.qs("div.problem", node);
+		node.solution = u.qs("div.solution", node);
+		node.details = u.qs("div.details", node.solution);
+		if(node.details) {
+			node.details_header = u.qs("h3", node.details);
+			node.details_description = u.qs("div.description", node.details);
+			node.details_header.node = node;
+			u.addExpandArrow(node.details_header);
+			u.ce(node.details_header);
+			node.details_header.clicked = function() {
+				if(u.hc(this.node.details, "open")) {
+					u.addExpandArrow(this);
+					u.rc(this.node.details, "open");
+				}
+				else {
+					u.addCollapseArrow(this);
+					u.ac(this.node.details, "open");
+				}
+			}
+		}
+	}
+}
