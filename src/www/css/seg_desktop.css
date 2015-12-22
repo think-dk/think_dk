@@ -643,38 +643,6 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 
 
 /*s-pages.css*/
-#content .scene.front {padding-bottom: 30px;
-	-o-user-select: none;
-	-ms-user-select: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	user-select: none;
-}
-#content .scene.front a {cursor: default;}
-#content .scene.front .active a {cursor: pointer;}
-#content .scene.front h1 {font-size: 100px;}
-#content .scene.front h2 {font-size: 60px;}
-#content .scene.front h3 {font-size: 30px;}
-#content .scene.front p {font-size: 22px;}
-#content .scene.front .long .s2,
-#content .scene.front .long .s2 a {font-size: 32px; color: #01939a;}
-#content .scene.front .wake .s2,
-#content .scene.front .wake .s2 a {font-size: 34px; color: #bf7230;}
-#content .scene.front .tyrant .s2,
-#content .scene.front .tyrant .s2 a {font-size: 30px; color: #01939a;}
-#content .scene.front .goal .s2,
-#content .scene.front .goal .s2 a {font-size: 34px; color: #bf7230;}
-#content .scene.front .idleness .s2,
-#content .scene.front .idleness .s2 {font-size: 34px; color: #01939a;}
-#content .scene.front .content,
-#content .scene.front .content a {font-size: 34px; color: #01939a;}
-#content .scene.front .slaves .s2,
-#content .scene.front .slaves .s2 a {font-size: 30px; color: #bf7230;}
-#content .scene.front h1,
-#content .scene.front h2,
-#content .scene.front h3,
-#content .scene.front p {position: absolute; top: 0; left: 0; padding: 0 5px; opacity: 0; width: auto;}
-#content .scene.front h1 {padding: 0 10px;}
 #content .scene.articles ul.articles {padding: 20px 0 30px;}
 #content .scene ul.articles li.article h3 {font-size: 24px;
 	font-family: "PT Serif", Times, serif;
