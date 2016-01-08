@@ -9,7 +9,6 @@
 					<?= $HTML->link("Articles", "/janitor/article/list", array("wrapper" => "li.article")) ?>
 					<?= $HTML->link("Pages", "/janitor/page/list", array("wrapper" => "li.page")) ?>
 					<?= $HTML->link("TODOs", "/janitor/admin/todo/list", array("wrapper" => "li.todo")) ?>
-					<?= $HTML->link("TODOs", "/janitor/admin/todo/list", array("wrapper" => "li.todo")) ?>
 					<?= $HTML->link("Wishes", "/janitor/admin/wish/list", array("wrapper" => "li.wish")) ?>
 				</ul>
 			</li>
