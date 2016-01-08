@@ -1,8 +1,7 @@
 <?
 $IC = new Items();
-$posts = $IC->getItems(array("itemtype" => "post", "status" => 1, "extend" => array("tags" => true, "readstate" => true)));
 
-$post_items = $IC->getItems(array("itemtype" => "post", "limit" => 3, "status" => 1, "extend" => array("tags" => true, "user" => true, "mediae" => true)));
+$post_items = $IC->getItems(array("itemtype" => "post", "limit" => 3, "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
 
 ?>
 <div class="scene front i:front">
@@ -10,7 +9,7 @@ $post_items = $IC->getItems(array("itemtype" => "post", "limit" => 3, "status" =
 	<ul class="items postings i:articlelist">
 <?		foreach($post_items as $item):
 			$media = $IC->sliceMedia($item); ?>
-		<li class="item post id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
+		<li class="item post id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/BlogPosting">
 
 <?			if($media): ?>
 			<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
@@ -32,7 +31,7 @@ $post_items = $IC->getItems(array("itemtype" => "post", "limit" => 3, "status" =
 <?			endif; ?>
 			</ul>
 
-			<h3 itemprop="name"><a href="/posts/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h3>
+			<h3 itemprop="headline"><a href="/posts/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h3>
 
 			<dl class="info">
 				<dt class="published_at">Date published</dt>
