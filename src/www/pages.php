@@ -1,5 +1,5 @@
 <?php
-$access_item["/"] = true;
+$access_item["/"] = false;
 $access_item["/hemmeligheder"] = true;
 
 if(isset($read_access) && $read_access) {
