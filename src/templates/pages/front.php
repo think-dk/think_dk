@@ -7,14 +7,15 @@ $page = $IC->getItem(array("tags" => "page:front", "extend" => array("user" => t
 ?>
 <div class="scene front i:front">
 
+	<? if($page): ?>
 	<div class="intro" itemscope itemtype="http://schema.org/Article">
 		<h1 itemprop="headline"><?= $page["name"] ?></h1>
 
 		<dl class="info">
 			<dt class="published_at">Date published</dt>
-			<dd class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($page["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></dd>
+			<dd class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($page["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page["published_at"])) ?></dd>
 			<dt class="modified_at">Date modified</dt>
-			<dd class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></dd>
+			<dd class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page["published_at"])) ?></dd>
 			<dt class="author">Author</dt>
 			<dd class="author" itemprop="author" itemprop="name"><?= $page["user_nickname"] ?></dd>
 			<dt class="publisher">Publisher</dt>
@@ -28,14 +29,12 @@ $page = $IC->getItem(array("tags" => "page:front", "extend" => array("user" => t
 					</li>
 				</ul>
 			</dd>
-			<dt class="image">Image</dt>
+			<dt class="image_info">Image</dt>
 			<dd class="image_info" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
 				<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/img/logo-large.png"></span>
 				<span class="image_width" itemprop="width" content="720"></span>
 				<span class="image_height" itemprop="height" content="405"></span>
 			</dd>
-			<dt class="hardlink">Hardlink</dt>
-			<dd class="hardlink" itemscope itemprop="mainEntityOfPage" itemType="https://schema.org/WebPage" itemid="<?= SITE_URL."/posts/".$item["sindex"] ?>"><?= SITE_URL."/posts/".$item["sindex"] ?></dd>
 		</dl>
 
 		<? if($page["subheader"]): ?>
@@ -48,6 +47,8 @@ $page = $IC->getItem(array("tags" => "page:front", "extend" => array("user" => t
 		</div>
 		<? endif; ?>
 	</div>
+	<? endif; ?>
+
 
 	<ul class="items postings">
 <?		foreach($post_items as $item):

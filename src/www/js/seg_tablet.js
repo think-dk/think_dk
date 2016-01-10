@@ -6045,40 +6045,52 @@ u.addCollapseArrow = function(node) {
 }
 
 /*i-front.js*/
-Util.Objects["1front"] = new function() {
+Util.Objects["front"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 			u.bug("scene.resized:" + u.nodeId(this));
-			var counter = 0;
-			var center = page.cN.offsetWidth/2;
-			u.a.translate(this._h1, (center)-(this._h1.offsetWidth/2), (page.cN.offsetHeight/2)-(this._h1.offsetHeight))
-			u.a.translate(this._means, this._h1._x - this._means.offsetWidth/3, this._h1._y+this._h1.offsetHeight*1.05);
-			u.a.translate(this._tyrant, this._h1._x + this._h1.offsetWidth/2, this._h1._y+this._h1.offsetHeight/1.1);
-			u.a.translate(this._safety, this._tyrant._x - this._tyrant.offsetHeight*0.9, this._tyrant._y + this._tyrant.offsetHeight);
-			u.a.translate(this._luxery, center - this._luxery.offsetWidth/2, this._safety._y + this._safety.offsetHeight*1.1);
-			u.a.translate(this._bills, center - this._bills.offsetWidth/2, this._luxery._y + this._bills.offsetHeight*1.2);
-			u.a.translate(this._think, center - this._think.offsetWidth/2, this._bills._y+this._bills.offsetHeight);
-			u.a.translate(this._everything, center - this._everything.offsetWidth/2, this._think._y + this._everything.offsetHeight/1.1);
-			u.a.translate(this._time, this._means._x+this._means.offsetWidth/5, this._means._y+this._means.offsetHeight);
-			u.a.translate(this._except, this._h1._x + this._h1.offsetWidth*0.94, this._h1._y + this._except.offsetHeight*1.7);
-			u.a.translate(this._ability, this._h1._x + this._h1.offsetWidth*1.015, this._h1._y + this._ability.offsetHeight*0.3);
-			u.a.translate(this._forgotten, this._h1._x - this._forgotten.offsetWidth*0.9, this._h1._y + this._forgotten.offsetHeight*1.4);
-			u.a.translate(this._content, this._h1._x - this._content.offsetWidth*0.9, this._h1._y + this._content.offsetHeight*0.7);
-			u.a.translate(this._idleness, this._h1._x - this._idleness.offsetWidth/2, this._h1._y - this._idleness.offsetHeight/1.5);
-			u.a.translate(this._long, this._h1._x + this._long.offsetWidth/1.8, this._h1._y-this._long.offsetHeight/1.5);
-			u.a.translate(this._realize, this._h1._x + this._realize.offsetWidth*1.15, this._h1._y-this._long.offsetHeight/2.3	);
-			u.a.translate(this._now, this._realize._x + this._realize.offsetWidth/4.5, this._realize._y - this._now.offsetHeight*1.1);
-			u.a.translate(this._nothing, this._long._x*0.98, this._long._y-this._nothing.offsetHeight);
-			u.a.translate(this._busy, this._idleness._x + this._idleness.offsetWidth*0.1, this._long._y-this._busy.offsetHeight*1.1);
-			u.a.translate(this._slaves, this._busy._x + this._busy.offsetWidth*0.15, this._busy._y-this._slaves.offsetHeight*1.15);
-			u.a.translate(this._cost, this._slaves._x + this._slaves.offsetWidth*1.01, this._nothing._y-this._cost.offsetHeight*1.1);
-			u.a.translate(this._goal, this._slaves._x + this._goal.offsetWidth*0.25, this._slaves._y - this._goal.offsetHeight);
-			u.a.translate(this._wake, this._goal._x + this._goal.offsetWidth*1.15, this._goal._y);
 		}
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			u.textscaler(this, {
+			scene.fontsLoaded = function() {
+				page.resized();
+				this.initIntro();
+			}
+			page.cN.scene = this;
+			u.fontsReady(scene, [
+				{"family":"OpenSans", "weight":"normal", "style":"normal"},
+				{"family":"OpenSans", "weight":"bold", "style":"normal"},
+				{"family":"OpenSans", "weight":"normal", "style":"italic"},
+				{"family":"PT Serif", "weight":"normal", "style":"normal"}
+			]);
+		}
+		scene.build = function() {
+		}
+		scene.initIntro = function() {
+			u.bug("initIntro")
+			this.intro = u.qs(".intro", this);
+			this.intro.scene = scene;
+			u.e.click(this.intro);
+			this.intro.clicked = function() {
+				this.scene.step7();
+			}
+			this._h1 = u.qs("h1", this.intro);
+			this._h2 = u.qs("h2", this.intro);
+			this._body = u.qs("div.articlebody", this.intro);
+			if(this._h1) {
+				this._h1.scene = this;
+				u.as(this._h1, "opacity", 0);
+			}
+			if(this._h2) {
+				this._h2.scene = this;
+				u.as(this._h2, "opacity", 0);
+			}
+			if(this._body) {
+				this._body.scene = this;
+				u.as(this._body, "opacity", 0);
+			}
+			u.textscaler(this.intro, {
 				"min_height":400,
 				"max_height":1000,
 				"min_width":600,
@@ -6092,389 +6104,138 @@ Util.Objects["1front"] = new function() {
 					"min_size":2,
 					"max_size":4
 				},
-				"h2 span.s2":{
-					"min_size":2.2,
-					"max_size":4.4
-				},
-				"h3":{
-					"min_size":1.4,
-					"max_size":2.8
-				},
 				"p":{
-					"min_size":1,
-					"max_size":2
-				},
-				"p span.s2":{
-					"min_size":1.4,
-					"max_size":2.8
+					"min_size":4,
+					"max_size":6
 				}
 			});
-			this._h1 = u.qs("h1", this);
-			this._long = u.qs(".long", this);
-			this._long._spans = u.qsa("span", this._long);
-			this._now = u.qs(".now", this);
-			this._time = u.qs(".time", this);
-			this._wake = u.qs(".wake", this);
-			this._wake._spans = u.qsa("span", this._wake);
-			this._realize = u.qs(".realize", this);
-			this._means = u.qs(".means", this);
-			this._tyrant = u.qs(".tyrant", this);
-			this._tyrant._spans = u.qsa("span", this._tyrant);
-			this._goal = u.qs(".goal", this);
-			this._goal._spans = u.qsa("span", this._goal);
-			this._forgotten = u.qs(".forgotten", this);
-			this._bills = u.qs(".bills", this);
-			this._busy = u.qs(".busy", this);
-			this._idleness = u.qs(".idleness", this);
-			this._idleness._spans = u.qsa("span", this._idleness);
-			this._safety = u.qs(".safety", this);
-			this._safety._spans = u.qsa("span", this._safety);
-			this._luxery = u.qs(".luxery", this);
-			this._luxery._spans = u.qsa("span", this._luxery);
-			this._cost = u.qs(".cost", this);
-			this._everything = u.qs(".everything", this);
-			this._content = u.qs(".content", this);
-			this._slaves = u.qs(".slaves", this);
-			this._slaves._spans = u.qsa("span", this._slaves);
-			this._nothing = u.qs(".nothing", this);
-			this._nothing._spans = u.qsa("span", this._nothing);
-			this._except = u.qs(".except", this);
-			this._ability = u.qs(".ability", this);
-			this._think = u.qs(".think", this);
-			this.showAllContent = function() {
-				var node, i, span;
-				var nodes = u.qsa("p,h1,h2,h3", this);
-				for(i = 0; node = nodes[i]; i++) {
-					node.transitioned = function() {
-						u.ac(this, "active");
-					}
-					if(node._opacity == 0) {
-						u.a.transition(node, "all 0.4s ease-in-out " + (i)*100 + "ms");
-						u.a.setOpacity(node, 1);
-					}
-				}
-				var spans = u.qsa("span", this);
-				for(i = 0; span = spans[i]; i++) {
-					span.transitioned = function() {
-						u.ac(this, "active");
-						u.a.transition(this, "none");
-					}
-					if(span._opacity == 0) {
-						u.a.transition(span, "all 0.4s ease-in-out " + ((i)*100)+((nodes.length)*100));
-						u.a.setOpacity(span, 1);
-					}
-				}
-				// 
+			this.intro_event_id = u.e.addWindowEvent(this, "mousemove", this.startIntro);
+		}
+		scene.startIntro = function() {
+			u.e.removeWindowEvent(this, "mousemove", this.intro_event_id);
+			u.as(this.intro, "opacity", 1);
+			this.step1 = function() {
+				var h1_x = (page.cN.offsetWidth-this._h1.offsetWidth) / 2;
+				var h1_y = ((page.cN.offsetHeight-this._h1.offsetHeight) / 2) - page.hN.offsetHeight/2;
+				u.ass(this._h1, {
+					"position":"absolute",
+					"opacity": 0, 
+					"left": h1_x+"px", 
+					"top": h1_y+"px",
+				});
+				u.a.transition(this._h1, "all 0.3s ease-in-out", "step2");
+				u.ass(this._h1, {
+					"opacity": 1
+				});
 			}
-			scene.sequence = new Array();
-			scene.addSequence = function(sequence) {
-				this.sequence.push(sequence);
-			}
-			scene.nextSequence = function(delay) {
-				if(this.random) {
-					this.playRandom(delay);
+			this._h1.step2 = function() {
+				if(this.scene._h2) {
+					var h2_x = (page.cN.offsetWidth-this.scene._h2.offsetWidth) / 2;
+					var h2_y = ((page.cN.offsetHeight-this.scene._h2.offsetHeight) / 2) - page.hN.offsetHeight/2;
+					u.ass(this.scene._h2, {
+						"position":"absolute",
+						"opacity": 0, 
+						"left": h2_x+"px", 
+						"top": h2_y+"px",
+					});
+					this.scene._h2.innerHTML = "<span>"+this.scene._h2.innerHTML.split("").join("</span><span>")+"</span>"; 
+					this.scene._h2.spans = u.qsa("span", this.scene._h2);
+					for(i = 0; span = this.scene._h2.spans[i]; i++) {
+						span.innerHTML = span.innerHTML.replace(/ /, "&nbsp;");
+						u.ass(span, {
+							"transformOrigin": "0 100% 0",
+							"transform":"translate(-40px, 0) rotate(85deg)",
+							"opacity":0
+						});
+					}
+					u.t.setTimer(this.scene, "step3", 1100);
 				}
 				else {
-					if(this.sequence.length) {
-						this._sequence = this.sequence.shift();
-						if(delay) {
-							this.t_sequence = u.t.setTimer(this, this._sequence, delay);
-						}
-						else {
-							this._sequence();
-						}
+					this.scene.introDone();
+				}
+			}
+			this.step3 = function() {
+				u.a.transition(this._h1, "all 0.2s ease-in", "step4");
+				u.ass(this._h1, {
+					"transform":"translate(0, -20px)",
+					"opacity": 0
+				});
+			}
+			this._h1.step4 = function() {
+				u.as(this.scene._h2, "opacity", 1);
+				var i, span;
+				for(i = 0; span = this.scene._h2.spans[i]; i++) {
+					u.a.transition(span, "all 0.2s ease-in-out "+(10*i)+"ms");
+					u.ass(span, {
+						"transform":"translate(0, 0) rotate(0)",
+						"opacity":1
+					});
+				}
+				u.t.setTimer(this.scene, "step5", 2000);
+			}
+			this.step5 = function() {
+				var i, span;
+				for(i = 0; span = this._h2.spans[i]; i++) {
+					u.bug("span:" + span);
+					u.a.transition(span, "all 0.2s ease-in-out "+(10*i)+"ms");
+					u.ass(span, {
+						"transform":"translate(60px, -60px) rotate(-135deg)",
+						"opacity":0
+					});
+				}
+				u.t.setTimer(this, "step6", 500);
+			}
+			this.step6 = function() {
+				u.as(this._h2, "opacity", 0);
+				var body_x = (page.cN.offsetWidth-this._body.offsetWidth) / 2;
+				var body_y = ((page.cN.offsetHeight-this._body.offsetHeight) / 2) - page.hN.offsetHeight/2;
+				u.ass(this._body, {
+					"position":"absolute",
+					"left": body_x+"px", 
+					"top": body_y+"px",
+					"transform":"translate(0, 20px)"
+				});
+				u.a.transition(this._body, "all 0.2s ease-in-out");
+				u.ass(this._body, {
+					"transform":"translate(0, 0)",
+					"opacity": 1
+				});
+				u.t.setTimer(this, "step7", 1800);
+			}
+			this.step7 = function() {
+				u.a.transition(this.intro, "all 0.2s ease-in-out", "step8");
+				u.ass(this.intro, {
+					"opacity": 0
+				});
+			}
+			this.intro.step8 = function() {
+				u.as(this, "display", "none");
+				u.t.setTimer(this.scene, "introDone", 500);
+			}
+			if(this._h1) {
+				this.step1();
+			}
+			else {
+				this.introDone();
+			}
+		}
+		scene.introDone = function() {
+			this._posts = u.qsa("li.post", this);
+			if(this._posts) {
+				var i, node;
+				for(i = 0; node = this._posts[i]; i++) {
+					u.as(node, "display", "block");
+					u.as(node, "opacity", 0);
+					node.header = u.qs("h2", node);
+					u.o.article.init(node);
+					node.readstate = u.cv(node, "readstate");
+					if(node.readstate) {
+						u.addCheckmark(node);
+						u.as(node.checkmark, "top", (this.header.offsetTop + 3) + "px");
 					}
+					u.as(node, "opacity", 1);
 				}
 			}
-			scene.show = function(node) {
-				node.transitioned = function() {
-					u.ac(this, "active");
-				}
-				u.a.transition(node, "all 0.5s ease-in");
-				u.a.setOpacity(node, 1);
-			}
-			scene.hide = function(node) {
-				node.transitioned = function() {
-					u.rc(this, "active");
-				}
-				u.a.transition(node, "all 0.3s ease-in");
-				u.a.setOpacity(node, 0);
-			}
-			scene.showSpan = function(span, show_node) {
-				var i, _span;
-				if(show_node) {
-					for(i = 0; _span = span.parentNode._spans[i]; i++) {
-						if(_span != span) {
-							u.a.transition(_span, "none");
-							u.a.setOpacity(_span, 0);
-						}
-					}
-					this.show(span.parentNode);
-				}
-				else {
-					this.show(span);
-				}
-			}
-			scene.addSequence(function() {
-				this.show(this._h1);
-				this.nextSequence(1200);
-			});
-			scene.addSequence(function() {
-				this.showSpan(this._long._spans[0], true);
-				this.nextSequence(100);
-			});
-			scene.addSequence(function() {
-				this.showSpan(this._long._spans[1]);
-				this.nextSequence(600);
-			});
-			scene.addSequence(function() {
-				this.hide(this._h1);
-				this.nextSequence(200);
-			});
-			scene.addSequence(function() {
-				this.showSpan(this._long._spans[2]);
-				this.nextSequence(500);
-			});
-			scene.addSequence(function() {
-				this.hide(this._long._spans[0]);
-				this.nextSequence(200);
-			});
-			scene.addSequence(function() {
-				this.hide(this._long._spans[1]);
-				this.nextSequence(300);
-			});
-			scene.addSequence(function() {
-				this.show(this._now);
-				this.nextSequence(700);
-			});
-			scene.addSequence(function() {
-				this.hide(this._long._spans[2]);
-				this.nextSequence(500);
-			});
-			scene.addSequence(function() {
-				this.show(this._time);
-				this.nextSequence(600);
-			});
-			scene.addSequence(function() {
-				this.hide(this._now);
-				this.nextSequence(500);
-			});
-			scene.addSequence(function() {
-				this.hide(this._time);
-				this.nextSequence(100);
-			});
-			scene.addSequence(function() {
-				this.showSpan(this._wake._spans[0], true);
-				this.nextSequence(200);
-			});
-			scene.addSequence(function() {
-				this.showSpan(this._wake._spans[1]);
-				this.nextSequence(800);
-			});
-			scene.addSequence(function() {
-				this.showSpan(this._wake._spans[2]);
-				this.nextSequence(300);
-			});
-			scene.addSequence(function() {
-				this.hide(this._wake._spans[0]);
-				this.nextSequence(100);
-			});
-			scene.addSequence(function() {
-				this.hide(this._wake._spans[1]);
-				this.nextSequence(300);
-			});
-			scene.addSequence(function() {
-				this.show(this._realize);
-				this.nextSequence(500);
-			});
-			scene.addSequence(function() {
-				this.hide(this._wake);
-				this.nextSequence(800);
-			});
-			scene.addSequence(function() {
-				this.show(this._means);
-				this.nextSequence(300);
-			});
-			scene.addSequence(function() {
-				this.hide(this._realize);
-				this.nextSequence(700);
-			});
-			scene.addSequence(function() {
-				this.show(this._tyrant);
-				this.nextSequence(400);
-			});
-			scene.addSequence(function() {
-				this.hide(this._means);
-				this.nextSequence(500);
-			});
-			scene.addSequence(function() {
-				this.hide(this._tyrant._spans[0]);
-				this.nextSequence(700);
-			});
-			scene.addSequence(function() {
-				this.hide(this._tyrant._spans[1]);
-				this.nextSequence(100);
-			});
-			scene.addSequence(function() {
-				this.show(this._goal);
-				this.nextSequence(800);
-			});
-			scene.addSequence(function() {
-				this.show(this._forgotten);
-				this.nextSequence(600);
-			});
-			scene.addSequence(function() {
-				this.hide(this._goal);
-				this.nextSequence(300);
-			});
-			scene.addSequence(function() {
-				this.show(this._bills);
-				this.nextSequence(500);
-			});
-			scene.addSequence(function() {
-				this.hide(this._forgotten);
-				this.nextSequence(1300);
-			});
-			scene.addSequence(function() {
-				this.hide(this._bills);
-				this.nextSequence(700);
-			});
-			scene.addSequence(function() {
-				this.show(this._busy);
-				this.nextSequence(1000);
-			});
-			scene.addSequence(function() {
-				this.show(this._idleness);
-				this.nextSequence(400);
-			});
-			scene.addSequence(function() {
-				this.hide(this._busy);
-				this.nextSequence(500);
-			});
-			scene.addSequence(function() {
-				this.show(this._safety);
-				this.nextSequence(1000);
-			});
-			scene.addSequence(function() {
-				this.hide(this._idleness);
-				this.nextSequence(400);
-			});
-			scene.addSequence(function() {
-				this.hide(this._safety);
-				this.nextSequence(100);
-			});
-			scene.addSequence(function() {
-				this.showSpan(this._luxery._spans[0], true);
-				this.nextSequence(500);
-			});
-			scene.addSequence(function() {
-				this.showSpan(this._luxery._spans[1]);
-				this.nextSequence(900);
-			});
-			scene.addSequence(function() {
-				this.hide(this._luxery._spans[0]);
-				this.nextSequence(300);
-			});
-			scene.addSequence(function() {
-				this.show(this._cost);
-				this.nextSequence(600);
-			});
-			scene.addSequence(function() {
-				this.hide(this._luxery._spans[1]);
-				this.nextSequence(600);
-			});
-			scene.addSequence(function() {
-				this.hide(this._cost);
-				this.nextSequence(100);
-			});
-			scene.addSequence(function() {
-				this.show(this._everything);
-				this.nextSequence(1600);
-			});
-			scene.addSequence(function() {
-				this.hide(this._everything);
-				this.nextSequence(800);
-			});
-			scene.addSequence(function() {
-				this.show(this._content);
-				this.nextSequence(700);
-			});
-			scene.addSequence(function() {
-				this.showSpan(this._slaves._spans[0], true);
-				this.nextSequence(200);
-			});
-			scene.addSequence(function() {
-				this.showSpan(this._slaves._spans[1]);
-				this.nextSequence(1000);
-			});
-			scene.addSequence(function() {
-				this.hide(this._slaves._spans[0]);
-				this.nextSequence(800);
-			});
-			scene.addSequence(function() {
-				this.hide(this._content);
-				this.nextSequence(100);
-			});
-			scene.addSequence(function() {
-				this.hide(this._slaves._spans[1]);
-				this.nextSequence(400);
-			});
-			scene.addSequence(function() {
-				this.showSpan(this._nothing._spans[0], true);
-				this.nextSequence(400);
-			});
-			scene.addSequence(function() {
-				this.showSpan(this._nothing._spans[1]);
-				this.nextSequence(800);
-			});
-			scene.addSequence(function() {
-				this.hide(this._nothing._spans[0]);
-				this.nextSequence(100);
-			});
-			scene.addSequence(function() {
-				this.show(this._except);
-				this.nextSequence(400);
-			});
-			scene.addSequence(function() {
-				this.hide(this._nothing._spans[1]);
-				this.nextSequence(500);
-			});
-			scene.addSequence(function() {
-				this.show(this._ability);
-				this.nextSequence(900);
-			});
-			scene.addSequence(function() {
-				this.hide(this._except);
-				this.nextSequence(1000);
-			});
-			scene.addSequence(function() {
-				this.hide(this._ability);
-				this.nextSequence(400);
-			});
-			scene.addSequence(function() {
-				this.show(this._think);
-				this.nextSequence(3000);
-			});
-			scene.addSequence(function() {
-				this.hide(this._think);
-				this.nextSequence(500);
-			});
-			scene.addSequence(function() {
-				page.resized();
-				this.showAllContent();
-			});
-			scene.fontsLoaded = function() {
-				page.resized();
-				this.nextSequence(1000);
-			}
-			page.cN.scene = this;
-			page.resized();
-			u.fontsReady(scene, [
-				{"family":"OpenSans", "weight":"normal", "style":"normal"},
-				{"family":"OpenSans", "weight":"bold", "style":"normal"},
-				{"family":"OpenSans", "weight":"normal", "style":"italic"},
-				{"family":"PT Serif", "weight":"normal", "style":"normal"}
-			]);
 		}
 		scene.ready();
 	}

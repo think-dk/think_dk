@@ -238,7 +238,9 @@ Util.Objects["front"] = new function() {
 			this.step7 = function() {
 
 				u.a.transition(this.intro, "all 0.2s ease-in-out", "step8");
-				u.as(this.intro, "opacity", 0);
+				u.ass(this.intro, {
+					"opacity": 0
+				});
 
 			}
 
