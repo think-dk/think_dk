@@ -11,9 +11,9 @@ if($todo_tag) {
 ?>
 <div class="scene about i:scene">
 
-	<div class="article id:<?= $page["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
+	<div class="article id:<?= $page["item_id"] ?>" itemscope itemtype="http://schema.org/BlogPosting">
 
-		<h1 itemprop="name"><?= $page["name"] ?></h1>
+		<h1 itemprop="headline"><?= $page["name"] ?></h1>
 		<h2 itemprop="alternateName"><?= $page["subheader"] ?></h2>
 	
 		<!--dl class="info">
@@ -35,7 +35,7 @@ if($todo_tag) {
 		data-comment-add="<?= $this->validPath("/janitor/page/addComment") ?>" 
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		>
-		<h2 class="comments">Kommentarer til &quot;<?= $page["name"] ?>&quot;</h2>
+		<h2 class="comments">Commentaries for &quot;<?= $page["name"] ?>&quot;</h2>
 <?	if($page["comments"]): ?>
 		<ul class="comments">
 <?		foreach($page["comments"] as $comment): ?>
@@ -49,7 +49,7 @@ if($todo_tag) {
 <?		endforeach; ?>
 		</ul>
 <?	else: ?>
-		<p>Ingen kommentarer endnu</p>
+		<p>No comments</p>
 <?	endif; ?>
 	</div>
 <?	endif; ?>

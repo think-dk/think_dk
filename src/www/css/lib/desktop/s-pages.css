@@ -1,5 +1,26 @@
 
+
+
 /* FRONT */
+
+#content .scene.front div.intro {opacity: 0;}
+#content .scene.front div.intro h1,
+#content .scene.front div.intro h2,
+#content .scene.front div.intro h2 span,
+#content .scene.front div.intro div.articlebody,
+#content .scene.front div.intro div.articlebody p {display: inline-block; width: auto;}
+
+
+#content .scene.front div.intro h2 {
+	font-family: "OpenSans", Verdana, Arial, sans-serif;
+}
+#content .scene.front div.intro p {
+	font-family: "PT Serif", Times, serif;
+}
+
+#content .scene.front ul.postings > li {display: none;}
+
+
 /*#content .scene.front {padding-bottom: 30px;
 	-o-user-select: none;
 	-ms-user-select: none;
