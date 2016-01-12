@@ -22,11 +22,11 @@ $page->pageTitle("the Janitor @ ".SITE_URL)
 	<h1><?= SITE_NAME ?></h1>
 
 
-	<h2>Janitor</h2>
-	<p>
+	<!--h2>Janitor</h2-->
+	<!--p>
 		Stopknappen er bygget på <a href="http://janitor.parentnode.dk" target="_blank">Janitor</a>
 		- og Janitor er bygget til Stopknappen.
-	</p>
+	</p-->
 
 	<?= $JML->listUserTodos() ?>
 
