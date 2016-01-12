@@ -9,7 +9,6 @@
 	<meta name="keywords" content="" />
 	<meta name="description" content="<?= $this->pageDescription() ?>" />
 	<meta name="viewport" content="initial-scale=1, user-scalable=no" />
-
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 

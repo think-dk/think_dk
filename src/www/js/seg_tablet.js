@@ -6073,7 +6073,7 @@ Util.Objects["front"] = new function() {
 			this.intro.scene = scene;
 			u.e.click(this.intro);
 			this.intro.clicked = function() {
-				this.scene.step7();
+				this.scene.step8();
 			}
 			this._h1 = u.qs("h1", this.intro);
 			this._h2 = u.qs("h2", this.intro);
@@ -6203,12 +6203,20 @@ Util.Objects["front"] = new function() {
 				u.t.setTimer(this, "step7", 1800);
 			}
 			this.step7 = function() {
-				u.a.transition(this.intro, "all 0.2s ease-in-out", "step8");
+				u.a.transition(this._body, "all 0.2s ease-in-out");
+				u.ass(this._body, {
+					"transform":"translate(0, -20px)",
+					"opacity": 0
+				});
+				u.t.setTimer(this, "step8", 300);
+			}
+			this.step8 = function() {
+				u.a.transition(this.intro, "all 0.2s ease-in-out", "step9");
 				u.ass(this.intro, {
 					"opacity": 0
 				});
 			}
-			this.intro.step8 = function() {
+			this.intro.step9 = function() {
 				u.as(this, "display", "none");
 				u.t.setTimer(this.scene, "introDone", 500);
 			}
@@ -6225,7 +6233,6 @@ Util.Objects["front"] = new function() {
 				var i, node;
 				for(i = 0; node = this._posts[i]; i++) {
 					u.as(node, "display", "block");
-					u.as(node, "opacity", 0);
 					node.header = u.qs("h2", node);
 					u.o.article.init(node);
 					node.readstate = u.cv(node, "readstate");
@@ -6233,7 +6240,6 @@ Util.Objects["front"] = new function() {
 						u.addCheckmark(node);
 						u.as(node.checkmark, "top", (this.header.offsetTop + 3) + "px");
 					}
-					u.as(node, "opacity", 1);
 				}
 			}
 		}
