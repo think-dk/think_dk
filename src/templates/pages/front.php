@@ -17,7 +17,7 @@ $page = $IC->getItem(array("tags" => "page:front", "extend" => array("user" => t
 			<dt class="modified_at">Date modified</dt>
 			<dd class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page["published_at"])) ?></dd>
 			<dt class="author">Author</dt>
-			<dd class="author" itemprop="author" itemprop="name"><?= $page["user_nickname"] ?></dd>
+			<dd class="author" itemprop="author"><?= $page["user_nickname"] ?></dd>
 			<dt class="publisher">Publisher</dt>
 			<dd class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 				<ul class="publisher_info">
@@ -67,7 +67,7 @@ $page = $IC->getItem(array("tags" => "page:front", "extend" => array("user" => t
 				<dt class="modified_at">Date modified</dt>
 				<dd class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></dd>
 				<dt class="author">Author</dt>
-				<dd class="author" itemprop="author" itemprop="name"><?= $item["user_nickname"] ?></dd>
+				<dd class="author" itemprop="author"><?= $item["user_nickname"] ?></dd>
 				<dt class="publisher">Publisher</dt>
 				<dd class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 					<ul class="publisher_info">
