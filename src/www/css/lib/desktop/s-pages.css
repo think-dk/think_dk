@@ -84,6 +84,7 @@
 /* RELATED */
 #content .scene.articles div.related {border: none;}
 
+.pages #content .scene dl.info {display: none;}
 
 
 /* TODOS */

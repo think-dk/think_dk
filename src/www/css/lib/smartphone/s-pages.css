@@ -3,7 +3,7 @@
 
 
 /* FRONT */
-#content .scene.front {
+/*#content .scene.front {
 	-o-user-select: none;
 	-ms-user-select: none;
 	-moz-user-select: none;
@@ -37,14 +37,15 @@
 #content .scene.front .slaves .s2 a {font-size: 26px; color: #bf7230;}
 
 #content .scene.front .everything {font-size: 38px;}
+*/
+#content .scene.front dl.info {display: none;}
 
-
-#content .scene.front h1,
+/*#content .scene.front h1,
 #content .scene.front h2,
 #content .scene.front h3,
 #content .scene.front p {opacity: 0; text-align: center;}
 #content .scene.front h1 {}
-
+*/
 
 /* ARTICLES */
 #content .scene ul.articles li.article {border-color: #ccdbcd;}

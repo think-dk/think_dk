@@ -671,6 +671,7 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene.article div.intro p {font-size: 13px; color: #cccccc;}
 #content .scene.article div.article {padding-bottom: 30px;}
 #content .scene.articles div.related {border: none;}
+.pages #content .scene dl.info {display: none;}
 #content .scene div.todos {padding-bottom: 15px; position: relative; z-index: 1;}
 #content .scene div.todos h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
 #content .scene div.todos h2:hover {color: #00c90d;}

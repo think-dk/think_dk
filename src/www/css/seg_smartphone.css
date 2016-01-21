@@ -598,40 +598,7 @@ body {}
 
 /*s-pages.css*/
 #content .terms_notification {display: none;}
-#content .scene.front {
-	-o-user-select: none;
-	-ms-user-select: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	user-select: none;
-}
-#content .scene.front a {cursor: default;}
-#content .scene.front .active a {cursor: pointer;}
-#content .scene.front h1 {font-size: 65px; padding: 0 5px 10px;}
-#content .scene.front h2 {font-size: 50px; padding: 10px 5px 10px;}
-#content .scene.front h3 {font-size: 26px; padding: 0 5px 5px;}
-#content .scene.front p {font-size: 20px; padding: 0 5px 0px;}
-#content .scene.front .long .s2,
-#content .scene.front .long .s2 a {font-size: 28px; color: #01939a;}
-#content .scene.front .now {font-size: 38px;}
-#content .scene.front .wake .s2,
-#content .scene.front .wake .s2 a {font-size: 28px; color: #bf7230;}
-#content .scene.front .tyrant .s2,
-#content .scene.front .tyrant .s2 a {font-size: 30px; color: #01939a;}
-#content .scene.front .goal .s2,
-#content .scene.front .goal .s2 a {font-size: 28px; color: #bf7230;}
-#content .scene.front .idleness .s2,
-#content .scene.front .idleness .s2 {font-size: 28px; color: #01939a;}
-#content .scene.front .content,
-#content .scene.front .content a {font-size: 28px; color: #01939a;}
-#content .scene.front .slaves .s2,
-#content .scene.front .slaves .s2 a {font-size: 26px; color: #bf7230;}
-#content .scene.front .everything {font-size: 38px;}
-#content .scene.front h1,
-#content .scene.front h2,
-#content .scene.front h3,
-#content .scene.front p {opacity: 0; text-align: center;}
-#content .scene.front h1 {}
+#content .scene.front dl.info {display: none;}
 #content .scene ul.articles li.article {border-color: #ccdbcd;}
 #content .scene ul.articles li.article h3 {font-size: 24px;
 	font-family: "PT Serif", Times, serif;

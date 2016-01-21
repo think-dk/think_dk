@@ -56,9 +56,9 @@ $page = $IC->getItem(array("tags" => "page:front", "extend" => array("user" => t
 		<li class="item post id:<?= $item["item_id"] ?> readstate:<?= $item["readstate"] ? 1 : "" ?>" itemscope itemtype="http://schema.org/NewsArticle">
 
 <?			if($media): ?>
-			<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
+			<!--div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
 				<p>Image: <a href="/images/<?= $item["item_id"] ?>/<?= $media["variant"] ?>/500x.<?= $media["format"] ?>"><?= $media["name"] ?></a></p>
-			</div>
+			</div-->
 <?			endif; ?>
 
 			<dl class="info">
