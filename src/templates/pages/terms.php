@@ -1,14 +1,29 @@
 <div class="scene terms i:scene">
 
-	<div class="article" itemscope itemtype="http://schema.org/Article">
-		<h1 itemprop="name">Cookies, privacy and terms of use</h1>
+	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
+		<h1 itemprop="headline">Cookies, privacy and terms of use</h1>
 
-		<dl class="info">
-			<dt class="published_at">Date published</dt>
-			<dd class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", filemtime(__FILE__)) ?>"><?= date("Y-m-d, H:i", filemtime(__FILE__)) ?></dd>
-			<dt class="author">Author</dt>
-			<dd class="author" itemprop="author">Martin Kæstel Nielsen</dd>
-		</dl>
+		<ul class="info">
+			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", filemtime(__FILE__)) ?>"><?= date("Y-m-d, H:i", filemtime(__FILE__)) ?></li>
+			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", filemtime(__FILE__)) ?>"><?= date("Y-m-d, H:i", filemtime(__FILE__)) ?></li>
+			<li class="author" itemprop="author">Martin Kæstel Nielsen</li>
+			<li class="main_entity" itemprop="mainEntityOfPage"><?= SITE_URL."/terms" ?></li>
+			<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+				<ul class="publisher_info">
+					<li class="name" itemprop="name">think.dk</li>
+					<li class="logo" itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+						<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/img/logo-large.png"></span>
+						<span class="image_width" itemprop="width" content="720"></span>
+						<span class="image_height" itemprop="height" content="405"></span>
+					</li>
+				</ul>
+			</li>
+			<li class="image_info" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+				<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/img/logo-large.png"></span>
+				<span class="image_width" itemprop="width" content="720"></span>
+				<span class="image_height" itemprop="height" content="405"></span>
+			</li>
+		</ul>
 
 		<div class="articlebody" itemprop="articleBody">
 			<p>
@@ -16,7 +31,7 @@
 				these terms, you cannot use the website.
 			</p>
 			<p>
-				This website is owned  and maintained by Martin Kæstel Nielsen (in the 
+				This website is owned and maintained by Martin Kæstel Nielsen (in the 
 				following referred to as "Me", "I", "My", "Mine"), who is a Danish citizen, abiding Danish laws.
 			</p>
 	

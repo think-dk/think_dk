@@ -8,14 +8,16 @@ include_once($_SERVER["FRAMEWORK_PATH"]."/config/init.php");
 
 
 $action = $page->actions();
+$IC = new Items();
 
 
-$page->bodyClass("front");
-$page->pageTitle("Think, before it is too late");
+$page->bodyClass("contact");
+$page->pageTitle("Contact");
 
 
 $page->page(array(
-	"templates" => "pages/front.php"
+	"templates" => "pages/contact.php"
 ));
+exit();
 
 ?>

@@ -1,76 +1,68 @@
+/* GENERAL SCENE SETTING */
+#content .scene {opacity: 0;}
+#content .scene h1 span {display: inline-block;}
+
+
+#content .scene ul.info {display: none;}
+
+
+#content .scene.login {opacity: 1;}
 
 
 
 /* FRONT */
-
-#content .scene.front div.intro {opacity: 0;}
-#content .scene.front div.intro h1,
-#content .scene.front div.intro h2,
-#content .scene.front div.intro h2 span,
-#content .scene.front div.intro div.articlebody,
-#content .scene.front div.intro div.articlebody p {display: inline-block; width: auto;}
-#content .scene.front div.intro dl.info {display: none;}
+#content .scene.front {opacity: 1;}
 
 
-#content .scene.front div.intro h2 {
-	font-family: "OpenSans", Verdana, Arial, sans-serif;
-}
-#content .scene.front div.intro p {
-	font-family: "PT Serif", Times, serif;
-}
-
-#content .scene.front ul.postings > li {display: none;}
-
-#content .scene.front ul.postings > li.item h2 {padding-bottom: 10px;}
-#content .scene.front ul.postings > li.item dl.info {display: none;}
-
-/*#content .scene.front {padding-bottom: 30px;
+/* FRONT - INTRO */
+#content .scene.front div.intro {opacity: 0; overflow: hidden;
 	-o-user-select: none;
 	-ms-user-select: none;
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	user-select: none;
 }
-
-#content .scene.front a {cursor: default;}
-#content .scene.front .active a {cursor: pointer;}
-
-#content .scene.front h1 {font-size: 100px;}
-#content .scene.front h2 {font-size: 60px;}
-#content .scene.front h3 {font-size: 30px;}
-#content .scene.front p {font-size: 22px;}
-
-#content .scene.front .long .s2,
-#content .scene.front .long .s2 a {font-size: 32px; color: #01939a;}
-#content .scene.front .wake .s2,
-#content .scene.front .wake .s2 a {font-size: 34px; color: #bf7230;}
-#content .scene.front .tyrant .s2,
-#content .scene.front .tyrant .s2 a {font-size: 30px; color: #01939a;}
-#content .scene.front .goal .s2,
-#content .scene.front .goal .s2 a {font-size: 34px; color: #bf7230;}
-#content .scene.front .idleness .s2,
-#content .scene.front .idleness .s2 {font-size: 34px; color: #01939a;}
-
-#content .scene.front .content,
-#content .scene.front .content a {font-size: 34px; color: #01939a;}
-#content .scene.front .slaves .s2,
-#content .scene.front .slaves .s2 a {font-size: 30px; color: #bf7230;}
+#content .scene.front div.intro p,
+#content .scene.front div.intro h2,
+#content .scene.front div.intro h3,
+#content .scene.front div.intro span {display: inline-block; width: auto; color: #26962d; padding: 0;}
 
 
-#content .scene.front h1,
-#content .scene.front h2,
-#content .scene.front h3,
-#content .scene.front p {position: absolute; top: 0; left: 0; padding: 0 5px; opacity: 0; width: auto;}
-#content .scene.front h1 {padding: 0 10px;}
+/* FRONT - ARTICLE */
+#content .scene.front div.article {display: none; padding-bottom: 30px;}
+#content .scene.front div.article h1 span {display: inline-block;}
 
-*/
+
+/* FRONT - NEWS */
+#content .scene.front div.news {display: none;}
+#content .scene.front ul.items > li.item {padding-bottom: 5px;}
+#content .scene.front ul.items > li.item h3 {padding-bottom: 10px; font-size: 22px;
+	font-family: "PT Serif", Times, serif;
+}
+#content .scene.front ul.items > li.item ul.info {display: none;}
+
+
+
+/* NEWS */
+#content .scene.news div.article {padding-bottom: 30px;}
+/*#content .scene.news ul.info {display: none;}*/
+
+
+/* POSTS */
+/*#content .scene.posts ul.info {display: none;}*/
+
+
+
+
+
 
 /* ARTICLES */
 #content .scene.articles ul.articles {padding: 20px 0 30px;}
-#content .scene ul.articles li.article h3 {font-size: 24px;
+#content .scene ul.articles li.article h3 {font-size: 22px;
 	font-family: "PT Serif", Times, serif;
 }
-#content .scene ul.articles li.article p {font-size: 16px;}
+
+/*#content .scene ul.articles li.article p {font-size: 16px;}*/
 
 
 
@@ -143,60 +135,4 @@
 
 /* ABOUT */
 #content .scene.about div.comments {margin-top: 20px;}
-
-
-
-/* STOP */
-#content .scene.stop {}
-
-#content .scene.stop ul.topics {padding: 10px 0 0; border-bottom: 1px solid #dedede; margin-bottom: 40px;}
-
-#content .scene.stop li.topic {border-top: 1px solid #dedede; padding-top: 10px; position: relative;}
-#content .scene.stop li.topic:first-child {border: none;}
-#content .scene.stop li.topic h1 {display: none;}
-
-#content .scene.stop li.topic > svg.checkmark {position: absolute; top: 14px; left: 25px;}
-#content .scene.stop li.topic > svg.checkmark line {stroke: #666666; stroke-width: 3px;}
-
-#content .scene.stop li.topic > h3 {position: relative;}
-#content .scene.stop li.topic > h3 svg.arrow {position: absolute; top: 7px; right: 55px;}
-#content .scene.stop li.topic > h3 svg.arrow line {stroke: #dedede; stroke-width: 3px;}
-#content .scene.stop li.topic > h3:hover svg.arrow line {stroke: #00c90d;}
-
-
-#content .scene.stop li.topic > h3 a {display: block;}
-
-#content .scene.stop li.topic div.topic {display: none;}
-#content .scene.stop li.topic.open div.topic {display: block;}
-
-
-#content .scene.stop .topic div.problem {padding-top: 20px;}
-#content .scene.stop .topic div.solution {padding-top: 20px;}
-#content .scene.stop .topic div.details {}
-#content .scene.stop .topic div.details h3.clickable {color: #00c90d; cursor: pointer; padding-bottom: 40px; position: underline; position: relative;}
-#content .scene.stop .topic div.details h3.clickable svg.arrow {position: absolute; top: 7px; right: 55px;}
-#content .scene.stop .topic div.details h3.clickable svg.arrow line {stroke: #dedede; stroke-width: 3px;}
-
-#content .scene.stop .topic div.details h3.clickable:hover {text-decoration: underline;}
-#content .scene.stop .topic div.details h3.clickable:hover svg.arrow line {stroke: #00c90d;}
-
-
-#content .scene.stop .topic div.details div.description,
-#content .scene.stop .topic div.details div.todos,
-#content .scene.stop .topic div.details div.comments {display: none;}
-
-#content .scene.stop .topic div.details.open h3 {padding-bottom: 10px;}
-#content .scene.stop .topic div.details.open div.description {padding-bottom: 40px;}
-
-#content .scene.stop .topic div.details.open div.description,
-#content .scene.stop .topic div.details.open div.todos,
-#content .scene.stop .topic div.details.open div.comments {display: block;}
-
-
-#content .scene.stop .topic div.related {border: none; padding-top: 20px; padding-bottom: 15px; position: relative; z-index: 1;}
-#content .scene.stop .topic div.related h2 {font-size: 16px; padding-bottom: 25px;}
-#content .scene.stop .topic div.related ul.articles {list-style: none; margin: 0;}
-#content .scene.stop .topic div.related ul.articles li {padding: 0; border: none;}
-#content .scene.stop .topic div.related ul.articles li h3 {font-size: 16px;}
-#content .scene.stop .topic div.related ul.articles li p {font-size: 14px;}
 

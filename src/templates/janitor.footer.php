@@ -10,6 +10,7 @@
 					<?= $HTML->link("Pages", "/janitor/admin/page/list", array("wrapper" => "li.page")) ?>
 					<?= $HTML->link("TODOs", "/janitor/admin/todo/list", array("wrapper" => "li.todo")) ?>
 					<?= $HTML->link("Wishes", "/janitor/admin/wish/list", array("wrapper" => "li.wish")) ?>
+					<?= $HTML->link("People", "/janitor/admin/person/list", array("wrapper" => "li.person")) ?>
 				</ul>
 			</li>
 			<li class="site">

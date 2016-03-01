@@ -1,13 +1,25 @@
 Util.Objects["front"] = new function() {
 	this.init = function(scene) {
 //		u.bug("scene init:" + u.nodeId(scene))
-		
 
 		scene.resized = function() {
-			u.bug("scene.resized:" + u.nodeId(this));
+//			u.bug("scene.resized:" + u.nodeId(this));
+
+			// re-position text nodes
+			if(this.intro && this.intro._textnodes) {
+				var i, node;
+				for(i = 0; node = this.intro._textnodes[i]; i++) {
+					var node_x = (page.cN.offsetWidth-node.offsetWidth) / 2;
+					var node_y = ((page.cN.offsetHeight-node.offsetHeight) / 2) - page.hN.offsetHeight / 2;
+					u.ass(node, {
+						"left": node_x+"px", 
+						"top": node_y+"px",
+					}, false);
+				}
+			}
 
 			// refresh dom
-			//this.offsetHeight;
+			this.offsetHeight;
 		}
 
 		scene.scrolled = function() {
@@ -17,26 +29,17 @@ Util.Objects["front"] = new function() {
 		scene.ready = function() {
 //			u.bug("scene.ready:" + u.nodeId(this));
 
+			// map reference
+			page.cN.scene = this;
 
-
-
+			// required fonts loaded
 			scene.fontsLoaded = function() {
 
 				page.resized();
-
-				this.initIntro();
-
-
-
-
-
+				this.build();
 			}
 
-
-
-			page.cN.scene = this;
-
-
+			// preload fonts
 			u.fontsReady(scene, [
 				{"family":"OpenSans", "weight":"normal", "style":"normal"},
 				{"family":"OpenSans", "weight":"bold", "style":"normal"},
@@ -47,258 +50,291 @@ Util.Objects["front"] = new function() {
 		}
 
 		scene.build = function() {
-
-
-
-		}
-
-		scene.initIntro = function() {
-			u.bug("initIntro")
+//			u.bug("scene.build:" + u.nodeId(this));
 
 			this.intro = u.qs(".intro", this);
-			this.intro.scene = scene;
-
-			u.e.click(this.intro);
-			this.intro.clicked = function() {
-				this.scene.step8();
-			}
-
-			this._h1 = u.qs("h1", this.intro);
-			this._h2 = u.qs("h2", this.intro);
-			this._body = u.qs("div.articlebody", this.intro);
-
-			if(this._h1) {
-				this._h1.scene = this;
-				u.as(this._h1, "opacity", 0);
-			}
-
-			if(this._h2) {
-				this._h2.scene = this;
-				u.as(this._h2, "opacity", 0);
-			}
-
-			if(this._body) {
-				this._body.scene = this;
-				u.as(this._body, "opacity", 0);
-			}
-
-			u.textscaler(this.intro, {
-				"min_height":400,
-				"max_height":1000,
-				"min_width":600,
-				"max_width":1300,
-				"unit":"rem",
-				"h1":{
-					"min_size":4,
-					"max_size":8
-				},
-				"h2":{
-					"min_size":2,
-					"max_size":4
-				},
-				"p":{
-					"min_size":4,
-					"max_size":6
-				}
-
-			});
-
-
-
-			this.intro_event_id = u.e.addWindowEvent(this, "mousemove", this.startIntro);
-		}
-		scene.startIntro = function() {
-
-			u.e.removeWindowEvent(this, "mousemove", this.intro_event_id);
-
-			// make sure css is updated
-			u.as(this.intro, "opacity", 1);
-
-			this.step1 = function() {
-
-				var h1_x = (page.cN.offsetWidth-this._h1.offsetWidth) / 2;
-				var h1_y = ((page.cN.offsetHeight-this._h1.offsetHeight) / 2) - page.hN.offsetHeight/2;
-
-
-				u.ass(this._h1, {
-					"position":"absolute",
-					"opacity": 0, 
-					"left": h1_x+"px", 
-					"top": h1_y+"px",
-				});
-
-
-				u.a.transition(this._h1, "all 0.3s ease-in-out", "step2");
-				u.ass(this._h1, {
-					"opacity": 1
-				});
-
-			}
-
-			this._h1.step2 = function() {
-
-				if(this.scene._h2) {
-
-					var h2_x = (page.cN.offsetWidth-this.scene._h2.offsetWidth) / 2;
-					var h2_y = ((page.cN.offsetHeight-this.scene._h2.offsetHeight) / 2) - page.hN.offsetHeight/2;
-					u.ass(this.scene._h2, {
-						"position":"absolute",
-						"opacity": 0, 
-						"left": h2_x+"px", 
-						"top": h2_y+"px",
-					});
-
-					this.scene._h2.innerHTML = "<span>"+this.scene._h2.innerHTML.split("").join("</span><span>")+"</span>"; 
-					this.scene._h2.spans = u.qsa("span", this.scene._h2);
-
-					for(i = 0; span = this.scene._h2.spans[i]; i++) {
-						span.innerHTML = span.innerHTML.replace(/ /, "&nbsp;");
-						u.ass(span, {
-							"transformOrigin": "0 100% 0",
-							"transform":"translate(-40px, 0) rotate(85deg)",
-							"opacity":0
-						});
-					}
-
-
-					//(/([A-Za-z0-9 -\'\"?&\(\)]?)/g, "<span>$1</span>");
-					u.t.setTimer(this.scene, "step3", 1100);
-				}
-				else {
-					this.scene.introDone();
-				}
-			}
-
-			this.step3 = function() {
-
-				u.a.transition(this._h1, "all 0.2s ease-in", "step4");
-				u.ass(this._h1, {
-					"transform":"translate(0, -20px)",
-					"opacity": 0
-				});
-
-
-			}
-
-			this._h1.step4 = function() {
-
-				u.as(this.scene._h2, "opacity", 1);
-
-				var i, span;
-				for(i = 0; span = this.scene._h2.spans[i]; i++) {
-					u.a.transition(span, "all 0.2s ease-in-out "+(10*i)+"ms");
-					u.ass(span, {
-						"transform":"translate(0, 0) rotate(0)",
-						"opacity":1
-					});
-				}
-
-
-				u.t.setTimer(this.scene, "step5", 2000);
-			}
-
-			this.step5 = function() {
-
-				var i, span;
-				for(i = 0; span = this._h2.spans[i]; i++) {
-					u.bug("span:" + span);
-					u.a.transition(span, "all 0.2s ease-in-out "+(10*i)+"ms");
-					u.ass(span, {
-						"transform":"translate(60px, -60px) rotate(-135deg)",
-						"opacity":0
-					});
-				}
-
-				u.t.setTimer(this, "step6", 500);
-			}
-
-			this.step6 = function() {
-
-				u.as(this._h2, "opacity", 0);
-
-				var body_x = (page.cN.offsetWidth-this._body.offsetWidth) / 2;
-				var body_y = ((page.cN.offsetHeight-this._body.offsetHeight) / 2) - page.hN.offsetHeight/2;
-				u.ass(this._body, {
-					"position":"absolute",
-					"left": body_x+"px", 
-					"top": body_y+"px",
-					"transform":"translate(0, 20px)"
-				});
-
-				u.a.transition(this._body, "all 0.2s ease-in-out");
-				u.ass(this._body, {
-					"transform":"translate(0, 0)",
-					"opacity": 1
-				});
-
-				u.t.setTimer(this, "step7", 1800);
-
-			}
-			this.step7 = function() {
-
-				u.a.transition(this._body, "all 0.2s ease-in-out");
-				u.ass(this._body, {
-					"transform":"translate(0, -20px)",
-					"opacity": 0
-				});
-
-				u.t.setTimer(this, "step8", 300);
-			}
-
-			this.step8 = function() {
-
-				u.a.transition(this.intro, "all 0.2s ease-in-out", "step9");
-				u.ass(this.intro, {
-					"opacity": 0
-				});
-
-			}
-
-			this.intro.step9 = function() {
-
-				u.as(this, "display", "none");
-				u.t.setTimer(this.scene, "introDone", 500);
-
-			}
-
-
-			// start intro if data is available
-			if(this._h1) {
-				this.step1();
+			if(this.intro) {
+				this.initIntro();
 			}
 			else {
-				this.introDone();
+				this.showArticle();
 			}
 
 		}
 
-		scene.introDone = function() {
 
 
-			this._posts = u.qsa("li.post", this);
-			if(this._posts) {
-				var i, node;
-				for(i = 0; node = this._posts[i]; i++) {
 
-					u.as(node, "display", "block");
-//					u.as(node, "opacity", 0);
 
-					node.header = u.qs("h2", node);
+		// INTRO
 
-					u.o.article.init(node);
+		// Prepare intro content for playback
+		scene.initIntro = function() {
+			// u.bug("initIntro")
 
-					node.readstate = u.cv(node, "readstate");
-					if(node.readstate) {
-						u.addCheckmark(node);
-						u.as(node.checkmark, "top", (this.header.offsetTop + 3) + "px");
+			// map reference
+			this.intro.scene = this;
+
+			// does intro contain any text?
+			this.intro._textnodes = u.qsa("p,h2,h3,h4", this.intro);
+			if(this.intro._textnodes.length) {
+
+				// end intro on click
+				u.e.click(this.intro);
+				this.intro.clicked = function() {
+
+					// stop event chain
+					if(typeof(this.stop) == "function") {
+						// stop any playback
+						this.stop();
 					}
-//					u.as(node, "opacity", 1);
+					// or just hide intro
+					else {
+						// remove trigger event listener (just to be on the safe side)
+						u.e.removeWindowEvent(this.scene, "mousemove", this.scene.intro_event_id);
+
+						// hide intro
+						this.scene.hideIntro();
+					}
+				}
+
+				// apply text-scaling
+				u.textscaler(this.intro, {
+					"min_height":400,
+					"max_height":1000,
+					"min_width":600,
+					"max_width":1300,
+					"unit":"rem",
+					"h2":{
+						"min_size":4,
+						"max_size":8
+					},
+					"h3":{
+						"min_size":3,
+						"max_size":6
+					},
+					"p":{
+						"min_size":2,
+						"max_size":4
+					}
+
+				});
+
+				var i, node;
+				// set initial state for all intro content
+				for(i = 0; node = this.intro._textnodes[i]; i++) {
+					var node_x = (page.cN.offsetWidth-node.offsetWidth) / 2;
+					var node_y = ((page.cN.offsetHeight-node.offsetHeight) / 2) - page.hN.offsetHeight / 2;
+					u.ass(node, {
+						"position":"absolute",
+						"opacity": 0, 
+						"left": node_x+"px", 
+						"top": node_y+"px",
+					});
+				}
+
+				// set height of intro and show it
+				u.ass(this.intro, {
+					"height": u.browserH()-(page.hN.offsetHeight+page.fN.offsetHeight+100) + "px",
+					"opacity": 1
+				});
+
+				// apply start-intro event listener
+				this.intro_event_id = u.e.addWindowEvent(this, "mousemove", this.showIntro);
+			}
+
+			// skip intro if it has no content
+			else {
+				this.hideIntro();
+			}
+
+		}
+
+		// start intro animation playback
+		scene.showIntro = function() {
+
+			var node, duration, i;
+
+			// remove trigger event listener
+			u.e.removeWindowEvent(this, "mousemove", this.intro_event_id);
+
+			// start new event chain
+			u.eventChain(this.intro);
+
+			// first node
+			node = this.intro._textnodes[0];
+			// calculate duration based on text length
+			duration = node.innerHTML.length*100 > 1500 ? node.innerHTML.length*100 : 1500;
+
+			// add events to event chain
+			this.intro.addEvent(node, u._stepA1, duration);
+			this.intro.addEvent(node, u._stepA2, 300);
+
+			// loop through middle child nodes
+			for(i = 1; i < this.intro._textnodes.length-1; i++) {
+				node = this.intro._textnodes[i];
+				// calculate duration based on text length
+				duration = node.innerHTML.length*100 > 1500 ? node.innerHTML.length*75 : 1500;
+
+				// add events to event chain
+				this.intro.addEvent(node, u._stepA1, duration);
+				this.intro.addEvent(node, u._stepA2, 400);
+			}
+
+			// last node
+			node = this.intro._textnodes[this.intro._textnodes.length-1];
+			// calculate duration based on text length
+			duration = node.innerHTML.length*100 > 1500 ? node.innerHTML.length*100 : 1500;
+
+			// add events to event chain
+			this.intro.addEvent(node, u._stepA1, duration);
+			this.intro.addEvent(node, u._stepA2, 400);
+
+			// event chain ended
+			this.intro.eventChainEnded = function() {
+//				u.bug("eventChainEnded")
+
+				// hide intro
+				this.scene.hideIntro();
+			}
+
+			// start event chain playback
+			this.intro.play();
+
+		}
+
+		// hide intro and continue to article
+		scene.hideIntro = function() {
+//			u.bug("exit intro")
+
+			// could also be called if no intro is present
+			if(this.intro) {
+
+				// hide intro
+				u.ass(this.intro, {
+					"opacity": 0,
+					"display": "none"
+				});
+
+				// remove intro from DOM
+				this.intro.parentNode.removeChild(this.intro);
+
+				// delete reference
+				delete this.intro;
+			}
+
+			// start showing article
+			this.showArticle();
+		}
+
+
+
+		// ARTICLE
+
+		// start article animation playback
+		scene.showArticle = function() {
+			// u.bug("showArticle")
+
+			// does article exist
+			this._article = u.qs("div.article", this);
+			if(this._article) {
+				this._article.scene = this;
+
+				u.ass(this._article, {
+					"opacity":0,
+					"display":"block"
+				});
+
+				// prepare childnodes for animation
+				var cn = u.cn(this._article);
+				this._article.nodes = [];
+				for(i = 0; node = cn[i]; i++) {
+					if(u.gcs(node, "display") != "none") {
+						u.ass(node, {
+							"opacity":0,
+						});
+						this._article.nodes.push(node);
+					}
+				}
+
+				// show article node
+				u.ass(this._article, {
+					"opacity":1,
+				});
+
+				// apply headline anumation
+				u._stepA1.call(this._article.nodes[0]);
+
+				// show remaining article elements
+				for(i = 1; node = cn[i]; i++) {
+					u.a.transition(node, "all 0.3s ease-in "+(100+(i*200))+"ms");
+					u.ass(node, {
+						"transform":"translate(0, 0)",
+						"opacity":1
+					});
 
 				}
 
+				// show news when time is up
+				u.t.setTimer(this, "showNews", 800);
+
+			}
+			// show news if no article exists
+			else {
+				this.showNews();
 			}
 
 		}
+
+
+
+		// NEWS
+
+		// start news animation playback
+		scene.showNews = function() {
+			u.bug("showNews")
+
+			this._news = u.qs("div.news", this);
+
+			if(this._news) {
+				this._news.scene = this;
+
+				u.ass(this._news, {
+					"opacity": 0,
+					"display":"block"
+				});
+
+				u.a.transition(this._news, "all 0.4s ease-in-out", "showPosts");
+				u.ass(this._news, {
+					"opacity":1
+				});
+
+				this._news.showPosts = function() {
+					this._posts = u.qsa("li.item", this._news);
+					if(this._posts) {
+						var i, node;
+						for(i = 0; node = this._posts[i]; i++) {
+
+							var header = u.qs("h2,h3", node);
+							header.current_readstate = node.getAttribute("data-readstate");
+							if(header.current_readstate) {
+								u.addCheckmark(header);
+//								u.as(node.checkmark, "top", (header.offsetTop + 3) + "px");
+							}
+
+
+							u.a.transition(node, "all 0.4s ease-in-out "+(100*i)+"ms", "done");
+							u.ass(node, {
+								"opacity": 1
+							});
+
+						}
+
+					}
+				} 
+			}
+		}
+
 
 		// scene is ready
 		scene.ready();

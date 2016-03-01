@@ -21,7 +21,7 @@ if(is_array($action) && count($action)) {
 	if($action[0] == "kvittering") {
 
 		$page->page(array(
-			"templates" => "pages/signup_receipt.php"
+			"templates" => "signup/signup_receipt.php"
 		));
 		exit();
 	}
@@ -31,12 +31,12 @@ if(is_array($action) && count($action)) {
 
 		if($model->confirmUser($action)) {
 			$page->page(array(
-				"templates" => "pages/signup_confirmed.php"
+				"templates" => "signup/signup_confirmed.php"
 			));
 		}
 		else {
 			$page->page(array(
-				"templates" => "pages/signup_confirmed_failed.php"
+				"templates" => "signup/signup_confirmed_failed.php"
 			));
 		}
 		exit();
@@ -72,7 +72,7 @@ if(is_array($action) && count($action)) {
 // plain signup
 // /signup
 $page->page(array(
-	"templates" => "pages/signup.php"
+	"templates" => "signup/signup.php"
 ));
 
 ?>

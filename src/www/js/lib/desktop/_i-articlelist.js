@@ -1,16 +1,14 @@
-Util.Objects["articleList"] = new function() {
+Util.Objects["articleMiniList"] = new function() {
 	this.init = function(list) {
-
 
 		list.articles = u.qsa("li.article", list);
 
 		var i, node;
 		for(i = 0; node = list.articles[i]; i++) {
 
-			var header = u.qs("h3", node);
-
 			node.readstate = u.cv(node, "readstate");
 			if(node.readstate) {
+				var header = u.qs("h2,h3", node);
 				u.addCheckmark(node);
 				u.as(node.checkmark, "top", (header.offsetTop + 3) + "px");
 			}
@@ -19,6 +17,7 @@ Util.Objects["articleList"] = new function() {
 
 	}
 }
+
 
 
 // TODO: do not load images while scrolling is in process

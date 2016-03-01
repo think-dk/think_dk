@@ -21,7 +21,7 @@ if(is_array($action) && count($action)) {
 	if($action[0] == "kvittering") {
 
 		$page->page(array(
-			"templates" => "pages/newsletter_receipt.php"
+			"templates" => "news/newsletter_receipt.php"
 		));
 		exit();
 	}
@@ -54,7 +54,7 @@ if(is_array($action) && count($action)) {
 }
 
 $page->page(array(
-	"templates" => "pages/newsletter.php"
+	"templates" => "news/newsletter.php"
 ));
 
 ?>

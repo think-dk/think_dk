@@ -1,10 +1,11 @@
 <? $this->bodyClass("page_missing"); ?>
 
 <div class="scene page_missing i:scene">
-	<h1>404</h1>
-	<h2>Siden mangler</h2>
+	<h1>404 - Page is missing</h1>
+	<h2>Technology needs humanity.</h2>
+
 	<p>
-		Bare vi havde en god forklaring, men der er sket noget vi ikke var forberedt på.
-		Hjælp os ved at sende en drillende email til <a href="mailto:martin@think.dk?subject=Siden%20mangler:<?= $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"] ?>">martin@think.dk</a>.
+		Please send a taunting email to our developers at 
+		<a href="mailto:support@think.dk?subject=Missing%20page:<?= $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"] ?>">support@think.dk</a>.
 	</p>
 </div>

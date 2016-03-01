@@ -24,7 +24,7 @@ if(is_array($action) && count($action)) {
 	if($action[0] == "hemmeligheder") {
 
 		$page->page(array(
-			"templates" => "pages/list.php"
+			"templates" => "pages/page_list.php"
 		));
 		exit();
 	}
@@ -33,7 +33,7 @@ if(is_array($action) && count($action)) {
 	else if(count($action) == 1) {
 
 		$page->page(array(
-			"templates" => "pages/view.php"
+			"templates" => "pages/page_view.php"
 		));
 		exit();
 	}
