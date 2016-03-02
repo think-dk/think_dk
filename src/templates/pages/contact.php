@@ -107,7 +107,7 @@ $this->sharingMetaData($page);
 				</ul>
 			</dd>
 			<dt class="cvr">CVR</dt>
-			<dd class="cvr" itemprop="taxID">33 06 23 38</dd>
+			<dd class="cvr" itemprop="taxID">25 21 04 33</dd>
 		</dl>
 		<dl class="info">
 			<dt class="contact">Contact</dt>
