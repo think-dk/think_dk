@@ -6,7 +6,7 @@
 #content .scene ul.info {display: none;}
 
 
-#content .scene.login {opacity: 1;}
+/*#content .scene.login {opacity: 1;}*/
 
 
 
@@ -30,53 +30,81 @@
 
 /* FRONT - ARTICLE */
 #content .scene.front div.article {display: none; padding-bottom: 30px;}
-#content .scene.front div.article h1 span {display: inline-block;}
+/*#content .scene.front div.article h1 span {display: inline-block;}*/
 
 
 /* FRONT - NEWS */
 #content .scene.front div.news {display: none;}
-#content .scene.front ul.items > li.item {padding-bottom: 5px;}
-#content .scene.front ul.items > li.item h3 {padding-bottom: 10px; font-size: 22px;
+
+/*#content .scene.front ul.items > li.item {padding-bottom: 5px;}*/
+/*#content .scene.front ul.items > li.item h3 {padding-bottom: 10px; font-size: 22px;
 	font-family: "PT Serif", Times, serif;
 }
-#content .scene.front ul.items > li.item ul.info {display: none;}
+*//*#content .scene.front ul.items > li.item ul.info {display: none;}*/
 
 
 
 /* NEWS */
 #content .scene.news div.article {padding-bottom: 30px;}
-/*#content .scene.news ul.info {display: none;}*/
 
+
+/* CONTACT */
+#content .scene.contact div.article {padding-bottom: 30px;}
+
+#content .scene.contact ul.people {padding: 0 70px 30px; border-top: 1px solid #dedede;}
+#content .scene.contact ul.items.people li.item.person {width: 230px; padding: 20px 20px 20px 0; display: inline-block; vertical-align: top; border: none;}
+#content .scene.contact ul.items.people li.item.person h3 {width: auto; padding-left: 0; padding-right: 0;}
+#content .scene.contact ul.items.people li.item.person ul.info {display: block; padding: 0 0 20px;}
+#content .scene.contact ul.items.people li.item.person ul.info li {display: block; color: #777777;}
+#content .scene.contact ul.items.people li.item.person ul.info li.affiliation {display: none;}
+
+#content .scene.contact ul.items.people li.item.person .description {}
+
+#content .scene.contact ul.items.people li.item.person .description h2, 
+#content .scene.contact ul.items.people li.item.person .description h3, 
+#content .scene.contact ul.items.people li.item.person .description h4, 
+#content .scene.contact ul.items.people li.item.person .description h5, 
+#content .scene.contact ul.items.people li.item.person .description h6, 
+#content .scene.contact ul.items.people li.item.person .description p {padding-left: 0; padding-right: 0;}
+
+#content .scene.contact ul.items.people li.item.person .description p {font-size: 13px;}
+
+#content .scene.contact div.vcard.company {margin-top: 65px; border-top: 1px solid #dedede;}
+#content .scene.contact div.vcard.company h2 {margin-top: -65px; padding-bottom: 60px;}
+#content .scene.contact div.vcard dl.info {width: 230px; padding: 0 20px 20px 0; display: inline-block; vertical-align: top;}
+
+
+
+
+/*#content .scene div.vcard .name {color: #26962d;}*/
+/*#content .scene.news ul.info {display: none;}*/
 
 /* POSTS */
 /*#content .scene.posts ul.info {display: none;}*/
 
-
-
-
-
-
 /* ARTICLES */
-#content .scene.articles ul.articles {padding: 20px 0 30px;}
-#content .scene ul.articles li.article h3 {font-size: 22px;
+/*#content .scene.articles ul.articles {padding: 20px 0 30px;}*/
+/*#content .scene ul.articles li.article h3 {font-size: 22px;
 	font-family: "PT Serif", Times, serif;
 }
-
+*/
 /*#content .scene ul.articles li.article p {font-size: 16px;}*/
 
 
 
 /* ARTICLE */
-#content .scene.article div.intro {padding-bottom: 20px; border-bottom: 1px solid #dedede; margin-bottom: 40px;}
+/*#content .scene.article div.intro {padding-bottom: 20px; border-bottom: 1px solid #dedede; margin-bottom: 40px;}
 #content .scene.article div.intro p {font-size: 13px; color: #cccccc;}
 #content .scene.article div.article {padding-bottom: 30px;}
-
+*/
 
 
 /* RELATED */
-#content .scene.articles div.related {border: none;}
+/*#content .scene.articles div.related {border: none;}
 
 .pages #content .scene dl.info {display: none;}
+*/
+
 
 
 /* TODOS */
@@ -134,5 +162,5 @@
 
 
 /* ABOUT */
-#content .scene.about div.comments {margin-top: 20px;}
+/*#content .scene.about div.comments {margin-top: 20px;}*/
 
