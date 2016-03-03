@@ -50,8 +50,6 @@ body {}
 .contact #navigation ul li.contact,
 .news #navigation ul li.news,
 .posts #navigation ul li.news,
-
-.articles #navigation ul li.articles,
-.stop #navigation ul li.stop {color: #26962d;}
+.articles #navigation ul li.articles {color: #26962d;}
 
 

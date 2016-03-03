@@ -3644,12 +3644,13 @@ if(String.prototype.substr == undefined || "ABC".substr(-1,1) == "A") {
 /*u-settings.js*/
 u.site_name = "think.dk";
 u.txt = {};
-u.txt["share"] = "Del artiklen";
-u.txt["not_read"] = "Klik på <em>Tjek</em>-ikonet når du har læst et emne, så husker vi det for dig.";
-u.txt["read"] = "Læst";
-u.txt["add_comment"] = "Tilføj kommentar";
-u.txt["comment"] = "Kommentar";
-u.txt["cancel"] = "Fortryd";
+u.txt["share"] = "Share";
+u.txt["readstate-not_read"] = "Click to mark as read";
+u.txt["readstate-read"] = "Read";
+u.txt["add_comment"] = "Add comment";
+u.txt["comment"] = "Comment";
+u.txt["cancel"] = "Cancel";
+
 
 /*ga.js*/
 u.ga_account = 'UA-10756281-1';
@@ -3693,6 +3694,7 @@ if(u.ga_account) {
 u.bug_console_only = true;
 Util.Objects["page"] = new function() {
 	this.init = function(page) {
+		window.page = page;
 		page.hN = u.qs("#header");
 		page.hN.service = u.qs(".servicenavigation", page.hN);
 		page.logo = u.ie(page.hN, "a", {"class":"logo", "html":u.eitherOr(u.site_name, "Frontpage")});
@@ -3745,8 +3747,10 @@ Util.Objects["login"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			this._form = u.qs("form", this);
-			u.f.init(this._form);
+			u.ae(this, "p", {"html":"Your browser is not supported by the Administration system.<br />Please upgrade:"})
+			var ul = u.ae(this, "ul");
+			u.ae(ul, "li", {"html":'<a href="https://firefox.com/download" target="_blank">Firefox</a>'});
+			u.ae(ul, "li", {"html":'<a href="https://www.google.com/chrome/" target="_blank">Chrome</a>'});
 			page.cN.scene = this;
 		}
 		scene.ready();

@@ -65,6 +65,9 @@ Util.Objects["scene"] = new function() {
 
 			}
 
+			// accept cookies?
+			page.acceptCookies();
+
 
 			page.resized();
 		}

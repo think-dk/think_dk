@@ -223,6 +223,9 @@ Util.Objects["front"] = new function() {
 				delete this.intro;
 			}
 
+			// accept cookies?
+			page.acceptCookies();
+
 			// start showing article
 			this.showArticle();
 		}

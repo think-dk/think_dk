@@ -8,31 +8,47 @@
 
 body {}
 
-#header .logo {color: #00c90d;}
-#navigation ul li a {color: #00c90d;}
+#header .logo {color: #34cc3d;}
+#navigation ul li a {color: #34cc3d;}
 
-#content .scene a {color: #00c90d;}
+#content .scene a {color: #34cc3d;}
 #content .scene hr {border-color: #ccdbcd;}
 
 #content ul.actions input.button.primary,
 #content ul.actions a.button.primary,
 #content .scene .pagination .next,
-#content .scene .pagination .previous {background-color: #00c90d;}
+#content .scene .pagination .previous {background-color: #34cc3d;}
 #content ul.actions input.button.primary:hover,
 #content ul.actions a.button.primary:hover,
 #content .scene .pagination .next:hover,
 #content .scene .pagination .previous:hover {background-color: #26962d;}
 
+#content .scene div.categories ul.tags li.selected a {color: #26962d;}
+
+#content .scene ul.tags a:hover {color: #00c90d;}
+
+
+#content .scene h3,
+#content .scene h4,
+#content .scene h5,
+#content .scene h6,
+#content .scene p,
+#content .scene li,
+#content .scene dd {color: #777777;}
+
+
 #footer {border-color: #ccdbcd;}
 
 .terms_notification .accept,
-.terms_notification .details {color: #00c90d;}
+.terms_notification .details {color: #34cc3d;}
 .terms_notification {border-color: #26962d;}
 
 
 /* LOCAL */
-
 .front #header .logo,
-.stop #navigation ul li.stop a,
-.whatis #navigation ul li.whatis a {color: #26962d;}
+.about #navigation ul li.about a,
+.contact #navigation ul li.contact a,
+.news #navigation ul li.news a,
+.posts #navigation ul li.news a,
+.articles #navigation ul li.articles a {color: #26962d;}
 

@@ -5056,7 +5056,23 @@ Util.Objects["page"] = new function() {
 					u.e.addEvent(window, "scroll", page.scrolled);
 					this.initNavigation();
 					this.resized();
-					if(!u.getCookie("terms_v1")) {
+				}
+			}
+			page.acceptCookies = function() {
+				if(!u.getCookie("terms_v1")) {
+					var terms = u.ie(document.body, "div", {"class":"terms_notification"});
+					u.ae(terms, "h3", {"html":"We love <br />cookies and privacy"});
+					var bn_accept = u.ae(terms, "a", {"class":"accept", "html":"Accept"});
+					bn_accept.terms = terms;
+					u.ce(bn_accept);
+					bn_accept.clicked = function() {
+						this.terms.parentNode.removeChild(this.terms);
+						u.saveCookie("terms_v1", true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
+					}
+					if(!location.href.match(/\/terms/)) {
+						var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details"});
+						bn_details.url = "/terms";
+						u.ce(bn_details, {"type":"link"});
 					}
 				}
 			}
@@ -5739,6 +5755,7 @@ Util.Objects["front"] = new function() {
 				this.intro.parentNode.removeChild(this.intro);
 				delete this.intro;
 			}
+			page.acceptCookies();
 			this.showArticle();
 		}
 		scene.showArticle = function() {
@@ -5850,6 +5867,7 @@ Util.Objects["scene"] = new function() {
 					"opacity":1,
 				});
 			}
+			page.acceptCookies();
 			page.resized();
 		}
 		scene.ready();

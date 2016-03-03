@@ -48,7 +48,7 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 .c100 {width: 25%;}
 #page {position: relative; min-height: 100%; min-width: 640px;}
 #page.fixed {width: 1300px; margin: 0 auto;}
-.terms_notification {position: fixed; z-index: 90; top: 50%; margin-top: -100px; right: 0px; padding: 15px 20px; border-top-left-radius: 20px; border-bottom-left-radius: 20px; border: 1px solid #888888; background: #ffffff; border-right: none;}
+.terms_notification {position: fixed; z-index: 90; top: 50%; margin-top: -100px; right: 0px; padding: 15px 20px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border: 1px solid #888888; background: #ffffff; border-right: none;}
 .terms_notification h3 {padding: 0; font-size: 14px;}
 .terms_notification .accept,
 .terms_notification .details {padding: 0; font-size: 13px; display: inline-block; vertical-align: bottom; padding: 0 15px 0 0;}
@@ -192,7 +192,6 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 #content .scene ul.articles li.article h3 {font-size: 22px; line-height: 1em; padding-bottom: 10px;
 	font-family: "PT Serif", Times, serif;
 }
-#content .scene ul.articles li.article p {font-size: 13px; color: #888888;}
 #content .scene ul.articles li.article > svg.checkmark {position: absolute; top: 14px; left: 45px;}
 #content .scene ul.articles li.article > svg.checkmark line {stroke: #666666; stroke-width: 3px;}
 #content .scene div.related {padding-top: 40px; position: relative; z-index: 1;}
@@ -266,8 +265,7 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 #content .scene div.vcard dl.info {padding: 0 0 30px;}
 #content .scene div.vcard dl.info dt,
 #content .scene div.vcard dl.info dd {display: block; width: auto; text-align: left;}
-#content .scene div.vcard dl.info dt {}
-#content .scene div.vcard dl.info dd {padding-bottom: 10px; }
+#content .scene div.vcard dl.info dd {padding-bottom: 10px;}
 #content .scene div.vcard dl.info dd ul {padding: 0;}
 #content .scene div.vcard dl.info dd li {font-size: 12px; color: #cccccc;}
 #content .scene .usedby {min-width: 600px; margin-top: 20px; margin-bottom: -50px; padding-top: 5px; border-top: 1px solid #cccccc;}
@@ -682,7 +680,6 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.front div.intro span {display: inline-block; width: auto; color: #26962d; padding: 0;}
 #content .scene.front div.article {display: none; padding-bottom: 30px;}
 #content .scene.front div.news {display: none;}
-/*#content .scene.front ul.items > li.item ul.info {display: none;}*/
 #content .scene.news div.article {padding-bottom: 30px;}
 #content .scene.contact div.article {padding-bottom: 30px;}
 #content .scene.contact ul.people {padding: 0 70px 30px; border-top: 1px solid #dedede;}
@@ -772,16 +769,14 @@ body {}
 .contact #navigation ul li.contact,
 .news #navigation ul li.news,
 .posts #navigation ul li.news,
-.articles #navigation ul li.articles,
-.stop #navigation ul li.stop {color: #26962d;}
+.articles #navigation ul li.articles {color: #26962d;}
 
 
 /*s-pages-hovers.css*/
 #content ul.actions input.button.primary:hover,
 #content ul.actions a.button.primary:hover {background-color: #26962d;}
 #content .scene.front .link:hover {text-decoration: underline;}
-#content .scene .article ul.tags a:hover {color: #00c90d;}
-#content .scene div.readstate:hover p {color: #26962d;}
-#content .scene div.comments h2:hover {color: #00c90d;}
-#content .scene div.comments h2:hover svg.arrow line {stroke: #00c90d;}
+#content .scene .article ul.tags a:hover {color: #34cc3d;}
+#content .scene div.comments h2:hover {color: #34cc3d;}
+#content .scene div.comments h2:hover svg.arrow line {stroke: #34cc3d;}
 

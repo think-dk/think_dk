@@ -113,7 +113,7 @@ $this->sharingMetaData($page);
 			<dt class="contact">Contact</dt>
 			<dd class="contact">
 				<ul>
-					<li class="email"><a href="mailto:start@think.dk" itemprop="email">start@think.dk</a></li>
+					<li class="email"><a href="mailto:start@think.dk" itemprop="email" content="start@think.dk">start@think.dk</a></li>
 				</ul>
 			</dd>
 

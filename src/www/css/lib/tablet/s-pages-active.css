@@ -1,2 +1,15 @@
+/* HOVERS ARE SEPARATED FOR DESKTOP SEGMENT BECAUSE THE CSS IS REUSED FOR TABLET */
 #content ul.actions input.button.primary:active,
 #content ul.actions a.button.primary:active {background-color: #26962d;}
+
+
+#content .scene.front .link:active {text-decoration: underline;}
+
+
+#content .scene .article ul.tags a:active {color: #00c90d;}
+#content .scene div.readstate:active p {color: #26962d;}
+
+#content .scene div.comments h2:active {color: #00c90d;}
+#content .scene div.comments h2:active svg.arrow line {stroke: #00c90d;}
+
+

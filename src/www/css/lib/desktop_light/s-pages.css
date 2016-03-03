@@ -1,54 +1,44 @@
+#content .scene {}
+#content .scene ul.info {display: none;}
+
+
 /* LOGIN */
-#content .login form {display: none;}
+#content .scene.login form {display: none;}
 
 
 /* FRONT */
-#content .scene.front h1 {font-size: 100px;}
-#content .scene.front h1 a,
-#content .scene.front h2 a,
-#content .scene.front h2 span {font-family: "PT Serif", Times, serif;}
-#content .scene.front h2 {font-size: 60px;}
-#content .scene.front h3 {font-size: 22px;}
-#content .scene.front p {font-size: 22px; padding-bottom: 10px;}
-
-#content .scene.front .long .s2,
-#content .scene.front .long .s2 a {/*font-size: 32px;*/ color: #01939a;}
-#content .scene.front .wake .s2,
-#content .scene.front .wake .s2 a {/*font-size: 34px;*/ color: #bf7230;}
-#content .scene.front .tyrant .s2,
-#content .scene.front .tyrant .s2 a {/*font-size: 30px;*/ color: #01939a;}
-#content .scene.front .goal .s2,
-#content .scene.front .goal .s2 a {/*font-size: 34px;*/ color: #bf7230;}
-#content .scene.front .idleness .s2,
-#content .scene.front .idleness .s2 {/*font-size: 34px;*/ color: #01939a;}
-
-#content .scene.front .content,
-#content .scene.front .content a {/*font-size: 34px;*/ color: #01939a;}
-#content .scene.front .slaves .s2,
-#content .scene.front .slaves .s2 a {/*font-size: 30px;*/ color: #bf7230;}
-
-#content .scene.front .bills {padding-bottom: 40px;}
-#content .scene.front .idleness {padding-bottom: 0px;}
-#content .scene.front .everything {padding-bottom: 40px;}
+#content .scene.front div.intro {display: none;}
 
 
-/* ARTICLES */
-#content .scene ul.articles li.article {border-color: #ccdbcd;}
-#content .scene ul.articles li.article h3 {font-size: 24px;
-	font-family: "PT Serif", Times, serif;
-}
-#content .scene ul.articles li.article p {font-size: 16px;}
+/* FRONT - ARTICLE */
+#content .scene.front div.article {padding-bottom: 30px;}
 
 
-/* ARTICLE */
-#content .scene.article div.intro {padding-bottom: 20px; border-bottom: 1px solid #dedede; margin-bottom: 40px;}
-#content .scene.article div.intro p {font-size: 13px; color: #cccccc;}
-#content .scene.article div.article {padding-bottom: 50px;}
+/* CONTACT */
+#content .scene.contact div.article {padding-bottom: 30px;}
+#content .scene.contact ul.people {padding: 0 70px 30px; border-top: 1px solid #dedede; overflow: hidden;}
+#content .scene.contact ul.items.people li.item.person {width: 230px; height: 170px; overflow: hidden; padding: 20px 20px 20px 0; display: inline; float: left; vertical-align: top; border: none;}
+#content .scene.contact ul.items.people li.item.person h3 {width: auto; padding-left: 0; padding-right: 0;}
+#content .scene.contact ul.items.people li.item.person ul.info {display: block; padding: 0 0 20px;}
+#content .scene.contact ul.items.people li.item.person ul.info li {display: block; color: #777777;}
+#content .scene.contact ul.items.people li.item.person ul.info li.affiliation {display: none;}
 
+#content .scene.contact ul.items.people li.item.person .description {}
 
-#content .scene .article ul.tags a:hover {color: #00c90d;}
+#content .scene.contact ul.items.people li.item.person .description h2, 
+#content .scene.contact ul.items.people li.item.person .description h3, 
+#content .scene.contact ul.items.people li.item.person .description h4, 
+#content .scene.contact ul.items.people li.item.person .description h5, 
+#content .scene.contact ul.items.people li.item.person .description h6, 
+#content .scene.contact ul.items.people li.item.person .description p {padding-left: 0; padding-right: 0;}
 
-#content .scene div.related {border-color: #ccdbcd;}
+#content .scene.contact ul.items.people li.item.person .description p {font-size: 13px;}
+
+#content .scene.contact div.vcard.company {margin-top: 65px; border-top: 1px solid #dedede;}
+#content .scene.contact div.vcard.company h2 {margin-top: -65px; padding-bottom: 60px;}
+#content .scene.contact div.vcard dl.info {width: 230px; padding: 0 20px 20px 0; display: inline; float: left; vertical-align: top;}
+#content .scene.contact div.vcard {height: 260px;}
+
 
 
 /* FEEDBACK ELEMENTS */
