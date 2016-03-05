@@ -36,6 +36,10 @@
 #content .scene.news div.article {padding-bottom: 30px;}
 
 
+/* ARTICLE */
+#content .scene.post div.article ul.info {display: block;}
+
+
 /* CONTACT */
 #content .scene.contact div.article {padding-bottom: 30px;}
 
@@ -69,10 +73,8 @@
 /* TODOS */
 #content .scene div.todos {padding-bottom: 15px; position: relative; z-index: 1;}
 #content .scene div.todos h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
-#content .scene div.todos h2:hover {color: #00c90d;}
 #content .scene div.todos h2 svg.arrow {position: absolute; top: 6px; right: 55px;}
 #content .scene div.todos h2 svg.arrow line {stroke: #dedede; stroke-width: 3px;}
-#content .scene div.todos h2:hover svg.arrow line {stroke: #00c90d;}
 
 #content .scene div.todos > p,
 #content .scene div.todos ul.todos,
@@ -94,10 +96,8 @@
 /* QnAs */
 #content .scene div.qnas {padding-bottom: 15px; position: relative; z-index: 1;}
 #content .scene div.qnas h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
-#content .scene div.qnas h2:hover {color: #00c90d;}
 #content .scene div.qnas h2 svg.arrow {position: absolute; top: 6px; right: 55px;}
 #content .scene div.qnas h2 svg.arrow line {stroke: #dedede; stroke-width: 3px;}
-#content .scene div.qnas h2:hover svg.arrow line {stroke: #00c90d;}
 
 #content .scene div.qnas > p,
 #content .scene div.qnas ul.qnas,

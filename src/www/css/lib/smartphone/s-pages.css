@@ -1,5 +1,54 @@
+#content .scene {opacity: 0;}
+#content .scene h1 span {display: inline-block;}
+#content .scene ul.info {display: none;}
+
+
+/* FRONT */
+#content .scene.front {opacity: 1;}
+
+
+/* FRONT - INTRO */
+#content .scene.front div.intro {opacity: 0; overflow: hidden; text-align: center;
+	-o-user-select: none;
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+#content .scene.front div.intro p,
+#content .scene.front div.intro h2,
+#content .scene.front div.intro h3,
+#content .scene.front div.intro span {display: inline-block; width: auto; color: #26962d; padding: 0;}
+
+
+/* FRONT - ARTICLE */
+#content .scene.front div.article {display: none; padding-bottom: 30px;}
+
+
+/* FRONT - NEWS */
+#content .scene.front div.news {display: none;}
+
+
+/* NEWS */
+#content .scene.news div.article {padding-bottom: 30px;}
+
+
+/* ARTICLE */
+#content .scene.post div.article ul.info {display: block;}
+
+
+/* CONTACT */
+#content .scene.contact div.article {padding-bottom: 30px;}
+#content .scene.contact ul.people {padding-bottom: 30px;}
+#content .scene.contact ul.people li.person {padding-bottom: 10px;}
+
+#content .scene.contact div.vcard.company {margin-top: 52px; border-top: 1px solid #dedede; padding-left: 0; padding-right: 0;}
+#content .scene.contact div.vcard.company h2 {margin-top: -52px; padding-bottom: 48px;}
+#content .scene.contact div.vcard dl.info {padding: 0 20px 20px; display: block;}
+
+
 /* LOGIN */
-#content .terms_notification {display: none;}
+/*#content .terms_notification {display: none;}*/
 
 
 /* FRONT */
@@ -38,7 +87,8 @@
 
 #content .scene.front .everything {font-size: 38px;}
 */
-#content .scene.front dl.info {display: none;}
+
+/*#content .scene.front dl.info {display: none;}*/
 
 /*#content .scene.front h1,
 #content .scene.front h2,
@@ -48,19 +98,21 @@
 */
 
 /* ARTICLES */
+/*
 #content .scene ul.articles li.article {border-color: #ccdbcd;}
 #content .scene ul.articles li.article h3 {font-size: 24px;
 	font-family: "PT Serif", Times, serif;
 }
 #content .scene ul.articles li.article p {font-size: 16px;}
-
+*/
 
 /* ARTICLE */
+/*
 #content .scene.article div.intro {padding-bottom: 10px; border-bottom: 1px solid #dedede; margin-bottom: 30px; margin-top: -20px;}
 #content .scene.article div.intro p {font-size: 13px; color: #cccccc;}
 #content .scene .article ul.tags a:active {color: #00c90d;}
 
-
+*/
 
 /* FEEDBACK ELEMENTS */
 #content .scene div.todos {display: none;}
@@ -68,56 +120,3 @@
 
 
 
-
-/* STOP */
-#content .scene.stop ul.topics {padding: 10px 0 0; border-bottom: 1px solid #dedede; margin-bottom: 40px;}
-
-#content .scene.stop li.topic {border-top: 1px solid #dedede; padding-top: 10px; position: relative;}
-#content .scene.stop li.topic:first-child {border: none;}
-#content .scene.stop li.topic h1 {display: none;}
-
-#content .scene.stop li.topic > svg.checkmark {display: none;}
-#content .scene.stop li.topic > svg.checkmark line {stroke: #666666; stroke-width: 2px;}
-
-#content .scene.stop li.topic > h3 {position: relative;}
-#content .scene.stop li.topic > h3 svg.arrow {position: absolute; top: 7px; right: 20px;}
-#content .scene.stop li.topic > h3 svg.arrow line {stroke: #dedede; stroke-width: 3px;}
-#content .scene.stop li.topic > h3:hover svg.arrow line {stroke: #00c90d;}
-
-
-#content .scene.stop li.topic > h3 a {display: block;}
-
-#content .scene.stop li.topic div.topic {display: none;}
-#content .scene.stop li.topic.open div.topic {display: block;}
-
-
-#content .scene.stop .topic div.problem {padding-top: 20px;}
-#content .scene.stop .topic div.solution {padding-top: 20px;}
-#content .scene.stop .topic div.details {}
-#content .scene.stop .topic div.details h3 {font-size: 16px;}
-#content .scene.stop .topic div.details h3.clickable {color: #00c90d; cursor: pointer; padding-bottom: 40px; position: underline; position: relative;}
-#content .scene.stop .topic div.details h3.clickable svg.arrow {position: absolute; top: 7px; right: 20px;}
-#content .scene.stop .topic div.details h3.clickable svg.arrow line {stroke: #dedede; stroke-width: 3px;}
-
-#content .scene.stop .topic div.details h3.clickable:hover {text-decoration: underline;}
-#content .scene.stop .topic div.details h3.clickable:hover svg.arrow line {stroke: #00c90d;}
-
-
-#content .scene.stop .topic div.details div.description,
-#content .scene.stop .topic div.details div.todos,
-#content .scene.stop .topic div.details div.comments {display: none;}
-
-#content .scene.stop .topic div.details.open h3 {padding-bottom: 10px;}
-#content .scene.stop .topic div.details.open div.description {padding-bottom: 40px;}
-
-#content .scene.stop .topic div.details.open div.description,
-#content .scene.stop .topic div.details.open div.todos,
-#content .scene.stop .topic div.details.open div.comments {display: block;}
-
-
-#content .scene.stop .topic div.related {border: none; padding-top: 20px; padding-bottom: 15px; position: relative; z-index: 1;}
-#content .scene.stop .topic div.related h2 {font-size: 16px; padding-bottom: 25px;}
-#content .scene.stop .topic div.related ul.articles {list-style: none; margin: 0;}
-#content .scene.stop .topic div.related ul.articles li {padding: 0; border: none;}
-#content .scene.stop .topic div.related ul.articles li h3 {font-size: 16px;}
-#content .scene.stop .topic div.related ul.articles li p {font-size: 14px;}

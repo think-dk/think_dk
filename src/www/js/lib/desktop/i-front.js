@@ -49,6 +49,7 @@ Util.Objects["front"] = new function() {
 
 		}
 
+
 		scene.build = function() {
 //			u.bug("scene.build:" + u.nodeId(this));
 
@@ -61,8 +62,6 @@ Util.Objects["front"] = new function() {
 			}
 
 		}
-
-
 
 
 

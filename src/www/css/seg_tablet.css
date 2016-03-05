@@ -48,11 +48,12 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 .c100 {width: 25%;}
 #page {position: relative; min-height: 100%; min-width: 640px;}
 #page.fixed {width: 1300px; margin: 0 auto;}
-.terms_notification {position: fixed; z-index: 90; top: 50%; margin-top: -100px; right: 0px; padding: 15px 20px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border: 1px solid #888888; background: #ffffff; border-right: none;}
-.terms_notification h3 {padding: 0; font-size: 14px;}
+.terms_notification {opacity: 0; position: fixed; z-index: 90; top: 50%; margin-top: -100px; right: 0px; padding: 15px 20px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border: 1px solid #888888; background: #ffffff; border-right: none;}
+.terms_notification h3 {padding: 0 0 20px; font-size: 14px;}
 .terms_notification .accept,
-.terms_notification .details {padding: 0; font-size: 13px; display: inline-block; vertical-align: bottom; padding: 0 15px 0 0;}
-.terms_notification .details {}
+.terms_notification .details {padding: 0; font-size: 16px; display: inline-block; vertical-align: bottom; padding: 0;}
+.terms_notification .accept {float: left;}
+.terms_notification .details {float: right;}
 
 
 /*s-header.css*/
@@ -140,7 +141,7 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 #content .scene dl.info dd.publisher {display: none;}
 #content .scene dl.info dd.image_info {display: none;}
 #content .scene dl.info dd.modified_at {display: none;}
-#content .scene ul.info {position: relative; z-index: 1; padding-bottom: 20px; padding-right: 0; display: inline-block; vertical-align: top; width: auto;}
+#content .scene ul.info {position: relative; z-index: 1; padding-bottom: 26px; padding-right: 0; display: inline-block; vertical-align: top; width: auto;}
 #content .scene ul.info li {width: auto; font-size: 12px; color: #cccccc; display: inline-block; vertical-align: top;}
 #content .scene ul.info li.author:before {content: "\00a0|\00a0"; color: #dedede;}
 #content .scene ul.info li.main_entity {display: none;}
@@ -195,8 +196,6 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 #content .scene ul.articles li.article > svg.checkmark {position: absolute; top: 14px; left: 45px;}
 #content .scene ul.articles li.article > svg.checkmark line {stroke: #666666; stroke-width: 3px;}
 #content .scene div.related {padding-top: 40px; position: relative; z-index: 1;}
-#content .scene div.related ul.articles {padding: 0;}
-#content .scene div.related ul.articles li.item dl.info {display: none;}
 #content .scene div.sharing {padding: 0 0 20px; position: relative; height: 40px;}
 #content .scene div.sharing p {padding: 0; z-index: 2; position: absolute; top: 22px; left: 120px; display: none; font-size: 11px; color: #999999;}
 #content .scene div.sharing h3 {position: absolute; top: 0px; left: 120px; padding: 0; display: none;}
@@ -680,6 +679,7 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene.front div.article {display: none; padding-bottom: 30px;}
 #content .scene.front div.news {display: none;}
 #content .scene.news div.article {padding-bottom: 30px;}
+#content .scene.post div.article ul.info {display: block;}
 #content .scene.contact div.article {padding-bottom: 30px;}
 #content .scene.contact ul.people {padding: 0 70px 30px; border-top: 1px solid #dedede;}
 #content .scene.contact ul.items.people li.item.person {width: 230px; padding: 20px 20px 20px 0; display: inline-block; vertical-align: top; border: none;}
@@ -700,10 +700,8 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene.contact div.vcard dl.info {width: 230px; padding: 0 20px 20px 0; display: inline-block; vertical-align: top;}
 #content .scene div.todos {padding-bottom: 15px; position: relative; z-index: 1;}
 #content .scene div.todos h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
-#content .scene div.todos h2:hover {color: #00c90d;}
 #content .scene div.todos h2 svg.arrow {position: absolute; top: 6px; right: 55px;}
 #content .scene div.todos h2 svg.arrow line {stroke: #dedede; stroke-width: 3px;}
-#content .scene div.todos h2:hover svg.arrow line {stroke: #00c90d;}
 #content .scene div.todos > p,
 #content .scene div.todos ul.todos,
 #content .scene div.todos ul.actions {display: none;}
@@ -718,10 +716,8 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene div.todos .field {padding-bottom: 10px;}
 #content .scene div.qnas {padding-bottom: 15px; position: relative; z-index: 1;}
 #content .scene div.qnas h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
-#content .scene div.qnas h2:hover {color: #00c90d;}
 #content .scene div.qnas h2 svg.arrow {position: absolute; top: 6px; right: 55px;}
 #content .scene div.qnas h2 svg.arrow line {stroke: #dedede; stroke-width: 3px;}
-#content .scene div.qnas h2:hover svg.arrow line {stroke: #00c90d;}
 #content .scene div.qnas > p,
 #content .scene div.qnas ul.qnas,
 #content .scene div.qnas ul.actions {display: none;}
@@ -759,8 +755,10 @@ body {}
 #content .scene li,
 #content .scene dd {color: #777777;}
 #footer {border-color: #ccdbcd;}
+.terms_notification {background-color: #26962d;}
 .terms_notification .accept,
-.terms_notification .details {color: #34cc3d;}
+.terms_notification .details,
+.terms_notification h3 {color: #ffffff;}
 .terms_notification {border-color: #26962d;}
 #content .scene div.comments.open h2 {color: #34cc3d;}
 .front #header .logo,
@@ -768,6 +766,8 @@ body {}
 .contact #navigation ul li.contact,
 .news #navigation ul li.news,
 .posts #navigation ul li.news,
+.join #navigation ul li.join,
+.services #navigation ul li.services,
 .articles #navigation ul li.articles {color: #26962d;}
 
 
@@ -775,8 +775,11 @@ body {}
 #content ul.actions input.button.primary:active,
 #content ul.actions a.button.primary:active {background-color: #26962d;}
 #content .scene.front .link:active {text-decoration: underline;}
-#content .scene .article ul.tags a:active {color: #00c90d;}
-#content .scene div.readstate:active p {color: #26962d;}
-#content .scene div.comments h2:active {color: #00c90d;}
-#content .scene div.comments h2:active svg.arrow line {stroke: #00c90d;}
+#content .scene .article ul.tags a:active {color: #34cc3d;}
+#content .scene div.comments h2:active {color: #34cc3d;}
+#content .scene div.comments h2:active svg.arrow line {stroke: #34cc3d;}
+#content .scene div.todos h2:active {color: #34cc3d;}
+#content .scene div.todos h2:active svg.arrow line {stroke: #34cc3d;}
+#content .scene div.qnas h2:active {color: #34cc3d;}
+#content .scene div.qnas h2:active svg.arrow line {stroke: #34cc3d;}
 

@@ -7,7 +7,6 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/m
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-eventchain.js"></script>');
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-animation-to.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-animation-to.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-fontsReady.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-textscaler.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-svg.js"></script>');
@@ -19,8 +18,6 @@ document.write('<script type="text/javascript" src="/js/lib/desktop/i-login.js">
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-signup.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-newsletter.js"></script>');
 
-
-//document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-readstate.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-comments.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/u-sharing.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/u-checkmark.js"></script>');
@@ -32,13 +29,5 @@ document.write('<script type="text/javascript" src="/js/lib/desktop/i-front.js">
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-scene.js"></script>');
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-article.js"></script>');
-//document.write('<script type="text/javascript" src="/js/lib/desktop/i-articles.js"></script>');
-//document.write('<script type="text/javascript" src="/js/lib/desktop/i-stop.js"></script>');
-
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-article_mini_list.js"></script>');
 
-//document.write('<script type="text/javascript" src="/js/lib/desktop/i-articlelist.js"></script>');
-//document.write('<script type="text/javascript" src="/js/lib/desktop/i-topic.js"></script>');
-
-//document.write('<script type="text/javascript" src="/js/lib/desktop/i-qnas.js"></script>');
-//document.write('<script type="text/javascript" src="/js/lib/desktop/i-todos.js"></script>');
