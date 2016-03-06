@@ -14,6 +14,14 @@
 #content .scene.front div.article {padding-bottom: 30px;}
 
 
+/* NEWS */
+#content .scene.news div.article {padding-bottom: 30px;}
+
+
+/* ARTICLE */
+#content .scene.post div.article ul.info {display: block;}
+
+
 /* CONTACT */
 #content .scene.contact div.article {padding-bottom: 30px;}
 #content .scene.contact ul.people {padding: 0 70px 30px; border-top: 1px solid #dedede; overflow: hidden;}

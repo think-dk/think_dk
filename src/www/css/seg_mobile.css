@@ -111,6 +111,12 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene dl.info dd {padding-left: 0; padding-right: 0; padding-bottom: 3px; font-size: 12px; color: #999999;}
 #content .scene dl.info dt {display: none;}
 #content .scene dl.info dd.hardlink {display: none;}
+#content .scene ul.info {padding-bottom: 10px; padding-right: 0;}
+#content .scene ul.info li {font-size: 12px; color: #cccccc; display: block;}
+#content .scene ul.info li.main_entity {display: none;}
+#content .scene ul.info li.publisher {display: none;}
+#content .scene ul.info li.image_info {display: none;}
+#content .scene ul.info li.modified_at {display: none;}
 #content .scene dl.geo {margin-top: -15px;}
 #content .scene dl.geo dd {padding-bottom: 3px; font-size: 12px; color: #999999;}
 #content .scene dl.geo dt {display: none;}
@@ -120,8 +126,12 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene div.media {display: none;}
 #content .scene .pagination {}
 #content .scene div.categories {padding-bottom: 10px;}
+#content .scene div.article ul.tags a {color: #cccccc;}
 #content .scene ul.articles {padding: 0;}
 #content .scene ul.articles li.article {padding: 10px 0 0; border-top: 1px solid #dedede;}
+#content .scene ul.articles li.article ul.tags {padding-bottom: 10px;}
+#content .scene ul.articles li.article ul.tags li a {color: #cccccc;}
+#content .scene div.related {padding-top: 20px;}
 #content .scene div.comments {display: none;}
 #content .scene div.readstate {display: none;}
 #content .scene code {padding: 10px 10px; margin: 0 0 15px; background-color: #ededed; color: #333333; font-size: 11px; display: block; overflow: hidden; white-space: pre-wrap;
@@ -146,10 +156,13 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene span.file {color: #a62300;}
 #content .scene span.htmltag {text-transform: uppercase;}
 #content .scene span.command {color: #4b5cd7;}
-#content .scene div.vcard {padding: 0 10px 15px;}
-#content .scene div.vcard .name {padding: 0 0 15px;}
-#content .scene div.vcard .tel,
-#content .scene div.vcard .email {font-size: 13px;}
+#content .scene div.vcard {padding: 0 0 15px;}
+#content .scene div.vcard dl.info {}
+#content .scene div.vcard dl.info dt,
+#content .scene div.vcard dl.info dd {display: block; width: auto; text-align: left;}
+#content .scene div.vcard dl.info dd {padding-bottom: 10px; color: #cccccc;}
+#content .scene div.vcard dl.info dd ul {padding: 0;}
+#content .scene div.vcard dl.info dd li {font-size: 12px; color: #cccccc;}
 #content .scene .usedby {display: none;}
 
 
@@ -334,13 +347,19 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 
 
 /*s-pages.css*/
+#content .scene ul.info {display: none;}
 #content .login form {display: none;}
-#content .scene.front h1 {padding-bottom: 20px; font-size: 35px;}
-#content .scene.front h2 {padding-top: 20px; padding-bottom: 20px; font-size: 30px;}
-#content .scene.front h3 {padding-bottom: 10px; padding-top: 10px;}
-#content .scene.front p {padding-bottom: 0px;}
-#content .scene.front a {text-decoration: none;}
-#content .scene ul.articles li.article {border-color: #ccdbcd;}
+#content .front div.intro {padding-bottom: 30px;}
+#content .front div.intro p,
+#content .front div.intro h2,
+#content .front div.intro h3 {color: #26962d;}
+#content .front div.article {padding-bottom: 30px;}
+#content .news div.article {padding-bottom: 20px;}
+#content .post div.article ul.info {display: block;}
+#content .contact div.article {padding-bottom: 20px;}
+#content .contact ul.people {padding: 0 0 20px;}
+#content .contact div.company {margin-top: 45px; border-top: 1px solid #dedede;}
+#content .contact div.company h2 {margin-top: -45px; padding-bottom: 50px;}
 #content .scene div.todos {display: none;}
 #content .scene div.qnas {display: none;}
 
@@ -348,18 +367,31 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 /*s-colorscheme.css*/
 * {color: #26962d;}
 body {}
-#header .logo {color: #00c90d;}
+#header .logo {color: #34cc3d;}
 #navigation ul {border-color: #ccdbcd;}
-#navigation ul li {color: #00c90d;}
-#content .scene a {color: #00c90d;}
+#navigation ul li {color: #34cc3d;}
+#content .scene a {color: #34cc3d;}
 #content .scene hr {border-color: #ccdbcd;}
 #content ul.actions input.button.primary,
-#content ul.actions a.button.primary {background-color: #00c90d;}
+#content ul.actions a.button.primary {background-color: #34cc3d;}
 #content ul.actions input.button.primary:active,
 #content ul.actions a.button.primary:active {background-color: #26962d;}
+#content .scene div.categories ul.tags li.selected a {color: #26962d;}
+#content .scene h3,
+#content .scene h4,
+#content .scene h5,
+#content .scene h6,
+#content .scene p,
+#content .scene li,
+#content .scene dd {color: #777777;}
 #footer {border-color: #ccdbcd;}
 #footer p {color: #26962d;}
-.front #navigation .front,
-.manifest #navigation ul li.manifest,
-.about #navigation ul li.about {color: #26962d;}
+.front #header .logo,
+.about #navigation ul li.about,
+.contact #navigation ul li.contact,
+.news #navigation ul li.news,
+.posts #navigation ul li.news,
+.join #navigation ul li.join,
+.services #navigation ul li.services,
+.articles #navigation ul li.articles {color: #26962d;}
 
