@@ -5,7 +5,7 @@ global $IC;
 $itemtype = "person";
 
 $page = $IC->getItem(array("tags" => "page:contact", "extend" => array("user" => true, "mediae" => true)));
-$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => $itemtype.".position", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
 
 
 $this->sharingMetaData($page);
