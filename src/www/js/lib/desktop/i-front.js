@@ -138,8 +138,14 @@ Util.Objects["front"] = new function() {
 					"opacity": 1
 				});
 
+
 				// apply start-intro event listener
-				this.intro_event_id = u.e.addWindowEvent(this, "mousemove", this.showIntro);
+				if(u.e.event_support == "mouse") {
+					this.intro_event_id = u.e.addWindowEvent(this, "mousemove", this.showIntro);
+				}
+				else {
+					u.t.setTimer(this, "showIntro", 500);
+				}
 			}
 
 			// skip intro if it has no content
@@ -155,7 +161,10 @@ Util.Objects["front"] = new function() {
 			var node, duration, i;
 
 			// remove trigger event listener
-			u.e.removeWindowEvent(this, "mousemove", this.intro_event_id);
+			if(u.e.event_support == "mouse") {
+				// remove trigger event listener
+				u.e.removeWindowEvent(this, "mousemove", this.intro_event_id);
+			}
 
 			// start new event chain
 			u.eventChain(this.intro);

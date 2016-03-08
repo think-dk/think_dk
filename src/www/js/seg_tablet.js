@@ -5545,7 +5545,12 @@ Util.Objects["front"] = new function() {
 					"height": u.browserH()-(page.hN.offsetHeight+page.fN.offsetHeight+100) + "px",
 					"opacity": 1
 				});
-				this.intro_event_id = u.e.addWindowEvent(this, "mousemove", this.showIntro);
+				if(u.e.event_support == "mouse") {
+					this.intro_event_id = u.e.addWindowEvent(this, "mousemove", this.showIntro);
+				}
+				else {
+					u.t.setTimer(this, "showIntro", 500);
+				}
 			}
 			else {
 				this.hideIntro();
@@ -5553,7 +5558,9 @@ Util.Objects["front"] = new function() {
 		}
 		scene.showIntro = function() {
 			var node, duration, i;
-			u.e.removeWindowEvent(this, "mousemove", this.intro_event_id);
+			if(u.e.event_support == "mouse") {
+				u.e.removeWindowEvent(this, "mousemove", this.intro_event_id);
+			}
 			u.eventChain(this.intro);
 			node = this.intro._textnodes[0];
 			duration = node.innerHTML.length*100 > 1500 ? node.innerHTML.length*100 : 1500;
