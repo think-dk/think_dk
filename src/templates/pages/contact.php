@@ -82,7 +82,7 @@ $this->sharingMetaData($page);
 				<li itemprop="telephone" class="tel"><?= $item["tel"] ?></li>
 				<li><a href="mailto:<?= $item["email"] ?>" itemprop="email" class="email"><?= $item["email"] ?></a></li>
 			</ul>
-			<? if($item["description"]): ?>
+			<? if($item["html"]): ?>
 			<div class="description" itemprop="description">
 				<?= $item["html"] ?>
 			</div>
