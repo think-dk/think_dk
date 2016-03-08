@@ -38,7 +38,7 @@
 #content .scene.contact ul.items.people li.item.person .description h4, 
 #content .scene.contact ul.items.people li.item.person .description h5, 
 #content .scene.contact ul.items.people li.item.person .description h6, 
-#content .scene.contact ul.items.people li.item.person .description p {padding-left: 0; padding-right: 0;}
+#content .scene.contact ul.items.people li.item.person .description p {padding-left: 0; padding-right: 0; width: auto;}
 
 #content .scene.contact ul.items.people li.item.person .description p {font-size: 13px;}
 

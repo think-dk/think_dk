@@ -84,7 +84,7 @@ $this->sharingMetaData($page);
 			</ul>
 			<? if($item["description"]): ?>
 			<div class="description" itemprop="description">
-				<p><?= nl2br($item["description"]) ?></p>
+				<?= $item["html"] ?>
 			</div>
 			<? endif; ?>
 

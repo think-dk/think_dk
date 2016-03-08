@@ -698,7 +698,7 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene.contact ul.items.people li.item.person .description h4, 
 #content .scene.contact ul.items.people li.item.person .description h5, 
 #content .scene.contact ul.items.people li.item.person .description h6, 
-#content .scene.contact ul.items.people li.item.person .description p {padding-left: 0; padding-right: 0;}
+#content .scene.contact ul.items.people li.item.person .description p {padding-left: 0; padding-right: 0; width: auto;}
 #content .scene.contact ul.items.people li.item.person .description p {font-size: 13px;}
 #content .scene.contact div.vcard.company {margin-top: 65px; border-top: 1px solid #dedede;}
 #content .scene.contact div.vcard.company h2 {margin-top: -65px; padding-bottom: 60px;}
