@@ -20,12 +20,12 @@ $username = stringOr(getPost("username"));
 <?	endif; ?>
 
 		<fieldset>
-			<?= $model->input("username", array("type" => "string", "label" => "Email eller mobilnummer", "required" => true, "value" => $username, "pattern" => "[\w\.\-\_]+@[\w-\.]+\.\w{2,4}|([\+0-9\-\.\s\(\)]){5,18}", "hint_message" => "Du kan logge ind med enten dit mobilnummer eller din email-adresse.", "error_message" => "Det indtastede er ikke et gyldigt mobilnummer eller email-adresse.")); ?>
-			<?= $model->input("password", array("type" => "password", "label" => "password", "required" => true, "hint_message" => "Indtast din kode", "error_message" => "Din kode skal være 8-20 tegn.")); ?>
+			<?= $model->input("username", array("type" => "string", "label" => "Email or mobile number", "required" => true, "value" => $username, "pattern" => "[\w\.\-\_]+@[\w-\.]+\.\w{2,4}|([\+0-9\-\.\s\(\)]){5,18}", "hint_message" => "You can log in using either your email or mobile number.", "error_message" => "You entered an invalid email or mobile number.")); ?>
+			<?= $model->input("password", array("type" => "password", "label" => "Password", "required" => true, "hint_message" => "Type your password", "error_message" => "Your password should be between 8-20 characters.")); ?>
 		</fieldset>
 
 		<ul class="actions">
-			<?= $model->submit("Log ind", array("class" => "primary", "wrapper" => "li.login")) ?>
+			<?= $model->submit("Log in", array("class" => "primary", "wrapper" => "li.login")) ?>
 		</ul>
 	<?= $model->formEnd() ?>
 
