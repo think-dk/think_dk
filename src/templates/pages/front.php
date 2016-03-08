@@ -1,7 +1,9 @@
 <?
 $IC = new Items();
 
-$intro = $IC->getItem(array("tags" => "page:intro", "extend" => true));
+$intros = $IC->getItems(array("itemtype" => "page", "tags" => "page:intro", "status" => 1, "extend" => true));
+$intro = $intros[rand(0, count($intros)-1)];
+
 $page = $IC->getItem(array("tags" => "page:front", "extend" => array("user" => true, "mediae" => true)));
 $post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage", "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
 
