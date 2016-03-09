@@ -12,13 +12,13 @@ $model = new User();
 
 
 $page->bodyClass("newsletter");
-$page->pageTitle("Nysgerrig?");
+$page->pageTitle("Curious?");
 
 
 if(is_array($action) && count($action)) {
 
 	// /newsletter/receipt (user just signed up)
-	if($action[0] == "kvittering") {
+	if($action[0] == "receipt") {
 
 		$page->page(array(
 			"templates" => "news/newsletter_receipt.php"
@@ -27,7 +27,7 @@ if(is_array($action) && count($action)) {
 	}
 
 	// /newsletter/subscribe
-	else if($action[0] == "tilmelding" && $page->validateCsrfToken()) {
+	else if($action[0] == "signup" && $page->validateCsrfToken()) {
 
 		$user = $model->newUser(array("newUser"));
 
@@ -35,18 +35,18 @@ if(is_array($action) && count($action)) {
 		if(isset($user["user_id"])) {
 
 			// redirect to leave POST state
-			header("Location: kvittering");
+			header("Location: receipt");
 			exit();
 
 		}
 
 		// user exists
 		else if(isset($user["status"]) && $user["status"] == "USER_EXISTS") {
-			message()->addMessage("Beklager, serveren siger du enten har dårlig samvittighed eller dårlig hukommelse!", array("type" => "error"));
+			message()->addMessage("Sorry, the computer says you either have a bad memory or a bad conscience!", array("type" => "error"));
 		}
 		// something went wrong
 		else {
-			message()->addMessage("Beklager, serveren siger NEJ!", array("type" => "error"));
+			message()->addMessage("Sorry, computer says no!", array("type" => "error"));
 		}
 
 	}
