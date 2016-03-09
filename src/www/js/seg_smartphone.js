@@ -5304,6 +5304,50 @@ Util.Objects["scene"] = new function() {
 	}
 }
 
+/*i-newsletter.js*/
+Util.Objects["newsletter"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			this._form = u.qs("form", this);
+			u.f.init(this._form);
+			this._form.fields["email"].focus();
+			var i, node;
+			var nodes = u.cn(this);
+			if(nodes.length) {
+				for(i = 0; node = nodes[i]; i++) {
+					u.ass(node, {
+						"opacity":0,
+						"transform":"translate(0, 40px)"
+					});
+				}
+				u.ass(this, {
+					"opacity":1,
+				});
+				for(i = 0; node = nodes[i]; i++) {
+					u.a.transition(node, "all 0.2s ease-in "+(i*100)+"ms");
+					u.ass(node, {
+						"opacity":1,
+						"transform":"translate(0, 0)"
+					});
+				}
+			}
+			else {
+				u.ass(this, {
+					"opacity":1,
+				});
+			}
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
+
 /*i-article.js*/
 Util.Objects["article"] = new function() {
 	this.init = function(article) {
