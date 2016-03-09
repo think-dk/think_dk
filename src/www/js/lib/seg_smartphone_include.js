@@ -22,6 +22,7 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/g
 document.write('<script type="text/javascript" src="/js/lib/u-basics.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-front.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-scene.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/smartphone/i-newsletter.js"></script>');
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-article.js"></script>');
 
