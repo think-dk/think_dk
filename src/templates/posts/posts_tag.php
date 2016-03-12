@@ -4,7 +4,7 @@ global $IC;
 global $itemtype;
 
 $selected_tag = urldecode($action[1]);
-$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => $itemtype.":".addslashes($selected_tag), "extend" => array("tags" => true, "user" => true, "readstate" => true, "mediae" => true)));
+$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => $itemtype.":".addslashes($selected_tag), "extend" => array("tags" => true, "user" => true, "readstate" => true)));
 
 $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
@@ -28,8 +28,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 <? if($items): ?>
 	<ul class="items articles i:articleMiniList">
-		<? foreach($items as $item):
-			$media = $IC->sliceMedia($item); ?>
+		<? foreach($items as $item): ?>
 		<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 			data-readstate="<?= $item["readstate"] ?>"
 			>

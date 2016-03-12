@@ -6,7 +6,7 @@ global $itemtype;
 
 // get post tags for listing
 $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
-$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" => array("tags" => true, "user" => true, "readstate" => true, "mediae" => true)));
+$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" => array("tags" => true, "user" => true, "readstate" => true)));
 
 ?>
 
@@ -28,8 +28,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" =>
 
 <?	if($items): ?>
 	<ul class="items articles i:articleMiniList">
-<?		foreach($items as $item):
-			$media = $IC->sliceMedia($item); ?>
+		<? foreach($items as $item): ?>
 		<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 			data-readstate="<?= $item["readstate"] ?>"
 			>
@@ -86,7 +85,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" =>
 			<? endif; ?>
 
 		</li>
-<?		endforeach; ?>
+		<? endforeach; ?>
 	</ul>
 <? endif; ?>
 

@@ -1,4 +1,4 @@
-	<? $navigation = $this->navigation("main"); ?>
+<? $navigation = $this->navigation("main"); ?>
 	</div>
 
 	<div id="navigation">

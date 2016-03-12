@@ -55,30 +55,33 @@ $page = $IC->getItem(array("tags" => "page:about", "extend" => array("comments" 
 			<?= $page["html"] ?>
 		</div>
 		<? endif; ?>
+
+
+		<div class="comments i:comments item_id:<?= $page["item_id"] ?>" 
+			data-comment-add="<?= $this->validPath("/janitor/admin/page/addComment") ?>" 
+			data-csrf-token="<?= session()->value("csrf") ?>"
+			>
+			<h2 class="comments">Comments for &quot;<?= $page["name"] ?>&quot;</h2>
+			<? if($page["comments"]): ?>
+			<ul class="comments">
+				<? foreach($page["comments"] as $comment): ?>
+				<li class="comment comment_id:<?= $comment["id"] ?>" itemprop="comment" itemscope itemtype="https://schema.org/Comment">
+					<ul class="info">
+						<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($comment["created_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($comment["created_at"])) ?></li>
+						<li class="author" itemprop="author"><?= $comment["nickname"] ?></li>
+					</ul>
+					<p class="comment" itemprop="text"><?= $comment["comment"] ?></p>
+				</li>
+				<? endforeach; ?>
+			</ul>
+			<? else: ?>
+			<p>No comments yet</p>
+			<? endif; ?>
+		</div>
+
 	</div>
 
 
-	<div class="comments i:comments item_id:<?= $page["item_id"] ?>" 
-		data-comment-add="<?= $this->validPath("/janitor/admin/page/addComment") ?>" 
-		data-csrf-token="<?= session()->value("csrf") ?>"
-		>
-		<h2 class="comments">Comments for &quot;<?= $page["name"] ?>&quot;</h2>
-		<? if($page["comments"]): ?>
-		<ul class="comments">
-			<? foreach($page["comments"] as $comment): ?>
-			<li class="comment comment_id:<?= $comment["id"] ?>" itemprop="comment" itemscope itemtype="https://schema.org/Comment">
-				<ul class="info">
-					<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($comment["created_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($comment["created_at"])) ?></li>
-					<li class="author" itemprop="author"><?= $comment["nickname"] ?></li>
-				</ul>
-				<p class="comment" itemprop="text"><?= $comment["comment"] ?></p>
-			</li>
-			<? endforeach; ?>
-		</ul>
-		<? else: ?>
-		<p>No comments yet</p>
-		<? endif; ?>
-	</div>
 
 <? else:?>
 

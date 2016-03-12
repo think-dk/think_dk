@@ -111,6 +111,7 @@ $this->sharingMetaData($page);
 			<dt class="cvr">CVR</dt>
 			<dd class="cvr" itemprop="taxID">25 21 04 33</dd>
 		</dl>
+
 		<dl class="info contact">
 			<dt class="contact">Contact</dt>
 			<dd class="contact">
@@ -118,7 +119,6 @@ $this->sharingMetaData($page);
 					<li class="email"><a href="mailto:start@think.dk" itemprop="email" content="start@think.dk">start@think.dk</a></li>
 				</ul>
 			</dd>
-
 			<dt class="social">Social media</dt>
 			<dd class="social">
 				<ul>
@@ -126,7 +126,6 @@ $this->sharingMetaData($page);
 					<li class="linkedin"><a href="https://www.linkedin.com/company/think-dk">LinkedIn</a></li>
 				</ul>
 			</dd>
-
 		</dl>
 
 		<dl class="info financial">
@@ -138,10 +137,5 @@ $this->sharingMetaData($page);
 		</dl>
 
 	</div>
-
-
-
-
-
 
 </div>
