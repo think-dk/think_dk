@@ -4351,6 +4351,7 @@ if(false && document.documentMode <= 10) {
 
 /*u-settings.js*/
 u.site_name = "think.dk";
+u.terms_version = "terms_v1";
 u.txt = {};
 u.txt["share"] = "Share";
 u.txt["readstate-not_read"] = "Click to mark as read";
@@ -4856,24 +4857,22 @@ u.bug_console_only = true;
 Util.Objects["page"] = new function() {
 	this.init = function(page) {
 		window.page = page;
+		u.bug_force = true;
+		u.bug("think.dk is built using Manipulator, Janitor and Detector");
+		u.bug("Visit http://parentnode.dk for more information");
+		u.bug("Free lunch for new contributers ;-)");
+		u.bug_force = false;
 		page.style_tag = document.createElement("style");
 		page.style_tag.setAttribute("media", "all")
 		page.style_tag.setAttribute("type", "text/css")
 		page.style_tag = u.ae(document.head, page.style_tag);
 		page.hN = u.qs("#header");
-		page.hN.service = u.qs(".servicenavigation", page.hN);
+		page.hN.service = u.qs("ul.servicenavigation", page.hN);
 		page.cN = u.qs("#content", page);
 		page.nN = u.qs("#navigation", page);
 		page.nN = u.ie(page.hN, page.nN);
 		page.fN = u.qs("#footer");
-		page.fN.service = u.qs(".servicenavigation", page.fN);
-		page.fN.slogan = u.qs("p", page.fN);
-		if(page.fN.slogan) {
-			u.ce(page.fN.slogan);
-			page.fN.slogan.clicked = function(event) {
-				window.open("http://parentnode.dk");
-			}
-		}
+		page.fN.service = u.qs("ul.servicenavigation", page.fN);
 		page.logo = u.ie(page.hN, "a", {"class":"logo", "html":u.eitherOr(u.site_name, "Frontpage")});
 		page.logo.url = '/';
 		page.logo.font_size = parseInt(u.gcs(page.logo, "font-size"));
@@ -4881,12 +4880,7 @@ Util.Objects["page"] = new function() {
 		page.logo.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
 		page.style_tag.sheet.insertRule("#header a.logo {}", 0);
 		page.logo.css_rule = page.style_tag.sheet.cssRules[0];
-		if(u.github_fork) {
-			var github = u.ae(page.hN.service, "li", {"html":'<a href="'+u.github_fork.url+'">'+u.github_fork.text+'</a>', "class":"github"});
-			u.ce(github, {"type":"link"});
-		}
 		page.resized = function() {
-			u.bug("page resized")
 			page.browser_h = u.browserH();
 			page.browser_w = u.browserW();
 			page.available_height = page.browser_h - page.hN.offsetHeight - page.fN.offsetHeight;
@@ -4900,10 +4894,8 @@ Util.Objects["page"] = new function() {
 			else {
 				u.rc(page, "fixed");
 			}
-			if(page.cN && page.cN.scene) {
-				if(typeof(page.cN.scene.resized) == "function") {
-					page.cN.scene.resized();
-				}
+			if(page.cN && page.cN.scene && typeof(page.cN.scene.resized) == "function") {
+				page.cN.scene.resized();
 			}
 		}
 		page.scrolled = function() {
@@ -4944,7 +4936,7 @@ Util.Objects["page"] = new function() {
 			}
 		}
 		page.acceptCookies = function() {
-			if(!u.getCookie("terms_v1")) {
+			if(u.terms_version && !u.getCookie(u.terms_version)) {
 				var terms = u.ie(document.body, "div", {"class":"terms_notification"});
 				u.ae(terms, "h3", {"html":"We love <br />cookies and privacy"});
 				var bn_accept = u.ae(terms, "a", {"class":"accept", "html":"Accept"});
@@ -4952,11 +4944,10 @@ Util.Objects["page"] = new function() {
 				u.ce(bn_accept);
 				bn_accept.clicked = function() {
 					this.terms.parentNode.removeChild(this.terms);
-					u.saveCookie("terms_v1", true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
+					u.saveCookie(u.terms_version, true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
 				}
-				if(!location.href.match(/\/terms/)) {
-					var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details"});
-					bn_details.url = "/terms";
+				if(!location.href.match(/\/terms\//)) {
+					var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details", "href":"/terms"});
 					u.ce(bn_details, {"type":"link"});
 				}
 				u.a.transition(terms, "all 0.5s ease-in");
@@ -4966,7 +4957,7 @@ Util.Objects["page"] = new function() {
 			}
 		}
 		page.initNavigation = function() {
-			var i, node;
+			var i, node, nodes;
 			page.nN.list = u.qs("ul", page.nN);
 			page.nN.list.nodes = u.qsa("li", page.nN.list);
 			if(page.nN.list.nodes.length) {
@@ -4979,7 +4970,7 @@ Util.Objects["page"] = new function() {
 				page.style_tag.sheet.insertRule("#navigation ul li {}", 0);
 				page.nN.list.css_rule = page.style_tag.sheet.cssRules[0];
 			}
-			var nodes = u.qsa("#navigation li,a.logo", page.hN);
+			nodes = u.qsa("#navigation li,a.logo", page.hN);
 			for(i = 0; node = nodes[i]; i++) {
 				u.ce(node, {"type":"link"});
 				u.e.hover(node);
@@ -5010,55 +5001,28 @@ Util.Objects["page"] = new function() {
 					u.a.scale(this, 0.8);
 				}
 			}
+			if(page.hN.service) {
+				var nav_anchor = u.qs("li.navigation", page.hN.service);
+				if(nav_anchor) {
+					page.hN.service.removeChild(nav_anchor);
+				}
+			}
+			if(page.fN.service) {
+				nodes = u.qsa("li", page.fN.service);
+				for(i = 0; node = nodes[i]; i++) {
+					u.ie(page.hN.service, node);
+				}
+				page.fN.removeChild(page.fN.service);
+			}
+			if(u.github_fork) {
+				var github = u.ae(page.hN.service, "li", {"html":'<a href="'+u.github_fork.url+'">'+u.github_fork.text+'</a>', "class":"github"});
+				u.ce(github, {"type":"link"});
+			}
 		}
 		page.ready();
 	}
 }
 u.e.addDOMReadyEvent(u.init);
-
-
-/*i-login.js*/
-Util.Objects["login"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			page.cN.scene = this;
-			this._form = u.qs("form", this);
-			u.f.init(this._form);
-			this._form.fields["username"].focus();
-			var i, node;
-			var nodes = u.cn(this);
-			if(nodes.length) {
-				for(i = 0; node = nodes[i]; i++) {
-					u.ass(node, {
-						"opacity":0,
-					});
-				}
-				u.ass(this, {
-					"opacity":1,
-				});
-				u._stepA1.call(nodes[0]);
-				for(i = 1; node = nodes[i]; i++) {
-					u.a.transition(node, "all 0.2s ease-in "+((i*100)+200)+"ms");
-					u.ass(node, {
-						"opacity":1,
-						"transform":"translate(0, 0)"
-					});
-				}
-			}
-			else {
-				u.ass(this, {
-					"opacity":1,
-				});
-			}
-			page.resized();
-		}
-		scene.ready();
-	}
-}
 
 
 /*i-signup.js*/
@@ -5744,6 +5708,50 @@ Util.Objects["scene"] = new function() {
 		scene.ready();
 	}
 }
+
+/*i-login.js*/
+Util.Objects["login"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			this._form = u.qs("form", this);
+			u.f.init(this._form);
+			this._form.fields["username"].focus();
+			var i, node;
+			var nodes = u.cn(this);
+			if(nodes.length) {
+				for(i = 0; node = nodes[i]; i++) {
+					u.ass(node, {
+						"opacity":0,
+					});
+				}
+				u.ass(this, {
+					"opacity":1,
+				});
+				u._stepA1.call(nodes[0]);
+				for(i = 1; node = nodes[i]; i++) {
+					u.a.transition(node, "all 0.2s ease-in "+((i*100)+200)+"ms");
+					u.ass(node, {
+						"opacity":1,
+						"transform":"translate(0, 0)"
+					});
+				}
+			}
+			else {
+				u.ass(this, {
+					"opacity":1,
+				});
+			}
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
 
 /*i-newsletter.js*/
 Util.Objects["newsletter"] = new function() {

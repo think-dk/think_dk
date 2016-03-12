@@ -4297,6 +4297,7 @@ Util.getVar = function(param, url) {
 
 /*u-settings.js*/
 u.site_name = "think.dk";
+u.terms_version = "terms_v1";
 u.txt = {};
 u.txt["share"] = "Share";
 u.txt["readstate-not_read"] = "Click to mark as read";
@@ -4759,12 +4760,54 @@ Util.svgShape = function(svg, svg_object) {
 }
 
 
+/*u-date.js*/
+Util.date = function(format, timestamp, months) {
+	var date = timestamp ? new Date(timestamp) : new Date();
+	if(isNaN(date.getTime())) {
+		if(new Date(timestamp.replace(/ /, "T"))) {
+			date = new Date(timestamp.replace(/ /, "T"));
+		}
+		else {
+			if(!timestamp.match(/[A-Z]{3}\+[0-9]{4}/)) {
+				if(timestamp.match(/ \+[0-9]{4}/)) {
+					date = new Date(timestamp.replace(/ (\+[0-9]{4})/, " GMT$1"));
+				}
+			}
+		}
+		if(isNaN(date.getTime())) {
+			date = new Date();
+		}
+	}
+	var tokens = /d|j|m|n|F|Y|G|H|i|s/g;
+	var chars = new Object();
+	chars.j = date.getDate();
+	chars.d = (chars.j > 9 ? "" : "0") + chars.j;
+	chars.n = date.getMonth()+1;
+	chars.m = (chars.n > 9 ? "" : "0") + chars.n;
+	chars.F = months ? months[date.getMonth()] : "";
+	chars.Y = date.getFullYear();
+	chars.G = date.getHours();
+	chars.H = (chars.G > 9 ? "" : "0") + chars.G;
+	var i = date.getMinutes();
+	chars.i = (i > 9 ? "" : "0") + i;
+	var s = date.getSeconds();
+	chars.s = (s > 9 ? "" : "0") + s;
+	return format.replace(tokens, function (_) {
+		return _ in chars ? chars[_] : _.slice(1, _.length - 1);
+	});
+};
+
+
 /*i-page.js*/
-u.bug_force = true;
 u.bug_console_only = true;
 Util.Objects["page"] = new function() {
 	this.init = function(page) {
 		window.page = page;
+		u.bug_force = true;
+		u.bug("think.dk is built using Manipulator, Janitor and Detector");
+		u.bug("Visit http://parentnode.dk for more information");
+		u.bug("Free lunch for new contributers ;-)");
+		u.bug_force = false;
 		page.hN = u.qs("#header");
 		page.hN.service = u.qs(".servicenavigation", page.hN);
 		u.e.drag(page.hN, page.hN);
@@ -4772,29 +4815,19 @@ Util.Objects["page"] = new function() {
 		page.logo.url = '/';
 		page.cN = u.qs("#content", page);
 		page.nN = u.qs("#navigation", page);
-		page.nN.list = u.qs("ul", page.nN);
 		page.nN = u.ie(page.hN, page.nN);
 		page.fN = u.qs("#footer");
 		page.fN.service = u.qs(".servicenavigation", page.fN);
-		page.fN.slogan = u.qs("p", page.fN);
-		if(page.fN.slogan) {
-			u.ce(page.fN.slogan);
-			page.fN.slogan.clicked = function(event) {
-				window.open("http://parentnode.dk");
-			}
-		}
 		page.resized = function() {
-			this.calc_height = u.browserH();
-			this.calc_width = u.browserW();
-			this.available_height = this.calc_height - page.hN.offsetHeight - page.fN.offsetHeight;
+			page.browser_h = u.browserH();
+			page.browser_w = u.browserW();
+			page.available_height = page.browser_h - page.hN.offsetHeight - page.fN.offsetHeight;
 			u.as(page.cN, "min-height", "auto", false);
-			if(this.available_height >= page.cN.offsetHeight) {
-				u.as(page.cN, "min-height", this.available_height+"px", false);
+			if(page.available_height >= page.cN.offsetHeight) {
+				u.as(page.cN, "min-height", page.available_height+"px", false);
 			}
-			if(page.cN && page.cN.scene) {
-				if(typeof(page.cN.scene.resized) == "function") {
-					page.cN.scene.resized();
-				}
+			if(page.cN && page.cN.scene && typeof(page.cN.scene.resized) == "function") {
+				page.cN.scene.resized();
 			}
 		}
 		page.scrolled = function() {
@@ -4821,7 +4854,7 @@ Util.Objects["page"] = new function() {
 			}
 		}
 		page.acceptCookies = function() {
-			if(!u.getCookie("terms_v1")) {
+			if(u.terms_version && !u.getCookie(u.terms_version)) {
 				var terms = u.ie(page.cN, "div", {"class":"terms_notification"});
 				u.ae(terms, "h3", {"html":"We love <br />cookies and privacy"});
 				var bn_accept = u.ae(terms, "a", {"class":"accept", "html":"Accept"});
@@ -4829,11 +4862,10 @@ Util.Objects["page"] = new function() {
 				u.ce(bn_accept);
 				bn_accept.clicked = function() {
 					this.terms.parentNode.removeChild(this.terms);
-					u.saveCookie("terms_v1", true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
+					u.saveCookie(u.terms_version, true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
 				}
 				if(!location.href.match(/\/terms/)) {
-					var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details"});
-					bn_details.url = "/terms";
+					var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details", "href":"/terms"});
 					u.ce(bn_details, {"type":"link"});
 				}
 				u.a.transition(terms, "all 0.5s ease-in");
@@ -4843,6 +4875,7 @@ Util.Objects["page"] = new function() {
 			}
 		}
 		page.initNavigation = function() {
+			page.nN.list = u.qs("ul.navigation", page.nN);
 			this.bn_nav = u.qs(".servicenavigation li.navigation", this.hN);
 			u.ae(this.bn_nav, "div");
 			u.ae(this.bn_nav, "div");
@@ -4897,8 +4930,15 @@ Util.Objects["page"] = new function() {
 				page.nN.end_drag_y = page.nN.offsetHeight;
 			}
 			u.e.drag(this.nN, [0, (window.innerHeight - 100) - this.nN.offsetHeight, this.hN.offsetWidth, this.nN.offsetHeight], {"strict":false, "elastica":200, "vertical_lock":true});
-			var i, node;
-			var nodes = u.qsa("#navigation li,a.logo", page.hN);
+			if(page.fN.service) {
+				nodes = u.qsa("li", page.fN.service);
+				for(i = 0; node = nodes[i]; i++) {
+					u.ae(page.nN.list, node);
+				}
+				page.fN.removeChild(page.fN.service);
+			}
+			var i, node, nodes;
+			nodes = u.qsa("#navigation li,a.logo", page.hN);
 			for(i = 0; node = nodes[i]; i++) {
 				u.ce(node, {"type":"link"});
 				u.e.hover(node);
@@ -4933,70 +4973,8 @@ Util.Objects["page"] = new function() {
 u.e.addDOMReadyEvent(u.init);
 
 
-/*i-login.js*/
-Util.Objects["login"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			page.cN.scene = this;
-			this._form = u.qs("form", this);
-			u.f.init(this._form);
-			this._form.fields["username"].focus();
-			var i, node;
-			var nodes = u.cn(this);
-			if(nodes.length) {
-				for(i = 0; node = nodes[i]; i++) {
-					u.ass(node, {
-						"opacity":0,
-					});
-				}
-				u.ass(this, {
-					"opacity":1,
-				});
-				u._stepA1.call(nodes[0]);
-				for(i = 1; node = nodes[i]; i++) {
-					u.a.transition(node, "all 0.2s ease-in "+((i*100)+200)+"ms");
-					u.ass(node, {
-						"opacity":1,
-						"transform":"translate(0, 0)"
-					});
-				}
-			}
-			else {
-				u.ass(this, {
-					"opacity":1,
-				});
-			}
-			page.resized();
-		}
-		scene.ready();
-	}
-}
-
-
 /*i-signup.js*/
 Util.Objects["signup"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			this._form = u.qs("form", this);
-			u.f.init(this._form);
-			page.cN.scene = this;
-			page.resized();
-		}
-		scene.ready();
-	}
-}
-
-
-/*i-newsletter.js*/
-Util.Objects["newsletter"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -5330,6 +5308,50 @@ Util.Objects["newsletter"] = new function() {
 				});
 				for(i = 0; node = nodes[i]; i++) {
 					u.a.transition(node, "all 0.2s ease-in "+(i*100)+"ms");
+					u.ass(node, {
+						"opacity":1,
+						"transform":"translate(0, 0)"
+					});
+				}
+			}
+			else {
+				u.ass(this, {
+					"opacity":1,
+				});
+			}
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
+
+/*i-login.js*/
+Util.Objects["login"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			this._form = u.qs("form", this);
+			u.f.init(this._form);
+			this._form.fields["username"].focus();
+			var i, node;
+			var nodes = u.cn(this);
+			if(nodes.length) {
+				for(i = 0; node = nodes[i]; i++) {
+					u.ass(node, {
+						"opacity":0,
+					});
+				}
+				u.ass(this, {
+					"opacity":1,
+				});
+				u._stepA1.call(nodes[0]);
+				for(i = 1; node = nodes[i]; i++) {
+					u.a.transition(node, "all 0.2s ease-in "+((i*100)+200)+"ms");
 					u.ass(node, {
 						"opacity":1,
 						"transform":"translate(0, 0)"
