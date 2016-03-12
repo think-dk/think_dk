@@ -1,9 +1,9 @@
 This is the source code for http://think.dk.
 
 #About think.dk
-Think.dk is a Copenhagen based think tank / center for acceleration of sustanable change. Visit http://think.dk for more information.
+think.dk is a Copenhagen based think tank & center for acceleration of sustainable change. Visit http://think.dk for more information.
 
-The website is primarily built using Janitor and Manipulator. See http://parentnode.dk for more information.
+The website is primarily built using Janitor and Manipulator. Visit http://parentnode.dk for more information.
 
 
 # Licenses:

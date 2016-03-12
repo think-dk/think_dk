@@ -26,7 +26,6 @@
 		</ul>
 
 		<div class="articlebody" itemprop="articleBody">
-
 			<p>
 				This website is owned and maintained by think.dk (in the 
 				following referred to as "We", "Us", "Our"), which is a legally registered Danish company, abiding Danish laws.
@@ -94,7 +93,6 @@
 				The source code of this website is licensed under a 
 				<a rel="license" href="https://github.com/kaestel/think_dk/blob/master/LICENSE-CPAL.md">CPAL-1.0 licence</a>.
 			</p>
-			
 		</div>
 	</div>
 </div>

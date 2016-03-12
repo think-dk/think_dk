@@ -198,21 +198,14 @@ Software distributed under the License is distributed on an “AS IS” basis, W
 
 The Original Code is think.dk.
 
-The Initial Developer of the Original Code is Martin Kaestel Nielsen. All portions of the code written by Martin Kaestel Nielsen are Copyright (c) 2013. All Rights Reserved.
-
-Contributor Martin Kaestel Nielsen.  
+The Initial Developer of the Original Code is Martin Kaestel Nielsen. All portions of the code written by Martin Kaestel Nielsen are covered by this license.
 
 [NOTE: The text of this Exhibit A may differ slightly from the text of the notices in the Source Code files of the Original Code. You should use the text of this Exhibit A rather than the text found in the Original Code Source Code for Your Modifications.]
 
 
 #EXHIBIT B. Attribution Information
 
-Attribution Copyright Notice: Copyright 2013 think.dk
-
-Attribution Phrase (not exceeding 10 words): Copyright 2013 think.dk
-
+Attribution Copyright Notice: Copyright 2016, think.dk
 Attribution URL: think.dk
-
-Graphic Image as provided online: http://think.dk/img/license_badge.png.
 
 Display of Attribution Information is required in Larger Works which are defined in the CPAL as a work which combines Covered Code or portions thereof with code not governed by the terms of the CPAL.
