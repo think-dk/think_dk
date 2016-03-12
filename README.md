@@ -10,7 +10,7 @@ The website is primarily built using Janitor and Manipulator. See http://parentn
 Think.dk is licensed as follows:
 
 ##Source code:
-https://github.com/kaestel/think_dk/LICENSE-CPAL.md
+https://github.com/kaestel/think_dk/blob/master/LICENSE-CPAL.md
 
 ##Content:
 http://creativecommons.org/licenses/by/4.0/
