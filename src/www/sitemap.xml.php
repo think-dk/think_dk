@@ -6,40 +6,63 @@ if(isset($read_access) && $read_access) {
 
 include_once($_SERVER["FRAMEWORK_PATH"]."/config/init.php");
 $query = new Query();
-$IC = new Item();
+$IC = new Items();
 
 print '<?xml version="1.0" encoding="UTF-8"?>';
 
 ?>
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<?
+// FRONTPAGE
+$item = $IC->getItem(array("tags" => "page:front"));
+?>
 	<url>
-		<loc>http://think.dk/</loc>
-		<lastmod><?= date("Y-m-d", filemtime(LOCAL_PATH."/templates/pages/about.php")) ?></lastmod>
+		<loc><?= SITE_URL ?>/</loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>1</priority>
 	</url>
-
-	<?
-		// ARTICLES ITEMS
-		$items = $IC->getItems(array("itemtype" => "post", "status" => 1)); 
-	?>
+<?
+// NEWS PAGE
+$item = $IC->getItem(array("tags" => "page:news"));
+?>
 	<url>
-		<loc>http://think.dk/posts/</loc>
-		<lastmod><?= date("Y-m-d", strtotime($items[0]["modified_at"])) ?></lastmod>
+		<loc><?= SITE_URL ?>/news</loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
 		<changefreq>daily</changefreq>
 		<priority>1</priority>
 	</url>
+<?
+// POSTS
+$items = $IC->getItems(array("itemtype" => "post", "status" => 1)); 
+foreach($items as $item):
+?>
 	<url>
-		<loc>http://think.dk/about</loc>
-		<lastmod><?= date("Y-m-d", filemtime(LOCAL_PATH."/templates/pages/about.php")) ?></lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.7</priority>
+		<loc><?= SITE_URL ?>/posts/<?= $item["sindex"] ?></loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
+		<changefreq>daily</changefreq>
+		<priority>1</priority>
 	</url>
+<? endforeach; ?>
+<?
+// ABOUT PAGE
+$item = $IC->getItem(array("tags" => "page:about"));
+?>
 	<url>
-		<loc>http://think.dk/contact</loc>
-		<lastmod><?= date("Y-m-d", filemtime(LOCAL_PATH."/templates/pages/contact.php")) ?></lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.7</priority>
+		<loc><?= SITE_URL ?>/about</loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
+		<changefreq>daily</changefreq>
+		<priority>1</priority>
+	</url>
+<?
+// CONTACT PAGE
+$item = $IC->getItem(array("tags" => "page:contact"));
+?>
+	<url>
+		<loc><?= SITE_URL ?>/contact</loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
+		<changefreq>daily</changefreq>
+		<priority>1</priority>
 	</url>
 </urlset>
