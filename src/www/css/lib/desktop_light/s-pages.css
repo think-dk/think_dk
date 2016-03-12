@@ -10,27 +10,12 @@
 #content .scene.front div.intro {display: none;}
 
 
-/* FRONT - ARTICLE */
-#content .scene.front div.article {padding-bottom: 30px;}
-
-
-/* NEWS */
-#content .scene.news div.article {padding-bottom: 30px;}
-
-
 /* ARTICLE */
 #content .scene.post div.article ul.info {display: block;}
 
 
 /* CONTACT */
-#content .scene.contact div.article {padding-bottom: 30px;}
 #content .scene.contact div.teams {display: none;}
-#content .scene.contact div.vcard.company {margin-top: 65px; border-top: 1px solid #dedede;}
-#content .scene.contact div.vcard.company h2 {margin-top: -65px; padding-bottom: 60px;}
-#content .scene.contact div.vcard dl.info {width: 230px; padding: 0 20px 20px 0; display: inline; float: left; vertical-align: top;}
-#content .scene.contact div.vcard dl.info.financial {display: none;}
-#content .scene.contact div.vcard {height: 260px;}
-
 
 
 /* FEEDBACK ELEMENTS */

@@ -10,25 +10,12 @@
 #content .scene.front div.intro {display: none;}
 
 
-/* FRONT - ARTICLE */
-#content .front div.article {padding-bottom: 30px;}
-
-
-/* NEWS */
-#content .news div.article {padding-bottom: 20px;}
-
-
 /* ARTICLE */
 #content .post div.article ul.info {display: block;}
 
 
 /* CONTACT */
-#content .contact div.article {padding-bottom: 20px;}
 #content .contact div.teams {display: none;}
-#content .contact div.company {margin-top: 45px; border-top: 1px solid #dedede;}
-#content .contact div.vcard dl.info.financial {display: none;}
-#content .contact div.company h2 {margin-top: -45px; padding-bottom: 50px;}
-
 
 
 /* FEEDBACK ELEMENTS */

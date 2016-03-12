@@ -19,7 +19,6 @@ body {}
 #content ul.actions a.button.primary {background-color: #34cc3d;}
 #content ul.actions input.button.primary:active,
 #content ul.actions a.button.primary:active {background-color: #26962d;}
-
 #content .scene div.categories ul.tags li.selected a {color: #26962d;}
 
 #content .scene h3,
