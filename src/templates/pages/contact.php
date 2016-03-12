@@ -69,35 +69,37 @@ $this->sharingMetaData($page);
 
 
 <? if($items): ?>
-	<h2>Team</h2>
-	<ul class="items people">
-		<? foreach($items as $item): 
-			$media = $IC->sliceMedia($item); ?>
-		<li class="item person vcard id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Person">
+	<div class="teams">
+		<h2>Team</h2>
+		<ul class="items people">
+			<? foreach($items as $item): 
+				$media = $IC->sliceMedia($item); ?>
+			<li class="item person vcard id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Person">
 
-			<h3 itemprop="name" class="fn name"><?= $item["name"] ?></h3>
-			<ul class="info">
-				<li itemprop="affiliation" class="affiliation">think.dk</li>
-				<li itemprop="jobTitle" class="title"><?= $item["job_title"] ?></li>
-				<li itemprop="telephone" class="tel"><?= $item["tel"] ?></li>
-				<li><a href="mailto:<?= $item["email"] ?>" itemprop="email" class="email"><?= $item["email"] ?></a></li>
-			</ul>
-			<? if($item["html"]): ?>
-			<div class="description" itemprop="description">
-				<?= $item["html"] ?>
-			</div>
-			<? endif; ?>
+				<h3 itemprop="name" class="fn name"><?= $item["name"] ?></h3>
+				<ul class="info">
+					<li itemprop="affiliation" class="affiliation">think.dk</li>
+					<li itemprop="jobTitle" class="title"><?= $item["job_title"] ?></li>
+					<li itemprop="telephone" class="tel"><?= $item["tel"] ?></li>
+					<li><a href="mailto:<?= $item["email"] ?>" itemprop="email" class="email"><?= $item["email"] ?></a></li>
+				</ul>
+				<? if($item["html"]): ?>
+				<div class="description" itemprop="description">
+					<?= $item["html"] ?>
+				</div>
+				<? endif; ?>
 
-		</li>
-		<? endforeach; ?>
-	</ul>
+			</li>
+			<? endforeach; ?>
+		</ul>
+	</div>
 <? endif; ?>
 
 
 	<div itemtype="http://schema.org/Organization" itemscope class="vcard company">
 		<h2 class="name fn org" itemprop="name">think.dk</h2>
 
-		<dl class="info">
+		<dl class="info basic">
 			<dt class="address">Address</dt>
 			<dd class="address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
 				<ul>
@@ -109,7 +111,7 @@ $this->sharingMetaData($page);
 			<dt class="cvr">CVR</dt>
 			<dd class="cvr" itemprop="taxID">25 21 04 33</dd>
 		</dl>
-		<dl class="info">
+		<dl class="info contact">
 			<dt class="contact">Contact</dt>
 			<dd class="contact">
 				<ul>
@@ -127,7 +129,7 @@ $this->sharingMetaData($page);
 
 		</dl>
 
-		<dl class="info">
+		<dl class="info financial">
 			<dt class="bank">Bank</dt>
 			<dd class="bank"><a href="http://faelleskassen.dk">Fælleskassen</a></dd>
 

@@ -7,10 +7,7 @@
 
 
 /* FRONT */
-#content .front div.intro {padding-bottom: 30px;}
-#content .front div.intro p,
-#content .front div.intro h2,
-#content .front div.intro h3 {color: #26962d;}
+#content .scene.front div.intro {display: none;}
 
 
 /* FRONT - ARTICLE */
@@ -27,8 +24,9 @@
 
 /* CONTACT */
 #content .contact div.article {padding-bottom: 20px;}
-#content .contact ul.people {padding: 0 0 20px;}
+#content .contact div.teams {display: none;}
 #content .contact div.company {margin-top: 45px; border-top: 1px solid #dedede;}
+#content .contact div.vcard dl.info.financial {display: none;}
 #content .contact div.company h2 {margin-top: -45px; padding-bottom: 50px;}
 
 

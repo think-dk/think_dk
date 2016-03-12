@@ -34,12 +34,9 @@ body {}
 
 
 #footer {border-color: #ccdbcd;}
+#footer a {color: #34cc3d;}
 
 .terms_notification {background-color: #26962d;}
-.terms_notification .accept,
-.terms_notification .details,
-.terms_notification h3 {color: #ffffff;}
-.terms_notification {border-color: #26962d;}
 
 
 #content .scene div.comments.open h2 {color: #34cc3d;}

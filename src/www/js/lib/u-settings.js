@@ -1,5 +1,8 @@
 u.site_name = "think.dk";
+u.terms_version = "terms_v1";
 
+
+// dynamic text
 u.txt = {};
 u.txt["share"] = "Share";
 

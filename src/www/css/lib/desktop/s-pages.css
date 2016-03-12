@@ -43,6 +43,7 @@
 /* CONTACT */
 #content .scene.contact div.article {padding-bottom: 30px;}
 
+#content .scene.contact div.teams h2 {padding-top: 20px;}
 #content .scene.contact ul.people {padding: 0 70px 30px; border-top: 1px solid #dedede;}
 #content .scene.contact ul.items.people li.item.person {width: 230px; padding: 20px 20px 20px 0; display: inline-block; vertical-align: top; border: none;}
 #content .scene.contact ul.items.people li.item.person h3 {width: auto; padding-left: 0; padding-right: 0;}

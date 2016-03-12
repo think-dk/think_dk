@@ -24,27 +24,11 @@
 
 /* CONTACT */
 #content .scene.contact div.article {padding-bottom: 30px;}
-#content .scene.contact ul.people {padding: 0 70px 30px; border-top: 1px solid #dedede; overflow: hidden;}
-#content .scene.contact ul.items.people li.item.person {width: 230px; height: 170px; overflow: hidden; padding: 20px 20px 20px 0; display: inline; float: left; vertical-align: top; border: none;}
-#content .scene.contact ul.items.people li.item.person h3 {width: auto; padding-left: 0; padding-right: 0;}
-#content .scene.contact ul.items.people li.item.person ul.info {display: block; padding: 0 0 20px;}
-#content .scene.contact ul.items.people li.item.person ul.info li {display: block; color: #777777;}
-#content .scene.contact ul.items.people li.item.person ul.info li.affiliation {display: none;}
-
-#content .scene.contact ul.items.people li.item.person .description {}
-
-#content .scene.contact ul.items.people li.item.person .description h2, 
-#content .scene.contact ul.items.people li.item.person .description h3, 
-#content .scene.contact ul.items.people li.item.person .description h4, 
-#content .scene.contact ul.items.people li.item.person .description h5, 
-#content .scene.contact ul.items.people li.item.person .description h6, 
-#content .scene.contact ul.items.people li.item.person .description p {padding-left: 0; padding-right: 0; width: auto;}
-
-#content .scene.contact ul.items.people li.item.person .description p {font-size: 13px;}
-
+#content .scene.contact div.teams {display: none;}
 #content .scene.contact div.vcard.company {margin-top: 65px; border-top: 1px solid #dedede;}
 #content .scene.contact div.vcard.company h2 {margin-top: -65px; padding-bottom: 60px;}
 #content .scene.contact div.vcard dl.info {width: 230px; padding: 0 20px 20px 0; display: inline; float: left; vertical-align: top;}
+#content .scene.contact div.vcard dl.info.financial {display: none;}
 #content .scene.contact div.vcard {height: 260px;}
 
 

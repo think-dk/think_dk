@@ -6,8 +6,6 @@
 
 * {color: #26962d;}
 
-body {}
-
 #header .logo {color: #34cc3d;}
 #navigation ul li a {color: #34cc3d;}
 
@@ -38,10 +36,10 @@ body {}
 
 
 #footer {border-color: #ccdbcd;}
+#footer a {color: #34cc3d;}
 
-.terms_notification .accept,
-.terms_notification .details {color: #34cc3d;}
-.terms_notification {border-color: #26962d;}
+
+.terms_notification {background-color: #26962d;}
 
 
 /* LOCAL */
