@@ -26,7 +26,7 @@ $page = $IC->getItem(array("tags" => "page:about", "extend" => array("comments" 
 			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($page["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page["published_at"])) ?></li>
 			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page["published_at"])) ?></li>
 			<li class="author" itemprop="author"><?= $page["user_nickname"] ?></li>
-			<li class="main_entity share" itemprop="mainEntityOfPage"><?= SITE_URL."/news" ?></li>
+			<li class="main_entity share" itemprop="mainEntityOfPage"><?= SITE_URL."/about" ?></li>
 			<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 				<ul class="publisher_info">
 					<li class="name" itemprop="name">think.dk</li>

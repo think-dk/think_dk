@@ -5,8 +5,11 @@ global $model;
 $IC = new Items();
 $page = $IC->getItem(array("tags" => "page:newsletter", "extend" => array("user" => true, "mediae" => true)));
 
+
+$this->sharingMetaData($page);
+
+
 $email = $model->getProperty("email", "value");
-	
 ?>
 <div class="scene newsletter i:newsletter">
 

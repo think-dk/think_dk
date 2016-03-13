@@ -12,13 +12,13 @@ $model = new User();
 
 
 $page->bodyClass("signup");
-$page->pageTitle("Tilmelding");
+$page->pageTitle("Signup");
 
 
 if(is_array($action) && count($action)) {
 
 	// /signup/receipt
-	if($action[0] == "kvittering") {
+	if($action[0] == "receipt") {
 
 		$page->page(array(
 			"templates" => "signup/signup_receipt.php"
@@ -27,7 +27,7 @@ if(is_array($action) && count($action)) {
 	}
 
 	// /signup/confirm/email|mobile/#email|mobile#/#verification_code#
-	else if($action[0] == "bekræft" && count($action) == 4) {
+	else if($action[0] == "confirm" && count($action) == 4) {
 
 		if($model->confirmUser($action)) {
 			$page->page(array(
@@ -36,13 +36,13 @@ if(is_array($action) && count($action)) {
 		}
 		else {
 			$page->page(array(
-				"templates" => "signup/signup_confirmed_failed.php"
+				"templates" => "signup/signup_confirmation_failed.php"
 			));
 		}
 		exit();
 	}
 
-	// signup/save
+	// /signup/save
 	else if($action[0] == "save" && $page->validateCsrfToken()) {
 
 		// create new user
@@ -52,24 +52,25 @@ if(is_array($action) && count($action)) {
 		if(isset($user["user_id"])) {
 
 			// redirect to leave POST state
-			header("Location: kvittering");
+			header("Location: receipt");
 			exit();
 
 		}
+
 		// user exists
 		else if(isset($user["status"]) && $user["status"] == "USER_EXISTS") {
-			message()->addMessage("Beklager, serveren siger du enten har dårlig samvittighed eller dårlig hukommelse!", array("type" => "error"));
+			message()->addMessage("Sorry, the computer says you either have a bad memory or a bad conscience!", array("type" => "error"));
 		}
 		// something went wrong
 		else {
-			message()->addMessage("Beklager, serveren siger NEJ!", array("type" => "error"));
+			message()->addMessage("Sorry, computer says no!", array("type" => "error"));
 		}
 
 	}
 
 }
 
-// plain signup
+// plain signup directly
 // /signup
 $page->page(array(
 	"templates" => "signup/signup.php"

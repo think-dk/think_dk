@@ -29,6 +29,7 @@ if(is_array($action) && count($action)) {
 	// /newsletter/subscribe
 	else if($action[0] == "signup" && $page->validateCsrfToken()) {
 
+		// create new user
 		$user = $model->newUser(array("newUser"));
 
 		// successful creation
@@ -53,6 +54,8 @@ if(is_array($action) && count($action)) {
 
 }
 
+// plain newsletter signup directly
+// /curious
 $page->page(array(
 	"templates" => "news/newsletter.php"
 ));

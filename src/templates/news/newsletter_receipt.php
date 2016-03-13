@@ -5,8 +5,11 @@ global $model;
 $IC = new Items();
 $page = $IC->getItem(array("tags" => "page:newsletter-receipt", "extend" => array("user" => true, "mediae" => true)));
 
+
+$this->sharingMetaData($page);
+
+
 $email = session()->value("signup_email");
-	
 ?>
 <div class="scene newsletter i:scene">
 <? if($page && $page["status"]): 
