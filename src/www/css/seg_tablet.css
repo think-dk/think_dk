@@ -539,7 +539,7 @@ body #selection_options ul.actions a.button {background-color: #8c9399; color: #
 #content .scene ul.wishes {padding-left: 70px; padding-right: 70px;}
 #content .scene ul.wishes > li .image,
 #content .scene ul.wishes > li .text {display: inline-block; vertical-align: top;}
-#content .scene ul.wishes > li .image {width: 250px; height: 140px; background-position: center center; background-size: 100% auto; margin-bottom: 0px; cursor: default;}
+#content .scene ul.wishes > li .image {width: 250px; height: 140px; background-position: center center; background-size: 100% auto; background-repeat: no-repeat; margin-bottom: 0px; cursor: default;}
 #content .scene ul.wishes > li h3 {padding: 0 25px 10px;}
 #content .scene ul.wishes > li div.description p {padding: 0 25px;}
 #content .scene ul.wishes dl.info {padding: 0 25px 20px;}
