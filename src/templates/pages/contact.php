@@ -103,8 +103,8 @@ $this->sharingMetaData($page);
 			<dt class="address">Address</dt>
 			<dd class="address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
 				<ul>
-					<li itemprop="streetAddress">Æbeløgade 4</li>
-					<li><span class="postal" itemprop="postalCode">2100</span> <span class="locality" itemprop="addressLocality">København Ø</span></li>
+					<li class="streetaddress" itemprop="streetAddress">Æbeløgade 4</li>
+					<li class="city"><span class="postal" itemprop="postalCode">2100</span> <span class="locality" itemprop="addressLocality">København Ø</span></li>
 					<li class="country" itemprop="addressCountry">Denmark</li>
 				</ul>
 			</dd>
