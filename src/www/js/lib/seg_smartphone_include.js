@@ -23,6 +23,7 @@ document.write('<script type="text/javascript" src="/js/lib/smartphone/i-front.j
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-scene.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-newsletter.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-login.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/smartphone/i-wishes.js"></script>');
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-article.js"></script>');
 
