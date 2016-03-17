@@ -4,8 +4,8 @@ global $IC;
 
 $itemtype = "post";
 
-$page = $IC->getItem(array("tags" => "page:news", "extend" => array("user" => true, "mediae" => true)));
-$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => "post:news", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+$page = $IC->getItem(array("tags" => "page:latest", "extend" => array("user" => true, "mediae" => true)));
+$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => "post:latest", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
 
 
 $this->sharingMetaData($page);

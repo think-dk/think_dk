@@ -3,19 +3,19 @@
 
 
 /* LOGIN */
-#content .login form {display: none;}
+#content div.login form {display: none;}
 
 
 /* FRONT */
-#content .scene.front div.intro {display: none;}
+#content div.front div.intro {display: none;}
 
 
-/* ARTICLE */
-#content .post div.article ul.info {display: block;}
+/* POST ARTICLE */
+#content div.post div.article ul.info {display: block;}
 
 
 /* CONTACT */
-#content .contact div.teams {display: none;}
+#content div.contact div.teams {display: none;}
 
 
 /* FEEDBACK ELEMENTS */

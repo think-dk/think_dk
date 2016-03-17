@@ -19,9 +19,9 @@ body {}
 #content ul.actions input.button.primary,
 #content ul.actions a.button.primary {background-color: #34cc3d;}
 
-
 #content .scene div.categories ul.tags li.selected a,
 #content .scene div.categories ul.tags li.selected:before {color: #26962d;}
+#content .scene div.comments.open h2 {color: #34cc3d;}
 
 #content .scene h3,
 #content .scene h4,
@@ -37,11 +37,8 @@ body {}
 .terms_notification {background-color: #26962d;}
 
 
-#content .scene div.comments.open h2 {color: #34cc3d;}
-
 
 /* LOCAL */
-
 .front #header .logo,
 .about #navigation ul li.about,
 .contact #navigation ul li.contact,

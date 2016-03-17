@@ -11,12 +11,12 @@ $action = $page->actions();
 $IC = new Items();
 
 
-$page->bodyClass("news");
-$page->pageTitle("News");
+$page->bodyClass("latest");
+$page->pageTitle("Latest");
 
 
 $page->page(array(
-	"templates" => "news/news.php"
+	"templates" => "posts/latest.php"
 ));
 exit();
 

@@ -33,7 +33,7 @@
 
 	<div id="footer">
 		<ul class="servicenavigation">
-			<li class="copyright">Janitor, Manipulator, Modulator - parentNode - Copyright 2009-2016</li>
+			<li class="copyright">Copyright 2016, parentNode.dk</li>
 		</ul>
 	</div>
 </div>

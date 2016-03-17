@@ -429,16 +429,17 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 /*s-pages.css*/
 #content .scene {}
 #content .scene ul.info {display: none;}
-#content .scene.login form {display: none;}
-#content .scene.front div.intro {display: none;}
-#content .scene.post div.article ul.info {display: block;}
-#content .scene.contact div.teams {display: none;}
+#content div.login form {display: none;}
+#content div.front div.intro {display: none;}
+#content div.post div.article ul.info {display: block;}
+#content div.contact div.teams {display: none;}
 #content .scene div.todos {display: none;}
 #content .scene div.qnas {display: none;}
 
 
 /*s-colorscheme.css*/
 * {color: #26962d;}
+body {}
 #header .logo {color: #34cc3d;}
 #navigation ul li a {color: #34cc3d;}
 #content .scene a {color: #34cc3d;}

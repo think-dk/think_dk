@@ -754,6 +754,7 @@ body {}
 #content ul.actions a.button.primary {background-color: #34cc3d;}
 #content .scene div.categories ul.tags li.selected a,
 #content .scene div.categories ul.tags li.selected:before {color: #26962d;}
+#content .scene div.comments.open h2 {color: #34cc3d;}
 #content .scene h3,
 #content .scene h4,
 #content .scene h5,
@@ -764,7 +765,6 @@ body {}
 #footer {border-color: #ccdbcd;}
 #footer a {color: #34cc3d;}
 .terms_notification {background-color: #26962d;}
-#content .scene div.comments.open h2 {color: #34cc3d;}
 .front #header .logo,
 .about #navigation ul li.about,
 .contact #navigation ul li.contact,

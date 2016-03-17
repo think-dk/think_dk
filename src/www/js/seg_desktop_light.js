@@ -3653,11 +3653,6 @@ u.txt["comment"] = "Comment";
 u.txt["cancel"] = "Cancel";
 
 
-/*ga.js*/
-u.ga_account = 'UA-10756281-1';
-u.ga_domain = 'think.dk';
-
-
 /*u-googleanalytics.js*/
 if(u.ga_account) {
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
