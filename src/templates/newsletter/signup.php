@@ -14,8 +14,8 @@ $email = $model->getProperty("email", "value");
 <div class="scene newsletter i:newsletter">
 
 <? if($page && $page["status"]): 
-	$media = $IC->sliceMedia($item); ?>
-	<div class="article i:article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
+	$media = $IC->sliceMedia($page); ?>
+	<div class="article i:article id:<?= $page["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
 		<div class="image item_id:<?= $page["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">

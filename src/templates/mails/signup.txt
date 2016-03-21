@@ -1,21 +1,18 @@
-SUBJECT:Nysgerrigheden længe leve!
+SUBJECT:Long love curiosity!
 
-Tak for din nysgerrighed.
+Thank you for being curious.
 
-Bekræft din tilmelding på linket nedenfor:
-
-{SITE_URL}/signup/bekræft/email/{EMAIL}/{VERIFICATION}
-
-
-Hvis du vil ændre din tilmelding eller dit password, kan du gøre det ved at logge ind på sitet.
-
-Login oplysninger: 
-Dit brugernavn er: {EMAIL}
-Dit password er: {PASSWORD}
+Confirm your sign up, by clicking the link below:
+{SITE_URL}/signup/confirm/email/{EMAIL}/{VERIFICATION}
 
 
+If you want to change your newsletter subscription or change your password, please log in to {SITE_URL}.
 
-Med vilje og tro bliver vejen virkelig,
+Login information: 
+Your username: {EMAIL}
+Your password: {PASSWORD}
 
-Stopknappen / Startknappen
+
+Insistingly hopeful,
+
 {SITE_URL}

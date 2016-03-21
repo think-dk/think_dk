@@ -1,9 +1,9 @@
-SUBJECT:Nysgerrigheden længe leve!
+SUBJECT:Long live curiosity?
 
-Der gik noget helt galt!?
-Besvar venligst denne email, så vi kan få løst problemet.
+Something went bonkers!?
+Please reply to this email, and we'll look into the problem.
 
 
-Med vilje og tro bliver vejen virkelig,
+Insistingly hopeful,
 
-Stopknappen / Startknappen
+{SITE_URL}

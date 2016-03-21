@@ -13,8 +13,8 @@ $this->sharingMetaData($page);
 <div class="scene contact i:scene">
 
 <? if($page && $page["status"]): 
-	$media = $IC->sliceMedia($item); ?>
-	<div class="article i:article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
+	$media = $IC->sliceMedia($page); ?>
+	<div class="article i:article id:<?= $page["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
 		<div class="image item_id:<?= $page["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
@@ -133,7 +133,13 @@ $this->sharingMetaData($page);
 			<dd class="bank"><a href="http://faelleskassen.dk">Fælleskassen</a></dd>
 
 			<dt class="account">Account no</dt>
-			<dd class="account">84114145172</dd>
+			<dd class="account">8411 4145172</dd>
+
+			<dt class="account">IBAN</dt>
+			<dd class="account">DK3184110004145172</dd>
+
+			<dt class="account">SWIFT/BIC</dt>
+			<dd class="account">FAELDKK1</dd>
 		</dl>
 
 	</div>

@@ -26,7 +26,7 @@ $this->sharingMetaData($page);
 
 
 <? if($page && $page["status"]): 
-	$media = $IC->sliceMedia($item); ?>
+	$media = $IC->sliceMedia($page); ?>
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>

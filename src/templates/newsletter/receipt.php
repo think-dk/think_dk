@@ -13,8 +13,8 @@ $email = session()->value("signup_email");
 ?>
 <div class="scene newsletter i:scene">
 <? if($page && $page["status"]): 
-	$media = $IC->sliceMedia($item); ?>
-	<div class="article i:article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
+	$media = $IC->sliceMedia($page); ?>
+	<div class="article i:article id:<?= $page["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
 		<div class="image item_id:<?= $page["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
@@ -67,15 +67,4 @@ $email = session()->value("signup_email");
 	<p>Thanks for signing up to our newsletter. You'll hear from us soon.</p>
 <? endif; ?>
 
-	<!--h1>Velkommen til de nysgerriges klub</h1>
-	<p>
-		Stopknappen har sendt en email på <em><?= $email ?></em> med et aktiveringslink.
-		Den håber du er nysgerrig nok til at klikke på det - ellers får du ingen opdateringer.
-	</p>
-	<p>
-		Der er også oprettet en bruger til dig. Koden finder du også 
-		i den tilsendte email - men du kan først logge ind, når du har klikket på aktiveringslinket.
-	</p>
-
-	<p>På gensyn.</p-->
 </div>

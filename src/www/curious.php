@@ -21,7 +21,7 @@ if(is_array($action) && count($action)) {
 	if($action[0] == "receipt") {
 
 		$page->page(array(
-			"templates" => "news/newsletter_receipt.php"
+			"templates" => "newsletter/receipt.php"
 		));
 		exit();
 	}
@@ -57,7 +57,7 @@ if(is_array($action) && count($action)) {
 // plain newsletter signup directly
 // /curious
 $page->page(array(
-	"templates" => "news/newsletter.php"
+	"templates" => "newsletter/signup.php"
 ));
 
 ?>

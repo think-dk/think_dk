@@ -11,7 +11,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 ?>
 
 <div class="scene posts tag i:scene">
-	<h1>Posts, News, Updates</h1>
+	<h1>Posts</h1>
 
 
 <? if($categories): ?>
