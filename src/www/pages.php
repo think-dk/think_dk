@@ -15,25 +15,16 @@ $itemtype = "page";
 
 
 $page->bodyClass("pages");
-$page->pageTitle("Notes and other work in progress");
+$page->pageTitle("Page");
 
 
 if(is_array($action) && count($action)) {
 
-	# /sider/hemmeligheder - list all pages
-	if($action[0] == "hemmeligheder") {
+	# /pages/#sindex# - view
+	if(count($action) == 1) {
 
 		$page->page(array(
-			"templates" => "pages/page_list.php"
-		));
-		exit();
-	}
-
-	# /artikler/#sindex# - view
-	else if(count($action) == 1) {
-
-		$page->page(array(
-			"templates" => "pages/page_view.php"
+			"templates" => "pages/view.php"
 		));
 		exit();
 	}
