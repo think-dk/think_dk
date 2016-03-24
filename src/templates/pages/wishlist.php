@@ -91,7 +91,7 @@ $this->sharingMetaData($page);
 			<dl class="info">
 				<? if($item["price"]): ?>
 				<dt class="price">Approximate price</dt>
-				<dd class="price">DKK <?= $item["price"] ?></dd>
+				<dd class="price">DKK ~<?= $item["price"] ?></dd>
 				<? endif; ?>
 				<? if($item["link"]): ?>
 				<dt class="link">Link</dt>
