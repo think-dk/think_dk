@@ -709,6 +709,16 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene.contact ul.items.people li.item.person .description h6, 
 #content .scene.contact ul.items.people li.item.person .description p {padding-left: 0; padding-right: 0; width: auto;}
 #content .scene.contact ul.items.people li.item.person .description p {font-size: 13px;}
+#content .scene div.all_services {padding: 0 25px; font-size: 0;}
+#content .scene div.all_services div.servicegroup h2,
+#content .scene div.all_services div.servicegroup h3,
+#content .scene div.all_services div.servicegroup p {width: auto;}
+#content .scene div.all_services div.servicegroup {display: inline-block; vertical-align: top; width: 220px; padding: 0 25px;}
+#content .scene div.all_services div.servicegroup ul.services {}
+#content .scene div.all_services div.servicegroup ul.services li {padding-left: 20px; padding-right: 20px;}
+#content .scene div.all_services div.servicegroup h2 {padding-left: 20px; padding-right: 20px;}
+#content .scene div.all_services div.servicegroup ul.services h3,
+#content .scene div.all_services div.servicegroup ul.services p {padding-left: 0; padding-right: 0;}
 #content .scene div.todos {padding-bottom: 15px; position: relative; z-index: 1;}
 #content .scene div.todos h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
 #content .scene div.todos h2 svg.arrow {position: absolute; top: 6px; right: 55px;}
