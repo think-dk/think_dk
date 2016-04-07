@@ -3,38 +3,35 @@ global $action;
 global $model;
 
 $IC = new Items();
-$page = $IC->getItem(array("tags" => "page:signup", "extend" => array("user" => true, "mediae" => true)));
+$page_item = $IC->getItem(array("tags" => "page:signup", "extend" => array("user" => true, "mediae" => true)));
+if($page_item) {
+	$this->sharingMetaData($page_item);
+}
 
-
-$this->sharingMetaData($page);
-
-
-// in case of signup failure, empty password field
-$model->setProperty("password", "value", "");
-
+$email = $model->getProperty("email", "value");
 ?>
 <div class="scene signup i:signup">
 
-<? if($page && $page["status"]): 
-	$media = $IC->sliceMedia($page); ?>
-	<div class="article i:article id:<?= $page["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
+<? if($page_item && $page_item["status"]): 
+	$media = $IC->sliceMedia($page_item); ?>
+	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
-		<div class="image item_id:<?= $page["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
-			<p>Image: <a href="/images/<?= $page["item_id"] ?>/<?= $media["variant"] ?>/500x.<?= $media["format"] ?>"><?= $media["name"] ?></a></p>
+		<div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
+			<p>Image: <a href="/images/<?= $page_item["item_id"] ?>/<?= $media["variant"] ?>/500x.<?= $media["format"] ?>"><?= $media["name"] ?></a></p>
 		</div>
 		<? endif; ?>
 
-		<h1 itemprop="headline"><?= $page["name"] ?></h1>
+		<h1 itemprop="headline"><?= $page_item["name"] ?></h1>
 
-		<? if($page["subheader"]): ?>
-		<h2 itemprop="alternativeHeadline"><?= $page["subheader"] ?></h2>
+		<? if($page_item["subheader"]): ?>
+		<h2 itemprop="alternativeHeadline"><?= $page_item["subheader"] ?></h2>
 		<? endif; ?>
 
 		<ul class="info">
-			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($page["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page["published_at"])) ?></li>
-			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page["published_at"])) ?></li>
-			<li class="author" itemprop="author"><?= $page["user_nickname"] ?></li>
+			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($page_item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
+			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page_item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
+			<li class="author" itemprop="author"><?= $page_item["user_nickname"] ?></li>
 			<li class="main_entity" itemprop="mainEntityOfPage"><?= SITE_URL."/curious" ?></li>
 			<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 				<ul class="publisher_info">
@@ -48,7 +45,7 @@ $model->setProperty("password", "value", "");
 			</li>
 			<li class="image_info" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
 			<? if($media): ?>
-				<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/images/<?= $page["item_id"] ?>/<?= $media["variant"] ?>/720x.<?= $media["format"] ?>"></span>
+				<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/images/<?= $page_item["item_id"] ?>/<?= $media["variant"] ?>/720x.<?= $media["format"] ?>"></span>
 				<span class="image_width" itemprop="width" content="720"></span>
 				<span class="image_height" itemprop="height" content="<?= floor(720 / ($media["width"] / $media["height"])) ?>"></span>
 			<? else: ?>
@@ -59,23 +56,17 @@ $model->setProperty("password", "value", "");
 			</li>
 		</ul>
 
-		<? if($page["html"]): ?>
+		<? if($page_item["html"]): ?>
 		<div class="articlebody" itemprop="articleBody">
-			<?= $page["html"] ?>
+			<?= $page_item["html"] ?>
 		</div>
 		<? endif; ?>
 	</div>
 <? else:?>
-	<h1>Sign up</h1>
-	<h2>Become a member of think.dk</h2>
+	<h1>Newsletter</h1>
 <? endif; ?>
 
-	<p>Add information about membership types</p>
-
-	<?= $model->formStart("save", array("class" => "labelstyle:inject")) ?>
-		<p>
-			Type you name, email and password below.
-		</p>
+	<?= $model->formStart("/curious/signup", array("class" => "signup labelstyle:inject")) ?>
 
 <?	if(message()->hasMessages(array("type" => "error"))): ?>
 		<p class="errormessage">
@@ -88,22 +79,13 @@ $model->setProperty("password", "value", "");
 <?	endif; ?>
 
 		<fieldset>
-			<?= $model->input("nickname", array("label" => "Dit navn", "required" => true, "hint_message" => "Indtast dit navn.", "error_message" => "Det indtastede er ikke en gyldigt.")); ?>
-			<?= $model->input("email", array("label" => "Din email", "required" => true, "hint_message" => "Indtast din email-adresse.", "error_message" => "Det indtastede er ikke en gyldig email-adresse.")); ?>
-			<?= $model->input("password", array("required" => true, "hint_message" => "Indtast dit nye password.", "error_message" => "Dit password skal være mellem 8 og 20 tegn.")); ?>
+			<?= $model->input("newsletter", array("type" => "hidden", "value" => "curious")); ?>
+			<?= $model->input("email", array("label" => "Your email", "required" => true, "value" => $email, "hint_message" => "Type your email.", "error_message" => "You entered an invalid email.")); ?>
 		</fieldset>
 
 		<ul class="actions">
-			<?= $model->submit("Sign up", array("class" => "primary", "wrapper" => "li.signup")) ?>
+			<?= $model->submit("Join", array("class" => "primary", "wrapper" => "li.signup")) ?>
 		</ul>
 	<?= $model->formEnd() ?>
-
-	<p>
-		When you sign up for think.dk, you'll receive a activation email with a confimation link. 
-		The sign up is only completed after you have clicked the link and activated your account.
-	</p>
-	<p class="note">
-		If you don't receive the activation email, please check your spam folder, before contacting us.
-	</p>
 
 </div>

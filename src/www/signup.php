@@ -26,6 +26,16 @@ if(is_array($action) && count($action)) {
 		exit();
 	}
 
+	// TODO
+	// /signup/unsubscribe/#newsletter#/email|mobile/#email|mobile#
+	else if($action[0] == "receipt") {
+
+		$page->page(array(
+			"templates" => "signup/unsubscribe.php"
+		));
+		exit();
+	}
+
 	// /signup/confirm/email|mobile/#email|mobile#/#verification_code#
 	else if($action[0] == "confirm" && count($action) == 4) {
 

@@ -2,16 +2,18 @@
 global $action;
 global $model;
 
-$page_item = $IC->getItem(array("tags" => "page:signup-confirmed", "extend" => array("user" => true, "mediae" => true)));
+$IC = new Items();
+$page_item = $IC->getItem(array("tags" => "page:signup", "extend" => array("user" => true, "mediae" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
-$type = $action[1];
-$username = $action[2];
+
+// in case of signup failure, empty password field
+$model->setProperty("password", "value", "");
 
 ?>
-<div class="scene signup i:scene">
+<div class="scene signup i:signup">
 
 <? if($page_item && $page_item["status"]): 
 	$media = $IC->sliceMedia($page_item); ?>
@@ -33,7 +35,7 @@ $username = $action[2];
 			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($page_item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
 			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page_item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
 			<li class="author" itemprop="author"><?= $page_item["user_nickname"] ?></li>
-			<li class="main_entity" itemprop="mainEntityOfPage"><?= SITE_URL."/signup/confirm" ?></li>
+			<li class="main_entity" itemprop="mainEntityOfPage"><?= SITE_URL."/curious" ?></li>
 			<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 				<ul class="publisher_info">
 					<li class="name" itemprop="name">think.dk</li>
@@ -60,21 +62,48 @@ $username = $action[2];
 		<? if($page_item["html"]): ?>
 		<div class="articlebody" itemprop="articleBody">
 			<?= $page_item["html"] ?>
-			<?= preg_replace("/{type}/", $type, preg_replace("/{username}/", $username, $page_item["html"]) ?>
 		</div>
 		<? endif; ?>
 	</div>
 <? else:?>
-	<h1>Thank you!</h1>
-	<p>Your <?= $type ?>: <?= $username ?>, has been confirmed.</p>
-
-	<p>
-		Via <a href="/janitor/admin/profile">Janitor</a> kan du opdatere din profil og annullere din nysgerrighed,
-		hvis det skulle blive nødvendigt.
-	</p>
-
-	<p>Tak for din nysgerrighed - du hører fra os!</p>
+	<h1>Sign up</h1>
+	<h2>Become a member of think.dk</h2>
 <? endif; ?>
 
+	<p>Add information about membership types</p>
+
+	<?= $model->formStart("save", array("class" => "labelstyle:inject")) ?>
+		<p>
+			Type you name, email and password below.
+		</p>
+
+<?	if(message()->hasMessages(array("type" => "error"))): ?>
+		<p class="errormessage">
+<?		$messages = message()->getMessages(array("type" => "error"));
+		message()->resetMessages();
+		foreach($messages as $message): ?>
+			<?= $message ?><br>
+<?		endforeach;?>
+		</p>
+<?	endif; ?>
+
+		<fieldset>
+			<?= $model->input("nickname", array("label" => "Dit navn", "required" => true, "hint_message" => "Indtast dit navn.", "error_message" => "Det indtastede er ikke en gyldigt.")); ?>
+			<?= $model->input("email", array("label" => "Din email", "required" => true, "hint_message" => "Indtast din email-adresse.", "error_message" => "Det indtastede er ikke en gyldig email-adresse.")); ?>
+			<?= $model->input("password", array("required" => true, "hint_message" => "Indtast dit nye password.", "error_message" => "Dit password skal være mellem 8 og 20 tegn.")); ?>
+		</fieldset>
+
+		<ul class="actions">
+			<?= $model->submit("Sign up", array("class" => "primary", "wrapper" => "li.signup")) ?>
+		</ul>
+	<?= $model->formEnd() ?>
+
+	<p>
+		When you sign up for think.dk, you'll receive a activation email with a confimation link. 
+		The sign up is only completed after you have clicked the link and activated your account.
+	</p>
+	<p class="note">
+		If you don't receive the activation email, please check your spam folder, before contacting us.
+	</p>
 
 </div>

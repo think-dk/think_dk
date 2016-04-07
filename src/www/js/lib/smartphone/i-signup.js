@@ -1,4 +1,4 @@
-Util.Objects["newsletter"] = new function() {
+Util.Objects["signup"] = new function() {
 	this.init = function(scene) {
 //		u.bug("scene init:" + u.nodeId(scene))
 		
@@ -21,9 +21,21 @@ Util.Objects["newsletter"] = new function() {
 			page.cN.scene = this;
 
 			this._form = u.qs("form", this);
+
+			var description = u.qs("div.articlebody", this);
+			u.bug("description:" + description)
+			if(u.text(description).match(/\{form\.signup\}/)) {
+				for(i = 0; node = description.childNodes[i]; i++) {
+					u.bug("node:" + node)
+					if(u.text(node).match(/\{form\.signup\}/)) {
+						u.bug("this._form:" + this._form)
+						description.replaceChild(this._form, node);
+					}
+				}
+			}
+
+
 			u.f.init(this._form);
-
-
 			this._form.fields["email"].focus();
 
 

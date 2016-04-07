@@ -20,15 +20,15 @@ $item = $IC->getItem(array("tags" => "page:front"));
 	<url>
 		<loc><?= SITE_URL ?>/</loc>
 		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
-		<changefreq>weekly</changefreq>
+		<changefreq>daily</changefreq>
 		<priority>1</priority>
 	</url>
 <?
 // NEWS PAGE
-$item = $IC->getItem(array("tags" => "page:news"));
+$item = $IC->getItem(array("tags" => "page:latest"));
 ?>
 	<url>
-		<loc><?= SITE_URL ?>/news</loc>
+		<loc><?= SITE_URL ?>/latest</loc>
 		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
 		<changefreq>daily</changefreq>
 		<priority>1</priority>
@@ -52,7 +52,7 @@ $item = $IC->getItem(array("tags" => "page:about"));
 	<url>
 		<loc><?= SITE_URL ?>/about</loc>
 		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
-		<changefreq>daily</changefreq>
+		<changefreq>weekly</changefreq>
 		<priority>1</priority>
 	</url>
 <?
@@ -61,6 +61,16 @@ $item = $IC->getItem(array("tags" => "page:contact"));
 ?>
 	<url>
 		<loc><?= SITE_URL ?>/contact</loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>1</priority>
+	</url>
+<?
+// WISHLIST PAGE
+$item = $IC->getItem(array("tags" => "page:wishlist"));
+?>
+	<url>
+		<loc><?= SITE_URL ?>/wishlist</loc>
 		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
 		<changefreq>daily</changefreq>
 		<priority>1</priority>

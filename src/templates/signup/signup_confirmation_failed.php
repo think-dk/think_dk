@@ -2,33 +2,37 @@
 global $action;
 global $model;
 
-$page = $IC->getItem(array("tags" => "page:signup-confirm-failed", "extend" => array("user" => true, "mediae" => true)));
+$page_item = $IC->getItem(array("tags" => "page:signup-confirm-failed", "extend" => array("user" => true, "mediae" => true)));
+if($page_item) {
+	$this->sharingMetaData($page_item);
+}
+
 
 $type = $action[1];
 $username = $action[2];
 ?>
 <div class="scene confirmed i:scene">
 
-<? if($page && $page["status"]): 
-	$media = $IC->sliceMedia($page); ?>
-	<div class="article i:article id:<?= $page["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
+<? if($page_item && $page_item["status"]): 
+	$media = $IC->sliceMedia($page_item); ?>
+	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
-		<div class="image item_id:<?= $page["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
-			<p>Image: <a href="/images/<?= $page["item_id"] ?>/<?= $media["variant"] ?>/500x.<?= $media["format"] ?>"><?= $media["name"] ?></a></p>
+		<div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
+			<p>Image: <a href="/images/<?= $page_item["item_id"] ?>/<?= $media["variant"] ?>/500x.<?= $media["format"] ?>"><?= $media["name"] ?></a></p>
 		</div>
 		<? endif; ?>
 
-		<h1 itemprop="headline"><?= $page["name"] ?></h1>
+		<h1 itemprop="headline"><?= $page_item["name"] ?></h1>
 
-		<? if($page["subheader"]): ?>
-		<h2 itemprop="alternativeHeadline"><?= $page["subheader"] ?></h2>
+		<? if($page_item["subheader"]): ?>
+		<h2 itemprop="alternativeHeadline"><?= $page_item["subheader"] ?></h2>
 		<? endif; ?>
 
 		<ul class="info">
-			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($page["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page["published_at"])) ?></li>
-			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page["published_at"])) ?></li>
-			<li class="author" itemprop="author"><?= $page["user_nickname"] ?></li>
+			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($page_item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
+			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page_item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
+			<li class="author" itemprop="author"><?= $page_item["user_nickname"] ?></li>
 			<li class="main_entity" itemprop="mainEntityOfPage"><?= SITE_URL."/signup/confirm" ?></li>
 			<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 				<ul class="publisher_info">
@@ -42,7 +46,7 @@ $username = $action[2];
 			</li>
 			<li class="image_info" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
 			<? if($media): ?>
-				<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/images/<?= $page["item_id"] ?>/<?= $media["variant"] ?>/720x.<?= $media["format"] ?>"></span>
+				<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/images/<?= $page_item["item_id"] ?>/<?= $media["variant"] ?>/720x.<?= $media["format"] ?>"></span>
 				<span class="image_width" itemprop="width" content="720"></span>
 				<span class="image_height" itemprop="height" content="<?= floor(720 / ($media["width"] / $media["height"])) ?>"></span>
 			<? else: ?>
@@ -53,10 +57,10 @@ $username = $action[2];
 			</li>
 		</ul>
 
-		<? if($page["html"]): ?>
+		<? if($page_item["html"]): ?>
 		<div class="articlebody" itemprop="articleBody">
-			<?= $page["html"] ?>
-			<?= preg_replace("/{type}/", $type, preg_replace("/{username}/", $username, $page["html"]) ?>
+			<?= $page_item["html"] ?>
+			<?= preg_replace("/{type}/", $type, preg_replace("/{username}/", $username, $page_item["html"]) ?>
 		</div>
 		<? endif; ?>
 	</div>

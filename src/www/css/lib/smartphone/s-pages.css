@@ -19,6 +19,9 @@
 #content .scene.front div.intro h2,
 #content .scene.front div.intro h3,
 #content .scene.front div.intro span {display: inline-block; width: auto; color: #26962d; padding: 0;}
+#content .scene.front div.intro p,
+#content .scene.front div.intro h2,
+#content .scene.front div.intro h3 {padding: 0 20px;}
 
 
 /* FRONT - ARTICLE */

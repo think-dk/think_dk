@@ -4,34 +4,36 @@ global $IC;
 
 $itemtype = "person";
 
-$page = $IC->getItem(array("tags" => "page:contact", "extend" => array("user" => true, "mediae" => true)));
+$page_item = $IC->getItem(array("tags" => "page:contact", "extend" => array("user" => true, "mediae" => true)));
+if($page_item) {
+	$this->sharingMetaData($page_item);
+}
+
 $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => $itemtype.".position", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
 
-
-$this->sharingMetaData($page);
 ?>
 <div class="scene contact i:scene">
 
-<? if($page && $page["status"]): 
-	$media = $IC->sliceMedia($page); ?>
-	<div class="article i:article id:<?= $page["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
+<? if($page_item && $page_item["status"]): 
+	$media = $IC->sliceMedia($page_item); ?>
+	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
-		<div class="image item_id:<?= $page["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
-			<p>Image: <a href="/images/<?= $page["item_id"] ?>/<?= $media["variant"] ?>/500x.<?= $media["format"] ?>"><?= $media["name"] ?></a></p>
+		<div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
+			<p>Image: <a href="/images/<?= $page_item["item_id"] ?>/<?= $media["variant"] ?>/500x.<?= $media["format"] ?>"><?= $media["name"] ?></a></p>
 		</div>
 		<? endif; ?>
 
-		<h1 itemprop="headline"><?= $page["name"] ?></h1>
+		<h1 itemprop="headline"><?= $page_item["name"] ?></h1>
 
-		<? if($page["subheader"]): ?>
-		<h2 itemprop="alternativeHeadline"><?= $page["subheader"] ?></h2>
+		<? if($page_item["subheader"]): ?>
+		<h2 itemprop="alternativeHeadline"><?= $page_item["subheader"] ?></h2>
 		<? endif; ?>
 
 		<ul class="info">
-			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($page["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page["published_at"])) ?></li>
-			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page["published_at"])) ?></li>
-			<li class="author" itemprop="author"><?= $page["user_nickname"] ?></li>
+			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($page_item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
+			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page_item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
+			<li class="author" itemprop="author"><?= $page_item["user_nickname"] ?></li>
 			<li class="main_entity" itemprop="mainEntityOfPage"><?= SITE_URL."/contact" ?></li>
 			<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 				<ul class="publisher_info">
@@ -45,7 +47,7 @@ $this->sharingMetaData($page);
 			</li>
 			<li class="image_info" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
 			<? if($media): ?>
-				<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/images/<?= $page["item_id"] ?>/<?= $media["variant"] ?>/720x.<?= $media["format"] ?>"></span>
+				<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/images/<?= $page_item["item_id"] ?>/<?= $media["variant"] ?>/720x.<?= $media["format"] ?>"></span>
 				<span class="image_width" itemprop="width" content="720"></span>
 				<span class="image_height" itemprop="height" content="<?= floor(720 / ($media["width"] / $media["height"])) ?>"></span>
 			<? else: ?>
@@ -56,9 +58,9 @@ $this->sharingMetaData($page);
 			</li>
 		</ul>
 
-		<? if($page["html"]): ?>
+		<? if($page_item["html"]): ?>
 		<div class="articlebody" itemprop="articleBody">
-			<?= $page["html"] ?>
+			<?= $page_item["html"] ?>
 		</div>
 		<? endif; ?>
 	</div>
@@ -80,8 +82,8 @@ $this->sharingMetaData($page);
 				<ul class="info">
 					<li itemprop="affiliation" class="affiliation">think.dk</li>
 					<li itemprop="jobTitle" class="title"><?= $item["job_title"] ?></li>
-					<li itemprop="telephone" class="tel"><?= $item["tel"] ?></li>
-					<li><a href="mailto:<?= $item["email"] ?>" itemprop="email" class="email"><?= $item["email"] ?></a></li>
+					<li itemprop="telephone" class="tel" content="<?= $item["tel"] ?>"><?= $item["tel"] ?></li>
+					<li><a href="mailto:<?= $item["email"] ?>" itemprop="email" class="email" content="<?= $item["email"] ?>"><?= $item["email"] ?></a></li>
 				</ul>
 				<? if($item["html"]): ?>
 				<div class="description" itemprop="description">

@@ -11,22 +11,38 @@ $action = $page->actions();
 $model = new User();
 
 
-$page->bodyClass("newsletter");
+$page->bodyClass("signup");
 $page->pageTitle("Curious?");
 
 
 if(is_array($action) && count($action)) {
 
-	// /newsletter/receipt (user just signed up)
+	// /curious/receipt (user just signed up)
 	if($action[0] == "receipt") {
 
 		$page->page(array(
-			"templates" => "newsletter/receipt.php"
+			"templates" => "signup/receipt.php"
 		));
 		exit();
 	}
 
-	// /newsletter/subscribe
+	// /curious/confirm/email|mobile/#email|mobile#/#verification_code#
+	else if($action[0] == "confirm" && count($action) == 4) {
+
+		if($model->confirmUser($action)) {
+			$page->page(array(
+				"templates" => "signup/signup_confirmed.php"
+			));
+		}
+		else {
+			$page->page(array(
+				"templates" => "signup/signup_confirmation_failed.php"
+			));
+		}
+		exit();
+	}
+
+	// /curious/subscribe
 	else if($action[0] == "signup" && $page->validateCsrfToken()) {
 
 		// create new user
@@ -54,10 +70,10 @@ if(is_array($action) && count($action)) {
 
 }
 
-// plain newsletter signup directly
+// plain signup directly
 // /curious
 $page->page(array(
-	"templates" => "newsletter/signup.php"
+	"templates" => "signup/signup.php"
 ));
 
 ?>

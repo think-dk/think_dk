@@ -1,6 +1,8 @@
 u.site_name = "think.dk";
 u.terms_version = "terms_v1";
 
+u.ga_account = 'UA-10756281-1';
+u.ga_domain = 'think.dk';
 
 // dynamic text
 u.txt = {};
