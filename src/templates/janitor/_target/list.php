@@ -7,7 +7,7 @@ global $itemtype;
 $items = $IC->getItems(array("itemtype" => $itemtype, "order" => "status DESC, position ASC, published_at DESC", "extend" => array("tags" => true)));
 ?>
 
-<div class="scene defaultList <?= $itemtype ?>List">
+<div class="scene i:scene defaultList <?= $itemtype ?>List">
 	<h1>Targets</h1>
 
 	<ul class="actions">

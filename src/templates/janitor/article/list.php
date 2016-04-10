@@ -7,8 +7,9 @@ global $itemtype;
 $items = $IC->getItems(array("itemtype" => $itemtype, "order" => "status DESC, position ASC, published_at DESC", "extend" => array("tags" => true, "mediae" => true)));
 ?>
 
-<div class="scene defaultList <?= $itemtype ?>List">
+<div class="scene i:scene defaultList <?= $itemtype ?>List">
 	<h1>Articles</h1>
+	<h2><?= $item["name"] ?></h2>
 
 	<ul class="actions">
 		<?= $JML->listNew(array("label" => "New article")) ?>
@@ -18,8 +19,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "order" => "status DESC, p
 <?		if($items): ?>
 		<ul class="items">
 <?			foreach($items as $item): ?>
-			<li class="item draggable item_id:<?= $item["id"] ?>">
-				<div class="drag"></div>
+			<li class="item item_id:<?= $item["id"] ?>">
 				<h3><?= $item["name"] ?></h3>
 
 				<?= $JML->tagList($item["tags"]) ?>
