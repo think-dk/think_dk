@@ -60,7 +60,6 @@ $username = $action[2];
 
 		<? if($page_item["html"]): ?>
 		<div class="articlebody" itemprop="articleBody">
-			<?= $page_item["html"] ?>
 			<?= preg_replace("/{type}/", $type, preg_replace("/{username}/", $username, $page_item["html"])) ?>
 		</div>
 		<? endif; ?>
