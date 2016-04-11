@@ -4381,8 +4381,6 @@ u.defaultFilters = function(div) {
 					this._filter.selected_tags.push(this.tag);
 					u.ac(this, "selected");
 				}
-				u.bug("pre filter")
-				u.xInObject(this._filter.selected_tags);
 				this._filter.form.updated();
 			}
 		}
@@ -4402,7 +4400,6 @@ u.defaultFilters = function(div) {
 		if(this.selected_tags.length) {
 			var regex = new RegExp("("+this.selected_tags.join(";|")+";)", "g");
 			var match = node._c.match(regex);
-			u.bug("match:" + match + ", " + "("+this.selected_tags.join(";|")+";)")
 			if(!match || match.length != this.selected_tags.length) {
 				return false;
 			}

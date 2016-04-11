@@ -1,10 +1,15 @@
-SUBJECT:Long love curiosity!
+SUBJECT:Long live curiosity!
 
-Thank you for being curious.
+Hi there, 
 
-Confirm your sign up, by clicking the link below:
+and Thank you for being curious! 
+
+Please confirm your sign up by clicking the link below:
 {SITE_URL}/signup/confirm/email/{EMAIL}/{VERIFICATION}
 
+We want to build a movement, so feel free to tell your friends about us - the more we are, the more we can accelerate change :)
+
+We hope you don’t hesitate to reply to this email if you have any questions.
 
 If you want to change your newsletter subscription or change your password, please log in to {SITE_URL}.
 
