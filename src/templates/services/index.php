@@ -9,9 +9,9 @@ if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
-$items_provisioning = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => "service:provisioning", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
-$items_regulating = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => "service:regulating", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
-$items_cultural = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => "service:cultural", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+$items_provisioning = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => "$itemtype.position ASC", "tags" => "service:provisioning", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+$items_regulating = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => "$itemtype.position ASC", "tags" => "service:regulating", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+$items_cultural = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => "$itemtype.position ASC", "tags" => "service:cultural", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
 
 ?>
 
