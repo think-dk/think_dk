@@ -19,9 +19,7 @@ $username = $action[2];
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
-		<div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
-			<p>Image: <a href="/images/<?= $page_item["item_id"] ?>/<?= $media["variant"] ?>/500x.<?= $media["format"] ?>"><?= $media["name"] ?></a></p>
-		</div>
+		<div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
 		<? endif; ?>
 
 		<h1 itemprop="headline"><?= $page_item["name"] ?></h1>
@@ -67,13 +65,6 @@ $username = $action[2];
 <? else:?>
 	<h1>Thank you!</h1>
 	<p>Your <?= $type ?>: <?= $username ?>, has been confirmed.</p>
-
-	<p>
-		Via <a href="/janitor/admin/profile">Janitor</a> kan du opdatere din profil og annullere din nysgerrighed,
-		hvis det skulle blive nødvendigt.
-	</p>
-
-	<p>Tak for din nysgerrighed - du hører fra os!</p>
 <? endif; ?>
 
 
