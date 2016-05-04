@@ -6,7 +6,7 @@ u._stepA1 = function() {
 //	u.bug("stepA1:" + u.text(this));
 
 	// split words into spans
-	this.innerHTML = '<span class="word">'+this.innerHTML.split(" ").join('</span>&nbsp;<span class="word">')+'</span>'; 
+	this.innerHTML = '<span class="word">'+this.innerHTML.split(" ").join('</span> <span class="word">')+'</span>'; 
 	this.word_spans = u.qsa("span.word", this);
 	var i, span;
 

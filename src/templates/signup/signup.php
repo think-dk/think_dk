@@ -61,10 +61,10 @@ $email = $model->getProperty("email", "value");
 		<? endif; ?>
 	</div>
 <? else:?>
-	<h1>Newsletter</h1>
+	<h1>Sign up</h1>
 <? endif; ?>
 
-	<?= $model->formStart("/curious/signup", array("class" => "signup labelstyle:inject")) ?>
+	<?= $model->formStart("save", array("class" => "signup labelstyle:inject")) ?>
 
 <?	if(message()->hasMessages(array("type" => "error"))): ?>
 		<p class="errormessage">

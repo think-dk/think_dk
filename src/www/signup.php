@@ -21,17 +21,7 @@ if(is_array($action) && count($action)) {
 	if($action[0] == "receipt") {
 
 		$page->page(array(
-			"templates" => "signup/signup_receipt.php"
-		));
-		exit();
-	}
-
-	// TODO
-	// /signup/unsubscribe/#newsletter#/email|mobile/#email|mobile#
-	else if($action[0] == "receipt") {
-
-		$page->page(array(
-			"templates" => "signup/unsubscribe.php"
+			"templates" => "signup/receipt.php"
 		));
 		exit();
 	}
@@ -41,12 +31,12 @@ if(is_array($action) && count($action)) {
 
 		if($model->confirmUser($action)) {
 			$page->page(array(
-				"templates" => "signup/signup_confirmed.php"
+				"templates" => "signup/confirmed.php"
 			));
 		}
 		else {
 			$page->page(array(
-				"templates" => "signup/signup_confirmation_failed.php"
+				"templates" => "signup/confirmation_failed.php"
 			));
 		}
 		exit();
@@ -75,6 +65,14 @@ if(is_array($action) && count($action)) {
 		else {
 			message()->addMessage("Sorry, computer says no!", array("type" => "error"));
 		}
+
+	}
+
+	// /signup/unsubscribe
+	// post email + newsletter
+	else if($action[0] == "unsubscribe" && $page->validateCsrfToken()) {
+
+		// TODO
 
 	}
 

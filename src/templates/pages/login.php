@@ -7,6 +7,10 @@ $username = stringOr(getPost("username"));
 <div class="scene login i:login">
 	<h1>Login</h1>
 
+<?	if(defined("SITE_SIGNUP") && SITE_SIGNUP): ?>
+	<p>Not registered yet? <a href="/nysgerrig">Create your account now</a>.</p>
+<?	endif; ?>
+
 	<?= $model->formStart("?login=true", array("class" => "labelstyle:inject")) ?>
 
 <?	if(message()->hasMessages(array("type" => "error"))): ?>
@@ -28,5 +32,7 @@ $username = stringOr(getPost("username"));
 			<?= $model->submit("Log in", array("class" => "primary", "wrapper" => "li.login")) ?>
 		</ul>
 	<?= $model->formEnd() ?>
+
+	<p>Did you <a href="/nysgerrig/glemt">forget your password</a>?</p>
 
 </div>

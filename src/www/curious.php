@@ -42,8 +42,11 @@ if(is_array($action) && count($action)) {
 		exit();
 	}
 
-	// /curious/subscribe
+	// /curious/signup
 	else if($action[0] == "signup" && $page->validateCsrfToken()) {
+
+		// add to log
+		$page->addLog("Signup submitted");
 
 		// create new user
 		$user = $model->newUser(array("newUser"));
@@ -65,6 +68,14 @@ if(is_array($action) && count($action)) {
 		else {
 			message()->addMessage("Sorry, computer says no!", array("type" => "error"));
 		}
+
+	}
+
+	// /curious/unsubscribe
+	// post email + newsletter
+	else if($action[0] == "unsubscribe" && $page->validateCsrfToken()) {
+
+		// TODO
 
 	}
 

@@ -1,16 +1,15 @@
 <?php
 global $action;
 global $model;
-$IC = new Items();
 
-$page_item = $IC->getItem(array("tags" => "page:signup-confirmed", "extend" => array("user" => true, "mediae" => true)));
+$IC = new Items();
+$page_item = $IC->getItem(array("tags" => "page:signup-confirm-failed", "extend" => array("user" => true, "mediae" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
 $type = $action[1];
 $username = $action[2];
-
 ?>
 <div class="scene signup i:scene">
 
@@ -63,9 +62,8 @@ $username = $action[2];
 		<? endif; ?>
 	</div>
 <? else:?>
-	<h1>Thank you!</h1>
-	<p>Your <?= $type ?>: <?= $username ?>, has been confirmed.</p>
+	<h1>What??</h1>
+	<p>Your <?= $type ?>, <?= $username ?>, could not be verified.</p>
 <? endif; ?>
-
 
 </div>

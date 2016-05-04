@@ -33,14 +33,14 @@ Util.Objects["front"] = new function() {
 			page.cN.scene = this;
 
 			// required fonts loaded
-			scene.fontsLoaded = function() {
+			this.fontsLoaded = function() {
 
 				page.resized();
 				this.build();
 			}
 
 			// preload fonts
-			u.fontsReady(scene, [
+			u.fontsReady(this, [
 				{"family":"OpenSans", "weight":"normal", "style":"normal"},
 				{"family":"OpenSans", "weight":"bold", "style":"normal"},
 				{"family":"OpenSans", "weight":"normal", "style":"italic"},
