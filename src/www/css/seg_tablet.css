@@ -281,7 +281,7 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 #content .scene .usedby ul li.oeo {background-image: url(/img/logos/oeo.png);}
 #content .scene .usedby ul li.peoplegroup {background-image: url(/img/logos/peoplegroup.png);}
 #content .scene.login form {padding-bottom: 20px;}
-#content .errormessage {color: #df0000;}
+#content .scene p.errormessage {color: #df0000;}
 
 
 /*s-form.css*/

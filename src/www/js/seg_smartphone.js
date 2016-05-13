@@ -4307,7 +4307,9 @@ u.txt["readstate-read"] = "Read";
 u.txt["add_comment"] = "Add comment";
 u.txt["comment"] = "Comment";
 u.txt["cancel"] = "Cancel";
-
+u.txt["terms-headline"] = "We love <br />cookies and privacy";
+u.txt["terms-accept"] = "Accept";
+u.txt["terms-details"] = "Details";
 
 /*u-googleanalytics.js*/
 if(u.ga_account) {
@@ -5031,7 +5033,7 @@ Util.Objects["signup"] = new function() {
 
 /*u-basics.js*/
 u._stepA1 = function() {
-	this.innerHTML = '<span class="word">'+this.innerHTML.split(" ").join('</span>&nbsp;<span class="word">')+'</span>'; 
+	this.innerHTML = '<span class="word">'+this.innerHTML.split(" ").join('</span> <span class="word">')+'</span>'; 
 	this.word_spans = u.qsa("span.word", this);
 	var i, span;
 	for(i = 0; span = this.word_spans[i]; i++) {

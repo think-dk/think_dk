@@ -4354,7 +4354,6 @@ u.defaultFilters = function(div) {
 		for(j = 0; text_node = text_nodes[j]; j++) {
 			node._c += u.text(text_node).toLowerCase() + ";"; 
 		}
-		u.bug("c:" + node._c)
 	}
 	var tags = u.qsa("li.tag", div.list);
 	if(tags) {
@@ -8207,39 +8206,44 @@ Util.Objects["page"] = new function() {
 			var sections = u.qsa("ul.navigation > li", page.nN);
 			if(sections) {
 				for(i = 0; section = sections[i]; i++) {
-					section.nodes = u.qsa("li", section);
-					if(section.nodes.length) {
-						for(j = 0; node = section.nodes[j]; j++) {
-							u.ce(node, {"type":"link"});
-							if(u.hc(node, document.body.className)) {
-								u.ac(node, "selected");
+					section.header = u.qs("h3", section);
+					if(section.header) {
+						section.nodes = u.qsa("li", section);
+						if(section.nodes.length) {
+							for(j = 0; node = section.nodes[j]; j++) {
+								u.ce(node, {"type":"link"});
+								if(u.hc(node, document.body.className)) {
+									u.ac(node, "selected");
+								}
+							}
+							if(section.header) {
+								section.header.section = section;
+								u.e.click(section.header);
+								section.header.clicked = function() {
+									if(this.section.is_open) {
+										this.section.is_open = false;
+										u.as(this.section, "height", this.offsetHeight+"px");
+										u.saveNodeCookie(this.section, "open", 0, {"ignore_classvars":true});
+										u.addExpandArrow(this);
+										page.nN.list.updateDragBoundaries();
+									}
+									else {
+										this.section.is_open = true;
+										u.as(this.section, "height", "auto");
+										u.saveNodeCookie(this.section, "open", 1, {"ignore_classvars":true});
+										u.addCollapseArrow(this);
+										page.nN.list.updateDragBoundaries();
+									}
+								}
+								var state = u.getNodeCookie(section, "open", {"ignore_classvars":true});
+								if(!state) {
+									section.is_open = true;
+								}
+								section.header.clicked();
 							}
 						}
-						section.header = u.qs("h3", section);
-						if(section.header) {
-							section.header.section = section;
-							u.e.click(section.header);
-							section.header.clicked = function() {
-								if(this.section.is_open) {
-									this.section.is_open = false;
-									u.as(this.section, "height", this.offsetHeight+"px");
-									u.saveNodeCookie(this.section, "open", 0, {"ignore_classvars":true});
-									u.addExpandArrow(this);
-									page.nN.list.updateDragBoundaries();
-								}
-								else {
-									this.section.is_open = true;
-									u.as(this.section, "height", "auto");
-									u.saveNodeCookie(this.section, "open", 1, {"ignore_classvars":true});
-									u.addCollapseArrow(this);
-									page.nN.list.updateDragBoundaries();
-								}
-							}
-							var state = u.getNodeCookie(section, "open", {"ignore_classvars":true});
-							if(!state) {
-								section.is_open = true;
-							}
-							section.header.clicked();
+						else {
+							u.ac(section, "empty");
 						}
 					}
 					else {
@@ -9895,6 +9899,21 @@ Util.Objects["newslettersProfile"] = new function() {
 		}
 	}
 }
-
+Util.Objects["resetPassword"] = new function() {
+	this.init = function(form) {
+		u.f.init(form);
+		form.submitted = function() {
+			this.response = function(response) {
+				if(response.cms_status == "success") {
+					location.href = "/login";
+				}
+				else {
+					page.notify({"isJSON":true, "cms_status":"error", "cms_message":"Password could not be updated"});
+				}
+			}
+			u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
+		}
+	}
+}
 
 
