@@ -134,7 +134,7 @@ Util.Objects["front"] = new function() {
 
 				// set height of intro and show it
 				u.ass(this.intro, {
-					"height": u.browserH()-(page.hN.offsetHeight+page.fN.offsetHeight+100) + "px",
+					"height": u.browserH()-(page.hN.offsetHeight+page.fN.offsetHeight+125) + "px",
 					"opacity": 1
 				});
 
