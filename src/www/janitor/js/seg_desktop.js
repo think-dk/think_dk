@@ -7750,6 +7750,8 @@ Util.Objects["page"] = new function() {
 			}
 			page.hN.over = function() {
 				this.is_open = true;
+				u.a.transition(page.nN, "none");
+				page.nN.transitioned = null;
 				u.t.resetTimer(this.t_navigation);
 				u.a.transition(this, "all 0.3s ease-in-out");
 				u.ass(this, {
@@ -7780,6 +7782,8 @@ Util.Objects["page"] = new function() {
 			}
 			page.hN.out = function() {
 				this.is_open = false;
+				u.a.transition(page.nN, "none");
+				page.nN.transitioned = null;
 				var span, i;
 				for(i = 0; span = page.hN.janitor_spans[i]; i++) {
 					if(i == 0) {
@@ -7797,6 +7801,7 @@ Util.Objects["page"] = new function() {
 					}
 				}
 				page.nN.transitioned = function() {
+					u.bug("hide me")
 					u.ass(this, {
 						"display":"none"
 					});
