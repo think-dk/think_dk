@@ -9,9 +9,9 @@ if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
-$items_provisioning = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => "$itemtype.position ASC", "tags" => "service:provisioning", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
-$items_regulating = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => "$itemtype.position ASC", "tags" => "service:regulating", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
-$items_cultural = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => "$itemtype.position ASC", "tags" => "service:cultural", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+$items_substance = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => "$itemtype.position ASC", "tags" => "service:Substance", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+$items_balance = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => "$itemtype.position ASC", "tags" => "service:Balance", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+$items_culture = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => "$itemtype.position ASC", "tags" => "service:Culture", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
 
 ?>
 
@@ -80,12 +80,12 @@ $items_cultural = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "o
 
 	<div class="all_services">
 
-		<? if($items_provisioning): ?>
+		<? if($items_substance): ?>
 		<div class="servicegroup provisioning">
 
-			<h2>Provisioning</h2>
+			<h2>Substance</h2>
 			<ul class="items services i:articleMiniList">
-				<? foreach($items_provisioning as $item): ?>
+				<? foreach($items_substance as $item): ?>
 				<li class="item service id:<?= $item["item_id"] ?><?= $item["classname"] ? " ".$item["classname"] : "" ?>" itemscope itemtype="http://schema.org/Article">
 
 					<!--ul class="tags">
@@ -145,12 +145,12 @@ $items_cultural = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "o
 		</div>
 		<? endif; ?>
 
-		<? if($items_regulating): ?>
+		<? if($items_balance): ?>
 		<div class="servicegroup regulating">
 
-			<h2>Regulating</h2>
+			<h2>Balance</h2>
 			<ul class="items services i:articleMiniList">
-				<? foreach($items_regulating as $item): ?>
+				<? foreach($items_balance as $item): ?>
 				<li class="item service id:<?= $item["item_id"] ?><?= $item["classname"] ? " ".$item["classname"] : "" ?>" itemscope itemtype="http://schema.org/Article">
 
 					<!--ul class="tags">
@@ -210,12 +210,12 @@ $items_cultural = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "o
 		</div>
 		<? endif; ?>
 
-		<? if($items_cultural): ?>
+		<? if($items_culture): ?>
 		<div class="servicegroup cultural">
 
-			<h2>Cultural</h2>
+			<h2>Culture</h2>
 			<ul class="items services i:articleMiniList">
-				<? foreach($items_cultural as $item): ?>
+				<? foreach($items_culture as $item): ?>
 				<li class="item service id:<?= $item["item_id"] ?><?= $item["classname"] ? " ".$item["classname"] : "" ?>" itemscope itemtype="http://schema.org/Article">
 
 					<!--ul class="tags">
