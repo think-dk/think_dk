@@ -107,7 +107,7 @@ $post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage"
 				<? endif; ?>
 				</ul>
 
-				<h3 itemprop="headline"><a href="/posts/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h3>
+				<h3 itemprop="headline"><a href="/posts/<?= $item["sindex"] ?>"><?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?></a></h3>
 
 				<ul class="info">
 					<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
