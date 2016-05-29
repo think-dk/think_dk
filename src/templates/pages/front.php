@@ -137,9 +137,9 @@ $post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage"
 					</li>
 				</ul>
 
-				<? if($item["description"]): ?>
-				<div class="description" itemprop="description">
-					<p><?= nl2br($item["description"]) ?></p>
+				<? if($item["html"]): ?>
+				<div class="articlebody" itemprop="articleBody">
+					<?= $item["html"] ?>
 				</div>
 				<? endif; ?>
 
