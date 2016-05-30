@@ -4311,12 +4311,18 @@ Util.Objects["collapseHeader"] = new function() {
 				this.div._toggle_is_closed = false;
 				u.saveNodeCookie(this.div, "open", 1, {"ignore_classvars":true});
 				u.addCollapseArrow(this);
+				if(typeof(this.div.headerExpanded) == "function") {
+					this.div.headerExpanded();
+				}
 			}
 			else {
 				u.as(this.div, "height", this.offsetHeight+"px");
 				this.div._toggle_is_closed = true;
 				u.saveNodeCookie(this.div, "open", 0, {"ignore_classvars":true});
 				u.addExpandArrow(this);
+				if(typeof(this.div.headerCollapsed) == "function") {
+					this.div.headerCollapsed();
+				}
 			}
 		}
 		var state = u.getNodeCookie(div, "open", {"ignore_classvars":true});
@@ -4325,6 +4331,9 @@ Util.Objects["collapseHeader"] = new function() {
 		}
 		else {
 			u.addCollapseArrow(div._toggle_header);
+			if(typeof(div.headerExpanded) == "function") {
+				div.headerExpanded();
+			}
 		}
 	}
 }

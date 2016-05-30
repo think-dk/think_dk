@@ -612,7 +612,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content div.disabled_items > p {padding-top: 20px;}
 #content div.all_items > h2 + ul.items,
 #content div.all_items > p + ul.items {border-top: 1px solid #dedede;}
-#content div.all_items ul.items > li {display: block; position: relative; border-bottom: 1px solid #dedede;}
+#content div.all_items ul.items > li {display: block; position: relative; border-bottom: 1px solid #dedede; overflow: hidden;}
 #content div.all_items ul.items > li:hover {background-color: #edf0f2;}
 #content div.all_items ul.items > li h3 {padding: 10px 250px 10px 30px;}
 #content div.all_items.images ul.items > li {background-repeat: no-repeat; background-position: 0px center;}
