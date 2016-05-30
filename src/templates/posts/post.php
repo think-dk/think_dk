@@ -105,7 +105,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 			data-comment-add="<?= $this->validPath("/janitor/admin/post/addComment") ?>" 
 			data-csrf-token="<?= session()->value("csrf") ?>"
 			>
-			<h2 class="comments">Comments for &quot;<?= $item["name"] ?>&quot;</h2>
+			<h2 class="comments">Comments for &quot;<?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?>&quot;</h2>
 			<? if($item["comments"]): ?>
 			<ul class="comments">
 				<? foreach($item["comments"] as $comment): ?>
