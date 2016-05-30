@@ -79,7 +79,7 @@ $email = $model->getProperty("email", "value");
 		<fieldset>
 			<?= $model->input("newsletter", array("type" => "hidden", "value" => "curious")); ?>
 			<?= $model->input("email", array("label" => "Your email", "required" => true, "value" => $email, "hint_message" => "Type your email.", "error_message" => "You entered an invalid email.")); ?>
-			<?= $model->input("password", array("required" => true, "hint_message" => "Type your new password.", "error_message" => "Your password must be between 8 and 20 characters.")); ?>
+			<?= $model->input("password", array("hint_message" => "Type your new password - or leave it blank and we'll generate one for you.", "error_message" => "Your password must be between 8 and 20 characters.")); ?>
 		</fieldset>
 
 		<ul class="actions">
