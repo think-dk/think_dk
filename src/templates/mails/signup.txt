@@ -11,7 +11,7 @@ We want to build a movement, so feel free to tell your friends about us - the mo
 
 We hope you don’t hesitate to reply to this email if you have any questions.
 
-If you want to change your newsletter subscription or change your password, please log in to {SITE_URL}.
+If you want to update your profile, please visit {SITE_URL}/janitor/admin/profile after activating your account.
 
 Login information: 
 Your username: {EMAIL}
