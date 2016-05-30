@@ -2,7 +2,7 @@ SUBJECT:Long live curiosity!
 
 Hi there, 
 
-and Thank you for being curious! 
+and thank you for being curious! 
 
 Please confirm your sign up by clicking the link below:
 {SITE_URL}/signup/confirm/email/{EMAIL}/{VERIFICATION}
