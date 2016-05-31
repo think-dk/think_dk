@@ -122,15 +122,15 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 			<dt class="social">Social media</dt>
 			<dd class="social">
 				<ul>
-					<li class="facebook"><a href="https://facebook.com/think.dk">Facebook</a></li>
-					<li class="linkedin"><a href="https://www.linkedin.com/company/think-dk">LinkedIn</a></li>
+					<li class="facebook"><a href="https://www.facebook.com/thinkdk-527647573938387/" target="_blank">Facebook</a></li>
+					<li class="linkedin"><a href="https://www.linkedin.com/company/think-dk" target="_blank">LinkedIn</a></li>
 				</ul>
 			</dd>
 		</dl>
 
 		<dl class="info financial">
 			<dt class="bank">Bank</dt>
-			<dd class="bank"><a href="http://faelleskassen.dk">Fælleskassen</a></dd>
+			<dd class="bank"><a href="http://faelleskassen.dk" target="_blank">Fælleskassen</a></dd>
 
 			<dt class="account">Account no</dt>
 			<dd class="account">8411 4145172</dd>
