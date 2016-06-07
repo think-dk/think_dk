@@ -14,7 +14,7 @@ $items_culture = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "or
 
 ?>
 
-<div class="scene news i:scene">
+<div class="scene services i:scene">
 
 <? if($page_item && $page_item["status"]): 
 	$media = $IC->sliceMedia($page_item); ?>

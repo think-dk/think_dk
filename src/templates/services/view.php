@@ -8,11 +8,13 @@ $item = $IC->getItem(array("sindex" => $sindex, "extend" => array("tags" => true
 if($item) {
 	$this->sharingMetaData($item);
 
-
-
 	$event_items = false;
-	// set related pattern
-//	$related_pattern = array("itemtype" => $item["itemtype"], "tags" => $item["tags"], "exclude" => $item["id"]);
+
+	$service_tag = arrayKeyValue($item["tags"], "context", "service");
+	if($service_tag) {
+		$event_items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "event.starting_at > NOW()", "order" => "event.starting_at ASC", "tags" => "service:".addslashes($item["tags"][$service_tag]["value"]), "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+		
+	}
 
 }
 
@@ -24,7 +26,7 @@ if($item) {
 <? if($item):
 	$media = $IC->sliceMedia($item); ?>
 
-	<div class="article i:article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Article"
+	<div class="article i:article id:<?= $item["item_id"] ?> service" itemscope itemtype="http://schema.org/Article"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-readstate="<?= $item["readstate"] ?>"
 		data-readstate-update="<?= $this->validPath("/janitor/admin/service/updateReadstate/".$item["item_id"]) ?>" 
@@ -35,20 +37,19 @@ if($item) {
 		<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
 		<? endif; ?>
 
-		<!--ul class="tags">
+		<ul class="tags">
 		<? if($item["tags"]):
 			$editing_tag = arrayKeyValue($item["tags"], "context", "editing"); ?>
 			<? if($editing_tag !== false): ?>
 			<li class="editing" title="This post is work in progress"><?= $item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"] ?></li>
 			<? endif; ?>
-			<li><a href="/services">Services</a></li>
 			<? foreach($item["tags"] as $item_tag): ?>
-				<? if($item_tag["context"] == $itemtype): ?>
-			<li itemprop="articleSection"><a href="/posts/tag/<?= urlencode($item_tag["value"]) ?>"><?= $item_tag["value"] ?></a></li>
+				<? if($item_tag["context"] == "servicecategory"): ?>
+			<li itemprop="articleSection"><?= $item_tag["value"] ?></li>
 				<? endif; ?>
 			<? endforeach; ?>
 		<? endif; ?>
-		</ul-->
+		</ul>
 
 		<h1 itemprop="headline"><?= $item["name"] ?></h1>
 
@@ -93,75 +94,6 @@ if($item) {
 		<? endif; ?>
 
 
-		<? if($event_items): ?>
-		<div class="events">
-			<h2>Events</h2>
-
-			<ul class="items events i:articleMiniList">
-			<? foreach($related_items as $item): 
-				$media = $IC->sliceMedia($item); ?>
-				<li class="item event item_id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Event"
-					data-readstate="<?= $item["readstate"] ?>"
-					>
-
-					<!--ul class="tags">
-					<? if($item["tags"]):
-						$editing_tag = arrayKeyValue($item["tags"], "context", "editing"); ?>
-						<? if($editing_tag !== false): ?>
-						<li class="editing" title="This post is work in progress"><?= $item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"] ?></li>
-						<? endif; ?>
-						<li><a href="/posts">Posts</a></li>
-						<? foreach($item["tags"] as $item_tag): ?>
-							<? if($item_tag["context"] == $itemtype): ?>
-						<li itemprop="articleSection"><a href="/posts/tag/<?= urlencode($item_tag["value"]) ?>"><?= $item_tag["value"] ?></a></li>
-							<? endif; ?>
-						<? endforeach; ?>
-					<? endif; ?>
-					</ul-->
-
-					<h3 itemprop="headline"><a href="/posts/<?= $item["sindex"] ?>"><?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?></a></h3>
-
-					<ul class="info">
-						<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
-						<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
-						<li class="author" itemprop="author"><?= $item["user_nickname"] ?></li>
-						<li class="main_entity" itemprop="mainEntityOfPage"><?= SITE_URL."/posts/".$item["sindex"] ?></li>
-						<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-							<ul class="publisher_info">
-								<li class="name" itemprop="name">think.dk</li>
-								<li class="logo" itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-									<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/img/logo-large.png"></span>
-									<span class="image_width" itemprop="width" content="720"></span>
-									<span class="image_height" itemprop="height" content="405"></span>
-								</li>
-							</ul>
-						</li>
-						<li class="image_info" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-						<? if($media): ?>
-							<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/images/<?= $item["item_id"] ?>/<?= $media["variant"] ?>/720x.<?= $media["format"] ?>"></span>
-							<span class="image_width" itemprop="width" content="720"></span>
-							<span class="image_height" itemprop="height" content="<?= floor(720 / ($media["width"] / $media["height"])) ?>"></span>
-						<? else: ?>
-							<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/img/logo-large.png"></span>
-							<span class="image_width" itemprop="width" content="720"></span>
-							<span class="image_height" itemprop="height" content="405"></span>
-						<? endif; ?>
-						</li>
-					</ul>
-
-					<? if($item["description"]): ?>
-					<div class="description" itemprop="description">
-						<p><?= nl2br($item["description"]) ?></p>
-					</div>
-					<? endif; ?>
-
-				</li>
-		<?	endforeach; ?>
-			</ul>
-		</div>
-	<? endif; ?>
-
-
 		<div class="comments i:comments item_id:<?= $item["item_id"] ?>" 
 			data-comment-add="<?= $this->validPath("/janitor/admin/service/addComment") ?>" 
 			data-csrf-token="<?= session()->value("csrf") ?>"
@@ -183,6 +115,42 @@ if($item) {
 			<p>No comments yet</p>
 		<? endif; ?>
 		</div>
+
+
+		<div class="all_events">
+			<h2>Upcoming events</h2>
+
+		<? if($event_items): ?>
+
+			<ul class="items events">
+			<? foreach($event_items as $item): 
+				$media = $IC->sliceMedia($item); ?>
+				<li class="item event item_id:<?= $item["item_id"] ?>">
+
+					<dl class="occurs_at">
+						<dt class="starting_at">Starts</dt>
+						<dd class="starting_at"><?= date("F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
+					</dl>
+
+					<h3><a href="/events/<?= $item["sindex"] ?>"><?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?></a></h3>
+
+					<? if($item["description"]): ?>
+					<div class="description">
+						<p><?= nl2br($item["description"]) ?></p>
+					</div>
+					<? endif; ?>
+
+				</li>
+		<?	endforeach; ?>
+			</ul>
+
+	<? else: ?>
+
+			<p>No scheduled events.</p>
+
+	<? endif; ?>
+		</div>
+
 
 	</div>
 
