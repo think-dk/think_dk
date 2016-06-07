@@ -788,7 +788,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.wishList div.wishlists {padding: 0 0 50px; border-bottom: 1px solid #aaaaaa;}
 #content .scene.wishList ul.items > li dl dt.reserved {display: none;}
 #content .scene.wishList ul.items > li dl dd.reserved {font-size: 14px;}
-
+#content .scene.eventList ul.items > li.past {background: #dddddd;}
 
 
 /*s-content.css*/

@@ -8161,7 +8161,12 @@ Util.Objects["defaultNew"] = new function() {
 		form.submitted = function(iN) {
 			this.response = function(response) {
 				if(response.cms_status == "success" && response.cms_object) {
-					location.href = this.action.replace("\/save", "/edit/"+response.cms_object.item_id);
+					if(this.action.match(/\/save/)) {
+						location.href = this.action.replace("\/save", "/edit/"+response.cms_object.item_id);
+					}
+					else if(this.actions["cancel"]) {
+						this.actions["cancel"].clicked();
+					}
 				}
 				else {
 					page.notify(response);
