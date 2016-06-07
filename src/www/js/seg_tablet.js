@@ -4919,25 +4919,24 @@ Util.Objects["page"] = new function() {
 			if(u.terms_version && !u.getCookie(u.terms_version)) {
 				var terms_link = u.qs("li.terms a");
 				if(terms_link && terms_link.href) {
+					var terms = u.ie(document.body, "div", {"class":"terms_notification"});
+					u.ae(terms, "h3", {"html":u.stringOr(u.txt["terms-headline"], "We love <br />cookies and privacy")});
+					var bn_accept = u.ae(terms, "a", {"class":"accept", "html":u.stringOr(u.txt["terms-accept"], "Accept")});
+					bn_accept.terms = terms;
+					u.ce(bn_accept);
+					bn_accept.clicked = function() {
+						this.terms.parentNode.removeChild(this.terms);
+						u.saveCookie(u.terms_version, true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
+					}
+					if(!location.href.match(terms_link.href)) {
+						var bn_details = u.ae(terms, "a", {"class":"details", "html":u.stringOr(u.txt["terms-details"], "Details"), "href":terms_link.href});
+						u.ce(bn_details, {"type":"link"});
+					}
+					u.a.transition(terms, "all 0.5s ease-in");
+					u.ass(terms, {
+						"opacity": 1
+					});
 				}
-				u.bug("terms_link:" + terms_link.href)
-				var terms = u.ie(document.body, "div", {"class":"terms_notification"});
-				u.ae(terms, "h3", {"html":u.stringOr(u.txt["terms-headline"], "We love <br />cookies and privacy")});
-				var bn_accept = u.ae(terms, "a", {"class":"accept", "html":u.stringOr(u.txt["terms-accept"], "Accept")});
-				bn_accept.terms = terms;
-				u.ce(bn_accept);
-				bn_accept.clicked = function() {
-					this.terms.parentNode.removeChild(this.terms);
-					u.saveCookie(u.terms_version, true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
-				}
-				if(!location.href.match(terms_link.href)) {
-					var bn_details = u.ae(terms, "a", {"class":"details", "html":u.stringOr(u.txt["terms-details"], "Details"), "href":terms_link.href});
-					u.ce(bn_details, {"type":"link"});
-				}
-				u.a.transition(terms, "all 0.5s ease-in");
-				u.ass(terms, {
-					"opacity": 1
-				});
 			}
 		}
 		page.initNavigation = function() {
@@ -4959,6 +4958,7 @@ Util.Objects["page"] = new function() {
 				u.ce(node, {"type":"link"});
 				u.e.hover(node);
 				node.over = function() {
+					u.a.transition(this, "none");
 					this.transitioned = function() {
 						this.transitioned = function() {
 							this.transitioned = function() {
@@ -4970,10 +4970,16 @@ Util.Objects["page"] = new function() {
 						u.a.transition(this, "all 0.1s ease-in-out");
 						u.a.scale(this, 1.15);
 					}
-					u.a.transition(this, "all 0.1s ease-in-out");
-					u.a.scale(this, 1.22);
+					if(this._scale != 1.22) {
+						u.a.transition(this, "all 0.1s ease-in-out");
+						u.a.scale(this, 1.22);
+					}
+					else {
+						this.transitioned();
+					}
 				}
 				node.out = function() {
+					u.a.transition(this, "none");
 					this.transitioned = function() {
 						this.transitioned = function() {
 							u.a.transition(this, "none");
@@ -4981,8 +4987,13 @@ Util.Objects["page"] = new function() {
 						u.a.transition(this, "all 0.1s ease-in");
 						u.a.scale(this, 1);
 					}
-					u.a.transition(this, "all 0.1s ease-in");
-					u.a.scale(this, 0.8);
+					if(this._scale != 0.8) {
+						u.a.transition(this, "all 0.1s ease-in");
+						u.a.scale(this, 0.8);
+					}
+					else {
+						this.transitioned();
+					}
 				}
 			}
 			if(page.hN.service) {

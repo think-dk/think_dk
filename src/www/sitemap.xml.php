@@ -24,7 +24,7 @@ $item = $IC->getItem(array("tags" => "page:front"));
 		<priority>1</priority>
 	</url>
 <?
-// NEWS PAGE
+// LATEST PAGE
 $item = $IC->getItem(array("tags" => "page:latest"));
 ?>
 	<url>
@@ -65,6 +65,28 @@ $item = $IC->getItem(array("tags" => "page:contact"));
 		<changefreq>weekly</changefreq>
 		<priority>1</priority>
 	</url>
+<?
+// SERVICES PAGE
+$item = $IC->getItem(array("tags" => "page:services"));
+?>
+	<url>
+		<loc><?= SITE_URL ?>/services</loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>1</priority>
+	</url>
+<?
+// SERVICES
+$items = $IC->getItems(array("itemtype" => "service", "status" => 1)); 
+foreach($items as $item):
+?>
+	<url>
+		<loc><?= SITE_URL ?>/services/<?= $item["sindex"] ?></loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
+		<changefreq>daily</changefreq>
+		<priority>1</priority>
+	</url>
+<? endforeach; ?>
 <?
 // WISHLIST PAGE
 $item = $IC->getItem(array("tags" => "page:wishlist"));
