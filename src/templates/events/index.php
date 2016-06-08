@@ -106,7 +106,7 @@ $items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "e
 
 <? else: ?>
 
-		<p>No scheduled events</p>
+		<p>No scheduled events.</p>
 
 <? endif; ?>
 	</div>
