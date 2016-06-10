@@ -88,6 +88,28 @@ foreach($items as $item):
 	</url>
 <? endforeach; ?>
 <?
+// EVENTS PAGE
+$item = $IC->getItem(array("tags" => "page:events"));
+?>
+	<url>
+		<loc><?= SITE_URL ?>/events</loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>1</priority>
+	</url>
+<?
+// EVENTS
+$items = $IC->getItems(array("itemtype" => "event", "status" => 1)); 
+foreach($items as $item):
+?>
+	<url>
+		<loc><?= SITE_URL ?>/events/<?= $item["sindex"] ?></loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
+		<changefreq>daily</changefreq>
+		<priority>1</priority>
+	</url>
+<? endforeach; ?>
+<?
 // WISHLIST PAGE
 $item = $IC->getItem(array("tags" => "page:wishlist"));
 ?>
