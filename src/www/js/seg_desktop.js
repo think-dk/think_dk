@@ -4361,6 +4361,7 @@ u.txt["readstate-read"] = "Read";
 u.txt["add_comment"] = "Add comment";
 u.txt["comment"] = "Comment";
 u.txt["cancel"] = "Cancel";
+u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/signup">Sign up</a> to add comments.';
 u.txt["terms-headline"] = "We love <br />cookies and privacy";
 u.txt["terms-accept"] = "Accept";
 u.txt["terms-details"] = "Details";
@@ -5155,7 +5156,7 @@ Util.Objects["comments"] = new function() {
 			}
 		}
 		else {
-			u.ae(div, "p", {"html":"Login or signup to comment"})
+			u.ae(div, "p", {"html": (u.txt["login_to_comment"] ? u.txt["login_to_comment"] : "Login or signup to comment")});
 		}
 		var i, node;
 		for(i = 0; node = div.comments[i]; i++) {
