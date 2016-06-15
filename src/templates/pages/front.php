@@ -10,6 +10,7 @@ if($page_item) {
 }
 
 $post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage", "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
+$event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.starting_at > NOW()" , "order" => "event.starting_at", "limit" => 2, "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
 
 
 ?>
@@ -79,33 +80,40 @@ $post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage"
 <? endif; ?>
 
 
+<? if($event_items): ?>
+	<div class="all_events">
+		<h2>Upcoming events <a href="/events">(see all)</a></h2>
+
+		<ul class="items events">
+		<? foreach($event_items as $item): 
+			$media = $IC->sliceMedia($item); ?>
+			<li class="item event item_id:<?= $item["item_id"] ?>">
+
+				<dl class="occurs_at">
+					<dt class="starting_at">Starts</dt>
+					<dd class="starting_at"><?= date("F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
+				</dl>
+
+				<h3><a href="/events/<?= $item["sindex"] ?>"><?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?></a></h3>
+
+			</li>
+	<?	endforeach; ?>
+		</ul>
+
+	</div>
+<? endif; ?>
+
+
+
 <? if($post_items): ?>
 	<div class="news">
-		<h2>Latest news</h2>
+		<h2>Latest news <a href="/latest">(see all)</a></h2>
 		<ul class="items articles">
 		<? foreach($post_items as $item): 
 			$media = $IC->sliceMedia($item); ?>
 			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 				data-readstate="<?= $item["readstate"] ?>"
 				>
-
-				<ul class="tags">
-				<? if($item["tags"]):
-					// editing?
-					$editing_tag = arrayKeyValue($item["tags"], "context", "editing"); ?>
-
-					<? if($editing_tag !== false): ?>
-					<li class="editing" title="This post is work in progress"><?= $item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"] ?></li>
-					<? endif; ?>
-
-					<li><a href="/posts">Posts</a></li>
-					<? foreach($item["tags"] as $item_tag): ?>
-						<? if($item_tag["context"] == "post"): ?>
-					<li itemprop="articleSection"><a href="/posts/tag/<?= urlencode($item_tag["value"]) ?>"><?= $item_tag["value"] ?></a></li>
-						<? endif; ?>
-					<? endforeach; ?>
-				<? endif; ?>
-				</ul>
 
 				<h3 itemprop="headline"><a href="/posts/<?= $item["sindex"] ?>"><?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?></a></h3>
 

@@ -5622,6 +5622,37 @@ Util.Objects["front"] = new function() {
 						"opacity":1
 					});
 				}
+				u.t.setTimer(this, "showEvents", 800);
+			}
+			else {
+				this.showEvents();
+			}
+		}
+		scene.showEvents = function() {
+			u.bug("showEvents")
+			this._events = u.qs("div.all_events", this);
+			if(this._events) {
+				this._events.scene = this;
+				u.ass(this._events, {
+					"opacity": 0,
+					"display":"block"
+				});
+				u.a.transition(this._events, "all 0.4s ease-in-out", "showPosts");
+				u.ass(this._events, {
+					"opacity":1
+				});
+				this._events.showPosts = function() {
+					this._posts = u.qsa("li.item", this._events);
+					if(this._posts) {
+						var i, node;
+						for(i = 0; node = this._posts[i]; i++) {
+							u.a.transition(node, "all 0.4s ease-in-out "+(100*i)+"ms", "done");
+							u.ass(node, {
+								"opacity": 1
+							});
+						}
+					}
+				} 
 				u.t.setTimer(this, "showNews", 800);
 			}
 			else {

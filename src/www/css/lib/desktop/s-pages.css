@@ -26,6 +26,22 @@
 #content .scene.front div.article {display: none;}
 
 
+/* FRONT - EVENTS */
+#content .scene.front div.all_events {display: none; padding-bottom: 50px;}
+
+#content .scene.front div.all_events h2,
+#content .scene.front div.news h2 {padding-bottom: 15px;}
+
+#content .scene.front div.all_events h2 a,
+#content .scene.front div.news h2 a {font-size: 10px; display: inline-block; vertical-align: middle;
+	font-family: "OpenSans";
+}
+#content .scene.front div.all_events ul.events {border-top: 1px solid #dedede; padding: 0 70px;}
+#content .scene.front div.all_events ul.events h3,
+#content .scene.front div.all_events ul.events dl {padding-left: 0; padding-right: 0; width: auto;}
+#content .scene.front div.all_events ul.events li.event {margin-top: -1px; padding-top: 15px; padding-bottom: 5px; display: inline-block; vertical-align: top; width: 250px;}
+
+
 /* FRONT - NEWS */
 #content .scene.front div.news {display: none;}
 
@@ -70,14 +86,17 @@
 
 
 /* EVENTS */
+#content .scene div.all_events h2 a {font-size: 10px; display: inline-block; vertical-align: middle;
+	font-family: "OpenSans";
+}
 #content .scene div.all_events ul.events li.event {padding-bottom: 0;}
-#content .scene div.all_events ul.events li.event dl.occurs_at { padding-bottom: 10px;}
+#content .scene div.all_events ul.events li.event dl.occurs_at {padding-bottom: 0;}
 #content .scene div.all_events ul.events li.event dd {width: auto; font-size: 10px; padding-bottom: 0;}
 #content .scene div.all_events ul.events li.event dt {display: none;}
 
 
 #content .scene.event div.event div.description {padding-bottom: 10px;}
-#content .scene.event div.event dl.occurs_at { padding-bottom: 0px;}
+#content .scene.event div.event dl.occurs_at {padding-bottom: 0;}
 #content .scene.event div.event dl.occurs_at dt {display: block; width: auto; font-size: 10px; text-align: left;}
 #content .scene.event div.event dl.occurs_at dd {display: block; width: auto; font-size: 16px; padding-bottom: 15px;}
 #content .scene.event div.event ul.location {display: block;}
