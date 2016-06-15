@@ -38,9 +38,10 @@ if($item) {
 			<? if($editing_tag !== false): ?>
 			<li class="editing" title="This post is work in progress"><?= $item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"] ?></li>
 			<? endif; ?>
+			<li itemprop="category"><a href="/events">Events</a></li>
 			<? foreach($item["tags"] as $item_tag): ?>
 				<? if($item_tag["context"] == "service"): ?>
-			<li><?= $item_tag["value"] ?></li>
+			<li itemprop="category"><?= $item_tag["value"] ?></li>
 				<? endif; ?>
 			<? endforeach; ?>
 		<? endif; ?>

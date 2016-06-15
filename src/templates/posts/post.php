@@ -140,7 +140,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 
 <? if($related_items): ?>
 	<div class="related">
-		<h2>Related posts</h2>
+		<h2>Related posts <a href="/posts">(see all)</a></h2>
 
 		<ul class="items articles i:articleMiniList">
 <?		foreach($related_items as $item): 

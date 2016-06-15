@@ -13,7 +13,6 @@ if($item) {
 	$service_tag = arrayKeyValue($item["tags"], "context", "service");
 	if($service_tag) {
 		$event_items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "event.starting_at > NOW()", "order" => "event.starting_at ASC", "tags" => "service:".addslashes($item["tags"][$service_tag]["value"]), "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
-		
 	}
 
 }
@@ -43,6 +42,7 @@ if($item) {
 			<? if($editing_tag !== false): ?>
 			<li class="editing" title="This post is work in progress"><?= $item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"] ?></li>
 			<? endif; ?>
+			<li><a href="/services">Services</a></li>
 			<? foreach($item["tags"] as $item_tag): ?>
 				<? if($item_tag["context"] == "servicecategory"): ?>
 			<li itemprop="articleSection"><?= $item_tag["value"] ?></li>
@@ -117,43 +117,43 @@ if($item) {
 		</div>
 
 
-		<div class="all_events">
-			<h2>Upcoming events</h2>
-
-		<? if($event_items): ?>
-
-			<ul class="items events">
-			<? foreach($event_items as $item): 
-				$media = $IC->sliceMedia($item); ?>
-				<li class="item event item_id:<?= $item["item_id"] ?>">
-
-					<dl class="occurs_at">
-						<dt class="starting_at">Starts</dt>
-						<dd class="starting_at"><?= date("F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
-					</dl>
-
-					<h3><a href="/events/<?= $item["sindex"] ?>"><?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?></a></h3>
-
-					<? if($item["description"]): ?>
-					<div class="description">
-						<p><?= nl2br($item["description"]) ?></p>
-					</div>
-					<? endif; ?>
-
-				</li>
-		<?	endforeach; ?>
-			</ul>
-
-	<? else: ?>
-
-			<p>No scheduled events.</p>
-
-	<? endif; ?>
-		</div>
 
 
 	</div>
 
+	<div class="all_events">
+		<h2>Upcoming events <a href="/events">(see all)</a></h2>
+
+	<? if($event_items): ?>
+
+		<ul class="items events">
+		<? foreach($event_items as $item): 
+			$media = $IC->sliceMedia($item); ?>
+			<li class="item event item_id:<?= $item["item_id"] ?>">
+
+				<dl class="occurs_at">
+					<dt class="starting_at">Starts</dt>
+					<dd class="starting_at"><?= date("F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
+				</dl>
+
+				<h3><a href="/events/<?= $item["sindex"] ?>"><?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?></a></h3>
+
+				<? if($item["description"]): ?>
+				<div class="description">
+					<p><?= nl2br($item["description"]) ?></p>
+				</div>
+				<? endif; ?>
+
+			</li>
+		<?	endforeach; ?>
+		</ul>
+
+	<? else: ?>
+
+		<p>No scheduled events.</p>
+
+<? endif; ?>
+	</div>
 
 
 <? else: ?>

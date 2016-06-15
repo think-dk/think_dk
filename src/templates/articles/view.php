@@ -27,17 +27,6 @@ $related_items = $IC->getRelatedItems($related_pattern);
 
 <div class="scene article i:article">
 
-<? if(!session()->value("article_intro_shown")): 
-	session()->value("article_intro_shown", "1"); ?>
-	<div class="intro">
-		<p>
-			Stopknappen er en ideologi der tror på mennesker og fuldt ud accepterer, at vi kan meget mere
-			end vi får lov til. Det er på tide at vi giver os selv lov til at afgøre vores
-			fremtid. Vi kan nemlig godt.
-		</p>
-	</div>
-<? endif; ?>
-
 <? if($item): ?>
 
 	<div class="article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
@@ -48,6 +37,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 				<li class="editing" title="Denne artikel redigeres stadig">Redigeres</li>
 <?			endif; ?>
 <?		endif; ?>
+				<li><a href="/articles">Artikler</a></li>
 <?		if($item["tags"]): ?>
 <?			foreach($item["tags"] as $tag): ?>
 <?	 			if($tag["context"] == "about"): ?>
@@ -90,7 +80,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 		data-comment-add="<?= $this->validPath("/janitor/article/addComment") ?>" 
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		>
-		<h2 class="comments">Kommentarer til &quot;<?= $item["name"] ?>&quot;</h2>
+		<h2 class="comments">Comments til &quot;<?= $item["name"] ?>&quot;</h2>
 <?	if($item["comments"]): ?>
 		<ul class="comments">
 <?		foreach($item["comments"] as $comment): ?>
@@ -104,7 +94,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 <?		endforeach; ?>
 		</ul>
 <?	else: ?>
-		<p>Ingen kommentarer endnu</p>
+		<p>No comments yet.</p>
 <?	endif; ?>
 	</div>
 
