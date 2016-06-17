@@ -39,8 +39,6 @@
 	font-family: "OpenSans";
 }
 #content .scene.front div.all_events ul.events {border-top: 1px solid #dedede;}
-#content .scene.front div.all_events ul.events h3,
-#content .scene.front div.all_events ul.events dl {}
 #content .scene.front div.all_events ul.events li.event {margin-top: -1px; padding-top: 15px; padding-bottom: 5px;}
 
 
@@ -69,6 +67,9 @@
 	font-family: "OpenSans";
 }
 #content .scene div.all_events ul.events li.event {padding-bottom: 0;}
+#content .scene div.all_events ul.events h3 {
+	font-family: "PT Serif",Times,serif;	
+}
 #content .scene div.all_events ul.events li.event dl.occurs_at {padding-bottom: 0;}
 #content .scene div.all_events ul.events li.event dd {width: auto; font-size: 12px; padding-bottom: 0; padding-left: 0;}
 #content .scene div.all_events ul.events li.event dt {display: none;}

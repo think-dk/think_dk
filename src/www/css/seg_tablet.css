@@ -711,7 +711,7 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene.front div.all_events ul.events {border-top: 1px solid #dedede; padding: 0 70px;}
 #content .scene.front div.all_events ul.events h3,
 #content .scene.front div.all_events ul.events dl {padding-left: 0; padding-right: 0; width: auto;}
-#content .scene.front div.all_events ul.events li.event {margin-top: -1px; padding-top: 15px; padding-bottom: 5px; display: inline-block; vertical-align: top; width: 250px;}
+#content .scene.front div.all_events ul.events li.event {margin-top: -1px; padding-top: 15px; padding-bottom: 5px; display: inline-block; vertical-align: top; width: 230px; padding-right: 20px;}
 #content .scene.front div.news {display: none;}
 #content .scene.post div.article ul.info {display: block;}
 #content .scene.contact div.teams h2 {padding-top: 20px;}
@@ -743,6 +743,9 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 	font-family: "OpenSans";
 }
 #content .scene div.all_events ul.events li.event {padding-bottom: 0;}
+#content .scene div.all_events ul.events h3 {
+	font-family: "PT Serif",Times,serif;	
+}
 #content .scene div.all_events ul.events li.event dl.occurs_at {padding-bottom: 0;}
 #content .scene div.all_events ul.events li.event dd {width: auto; font-size: 10px; padding-bottom: 0;}
 #content .scene div.all_events ul.events li.event dt {display: none;}
