@@ -38,10 +38,10 @@
 #content .scene.front div.news h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
 	font-family: "OpenSans";
 }
-#content .scene.front div.all_events ul.events {border-top: 1px solid #dedede; padding: 0 20px;}
+#content .scene.front div.all_events ul.events {border-top: 1px solid #dedede;}
 #content .scene.front div.all_events ul.events h3,
-#content .scene.front div.all_events ul.events dl {padding-left: 0; padding-right: 0; width: auto;}
-#content .scene.front div.all_events ul.events li.event {margin-top: -1px; padding-top: 15px; padding-bottom: 5px; display: inline-block; vertical-align: top; width: 250px;}
+#content .scene.front div.all_events ul.events dl {}
+#content .scene.front div.all_events ul.events li.event {margin-top: -1px; padding-top: 15px; padding-bottom: 5px;}
 
 
 /* FRONT - NEWS */
