@@ -13,6 +13,7 @@
 					<?= $HTML->link("TODOs", "/janitor/admin/todo/list", array("wrapper" => "li.todo")) ?>
 					<?= $HTML->link("Wishes", "/janitor/admin/wish/list", array("wrapper" => "li.wish")) ?>
 					<?= $HTML->link("People", "/janitor/admin/person/list", array("wrapper" => "li.person")) ?>
+					<?= $HTML->link("Subscriptions", "/janitor/admin/subscription/list", array("wrapper" => "li.subscription")) ?>
 				</ul>
 			</li>
 			<li class="site">
