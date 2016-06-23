@@ -765,14 +765,17 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene fieldset.subscriptions .field .item h3,
 #content .scene fieldset.subscriptions .field .item p {width: auto; padding-left: 0px; padding-right: 0px;}
 #content .scene fieldset.subscriptions .field .item p.price {font-size: 11px; padding-bottom: 0;}
-#content .scene fieldset.subscriptions .field .item p.description {font-size: 13px; padding-bottom: 0;}
-#content .scene fieldset.subscriptions .field .item div.details {display: none;}
+#content .scene dl.offer {font-size: 0; padding: 0;}
+#content .scene dl.offer dt {display: none;}
+#content .scene dl.offer .url {display: none;}
+#content .scene dl.offer dd {font-size: 11px; width: auto; display: inline-block; vertical-align: top;}
+#content .scene dl.offer dd.currency:after {content: "\00a0";}
 #content .scene fieldset.subscriptions .field .indicator {display: none;}
 #content .scene fieldset.subscriptions .field .help {position: static;}
 #content .scene fieldset.subscriptions .field .item.selected {background-color: #26962d;}
 #content .scene fieldset.subscriptions .field .item.selected label,
 #content .scene fieldset.subscriptions .field .item.selected p {color: #ffffff;}
-#content .scene ul.subscriptions {}
+#content .scene ul.subscriptions {list-style: none; margin: 0; }
 #content .scene ul.subscriptions li {
 }
 #content .scene ul.subscriptions li h3,
