@@ -5,9 +5,8 @@ Hi there,
 
 and thank you for joining the think.dk community - you are herewith officially confirmed as a Curious Cat! This means, that from now on you’ll get to enjoy the following benefits:
 
-	- our newsletter
-	- first notice on special events
-	- an account on think.dk that allows you to leave comments on our page
+	- Our newsletter and first notice on special events
+	- An account on think.dk that allows you to leave comments on our page
 
 
 If you want to login to leave comments or update your profile, please visit {SITE_URL}/janitor/admin/profile after activating your account.
@@ -17,7 +16,7 @@ Your username: {EMAIL}
 Your password: {PASSWORD}
 
 
-We want to build a movement, so feel free to tell your friends about us - the more we are, the more we can accelerate change :)
+We want to build a movement, so please feel free to tell your friends about us - the more we are, the more we can accelerate change :)
 
 We hope you don’t hesitate to reply to this email if you have any questions.
 
