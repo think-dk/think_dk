@@ -12,7 +12,7 @@ $email = $model->getProperty("email", "value");
 
 $subscriptions = $IC->getItems(array("itemtype" => "subscription", "order" => "position ASC", "status" => 1, "extend" => array("prices" => true)));
 ?>
-<div class="scene signup i:signup">
+<div class="scene signup i:memberships">
 
 <? if($page_item && $page_item["status"]): 
 	$media = $IC->sliceMedia($page_item); ?>
@@ -74,6 +74,24 @@ $subscriptions = $IC->getItems(array("itemtype" => "subscription", "order" => "p
 <? else:?>
 	<h1>Sign up</h1>
 <? endif; ?>
+
+
+<? if($subscriptions): ?>
+	<div class="subscriptions">
+		<ul class="subscriptions">
+	<? foreach($subscriptions as $subscription): ?>
+			<li class="subscription<?= $subscription["classname"] ? " ".$subscription["classname"] : "" ?>">
+				<h3><?= $subscription["name"] ?></h3>
+				<div class="articlebody">
+					<?= $subscription["html"] ?>
+				</div>
+			</li>
+	<? endforeach; ?>
+		</ul>
+	</div>
+<? endif; ?>
+
+
 
 	<?= $model->formStart("save", array("class" => "signup labelstyle:inject")) ?>
 

@@ -1,4 +1,4 @@
-Util.Objects["signup"] = new function() {
+Util.Objects["memberships"] = new function() {
 	this.init = function(scene) {
 //		u.bug("scene init:" + u.nodeId(scene))
 		
@@ -21,8 +21,11 @@ Util.Objects["signup"] = new function() {
 			page.cN.scene = this;
 
 			this._form = u.qs("form.signup", this);
+			this._subscriptions = u.qs("div.subscriptions", this);
 
 			var description = u.qs("div.articlebody", this);
+
+			// move signup form
 			if(u.text(description).match(/\{form\.signup\}/)) {
 				for(i = 0; node = description.childNodes[i]; i++) {
 					if(u.text(node).match(/\{form\.signup\}/)) {
@@ -31,9 +34,18 @@ Util.Objects["signup"] = new function() {
 				}
 			}
 
+			// move subscription overview
+			if(u.text(description).match(/\{div\.subscriptions\}/)) {
+				for(i = 0; node = description.childNodes[i]; i++) {
+					if(u.text(node).match(/\{div\.subscriptions\}/)) {
+						description.replaceChild(this._subscriptions, node);
+					}
+				}
+			}
+
 
 			u.f.init(this._form);
-			this._form.fields["email"].focus();
+//			this._form.fields["email"].focus();
 
 
 			var i, node;

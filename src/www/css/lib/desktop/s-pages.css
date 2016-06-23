@@ -135,22 +135,25 @@
 #content .scene fieldset.subscriptions .field .item.selected p {color: #ffffff;}
 
 
-#content .scene ul.subscriptions {list-style: none; font-size: 0; margin: 0; position: relative; width: 500px;}
-#content .scene ul.subscriptions li {display: inline-block; vertical-align: top; width: 163px; padding: 10px; margin: 0 10px 10px 0;
+#content .scene ul.subscriptions {/*list-style: none; font-size: 0; margin: 0; position: relative; width: 500px;*/}
+#content .scene ul.subscriptions li {
+	
+/*	display: inline-block; vertical-align: top; width: 163px; padding: 10px; margin: 0 10px 10px 0;
 
 	border-radius: 5px;
 	border: 1px solid #26962d;
+*/
 }
-
 #content .scene ul.subscriptions li h3,
-#content .scene ul.subscriptions li p {width: auto; padding-left: 0px; padding-right: 0px;}
+#content .scene ul.subscriptions li p {/*width: auto;*/ padding-left: 0px; padding-right: 0px;}
+
+/*
 #content .scene ul.subscriptions li.selected {background-color: #26962d;}
 
 #content .scene ul.subscriptions li h3 {font-size: 16px;}
 #content .scene ul.subscriptions li p {font-size: 13px; padding-bottom: 0;}
 #content .scene ul.subscriptions li div.details {display: none;}
-
-
+*/
 
 /* TODOS */
 #content .scene div.todos {padding-bottom: 15px; position: relative; z-index: 1;}
