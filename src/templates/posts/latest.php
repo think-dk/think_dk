@@ -3,13 +3,16 @@ global $action;
 global $IC;
 
 $itemtype = "post";
+$selected_tag = "Latest";
 
 $page_item = $IC->getItem(array("tags" => "page:latest", "extend" => array("user" => true, "mediae" => true, "tags" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
-$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => "post:latest", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => "post:".$selected_tag, "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+
+$categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 ?>
 
@@ -76,6 +79,16 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => "
 	<h1>News</h1>
 <? endif; ?>
 
+<? if($categories): ?>
+	<div class="categories">
+		<ul class="tags">
+			<li><a href="/posts">All posts</a></li>
+			<? foreach($categories as $tag): ?>
+			<li<?= ($selected_tag == $tag["value"] ? ' class="selected"' : '') ?>><a href="/posts/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
+			<? endforeach; ?>
+		</ul>
+	</div>
+<? endif; ?>
 
 <? if($items): ?>
 	<ul class="items articles i:articleMiniList">

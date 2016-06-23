@@ -12,13 +12,15 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 <div class="scene posts tag i:scene">
 	<h1>Posts</h1>
-
+<? if($items): ?>
+	<h2><?= $selected_tag ?></h2>
+<? endif; ?>
 
 <? if($categories): ?>
 	<div class="categories">
 		<ul class="tags">
 			<li><a href="/posts">All posts</a></li>
-		<? foreach($categories as $tag): ?>
+			<? foreach($categories as $tag): ?>
 			<li<?= ($selected_tag == $tag["value"] ? ' class="selected"' : '') ?>><a href="/posts/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
 			<? endforeach; ?>
 		</ul>
