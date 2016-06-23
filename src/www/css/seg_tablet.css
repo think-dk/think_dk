@@ -763,10 +763,7 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene.event div.event ul.location ul {padding-left: 0; padding-right: 0;}
 #content .scene fieldset.subscriptions {}
 #content .scene fieldset.subscriptions .field {}
-#content .scene fieldset.subscriptions .field .item {position: relative;
-	display: inline-block; vertical-align: top; width: 163px; padding: 10px; margin: 0 10px 10px 0;
-	border-radius: 5px; border: 1px solid #26962d;
-}
+#content .scene fieldset.subscriptions .field .item {position: relative; display: inline-block; vertical-align: top; width: 163px; padding: 10px; margin: 0 10px 10px 0; border-radius: 5px; border: 1px solid #26962d;}
 #content .scene fieldset.subscriptions .field .item label {font-size: 16px; display: block;}
 #content .scene fieldset.subscriptions .field .item input {position: absolute; right: 1px; top: 17px;}
 #content .scene fieldset.subscriptions .field .item h3,
