@@ -1,22 +1,13 @@
-SUBJECT:Long live curiosity!
+SUBJECT:Welcome on board!
 
 Hi there, 
 
-and thank you for being curious! 
+and thank you for joining think.dk! 
 
 Please confirm your sign up by clicking the link below:
 {SITE_URL}/signup/confirm/email/{EMAIL}/{VERIFICATION}
 
-We want to build a movement, so feel free to tell your friends about us - the more we are, the more we can accelerate change :)
-
-We hope you don’t hesitate to reply to this email if you have any questions.
-
-If you want to update your profile, please visit {SITE_URL}/janitor/admin/profile after activating your account.
-
-Login information: 
-Your username: {EMAIL}
-Your password: {PASSWORD}
-
+You will recieve a second email with all the relevant information in a second.
 
 Insistingly hopeful,
 
