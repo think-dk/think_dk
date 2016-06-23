@@ -13,7 +13,6 @@ if($page_item) {
 $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => "post:".$selected_tag, "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
 
 $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
-
 ?>
 
 <div class="scene news i:scene">

@@ -7,13 +7,13 @@ $selected_tag = urldecode($action[1]);
 $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => $itemtype.":".addslashes($selected_tag), "extend" => array("tags" => true, "user" => true, "readstate" => true, "mediae" => true)));
 
 $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
-
 ?>
 
 <div class="scene posts tag i:scene">
-	<h1>Posts</h1>
 <? if($items): ?>
-	<h2><?= $selected_tag ?></h2>
+	<h1><?= $selected_tag ?> posts</h1>
+<? else: ?>
+	<h1>Posts</h1>
 <? endif; ?>
 
 <? if($categories): ?>
