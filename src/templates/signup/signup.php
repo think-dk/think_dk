@@ -8,7 +8,7 @@ if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
-$subscriptions = $IC->getItems(array("itemtype" => "subscription", "order" => "position ASC", "status" => 1, "extend" => array("prices" => true)));
+$subscriptions = $IC->getItems(array("itemtype" => "subscription", "order" => "position ASC", "status" => 1, "extend" => array("price" => true)));
 
 
 $email = $model->getProperty("email", "value");
@@ -94,13 +94,17 @@ $subscription = $model->getProperty("subscription", "value");
 		<fieldset class="subscriptions i:subscriptions">
 			<div class="field radiobuttons required">
 				<? foreach($subscriptions as $option): ?>
-				<div class="item<?= $option["classname"] ? " ".$option["classname"] : "" ?><?= $option["item_id"] == $subscription ? " selected" : "" ?>">
+				<div class="item<?= $option["classname"] ? " ".$option["classname"] : "" ?><?= $option["item_id"] == $subscription ? " selected" : "" ?>" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 					<input type="radio" name="subscription" id="input_subscription_<?= $option["item_id"] ?>" value="<?= $option["item_id"] ?>"<?= $option["item_id"] == $subscription ? ' checked="checked"' : "" ?> />
-					<label for="input_subscription_<?= $option["item_id"] ?>"><?= $option["name"] ?></label>
-					<p class="price"><?= $option["prices"][0]["currency"] ?> <?= $option["prices"][0]["formatted_price"] ?><?= $option["prices"][0]["price"] ? " / Month" : "" ?></p>
-					<div class="details">
-						<?= $option["html"] ?>
-					</div>
+					<label itemprop="name" for="input_subscription_<?= $option["item_id"] ?>"><?= $option["name"] ?></label>
+					<dl class="offer">
+						<dt class="currency">Currency</dt>
+						<dd class="currency" itemprop="priceCurrency"><?= $option["price"]["currency"] ?></dd>
+						<dt class="price">Price</dt>
+						<dd class="price" itemprop="price" content="<?= $option["price"]["price"] ?>"><?= $option["price"]["formatted_price"] ?><?= $option["price"]["price"] ? " / Month" : "" ?></dd>
+						<dt class="url">More info</dt>
+						<dd class="url" itemprop="url"><?= SITE_URL."/memberships" ?></dd>
+					</dl>
 				</div>
 				<? endforeach; ?>
 				<div class="help">
