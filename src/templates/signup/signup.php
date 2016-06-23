@@ -3,18 +3,32 @@ global $action;
 global $model;
 
 $IC = new Items();
-$page_item = $IC->getItem(array("tags" => "page:signup", "extend" => array("user" => true, "mediae" => true)));
+$page_item = $IC->getItem(array("tags" => "page:signup", "extend" => array("user" => true, "mediae" => true, "tags" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
+$subscriptions = $IC->getItems(array("itemtype" => "subscription", "order" => "position ASC", "status" => 1, "extend" => array("prices" => true)));
+
+
 $email = $model->getProperty("email", "value");
+$subscription = $model->getProperty("subscription", "value");
+
 ?>
 <div class="scene signup i:signup">
 
 <? if($page_item && $page_item["status"]): 
 	$media = $IC->sliceMedia($page_item); ?>
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
+
+		<? if($page_item["tags"]):
+			$editing_tag = arrayKeyValue($page_item["tags"], "context", "editing");
+			if($editing_tag !== false): ?>
+		<ul class="tags">
+			<li class="editing" title="This page is work in progress"><?= $page_item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $page_item["tags"][$editing_tag]["value"] ?></li>
+		</ul>
+			<? endif; ?>
+		<? endif; ?>
 
 		<? if($media): ?>
 		<div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
@@ -30,7 +44,7 @@ $email = $model->getProperty("email", "value");
 			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($page_item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
 			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page_item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
 			<li class="author" itemprop="author"><?= $page_item["user_nickname"] ?></li>
-			<li class="main_entity" itemprop="mainEntityOfPage"><?= SITE_URL."/curious" ?></li>
+			<li class="main_entity" itemprop="mainEntityOfPage"><?= SITE_URL."/signup" ?></li>
 			<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 				<ul class="publisher_info">
 					<li class="name" itemprop="name">think.dk</li>
@@ -74,6 +88,26 @@ $email = $model->getProperty("email", "value");
 			<?= $message ?><br>
 <?		endforeach;?>
 		</p>
+<?	endif; ?>
+
+<?	if($subscriptions): ?>
+		<fieldset class="subscriptions i:subscriptions">
+			<div class="field radiobuttons required">
+				<? foreach($subscriptions as $option): ?>
+				<div class="item<?= $option["classname"] ? " ".$option["classname"] : "" ?><?= $option["item_id"] == $subscription ? " selected" : "" ?>">
+					<input type="radio" name="subscription" id="input_subscription_<?= $option["item_id"] ?>" value="<?= $option["item_id"] ?>"<?= $option["item_id"] == $subscription ? ' checked="checked"' : "" ?> />
+					<label for="input_subscription_<?= $option["item_id"] ?>"><?= $option["name"] ?></label>
+					<p class="price"><?= $option["prices"][0]["currency"] ?> <?= $option["prices"][0]["formatted_price"] ?><?= $option["prices"][0]["price"] ? " / Month" : "" ?></p>
+					<div class="details">
+						<?= $option["html"] ?>
+					</div>
+				</div>
+				<? endforeach; ?>
+				<div class="help">
+					<div class="error">Please select a membership</div>
+				</div>
+			</div>
+		</fieldset>
 <?	endif; ?>
 
 		<fieldset>
