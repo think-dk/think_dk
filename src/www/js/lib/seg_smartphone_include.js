@@ -10,6 +10,7 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/m
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-textscaler.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-svg.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-date.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-form.js"></script>');
 
 
 
@@ -23,6 +24,7 @@ document.write('<script type="text/javascript" src="/js/lib/smartphone/i-scene.j
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-signup.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-login.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-wishes.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/smartphone/i-subscriptions.js"></script>');
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-article.js"></script>');
 

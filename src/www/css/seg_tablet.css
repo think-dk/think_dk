@@ -756,6 +756,37 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene.event div.event ul.location {display: block;}
 #content .scene.event div.event ul.location li.name {padding-bottom: 10px; font-size: 15px;}
 #content .scene.event div.event ul.location ul {padding-left: 0; padding-right: 0;}
+#content .scene fieldset.subscriptions {}
+#content .scene fieldset.subscriptions .field {}
+#content .scene fieldset.subscriptions .field .item {
+	position: relative;
+	display: inline-block; vertical-align: top; width: 163px; padding: 10px; margin: 0 10px 10px 0;
+		border-radius: 5px;
+		border: 1px solid #26962d;
+}
+#content .scene fieldset.subscriptions .field .item label {font-size: 16px; display: block;}
+#content .scene fieldset.subscriptions .field .item input {position: absolute; right: 1px; top: 17px;}
+#content .scene fieldset.subscriptions .field .item h3,
+#content .scene fieldset.subscriptions .field .item p {width: auto; padding-left: 0px; padding-right: 0px;}
+#content .scene fieldset.subscriptions .field .item p.price {font-size: 11px; padding-bottom: 0;}
+#content .scene fieldset.subscriptions .field .item p.description {font-size: 13px; padding-bottom: 0;}
+#content .scene fieldset.subscriptions .field .item div.details {display: none;}
+#content .scene fieldset.subscriptions .field .indicator {display: none;}
+#content .scene fieldset.subscriptions .field .help {position: static;}
+#content .scene fieldset.subscriptions .field .item.selected {background-color: #26962d;}
+#content .scene fieldset.subscriptions .field .item.selected label,
+#content .scene fieldset.subscriptions .field .item.selected p {color: #ffffff;}
+#content .scene ul.subscriptions {list-style: none; font-size: 0; margin: 0; position: relative; width: 500px;}
+#content .scene ul.subscriptions li {display: inline-block; vertical-align: top; width: 163px; padding: 10px; margin: 0 10px 10px 0;
+	border-radius: 5px;
+	border: 1px solid #26962d;
+}
+#content .scene ul.subscriptions li h3,
+#content .scene ul.subscriptions li p {width: auto; padding-left: 0px; padding-right: 0px;}
+#content .scene ul.subscriptions li.selected {background-color: #26962d;}
+#content .scene ul.subscriptions li h3 {font-size: 16px;}
+#content .scene ul.subscriptions li p {font-size: 13px; padding-bottom: 0;}
+#content .scene ul.subscriptions li div.details {display: none;}
 #content .scene div.todos {padding-bottom: 15px; position: relative; z-index: 1;}
 #content .scene div.todos h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
 #content .scene div.todos h2 svg.arrow {position: absolute; top: 6px; right: 55px;}

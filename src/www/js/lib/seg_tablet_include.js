@@ -10,10 +10,10 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/m
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-textscaler.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-svg.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-date.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-form.js"></script>');
 
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-page.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-signup.js"></script>');
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-comments.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/u-sharing.js"></script>');
@@ -27,6 +27,7 @@ document.write('<script type="text/javascript" src="/js/lib/desktop/i-scene.js">
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-login.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-signup.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-wishes.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/desktop/i-subscriptions.js"></script>');
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-article.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-article_mini_list.js"></script>');

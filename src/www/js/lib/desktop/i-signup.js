@@ -36,7 +36,7 @@ Util.Objects["signup"] = new function() {
 
 
 			u.f.init(this._form);
-			this._form.fields["email"].focus();
+//			this._form.fields["email"].focus();
 
 
 			var i, node;
