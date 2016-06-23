@@ -42,7 +42,7 @@ foreach($items as $item):
 		<loc><?= SITE_URL ?>/posts/<?= $item["sindex"] ?></loc>
 		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
 		<changefreq>daily</changefreq>
-		<priority>1</priority>
+		<priority>0.9</priority>
 	</url>
 <? endforeach; ?>
 <?
@@ -84,7 +84,7 @@ foreach($items as $item):
 		<loc><?= SITE_URL ?>/services/<?= $item["sindex"] ?></loc>
 		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
 		<changefreq>daily</changefreq>
-		<priority>1</priority>
+		<priority>0.9</priority>
 	</url>
 <? endforeach; ?>
 <?
@@ -105,8 +105,8 @@ foreach($items as $item):
 	<url>
 		<loc><?= SITE_URL ?>/events/<?= $item["sindex"] ?></loc>
 		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
-		<changefreq>daily</changefreq>
-		<priority>1</priority>
+		<changefreq>weekly</changefreq>
+		<priority>0.9</priority>
 	</url>
 <? endforeach; ?>
 <?
@@ -116,7 +116,7 @@ $item = $IC->getItem(array("tags" => "page:wishlist"));
 	<url>
 		<loc><?= SITE_URL ?>/wishlist</loc>
 		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
-		<changefreq>daily</changefreq>
-		<priority>1</priority>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
 	</url>
 </urlset>
