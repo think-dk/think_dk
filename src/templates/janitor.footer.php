@@ -29,6 +29,7 @@
 				<ul class="subjects">
 					<?= $HTML->link("Users", "/janitor/admin/user/list", array("wrapper" => "li.user")) ?>
 					<?= $HTML->link("Profile", "/janitor/admin/profile", array("wrapper" => "li.profile")) ?>
+					<?= $HTML->link("Subscribers", "/janitor/admin/user/subscriber/list", array("wrapper" => "li.subscriber")) ?>
 				</ul>
 			</li>
 		</ul>
