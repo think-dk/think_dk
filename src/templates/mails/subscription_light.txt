@@ -1,11 +1,12 @@
-SUBJECT:Light Membership!
+SUBJECT:Light Changer Membership!
 
 Hi there, 
 
-and thank you for joining the think.dk community - you are herewith officially confirmed as a Changer Light! This means, that from now on you’ll get to enjoy the following benefits:
+and thank you for joining the think.dk community - you are herewith officially confirmed as a Changer Light!
 
-	- Our newsletter
-	- First notice on special events
+This means, that from now on you’ll get to enjoy the following benefits:
+
+	- Our newsletter and first notice on special events
 	- An account on think.dk that allows you to leave comments on our page
 	- A personal thank you-note & a spot on our supporters wall
 	- Access to one free event of your choice per month (please sign up on our page)
@@ -16,12 +17,13 @@ And all of this for only {PRICE}! Thanks again so much for your support, you mak
 We are currently working on a payment solution that makes it easier for our members to pay for their subscription, and we’ll let you know as soon as we’re there! Until then, we depend on your banking skills - please be so kind and set up a monthly payment at your bank, using the following payment details:
 
 	Recipient:	think.dk
-	Reference: member {MEMBERID}
-	Bank: Fælleskassen
+	Reference: 	Member {MEMBERID}
+	Bank: 		Fælleskassen
 	Account no: 8411 4145172
-	IBAN: DK3184110004145172
-	SWIFT/BIC: FAELDKK1
+	IBAN: 		DK3184110004145172
+	SWIFT/BIC: 	FAELDKK1
 
+You can cancel your subscription anytime - just sent us a mail with the title 'Memberhsip cancellation'.
 
 If you want to login to leave comments or update your profile, please visit {SITE_URL}/janitor/admin/profile after activating your account.
 
@@ -30,7 +32,7 @@ Your username: {EMAIL}
 Your password: {PASSWORD}
 
 
-We want to build a movement, so feel free to tell your friends about us - the more we are, the more we can accelerate change :)
+We want to build a movement, so please feel free to tell your friends about us - the more we are, the more we can accelerate change :)
 
 We hope you don’t hesitate to reply to this email if you have any questions.
 
