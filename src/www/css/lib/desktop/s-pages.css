@@ -108,27 +108,21 @@
 
 
 
-/* SUBSCRIPTIONS */
+
+
+/* SUBSCRIPTIONS FORM */
 #content .scene fieldset.subscriptions {}
 #content .scene fieldset.subscriptions .field {/*padding-bottom: 0;*/}
-#content .scene fieldset.subscriptions .field .item {
-	position: relative;
+#content .scene fieldset.subscriptions .field .item {position: relative;
 	display: inline-block; vertical-align: top; width: 163px; padding: 10px; margin: 0 10px 10px 0;
-
-		border-radius: 5px;
-		border: 1px solid #26962d;
+	border-radius: 5px; border: 1px solid #26962d;
 }
 #content .scene fieldset.subscriptions .field .item label {font-size: 16px; display: block;}
 #content .scene fieldset.subscriptions .field .item input {position: absolute; right: 1px; top: 17px;}
 #content .scene fieldset.subscriptions .field .item h3,
-#content .scene fieldset.subscriptions .field .item p {width: auto; padding-left: 0px; padding-right: 0px;}
-#content .scene fieldset.subscriptions .field .item p.price {font-size: 11px; padding-bottom: 0;}
-
-#content .scene dl.offer {font-size: 0; padding: 0;}
-#content .scene dl.offer dt {display: none;}
-#content .scene dl.offer .url {display: none;}
-#content .scene dl.offer dd {font-size: 11px; width: auto; display: inline-block; vertical-align: top;}
-#content .scene dl.offer dd.currency:after {content: "\00a0";}
+#content .scene fieldset.subscriptions .field .item dl {width: auto; padding-left: 0px; padding-right: 0px;}
+/*#content .scene fieldset.subscriptions .field .item dd {font-size: 11px; padding-bottom: 0;}
+*/
 /*
 #content .scene fieldset.subscriptions .field .item p.description {font-size: 13px; padding-bottom: 0;}
 #content .scene fieldset.subscriptions .field .item div.details {display: none;}
@@ -140,21 +134,35 @@
 
 #content .scene fieldset.subscriptions .field .item.selected {background-color: #26962d;}
 #content .scene fieldset.subscriptions .field .item.selected label,
-#content .scene fieldset.subscriptions .field .item.selected p {color: #ffffff;}
+#content .scene fieldset.subscriptions .field .item.selected dd {color: #ffffff;}
 
 
-#content .scene ul.subscriptions {list-style: none; margin: 0; /*font-size: 0; position: relative; width: 500px;*/}
-#content .scene ul.subscriptions li {
+#content .scene ul.subscriptions {list-style: none; margin: 0;
+	font-size: 0; position: relative; width: auto;
 	
-/*	display: inline-block; vertical-align: top; width: 163px; padding: 10px; margin: 0 10px 10px 0;
-
+	 /*
+	width: 500px;
+	*/}
+#content .scene ul.subscriptions > li {
+	display: inline-block; vertical-align: top; width: calc( 25% - 32px); padding: 10px; margin: 0 10px 10px 0;
 	border-radius: 5px;
 	border: 1px solid #26962d;
+	
+/*	
+
 */
 }
-#content .scene ul.subscriptions li h3,
-#content .scene ul.subscriptions li p {/*width: auto;*/ padding-left: 0px; padding-right: 0px;}
+#content .scene ul.subscriptions > li h3 {color: #26962d; padding-bottom: 3px;
+	font-family: "PT Serif", Times, serif;
+}
+#content .scene ul.subscriptions > li dl {padding-bottom: 4px;}
 
+#content .scene ul.subscriptions > li h2,
+#content .scene ul.subscriptions > li h3,
+#content .scene ul.subscriptions > li h4,
+#content .scene ul.subscriptions > li p,
+#content .scene ul.subscriptions > li dl {width: auto; padding-left: 0px; padding-right: 0px;}
+#content .scene ul.subscriptions > li ul {padding: 0; width: auto;}
 /*
 #content .scene ul.subscriptions li.selected {background-color: #26962d;}
 
