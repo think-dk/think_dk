@@ -119,7 +119,6 @@ $item = $IC->getItem(array("tags" => "page:wishlist"));
 		<changefreq>weekly</changefreq>
 		<priority>0.5</priority>
 	</url>
-</urlset>
 <?
 // SIGNUP PAGE
 $item = $IC->getItem(array("tags" => "page:Signup"));
@@ -130,7 +129,6 @@ $item = $IC->getItem(array("tags" => "page:Signup"));
 		<changefreq>weekly</changefreq>
 		<priority>0.9</priority>
 	</url>
-</urlset>
 <?
 // MEMBERSHIPS PAGE
 $item = $IC->getItem(array("tags" => "page:Memberships"));
