@@ -21,11 +21,11 @@ We are currently working on a payment solution that makes it easier for our memb
 	Recipient:	think.dk
 	Reference: 	Member {MEMBERID}
 	Bank: 		Fælleskassen
-	Account no: 8411 4145172
+	Account no:	8411 4145172
 	IBAN: 		DK3184110004145172
 	SWIFT/BIC: 	FAELDKK1
 
-You can cancel your subscription anytime - just sent us a mail with the title 'Memberhsip cancellation'.
+You can cancel your subscription anytime - just sent us a mail with the title 'Membership cancellation'.
 
 If you want to login to leave comments or update your profile, please visit {SITE_URL}/janitor/admin/profile after activating your account.
 
