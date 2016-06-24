@@ -18,6 +18,10 @@
 #content div.contact div.teams {display: none;}
 
 
+#content .scene fieldset.subscriptions .field .item label {font-size: 16px;}
+#content .scene fieldset.subscriptions .field .item dl.offer {padding-left: 30px;}
+
+
 /* FEEDBACK ELEMENTS */
 #content .scene div.todos {display: none;}
 #content .scene div.qnas {display: none;}

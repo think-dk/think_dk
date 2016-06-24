@@ -17,6 +17,7 @@ fieldset {border: none;}
 input, select, textarea {font-size: 14px; color: #333333;}
 input, textarea {outline: none;}
 a, span {font-size: inherit; font-family: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
+em, strong {font-size: inherit; font-family: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
 h1 {padding: 0 70px 30px; font-size: 48px; line-height: 1.05em;
 	font-family: "PT Serif", Times, serif;
 }
@@ -174,6 +175,10 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 }
 #content .scene div.related {padding-top: 10px; position: relative; z-index: 1;}
 #content .scene div.comments {display: none;}
+#content .scene dl.offer {font-size: 0; padding: 0;}
+#content .scene dl.offer dt {display: none;}
+#content .scene dl.offer .url {display: none;}
+#content .scene dl.offer dd {font-size: 13px; width: auto; display: inline; padding: 0 5px 0 0;}
 #content .scene code {width: 480px; padding: 10px 10px; margin: 0 70px 15px; background-color: #ededed; color: #333333; font-size: 12px; display: block; white-space: pre-wrap; overflow: auto;
 	font-family: "Monaco", "Courier New", "Courier";
 	-webkit-tab-size: 4;
@@ -227,7 +232,7 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 /*s-form.css*/
 #content form {}
 #content fieldset {border: none; display: block;}
-#content .field {padding: 0 48px 15px; position: relative; font-size: 0;}
+#content .field {padding: 0 68px 15px; position: relative; font-size: 0;}
 #content label {display: none;}
 #content .field input,
 #content .field select,
@@ -433,6 +438,8 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 #content div.front div.intro {display: none;}
 #content div.post div.article ul.info {display: block;}
 #content div.contact div.teams {display: none;}
+#content .scene fieldset.subscriptions .field .item label {font-size: 16px;}
+#content .scene fieldset.subscriptions .field .item dl.offer {padding-left: 30px;}
 #content .scene div.todos {display: none;}
 #content .scene div.qnas {display: none;}
 

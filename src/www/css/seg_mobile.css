@@ -17,6 +17,7 @@ fieldset {border: none;}
 input, select, textarea {font-size: 14px;}
 input, textarea {outline: none;}
 a, span {font-size: inherit; font-family: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
+em, strong {font-size: inherit; font-family: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
 h1 {padding: 0 10px 20px; font-size: 24px; line-height: 1.05em;
 	font-family: "PT Serif", Times, serif;
 }
@@ -137,6 +138,10 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene div.related {}
 #content .scene div.comments {display: none;}
 #content .scene div.readstate {display: none;}
+#content .scene dl.offer {font-size: 0; padding: 0;}
+#content .scene dl.offer dt {display: none;}
+#content .scene dl.offer .url {display: none;}
+#content .scene dl.offer dd {font-size: 13px; width: auto; display: inline; padding: 0 5px 0 0;}
 #content .scene code {padding: 10px 10px; margin: 0 0 15px; background-color: #ededed; color: #333333; font-size: 11px; display: block; overflow: hidden; white-space: pre-wrap;
 	font-family: "Monaco", "Courier New", "Courier";
 	-webkit-tab-size: 4;
@@ -359,6 +364,14 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content div.front div.intro {display: none;}
 #content div.post div.article ul.info {display: block;}
 #content div.contact div.teams {display: none;}
+#content .scene fieldset.subscriptions .field .item label {font-size: 16px;}
+#content .scene fieldset.subscriptions .field .item dl.offer {padding-left: 25px;}
+#content .scene ul.subscriptions > li dl {padding-bottom: 4px;}
+#content .scene ul.subscriptions > li h2,
+#content .scene ul.subscriptions > li h3,
+#content .scene ul.subscriptions > li h4,
+#content .scene ul.subscriptions > li p,
+#content .scene ul.subscriptions > li dl {padding-left: 0px; padding-right: 0px;}
 #content .scene div.todos {display: none;}
 #content .scene div.qnas {display: none;}
 

@@ -6446,7 +6446,7 @@ Util.Objects["signup"] = new function() {
 			page.cN.scene = this;
 			this._form = u.qs("form.signup", this);
 			var description = u.qs("div.articlebody", this);
-			if(u.text(description).match(/\{form\.signup\}/)) {
+			if(this._form && u.text(description).match(/\{form\.signup\}/)) {
 				for(i = 0; node = description.childNodes[i]; i++) {
 					if(u.text(node).match(/\{form\.signup\}/)) {
 						description.replaceChild(this._form, node);
@@ -6454,7 +6454,6 @@ Util.Objects["signup"] = new function() {
 				}
 			}
 			u.f.init(this._form);
-			this._form.fields["email"].focus();
 			var i, node;
 			var nodes = u.cn(this);
 			if(nodes.length) {
@@ -6606,14 +6605,14 @@ Util.Objects["memberships"] = new function() {
 			this._form = u.qs("form.signup", this);
 			this._subscriptions = u.qs("div.subscriptions", this);
 			var description = u.qs("div.articlebody", this);
-			if(u.text(description).match(/\{form\.signup\}/)) {
+			if(this._form && u.text(description).match(/\{form\.signup\}/)) {
 				for(i = 0; node = description.childNodes[i]; i++) {
 					if(u.text(node).match(/\{form\.signup\}/)) {
 						description.replaceChild(this._form, node);
 					}
 				}
 			}
-			if(u.text(description).match(/\{div\.subscriptions\}/)) {
+			if(this._subscriptions && u.text(description).match(/\{div\.subscriptions\}/)) {
 				for(i = 0; node = description.childNodes[i]; i++) {
 					if(u.text(node).match(/\{div\.subscriptions\}/)) {
 						description.replaceChild(this._subscriptions, node);
@@ -6661,6 +6660,11 @@ Util.Objects["subscriptions"] = new function() {
 		var i, option;
 		for(i = 0; option = field.options[i]; i++) {
 			option.input = u.qs("input", option)
+			u.ce(option);
+			option.clicked = function() {
+				this.input.val(this.input.value);
+				this.input.field.updated();
+			}
 		}
 		field.updated = function() {
 			var selected = this._input.val();

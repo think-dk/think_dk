@@ -70,7 +70,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 
 <? if($items): ?>
 	<div class="teams">
-		<h2>Team</h2>
+		<h2>Behind the scenes</h2>
 		<ul class="items people">
 			<? foreach($items as $item): 
 				$media = $IC->sliceMedia($item); ?>

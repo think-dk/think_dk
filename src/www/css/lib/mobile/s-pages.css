@@ -18,6 +18,16 @@
 #content div.contact div.teams {display: none;}
 
 
+#content .scene fieldset.subscriptions .field .item label {font-size: 16px;}
+#content .scene fieldset.subscriptions .field .item dl.offer {padding-left: 25px;}
+
+#content .scene ul.subscriptions > li dl {padding-bottom: 4px;}
+#content .scene ul.subscriptions > li h2,
+#content .scene ul.subscriptions > li h3,
+#content .scene ul.subscriptions > li h4,
+#content .scene ul.subscriptions > li p,
+#content .scene ul.subscriptions > li dl {padding-left: 0px; padding-right: 0px;}
+
 /* FEEDBACK ELEMENTS */
 #content .scene div.todos {display: none;}
 #content .scene div.qnas {display: none;}

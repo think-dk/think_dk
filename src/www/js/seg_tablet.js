@@ -6979,6 +6979,22 @@ Util.Objects["wishes"] = new function() {
 Util.Objects["memberships"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
+			if(this._subscription_nodes) {
+				var tallest_node = 0;
+				var i, node;
+				for(i = 0; node = this._subscription_nodes[i]; i++) {
+					u.ass(node, {
+						"height":"auto"
+					})
+					u.bug(node.offsetHeight);
+					tallest_node = tallest_node < node.offsetHeight ? node.offsetHeight : tallest_node;
+				}
+				for(i = 0; node = this._subscription_nodes[i]; i++) {
+					u.ass(node, {
+						"height":(tallest_node-22)+"px"
+					})
+				}
+			}
 		}
 		scene.scrolled = function() {
 		}
@@ -6987,19 +7003,22 @@ Util.Objects["memberships"] = new function() {
 			this._form = u.qs("form.signup", this);
 			this._subscriptions = u.qs("div.subscriptions", this);
 			var description = u.qs("div.articlebody", this);
-			if(u.text(description).match(/\{form\.signup\}/)) {
+			if(this._form && u.text(description).match(/\{form\.signup\}/)) {
 				for(i = 0; node = description.childNodes[i]; i++) {
 					if(u.text(node).match(/\{form\.signup\}/)) {
 						description.replaceChild(this._form, node);
 					}
 				}
 			}
-			if(u.text(description).match(/\{div\.subscriptions\}/)) {
+			if(this._subscriptions && u.text(description).match(/\{div\.subscriptions\}/)) {
 				for(i = 0; node = description.childNodes[i]; i++) {
 					if(u.text(node).match(/\{div\.subscriptions\}/)) {
 						description.replaceChild(this._subscriptions, node);
 					}
 				}
+			}
+			if(this._subscriptions) {
+				this._subscription_nodes = u.qsa(".subscription", this._subscriptions);
 			}
 			u.f.init(this._form);
 			var i, node;
@@ -7042,6 +7061,11 @@ Util.Objects["subscriptions"] = new function() {
 		var i, option;
 		for(i = 0; option = field.options[i]; i++) {
 			option.input = u.qs("input", option)
+			u.ce(option);
+			option.clicked = function() {
+				this.input.val(this.input.value);
+				this.input.field.updated();
+			}
 		}
 		field.updated = function() {
 			var selected = this._input.val();

@@ -30,6 +30,8 @@ define("DEFAULT_CURRENCY_ISO", "DKK");
 define("SITE_ITEMS", true);
 define("SITE_SIGNUP", "/signup");
 
+define("SITE_SUBSCRIPTIONS", true);
+
 // Enable shop model
 // define("SITE_SHOP", true);
 // define("SHOP_ORDER_NOTIFIES", "martin@think.dk");
