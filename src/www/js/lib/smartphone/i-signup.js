@@ -23,7 +23,7 @@ Util.Objects["signup"] = new function() {
 			this._form = u.qs("form.signup", this);
 
 			var description = u.qs("div.articlebody", this);
-			if(u.text(description).match(/\{form\.signup\}/)) {
+			if(this._form && u.text(description).match(/\{form\.signup\}/)) {
 				for(i = 0; node = description.childNodes[i]; i++) {
 					if(u.text(node).match(/\{form\.signup\}/)) {
 						description.replaceChild(this._form, node);
@@ -33,7 +33,7 @@ Util.Objects["signup"] = new function() {
 
 
 			u.f.init(this._form);
-			this._form.fields["email"].focus();
+//			this._form.fields["email"].focus();
 
 
 			var i, node;

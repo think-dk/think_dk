@@ -1,5 +1,6 @@
 Util.Objects["subscriptions"] = new function() {
 	this.init = function(fieldset) {
+//		u.bug("init subscriptions");
 
 		var field = u.qs(".field.radiobuttons", fieldset);
 		field.options = u.qsa(".item", field);
@@ -9,10 +10,11 @@ Util.Objects["subscriptions"] = new function() {
 			option.input = u.qs("input", option)
 
 			// needs form update first (selecting radio-button does not cause updated callback)
-			// u.ce(option);
-			// option.clicked = function() {
-			// 	this.input.val(this.input.value);
-			// }
+			u.ce(option);
+			option.clicked = function() {
+				this.input.val(this.input.value);
+				this.input.field.updated();
+			}
 		}
 
 		field.updated = function() {
