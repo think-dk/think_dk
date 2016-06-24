@@ -95,7 +95,7 @@ if($item) {
 
 
 		<div class="comments i:comments item_id:<?= $item["item_id"] ?>" 
-			data-comment-add="<?= $this->validPath("/janitor/admin/service/addComment") ?>" 
+			data-comment-add="<?= $this->validPath("/janitor/service/addComment") ?>" 
 			data-csrf-token="<?= session()->value("csrf") ?>"
 			>
 			<h2 class="comments">Comments for &quot;<?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?>&quot;</h2>
