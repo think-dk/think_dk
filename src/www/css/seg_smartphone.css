@@ -24,6 +24,7 @@ fieldset {border: none;}
 input, select, textarea {font-size: 14px; color: #333333;}
 input, textarea {outline: none;}
 a, span {font-size: inherit; font-family: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
+em, strong {font-size: inherit; font-family: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
 h1 {padding: 0 20px 24px; font-size: 34px; line-height: 1.05em;
 	font-family: "PT Serif", Times, serif;
 }
@@ -203,7 +204,7 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene dl.offer {font-size: 0; padding: 0;}
 #content .scene dl.offer dt {display: none;}
 #content .scene dl.offer .url {display: none;}
-#content .scene dl.offer dd {font-size: 13px; width: auto; display: inline-block; vertical-align: top;}
+#content .scene dl.offer dd {font-size: 13px; width: auto; display: inline-block; vertical-align: top; padding: 0;}
 #content .scene dl.offer dd.currency:after {content: "\00a0";}
 #content .scene code {color: #333333; padding: 10px 20px; margin: 0 0 15px; background-color: #ededed; font-size: 11px; display: block; overflow: hidden; white-space: pre-wrap;
 	font-family: "Monaco", "Courier New", "Courier";
@@ -708,6 +709,35 @@ body {}
 #content .scene.event div.event ul.location {display: block;}
 #content .scene.event div.event ul.location li.name {padding-bottom: 10px; font-size: 15px;}
 #content .scene.event div.event ul.location ul {padding-left: 0; padding-right: 0;}
+#content .scene fieldset.subscriptions .field .item {position: relative; display: block; padding: 10px; margin: 0 0 10px; border-radius: 5px; border: 1px solid #26962d; cursor: pointer;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+#content .scene fieldset.subscriptions .field .item label {font-size: 16px; display: block; padding-bottom: 3px;}
+#content .scene fieldset.subscriptions .field .item input {position: absolute; right: 1px; top: 19px;}
+#content .scene fieldset.subscriptions .field .item h3,
+#content .scene fieldset.subscriptions .field .item dl {width: auto; padding-left: 0px; padding-right: 0px;}
+#content .scene fieldset.subscriptions .field .indicator {display: none;}
+#content .scene fieldset.subscriptions .field .help {position: static;}
+#content .scene fieldset.subscriptions .field .item:active,
+#content .scene fieldset.subscriptions .field .item.selected {background-color: #26962d;}
+#content .scene fieldset.subscriptions .field .item:active label,
+#content .scene fieldset.subscriptions .field .item.selected label,
+#content .scene fieldset.subscriptions .field .item:active dd,
+#content .scene fieldset.subscriptions .field .item.selected dd {color: #ffffff;}
+#content .scene ul.subscriptions {list-style: none; margin: 0; padding-bottom: 0; font-size: 0; position: relative; width: auto;}
+#content .scene ul.subscriptions > li {display: block; padding: 10px; margin: 0 0 10px 0; border-radius: 5px; border: 1px solid #26962d;}
+#content .scene ul.subscriptions > li h3 {color: #26962d; padding-bottom: 3px;
+	font-family: "PT Serif", Times, serif;
+}
+#content .scene ul.subscriptions > li dl {padding-bottom: 4px;}
+#content .scene ul.subscriptions > li h2,
+#content .scene ul.subscriptions > li h3,
+#content .scene ul.subscriptions > li h4,
+#content .scene ul.subscriptions > li p,
+#content .scene ul.subscriptions > li dl {width: auto; padding-left: 0px; padding-right: 0px;}
+#content .scene ul.subscriptions > li ul {padding: 0; width: auto;}
 #content .scene div.todos {display: none;}
 #content .scene div.qnas {display: none;}
 

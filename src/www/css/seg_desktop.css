@@ -757,11 +757,9 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.event div.event ul.location {display: block;}
 #content .scene.event div.event ul.location li.name {padding-bottom: 10px; font-size: 15px;}
 #content .scene.event div.event ul.location ul {padding-left: 0; padding-right: 0;}
-#content .scene fieldset.subscriptions {}
-#content .scene fieldset.subscriptions .field {}
-#content .scene fieldset.subscriptions .field .item {position: relative; display: inline-block; vertical-align: top; width: 163px; padding: 10px; margin: 0 10px 10px 0; border-radius: 5px; border: 1px solid #26962d;}
-#content .scene fieldset.subscriptions .field .item label {font-size: 16px; display: block;}
-#content .scene fieldset.subscriptions .field .item input {position: absolute; right: 1px; top: 17px;}
+#content .scene fieldset.subscriptions .field .item {position: relative; display: inline-block; vertical-align: top; width: calc(25% - 32px); padding: 10px; margin: 0 10px 10px 0; border-radius: 5px; border: 1px solid #26962d; cursor: pointer;}
+#content .scene fieldset.subscriptions .field .item label {font-size: 16px; display: block; padding-bottom: 3px;}
+#content .scene fieldset.subscriptions .field .item input {position: absolute; right: 1px; top: 19px;}
 #content .scene fieldset.subscriptions .field .item h3,
 #content .scene fieldset.subscriptions .field .item dl {width: auto; padding-left: 0px; padding-right: 0px;}
 #content .scene fieldset.subscriptions .field .indicator {display: none;}
@@ -769,14 +767,8 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene fieldset.subscriptions .field .item.selected {background-color: #26962d;}
 #content .scene fieldset.subscriptions .field .item.selected label,
 #content .scene fieldset.subscriptions .field .item.selected dd {color: #ffffff;}
-#content .scene ul.subscriptions {list-style: none; margin: 0;
-	font-size: 0; position: relative; width: auto;
-}
-#content .scene ul.subscriptions > li {
-	display: inline-block; vertical-align: top; width: calc( 25% - 32px); padding: 10px; margin: 0 10px 10px 0;
-	border-radius: 5px;
-	border: 1px solid #26962d;
-}
+#content .scene ul.subscriptions {list-style: none; margin: 0; padding-bottom: 0; font-size: 0; position: relative; width: auto;}
+#content .scene ul.subscriptions > li {display: inline-block; vertical-align: top; width: calc(25% - 32px); padding: 10px; margin: 0 10px 10px 0; border-radius: 5px; border: 1px solid #26962d;}
 #content .scene ul.subscriptions > li h3 {color: #26962d; padding-bottom: 3px;
 	font-family: "PT Serif", Times, serif;
 }
