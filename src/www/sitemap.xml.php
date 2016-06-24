@@ -120,3 +120,25 @@ $item = $IC->getItem(array("tags" => "page:wishlist"));
 		<priority>0.5</priority>
 	</url>
 </urlset>
+<?
+// SIGNUP PAGE
+$item = $IC->getItem(array("tags" => "page:Signup"));
+?>
+	<url>
+		<loc><?= SITE_URL ?>/signup</loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.9</priority>
+	</url>
+</urlset>
+<?
+// MEMBERSHIPS PAGE
+$item = $IC->getItem(array("tags" => "page:Memberships"));
+?>
+	<url>
+		<loc><?= SITE_URL ?>/memberships</loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>1</priority>
+	</url>
+</urlset>
