@@ -43,7 +43,7 @@ $items_culture = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "or
 			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($page_item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
 			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page_item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
 			<li class="author" itemprop="author"><?= $page_item["user_nickname"] ?></li>
-			<li class="main_entity share" itemprop="mainEntityOfPage"><?= SITE_URL."/services" ?></li>
+			<li class="main_entity share" itemprop="mainEntityOfPage" content="<?= SITE_URL."/services" ?>"></li>
 			<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 				<ul class="publisher_info">
 					<li class="name" itemprop="name">think.dk</li>
@@ -84,7 +84,7 @@ $items_culture = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "or
 
 			<h2>Convenience</h2>
 			<p>We all need stuff. think.dk helps you to find new sustainable alternatives and ways of getting it.</p>
-			<ul class="items services i:articleMiniList">
+			<ul class="items services">
 				<? foreach($items_convenience as $item): ?>
 				<li class="item service id:<?= $item["item_id"] ?><?= $item["classname"] ? " ".$item["classname"] : "" ?>" itemscope itemtype="http://schema.org/Article">
 
@@ -109,7 +109,7 @@ $items_culture = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "or
 						<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
 						<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
 						<li class="author" itemprop="author"><?= $item["user_nickname"] ?></li>
-						<li class="main_entity" itemprop="mainEntityOfPage"><?= SITE_URL."/services/".$item["sindex"] ?></li>
+						<li class="main_entity" itemprop="mainEntityOfPage" content="<?= SITE_URL."/services/".$item["sindex"] ?>"></li>
 						<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 							<ul class="publisher_info">
 								<li class="name" itemprop="name">think.dk</li>
@@ -175,7 +175,7 @@ $items_culture = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "or
 						<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
 						<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
 						<li class="author" itemprop="author"><?= $item["user_nickname"] ?></li>
-						<li class="main_entity" itemprop="mainEntityOfPage"><?= SITE_URL."/services/".$item["sindex"] ?></li>
+						<li class="main_entity" itemprop="mainEntityOfPage" content="<?= SITE_URL."/services/".$item["sindex"] ?>"></li>
 						<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 							<ul class="publisher_info">
 								<li class="name" itemprop="name">think.dk</li>
@@ -227,7 +227,7 @@ $items_culture = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "or
 						<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
 						<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
 						<li class="author" itemprop="author"><?= $item["user_nickname"] ?></li>
-						<li class="main_entity" itemprop="mainEntityOfPage"><?= SITE_URL."/services/".$item["sindex"] ?></li>
+						<li class="main_entity" itemprop="mainEntityOfPage" content="<?= SITE_URL."/services/".$item["sindex"] ?>"></li>
 						<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 							<ul class="publisher_info">
 								<li class="name" itemprop="name">think.dk</li>

@@ -142,9 +142,10 @@ Util.Objects["front"] = new function() {
 				// apply start-intro event listener
 				if(u.e.event_support == "mouse") {
 					this.intro_event_id = u.e.addWindowEvent(this, "mousemove", this.showIntro);
+					this.t_autoplay = u.t.setTimer(this, "showIntro", 1500);
 				}
 				else {
-					u.t.setTimer(this, "showIntro", 500);
+					this.t_autoplay = u.t.setTimer(this, "showIntro", 500);
 				}
 			}
 
@@ -159,6 +160,9 @@ Util.Objects["front"] = new function() {
 		scene.showIntro = function() {
 
 			var node, duration, i;
+
+			// cancel autoplay timer
+			u.t.resetTimer(this.t_autoplay);
 
 			// remove trigger event listener
 			if(u.e.event_support == "mouse") {

@@ -47,7 +47,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($page_item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
 			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page_item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
 			<li class="author" itemprop="author"><?= $page_item["user_nickname"] ?></li>
-			<li class="main_entity share" itemprop="mainEntityOfPage"><?= SITE_URL ?></li>
+			<li class="main_entity share" itemprop="mainEntityOfPage" content="<?= SITE_URL ?>"></li>
 			<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 				<ul class="publisher_info">
 					<li class="name" itemprop="name">think.dk</li>
@@ -115,13 +115,28 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 				data-readstate="<?= $item["readstate"] ?>"
 				>
 
-				<h3 itemprop="headline"><a href="/posts/<?= $item["sindex"] ?>"><?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?></a></h3>
+				<ul class="tags">
+				<? if($item["tags"]):
+					$editing_tag = arrayKeyValue($item["tags"], "context", "editing"); ?>
+					<? if($editing_tag !== false): ?>
+					<li class="editing" title="This post is work in progress"><?= $item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"] ?></li>
+					<? endif; ?>
+					<li><a href="/posts">Posts</a></li>
+					<? foreach($item["tags"] as $item_tag): ?>
+						<? if($item_tag["context"] == "post"): ?>
+					<li itemprop="articleSection"><a href="/posts/tag/<?= urlencode($item_tag["value"]) ?>"><?= $item_tag["value"] ?></a></li>
+						<? endif; ?>
+					<? endforeach; ?>
+				<? endif; ?>
+				</ul>
+
+				<h3 itemprop="headline"><?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?></h3>
 
 				<ul class="info">
 					<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
 					<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
 					<li class="author" itemprop="author"><?= $item["user_nickname"] ?></li>
-					<li class="main_entity" itemprop="mainEntityOfPage"><?= SITE_URL."/posts/".$item["sindex"] ?></li>
+					<li class="main_entity" itemprop="mainEntityOfPage" content="<?= SITE_URL."/posts/".$item["sindex"] ?>"></li>
 					<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 						<ul class="publisher_info">
 							<li class="name" itemprop="name">think.dk</li>

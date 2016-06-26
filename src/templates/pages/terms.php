@@ -7,7 +7,7 @@
 			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", filemtime(__FILE__)) ?>"><?= date("Y-m-d, H:i", filemtime(__FILE__)) ?></li>
 			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", filemtime(__FILE__)) ?>"><?= date("Y-m-d, H:i", filemtime(__FILE__)) ?></li>
 			<li class="author" itemprop="author">Martin Kæstel Nielsen</li>
-			<li class="main_entity" itemprop="mainEntityOfPage"><?= SITE_URL."/terms" ?></li>
+			<li class="main_entity" itemprop="mainEntityOfPage" content="<?= SITE_URL."/terms" ?>"></li>
 			<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 				<ul class="publisher_info">
 					<li class="name" itemprop="name">think.dk</li>

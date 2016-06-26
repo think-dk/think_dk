@@ -44,6 +44,7 @@
 
 /* FRONT - NEWS */
 #content .scene.front div.news {display: none;}
+#content .scene.front div.news ul.articles li.article h3 {padding-bottom: 15px; color: #26962d;}
 
 
 /* ARTICLE */
@@ -56,6 +57,12 @@
 
 
 /* SERVICES */
+#content .scene.service div.all_events {padding-bottom: 50px;}
+#content .scene ul.services li.service {padding-bottom: 0;}
+#content .scene ul.services li.service h3 {
+	font-family: "PT Serif",Times,serif;	
+}
+
 #content .scene div.all_services div.servicegroup {padding-bottom: 30px;}
 #content .scene div.all_services div.servicegroup ul.services li {padding-bottom: 0px;}
 #content .scene div.all_services div.servicegroup > h2 {padding-left: 20px; padding-right: 20px; padding-bottom: 10px;}
@@ -66,13 +73,13 @@
 #content .scene div.all_events h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
 	font-family: "OpenSans";
 }
-#content .scene div.all_events ul.events li.event {padding-bottom: 0;}
-#content .scene div.all_events ul.events h3 {
+#content .scene ul.events li.event {padding-bottom: 0;}
+#content .scene ul.events li.event h3 {
 	font-family: "PT Serif",Times,serif;	
 }
-#content .scene div.all_events ul.events li.event dl.occurs_at {padding-bottom: 0;}
-#content .scene div.all_events ul.events li.event dd {width: auto; font-size: 12px; padding-bottom: 0; padding-left: 0;}
-#content .scene div.all_events ul.events li.event dt {display: none;}
+#content .scene ul.events li.event dl.occurs_at {padding-bottom: 0;}
+#content .scene ul.events li.event dd {width: auto; font-size: 12px; padding-bottom: 0; padding-left: 0;}
+#content .scene ul.events li.event dt {display: none;}
 
 
 #content .scene.event div.event div.description {padding-bottom: 10px;}

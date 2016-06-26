@@ -15,6 +15,15 @@ if($item) {
 		$event_items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "event.starting_at > NOW()", "order" => "event.starting_at ASC", "tags" => "service:".addslashes($item["tags"][$service_tag]["value"]), "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
 	}
 
+	// set related pattern
+	$related_pattern = array("itemtype" => $item["itemtype"], "tags" => $item["tags"], "exclude" => $item["id"]);
+	// add base pattern properties
+	$related_pattern["limit"] = 5;
+	$related_pattern["extend"] = array("tags" => true, "readstate" => true, "user" => true, "mediae" => true);
+
+	// get related items
+	$related_items = $IC->getRelatedItems($related_pattern);
+
 }
 
 ?>
@@ -57,7 +66,7 @@ if($item) {
 			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
 			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
 			<li class="author" itemprop="author"><?= $item["user_nickname"] ?></li>
-			<li class="main_entity share" itemprop="mainEntityOfPage"><?= SITE_URL."/services/".$item["sindex"] ?></li>
+			<li class="main_entity share" itemprop="mainEntityOfPage" content="<?= SITE_URL."/services/".$item["sindex"] ?>"></li>
 			<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 				<ul class="publisher_info">
 					<li class="name" itemprop="name">think.dk</li>
@@ -152,8 +161,63 @@ if($item) {
 
 		<p>No scheduled events.</p>
 
-<? endif; ?>
+	<? endif; ?>
 	</div>
+
+
+	<? if($related_items): ?>
+		<div class="related">
+			<h2>Related services <a href="/services">(see all)</a></h2>
+
+			<ul class="items services">
+	<?		foreach($related_items as $item): 
+				$media = $IC->sliceMedia($item); ?>
+				<li class="item service item_id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
+					data-readstate="<?= $item["readstate"] ?>"
+					>
+
+					<h3 itemprop="headline"><a href="/posts/<?= $item["sindex"] ?>"><?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?></a></h3>
+
+					<ul class="info">
+						<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
+						<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
+						<li class="author" itemprop="author"><?= $item["user_nickname"] ?></li>
+						<li class="main_entity" itemprop="mainEntityOfPage" content="<?= SITE_URL."/posts/".$item["sindex"] ?>"></li>
+						<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+							<ul class="publisher_info">
+								<li class="name" itemprop="name">think.dk</li>
+								<li class="logo" itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+									<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/img/logo-large.png"></span>
+									<span class="image_width" itemprop="width" content="720"></span>
+									<span class="image_height" itemprop="height" content="405"></span>
+								</li>
+							</ul>
+						</li>
+						<li class="image_info" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+						<? if($media): ?>
+							<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/images/<?= $item["item_id"] ?>/<?= $media["variant"] ?>/720x.<?= $media["format"] ?>"></span>
+							<span class="image_width" itemprop="width" content="720"></span>
+							<span class="image_height" itemprop="height" content="<?= floor(720 / ($media["width"] / $media["height"])) ?>"></span>
+						<? else: ?>
+							<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/img/logo-large.png"></span>
+							<span class="image_width" itemprop="width" content="720"></span>
+							<span class="image_height" itemprop="height" content="405"></span>
+						<? endif; ?>
+						</li>
+					</ul>
+
+					<? if($item["description"]): ?>
+					<div class="description" itemprop="description">
+						<p><?= nl2br($item["description"]) ?></p>
+					</div>
+					<? endif; ?>
+
+				</li>
+		<?	endforeach; ?>
+			</ul>
+		</div>
+	<? endif; ?>
+
 
 
 <? else: ?>

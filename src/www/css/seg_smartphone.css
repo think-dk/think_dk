@@ -196,7 +196,8 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene div.article h2 br {display: none;}
 #content .scene div.article ul.tags {padding-bottom: 20px;}
 #content .scene div.related {padding-top: 10px; position: relative; z-index: 1;}
-#content .scene div.related h2 a {font-size: 11px; display: inline-block; vertical-align: middle;
+#content .scene div.related h2 {padding-bottom: 15px;}
+#content .scene div.related h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
 	font-family: "OpenSans";
 }
 #content .scene div.comments {display: none;}
@@ -685,9 +686,15 @@ body {}
 #content .scene.front div.all_events ul.events {border-top: 1px solid #dedede;}
 #content .scene.front div.all_events ul.events li.event {margin-top: -1px; padding-top: 15px; padding-bottom: 5px;}
 #content .scene.front div.news {display: none;}
+#content .scene.front div.news ul.articles li.article h3 {padding-bottom: 15px; color: #26962d;}
 #content .scene.post div.article ul.info {display: block;}
 #content .scene.contact ul.people {padding-bottom: 30px;}
 #content .scene.contact ul.people li.person {padding-bottom: 10px;}
+#content .scene.service div.all_events {padding-bottom: 50px;}
+#content .scene ul.services li.service {padding-bottom: 0;}
+#content .scene ul.services li.service h3 {
+	font-family: "PT Serif",Times,serif;	
+}
 #content .scene div.all_services div.servicegroup {padding-bottom: 30px;}
 #content .scene div.all_services div.servicegroup ul.services li {padding-bottom: 0px;}
 #content .scene div.all_services div.servicegroup > h2 {padding-left: 20px; padding-right: 20px; padding-bottom: 10px;}
@@ -695,13 +702,13 @@ body {}
 #content .scene div.all_events h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
 	font-family: "OpenSans";
 }
-#content .scene div.all_events ul.events li.event {padding-bottom: 0;}
-#content .scene div.all_events ul.events h3 {
+#content .scene ul.events li.event {padding-bottom: 0;}
+#content .scene ul.events li.event h3 {
 	font-family: "PT Serif",Times,serif;	
 }
-#content .scene div.all_events ul.events li.event dl.occurs_at {padding-bottom: 0;}
-#content .scene div.all_events ul.events li.event dd {width: auto; font-size: 12px; padding-bottom: 0; padding-left: 0;}
-#content .scene div.all_events ul.events li.event dt {display: none;}
+#content .scene ul.events li.event dl.occurs_at {padding-bottom: 0;}
+#content .scene ul.events li.event dd {width: auto; font-size: 12px; padding-bottom: 0; padding-left: 0;}
+#content .scene ul.events li.event dt {display: none;}
 #content .scene.event div.event div.description {padding-bottom: 10px;}
 #content .scene.event div.event dl.occurs_at {padding-bottom: 0;}
 #content .scene.event div.event dl.occurs_at dt {font-size: 12px; text-align: left;}

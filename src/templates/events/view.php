@@ -14,6 +14,16 @@ if($item) {
 	// get host info
 	$host = $model->getHosts(array("id" => $item["host"]));
 
+
+	// set related pattern
+	$related_pattern = array("itemtype" => $item["itemtype"], "tags" => $item["tags"], "exclude" => $item["id"]);
+	// add base pattern properties
+	$related_pattern["limit"] = 5;
+	$related_pattern["extend"] = array("tags" => true, "readstate" => true, "user" => true, "mediae" => true);
+
+	// get related items
+	$related_items = $IC->getRelatedItems($related_pattern);
+
 }
 
 ?>
@@ -68,7 +78,7 @@ if($item) {
 			<li class="name" itemprop="name"><?= $host["host"] ?></li>
 			<li class="address" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
 				<ul>
-					<li class="streetaddress" itemprop="streetAddress"><?= $host["host_address1"] ?><?= $host["host_address1"] ? ", ".$host["host_address2"] : "" ?></li>
+					<li class="streetaddress" itemprop="streetAddress"><?= $host["host_address1"] ?><?= $host["host_address2"] ? ", ".$host["host_address2"] : "" ?></li>
 					<li class="city"><span class="postal" itemprop="postalCode"><?= $host["host_postal"] ?></span> <span class="locality" itemprop="addressLocality"><?= $host["host_city"] ?></span></li>
 					<li class="country" itemprop="addressCountry"><?= $countries[arrayKeyValue($countries, "id", $host["host_country"])]["name"] ?></li>
 				</ul>
@@ -79,7 +89,7 @@ if($item) {
 		</ul>
 
 		<ul class="info">
-			<li class="main_entity share" itemprop="mainEntityOfPage"><?= SITE_URL."/events/".$item["sindex"] ?></li>
+			<li class="main_entity share" itemprop="mainEntityOfPage" content="<?= SITE_URL."/events/".$item["sindex"] ?>"></li>
 			<li class="url" itemprop="url"><?= SITE_URL."/events/".$item["sindex"] ?></li>
 			<li class="image_info" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
 			<? if($media): ?>
@@ -104,6 +114,37 @@ if($item) {
 
 
 	</div>
+
+
+	<? if($related_items): ?>
+
+	<div class="related">
+		<h2>Related events <a href="/events">(see all)</a></h2>
+
+		<ul class="items events">
+		<? foreach($related_items as $item): 
+			$media = $IC->sliceMedia($item); ?>
+			<li class="item event item_id:<?= $item["item_id"] ?>">
+
+				<dl class="occurs_at">
+					<dt class="starting_at">Starts</dt>
+					<dd class="starting_at"><?= date("F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
+				</dl>
+
+				<h3><a href="/events/<?= $item["sindex"] ?>"><?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?></a></h3>
+
+				<? if($item["description"]): ?>
+				<div class="description">
+					<p><?= nl2br($item["description"]) ?></p>
+				</div>
+				<? endif; ?>
+
+			</li>
+		<?	endforeach; ?>
+		</ul>
+	</div>
+
+	<? endif; ?>
 
 
 <? else: ?>

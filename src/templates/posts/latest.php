@@ -44,7 +44,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($page_item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
 			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page_item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
 			<li class="author" itemprop="author"><?= $page_item["user_nickname"] ?></li>
-			<li class="main_entity share" itemprop="mainEntityOfPage"><?= SITE_URL."/latest" ?></li>
+			<li class="main_entity share" itemprop="mainEntityOfPage" content="<?= SITE_URL."/latest" ?>"></li>
 			<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 				<ul class="publisher_info">
 					<li class="name" itemprop="name">think.dk</li>
@@ -90,7 +90,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 <? endif; ?>
 
 <? if($items): ?>
-	<ul class="items articles i:articleMiniList">
+	<ul class="items articles i:articleMiniList readmore">
 		<? foreach($items as $item): 
 			$media = $IC->sliceMedia($item); ?>
 		<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
@@ -118,7 +118,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 				<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
 				<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
 				<li class="author" itemprop="author"><?= $item["user_nickname"] ?></li>
-				<li class="main_entity" itemprop="mainEntityOfPage"><?= SITE_URL."/posts/".$item["sindex"] ?></li>
+				<li class="main_entity" itemprop="mainEntityOfPage" content="<?= SITE_URL."/posts/".$item["sindex"] ?>"></li>
 				<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 					<ul class="publisher_info">
 						<li class="name" itemprop="name">think.dk</li>
@@ -147,6 +147,10 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 				<p><?= nl2br($item["description"]) ?></p>
 			</div>
 			<? endif; ?>
+
+			<!--ul class="actions">
+				<li class="readmore"><a href="/posts/<?= $item["sindex"] ?>">Read more.</a></li>
+			</ul-->
 
 		</li>
 		<? endforeach; ?>

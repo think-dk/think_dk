@@ -4302,6 +4302,7 @@ u.ga_account = 'UA-10756281-1';
 u.ga_domain = 'think.dk';
 u.txt = {};
 u.txt["share"] = "Share";
+u.txt["readmore"] = "Read more.";
 u.txt["readstate-not_read"] = "Click to mark as read";
 u.txt["readstate-read"] = "Read";
 u.txt["add_comment"] = "Add comment";
@@ -6609,9 +6610,10 @@ Util.Objects["front"] = new function() {
 				});
 				if(u.e.event_support == "mouse") {
 					this.intro_event_id = u.e.addWindowEvent(this, "mousemove", this.showIntro);
+					this.t_autoplay = u.t.setTimer(this, "showIntro", 1500);
 				}
 				else {
-					u.t.setTimer(this, "showIntro", 500);
+					this.t_autoplay = u.t.setTimer(this, "showIntro", 500);
 				}
 			}
 			else {
@@ -6620,6 +6622,7 @@ Util.Objects["front"] = new function() {
 		}
 		scene.showIntro = function() {
 			var node, duration, i;
+			u.t.resetTimer(this.t_autoplay);
 			if(u.e.event_support == "mouse") {
 				u.e.removeWindowEvent(this, "mousemove", this.intro_event_id);
 			}
@@ -7153,7 +7156,7 @@ Util.Objects["article"] = new function() {
 			u.injectGeolocation(article);
 		}
 		var hardlink = u.qs("li.main_entity.share", article);
-		article.hardlink = hardlink ? hardlink.innerHTML : false;
+		article.hardlink = hardlink ? (hardlink.hasAttribute("content") ? hardlink.getAttribute("content") : hardlink.innerHTML) : false;
 		if(article.hardlink && typeof(u.injectSharing) == "function") {
 			article.shareInjected = function() {
 				if(this.article_list) {

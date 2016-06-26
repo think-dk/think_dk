@@ -29,11 +29,12 @@
 /* FRONT - EVENTS */
 #content .scene.front div.all_events {display: none; padding-bottom: 50px;}
 
-#content .scene.front div.all_events h2,
+/*
 #content .scene.front div.news h2 {padding-bottom: 15px;}
+#content .scene div.all_events h2,
+*/
 
-#content .scene.front div.all_events h2 a,
-#content .scene.front div.news h2 a {font-size: 10px; display: inline-block; vertical-align: middle;
+#content .scene.front div.all_events h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
 	font-family: "OpenSans";
 }
 #content .scene.front div.all_events ul.events {border-top: 1px solid #dedede; padding: 0 70px;}
@@ -44,6 +45,11 @@
 
 /* FRONT - NEWS */
 #content .scene.front div.news {display: none;}
+#content .scene.front div.news h2 {padding-bottom: 15px;}
+#content .scene.front div.news h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
+	font-family: "OpenSans";
+}
+#content .scene.front div.news ul.articles li.article h3 {padding-bottom: 20px; color: #26962d;}
 
 
 /* POST ARTICLE */
@@ -69,14 +75,23 @@
 
 
 /* SERVICES */
+#content .scene.service div.all_events {padding-bottom: 50px;}
+
+#content .scene ul.services li.service {padding-bottom: 0;}
+#content .scene ul.services li.service h3 {
+	font-family: "PT Serif",Times,serif;	
+}
+
 #content .scene div.all_services {padding: 0 25px; font-size: 0;}
+#content .scene div.all_services ul.services li.service {padding-bottom: 5px;}
+
 #content .scene div.all_services div.servicegroup h2,
 #content .scene div.all_services div.servicegroup h3,
 #content .scene div.all_services div.servicegroup p {width: auto;}
 
 #content .scene div.all_services div.servicegroup {display: inline-block; vertical-align: top; width: 220px; padding: 0 25px;}
 #content .scene div.all_services div.servicegroup ul.services {}
-#content .scene div.all_services div.servicegroup ul.services li {padding-left: 20px; padding-right: 20px; padding-bottom: 0;}
+#content .scene div.all_services div.servicegroup ul.services li.service {padding-left: 20px; padding-right: 20px; padding-bottom: 0;}
 
 #content .scene div.all_services div.servicegroup > h2 {padding-left: 20px; padding-right: 20px; padding-bottom: 10px;}
 #content .scene div.all_services div.servicegroup > p {padding-left: 20px; padding-right: 20px; padding-bottom: 30px;}
@@ -85,17 +100,19 @@
 
 
 
+
 /* EVENTS */
-#content .scene div.all_events h2 a {font-size: 10px; display: inline-block; vertical-align: middle;
+#content .scene div.all_events h2 {padding-bottom: 15px;}
+#content .scene div.all_events h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
 	font-family: "OpenSans";
 }
-#content .scene div.all_events ul.events li.event {padding-bottom: 0;}
-#content .scene div.all_events ul.events h3 {
+#content .scene ul.events li.event {padding-bottom: 0;}
+#content .scene ul.events li.event h3 {
 	font-family: "PT Serif",Times,serif;	
 }
-#content .scene div.all_events ul.events li.event dl.occurs_at {padding-bottom: 0;}
-#content .scene div.all_events ul.events li.event dd {width: auto; font-size: 10px; padding-bottom: 0;}
-#content .scene div.all_events ul.events li.event dt {display: none;}
+#content .scene ul.events li.event dl.occurs_at {padding-bottom: 0;}
+#content .scene ul.events li.event dd {width: auto; font-size: 10px; padding-bottom: 0;}
+#content .scene ul.events li.event dt {display: none;}
 
 
 #content .scene.event div.event div.description {padding-bottom: 10px;}
