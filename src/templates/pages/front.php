@@ -45,7 +45,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 
 		<ul class="info">
 			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($page_item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
-			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page_item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
+			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page_item["modified_at"])) ?>"></li>
 			<li class="author" itemprop="author"><?= $page_item["user_nickname"] ?></li>
 			<li class="main_entity share" itemprop="mainEntityOfPage" content="<?= SITE_URL ?>"></li>
 			<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
@@ -134,7 +134,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 
 				<ul class="info">
 					<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
-					<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
+					<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($item["modified_at"])) ?>"></li>
 					<li class="author" itemprop="author"><?= $item["user_nickname"] ?></li>
 					<li class="main_entity" itemprop="mainEntityOfPage" content="<?= SITE_URL."/posts/".$item["sindex"] ?>"></li>
 					<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
