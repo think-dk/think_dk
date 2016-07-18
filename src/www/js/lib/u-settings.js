@@ -6,7 +6,8 @@ u.ga_domain = 'think.dk';
 
 // dynamic text
 u.txt = {};
-u.txt["share"] = "Share";
+u.txt["share"] = "Share this page";
+
 u.txt["readmore"] = "Read more.";
 
 u.txt["readstate-not_read"] = "Click to mark as read";

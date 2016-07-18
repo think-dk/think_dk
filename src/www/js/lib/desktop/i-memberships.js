@@ -6,18 +6,18 @@ Util.Objects["memberships"] = new function() {
 		scene.resized = function() {
 //			u.bug("scene.resized:" + u.nodeId(this));
 
-			if(this._subscription_nodes) {
+			if(this._membership_nodes) {
 
 				var tallest_node = 0;
 				var i, node;
-				for(i = 0; node = this._subscription_nodes[i]; i++) {
+				for(i = 0; node = this._membership_nodes[i]; i++) {
 					u.ass(node, {
 						"height":"auto"
 					})
 					u.bug(node.offsetHeight);
 					tallest_node = tallest_node < node.offsetHeight ? node.offsetHeight : tallest_node;
 				}
-				for(i = 0; node = this._subscription_nodes[i]; i++) {
+				for(i = 0; node = this._membership_nodes[i]; i++) {
 					u.ass(node, {
 						"height":(tallest_node-22)+"px"
 					})
@@ -38,7 +38,7 @@ Util.Objects["memberships"] = new function() {
 			page.cN.scene = this;
 
 			this._form = u.qs("form.signup", this);
-			this._subscriptions = u.qs("div.subscriptions", this);
+			this._memberships = u.qs("div.memberships", this);
 
 			var description = u.qs("div.articlebody", this);
 
@@ -51,17 +51,17 @@ Util.Objects["memberships"] = new function() {
 				}
 			}
 
-			// move subscription overview
-			if(this._subscriptions && u.text(description).match(/\{div\.subscriptions\}/)) {
+			// move membership overview
+			if(this._memberships && u.text(description).match(/\{div\.memberships\}/)) {
 				for(i = 0; node = description.childNodes[i]; i++) {
-					if(u.text(node).match(/\{div\.subscriptions\}/)) {
-						description.replaceChild(this._subscriptions, node);
+					if(u.text(node).match(/\{div\.memberships\}/)) {
+						description.replaceChild(this._memberships, node);
 					}
 				}
 			}
 
-			if(this._subscriptions) {
-				this._subscription_nodes = u.qsa(".subscription", this._subscriptions);
+			if(this._memberships) {
+				this._membership_nodes = u.qsa(".membership", this._memberships);
 			}
 
 

@@ -28,12 +28,6 @@
 
 /* FRONT - EVENTS */
 #content .scene.front div.all_events {display: none; padding-bottom: 50px;}
-
-/*
-#content .scene.front div.news h2 {padding-bottom: 15px;}
-#content .scene div.all_events h2,
-*/
-
 #content .scene.front div.all_events h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
 	font-family: "OpenSans";
 }
@@ -128,30 +122,30 @@
 
 
 /* SUBSCRIPTIONS FORM */
-#content .scene fieldset.subscriptions .field .item {position: relative; display: inline-block; vertical-align: top; width: calc(25% - 32px); padding: 10px; margin: 0 10px 10px 0; border-radius: 5px; border: 1px solid #26962d; cursor: pointer;}
-#content .scene fieldset.subscriptions .field .item label {font-size: 16px; display: block; padding-bottom: 3px;}
-#content .scene fieldset.subscriptions .field .item input {position: absolute; right: 1px; top: 19px;}
-#content .scene fieldset.subscriptions .field .item h3,
-#content .scene fieldset.subscriptions .field .item dl {width: auto; padding-left: 0px; padding-right: 0px;}
-#content .scene fieldset.subscriptions .field .indicator {display: none;}
-#content .scene fieldset.subscriptions .field .help {position: static;}
-#content .scene fieldset.subscriptions .field .item.selected {background-color: #26962d;}
-#content .scene fieldset.subscriptions .field .item.selected label,
-#content .scene fieldset.subscriptions .field .item.selected dd {color: #ffffff;}
+#content .scene fieldset.memberships .field .item {position: relative; display: inline-block; vertical-align: top; width: calc(25% - 32px); padding: 10px; margin: 0 10px 10px 0; border-radius: 5px; border: 1px solid #26962d; cursor: pointer;}
+#content .scene fieldset.memberships .field .item label {font-size: 16px; display: block; padding-bottom: 3px;}
+#content .scene fieldset.memberships .field .item input {position: absolute; right: 1px; top: 19px;}
+#content .scene fieldset.memberships .field .item h3,
+#content .scene fieldset.memberships .field .item dl {width: auto; padding-left: 0px; padding-right: 0px;}
+#content .scene fieldset.memberships .field .indicator {display: none;}
+#content .scene fieldset.memberships .field .help {position: static;}
+#content .scene fieldset.memberships .field .item.selected {background-color: #26962d;}
+#content .scene fieldset.memberships .field .item.selected label,
+#content .scene fieldset.memberships .field .item.selected dd {color: #ffffff;}
 
 
-#content .scene ul.subscriptions {list-style: none; margin: 0; padding-bottom: 0; font-size: 0; position: relative; width: auto;}
-#content .scene ul.subscriptions > li {display: inline-block; vertical-align: top; width: calc(25% - 32px); padding: 10px; margin: 0 10px 10px 0; border-radius: 5px; border: 1px solid #26962d;}
-#content .scene ul.subscriptions > li h3 {color: #26962d; padding-bottom: 3px;
+#content .scene ul.memberships {list-style: none; margin: 0; padding-bottom: 0; font-size: 0; position: relative; width: auto;}
+#content .scene ul.memberships > li {display: inline-block; vertical-align: top; width: calc(25% - 32px); padding: 10px; margin: 0 10px 10px 0; border-radius: 5px; border: 1px solid #26962d;}
+#content .scene ul.memberships > li h3 {color: #26962d; padding-bottom: 3px;
 	font-family: "PT Serif", Times, serif;
 }
-#content .scene ul.subscriptions > li dl {padding-bottom: 4px;}
-#content .scene ul.subscriptions > li h2,
-#content .scene ul.subscriptions > li h3,
-#content .scene ul.subscriptions > li h4,
-#content .scene ul.subscriptions > li p,
-#content .scene ul.subscriptions > li dl {width: auto; padding-left: 0px; padding-right: 0px;}
-#content .scene ul.subscriptions > li ul {padding: 0; width: auto;}
+#content .scene ul.memberships > li dl {padding-bottom: 4px;}
+#content .scene ul.memberships > li h2,
+#content .scene ul.memberships > li h3,
+#content .scene ul.memberships > li h4,
+#content .scene ul.memberships > li p,
+#content .scene ul.memberships > li dl {width: auto; padding-left: 0px; padding-right: 0px;}
+#content .scene ul.memberships > li ul {padding: 0; width: auto;}
 
 
 

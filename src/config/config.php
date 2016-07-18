@@ -32,6 +32,8 @@ define("SITE_SIGNUP", "/signup");
 
 define("SITE_SUBSCRIPTIONS", true);
 
+define("SITE_MEMBERS", true);
+
 // Enable shop model
 // define("SITE_SHOP", true);
 // define("SHOP_ORDER_NOTIFIES", "martin@think.dk");

@@ -8,11 +8,11 @@ if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
-$subscriptions = $IC->getItems(array("itemtype" => "subscription", "order" => "position ASC", "status" => 1, "extend" => array("price" => true)));
+$memberships = $IC->getItems(array("itemtype" => "membership", "order" => "position ASC", "status" => 1, "extend" => array("price" => true)));
 
 
 $email = $model->getProperty("email", "value");
-$subscription = $model->getProperty("subscription", "value");
+$membership = $model->getProperty("membership", "value");
 
 ?>
 <div class="scene signup i:signup">
@@ -90,13 +90,13 @@ $subscription = $model->getProperty("subscription", "value");
 		</p>
 <?	endif; ?>
 
-<?	if($subscriptions): ?>
-		<fieldset class="subscriptions i:subscriptions">
+<?	if($memberships): ?>
+		<fieldset class="memberships i:memberships">
 			<div class="field radiobuttons required">
-				<? foreach($subscriptions as $option): ?>
-				<div class="item<?= $option["classname"] ? " ".$option["classname"] : "" ?><?= $option["item_id"] == $subscription ? " selected" : "" ?>" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-					<input type="radio" name="subscription" id="input_subscription_<?= $option["item_id"] ?>" value="<?= $option["item_id"] ?>"<?= $option["item_id"] == $subscription ? ' checked="checked"' : "" ?> />
-					<label itemprop="name" for="input_subscription_<?= $option["item_id"] ?>"><?= $option["name"] ?></label>
+				<? foreach($memberships as $option): ?>
+				<div class="item<?= $option["classname"] ? " ".$option["classname"] : "" ?><?= $option["item_id"] == $membership ? " selected" : "" ?>" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+					<input type="radio" name="membership" id="input_membership_<?= $option["item_id"] ?>" value="<?= $option["item_id"] ?>"<?= $option["item_id"] == $membership ? ' checked="checked"' : "" ?> />
+					<label itemprop="name" for="input_membership_<?= $option["item_id"] ?>"><?= $option["name"] ?></label>
 					<dl class="offer">
 						<dt class="currency">Currency</dt>
 						<dd class="currency" itemprop="priceCurrency"><?= $option["price"]["currency"] ?></dd>
