@@ -103,30 +103,7 @@ if($item) {
 		<? endif; ?>
 
 
-		<div class="comments i:comments item_id:<?= $item["item_id"] ?>" 
-			data-comment-add="<?= $this->validPath("/janitor/service/addComment") ?>" 
-			data-csrf-token="<?= session()->value("csrf") ?>"
-			>
-			<h2 class="comments">Comments for &quot;<?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?>&quot;</h2>
-			<? if($item["comments"]): ?>
-			<ul class="comments">
-				<? foreach($item["comments"] as $comment): ?>
-				<li class="comment comment_id:<?= $comment["id"] ?>" itemprop="comment" itemscope itemtype="https://schema.org/Comment">
-					<ul class="info">
-						<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($comment["created_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($comment["created_at"])) ?></li>
-						<li class="author" itemprop="author"><?= $comment["nickname"] ?></li>
-					</ul>
-					<p class="comment" itemprop="text"><?= $comment["comment"] ?></p>
-				</li>
-				<? endforeach; ?>
-			</ul>
-		<? else: ?>
-			<p>No comments yet</p>
-		<? endif; ?>
-		</div>
-
-
-
+		<?= $HTML->frontendComments($page_item, "/janitor/service/addComment") ?>
 
 	</div>
 

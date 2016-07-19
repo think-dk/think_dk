@@ -76,27 +76,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 	</div>
 
 
-	<div class="comments i:comments item_id:<?= $item["item_id"] ?>" 
-		data-comment-add="<?= $this->validPath("/janitor/article/addComment") ?>" 
-		data-csrf-token="<?= session()->value("csrf") ?>"
-		>
-		<h2 class="comments">Comments til &quot;<?= $item["name"] ?>&quot;</h2>
-<?	if($item["comments"]): ?>
-		<ul class="comments">
-<?		foreach($item["comments"] as $comment): ?>
-			<li class="comment comment_id:<?= $comment["id"] ?>">
-				<ul class="info">
-					<li class="user"><?= $comment["nickname"] ?></li>
-					<li class="created_at"><?= date("Y-m-d, H:i", strtotime($comment["created_at"])) ?></li>
-				</ul>
-				<p class="comment"><?= $comment["comment"] ?></p>
-			</li>
-<?		endforeach; ?>
-		</ul>
-<?	else: ?>
-		<p>No comments yet.</p>
-<?	endif; ?>
-	</div>
+	<?= $HTML->frontendComments($item, "/janitor/admin/article/addComment") ?>
 
 
 <? else: ?>
