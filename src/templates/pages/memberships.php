@@ -10,7 +10,7 @@ if($page_item) {
 
 $email = $model->getProperty("email", "value");
 
-$memberships = $IC->getItems(array("itemtype" => "membership", "order" => "position ASC", "status" => 1, "extend" => array("price" => true)));
+$memberships = $IC->getItems(array("itemtype" => "membership", "order" => "position ASC", "status" => 1, "extend" => array("prices" => true, "subscription_method" => true)));
 ?>
 <div class="scene signup i:memberships">
 
@@ -80,16 +80,11 @@ $memberships = $IC->getItems(array("itemtype" => "membership", "order" => "posit
 	<div class="memberships">
 		<ul class="memberships">
 	<? foreach($memberships as $membership): ?>
-			<li class="membership<?= $membership["classname"] ? " ".$membership["classname"] : "" ?>" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-				<h3 itemprop="name"><?= $membership["name"] ?></h3>
-				<dl class="offer">
-					<dt class="currency">Currency</dt>
-					<dd class="currency" itemprop="priceCurrency"><?= $membership["price"]["currency"] ?></dd>
-					<dt class="price">Price</dt>
-					<dd class="price" itemprop="price" content="<?= $membership["price"]["price"] ?>"><?= $membership["price"]["formatted_price"] ?><?= $membership["price"]["price"] ? " / Month" : "" ?></dd>
-					<dt class="url">More info</dt>
-					<dd class="url" itemprop="url"><?= SITE_URL."/memberships" ?></dd>
-				</dl>
+			<li class="membership<?= $membership["classname"] ? " ".$membership["classname"] : "" ?>" itemprop="offers">
+				<h3><?= $membership["name"] ?></h3>
+
+				<?= $HTML->frontendOffer($membership, SITE_URL."/memberships") ?>
+
 				<div class="articlebody" itemprop="description">
 					<?= $membership["html"] ?>
 				</div>
@@ -114,20 +109,15 @@ $memberships = $IC->getItems(array("itemtype" => "membership", "order" => "posit
 <?	endif; ?>
 
 <?	if($memberships): ?>
-		<fieldset class="memberships i:memberships">
+		<fieldset class="memberships i:subscriptions">
 			<div class="field radiobuttons required">
 				<? foreach($memberships as $option): ?>
-				<div class="item<?= $option["classname"] ? " ".$option["classname"] : "" ?>" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+				<div class="item<?= $option["classname"] ? " ".$option["classname"] : "" ?>" itemprop="offers">
 					<input type="radio" name="membership" id="input_membership_<?= $option["item_id"] ?>" value="<?= $option["item_id"] ?>" />
-					<label itemprop="name" for="input_membership_<?= $option["item_id"] ?>"><?= $option["name"] ?></label>
-					<dl class="offer">
-						<dt class="currency">Currency</dt>
-						<dd class="currency" itemprop="priceCurrency"><?= $option["price"]["currency"] ?></dd>
-						<dt class="price">Price</dt>
-						<dd class="price" itemprop="price" content="<?= $option["price"]["price"] ?>"><?= $option["price"]["formatted_price"] ?><?= $option["price"]["price"] ? " / Month" : "" ?></dd>
-						<dt class="url">More info</dt>
-						<dd class="url" itemprop="url"><?= SITE_URL."/memberships" ?></dd>
-					</dl>
+					<label for="input_membership_<?= $option["item_id"] ?>"><?= $option["name"] ?></label>
+
+					<?= $HTML->frontendOffer($option, SITE_URL."/memberships") ?>
+
 				</div>
 				<? endforeach; ?>
 				<div class="help">

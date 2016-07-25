@@ -33,11 +33,12 @@ Util.Objects["memberships"] = new function() {
 		}
 
 		scene.ready = function() {
-//			u.bug("scene.ready:" + u.nodeId(this));
+			u.bug("scene.ready:" + u.nodeId(this));
 
 			page.cN.scene = this;
 
 			this._form = u.qs("form.signup", this);
+			u.bug("form:" + this._form)
 			this._memberships = u.qs("div.memberships", this);
 
 			var description = u.qs("div.articlebody", this);
@@ -64,7 +65,7 @@ Util.Objects["memberships"] = new function() {
 				this._membership_nodes = u.qsa(".membership", this._memberships);
 			}
 
-
+			u.bug("init form:" + this._form);
 			u.f.init(this._form);
 //			this._form.fields["email"].focus();
 
