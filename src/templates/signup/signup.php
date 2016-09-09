@@ -90,25 +90,6 @@ $membership = $model->getProperty("membership", "value");
 		</p>
 <?	endif; ?>
 
-<?	if($memberships): ?>
-		<fieldset class="memberships i:subscriptions">
-			<div class="field radiobuttons required">
-				<? foreach($memberships as $option): ?>
-				<div class="item<?= $option["classname"] ? " ".$option["classname"] : "" ?><?= $option["item_id"] == $membership ? " selected" : "" ?>" itemprop="offers">
-					<input type="radio" name="membership" id="input_membership_<?= $option["item_id"] ?>" value="<?= $option["item_id"] ?>"<?= $option["item_id"] == $membership ? ' checked="checked"' : "" ?> />
-					<label for="input_membership_<?= $option["item_id"] ?>"><?= $option["name"] ?></label>
-
-					<?= $HTML->frontendOffer($option, SITE_URL."/memberships") ?>
-
-				</div>
-				<? endforeach; ?>
-				<div class="help">
-					<div class="error">Please select a membership</div>
-				</div>
-			</div>
-		</fieldset>
-<?	endif; ?>
-
 		<fieldset>
 			<?= $model->input("newsletter", array("type" => "hidden", "value" => "curious")); ?>
 			<?= $model->input("email", array("label" => "Your email", "required" => true, "value" => $email, "hint_message" => "Type your email.", "error_message" => "You entered an invalid email.")); ?>

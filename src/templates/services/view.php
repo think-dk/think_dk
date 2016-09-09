@@ -37,8 +37,8 @@ if($item) {
 	<div class="article i:article id:<?= $item["item_id"] ?> service" itemscope itemtype="http://schema.org/Article"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-readstate="<?= $item["readstate"] ?>"
-		data-readstate-update="<?= $this->validPath("/janitor/admin/service/updateReadstate/".$item["item_id"]) ?>" 
-		data-readstate-delete="<?= $this->validPath("/janitor/admin/service/deleteReadstate/".$item["item_id"]) ?>" 
+		data-readstate-update="<?= $this->validPath("/janitor/admin/profile/addReadstate/".$item["item_id"]) ?>" 
+		data-readstate-delete="<?= $this->validPath("/janitor/admin/profile/deleteReadstate/".$item["item_id"]) ?>" 
 		>
 
 		<? if($media): ?>
@@ -103,7 +103,7 @@ if($item) {
 		<? endif; ?>
 
 
-		<?= $HTML->frontendComments($page_item, "/janitor/service/addComment") ?>
+		<?= $HTML->frontendComments($item, "/janitor/service/addComment") ?>
 
 	</div>
 

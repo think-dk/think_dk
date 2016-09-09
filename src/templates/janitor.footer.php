@@ -16,6 +16,14 @@
 					<?= $HTML->link("Memberships", "/janitor/admin/membership/list", array("wrapper" => "li.membership")) ?>
 				</ul>
 			</li>
+			<li class="shop">
+				<h3>Shop</h3>
+				<ul class="subjects">
+					<?= $HTML->link("Orders", "/janitor/admin/shop/order/list", array("wrapper" => "li.orders")) ?>
+					<?= $HTML->link("Carts", "/janitor/admin/shop/cart/list", array("wrapper" => "li.carts")) ?>
+					<?= $HTML->link("Payments", "/janitor/admin/shop/payment/list", array("wrapper" => "li.payments")) ?>
+				</ul>
+			</li>
 			<li class="site">
 				<h3>Site</h3>
 				<ul class="subjects">
@@ -30,7 +38,7 @@
 				<ul class="subjects">
 					<?= $HTML->link("Users", "/janitor/admin/user/list", array("wrapper" => "li.user")) ?>
 					<?= $HTML->link("Groups", "/janitor/admin/user/group/list", array("wrapper" => "li.usergroup")) ?>
-					<?= $HTML->link("Members", "/janitor/admin/user/member/list", array("wrapper" => "li.member")) ?>
+					<?= $HTML->link("Members", "/janitor/admin/user/members/list", array("wrapper" => "li.members")) ?>
 					<?//= $HTML->link("Subscribers", "/janitor/admin/user/subscriber/list", array("wrapper" => "li.subscriber")) ?>
 					<?= $HTML->link("Profile", "/janitor/admin/profile", array("wrapper" => "li.profile")) ?>
 				</ul>

@@ -1,6 +1,6 @@
 Util.Objects["subscriptions"] = new function() {
 	this.init = function(fieldset) {
-//		u.bug("init subscriptions");
+		u.bug("init subscriptions");
 
 		var field = u.qs(".field.radiobuttons", fieldset);
 		field.options = u.qsa(".item", field);

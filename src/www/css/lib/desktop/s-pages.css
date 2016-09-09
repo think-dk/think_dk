@@ -150,6 +150,84 @@
 
 
 
+/* SHOP CART */
+#content .scene.cart .messages {display: none;}
+
+#content .scene.cart div.all_items h2 {padding-bottom: 15px;}
+
+#content .scene.cart ul.items > li {padding: 20px 0 10px;}
+#content .scene.cart ul.items li h3 {width: auto; font-size: 16px;}
+#content .scene.cart ul.items li h3 > span {display: inline-block; vertical-align: top; padding-top: 4px;}
+#content .scene.cart ul.items li h3 form {display: inline-block; vertical-align: top; position: relative;}
+#content .scene.cart ul.items li h3 form div.field {padding: 0;}
+#content .scene.cart ul.items li h3 form div.field .indicator {display: none;}
+#content .scene.cart ul.items li h3 form div.field .help {left: 47px; display: none;}
+#content .scene.cart ul.items li h3 form div.field input {height: 20px; width: 25px; text-align: right;}
+#content .scene.cart ul.items li h3 form > ul.actions {padding: 0; right: 45px; top: 0;}
+#content .scene.cart ul.items li h3 form > ul.actions li {padding: 8px 0 0;}
+#content .scene.cart ul.items li h3 form > ul.actions input.button {width: 16px; height: 16px; padding: 0; text-indent: -9999px; border-radius: 15px;
+	background-image: url(/janitor/admin/img/gx_refresh.png);
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+#content .scene.cart ul.items li p {padding-bottom: 10px;}
+#content .scene.cart ul.items li p.subscription_method+p.membership {margin-top: -10px;}
+#content .scene.cart ul.items li span.total_price {float: right;}
+
+#content .scene.cart ul.items li.total {border-top: 1px solid #dedede; /*border-bottom: 1px solid #dedede;*/}
+#content .scene.cart ul.items li.total h3 {font-size: 20px;}
+
+
+
+/* ROW BUTTONS */
+#content .scene.cart ul.items li ul.actions {padding: 0; top: 20px; position: absolute; right: 15px;}
+#content .scene.cart ul.items li ul.actions li.delete input {width: 30px; overflow: hidden; text-indent: -9999px;
+	background-image: url(/janitor/admin/img/bg_icons.png);
+	background-position: 8px -42px;
+	background-repeat: no-repeat;
+}
+#content .scene.cart ul.items li ul.actions li.delete input.confirm {width: auto; text-indent: 0; background-image: none;}
+
+#content .scene.cart div.checkout {padding: 20px 0;}
+#content .scene.cart div.checkout ul.actions {text-align: right;}
+#content .scene.cart div.checkout ul.actions li {padding-right: 0;}
+
+
+/* SHOP CHECKOUT */
+
+#content .scene.checkout div.confirm {padding: 20px 0;}
+#content .scene.checkout div.confirm ul.actions {text-align: right;}
+#content .scene.checkout div.confirm ul.actions li {padding-right: 0;}
+
+
+#content .scene.checkout div.contact,
+#content .scene.checkout div.all_items {padding: 0 0 20px;}
+
+#content .scene.checkout div.contact h2,
+#content .scene.checkout div.all_items h2,
+#content .scene.checkout div.delivery h2,
+#content .scene.checkout div.billing h2 {padding-bottom: 15px;}
+#content .scene.checkout div.contact h2 a,
+#content .scene.checkout div.all_items h2 a,
+#content .scene.checkout div.billing h2 a,
+#content .scene.checkout div.delivery h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
+	font-family: "OpenSans";
+}
+
+#content .scene.checkout ul.items > li {padding: 20px 0 10px;}
+#content .scene.checkout ul.items li h3 {width: auto; font-size: 16px;}
+#content .scene.checkout ul.items li h3 > span {display: inline-block; vertical-align: top; padding-top: 4px;}
+#content .scene.checkout ul.items li p {padding-bottom: 10px;}
+#content .scene.checkout ul.items li p.subscription_method+p.membership {margin-top: -10px;}
+#content .scene.checkout ul.items li span.total_price {float: right;}
+
+#content .scene.checkout ul.items li.total {border-top: 1px solid #dedede; /*border-bottom: 1px solid #dedede;*/}
+#content .scene.checkout ul.items li.total h3 {font-size: 20px;}
+
+
+
+
+
 /* TODOS */
 #content .scene div.todos {padding-bottom: 15px; position: relative; z-index: 1;}
 #content .scene div.todos h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}

@@ -35,8 +35,8 @@ $related_items = $IC->getRelatedItems($related_pattern);
 	<div class="article i:article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-readstate="<?= $item["readstate"] ?>"
-		data-readstate-update="<?= $this->validPath("/janitor/admin/post/updateReadstate/".$item["item_id"]) ?>" 
-		data-readstate-delete="<?= $this->validPath("/janitor/admin/post/deleteReadstate/".$item["item_id"]) ?>" 
+		data-readstate-update="<?= $this->validPath("/janitor/admin/profile/addReadstate/".$item["item_id"]) ?>" 
+		data-readstate-delete="<?= $this->validPath("/janitor/admin/profile/deleteReadstate/".$item["item_id"]) ?>" 
 		>
 
 		<? if($media): ?>

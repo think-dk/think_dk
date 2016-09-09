@@ -4301,7 +4301,7 @@ u.terms_version = "terms_v1";
 u.ga_account = 'UA-10756281-1';
 u.ga_domain = 'think.dk';
 u.txt = {};
-u.txt["share"] = "Share";
+u.txt["share"] = "Share this page";
 u.txt["readmore"] = "Read more.";
 u.txt["readstate-not_read"] = "Click to mark as read";
 u.txt["readstate-read"] = "Read";
@@ -5126,6 +5126,13 @@ Util.Form = u.f = new function() {
 				this.submitted(iN);
 			}
 			else {
+				for(name in this.fields) {
+					if(this.fields[name] && this.fields[name].default_value && typeof(this.fields[name].val) == "function" && !this.fields[name].val()) {
+						if(this.fields[name].nodeName.match(/^(input|textarea)$/i)) {
+							this.fields[name].value = "";
+						}
+					}
+				}
 				this.DOMsubmit();
 			}
 		}
@@ -5257,11 +5264,11 @@ Util.Form = u.f = new function() {
 	}
 	this.buttonOnEnter = function(node) {
 		node.keyPressed = function(event) {
-			if(event.keyCode == 13 && !u.hc(this, "disabled")) {
+			if(event.keyCode == 13 && !u.hc(this, "disabled") && typeof(this.clicked) == "function") {
 				u.e.kill(event);
-				this._form.submit_input = false;
-				this._form.submit_button = this;
-				this._form.submit(event);
+				this.clicked(event);
+				// 
+				// 
 			}
 		}
 		u.e.addEvent(node, "keydown", node.keyPressed);
@@ -6115,12 +6122,56 @@ Util.Objects["signup"] = new function() {
 
 
 /*u-basics.js*/
+u.showScene = function(scene) {
+	var i, node;
+	var nodes = u.cn(scene);
+	if(nodes.length) {
+		var article = u.qs("div.article", scene);
+		if(nodes[0] == article) {
+			var article_nodes = u.cn(article);
+			nodes.shift();
+			for(x in nodes) {
+				article_nodes.push(nodes[x]);
+			}
+			nodes = article_nodes;
+		}
+		var headline = u.qs("h1,h2", scene);
+		for(i = 0; node = nodes[i]; i++) {
+			u.ass(node, {
+				"opacity":0,
+			});
+		}
+		u.ass(scene, {
+			"opacity":1,
+		});
+		u._stepA1.call(headline);
+		for(i = 1; node = nodes[i]; i++) {
+			u.a.transition(node, "all 0.2s ease-in "+((i*100)+200)+"ms");
+			u.ass(node, {
+				"opacity":1,
+				"transform":"translate(0, 0)"
+			});
+		}
+	}
+	else {
+		u.ass(scene, {
+			"opacity":1,
+		});
+	}
+}
 u._stepA1 = function() {
+	var chars = this.innerHTML.split(" ");
+	this.innerHTML = this.innerHTML.replace(/[ ]?<br[ \/]?>[ ]?/, " <br /> ");
 	this.innerHTML = '<span class="word">'+this.innerHTML.split(" ").join('</span> <span class="word">')+'</span>'; 
 	this.word_spans = u.qsa("span.word", this);
 	var i, span;
 	for(i = 0; span = this.word_spans[i]; i++) {
-		span.innerHTML = "<span>"+span.innerHTML.split("").join("</span><span>")+"</span>"; 
+		if(span.innerHTML.match(/<br[ \/]?>/)) {
+			span.parentNode.replaceChild(document.createElement("br"), span);
+		}
+		else {
+			span.innerHTML = "<span>"+span.innerHTML.split("").join("</span><span>")+"</span>"; 
+		}
 	}
 	this.spans = u.qsa("span:not(.word)", this);
 	if(this.spans) {
@@ -6142,6 +6193,12 @@ u._stepA1 = function() {
 				"transform":"translate(0, 0)",
 				"opacity":1
 			});
+			span.transitioned = function(event) {
+				u.bug("done")
+				u.ass(this, {
+					"transform":"none"
+				});
+			}
 		}
 	}
 }

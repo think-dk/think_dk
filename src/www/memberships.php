@@ -50,7 +50,7 @@ if(is_array($action) && count($action)) {
 		}
 		// something went wrong
 		else {
-			message()->addMessage("Sorry, computer says no!", array("type" => "error"));
+			message()->addMessage("Colonizing Mars! The computer is so excited it cannot process your request right now. Try again later", array("type" => "error"));
 		}
 
 	}

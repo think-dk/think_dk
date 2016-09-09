@@ -68,8 +68,8 @@ $related_items = $IC->getRelatedItems($related_pattern);
 	</div>
 
 	<div class="readstate i:readstate item_id:<?= $item["item_id"] ?>"
-		data-readstate-update="<?= $this->validPath("/janitor/article/updateReadstate/".$item["item_id"]) ?>" 
-		data-readstate-delete="<?= $this->validPath("/janitor/article/deleteReadstate/".$item["item_id"]) ?>" 
+		data-readstate-update="<?= $this->validPath("/janitor/admin/profile/addReadstate/".$item["item_id"]) ?>" 
+		data-readstate-delete="<?= $this->validPath("/janitor/admin/profile/deleteReadstate/".$item["item_id"]) ?>" 
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-readstate="<?= strtotime($item["readstate"]) ?>"
 		>

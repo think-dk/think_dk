@@ -76,66 +76,56 @@ $memberships = $IC->getItems(array("itemtype" => "membership", "order" => "posit
 <? endif; ?>
 
 
+
 <? if($memberships): ?>
-	<div class="memberships">
-		<ul class="memberships">
-	<? foreach($memberships as $membership): ?>
-			<li class="membership<?= $membership["classname"] ? " ".$membership["classname"] : "" ?>" itemprop="offers">
-				<h3><?= $membership["name"] ?></h3>
-
-				<?= $HTML->frontendOffer($membership, SITE_URL."/memberships") ?>
-
-				<div class="articlebody" itemprop="description">
-					<?= $membership["html"] ?>
-				</div>
-			</li>
-	<? endforeach; ?>
-		</ul>
-	</div>
-<? endif; ?>
 
 
 
-	<?= $model->formStart("save", array("class" => "signup labelstyle:inject")) ?>
+		<!--fieldset class="memberships i:subscriptions"-->
 
-<?	if(message()->hasMessages(array("type" => "error"))): ?>
-		<p class="errormessage">
-<?		$messages = message()->getMessages(array("type" => "error"));
-		message()->resetMessages();
-		foreach($messages as $message): ?>
-			<?= $message ?><br>
-<?		endforeach;?>
-		</p>
-<?	endif; ?>
+			<div class="memberships">
 
-<?	if($memberships): ?>
-		<fieldset class="memberships i:subscriptions">
-			<div class="field radiobuttons required">
-				<? foreach($memberships as $option): ?>
-				<div class="item<?= $option["classname"] ? " ".$option["classname"] : "" ?>" itemprop="offers">
-					<input type="radio" name="membership" id="input_membership_<?= $option["item_id"] ?>" value="<?= $option["item_id"] ?>" />
-					<label for="input_membership_<?= $option["item_id"] ?>"><?= $option["name"] ?></label>
+			<? if(message()->hasMessages(array("type" => "error"))): ?>
+				<p class="errormessage">
+				<? 
+					$messages = message()->getMessages(array("type" => "error"));
+					message()->resetMessages();
+					foreach($messages as $message): ?>
+					<?= $message ?><br>
+				<? endforeach;?>
+				</p>
+			<? endif; ?>
 
-					<?= $HTML->frontendOffer($option, SITE_URL."/memberships") ?>
+				<ul class="memberships">
+			<? foreach($memberships as $membership): ?>
+					<li class="membership<?= $membership["classname"] ? " ".$membership["classname"] : "" ?>" itemprop="offers">
+						<h3><?= $membership["name"] ?></h3>
 
-				</div>
-				<? endforeach; ?>
-				<div class="help">
-					<div class="error">Please select a membership</div>
-				</div>
-			</div>
-		</fieldset>
-<?	endif; ?>
+						<?= $HTML->frontendOffer($membership, SITE_URL."/memberships") ?>
 
-		<fieldset>
-			<?= $model->input("newsletter", array("type" => "hidden", "value" => "curious")); ?>
-			<?= $model->input("email", array("label" => "Your email", "required" => true, "value" => $email, "hint_message" => "Type your email.", "error_message" => "You entered an invalid email.")); ?>
-			<?= $model->input("password", array("hint_message" => "Type your new password - or leave it blank and we'll generate one for you.", "error_message" => "Your password must be between 8 and 20 characters.")); ?>
-		</fieldset>
+						<div class="articlebody" itemprop="description">
+							<?= $membership["html"] ?>
+						</div>
+
+	<?= $model->formStart("/shop/addToCart", array("class" => "signup labelstyle:inject")) ?>
+		<?= $model->input("quantity", array("value" => 1, "type" => "hidden")); ?>
+		<?= $model->input("item_id", array("value" => $membership["item_id"], "type" => "hidden")); ?>
+
 
 		<ul class="actions">
 			<?= $model->submit("Join", array("class" => "primary", "wrapper" => "li.signup")) ?>
 		</ul>
 	<?= $model->formEnd() ?>
+
+					</li>
+			<? endforeach; ?>
+				</ul>
+			</div>
+	
+		<!--/fieldset-->
+
+
+<? endif; ?>
+
 
 </div>

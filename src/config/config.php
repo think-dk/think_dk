@@ -31,17 +31,16 @@ define("SITE_ITEMS", true);
 define("SITE_SIGNUP", "/signup");
 
 define("SITE_SUBSCRIPTIONS", true);
-
 define("SITE_MEMBERS", true);
 
 // Enable shop model
-// define("SITE_SHOP", true);
-// define("SHOP_ORDER_NOTIFIES", "martin@think.dk");
+define("SITE_SHOP", true);
+define("SHOP_ORDER_NOTIFIES", "martin@think.dk");
 
 
 // Enable notifications (send collection email after N notifications)
 define("SITE_COLLECT_NOTIFICATIONS", 50);
 
 
-//define("SITE_INSTALL", true);
+define("SITE_INSTALL", true);
 ?>
