@@ -36,6 +36,6 @@ We want to build a movement, so please feel free to tell your friends about us -
 
 We hope you don’t hesitate to reply to this email if you have any questions.
 
-Insistingly hopeful,
+Insistently hopeful,
 
 {SITE_URL}
