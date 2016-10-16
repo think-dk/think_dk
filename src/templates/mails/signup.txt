@@ -1,20 +1,23 @@
 SUBJECT:Welcome on board!
 
-Hi there, 
+Hi {NICKNAME},
 
 and thank you for joining think.dk! 
 
 Please confirm your sign up by clicking the link below:
 {SITE_URL}/signup/confirm/email/{EMAIL}/{VERIFICATION}
 
-If you want to login to leave comments or update your profile, please visit {SITE_URL}/janitor/admin/profile after activating your account.
+
+After you confirm your account:
+To update your profile, please visit {SITE_URL}/janitor/admin/profile
+
 
 Login information: 
 Your username: {EMAIL}
 Your password: {PASSWORD}
 
-If you signed up to become a think.dk member, you will receive a second email with more information in a minute.
+If you signed up to become a think.dk member, you will receive a second email after you complete the chekcout process.
 
-Insistingly hopeful,
+Insistently hopeful,
 
 {SITE_URL}

@@ -1,5 +1,12 @@
 SUBJECT: Free Membership - Long live curiosity!
 
+{MEMBERID}
+{EMAIL}
+{NICKNAME}
+{PRICE}
+{MEMBERSHIP}
+
+
 Hi there, 
 
 
@@ -11,9 +18,6 @@ and thank you for joining the think.dk community - you are herewith officially c
 
 If you want to login to leave comments or update your profile, please visit {SITE_URL}/janitor/admin/profile after activating your account.
 
-Login information: 
-Your username: {EMAIL}
-Your password: {PASSWORD}
 
 
 We want to build a movement, so please feel free to tell your friends about us - the more we are, the more we can accelerate change :)

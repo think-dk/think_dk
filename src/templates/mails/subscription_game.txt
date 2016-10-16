@@ -1,5 +1,11 @@
 SUBJECT:Game Changer Membership!
 
+{MEMBERID}
+{EMAIL}
+{NICKNAME}
+{PRICE}
+{MEMBERSHIP}
+
 Hi there, 
 
 and thank you for joining the think.dk community - you are herewith officially confirmed as a Game Changer! We are very happy to have you on board and extremely grateful for your generosity.

@@ -1,5 +1,11 @@
 SUBJECT:Light Changer Membership!
 
+{MEMBERID}
+{EMAIL}
+{NICKNAME}
+{PRICE}
+{MEMBERSHIP}
+
 Hi there, 
 
 and thank you for joining the think.dk community - you are herewith officially confirmed as a Changer Light!

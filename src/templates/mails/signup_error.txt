@@ -4,6 +4,6 @@ Something went bonkers!?
 Please reply to this email, and we'll look into the problem.
 
 
-Insistingly hopeful,
+Insistently hopeful,
 
 {SITE_URL}
