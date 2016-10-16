@@ -3,6 +3,7 @@ global $action;
 global $model;
 
 $IC = new Items();
+
 $page_item = $IC->getItem(array("tags" => "page:memberships", "extend" => array("user" => true, "mediae" => true, "tags" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
@@ -72,58 +73,54 @@ $memberships = $IC->getItems(array("itemtype" => "membership", "order" => "posit
 		<? endif; ?>
 	</div>
 <? else:?>
-	<h1>Sign up</h1>
+	<h1>Memberships</h1>
 <? endif; ?>
 
 
 
 <? if($memberships): ?>
 
+	<div class="memberships">
 
-
-		<!--fieldset class="memberships i:subscriptions"-->
-
-			<div class="memberships">
-
-			<? if(message()->hasMessages(array("type" => "error"))): ?>
-				<p class="errormessage">
-				<? 
-					$messages = message()->getMessages(array("type" => "error"));
-					message()->resetMessages();
-					foreach($messages as $message): ?>
-					<?= $message ?><br>
+		<? if(message()->hasMessages()): ?>
+		<div class="messages">
+		<? 
+			$all_messages = message()->getMessages();
+			message()->resetMessages();
+			foreach($all_messages as $type => $messages):
+				foreach($messages as $message): ?>
+					<p class="<?= $type ?>"><?= $message ?></p>
 				<? endforeach;?>
-				</p>
-			<? endif; ?>
+		<? endforeach;?>
+		</div>
+		<? endif; ?>
 
-				<ul class="memberships">
+
+		<ul class="memberships">
 			<? foreach($memberships as $membership): ?>
-					<li class="membership<?= $membership["classname"] ? " ".$membership["classname"] : "" ?>" itemprop="offers">
-						<h3><?= $membership["name"] ?></h3>
+			<li class="membership<?= $membership["classname"] ? " ".$membership["classname"] : "" ?>" itemprop="offers">
+				<h3><?= $membership["name"] ?></h3>
 
-						<?= $HTML->frontendOffer($membership, SITE_URL."/memberships") ?>
+				<?= $HTML->frontendOffer($membership, SITE_URL."/memberships") ?>
 
-						<div class="articlebody" itemprop="description">
-							<?= $membership["html"] ?>
-						</div>
+				<div class="articlebody" itemprop="description">
+					<?= $membership["introduction"] ?>
+				</div>
 
-	<?= $model->formStart("/shop/addToCart", array("class" => "signup labelstyle:inject")) ?>
-		<?= $model->input("quantity", array("value" => 1, "type" => "hidden")); ?>
-		<?= $model->input("item_id", array("value" => $membership["item_id"], "type" => "hidden")); ?>
+				<?= $model->formStart("/memberships/addToCart", array("class" => "signup labelstyle:inject")) ?>
+					<?= $model->input("quantity", array("value" => 1, "type" => "hidden")); ?>
+					<?= $model->input("item_id", array("value" => $membership["item_id"], "type" => "hidden")); ?>
 
+					<ul class="actions">
+						<?= $model->link("Read more", "/memberships/".$membership["sindex"], array("wrapper" => "li.readmore")) ?>
+						<?= $model->submit("Join", array("class" => "primary", "wrapper" => "li.signup")) ?>
+					</ul>
+				<?= $model->formEnd() ?>
 
-		<ul class="actions">
-			<?= $model->submit("Join", array("class" => "primary", "wrapper" => "li.signup")) ?>
-		</ul>
-	<?= $model->formEnd() ?>
-
-					</li>
+			</li>
 			<? endforeach; ?>
-				</ul>
-			</div>
-	
-		<!--/fieldset-->
-
+		</ul>
+	</div>
 
 <? endif; ?>
 

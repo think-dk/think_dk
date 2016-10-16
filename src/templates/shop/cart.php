@@ -85,7 +85,7 @@ $IC = new Items();
 						) ?>
 					</span>
 				</h3>
-				<? if($item["subscription_method"]): ?>
+				<? if($item["subscription_method"] && $price["price"]): ?>
 				<p class="subscription_method">
 					Re-occuring payment every <?= $item["subscription_method"]["duration"] ?>.
 				</p>

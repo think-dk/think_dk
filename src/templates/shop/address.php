@@ -31,7 +31,7 @@ $user = $UC->getUser();
 $cart = $model->getCart();
 //print_r($user);
 ?>
-<div class="scene shopProfile i:shopAddress">
+<div class="scene shopAddress i:shopAddress">
 	<h1><?= $type == "delivery" ? "Delivery" : "Billing" ?> address</h1>
 
 <? if(message()->hasMessages()): ?>
@@ -69,7 +69,7 @@ $cart = $model->getCart();
 				<?= $UC->formStart("selectAddress", array("class" => "labelstyle:inject")) ?>
 				<?= $UC->input($type."_address_id", array("type" => "hidden", "value" => $address["id"]))?>
 				<ul class="actions">
-					<?= $UC->submit("Select", array("class" => "primary key:s", "wrapper" => "li.save")) ?>
+					<?= $UC->submit("Select", array("wrapper" => "li.select")) ?>
 				</ul>
 				<?= $UC->formEnd() ?>
 				<? endif; ?>
@@ -82,7 +82,7 @@ $cart = $model->getCart();
 
 
 	<div class="item">
-		<h2>New address</h2>
+		<h2>Add new address</h2>
 		<?= $UC->formStart("addAddress/$type", array("class" => "address labelstyle:inject")) ?>
 			<fieldset>
 				<?= $UC->input("address_label", array("value" => $address_label)) ?>

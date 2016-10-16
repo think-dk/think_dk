@@ -3,23 +3,27 @@ global $action;
 global $model;
 
 $IC = new Items();
-$UC = new User();
 
-// get current user id
-$order_no = $action[1];
-$order = $model->getOrders(array("order_no" => $order_no));
-$user = $UC->getUser();
-
-$page_item = $IC->getItem(array("tags" => "page:shop-receipt", "extend" => array("user" => true, "mediae" => true)));
+$page_item = $IC->getItem(array("tags" => "page:Already member", "extend" => array("user" => true, "mediae" => true, "tags" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
 ?>
-<div class="scene shopReceipt i:scene">
-<? if($order && $page_item && $page_item["status"]): 
+<div class="scene signup i:scene">
+
+<? if($page_item && $page_item["status"]): 
 	$media = $IC->sliceMedia($page_item); ?>
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
+
+		<? if($page_item["tags"]):
+			$editing_tag = arrayKeyValue($page_item["tags"], "context", "editing");
+			if($editing_tag !== false): ?>
+		<ul class="tags">
+			<li class="editing" title="This page is work in progress"><?= $page_item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $page_item["tags"][$editing_tag]["value"] ?></li>
+		</ul>
+			<? endif; ?>
+		<? endif; ?>
 
 		<? if($media): ?>
 		<div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
@@ -35,7 +39,7 @@ if($page_item) {
 			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($page_item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
 			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page_item["modified_at"])) ?>"></li>
 			<li class="author" itemprop="author"><?= $page_item["user_nickname"] ?></li>
-			<li class="main_entity" itemprop="mainEntityOfPage" content="<?= SITE_URL."/curious/receipt" ?>"></li>
+			<li class="main_entity" itemprop="mainEntityOfPage" content="<?= SITE_URL."/memberships" ?>"></li>
 			<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 				<ul class="publisher_info">
 					<li class="name" itemprop="name">think.dk</li>
@@ -61,28 +65,14 @@ if($page_item) {
 
 		<? if($page_item["html"]): ?>
 		<div class="articlebody" itemprop="articleBody">
-			<? 
-			$html = preg_replace("/{EMAIL}/", $user["email"], $page_item["html"]);
-			$html = preg_replace("/{NICKNAME}/", $user["nickname"], $html);
-			$html = preg_replace("/{MEMBERID}/", $user["membership"]["id"], $html);
-			print $html;
-			?>
+			<?= $page_item["html"] ?>
 		</div>
 		<? endif; ?>
 	</div>
 <? else:?>
-	<h1>Receipt</h1>
-	<p>Thanks for joining. You should check out our <a href="/events">upcoming events</a>.</p>
+	<h1>You are already a member</h1>
+	<p>You can change your membership on your <a href="/janitor/admin/profile">account profile</a>.</p>
 <? endif; ?>
 
-	
-
-<? else: ?>
-	
-	<h2>Thank you for joining us.</h2>
-
-	
-
-<? endif; ?>
 
 </div>

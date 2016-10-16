@@ -149,25 +149,10 @@ $items_culture = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "or
 		<div class="servicegroup regulating">
 
 			<h2>Balance</h2>
-			<p>Whether it is body-mind or work-life balance, with us it's easy to get everything in line.</p>
+			<p>Whether it is body-mind, work-life or duty-passion balance, with us it's easy to get everything in line.</p>
 			<ul class="items services i:articleMiniList">
 				<? foreach($items_balance as $item): ?>
 				<li class="item service id:<?= $item["item_id"] ?><?= $item["classname"] ? " ".$item["classname"] : "" ?>" itemscope itemtype="http://schema.org/Article">
-
-					<!--ul class="tags">
-					<? if($item["tags"]):
-						$editing_tag = arrayKeyValue($item["tags"], "context", "editing"); ?>
-						<? if($editing_tag !== false): ?>
-						<li class="editing" title="This post is work in progress"><?= $item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"] ?></li>
-						<? endif; ?>
-						<li><a href="/posts">Posts</a></li>
-						<? foreach($item["tags"] as $item_tag): ?>
-							<? if($item_tag["context"] == $itemtype): ?>
-						<li itemprop="articleSection"><a href="/posts/tag/<?= urlencode($item_tag["value"]) ?>"><?= $item_tag["value"] ?></a></li>
-							<? endif; ?>
-						<? endforeach; ?>
-					<? endif; ?>
-					</ul-->
 
 					<h3 itemprop="headline"><a href="/services/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h3>
 

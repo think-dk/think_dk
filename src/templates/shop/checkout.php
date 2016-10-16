@@ -70,8 +70,9 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 
 	<div class="signup">
 		<h2>Or sign up</h2>
-		<p>Enter your details below and create your membership account now.</h2>
+		<p>Enter your details below and create your account now.</h2>
 		<?= $UC->formStart("/shop/signup", array("class" => "signup labelstyle:inject")) ?>
+			<?= $UC->input("newsletter", array("type" => "hidden", "value" => "curious")); ?>
 			<fieldset>
 				<?= $UC->input("firstname", array("label" => "Firstname", "value" => $firstname)); ?>
 				<?= $UC->input("lastname", array("label" => "Lastname", "value" => $lastname)); ?>
@@ -90,7 +91,10 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 
 
 	// user is already logged in, show checkout overview
-	else: ?>
+	else:
+
+		$user = $UC->getUser();
+	 ?>
 
 
 	<? if($cart["items"]): ?>
@@ -107,8 +111,6 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 	</div>
 	<? endif; ?>
 
-
-	<? $user = $UC->getUser(); ?>
 	<div class="contact">
 		<h2>Your details <a href="/shop/profile">(Edit)</a></h2>
 		<dl class="list">
@@ -145,7 +147,7 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 						) ?>
 					</span>
 				</h3>
-				<? if($item["subscription_method"]): ?>
+				<? if($item["subscription_method"] && $price["price"]): ?>
 				<p class="subscription_method">
 					Re-occuring payment every <?= $item["subscription_method"]["duration"] ?>.
 				</p>
@@ -153,7 +155,11 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 
 				<? if($item["itemtype"] == "membership"): ?>
 				<p class="membership">
+					<? if($price["price"]): ?>
 					This purchase includes a membership.
+					<? else: ?>
+					Confirm order to get your FREE membership.
+					<? endif; ?>
 				</p>
 				<? endif; ?>
 			</li>

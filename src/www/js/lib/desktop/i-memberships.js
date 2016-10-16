@@ -19,7 +19,7 @@ Util.Objects["memberships"] = new function() {
 				}
 				for(i = 0; node = this._membership_nodes[i]; i++) {
 					u.ass(node, {
-						"height":(tallest_node-22)+"px"
+						"height":(tallest_node+45)+"px"
 					})
 				}
 			}

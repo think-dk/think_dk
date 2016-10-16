@@ -42,31 +42,31 @@ if(is_array($action) && count($action)) {
 		exit();
 	}
 
-	// /signup/save
-	else if($action[0] == "save" && $page->validateCsrfToken()) {
-
-		// create new user
-		$user = $model->newUser(array("newUser"));
-
-		// successful creation
-		if(isset($user["user_id"])) {
-
-			// redirect to leave POST state
-			header("Location: receipt");
-			exit();
-
-		}
-
-		// user exists
-		else if(isset($user["status"]) && $user["status"] == "USER_EXISTS") {
-			message()->addMessage("Sorry, the computer says you either have a bad memory or a bad conscience!", array("type" => "error"));
-		}
-		// something went wrong
-		else {
-			message()->addMessage("Sorry, computer says no!", array("type" => "error"));
-		}
-
-	}
+	// // /signup/save
+	// else if($action[0] == "save" && $page->validateCsrfToken()) {
+	//
+	// 	// create new user
+	// 	$user = $model->newUser(array("newUser"));
+	//
+	// 	// successful creation
+	// 	if(isset($user["user_id"])) {
+	//
+	// 		// redirect to leave POST state
+	// 		header("Location: receipt");
+	// 		exit();
+	//
+	// 	}
+	//
+	// 	// user exists
+	// 	else if(isset($user["status"]) && $user["status"] == "USER_EXISTS") {
+	// 		message()->addMessage("Sorry, the computer says you either have a bad memory or a bad conscience!", array("type" => "error"));
+	// 	}
+	// 	// something went wrong
+	// 	else {
+	// 		message()->addMessage("Sorry, computer says no!", array("type" => "error"));
+	// 	}
+	//
+	// }
 
 	// /signup/unsubscribe
 	// post email + newsletter
@@ -81,7 +81,7 @@ if(is_array($action) && count($action)) {
 // plain signup directly
 // /signup
 $page->page(array(
-	"templates" => "signup/signup.php"
+	"templates" => "page/404.php"
 ));
 
 ?>

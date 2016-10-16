@@ -58,7 +58,8 @@
 			</p>
 			<p>
 				Ironically the only long term cookie we save on your computer, is the one used to remember your acceptance of these terms. 
-				This cookie is stored for 12 months and prevents the "Accept cookies" dialog from reapearing on every page.
+				This cookie is stored for 12 months and prevents the "Accept cookies" dialog from reapearing on every page, after you have
+				accepted them.
 			</p>
 			<p>
 				We use Google Analytics for statistics on our website. We like statistics because it tells us how many 
@@ -91,7 +92,8 @@
 			</p>
 			<p>
 				The source code of this website is licensed under a 
-				<a rel="license" href="https://github.com/kaestel/think_dk/blob/master/LICENSE-CPAL.md">CPAL-1.0 licence</a>.
+				<a rel="license" href="https://github.com/kaestel/think_dk/blob/master/LICENSE-CPAL.md">CPAL-1.0 licence</a>, 
+				and available as an open source project on <a rel="license" href="https://github.com/kaestel/think_dk">Github</a>.
 			</p>
 		</div>
 	</div>

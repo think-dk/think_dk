@@ -49,7 +49,7 @@ if(is_array($action) && count($action)) {
 	else if($action[0] == "confirm" && count($action) == 2) {
 
 		$order = $model->newOrderFromCart($action);
-		print_r($order);
+
 		if($order) {
 
 			$price = $model->getTotalOrderPrice($order["id"]);
@@ -61,15 +61,20 @@ if(is_array($action) && count($action)) {
 			}
 			else {
 				// redirect to leave POST state
-				header("Location: /shop/receipt");
+				header("Location: /shop/receipt/".$order["order_no"]);
 				exit();
 			}
 
 		}
 		else {
-			$page->page(array(
-				"templates" => "shop/checkout.php"
-			));
+
+			// redirect to leave POST state
+			header("Location: /shop/cart");
+			exit();
+
+			// $page->page(array(
+			// 	"templates" => "shop/checkout.php"
+			// ));
 		}
 		exit();
 	}
@@ -80,7 +85,7 @@ if(is_array($action) && count($action)) {
 		$page->page(array(
 			"templates" => "shop/payment.php"
 		));
-
+		exit();
 	}
 
 	# /shop/addToCart
