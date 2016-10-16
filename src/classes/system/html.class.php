@@ -40,6 +40,7 @@ class HTML extends HTMLCore {
 		$_ = '';
 
 		if($item["prices"]) {
+
 			global $page;
 
 			$offer_key = arrayKeyValue($item["prices"], "type", "offer");
@@ -49,7 +50,7 @@ class HTML extends HTMLCore {
 				$_ .= '<li class="name" itemprop="name" content="'.$item["name"].'"></li>';
 				$_ .= '<li class="currency" itemprop="priceCurrency" content="'.$page->currency().'"></li>';
 
-				if($offer_key) {
+				if($offer_key !== false) {
 					$_ .= '<li class="price default">'.formatPrice($item["prices"][$default_key]).($item["subscription_method"] && $item["prices"][$default_key]["price"] ? ' / '.$item["subscription_method"]["name"] : '').'</li>';
 					$_ .= '<li class="price offer" itemprop="price" content="'.$item["prices"][$offer_key]["price"].'">'.formatPrice($item["prices"][$offer_key]).($item["subscription_method"] && $item["prices"][$default_key]["price"] ? ' / '.$item["subscription_method"]["name"] : '').'</li>';
 				}
