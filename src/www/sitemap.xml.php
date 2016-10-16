@@ -121,14 +121,14 @@ $item = $IC->getItem(array("tags" => "page:wishlist"));
 	</url>
 <?
 // SIGNUP PAGE
-$item = $IC->getItem(array("tags" => "page:Signup"));
+//$item = $IC->getItem(array("tags" => "page:Signup"));
 ?>
-	<url>
+	<!--url>
 		<loc><?= SITE_URL ?>/signup</loc>
 		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>0.9</priority>
-	</url>
+	</url-->
 <?
 // MEMBERSHIPS PAGE
 $item = $IC->getItem(array("tags" => "page:Memberships"));
