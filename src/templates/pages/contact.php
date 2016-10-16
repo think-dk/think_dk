@@ -117,12 +117,17 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 			<dd class="contact">
 				<ul>
 					<li class="email"><a href="mailto:start@think.dk" itemprop="email" content="start@think.dk">start@think.dk</a></li>
+					<li itemprop="telephone" class="tel" content="+4520742819">+45 2074 2819</li>
+					<li itemprop="telephone" class="tel" content="+4520742819">+45 6069 2819</li>
 				</ul>
 			</dd>
 			<dt class="social">Social media</dt>
 			<dd class="social">
 				<ul>
 					<li class="facebook"><a href="https://www.facebook.com/thinkdk-527647573938387/" target="_blank">Facebook</a></li>
+					<li class="meetup"><a href="https://www.meetup.com/think-dk" target="_blank">Meetup</a></li>
+					<li class="twitter"><a href="https://twitter.com/think_denmark" target="_blank">Twitter</a></li>
+					<li class="instagram"><a href="https://www.instagram.com/think.dk" target="_blank">Instagram</a></li>
 					<li class="linkedin"><a href="https://www.linkedin.com/company/think-dk" target="_blank">LinkedIn</a></li>
 				</ul>
 			</dd>
