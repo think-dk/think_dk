@@ -88,7 +88,7 @@
 #content .scene div.all_services div.servicegroup ul.services li.service {padding-left: 20px; padding-right: 20px; padding-bottom: 0;}
 
 #content .scene div.all_services div.servicegroup > h2 {padding-left: 20px; padding-right: 20px; padding-bottom: 10px;}
-#content .scene div.all_services div.servicegroup > p {padding-left: 20px; padding-right: 20px; padding-bottom: 30px;}
+#content .scene div.all_services div.servicegroup > p {font-style: italic; padding-left: 20px; padding-right: 20px; padding-bottom: 30px;}
 #content .scene div.all_services div.servicegroup ul.services h3,
 #content .scene div.all_services div.servicegroup ul.services p {padding-left: 0; padding-right: 0;}
 
@@ -122,32 +122,48 @@
 
 
 /* SUBSCRIPTIONS FORM */
-#content .scene fieldset.memberships .field .item {position: relative; display: inline-block; vertical-align: top; width: calc(25% - 32px); padding: 10px; margin: 0 10px 10px 0; border-radius: 5px; border: 1px solid #26962d; cursor: pointer;}
+/*#content .scene fieldset.memberships .field .item {position: relative; display: inline-block; vertical-align: top; width: calc(25% - 32px); padding: 10px; margin: 0 10px 10px 0; border-radius: 5px; border: 1px solid #26962d; cursor: pointer;}
 #content .scene fieldset.memberships .field .item label {font-size: 16px; display: block; padding-bottom: 3px;}
 #content .scene fieldset.memberships .field .item input {position: absolute; right: 1px; top: 19px;}
 #content .scene fieldset.memberships .field .item h3,
+*/
 /*#content .scene fieldset.memberships .field .item ul.offer {width: auto; padding-left: 0px; padding-right: 0px;}*/
-#content .scene fieldset.memberships .field .indicator {display: none;}
+/*#content .scene fieldset.memberships .field .indicator {display: none;}
 #content .scene fieldset.memberships .field .help {position: static;}
 #content .scene fieldset.memberships .field .item.selected {background-color: #26962d;}
 #content .scene fieldset.memberships .field .item.selected label,
 #content .scene fieldset.memberships .field .item.selected li {color: #ffffff;}
+*/
 
-
-#content .scene ul.memberships {list-style: none; margin: 0; padding-bottom: 0; font-size: 0; position: relative; width: auto;}
-#content .scene ul.memberships > li {display: inline-block; vertical-align: top; width: calc(25% - 32px); padding: 10px; margin: 0 10px 10px 0; border-radius: 5px; border: 1px solid #26962d;}
-#content .scene ul.memberships > li h3 {color: #26962d; padding-bottom: 3px;
+#content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-bottom: 0; font-size: 0; position: relative; width: auto;}
+#content .scene div.memberships ul.memberships > li {display: inline-block; vertical-align: top; width: calc(25% - 32px); padding: 10px; margin: 0 10px 10px 0; border-radius: 5px; border: 1px solid #26962d; position: relative;}
+#content .scene div.memberships ul.memberships > li h3 {color: #26962d; padding-bottom: 3px;
 	font-family: "PT Serif", Times, serif;
 }
-#content .scene ul.memberships > li ul.offer {padding-bottom: 4px;}
-#content .scene ul.memberships > li h2,
-#content .scene ul.memberships > li h3,
-#content .scene ul.memberships > li h4,
-#content .scene ul.memberships > li p,
-#content .scene ul.memberships > li dl {width: auto; padding-left: 0px; padding-right: 0px;}
-#content .scene ul.memberships > li ul {padding: 0; width: auto;}
+#content .scene div.memberships ul.memberships > li ul.offer {padding-bottom: 4px;}
+#content .scene div.memberships ul.memberships > li h2,
+#content .scene div.memberships ul.memberships > li h3,
+#content .scene div.memberships ul.memberships > li h4,
+#content .scene div.memberships ul.memberships > li p,
+#content .scene div.memberships ul.memberships > li dl {width: auto; padding-left: 0px; padding-right: 0px;}
+#content .scene div.memberships ul.memberships > li ul {padding: 0; width: auto;}
+
+#content .scene div.memberships ul.memberships > li ul.actions {position: absolute; bottom: 10px; left: 10px; width: calc(100% - 20px);}
+#content .scene div.memberships ul.memberships > li ul.actions li {display: block; padding: 0;}
+#content .scene div.memberships ul.memberships > li ul.actions li.readmore {text-align: center; padding-bottom: 7px;}
+#content .scene div.memberships ul.memberships > li ul.actions li input {display: block; width: 100%;}
 
 
+/* MEMBERSHIP VIEW */
+#content .scene.membership div.article ul.offer {padding: 20px 70px 15px;}
+#content .scene.membership div.article ul.offer li.default {font-size: 14px;}
+#content .scene.membership div.article ul.offer li {font-size: 30px; display: block;}
+#content .scene.membership div.article form {}
+
+#content .scene.membership ul.memberships li.membership {padding-bottom: 0;}
+#content .scene.membership ul.memberships li.membership h3 {padding-bottom: 5px;}
+#content .scene.membership ul.memberships li.membership ul.offer {padding: 0 70px 10px;}
+#content .scene.membership ul.memberships li.membership ul.offer li {}
 
 
 /* SHOP CART */
@@ -200,6 +216,9 @@
 #content .scene.checkout div.confirm ul.actions li {padding-right: 0;}
 
 
+#content .scene.checkout div.emptycart,
+#content .scene.checkout div.login,
+#content .scene.checkout div.signup,
 #content .scene.checkout div.contact,
 #content .scene.checkout div.all_items {padding: 0 0 20px;}
 
@@ -223,6 +242,17 @@
 
 #content .scene.checkout ul.items li.total {border-top: 1px solid #dedede; /*border-bottom: 1px solid #dedede;*/}
 #content .scene.checkout ul.items li.total h3 {font-size: 20px;}
+
+
+
+/* ADDRESSES */
+#content .scene.shopAddress ul.addresses {}
+#content .scene.shopAddress ul.addresses > li {display: inline-block; vertical-align: top; width: 220px; height: 220px; padding: 0 10px 0 0; margin-bottom: 40px; position: relative;}
+#content .scene.shopAddress ul.addresses > li h3 {width: auto; padding-left: 0; padding-right: 0;}
+#content .scene.shopAddress ul.addresses > li > div {color: #777777;}
+
+#content .scene.shopAddress ul.addresses > li ul.actions {padding: 20px 0 0;}
+#content .scene.shopAddress div.item {border-top: 1px solid #dedede; padding-top: 20px;}
 
 
 
