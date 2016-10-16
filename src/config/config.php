@@ -35,12 +35,12 @@ define("SITE_MEMBERS", true);
 
 // Enable shop model
 define("SITE_SHOP", true);
-define("SHOP_ORDER_NOTIFIES", "martin@think.dk");
+define("SHOP_ORDER_NOTIFIES", "martin@think.dk,anja@think.dk");
 
 
 // Enable notifications (send collection email after N notifications)
 define("SITE_COLLECT_NOTIFICATIONS", 50);
 
 
-define("SITE_INSTALL", true);
+//define("SITE_INSTALL", true);
 ?>
