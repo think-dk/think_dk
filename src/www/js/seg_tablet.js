@@ -6004,6 +6004,10 @@ Util.Objects["page"] = new function() {
 				u.notifier(this);
 				this.initNavigation();
 				this.resized();
+				u.a.transition(page.fN, "all 0.5s ease-in");
+				u.ass(page.fN, {
+					"opacity":1
+				})
 			}
 		}
 		page.acceptCookies = function() {
@@ -7171,7 +7175,7 @@ Util.Objects["memberships"] = new function() {
 				}
 				for(i = 0; node = this._membership_nodes[i]; i++) {
 					u.ass(node, {
-						"height":(tallest_node-22)+"px"
+						"height":(tallest_node+45)+"px"
 					})
 				}
 			}

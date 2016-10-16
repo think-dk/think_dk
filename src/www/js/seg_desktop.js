@@ -6240,6 +6240,7 @@ u.f.addField = function(node, _options) {
 			"name":field_name, 
 			"disabled":field_disabled
 		};
+		u.ae(field, "input", {"name":field_name, "value":"false", "type":"hidden"});
 		u.ae(field, "input", u.f.verifyAttributes(attributes));
 		u.ae(field, "label", {"for":field_id, "html":field_label});
 	}
@@ -6437,6 +6438,10 @@ Util.Objects["page"] = new function() {
 				u.notifier(this);
 				this.initNavigation();
 				this.resized();
+				u.a.transition(page.fN, "all 0.5s ease-in");
+				u.ass(page.fN, {
+					"opacity":1
+				})
 			}
 		}
 		page.acceptCookies = function() {
@@ -7604,7 +7609,7 @@ Util.Objects["memberships"] = new function() {
 				}
 				for(i = 0; node = this._membership_nodes[i]; i++) {
 					u.ass(node, {
-						"height":(tallest_node-22)+"px"
+						"height":(tallest_node+45)+"px"
 					})
 				}
 			}

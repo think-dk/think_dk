@@ -54,6 +54,15 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 .terms_notification .details {padding: 0; font-size: 16px; display: inline-block; vertical-align: bottom; padding: 0; color: #ffffff;}
 .terms_notification .accept {float: left;}
 .terms_notification .details {float: right;}
+#page #notifications {
+	position: fixed;
+	z-index: 110;
+	top: 0;
+	width: 200px; left: 50%; margin-left: -100px;
+	background: #333333; color: #ffffff;
+}
+#page #notifications div {padding: 10px 20px; color: #ffffff;}
+#page #notifications .error {background: #df0000;}
 
 
 /*s-header.css*/
@@ -65,11 +74,12 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 #header .servicenavigation {position: absolute; top: 5px; right: 40px;}
 #header .servicenavigation li {display: inline-block; vertical-align: top; color: #bbbbbb; padding: 3px 0;}
 #header .servicenavigation li.navigation {display: none;}
-#header .servicenavigation li:before {content: "\00a0\00a0|\00a0\00a0";}
+#header .servicenavigation li:before {content: "\00a0\00a0|\00a0\00a0"; color: #bbbbbb;}
 #header .servicenavigation li.github:before,
 #header .servicenavigation li.navigation:before,
 #header .servicenavigation li:first-child:before {content: "";}
 #header .servicenavigation li.github {margin: 0 0 0 10px; padding: 4px 12px; background: #8c9399; border-radius: 3px; cursor: pointer; font-size: 12px; color: #ffffff;}
+#header .servicenavigation li.cart.used {color: #df0000;}
 #navigation {z-index: 10; position: fixed; right: 60px; top: 65px; background-color: rgba(255,255,255, 0.8); border-radius: 5px;}
 #navigation ul {}
 #navigation ul li {display: inline-block; vertical-align: top; padding: 10px; font-size: 20px; color: #888888;
@@ -79,7 +89,7 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 
 
 /*s-footer.css*/
-#footer {text-align: center; border-top: 1px solid #888888;}
+#footer {text-align: center; border-top: 1px solid #888888; opacity: 0;}
 #footer p {padding: 10px; cursor: pointer; font-size: 13px;}
 
 /*s-content.css*/
@@ -112,10 +122,10 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 #content .scene ul,
 #content .scene ol {padding: 0 70px 15px;}
 #content .scene ul.items {padding: 0;}
-#content .scene ul.items li.item {display: block; padding-top: 20px; padding-bottom: 30px; border-top: 1px solid #dedede;}
+#content .scene ul.items li.item {display: block; padding-top: 20px; padding-bottom: 30px; border-top: 1px solid #dedede; position: relative;}
 #content .scene ul.items li.item h2 {position: relative; z-index: 1;}
 #content .scene dl {padding: 0 70px 15px; width: 500px;}
-#content .scene dt {width: 100px; text-align: right; padding: 0 5px 0 0; color: #999999;} 
+#content .scene dt {width: 100px; text-align: right; padding: 0 5px 6px 0; color: #999999;} 
 #content .scene dt:after {content: ":";}
 #content .scene dd {padding: 0 0 6px; width: 394px;}
 #content .scene dt span {text-transform: none;}
@@ -245,11 +255,13 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 #content .scene div.comments ul.comments > li ul.info li.user:after {content: ",\00a0";}
 #content .scene div.comments ul.comments > li p.comment {padding-bottom: 15px; font-size: 13px;}
 #content .scene div.comments .field {padding-bottom: 10px;}
-#content .scene dl.offer {font-size: 0; padding: 0;}
-#content .scene dl.offer dt {display: none;}
-#content .scene dl.offer .url {display: none;}
-#content .scene dl.offer dd {font-size: 11px; width: auto; display: inline-block; vertical-align: top;}
-#content .scene dl.offer dd.currency:after {content: "\00a0";}
+#content .scene ul.offer,
+#content .scene .articlebody ul.offer {font-size: 0; padding: 0; margin: 0; list-style: none;}
+#content .scene ul.offer li.name,
+#content .scene ul.offer li.currency,
+#content .scene ul.offer li.url {display: none;}
+#content .scene ul.offer li {font-size: 11px; width: auto; display: inline-block; vertical-align: top; padding: 0 5px 0 0;}
+#content .scene ul.offer li.default {text-decoration: line-through;}
 #content .scene code {padding: 10px 20px; margin: 0 50px 15px; background-color: #ededed; color: #333333; font-size: 12px; display: block; overflow: auto; white-space: pre; border-radius: 5px;
 	font-family: "Monaco", "Courier New", "Courier";
 	-webkit-tab-size: 4;
@@ -297,7 +309,8 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 #content .scene .usedby ul li.torvehallerne {background-image: url(/img/logos/torvehallerne.png);}
 #content .scene .usedby ul li.peoplegroup {background-image: url(/img/logos/peoplegroup.png);}
 #content .scene.login form {padding-bottom: 20px;}
-#content .scene p.errormessage {color: #df0000;}
+#content .scene form li.forgot {padding-top: 5px;}
+#content .scene div.messages > p.error {color: #df0000;}
 
 
 /*s-form.css*/
@@ -335,6 +348,16 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 #content .field.radiobuttons div.item {padding: 10px 0 0;}
 #content .field.radiobuttons div.item input {width: auto; height: auto; padding: 0; margin: 1px 10px 0 3px; border: 0;}
 #content .field.radiobuttons div.item label {font-size: 14px; line-height: 1em; display: inline-block; vertical-align: top; text-align: left; width: auto;}
+#content .field input[type="integer"],
+#content .field input[type="number"] {
+	-moz-appearance: textfield;
+}
+#content .field input[type="integer"]::-webkit-inner-spin-button,
+#content .field input[type="integer"]::-webkit-outer-spin-button,
+#content .field input[type="number"]::-webkit-inner-spin-button,
+#content .field input[type="number"]::-webkit-outer-spin-button {margin: 0;
+	-webkit-appearance: none;
+}
 #content .field.files {border: 3px dashed #dedede; display: block; width: 378px; border-radius: 5px; position: relative; margin: 2px 68px 17px; padding: 0;}
 #content .field.files input[type=file] {opacity: 0; width: 360px; height: 49px; margin: 0; border: 0;}
 #content .field.files label {color: #333333; font-size: 14px; display: block; position: absolute; width: 120px; left: 50%; padding: 1px 4px 3px; margin: 16px 0 0 -60px; text-align: center; border-radius: 6px; background: #dedede;}
@@ -752,7 +775,7 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene div.all_services div.servicegroup ul.services {}
 #content .scene div.all_services div.servicegroup ul.services li.service {padding-left: 20px; padding-right: 20px; padding-bottom: 0;}
 #content .scene div.all_services div.servicegroup > h2 {padding-left: 20px; padding-right: 20px; padding-bottom: 10px;}
-#content .scene div.all_services div.servicegroup > p {padding-left: 20px; padding-right: 20px; padding-bottom: 30px;}
+#content .scene div.all_services div.servicegroup > p {font-style: italic; padding-left: 20px; padding-right: 20px; padding-bottom: 30px;}
 #content .scene div.all_services div.servicegroup ul.services h3,
 #content .scene div.all_services div.servicegroup ul.services p {padding-left: 0; padding-right: 0;}
 #content .scene div.all_events h2 {padding-bottom: 15px;}
@@ -773,28 +796,94 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene.event div.event ul.location {display: block;}
 #content .scene.event div.event ul.location li.name {padding-bottom: 10px; font-size: 15px;}
 #content .scene.event div.event ul.location ul {padding-left: 0; padding-right: 0;}
-#content .scene fieldset.subscriptions .field .item {position: relative; display: inline-block; vertical-align: top; width: calc(25% - 32px); padding: 10px; margin: 0 10px 10px 0; border-radius: 5px; border: 1px solid #26962d; cursor: pointer;}
-#content .scene fieldset.subscriptions .field .item label {font-size: 16px; display: block; padding-bottom: 3px;}
-#content .scene fieldset.subscriptions .field .item input {position: absolute; right: 1px; top: 19px;}
-#content .scene fieldset.subscriptions .field .item h3,
-#content .scene fieldset.subscriptions .field .item dl {width: auto; padding-left: 0px; padding-right: 0px;}
-#content .scene fieldset.subscriptions .field .indicator {display: none;}
-#content .scene fieldset.subscriptions .field .help {position: static;}
-#content .scene fieldset.subscriptions .field .item.selected {background-color: #26962d;}
-#content .scene fieldset.subscriptions .field .item.selected label,
-#content .scene fieldset.subscriptions .field .item.selected dd {color: #ffffff;}
-#content .scene ul.subscriptions {list-style: none; margin: 0; padding-bottom: 0; font-size: 0; position: relative; width: auto;}
-#content .scene ul.subscriptions > li {display: inline-block; vertical-align: top; width: calc(25% - 32px); padding: 10px; margin: 0 10px 10px 0; border-radius: 5px; border: 1px solid #26962d;}
-#content .scene ul.subscriptions > li h3 {color: #26962d; padding-bottom: 3px;
+#content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-bottom: 0; font-size: 0; position: relative; width: auto;}
+#content .scene div.memberships ul.memberships > li {display: inline-block; vertical-align: top; width: calc(25% - 32px); padding: 10px; margin: 0 10px 10px 0; border-radius: 5px; border: 1px solid #26962d; position: relative;}
+#content .scene div.memberships ul.memberships > li h3 {color: #26962d; padding-bottom: 3px;
 	font-family: "PT Serif", Times, serif;
 }
-#content .scene ul.subscriptions > li dl {padding-bottom: 4px;}
-#content .scene ul.subscriptions > li h2,
-#content .scene ul.subscriptions > li h3,
-#content .scene ul.subscriptions > li h4,
-#content .scene ul.subscriptions > li p,
-#content .scene ul.subscriptions > li dl {width: auto; padding-left: 0px; padding-right: 0px;}
-#content .scene ul.subscriptions > li ul {padding: 0; width: auto;}
+#content .scene div.memberships ul.memberships > li ul.offer {padding-bottom: 4px;}
+#content .scene div.memberships ul.memberships > li h2,
+#content .scene div.memberships ul.memberships > li h3,
+#content .scene div.memberships ul.memberships > li h4,
+#content .scene div.memberships ul.memberships > li p,
+#content .scene div.memberships ul.memberships > li dl {width: auto; padding-left: 0px; padding-right: 0px;}
+#content .scene div.memberships ul.memberships > li ul {padding: 0; width: auto;}
+#content .scene div.memberships ul.memberships > li ul.actions {position: absolute; bottom: 10px; left: 10px; width: calc(100% - 20px);}
+#content .scene div.memberships ul.memberships > li ul.actions li {display: block; padding: 0;}
+#content .scene div.memberships ul.memberships > li ul.actions li.readmore {text-align: center; padding-bottom: 7px;}
+#content .scene div.memberships ul.memberships > li ul.actions li input {display: block; width: 100%;}
+#content .scene.membership div.article ul.offer {padding: 20px 70px 15px;}
+#content .scene.membership div.article ul.offer li.default {font-size: 14px;}
+#content .scene.membership div.article ul.offer li {font-size: 30px; display: block;}
+#content .scene.membership div.article form {}
+#content .scene.membership ul.memberships li.membership {padding-bottom: 0;}
+#content .scene.membership ul.memberships li.membership h3 {padding-bottom: 5px;}
+#content .scene.membership ul.memberships li.membership ul.offer {padding: 0 70px 10px;}
+#content .scene.membership ul.memberships li.membership ul.offer li {}
+#content .scene.cart .messages {display: none;}
+#content .scene.cart div.all_items h2 {padding-bottom: 15px;}
+#content .scene.cart ul.items > li {padding: 20px 0 10px;}
+#content .scene.cart ul.items li h3 {width: auto; font-size: 16px;}
+#content .scene.cart ul.items li h3 > span {display: inline-block; vertical-align: top; padding-top: 4px;}
+#content .scene.cart ul.items li h3 form {display: inline-block; vertical-align: top; position: relative;}
+#content .scene.cart ul.items li h3 form div.field {padding: 0;}
+#content .scene.cart ul.items li h3 form div.field .indicator {display: none;}
+#content .scene.cart ul.items li h3 form div.field .help {left: 47px; display: none;}
+#content .scene.cart ul.items li h3 form div.field input {height: 20px; width: 25px; text-align: right;}
+#content .scene.cart ul.items li h3 form > ul.actions {padding: 0; right: 45px; top: 0;}
+#content .scene.cart ul.items li h3 form > ul.actions li {padding: 8px 0 0;}
+#content .scene.cart ul.items li h3 form > ul.actions input.button {width: 16px; height: 16px; padding: 0; text-indent: -9999px; border-radius: 15px;
+	background-image: url(/janitor/admin/img/gx_refresh.png);
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+#content .scene.cart ul.items li p {padding-bottom: 10px;}
+#content .scene.cart ul.items li p.subscription_method+p.membership {margin-top: -10px;}
+#content .scene.cart ul.items li span.total_price {float: right;}
+#content .scene.cart ul.items li.total {border-top: 1px solid #dedede; }
+#content .scene.cart ul.items li.total h3 {font-size: 20px;}
+#content .scene.cart ul.items li ul.actions {padding: 0; top: 20px; position: absolute; right: 15px;}
+#content .scene.cart ul.items li ul.actions li.delete input {width: 30px; overflow: hidden; text-indent: -9999px;
+	background-image: url(/janitor/admin/img/bg_icons.png);
+	background-position: 8px -42px;
+	background-repeat: no-repeat;
+}
+#content .scene.cart ul.items li ul.actions li.delete input.confirm {width: auto; text-indent: 0; background-image: none;}
+#content .scene.cart div.checkout {padding: 20px 0;}
+#content .scene.cart div.checkout ul.actions {text-align: right;}
+#content .scene.cart div.checkout ul.actions li {padding-right: 0;}
+#content .scene.checkout div.confirm {padding: 20px 0;}
+#content .scene.checkout div.confirm ul.actions {text-align: right;}
+#content .scene.checkout div.confirm ul.actions li {padding-right: 0;}
+#content .scene.checkout div.emptycart,
+#content .scene.checkout div.login,
+#content .scene.checkout div.signup,
+#content .scene.checkout div.contact,
+#content .scene.checkout div.all_items {padding: 0 0 20px;}
+#content .scene.checkout div.contact h2,
+#content .scene.checkout div.all_items h2,
+#content .scene.checkout div.delivery h2,
+#content .scene.checkout div.billing h2 {padding-bottom: 15px;}
+#content .scene.checkout div.contact h2 a,
+#content .scene.checkout div.all_items h2 a,
+#content .scene.checkout div.billing h2 a,
+#content .scene.checkout div.delivery h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
+	font-family: "OpenSans";
+}
+#content .scene.checkout ul.items > li {padding: 20px 0 10px;}
+#content .scene.checkout ul.items li h3 {width: auto; font-size: 16px;}
+#content .scene.checkout ul.items li h3 > span {display: inline-block; vertical-align: top; padding-top: 4px;}
+#content .scene.checkout ul.items li p {padding-bottom: 10px;}
+#content .scene.checkout ul.items li p.subscription_method+p.membership {margin-top: -10px;}
+#content .scene.checkout ul.items li span.total_price {float: right;}
+#content .scene.checkout ul.items li.total {border-top: 1px solid #dedede; }
+#content .scene.checkout ul.items li.total h3 {font-size: 20px;}
+#content .scene.shopAddress ul.addresses {}
+#content .scene.shopAddress ul.addresses > li {display: inline-block; vertical-align: top; width: 220px; height: 220px; padding: 0 10px 0 0; margin-bottom: 40px; position: relative;}
+#content .scene.shopAddress ul.addresses > li h3 {width: auto; padding-left: 0; padding-right: 0;}
+#content .scene.shopAddress ul.addresses > li > div {color: #777777;}
+#content .scene.shopAddress ul.addresses > li ul.actions {padding: 20px 0 0;}
+#content .scene.shopAddress div.item {border-top: 1px solid #dedede; padding-top: 20px;}
 #content .scene div.todos {padding-bottom: 15px; position: relative; z-index: 1;}
 #content .scene div.todos h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
 #content .scene div.todos h2 svg.arrow {position: absolute; top: 6px; right: 55px;}

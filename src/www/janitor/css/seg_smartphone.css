@@ -453,26 +453,56 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 
 
 /*s-shop.css*/
-#content .defaultView > .actions li.delete {float: right; padding: 0 0 10px 10px;}
-#content .defaultList.cartList ul.items > li h3 {padding-bottom: 16px;}
-#content .defaultList.cartList ul.items > li ul.products {display: none;}
-#content .defaultView.cartView ul.products {padding: 0 30px;}
-#content .defaultView.cartView ul.products li {display: block;}
-#content .defaultList.orderList ul.items > li dl.details {padding: 3px 30px 16px; display: block;}
-#content .defaultList.orderList ul.items > li dl.details dt {display: none;}
-#content .defaultList.orderList ul.items > li dl.details dd.name,
-#content .defaultList.orderList ul.items > li dl.details dd.price {display: none;}
-#content .defaultList.orderList ul.items > li dl.details dd.email:after {content: ",\00a0";}
-#content .defaultView.orderView dl.list {padding-top: 3px;}
-#content .defaultView.orderView dl.list dt {width: 200px;}
-#content .defaultView.orderView dl.list dt:after {content: ":";}
-#content .defaultView.orderView dl.list dd {width: 370px; margin: 0 30px 0 0;}
-#content .defaultView.orderView ul.list {padding-top: 3px;}
-#content .defaultView.orderView ul.list li {display: block; overflow: hidden; border-bottom: 1px solid #dedede;}
-#content .defaultView.orderView ul.list li span {display: inline-block; vertical-align: top; padding: 9px 15px 0 0;}
-#content .defaultView.orderView ul.list li span.title {width: 400px; padding-bottom: 9px; word-wrap: break-word;}
-#content .defaultView.orderView ul.list li span.price_piece {width: 200px;}
-#content .defaultView.orderView ul.list li span.price {float: right; padding-right: 0px;}
+#content .defaultList.shopList ul.items > li dl.details dt.price {display: none;}
+#content .defaultList.shopList ul.items > li dl.details dd.price {position: absolute; top: 10px; right: 100px; font-size: 14px;}
+#content .defaultList.shopList ul.items > li p.error {padding-bottom: 6px; color: #df0000;}
+#content .defaultEdit.shopView dl.list {padding-top: 3px; padding-right: 0; padding-bottom: 40px; width: 370px;}
+#content .defaultEdit.shopView dl.list dt {width: 120px;}
+#content .defaultEdit.shopView dl.list dt:after {content: ":";}
+#content .defaultEdit.shopView dl.list dd {width: 250px; margin: 0;}
+#content .defaultEdit.shopView div.basics,
+#content .defaultEdit.shopView div.contact,
+#content .defaultEdit.shopView div.delivery,
+#content .defaultEdit.shopView div.billing {display: inline-block; vertical-align: top;}
+#content .defaultEdit.shopView > div > form {display: none; padding-top: 10px; padding-bottom: 10px;}
+#content .defaultEdit.shopView > div > h2 > span {color: #7d848c; cursor: pointer;}
+#content .defaultEdit.shopView > div > h2 > span:before {content: " - ";}
+#content .defaultEdit.shopView div.all_items {border-top: 1px solid #bbbbbb; padding-bottom: 40px;}
+#content .defaultEdit.shopView div.all_items > ul.actions {padding-top: 10px;}
+#content .defaultEdit.shopView div.all_items > ul.actions li {padding-bottom: 0px;}
+#content .defaultEdit.shopView ul.items li h3 {font-size: 0; overflow: hidden; padding-right: 30px; padding-top: 6px; padding-bottom: 6px;}
+#content .defaultEdit.shopView ul.items li h3 span {font-size: 14px; line-height: 1em; padding: 9px 5px 5px 0; display: inline-block; vertical-align: top;}
+#content .defaultEdit.shopView ul.items li h3 span.total_price {float: right;  padding: 8px 0; display: inline-block; font-size: 16px;}
+#content .defaultEdit.shopView ul.items li h3 form {display: inline-block; vertical-align: top; position: relative;}
+#content .defaultEdit.shopView ul.items li h3 form div.field {padding: 0;}
+#content .defaultEdit.shopView ul.items li h3 form div.field .indicator {display: none;}
+#content .defaultEdit.shopView ul.items li h3 form div.field .help {left: 47px; display: none;}
+#content .defaultEdit.shopView ul.items li h3 form div.field input {height: 22px; width: 25px; text-align: right;}
+#content .defaultEdit.shopView ul.items li h3 form > ul.actions {padding: 0; right: 45px;}
+#content .defaultEdit.shopView ul.items li h3 form > ul.actions li {padding: 8px 0 0;}
+#content .defaultEdit.shopView ul.items li h3 form > ul.actions input.button {width: 16px; height: 16px; padding: 0; text-indent: -9999px; border-radius: 15px;
+	background-image: url(/janitor/admin/img/gx_refresh.png);
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+#content .defaultEdit.shopView ul.items li ul.actions {padding-top: 5px;}
+#content .defaultEdit.shopView ul.items li.item ul.actions li.shipped {display: none;}
+#content .defaultEdit.shopView ul.items li.item ul.actions li.not_shipped {}
+#content .defaultEdit.shopView ul.items li.item.shipped ul.actions li.not_shipped {display: none;}
+#content .defaultEdit.shopView ul.items li.item.shipped ul.actions li.shipped {display: inline-block;}
+#content .defaultEdit.cartView {}
+#content .defaultEdit.cartView div.all_items {border-bottom: 1px solid #bbbbbb;}
+#content .defaultEdit.cartView ul.items li h3 {padding-right: 120px;}
+#content .defaultEdit.cartView div.order {border-top: 1px solid #bbbbbb; padding-bottom: 40px;}
+#content .defaultEdit.orderView {}
+#content .defaultEdit.orderView div.orderstatus {border-bottom: 1px solid #bbbbbb;}
+#content .defaultEdit.orderView div.comment {border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb;}
+#content .defaultEdit.orderView div.payments {border-top: 1px solid #bbbbbb;}
+#content .defaultEdit.orderView div.payments ul.actions {padding-bottom: 10px;}
+#content .defaultEdit.orderView ul.items li.pending h3,
+#content .defaultEdit.orderView ul.items li.waiting h3,
+#content .defaultEdit.orderView ul.items li.complete h3 {padding-right: 170px;}
+#content .defaultList.paymentList ul.items > li dl.details dd.price {right: 140px;}
 
 
 /*s-user.css*/
@@ -517,16 +547,44 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.userEdit > div.newsletters ul.newsletters > li ul.actions li input {width: 100px; text-align: center;}
 #content .scene.userEdit > div.newsletters > ul.actions {padding-top: 20px; border-top: 1px solid #dedede;}
 #content .scene.userEdit > div.newsletters ul.newsletters > li.subscribed li.subscribe {display: none;}
-#content .scene.userEdit > div.newsletters ul.newsletters > li.subscribed li.delete {display: inline-block;}
-#content .scene.userEdit > div.newsletters ul.newsletters > li li.delete {display: none;}
+#content .scene.userEdit > div.newsletters ul.newsletters > li.subscribed li.unsubscribe {display: inline-block;}
+#content .scene.userEdit > div.newsletters ul.newsletters > li li.unsubscribe {display: none;}
 #content .defaultEdit.accessEdit > div.access {padding: 20px 0;}
 #content .defaultEdit.accessEdit > div.access ul.points {padding: 0 0 20px;}
 #content .defaultEdit.accessEdit > div.access ul.points li {display: block;}
 #content .defaultEdit.accessEdit > div.access ul.points li .field {padding-bottom: 10px;}
 #content .defaultEdit.accessEdit > div.access ul.points li.action {border-top: 1px solid #dedede; padding: 10px 0 0;}
-#content .defaultEdit.usergroupEdit > ul.actions li.access {float: right;}
+#content .defaultEdit.usergroupEdit > ul.actions li.access {float: right; padding-right: 0;}
 #content .defaultList.userContentList div.all_items {padding-bottom: 20px;}
 #content .defaultList.userContentList ul.items > li h3 br {display: none;}
+#content .defaultNew.userSubscriptions .item {padding-top: 10px;}
+#content .defaultNew.userSubscriptions .item p {padding-bottom: 3px;}
+#content .defaultList.userSubscriptions dd.price.default {text-decoration: line-through;}
+#content .defaultList.userSubscriptions dt.price,
+#content .defaultList.userSubscriptions dd.price {padding-top: 5px;}
+#content .defaultList.userSubscriptions dd.price+dt.price,
+#content .defaultList.userSubscriptions dd.price+dt.price+dd.price {padding-top: 0;}
+#content .defaultList.userSubscriptions dt.membership {display: none;}
+#content .defaultList.userSubscriptions dd.membership {color: #df0000; clear: left; padding-top: 5px;}
+#content .defaultList.userSubscriptions dd.payment_status.missing {color: #df0000;}
+#content .defaultView.userMembership .item {margin-top: 20px; position: relative;}
+#content .defaultView.userMembership .item h3 {padding-bottom: 20px; font-size: 28px;}
+#content .defaultView.userMembership dl {margin-top: -5px; overflow: hidden; padding: 0 30px 20px;}
+#content .defaultView.userMembership dt::after {content: ": ";}
+#content .defaultView.userMembership dt {clear: left; float: left;}
+#content .defaultView.userMembership dd {clear: right; float: left; padding: 0 0 3px;}
+#content .defaultView.userMembership dd.price.default {text-decoration: line-through;}
+#content .defaultView.userMembership dt.price,
+#content .defaultView.userMembership dd.price {padding-top: 5px;}
+#content .defaultView.userMembership dd.price+dt.price,
+#content .defaultView.userMembership dd.price+dt.price+dd.price {padding-top: 0;}
+#content .defaultView.userMembership dt.membership {display: none;}
+#content .defaultView.userMembership dd.membership {color: #df0000; clear: left; padding-top: 5px;}
+#content .defaultView.userMembership dt.payment_method,
+#content .defaultView.userMembership dd.payment_method {padding-top: 5px;}
+#content .defaultView.userMembership dd.payment_status.missing {color: #df0000;}
+#content .defaultView.userMembership ul.actions {position: absolute; top: 0; right: 0;}
+#content .defaultList.memberList dd.payment_status.missing {color: #df0000;}
 #content .defaultList.userContentList div.comments ul.items > li {}
 #content .scene.profileEdit div.password label {display: block; padding-left: 3px;}
 #content .scene.profileEdit div.password .indicator {top: 20px;}
@@ -567,12 +625,12 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 	background-repeat: no-repeat;
 }
 #content div.all_items ul.items > li.item:hover {background-color: transparent;}
-#content .defaultEdit.navigationEdit ul.nodes > li span {padding: 10px 10px 10px 0; display: inline-block; vertical-align: bottom;}
-#content .defaultEdit.navigationEdit ul.nodes > li.hover {background: red !important;}
-#content .defaultEdit.navigationEdit ul.nodes > li.dragged {
+#content .defaultEdit.navigationEdit ul.items > li span {padding: 10px 10px 10px 0; display: inline-block; vertical-align: bottom;}
+#content .defaultEdit.navigationEdit ul.items > li.hover {background: red !important;}
+#content .defaultEdit.navigationEdit ul.items > li.dragged {
 	z-index: 3;
 }
-#content .defaultEdit.navigationEdit ul.nodes > li.dragged .drag {background-image: none;}
+#content .defaultEdit.navigationEdit ul.items > li.dragged .drag {background-image: none;}
 
 
 /*s-front.css*/
@@ -713,16 +771,48 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.defaultEdit > div.comments li.comment > form {padding-bottom: 10px; padding-top: 5px;}
 #content .scene.defaultEdit > div.prices {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
 #content .scene.defaultEdit > div.prices > form {padding-bottom: 10px; padding-top: 5px;}
-#content .scene.defaultEdit > div.prices .field input[type=text] {width: 262px;}
-#content .scene.defaultEdit > div.prices fieldset {display: inline-block; vertical-align: top;}
-#content .scene.defaultEdit > div.prices fieldset .field {padding-right: 12px;}
+#content .scene.defaultEdit > div.prices .field {display: inline-block; vertical-align: top; padding-right: 5px;}
+#content .scene.defaultEdit > div.prices .field .indicator {display: none;}
+#content .scene.defaultEdit > div.prices .field.currency,
+#content .scene.defaultEdit > div.prices .field.vatrate,
+#content .scene.defaultEdit > div.prices .field.type,
+#content .scene.defaultEdit > div.prices .field.quantity {padding-left: 0;}
+#content .scene.defaultEdit > div.prices .field.quantity {display: none;}
+#content .scene.defaultEdit > div.prices .field.price .help {left: 610px;}
+#content .scene.defaultEdit > div.prices .field.currency .help {left: 489px;}
+#content .scene.defaultEdit > div.prices .field.vatrate .help {left: 425px;}
+#content .scene.defaultEdit > div.prices .field.type .help {left: 341px;}
+#content .scene.defaultEdit > div.prices .field.quantity .help {left: 197px;}
+#content .scene.defaultEdit > div.prices .field.price input[type=text] {width: 70px;}
+#content .scene.defaultEdit > div.prices .field.currency select {width: 55px;}
+#content .scene.defaultEdit > div.prices .field.vatrate select {width: 75px;}
+#content .scene.defaultEdit > div.prices .field.type select {width: 135px;}
+#content .scene.defaultEdit > div.prices .field.quantity input {width: 30px;}
+#content .scene.defaultEdit > div.prices fieldset {display: inline-block; vertical-align: top; font-size: 0;}
 #content .scene.defaultEdit > div.prices > form .actions {display: inline-block; vertical-align: top; padding: 0;}
 #content .scene.defaultEdit > div.prices > form .actions li {padding-left: 0;}
 #content .scene.defaultEdit > div.prices > form .actions li input {margin-top: 4px;}
 #content .scene.defaultEdit > div.prices ul.prices {padding: 0 0 15px;}
 #content .scene.defaultEdit > div.prices ul.prices li.pricedetails {display: block; position: relative; border-bottom: 1px solid #dedede;}
 #content .scene.defaultEdit > div.prices ul.prices li.pricedetails ul.info li {display: inline-block; vertical-align: top; padding: 10px 5px 10px 0; line-height: 1em;}
+#content .scene.defaultEdit > div.prices ul.prices li.pricedetails ul.info li.offer:before,
+#content .scene.defaultEdit > div.prices ul.prices li.pricedetails ul.info li.bulk:before {content: "- ";}
 #content .scene.defaultEdit > div.prices ul.prices > li > ul.actions {position: absolute; top: 3px; right: 0;}
+#content .scene.defaultEdit > div.subscription_method {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
+#content .scene.defaultEdit > div.subscription_method dl.settings {padding: 0 30px 20px;}
+#content .scene.defaultEdit > div.subscription_method dl.settings dt,
+#content .scene.defaultEdit > div.subscription_method dl.settings dd {display: block; font-size: 13px; line-height: 1.38em;}
+#content .scene.defaultEdit > div.subscription_method dl.settings dt {color: #313942;}
+#content .scene.defaultEdit > div.subscription_method ul.actions.change {padding-bottom: 10px;}
+#content .scene.defaultEdit > div.subscription_method div.change_subscription_method {display: none;}
+#content .scene.defaultEdit > div.subscription_method form {padding-bottom: 10px; padding-top: 5px;}
+#content .scene.defaultEdit > div.subscription_method .field select {width: 275px;}
+#content .scene.defaultEdit > div.subscription_method fieldset {display: inline-block; vertical-align: top;}
+#content .scene.defaultEdit > div.subscription_method fieldset .field {padding-right: 12px;}
+#content .scene.defaultEdit > div.subscription_method form .actions {display: inline-block; vertical-align: top; padding: 0;}
+#content .scene.defaultEdit > div.subscription_method form .actions li {padding-left: 0;}
+#content .scene.defaultEdit > div.subscription_method form .actions li input {margin-top: 4px;}
+#content .scene.defaultEdit > div.readstates {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
 #content .scene.defaultEdit > div.todos {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
 #content .scene.defaultEdit > div.todos ul.todos {list-style: disc; list-style-position: outside; margin-left: 15px; padding: 0 0 20px 30px;}
 #content .scene.defaultEdit > div.todos ul.todos > li {display: list-item;}
