@@ -1,12 +1,7 @@
-SUBJECT:Light Changer Membership!
+SUBJECT:Your Changer Light Membership!
 
-{MEMBERID}
-{EMAIL}
-{NICKNAME}
-{PRICE}
-{MEMBERSHIP}
+Hi {NICKNAME}, 
 
-Hi there, 
 
 and thank you for joining the think.dk community - you are herewith officially confirmed as a Changer Light!
 
@@ -15,30 +10,18 @@ This means, that from now on you’ll get to enjoy the following benefits:
 	- Our newsletter and first notice on special events
 	- An account on think.dk that allows you to leave comments on our page
 	- A personal thank you-note & a spot on our supporters wall
-	- Access to one free event of your choice per month (please sign up on our page)
+	- Access to one free event of your choice per month
 	- Loads of good karma!
 	
 And all of this for only {PRICE}! Thanks again so much for your support, you make us very happy with your contribution.
 
-We are currently working on a payment solution that makes it easier for our members to pay for their subscription, and we’ll let you know as soon as we’re there! Until then, we depend on your banking skills - please be so kind and set up a monthly payment at your bank, using the following payment details:
+If you did not pay yet, you find the payment information at {SITE_URL}/shop/payment/{ORDER_NO}.
 
-	Recipient:	think.dk
-	Reference: 	Member {MEMBERID}
-	Bank: 		Fælleskassen
-	Account no:	8411 4145172
-	IBAN: 		DK3184110004145172
-	SWIFT/BIC: 	FAELDKK1
+Your membership begins from the day of your payment. You can cancel your subscription anytime - just sent us a mail with the title 'Membership cancellation'.
 
-And make sure the payment doesn't start until the 24th of September, which is the date we officially open! You can cancel your subscription anytime - just sent us a mail with the title 'Membership cancellation'.
+If you want to login to leave comments or update your profile, please visit {SITE_URL}/janitor/admin/profile after activating your account - you recieved the confirmation link in a seperate email.
 
-If you want to login to leave comments or update your profile, please visit {SITE_URL}/janitor/admin/profile after activating your account.
-
-Login information: 
-Your username: {EMAIL}
-Your password: {PASSWORD}
-
-
-We want to build a movement, so please feel free to tell your friends about us - the more we are, the more we can accelerate change :)
+We are building a movement, so please tell your friends about us - the more we are, the more we can accelerate change :)
 
 We hope you don’t hesitate to reply to this email if you have any questions.
 

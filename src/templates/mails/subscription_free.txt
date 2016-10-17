@@ -1,26 +1,15 @@
-SUBJECT: Free Membership - Long live curiosity!
+SUBJECT: Your Sign Up at think.dk - long live curiosity!
 
-{MEMBERID}
-{EMAIL}
-{NICKNAME}
-{PRICE}
-{MEMBERSHIP}
+Hi {NICKNAME},
 
 
-Hi there, 
+and thank you for joining the think.dk community - you are herewith officially confirmed as a Curious Cat! 
 
+From now on you will receive our newsletter, which means you'll stay up to date on all developments at the Center for Acceleration of Sustainable Change. We hope you'll join the club of active members as soon as you feel the need for a change :)
 
-and thank you for joining the think.dk community - you are herewith officially confirmed as a Curious Cat! This means, that from now on you’ll get to enjoy the following benefits:
+We also set up an account on think.dk for you. This allows you to leave comments on our page and update your profile. If you want to login, please visit {SITE_URL}/janitor/admin/profile after activating your account.
 
-	- Our newsletter and first notice on special events
-	- An account on think.dk that allows you to leave comments on our page
-
-
-If you want to login to leave comments or update your profile, please visit {SITE_URL}/janitor/admin/profile after activating your account.
-
-
-
-We want to build a movement, so please feel free to tell your friends about us - the more we are, the more we can accelerate change :)
+We are building a movement, so please tell your friends about us - the more we are, the more we can accelerate change!
 
 We hope you don’t hesitate to reply to this email if you have any questions.
 
