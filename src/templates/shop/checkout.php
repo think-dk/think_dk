@@ -218,7 +218,7 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 
 		<? else: ?>
 
-		<p>No delivery address.</p>
+		<p>You can <a href="/shop/address/delivery">add a delivery address</a> if you want, but this is not required.</p>
 		
 		<? endif; ?>
 	</div>
@@ -245,7 +245,7 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 		</dl>
 		<? else: ?>
 
-		<p>No billing address.</p>
+		<p>You can <a href="/shop/address/billing">add a billing address</a> if you want, but this is not required.</p>
 		
 		<? endif; ?>
 	</div>

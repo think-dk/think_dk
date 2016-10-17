@@ -20,10 +20,25 @@ if(is_array($action) && count($action)) {
 	// /shop/receipt
 	if($action[0] == "receipt") {
 
-		$page->page(array(
-			"templates" => "shop/receipt.php"
-		));
-		exit();
+		// specific payment receipt
+		if(count($action) == 3) {
+
+			$page->page(array(
+				"templates" => "shop/receipt/".$action[2].".php"
+			));
+			exit();
+
+		}
+		// general receipt
+		else {
+
+			$page->page(array(
+				"templates" => "shop/receipt/index.php"
+			));
+			exit();
+
+		}
+
 	}
 
 	# /shop/checkout
@@ -86,6 +101,42 @@ if(is_array($action) && count($action)) {
 			"templates" => "shop/payment.php"
 		));
 		exit();
+	}
+
+	# /shop/selectPaymentMethod
+	else if($action[0] == "selectPaymentMethod" && $page->validateCsrfToken()) {
+
+		// register payment method
+		$payment_method = $model->selectPaymentMethod(array("selectPaymentMethod"));
+
+//		print_r($payment_method);
+
+		// if gateway is specified - proceed to gateway
+		if($payment_method["gateway"]) {
+			
+		}
+		// no gateway, means manual payment - go to receipt page
+		else if($payment_method["classname"] && $payment_method["classname"] !== "disabled") {
+
+			// redirect to leave POST state
+//			print "location: /shop/receipt/".$payment_method["order_no"]."/".$payment_method["classname"];
+
+			header("Location: /shop/receipt/".$payment_method["order_no"]."/".$payment_method["classname"]);
+			exit();
+			
+		}
+		// no gateway, no custom receipt
+		else {
+
+			// redirect to leave POST state
+//			print "location: /shop/receipt/".$payment_method["order_no"];
+
+			header("Location: /shop/receipt/".$payment_method["order_no"]);
+			exit();
+			
+		}
+		
+
 	}
 
 	# /shop/addToCart

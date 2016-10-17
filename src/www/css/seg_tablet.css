@@ -884,6 +884,10 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene.shopAddress ul.addresses > li > div {color: #777777;}
 #content .scene.shopAddress ul.addresses > li ul.actions {padding: 20px 0 0;}
 #content .scene.shopAddress div.item {border-top: 1px solid #dedede; padding-top: 20px;}
+#content .scene.shopPayment {}
+#content .scene.shopPayment ul.payment_methods {padding: 0;}
+#content .scene.shopPayment ul.payment_methods li.payment_method {padding-bottom: 10px;}
+#content .scene.shopPayment ul.payment_methods li.payment_method ul.actions {padding-bottom: 0;}
 #content .scene div.todos {padding-bottom: 15px; position: relative; z-index: 1;}
 #content .scene div.todos h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
 #content .scene div.todos h2 svg.arrow {position: absolute; top: 6px; right: 55px;}

@@ -255,6 +255,12 @@
 #content .scene.shopAddress div.item {border-top: 1px solid #dedede; padding-top: 20px;}
 
 
+/* PAYMENT */
+#content .scene.shopPayment {}
+#content .scene.shopPayment ul.payment_methods {padding: 0;}
+#content .scene.shopPayment ul.payment_methods li.payment_method {padding-bottom: 10px;}
+#content .scene.shopPayment ul.payment_methods li.payment_method ul.actions {padding-bottom: 0;}
+
 
 
 
