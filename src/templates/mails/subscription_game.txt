@@ -19,7 +19,7 @@ And all of this costs you only {PRICE} per month! Thanks again so much for your 
 
 If you did not pay yet, you find your payment information at {SITE_URL}/shop/payment/{ORDER_NO}.
 
-Your membership begins from the day of your payment. You can cancel your subscription anytime - just sent us a mail with the title 'Membership cancellation'.
+Your membership begins at the day of your sign up. You can cancel your subscription anytime - just sent us a mail with the title 'Membership cancellation'.
 
 If you want to login to leave comments or update your profile, please visit {SITE_URL}/janitor/admin/profile after activating your account - you recieved the confirmation link in a seperate email.
 
