@@ -10015,7 +10015,30 @@ Util.Objects["orderItemsList"] = new function() {
 		}
 	}
 }
-
+Util.Objects["defaultPayment"] = new function() {
+	this.init = function(form) {
+		u.bug("defaultPayment:" + u.nodeId(form));
+		u.f.init(form);
+		if(form.actions["cancel"]) {
+			form.actions["cancel"].clicked = function(event) {
+				location.href = this.url;
+			}
+		}
+		form.submitted = function(iN) {
+			this.response = function(response) {
+				if(response.cms_status == "success" && response.cms_object) {
+					if(this.actions["cancel"]) {
+						this.actions["cancel"].clicked();
+					}
+				}
+				else {
+					page.notify(response);
+				}
+			}
+			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this, {"send_as":"formdata"})});
+		}
+	}
+}
 
 /*i-system.js*/
 Util.Objects["cacheList"] = new function() {
