@@ -149,7 +149,7 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 				</h3>
 				<? if($item["subscription_method"] && $price["price"]): ?>
 				<p class="subscription_method">
-					Re-occuring payment every <?= $item["subscription_method"]["duration"] ?>.
+					Re-occuring payment every <?= strtolower($item["subscription_method"]["name"]) ?>.
 				</p>
 				<? endif; ?>
 

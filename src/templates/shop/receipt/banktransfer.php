@@ -12,10 +12,9 @@ $user = $UC->getUser();
 $order = $model->getOrders(array("order_no" => $order_no));
 $membership = $UC->getMembership();
 
-
-
 $is_membership = false;
 $subscription_method = false;
+$payment_date = false;
 
 
 if($order) {
@@ -32,7 +31,12 @@ if($order) {
 
 	if($membership && $membership["item"] && $membership["item"]["subscription_method"] && $membership["item"]["subscription_method"]["duration"]) {
 		$subscription_method = $membership["item"]["subscription_method"];
-		$payment_date = $membership["renewed_at"] ? date("jS", strtotime($membership["renewed_at"])) : date("jS", strtotime($membership["created_at"]));
+
+		$membership_price = $model->getPrice($membership["item_id"]);
+		if($membership_price["price"] == $total_order_price["price"]) {
+			$subscription = $UC->getSubscriptions(array("subscription_id" => $membership["subscription_id"]));
+			$payment_date = $subscription["renewed_at"] ? date("jS", strtotime($subscription["renewed_at"])) : date("jS", strtotime($subscription["created_at"]));
+		}
 	}
 
 }
@@ -49,7 +53,7 @@ if($order) {
 	<h2>Please be so kind ...</h2>
 
 	<p>
-	<? if($subscription_method): ?>
+	<? if($subscription_method && $payment_date): ?>
 		Set up a re-occuring payment every <?= strtolower($subscription_method["name"]) ?> on the <?= $payment_date ?> to our bankaccount, using the information below:
 	<? else: ?>
 		Make a payment to our bankaccount, using the information below:

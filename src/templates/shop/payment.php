@@ -29,7 +29,14 @@ $payment_methods = $this->paymentMethods();
 
 <? if($order): ?>
 
+	<dl class="amount">
+		<dt class="amount">Due amount</dt>
+		<dd class="amount"><?= $amount ?></dd>
+	</dl>
+
+
 	<h2>Please be so kind ...</h2>
+
 	<p>
 		Choose your preferred payment method:
 	</p>

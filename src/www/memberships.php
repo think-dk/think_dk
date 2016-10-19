@@ -40,7 +40,7 @@ if(is_array($action) && count($action)) {
 			// check if user is already a member
 			$UC = new User();
 			$membership = $UC->getMembership();
-			if($membership) {
+			if($membership && $membership["subscription_id"]) {
 
 				header("Location: already-member");
 				exit();
@@ -71,7 +71,7 @@ if(is_array($action) && count($action)) {
 
 			$UC = new User();
 			$membership = $UC->getMembership();
-			if($membership) {
+			if($membership && $membership["subscription_id"]) {
 
 				header("Location: already-member");
 				exit();

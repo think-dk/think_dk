@@ -87,7 +87,7 @@ $IC = new Items();
 				</h3>
 				<? if($item["subscription_method"] && $price["price"]): ?>
 				<p class="subscription_method">
-					Re-occuring payment every <?= $item["subscription_method"]["duration"] ?>.
+					Re-occuring payment every <?= strtolower($item["subscription_method"]["name"]) ?>.
 				</p>
 				<? endif; ?>
 
