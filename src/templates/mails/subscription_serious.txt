@@ -9,7 +9,7 @@ This means, that from now on you’ll get to enjoy the following benefits:
 
 	- Our newsletter and first notice on special events
 	- An account on think.dk that allows you to leave comments on our page
-	- A personal thank you-note & a spot on our supporters wall
+	- A personal thank-you note & a spot on our supporters wall
 	- Access to four free services & events per month
 	- A 50% discount on special events and yoga
 	
@@ -17,9 +17,9 @@ And all of this for only {PRICE}! Thanks again so much for your support, you mak
 
 If you did not pay yet, you can find your payment information at {SITE_URL}/shop/payment/{ORDER_NO}.
 
-Your membership begins at the day of your sign up. You can cancel your subscription anytime - just sent us a mail with the title 'Membership cancellation'.
+Your membership begins at the day of your sign up. You can cancel your subscription anytime - just send us an email with the title 'Membership cancellation'.
 
-If you want to login to leave comments or update your profile, please visit {SITE_URL}/janitor/admin/profile after activating your account - you recieved the confirmation link in a seperate email.
+If you want to login to leave comments or update your profile, please visit {SITE_URL}/janitor/admin/profile after activating your account - you received the confirmation link in a separate email.
 
 
 We are building a movement, so please tell your friends about us - the more we are, the more we can accelerate change :)
