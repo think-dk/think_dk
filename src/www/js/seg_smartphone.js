@@ -6103,24 +6103,6 @@ Util.Objects["page"] = new function() {
 u.e.addDOMReadyEvent(u.init);
 
 
-/*i-signup.js*/
-Util.Objects["signup"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			this._form = u.qs("form", this);
-			u.f.init(this._form);
-			page.cN.scene = this;
-			page.resized();
-		}
-		scene.ready();
-	}
-}
-
-
 /*u-basics.js*/
 u.showScene = function(scene) {
 	var i, node;
@@ -6452,97 +6434,20 @@ Util.Objects["front"] = new function() {
 /*i-scene.js*/
 Util.Objects["scene"] = new function() {
 	this.init = function(scene) {
-		u.bug("scene init:" + u.nodeId(scene))
 		scene.resized = function() {
-			u.bug("scene.resized:" + u.nodeId(this));
 			this.offsetHeight;
 		}
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
 			page.cN.scene = this;
-			var i, node;
-			var nodes = u.cn(this);
-			if(nodes.length) {
-				for(i = 0; node = nodes[i]; i++) {
-					u.ass(node, {
-						"opacity":0,
-						"transform":"translate(0, 40px)"
-					});
-				}
-				u.ass(this, {
-					"opacity":1,
-				});
-				for(i = 0; node = nodes[i]; i++) {
-					u.a.transition(node, "all 0.2s ease-in "+(i*100)+"ms");
-					u.ass(node, {
-						"opacity":1,
-						"transform":"translate(0, 0)"
-					});
-				}
-			}
-			else {
-				u.ass(this, {
-					"opacity":1,
-				});
-			}
+			u.showScene(this);
 			page.acceptCookies();
 			page.resized();
 		}
 		scene.ready();
 	}
 }
-
-/*i-signup.js*/
-Util.Objects["signup"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			page.cN.scene = this;
-			this._form = u.qs("form.signup", this);
-			var description = u.qs("div.articlebody", this);
-			if(this._form && u.text(description).match(/\{form\.signup\}/)) {
-				for(i = 0; node = description.childNodes[i]; i++) {
-					if(u.text(node).match(/\{form\.signup\}/)) {
-						description.replaceChild(this._form, node);
-					}
-				}
-			}
-			u.f.init(this._form);
-			var i, node;
-			var nodes = u.cn(this);
-			if(nodes.length) {
-				for(i = 0; node = nodes[i]; i++) {
-					u.ass(node, {
-						"opacity":0,
-						"transform":"translate(0, 40px)"
-					});
-				}
-				u.ass(this, {
-					"opacity":1,
-				});
-				for(i = 0; node = nodes[i]; i++) {
-					u.a.transition(node, "all 0.2s ease-in "+(i*100)+"ms");
-					u.ass(node, {
-						"opacity":1,
-						"transform":"translate(0, 0)"
-					});
-				}
-			}
-			else {
-				u.ass(this, {
-					"opacity":1,
-				});
-			}
-			page.resized();
-		}
-		scene.ready();
-	}
-}
-
 
 /*i-login.js*/
 Util.Objects["login"] = new function() {
@@ -6556,31 +6461,7 @@ Util.Objects["login"] = new function() {
 			this._form = u.qs("form", this);
 			u.f.init(this._form);
 			this._form.fields["username"].focus();
-			var i, node;
-			var nodes = u.cn(this);
-			if(nodes.length) {
-				for(i = 0; node = nodes[i]; i++) {
-					u.ass(node, {
-						"opacity":0,
-					});
-				}
-				u.ass(this, {
-					"opacity":1,
-				});
-				u._stepA1.call(nodes[0]);
-				for(i = 1; node = nodes[i]; i++) {
-					u.a.transition(node, "all 0.2s ease-in "+((i*100)+200)+"ms");
-					u.ass(node, {
-						"opacity":1,
-						"transform":"translate(0, 0)"
-					});
-				}
-			}
-			else {
-				u.ass(this, {
-					"opacity":1,
-				});
-			}
+			u.showScene(this);
 			page.resized();
 		}
 		scene.ready();
@@ -6620,30 +6501,7 @@ Util.Objects["wishes"] = new function() {
 					}
 				}
 			}
-			var nodes = u.cn(this);
-			if(nodes.length) {
-				for(i = 0; node = nodes[i]; i++) {
-					u.ass(node, {
-						"opacity":0,
-						"transform":"translate(0, 40px)"
-					});
-				}
-				u.ass(this, {
-					"opacity":1,
-				});
-				for(i = 0; node = nodes[i]; i++) {
-					u.a.transition(node, "all 0.2s ease-in "+(i*100)+"ms");
-					u.ass(node, {
-						"opacity":1,
-						"transform":"translate(0, 0)"
-					});
-				}
-			}
-			else {
-				u.ass(this, {
-					"opacity":1,
-				});
-			}
+			u.showScene(this);
 			page.resized();
 		}
 		scene.ready();
@@ -6660,83 +6518,22 @@ Util.Objects["memberships"] = new function() {
 		}
 		scene.ready = function() {
 			page.cN.scene = this;
-			this._form = u.qs("form.signup", this);
-			this._subscriptions = u.qs("div.subscriptions", this);
+			this._memberships = u.qs("div.memberships", this);
 			var description = u.qs("div.articlebody", this);
-			if(this._form && u.text(description).match(/\{form\.signup\}/)) {
+			if(this._memberships && u.text(description).match(/\{div\.memberships\}/)) {
 				for(i = 0; node = description.childNodes[i]; i++) {
-					if(u.text(node).match(/\{form\.signup\}/)) {
-						description.replaceChild(this._form, node);
+					if(u.text(node).match(/\{div\.memberships\}/)) {
+						description.replaceChild(this._memberships, node);
 					}
 				}
 			}
-			if(this._subscriptions && u.text(description).match(/\{div\.subscriptions\}/)) {
-				for(i = 0; node = description.childNodes[i]; i++) {
-					if(u.text(node).match(/\{div\.subscriptions\}/)) {
-						description.replaceChild(this._subscriptions, node);
-					}
-				}
-			}
-			u.f.init(this._form);
-			var i, node;
-			var nodes = u.cn(this);
-			if(nodes.length) {
-				for(i = 0; node = nodes[i]; i++) {
-					u.ass(node, {
-						"opacity":0,
-						"transform":"translate(0, 40px)"
-					});
-				}
-				u.ass(this, {
-					"opacity":1,
-				});
-				for(i = 0; node = nodes[i]; i++) {
-					u.a.transition(node, "all 0.2s ease-in "+(i*100)+"ms");
-					u.ass(node, {
-						"opacity":1,
-						"transform":"translate(0, 0)"
-					});
-				}
-			}
-			else {
-				u.ass(this, {
-					"opacity":1,
-				});
-			}
+			u.showScene(this);
 			page.resized();
 		}
 		scene.ready();
 	}
 }
 
-
-/*i-subscriptions.js*/
-Util.Objects["subscriptions"] = new function() {
-	this.init = function(fieldset) {
-		var field = u.qs(".field.radiobuttons", fieldset);
-		field.options = u.qsa(".item", field);
-		var i, option;
-		for(i = 0; option = field.options[i]; i++) {
-			option.input = u.qs("input", option)
-			u.ce(option);
-			option.clicked = function() {
-				this.input.val(this.input.value);
-				this.input.field.updated();
-			}
-		}
-		field.updated = function() {
-			var selected = this._input.val();
-			for(i = 0; option = this.options[i]; i++) {
-				if(option.input.value == selected) {
-					u.ac(option, "selected");
-				}
-				else {
-					u.rc(option, "selected");
-				}
-			}
-		}
-	}
-}
 
 /*i-article.js*/
 Util.Objects["article"] = new function() {

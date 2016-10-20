@@ -1,6 +1,6 @@
 Util.Objects["signup"] = new function() {
 	this.init = function(scene) {
-		u.bug("signup init:" + u.nodeId(scene))
+//		u.bug("scene init:" + u.nodeId(scene))
 		
 
 		scene.resized = function() {
@@ -20,59 +20,25 @@ Util.Objects["signup"] = new function() {
 
 			page.cN.scene = this;
 
+			this._form = u.qs("form.signup", this);
 
-			this._form = u.qs("form", this);
+			var description = u.qs("div.articlebody", this);
+			if(u.text(description).match(/\{form\.signup\}/)) {
+				for(i = 0; node = description.childNodes[i]; i++) {
+					if(u.text(node).match(/\{form\.signup\}/)) {
+						description.replaceChild(this._form, node);
+					}
+				}
+			}
+
+
 			u.f.init(this._form);
-
-			this._form.fields["nickname"].focus();
-
-
-			var i, node;
-
-			// get all scene children
-			var nodes = u.cn(this);
-			if(nodes.length) {
-
-				// hide all childnodes
-				for(i = 0; node = nodes[i]; i++) {
-
-					u.ass(node, {
-						"opacity":0,
-					});
-
-				}
-
-				// show scene
-				u.ass(this, {
-					"opacity":1,
-				});
+//			this._form.fields["email"].focus();
 
 
-				// apply headline anumation
-				u._stepA1.call(nodes[0]);
+			u.showScene(this);
 
-				// show content
-				for(i = 1; node = nodes[i]; i++) {
 
-					u.a.transition(node, "all 0.2s ease-in "+((i*100)+200)+"ms");
-					u.ass(node, {
-						"opacity":1,
-						"transform":"translate(0, 0)"
-					});
-
-				}
-
-			}
-
-			// don't know what we are dealing with here - just show scene
-			else {
-
-				// show scene
-				u.ass(this, {
-					"opacity":1,
-				});
-
-			}
 
 			page.resized();
 		}

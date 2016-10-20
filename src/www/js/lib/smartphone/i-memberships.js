@@ -21,77 +21,20 @@ Util.Objects["memberships"] = new function() {
 
 			page.cN.scene = this;
 
-			this._form = u.qs("form.signup", this);
-			this._subscriptions = u.qs("div.subscriptions", this);
-
+			this._memberships = u.qs("div.memberships", this);
 			var description = u.qs("div.articlebody", this);
 
-			// move signup form
-			if(this._form && u.text(description).match(/\{form\.signup\}/)) {
+			// move membership overview
+			if(this._memberships && u.text(description).match(/\{div\.memberships\}/)) {
 				for(i = 0; node = description.childNodes[i]; i++) {
-					if(u.text(node).match(/\{form\.signup\}/)) {
-						description.replaceChild(this._form, node);
-					}
-				}
-			}
-
-			// move subscription overview
-			if(this._subscriptions && u.text(description).match(/\{div\.subscriptions\}/)) {
-				for(i = 0; node = description.childNodes[i]; i++) {
-					if(u.text(node).match(/\{div\.subscriptions\}/)) {
-						description.replaceChild(this._subscriptions, node);
+					if(u.text(node).match(/\{div\.memberships\}/)) {
+						description.replaceChild(this._memberships, node);
 					}
 				}
 			}
 
 
-			u.f.init(this._form);
-//			this._form.fields["email"].focus();
-
-
-			var i, node;
-
-			// get all scene children
-			var nodes = u.cn(this);
-			if(nodes.length) {
-
-				// hide all childnodes
-				for(i = 0; node = nodes[i]; i++) {
-
-					u.ass(node, {
-						"opacity":0,
-						"transform":"translate(0, 40px)"
-					});
-
-				}
-
-				// show scene
-				u.ass(this, {
-					"opacity":1,
-				});
-
-				// show content
-				for(i = 0; node = nodes[i]; i++) {
-
-					u.a.transition(node, "all 0.2s ease-in "+(i*100)+"ms");
-					u.ass(node, {
-						"opacity":1,
-						"transform":"translate(0, 0)"
-					});
-
-				}
-
-			}
-
-			// don't know what we are dealing with here - just show scene
-			else {
-
-				// show scene
-				u.ass(this, {
-					"opacity":1,
-				});
-
-			}
+			u.showScene(this);
 
 
 			page.resized();

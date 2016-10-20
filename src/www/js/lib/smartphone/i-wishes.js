@@ -45,48 +45,8 @@ Util.Objects["wishes"] = new function() {
 
 			}
 
-			// animation
-			// get all scene children
-			var nodes = u.cn(this);
-			if(nodes.length) {
+			u.showScene(this);
 
-				// hide all childnodes
-				for(i = 0; node = nodes[i]; i++) {
-
-					u.ass(node, {
-						"opacity":0,
-						"transform":"translate(0, 40px)"
-					});
-
-				}
-
-				// show scene
-				u.ass(this, {
-					"opacity":1,
-				});
-
-				// show content
-				for(i = 0; node = nodes[i]; i++) {
-
-					u.a.transition(node, "all 0.2s ease-in "+(i*100)+"ms");
-					u.ass(node, {
-						"opacity":1,
-						"transform":"translate(0, 0)"
-					});
-
-				}
-
-			}
-
-			// don't know what we are dealing with here - just show scene
-			else {
-
-				// show scene
-				u.ass(this, {
-					"opacity":1,
-				});
-
-			}
 
 			page.resized();
 		}

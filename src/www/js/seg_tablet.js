@@ -4597,6 +4597,126 @@ u.fontsReady = function(node, fonts, _options) {
 	window["_man_fonts_"+loadkey].checkfonts();
 }
 
+/*beta-u-notifier.js*/
+u.notifier = function(node) {
+	var notifications = u.qs("div.notifications", node);
+	if(!notifications) {
+		node.notifications = u.ae(node, "div", {"id":"notifications"});
+	}
+	node.notifications.hide_delay = 4500;
+	node.notifications.hide = function() {
+		u.a.transition(this, "all 0.5s ease-in-out");
+		u.a.translate(this, 0, -this.offsetHeight);
+	}
+	node.notify = function(response, _options) {
+		var class_name = "message";
+		if(typeof(_options) == "object") {
+			var argument;
+			for(argument in _options) {
+				switch(argument) {
+					case "class"	: class_name	= _options[argument]; break;
+				}
+			}
+		}
+		var output;
+		if(typeof(response) == "object" && response.isJSON) {
+			var message = response.cms_message;
+			var cms_status = response.cms_status;
+			if(typeof(message) == "object") {
+				for(type in message) {
+					if(typeof(message[type]) == "string") {
+						output = u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message[type]});
+					}
+					else if(typeof(message[type]) == "object" && message[type].length) {
+						var node, i;
+						for(i = 0; _message = message[type][i]; i++) {
+							output = u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":_message});
+						}
+					}
+				}
+			}
+			else if(typeof(message) == "string") {
+				output = u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message});
+			}
+			if(typeof(this.notifications.show) == "function") {
+				this.notifications.show();
+			}
+		}
+		else if(typeof(response) == "object" && response.isHTML) {
+			var login = u.qs(".scene.login", response);
+			var messages = u.qsa(".scene div.messages p", response);
+			if(login && !u.qs("#login_overlay")) {
+				this.autosave_disabled = true;
+				if(page.t_autosave) {
+					u.t.resetTimer(page.t_autosave);
+				}
+				var overlay = u.ae(document.body, "div", {"id":"login_overlay"});
+				overlay.node = this;
+				u.ae(overlay, login);
+				u.as(document.body, "overflow", "hidden");
+				var form = u.qs("form", overlay);
+				form.overlay = overlay;
+				u.ae(form, "input", {"type":"hidden", "name":"ajaxlogin", "value":"true"})
+				u.f.init(form);
+				form.fields["username"].focus();
+				form.submitted = function() {
+					this.response = function(response) {
+						if(response.isJSON && response.cms_status == "success") {
+							var csrf_token = response.cms_object["csrf-token"];
+							var data_vars = u.qsa("[data-csrf-token]", page);
+							var input_vars = u.qsa("[name=csrf-token]", page);
+							var dom_vars = u.qsa("*", page);
+							var i, node;
+							for(i = 0; node = data_vars[i]; i++) {
+								node.setAttribute("data-csrf-token", csrf_token);
+							}
+							for(i = 0; node = input_vars[i]; i++) {
+								node.value = csrf_token;
+							}
+							for(i = 0; node = dom_vars[i]; i++) {
+								if(node.csrf_token) {
+									node.csrf_token = csrf_token;
+								}
+							}
+							this.overlay.parentNode.removeChild(this.overlay);
+							var multiple_overlays = u.qsa("#login_overlay");
+							if(multiple_overlays) {
+								for(i = 0; overlay = multiple_overlays[i]; i++) {
+									overlay.parentNode.removeChild(overlay);
+								}
+							}
+							u.as(document.body, "overflow", "auto");
+							this.overlay.node.autosave_disabled = false;
+							if(this.overlay.node._autosave_node && this.overlay.node._autosave_interval) {
+								u.t.setTimer(this.overlay.node._autosave_node, "autosave", this.overlay.node._autosave_interval);
+							}
+						}
+						else {
+							this.fields["username"].focus();
+							this.fields["password"].val("");
+							var error_message = u.qs(".errormessage", response);
+							if(error_message) {
+								this.overlay.node.notify({"isJSON":true, "cms_status":"error", "cms_message":error_message.innerHTML});
+							}
+							else {
+								this.overlay.node.notify({"isJSON":true, "cms_status":"error", "cms_message":"An error occured"});
+							}
+						}
+					}
+					u.request(this, this.action, {"method":this.method, "params":u.f.getParams(this)});
+				}
+			}
+			else if(messages) {
+				for(i = 0; message = messages[i]; i++) {
+					output = u.ae(this.notifications, "div", {"class":message.className, "html":message.innerHTML});
+				}
+			}
+		}
+		u.t.setTimer(this.notifications, this.notifications.hide, this.notifications.hide_delay);
+	}
+}
+
+
 /*u-textscaler.js*/
 u.textscaler = function(node, _settings) {
 	if(typeof(_settings) != "object") {
@@ -5922,6 +6042,266 @@ u.f.recurseName = function(object, indexes, value) {
 }
 
 
+/*u-form-builder.js*/
+u.f.customBuild = {};
+u.f.addForm = function(node, _options) {
+	var form_name = "js_form";
+	var form_action = "#";
+	var form_method = "post";
+	var form_class = "";
+	if(typeof(_options) == "object") {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "name"			: form_name				= _options[_argument]; break;
+				case "action"		: form_action			= _options[_argument]; break;
+				case "method"		: form_method			= _options[_argument]; break;
+				case "class"		: form_class			= _options[_argument]; break;
+			}
+		}
+	}
+	var form = u.ae(node, "form", {"class":form_class, "name": form_name, "action":form_action, "method":form_method});
+	return form;
+}
+u.f.addFieldset = function(node, _options) {
+	var fieldset_class = "";
+	if(typeof(_options) == "object") {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "class"			: fieldset_class			= _options[_argument]; break;
+			}
+		}
+	}
+	return u.ae(node, "fieldset", {"class":fieldset_class});
+}
+u.f.addField = function(node, _options) {
+	var field_name = "js_name";
+	var field_label = "Label";
+	var field_type = "string";
+	var field_value = "";
+	var field_options = [];
+	var field_class = "";
+	var field_id = "";
+	var field_max = false;
+	var field_min = false;
+	var field_disabled = false;
+	var field_readonly = false;
+	var field_required = false;
+	var field_pattern = false;
+	var field_error_message = "There is an error in your input";
+	var field_hint_message = "";
+	if(typeof(_options) == "object") {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "name"					: field_name			= _options[_argument]; break;
+				case "label"				: field_label			= _options[_argument]; break;
+				case "type"					: field_type			= _options[_argument]; break;
+				case "value"				: field_value			= _options[_argument]; break;
+				case "options"				: field_options			= _options[_argument]; break;
+				case "class"				: field_class			= _options[_argument]; break;
+				case "id"					: field_id				= _options[_argument]; break;
+				case "max"					: field_max				= _options[_argument]; break;
+				case "min"					: field_min				= _options[_argument]; break;
+				case "disabled"				: field_disabled		= _options[_argument]; break;
+				case "readonly"				: field_readonly		= _options[_argument]; break;
+				case "required"				: field_required		= _options[_argument]; break;
+				case "pattern"				: field_pattern			= _options[_argument]; break;
+				case "error_message"		: field_error_message	= _options[_argument]; break;
+				case "hint_message"			: field_hint_message	= _options[_argument]; break;
+			}
+		}
+	}
+	var custom_build;
+	if(field_type in u.f.customBuild) {
+		return u.f.customBuild[field_type](node, _options);
+	}
+	field_id = field_id ? field_id : "input_"+field_type+"_"+field_name;
+	field_disabled = !field_disabled ? (field_class.match(/(^| )disabled( |$)/) ? "disabled" : false) : "disabled";
+	field_readonly = !field_readonly ? (field_class.match(/(^| )readonly( |$)/) ? "readonly" : false) : "readonly";
+	field_required = !field_required ? (field_class.match(/(^| )required( |$)/) ? true : false) : true;
+	field_class += field_disabled ? (!field_class.match(/(^| )disabled( |$)/) ? " disabled" : "") : "";
+	field_class += field_readonly ? (!field_class.match(/(^| )readonly( |$)/) ? " readonly" : "") : "";
+	field_class += field_required ? (!field_class.match(/(^| )required( |$)/) ? " required" : "") : "";
+	field_class += field_min ? (!field_class.match(/(^| )min:[0-9]+( |$)/) ? " min:"+field_min : "") : "";
+	field_class += field_max ? (!field_class.match(/(^| )max:[0-9]+( |$)/) ? " max:"+field_max : "") : "";
+	if (field_type == "hidden") {
+		return u.ae(node, "input", {"type":"hidden", "name":field_name, "value":field_value, "id":field_id});
+	}
+	var field = u.ae(node, "div", {"class":"field "+field_type+" "+field_class});
+	var attributes = {};
+	if(field_type == "string") {
+		field_max = field_max ? field_max : 255;
+		attributes = {
+			"type":"text", 
+			"id":field_id, 
+			"value":field_value, 
+			"name":field_name, 
+			"maxlength":field_max, 
+			"minlength":field_min,
+			"pattern":field_pattern,
+			"readonly":field_readonly,
+			"disabled":field_disabled
+		};
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+		u.ae(field, "input", u.f.verifyAttributes(attributes));
+	}
+	else if(field_type == "email" || field_type == "tel" || field_type == "password") {
+		field_max = field_max ? field_max : 255;
+		attributes = {
+			"type":field_type, 
+			"id":field_id, 
+			"value":field_value, 
+			"name":field_name, 
+			"maxlength":field_max, 
+			"minlength":field_min,
+			"pattern":field_pattern,
+			"readonly":field_readonly,
+			"disabled":field_disabled
+		};
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+		u.ae(field, "input", u.f.verifyAttributes(attributes));
+	}
+	else if(field_type == "number" || field_type == "integer" || field_type == "date" || field_type == "datetime") {
+		attributes = {
+			"type":field_type, 
+			"id":field_id, 
+			"value":field_value, 
+			"name":field_name, 
+			"max":field_max, 
+			"min":field_min,
+			"pattern":field_pattern,
+			"readonly":field_readonly,
+			"disabled":field_disabled
+		};
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+		u.ae(field, "input", u.f.verifyAttributes(attributes));
+	}
+	else if(field_type == "checkbox") {
+		attributes = {
+			"type":field_type, 
+			"id":field_id, 
+			"value":field_value ? field_value : "true", 
+			"name":field_name, 
+			"disabled":field_disabled
+		};
+		u.ae(field, "input", {"name":field_name, "value":"false", "type":"hidden"});
+		u.ae(field, "input", u.f.verifyAttributes(attributes));
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+	}
+	else if(field_type == "text") {
+		attributes = {
+			"id":field_id, 
+			"html":field_value, 
+			"name":field_name, 
+			"maxlength":field_max, 
+			"minlength":field_min,
+			"pattern":field_pattern,
+			"readonly":field_readonly,
+			"disabled":field_disabled
+		};
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+		u.ae(field, "textarea", u.f.verifyAttributes(attributes));
+	}
+	else if(field_type == "select") {
+		attributes = {
+			"id":field_id, 
+			"name":field_name, 
+			"disabled":field_disabled
+		};
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+		var select = u.ae(field, "select", u.f.verifyAttributes(attributes));
+		if(field_options) {
+			var i, option;
+			for(i = 0; option = field_options[i]; i++) {
+				if(option.value == field_value) {
+					u.ae(select, "option", {"value":option.value, "html":option.text, "selected":"selected"});
+				}
+				else {
+					u.ae(select, "option", {"value":option.value, "html":option.text});
+				}
+			}
+		}
+	}
+	else if(field_type == "radiobuttons") {
+		u.ae(field, "label", {"html":field_label});
+		if(field_options) {
+			var i, option;
+			for(i = 0; option = field_options[i]; i++) {
+				var div = u.ae(field, "div", {"class":"item"});
+				if(option.value == field_value) {
+					u.ae(div, "input", {"value":option.value, "id":field_id+"-"+i, "type":"radio", "name":field_name, "checked":"checked"});
+					u.ae(div, "label", {"for":field_id+"-"+i, "html":option.text});
+				}
+				else {
+					u.ae(div, "input", {"value":option.value, "id":field_id+"-"+i, "type":"radio", "name":field_name});
+					u.ae(div, "label", {"for":field_id+"-"+i, "html":option.text});
+				}
+			}
+		}
+	}
+	else if(field_type == "files") {
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+		u.ae(field, "input", {"id":field_id, "name":field_name, "type":"file"});
+	}
+	else {
+		u.bug("input type not implemented")
+	}
+	if(field_hint_message || field_error_message) {
+		var help = u.ae(field, "div", {"class":"help"});
+		if (field_hint_message) {
+			u.ae(help, "div", { "class": "hint", "html": field_hint_message });
+		}
+		if(field_error_message) {
+			u.ae(help, "div", { "class": "error", "html": field_error_message });
+		}
+	}
+	return field;
+}
+u.f.verifyAttributes = function(attributes) {
+	for(attribute in attributes) {
+		if(attributes[attribute] === undefined || attributes[attribute] === false || attributes[attribute] === null) {
+			delete attributes[attribute];
+		}
+	}
+	return attributes;
+}
+u.f.addAction = function(node, _options) {
+	var action_type = "submit";
+	var action_name = "js_name";
+	var action_value = "";
+	var action_class = "";
+	if(typeof(_options) == "object") {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "type"			: action_type			= _options[_argument]; break;
+				case "name"			: action_name			= _options[_argument]; break;
+				case "value"		: action_value			= _options[_argument]; break;
+				case "class"		: action_class			= _options[_argument]; break;
+			}
+		}
+	}
+	var p_ul = node.nodeName.toLowerCase() == "ul" ? node : u.pn(node, {"include":"ul"});
+	if(!p_ul || !u.hc(p_ul, "actions")) {
+		if(node.nodeName.toLowerCase() == "form") {
+			p_ul = u.qs("ul.actions", node);
+		}
+		p_ul = p_ul ? p_ul : u.ae(node, "ul", {"class":"actions"});
+	}
+	var p_li = node.nodeName.toLowerCase() == "li" ? node : u.pn(node, {"include":"li"});
+	if(!p_li || p_ul != p_li.parentNode) {
+		p_li = u.ae(p_ul, "li", {"class":action_name});
+	}
+	else {
+		p_li = node;
+	}
+	var action = u.ae(p_li, "input", {"type":action_type, "class":action_class, "value":action_value, "name":action_name})
+	return action;
+}
+
+
 /*i-page.js*/
 u.bug_console_only = true;
 Util.Objects["page"] = new function() {
@@ -7076,33 +7456,6 @@ Util.Objects["oneButtonForm"] = new function() {
 	}
 }
 
-/*i-signup.js*/
-Util.Objects["signup"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			page.cN.scene = this;
-			this._form = u.qs("form.signup", this);
-			var description = u.qs("div.articlebody", this);
-			if(u.text(description).match(/\{form\.signup\}/)) {
-				for(i = 0; node = description.childNodes[i]; i++) {
-					if(u.text(node).match(/\{form\.signup\}/)) {
-						description.replaceChild(this._form, node);
-					}
-				}
-			}
-			u.f.init(this._form);
-			u.showScene(this);
-			page.resized();
-		}
-		scene.ready();
-	}
-}
-
-
 /*i-wishes.js*/
 Util.Objects["wishes"] = new function() {
 	this.init = function(scene) {
@@ -7161,7 +7514,6 @@ Util.Objects["wishes"] = new function() {
 /*i-memberships.js*/
 Util.Objects["memberships"] = new function() {
 	this.init = function(scene) {
-		u.bug("scene init:" + u.nodeId(scene))
 		scene.resized = function() {
 			if(this._membership_nodes) {
 				var tallest_node = 0;
@@ -7183,19 +7535,9 @@ Util.Objects["memberships"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			u.bug("scene.ready:" + u.nodeId(this));
 			page.cN.scene = this;
-			this._form = u.qs("form.signup", this);
-			u.bug("form:" + this._form)
 			this._memberships = u.qs("div.memberships", this);
 			var description = u.qs("div.articlebody", this);
-			if(this._form && u.text(description).match(/\{form\.signup\}/)) {
-				for(i = 0; node = description.childNodes[i]; i++) {
-					if(u.text(node).match(/\{form\.signup\}/)) {
-						description.replaceChild(this._form, node);
-					}
-				}
-			}
 			if(this._memberships && u.text(description).match(/\{div\.memberships\}/)) {
 				for(i = 0; node = description.childNodes[i]; i++) {
 					if(u.text(node).match(/\{div\.memberships\}/)) {
@@ -7206,8 +7548,6 @@ Util.Objects["memberships"] = new function() {
 			if(this._memberships) {
 				this._membership_nodes = u.qsa(".membership", this._memberships);
 			}
-			u.bug("init form:" + this._form);
-			u.f.init(this._form);
 			u.showScene(this);
 			page.resized();
 		}

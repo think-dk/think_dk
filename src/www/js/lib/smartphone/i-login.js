@@ -27,57 +27,11 @@ Util.Objects["login"] = new function() {
 
 			this._form.fields["username"].focus();
 
-
-			var i, node;
-
-			// get all scene children
-			var nodes = u.cn(this);
-			if(nodes.length) {
-
-				// hide all childnodes
-				for(i = 0; node = nodes[i]; i++) {
-
-					u.ass(node, {
-						"opacity":0,
-					});
-
-				}
-
-				// show scene
-				u.ass(this, {
-					"opacity":1,
-				});
-
-
-				// apply headline anumation
-				u._stepA1.call(nodes[0]);
-
-				// show content
-				for(i = 1; node = nodes[i]; i++) {
-
-					u.a.transition(node, "all 0.2s ease-in "+((i*100)+200)+"ms");
-					u.ass(node, {
-						"opacity":1,
-						"transform":"translate(0, 0)"
-					});
-
-				}
-
-			}
-
-			// don't know what we are dealing with here - just show scene
-			else {
-
-				// show scene
-				u.ass(this, {
-					"opacity":1,
-				});
-
-			}
-
+			u.showScene(this);
 
 			page.resized();
 		}
+
 
 
 		// scene is ready

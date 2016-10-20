@@ -7510,33 +7510,6 @@ Util.Objects["oneButtonForm"] = new function() {
 	}
 }
 
-/*i-signup.js*/
-Util.Objects["signup"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			page.cN.scene = this;
-			this._form = u.qs("form.signup", this);
-			var description = u.qs("div.articlebody", this);
-			if(u.text(description).match(/\{form\.signup\}/)) {
-				for(i = 0; node = description.childNodes[i]; i++) {
-					if(u.text(node).match(/\{form\.signup\}/)) {
-						description.replaceChild(this._form, node);
-					}
-				}
-			}
-			u.f.init(this._form);
-			u.showScene(this);
-			page.resized();
-		}
-		scene.ready();
-	}
-}
-
-
 /*i-wishes.js*/
 Util.Objects["wishes"] = new function() {
 	this.init = function(scene) {
@@ -7595,7 +7568,6 @@ Util.Objects["wishes"] = new function() {
 /*i-memberships.js*/
 Util.Objects["memberships"] = new function() {
 	this.init = function(scene) {
-		u.bug("scene init:" + u.nodeId(scene))
 		scene.resized = function() {
 			if(this._membership_nodes) {
 				var tallest_node = 0;
@@ -7617,19 +7589,9 @@ Util.Objects["memberships"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			u.bug("scene.ready:" + u.nodeId(this));
 			page.cN.scene = this;
-			this._form = u.qs("form.signup", this);
-			u.bug("form:" + this._form)
 			this._memberships = u.qs("div.memberships", this);
 			var description = u.qs("div.articlebody", this);
-			if(this._form && u.text(description).match(/\{form\.signup\}/)) {
-				for(i = 0; node = description.childNodes[i]; i++) {
-					if(u.text(node).match(/\{form\.signup\}/)) {
-						description.replaceChild(this._form, node);
-					}
-				}
-			}
 			if(this._memberships && u.text(description).match(/\{div\.memberships\}/)) {
 				for(i = 0; node = description.childNodes[i]; i++) {
 					if(u.text(node).match(/\{div\.memberships\}/)) {
@@ -7640,8 +7602,6 @@ Util.Objects["memberships"] = new function() {
 			if(this._memberships) {
 				this._membership_nodes = u.qsa(".membership", this._memberships);
 			}
-			u.bug("init form:" + this._form);
-			u.f.init(this._form);
 			u.showScene(this);
 			page.resized();
 		}

@@ -7,10 +7,12 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/m
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-animation-to.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-fontsReady.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-notifier.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-textscaler.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-svg.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-date.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-form.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-form-builder.js"></script>');
 
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-page.js"></script>');
@@ -26,7 +28,7 @@ document.write('<script type="text/javascript" src="/js/lib/desktop/i-front.js">
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-scene.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-login.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-cart.js"></script>');
-document.write('<script type="text/javascript" src="/js/lib/desktop/i-signup.js"></script>');
+//document.write('<script type="text/javascript" src="/js/lib/desktop/i-signup.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-wishes.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-memberships.js"></script>');
 //document.write('<script type="text/javascript" src="/js/lib/desktop/i-subscriptions.js"></script>');
