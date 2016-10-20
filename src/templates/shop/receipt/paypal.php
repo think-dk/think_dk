@@ -42,8 +42,8 @@ if($order) {
 ?>
 <div class="scene shopReceipt i:scene">
 	<h1>Receipt</h1>
-	<h2>Thank you for supporting change</h2>
-	<p>We are so thrilled to have you on board.</p>
+	<h2>Thank you for supporting change.</h2>
+	<p>We are so thrilled to have you on board - go ahead and check out our <a href="/events">upcoming events</a>!</p>
 
 <? if($order): ?>
 	<h2>Please be so kind ...</h2>
