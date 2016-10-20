@@ -32,7 +32,7 @@ if(is_array($action) && count($action)) {
 	}
 
 	// handle login flow
-	if($action[0] == "login") {
+	else if($action[0] == "login") {
 
 		$_POST["username"] = "mam";
 		session()->value("login_forward", "/shop/checkout");
