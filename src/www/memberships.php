@@ -30,6 +30,16 @@ if(is_array($action) && count($action)) {
 		exit();
 
 	}
+
+	// handle login flow
+	if($action[0] == "login") {
+
+		$_POST["username"] = "mam";
+		session()->value("login_forward", "/shop/checkout");
+
+		header("Location: /login");
+		exit();
+	}
 	
 	# /memberships/checkout
 	else if($action[0] == "checkout") {
@@ -108,7 +118,7 @@ if(is_array($action) && count($action)) {
 
 		// user exists
 		if(isset($user["status"]) && $user["status"] == "USER_EXISTS") {
-			message()->addMessage("A user already exists with that email. Try <a href=\"/login\">logging in</a>.", array("type" => "error"));
+			message()->addMessage("A user already exists with that email. Try <a href=\"/memberships/login\">logging in</a>.", array("type" => "error"));
 		}
 		// something went wrong
 		else if(!isset($user["user_id"])) {
@@ -136,6 +146,7 @@ if(is_array($action) && count($action)) {
 		));
 		exit();
 	}
+
 }
 
 // plain signup directly
