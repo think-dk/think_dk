@@ -34,7 +34,7 @@
 #content .scene.front div.all_events ul.events {border-top: 1px solid #dedede; padding: 0 70px;}
 #content .scene.front div.all_events ul.events h3,
 #content .scene.front div.all_events ul.events dl {padding-left: 0; padding-right: 0; width: auto;}
-#content .scene.front div.all_events ul.events li.event {margin-top: -1px; padding-top: 15px; padding-bottom: 5px; display: inline-block; vertical-align: top; width: 230px; padding-right: 20px;}
+#content .scene.front div.all_events ul.events li.event {border-top: none; padding-top: 15px; padding-bottom: 5px; display: inline-block; vertical-align: top; width: 230px; padding-right: 20px;}
 
 
 /* FRONT - NEWS */

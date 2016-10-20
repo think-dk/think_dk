@@ -10,7 +10,7 @@ if($page_item) {
 }
 
 $post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage", "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
-$event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.starting_at > NOW()" , "order" => "event.starting_at", "limit" => 2, "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
+$event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.starting_at > NOW()" , "order" => "event.starting_at", "limit" => 4, "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
 
 
 ?>
