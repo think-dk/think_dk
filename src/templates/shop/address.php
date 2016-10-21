@@ -101,7 +101,7 @@ $cart = $model->getCart();
 			</fieldset>
 
 			<ul class="actions">
-				<?= $UC->link("Cancel", "/shop/checkout/", array("class" => "button", "wrapper" => "li.cancel")) ?>
+				<?= $UC->link("Cancel", "/shop/checkout", array("class" => "button", "wrapper" => "li.cancel")) ?>
 				<?= $UC->submit("Update", array("class" => "primary key:s", "wrapper" => "li.save")) ?>
 			</ul>
 		<?= $UC->formEnd() ?>

@@ -652,8 +652,6 @@ body #selection_options ul.actions a.button {background-color: #8c9399; color: #
 
 
 /*s-header.css*/
-#header .servicenavigation li.admin,
-#header .servicenavigation li.user {display: none;}
 
 
 /*s-active.css*/

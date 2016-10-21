@@ -120,21 +120,6 @@
 
 
 
-
-/* SUBSCRIPTIONS FORM */
-/*#content .scene fieldset.memberships .field .item {position: relative; display: inline-block; vertical-align: top; width: calc(25% - 32px); padding: 10px; margin: 0 10px 10px 0; border-radius: 5px; border: 1px solid #26962d; cursor: pointer;}
-#content .scene fieldset.memberships .field .item label {font-size: 16px; display: block; padding-bottom: 3px;}
-#content .scene fieldset.memberships .field .item input {position: absolute; right: 1px; top: 19px;}
-#content .scene fieldset.memberships .field .item h3,
-*/
-/*#content .scene fieldset.memberships .field .item ul.offer {width: auto; padding-left: 0px; padding-right: 0px;}*/
-/*#content .scene fieldset.memberships .field .indicator {display: none;}
-#content .scene fieldset.memberships .field .help {position: static;}
-#content .scene fieldset.memberships .field .item.selected {background-color: #26962d;}
-#content .scene fieldset.memberships .field .item.selected label,
-#content .scene fieldset.memberships .field .item.selected li {color: #ffffff;}
-*/
-
 #content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-bottom: 0; font-size: 0; position: relative; width: auto;}
 #content .scene div.memberships ul.memberships > li {display: inline-block; vertical-align: top; width: calc(25% - 32px); padding: 10px; margin: 0 10px 10px 0; border-radius: 5px; border: 1px solid #26962d; position: relative;}
 #content .scene div.memberships ul.memberships > li h3 {color: #26962d; padding-bottom: 3px;
@@ -209,8 +194,8 @@
 #content .scene.cart div.checkout ul.actions li {padding-right: 0;}
 
 
-/* SHOP CHECKOUT */
 
+/* SHOP CHECKOUT */
 #content .scene.checkout div.confirm {padding: 20px 0;}
 #content .scene.checkout div.confirm ul.actions {text-align: right;}
 #content .scene.checkout div.confirm ul.actions li {padding-right: 0;}

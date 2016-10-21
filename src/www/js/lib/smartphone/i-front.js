@@ -11,7 +11,7 @@ Util.Objects["front"] = new function() {
 				var i, node;
 				for(i = 0; node = this.intro._textnodes[i]; i++) {
 					var node_x = (page.cN.offsetWidth-node.offsetWidth) / 2;
-					var node_y = ((page.cN.offsetHeight-node.offsetHeight) / 2) - page.hN.offsetHeight / 2;
+					var node_y = ((page.cN.offsetHeight-node.offsetHeight) / 2) - (page.hN.offsetHeight / 2);
 					u.ass(node, {
 						"left": node_x+"px", 
 						"top": node_y+"px",

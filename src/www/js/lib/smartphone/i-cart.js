@@ -36,9 +36,19 @@ Util.Objects["cart"] = new function() {
 				node.scene = this;
 				node.item_id = u.cv(node, "id");
 
+//				node.span_x = u.qs("span.x", node);
+				node.h3 = u.qs("h3", node);
+				node.span_a = u.qs("span.a", node);
 				node.unit_price = u.qs("span.unit_price", node);
 				node.total_price = u.qs("span.total_price", node);
 
+				node.div_prices = u.ie(node, "p", {"class":"prices"});
+				u.ae(node.div_prices, node.span_a);
+				u.ae(node.div_prices, node.unit_price);
+				u.ae(node.div_prices, node.total_price);
+
+				u.ie(node, node.h3);
+				
 				// look for quantity update form
 				var quantity_form = u.qs("form.updateCartItemQuantity", node)
 
@@ -126,7 +136,6 @@ Util.Objects["cart"] = new function() {
 }
 
 
-
 Util.Objects["checkout"] = new function() {
 	this.init = function(scene) {
 //		u.bug("scene init:" + u.nodeId(scene))
@@ -163,6 +172,33 @@ Util.Objects["checkout"] = new function() {
 			}
 
 
+			var cart_nodes = u.qsa("ul.items li.item", this);
+
+			if(cart_nodes) {
+
+				var i, node;
+				for(i = 0; node = cart_nodes[i]; i++) {
+				
+
+					node.scene = this;
+					node.item_id = u.cv(node, "id");
+
+					node.h3 = u.qs("h3", node);
+					node.span_a = u.qs("span.a", node);
+					node.unit_price = u.qs("span.unit_price", node);
+					node.total_price = u.qs("span.total_price", node);
+
+					node.div_prices = u.ie(node, "p", {"class":"prices"});
+					u.ae(node.div_prices, node.span_a);
+					u.ae(node.div_prices, node.unit_price);
+					u.ae(node.div_prices, node.total_price);
+
+					u.ie(node, node.h3);
+
+				}
+
+			}
+
 			u.showScene(this);
 
 
@@ -176,7 +212,6 @@ Util.Objects["checkout"] = new function() {
 	}
 
 }
-
 
 
 Util.Objects["shopProfile"] = new function() {
@@ -199,14 +234,7 @@ Util.Objects["shopProfile"] = new function() {
 		scene.ready = function() {
 //			u.bug("scene.ready:" + u.nodeId(this));
 
-
 			page.cN.scene = this;
-
-			this.isHTML = true;
-//			page.notify(this);
-
-//			this.header_cart = u.qs("li.cart span.total", page.hN);
-//			this.total_cart_price = u.qs(".total_cart_price", this);
 
 
 			var form = u.qs("form.details", this);
@@ -251,7 +279,6 @@ Util.Objects["shopAddress"] = new function() {
 		scene.ready = function() {
 //			u.bug("scene.ready:" + u.nodeId(this));
 
-
 			page.cN.scene = this;
 
 
@@ -274,5 +301,3 @@ Util.Objects["shopAddress"] = new function() {
 	}
 
 }
-
-

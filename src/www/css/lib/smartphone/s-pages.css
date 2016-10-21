@@ -95,40 +95,148 @@
 
 
 
-/* SUBSCRIPTIONS FORM */
-#content .scene fieldset.subscriptions .field .item {position: relative; display: block; padding: 10px; margin: 0 0 10px; border-radius: 5px; border: 1px solid #26962d; cursor: pointer;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	user-select: none;
-}
-#content .scene fieldset.subscriptions .field .item label {font-size: 16px; display: block; padding-bottom: 3px;}
-#content .scene fieldset.subscriptions .field .item input {position: absolute; right: 1px; top: 19px;}
-#content .scene fieldset.subscriptions .field .item h3,
-#content .scene fieldset.subscriptions .field .item dl {width: auto; padding-left: 0px; padding-right: 0px;}
-#content .scene fieldset.subscriptions .field .indicator {display: none;}
-#content .scene fieldset.subscriptions .field .help {position: static;}
-#content .scene fieldset.subscriptions .field .item:active,
-#content .scene fieldset.subscriptions .field .item.selected {background-color: #26962d;}
-#content .scene fieldset.subscriptions .field .item:active label,
-#content .scene fieldset.subscriptions .field .item.selected label,
-#content .scene fieldset.subscriptions .field .item:active dd,
-#content .scene fieldset.subscriptions .field .item.selected dd {color: #ffffff;}
-
-
-#content .scene ul.subscriptions {list-style: none; margin: 0; padding-bottom: 0; font-size: 0; position: relative; width: auto;}
-#content .scene ul.subscriptions > li {display: block; padding: 10px; margin: 0 0 10px 0; border-radius: 5px; border: 1px solid #26962d;}
-#content .scene ul.subscriptions > li h3 {color: #26962d; padding-bottom: 3px;
+#content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-bottom: 0; font-size: 0; position: relative; width: auto;}
+#content .scene div.memberships ul.memberships > li {display: block; padding: 10px 10px 70px; margin: 0 0 10px; border-radius: 5px; border: 1px solid #26962d; position: relative;}
+#content .scene div.memberships ul.memberships > li h3 {color: #26962d; padding-bottom: 3px;
 	font-family: "PT Serif", Times, serif;
 }
-#content .scene ul.subscriptions > li dl {padding-bottom: 4px;}
-#content .scene ul.subscriptions > li h2,
-#content .scene ul.subscriptions > li h3,
-#content .scene ul.subscriptions > li h4,
-#content .scene ul.subscriptions > li p,
-#content .scene ul.subscriptions > li dl {width: auto; padding-left: 0px; padding-right: 0px;}
-#content .scene ul.subscriptions > li ul {padding: 0; width: auto;}
+#content .scene div.memberships ul.memberships > li .articlebody {display: none;}
+#content .scene div.memberships ul.memberships > li ul.offer {padding-bottom: 4px;}
+#content .scene div.memberships ul.memberships > li h2,
+#content .scene div.memberships ul.memberships > li h3,
+#content .scene div.memberships ul.memberships > li h4,
+#content .scene div.memberships ul.memberships > li p,
+#content .scene div.memberships ul.memberships > li dl {width: auto; padding-left: 0px; padding-right: 0px;}
+#content .scene div.memberships ul.memberships > li ul {padding: 0; width: auto;}
+
+#content .scene div.memberships ul.memberships > li ul.actions {position: absolute; bottom: 10px; left: 10px; width: calc(100% - 20px);}
+#content .scene div.memberships ul.memberships > li ul.actions li {display: block; padding: 0;}
+#content .scene div.memberships ul.memberships > li ul.actions li.readmore {text-align: center; padding-bottom: 10px;}
+#content .scene div.memberships ul.memberships > li ul.actions li input {display: block; width: 100%;}
 
 
+/* MEMBERSHIP VIEW */
+#content .scene.membership div.article ul.offer {padding: 20px 20px 15px;}
+#content .scene.membership div.article ul.offer li.default {font-size: 14px;}
+#content .scene.membership div.article ul.offer li {font-size: 22px; display: block;}
+#content .scene.membership div.article form {}
+
+#content .scene.membership ul.memberships li.membership {padding-bottom: 0;}
+#content .scene.membership ul.memberships li.membership h3 {padding-bottom: 5px;}
+#content .scene.membership ul.memberships li.membership ul.offer {padding: 0 20px 10px;}
+#content .scene.membership ul.memberships li.membership ul.offer li {}
+
+
+
+/* SHOP CART */
+#content .scene.cart .messages {display: none;}
+
+#content .scene.cart div.all_items h2 {padding-bottom: 15px;}
+
+#content .scene.cart ul.items > li {padding: 20px 0 10px; position: relative;}
+#content .scene.cart ul.items li h3 {width: auto; font-size: 14px; overflow: hidden;}
+#content .scene.cart ul.items li h3 > span {display: inline-block; vertical-align: top; padding-top: 6px;}
+#content .scene.cart ul.items li h3 form {display: inline-block; vertical-align: top; position: relative; margin-left: 20px;}
+#content .scene.cart ul.items li h3 form div.field {padding: 0;}
+#content .scene.cart ul.items li h3 form div.field .indicator {display: none;}
+#content .scene.cart ul.items li h3 form div.field .help {left: 47px; display: none;}
+#content .scene.cart ul.items li h3 form div.field input {height: 20px; width: 25px; text-align: right;}
+#content .scene.cart ul.items li h3 form > ul.actions {padding: 0; right: 48px; top: 0;}
+#content .scene.cart ul.items li h3 form > ul.actions li {padding: 8px 0 0;}
+#content .scene.cart ul.items li h3 form > ul.actions input.button {width: 16px; height: 16px; padding: 0; text-indent: -9999px; border-radius: 15px;
+	background-image: url(/janitor/admin/img/gx_refresh.png);
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+#content .scene.cart ul.items li p {padding-bottom: 10px;}
+#content .scene.cart ul.items li p.prices {padding-bottom: 30px;}
+#content .scene.cart ul.items li p.subscription_method+p.membership {margin-top: -10px;}
+#content .scene.cart ul.items li span.total_price {float: right;}
+
+#content .scene.cart ul.items li.total {border-top: 1px solid #dedede; /*border-bottom: 1px solid #dedede;*/}
+#content .scene.cart ul.items li.total h3 {font-size: 20px;}
+
+
+
+/* ROW BUTTONS */
+#content .scene.cart ul.items li ul.actions {padding: 0; top: 20px; position: absolute; right: 15px;}
+#content .scene.cart ul.items li ul.actions li.delete {padding: 0;}
+#content .scene.cart ul.items li ul.actions li.delete input {width: 30px; overflow: hidden; text-indent: -9999px;
+	background-image: url(/janitor/admin/img/bg_icons.png);
+	background-position: 8px -42px;
+	background-repeat: no-repeat;
+}
+#content .scene.cart ul.items li ul.actions li.delete input.confirm {width: auto; text-indent: 0; background-image: none;}
+
+#content .scene.cart div.checkout {padding: 20px 0;}
+#content .scene.cart div.checkout ul.actions {text-align: right;}
+#content .scene.cart div.checkout ul.actions li {padding-right: 0;}
+
+
+/* SHOP CHECKOUT */
+#content .scene.checkout div.confirm {padding: 20px 0;}
+#content .scene.checkout div.confirm ul.actions {text-align: right;}
+#content .scene.checkout div.confirm ul.actions li {padding-right: 0;}
+
+
+#content .scene.checkout div.emptycart,
+#content .scene.checkout div.login,
+#content .scene.checkout div.signup,
+#content .scene.checkout div.contact,
+#content .scene.checkout div.all_items {padding: 0 0 20px;}
+
+#content .scene.checkout div.contact h2,
+#content .scene.checkout div.all_items h2,
+#content .scene.checkout div.delivery h2,
+#content .scene.checkout div.billing h2 {padding-bottom: 15px;}
+#content .scene.checkout div.contact h2 a,
+#content .scene.checkout div.all_items h2 a,
+#content .scene.checkout div.billing h2 a,
+#content .scene.checkout div.delivery h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
+	font-family: "OpenSans";
+}
+#content .scene.checkout dl.list {width: 320px;}
+#content .scene.checkout dl.list dt {display: inline-block; vertical-align: bottom; width: 90px; text-align: right; padding: 0 0 4px;}
+#content .scene.checkout dl.list dt:after {content: ":";}
+#content .scene.checkout dl.list dd {display: inline-block; vertical-align: bottom; width: 190px; overflow: hidden; padding: 0 0 4px 4px;}
+
+#content .scene.checkout ul.items > li {padding: 20px 0 10px;}
+#content .scene.checkout ul.items li h3 {width: auto; font-size: 16px;}
+#content .scene.checkout ul.items li h3 > span {display: inline-block; vertical-align: top; padding-top: 4px;}
+#content .scene.checkout ul.items li p {padding-bottom: 10px;}
+#content .scene.checkout ul.items li p.prices {padding-bottom: 30px;}
+#content .scene.checkout ul.items li p.subscription_method+p.membership {margin-top: -10px;}
+#content .scene.checkout ul.items li span.total_price {float: right;}
+
+#content .scene.checkout ul.items li.total {border-top: 1px solid #dedede; /*border-bottom: 1px solid #dedede;*/}
+#content .scene.checkout ul.items li.total h3 {font-size: 20px;}
+
+
+
+/* ADDRESSES */
+#content .scene.shopAddress ul.addresses {}
+#content .scene.shopAddress ul.addresses > li {display: block; padding: 0 10px 0 0; margin-bottom: 30px; position: relative;}
+#content .scene.shopAddress ul.addresses > li h3 {width: auto; padding-left: 0; padding-right: 0;}
+#content .scene.shopAddress ul.addresses > li > div {color: #777777;}
+
+#content .scene.shopAddress ul.addresses > li ul.actions {padding: 20px 0 0;}
+#content .scene.shopAddress div.item {border-top: 1px solid #dedede; padding-top: 20px;}
+
+
+/* PAYMENT */
+#content .scene.shopPayment {}
+#content .scene.shopPayment dl.amount {}
+#content .scene.shopPayment dl.amount dt {width: auto; font-size: 18px; display: block; text-align: left;}
+#content .scene.shopPayment dl.amount dd {width: auto; font-size: 28px; display: block; padding: 0;}
+
+#content .scene.shopPayment ul.payment_methods {padding: 0;}
+#content .scene.shopPayment ul.payment_methods li.payment_method {padding-bottom: 10px;}
+#content .scene.shopPayment ul.payment_methods li.payment_method ul.actions {padding-bottom: 0;}
+
+#content .scene.shopReceipt dl {width: 320px;}
+#content .scene.shopReceipt dl dt {display: inline-block; vertical-align: bottom; width: 90px; text-align: right; padding: 0 0 4px;}
+#content .scene.shopReceipt dl dt:after {content: ":";}
+#content .scene.shopReceipt dl dd {display: inline-block; vertical-align: bottom; width: 190px; overflow: hidden; padding: 0 0 4px 4px;}
 
 
 /* FEEDBACK ELEMENTS */

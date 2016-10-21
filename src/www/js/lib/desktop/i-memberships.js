@@ -13,7 +13,7 @@ Util.Objects["memberships"] = new function() {
 					u.ass(node, {
 						"height":"auto"
 					})
-					u.bug(node.offsetHeight);
+//					u.bug(node.offsetHeight);
 					tallest_node = tallest_node < node.offsetHeight ? node.offsetHeight : tallest_node;
 				}
 				for(i = 0; node = this._membership_nodes[i]; i++) {

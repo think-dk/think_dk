@@ -72,7 +72,9 @@ $IC = new Items();
 							<?= $model->submit("Update", array("name" => "update", "wrapper" => "li.save")) ?>
 						</ul>
 					<?= $model->formEnd() ?>
-					<span class="name">x <?= $item["name"] ?> á</span>
+					<span class="x">x </span>
+					<span class="name"><?= $item["name"] ?> </span>
+					<span class="a">á </span>
 					<span class="unit_price"><?= formatPrice($price) ?></span>
 					<span class="total_price">
 						<?= formatPrice(array(
