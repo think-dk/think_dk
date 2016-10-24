@@ -18,7 +18,7 @@ u.txt["comment"] = "Comment";
 u.txt["cancel"] = "Cancel";
 
 
-u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/signup">Sign up</a> to add comments.';
+u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/memberships">Join us</a> to add comments.';
 
 // terms
 u.txt["terms-headline"] = "We love <br />cookies and privacy";
