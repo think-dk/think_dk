@@ -119,7 +119,7 @@ if($item) {
 
 				<dl class="occurs_at">
 					<dt class="starting_at">Starts</dt>
-					<dd class="starting_at"><?= date("F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
+					<dd class="starting_at"><?= date("l, F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
 				</dl>
 
 				<h3><a href="/events/<?= $item["sindex"] ?>"><?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?></a></h3>
