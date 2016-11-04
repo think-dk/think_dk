@@ -37,18 +37,40 @@ if($order) {
 
 }
 
-
+$this->headerIncludes(["https://checkout.stripe.com/checkout.js"]);
 
 ?>
-<div class="scene shopReceipt i:scene">
-	<h1>Receipt</h1>
-	<h2>Thank you for supporting change.</h2>
-	<p>We are so thrilled to have you on board - go ahead and check out our <a href="/events">upcoming events</a>!</p>
+<div class="scene shopPayment stripe <?= $order ? "i:stripe" : "i:scene" ?>">
 
 <? if($order): ?>
 
-	<h2>Please be so kind ...</h2>
-	<p>Just bring <?= $amount ?> in cash next time you come to the center.</p>
+	<dl>
+		<dt class="amount">Amount</dt>
+		<dd class="amount"><?= $total_order_price["price"] ?></dd>
+		<dt class="currency">Currency</dt>
+		<dd class="currency"><?= $order["currency"] ?></dd>
+		<dt class="reference">Reference</dt>
+		<? if($is_membership): ?>
+		<dd class="reference">Member <?= $membership["id"] ?></dd>
+		<? else: ?>
+		<dd class="reference"><?= $order_no ?></dd>
+		<? endif; ?>
+		<dt class="email">Email</dt>
+		<dd class="email"><?= $user["email"] ?></dd>
+
+	</dl>
+
+	<h2>We're loading the payment window</h2>
+	<p>Please wait ...</p>
+	<p class="note">
+		We are using <a href="https://stripe" target="_blank">Stripe</a> to process the payment. <br />No card information is sent to or stored on our own server.
+	</p>
+
+
+	<?= $UC->formStart("/shop/gateway/".$order_no."/stripe/token", array("class" => "token labelstyle:inject")) ?>
+		<?= $UC->input("token", array("type" => "hidden", "id" => "token")); ?>
+	<?= $UC->formEnd() ?>
+
 
 <? else: ?>
 

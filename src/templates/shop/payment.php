@@ -12,11 +12,14 @@ $amount = "";
 $order = $model->getOrders(array("order_no" => $order_no));
 $membership = $UC->getMembership();
 
-if($order) {
+if($order && $order["payment_status"] != 2) {
+
 	$total_order_price = $model->getTotalOrderPrice($order["id"]);
 	if($total_order_price) {
 		$amount = formatPrice($total_order_price);
 	}
+
+	// TODO: should calculate remaining payment (in case partially paid)
 
 }
 
@@ -27,7 +30,7 @@ $payment_methods = $this->paymentMethods();
 <div class="scene shopPayment i:scene">
 	<h1>Payment</h1>
 
-<? if($order): ?>
+<? if($order && $amount): ?>
 
 	<dl class="amount">
 		<dt class="amount">Due amount</dt>
@@ -44,7 +47,7 @@ $payment_methods = $this->paymentMethods();
 	<ul class="payment_methods">
 
 		<? foreach($payment_methods as $payment_method): ?>
-		<li class="payment_method">
+		<li class="payment_method<?= $payment_method["classname"] ? " ".$payment_method["classname"] : "" ?>">
 
 			<ul class="actions">
 			<? if($payment_method["classname"] == "disabled"): ?>
@@ -74,7 +77,7 @@ $payment_methods = $this->paymentMethods();
 <? else: ?>
 
 	<h2>Looking to make a payment?</h2>
-	<p>You should log into your account and initiate your payment from there.</p>
+	<p>You should <a href="/login">log in</a> to your account and initiate your payment from there.</p>
 
 <? endif;?>
 

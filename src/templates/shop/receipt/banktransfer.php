@@ -90,7 +90,7 @@ if($order) {
 <? else: ?>
 
 	<h2>Looking to make a payment?</h2>
-	<p>You should log into your account and initiate your payment from there.</p>
+	<p>You should <a href="/login">log in</a> to your account and initiate your payment from there.</p>
 
 <? endif;?>
 

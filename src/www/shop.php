@@ -41,6 +41,42 @@ if(is_array($action) && count($action)) {
 
 	}
 
+	// /shop/gateway
+	else if($action[0] == "gateway") {
+
+		// specific payment receipt
+		if(count($action) == 3) {
+
+			$page->page(array(
+				"type" => "payment",
+				"templates" => "shop/gateway/".$action[2].".php"
+			));
+			exit();
+
+		}
+
+		// specific payment receipt
+		else if(count($action) == 4 && $action[3] == "token" && $page->validateCsrfToken()) {
+
+			if($model->processPayment($action)) {
+
+				// redirect to leave POST state
+				header("Location: /shop/receipt/".$action[1]."/".$action[2]);
+				exit();
+
+			}
+			else {
+
+				// redirect to leave POST state
+				header("Location: /shop/receipt/".$action[1]."/error");
+				exit();
+
+			}
+
+		}
+
+	}
+
 	# /shop/checkout
 	else if($action[0] == "checkout") {
 
@@ -113,7 +149,10 @@ if(is_array($action) && count($action)) {
 
 		// if gateway is specified - proceed to gateway
 		if($payment_method["gateway"]) {
-			
+
+			header("Location: /shop/gateway/".$payment_method["order_no"]."/".$payment_method["gateway"]);
+			exit();
+
 		}
 		// no gateway, means manual payment - go to receipt page
 		else if($payment_method["classname"] && $payment_method["classname"] !== "disabled") {

@@ -250,8 +250,12 @@
 #content .scene.shopPayment ul.payment_methods li.payment_method {padding-bottom: 10px;}
 #content .scene.shopPayment ul.payment_methods li.payment_method ul.actions {padding-bottom: 0;}
 
+#content .scene.shopPayment ul.payment_methods li.payment_method.stripe {background: url(/img/gx_creditcards.png) no-repeat 200px 0px;}
 
-
+#content .scene.shopPayment.stripe dl {display: none;}
+#content .scene.shopPayment.stripe h2,
+#content .scene.shopPayment.stripe p {text-align: center; margin: 0 auto;}
+#content .scene.shopPayment.stripe p.note {padding-top: 70px;}
 
 /* TODOS */
 #content .scene div.todos {padding-bottom: 15px; position: relative; z-index: 1;}
@@ -303,6 +307,23 @@
 
 
 
+
+
 /* ABOUT */
 /*#content .scene.about div.comments {margin-top: 20px;}*/
 
+/* PRINT STYLES */
+@media print {
+
+	#header .logo {position: absolute; left: 80px;}
+	#header .servicenavigation {display: none;}
+	#navigation {display: none;}
+	#footer {display: none;}
+
+	#content .scene.events {padding: 20px;}
+	#content .scene.events .article {display: none;}
+	#content .scene.events ul.events li.event {padding-top: 10px;}
+	#content .scene.events ul.events h3 {padding-bottom: 0; font-size: 18px;}
+	#content .scene.events ul.events p {padding-bottom: 10px; font-size: 12px;}
+
+}

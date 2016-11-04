@@ -41,20 +41,9 @@ if($order) {
 
 ?>
 <div class="scene shopReceipt i:scene">
-	<h1>Receipt</h1>
-	<h2>Thank you for supporting change.</h2>
+
+	<h1>Error</h1>
+	<h2>Shit.</h2>
 	<p>We are so thrilled to have you on board - go ahead and check out our <a href="/events">upcoming events</a>!</p>
-
-<? if($order): ?>
-
-	<h2>Please be so kind ...</h2>
-	<p>Just bring <?= $amount ?> in cash next time you come to the center.</p>
-
-<? else: ?>
-
-	<h2>Looking to make a payment?</h2>
-	<p>You should <a href="/login">log in</a> to your account and initiate your payment from there.</p>
-
-<? endif;?>
 
 </div>
