@@ -6474,16 +6474,18 @@ Util.Objects["page"] = new function() {
 		page.initNavigation = function() {
 			var i, node, nodes;
 			page.nN.list = u.qs("ul", page.nN);
-			page.nN.list.nodes = u.qsa("li", page.nN.list);
-			if(page.nN.list.nodes.length) {
-				page.nN.font_size = parseInt(u.gcs(page.nN.list.nodes[1], "font-size"));
-				page.nN.font_size_gap = page.nN.font_size-14;
-				page.nN.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
-				page.nN.top_offset_gap = page.nN.top_offset-10;
-				page.style_tag.sheet.insertRule("#navigation {}", 0);
-				page.nN.css_rule = page.style_tag.sheet.cssRules[0];
-				page.style_tag.sheet.insertRule("#navigation ul li {}", 0);
-				page.nN.list.css_rule = page.style_tag.sheet.cssRules[0];
+			if(page.nN.list) {
+				page.nN.list.nodes = u.qsa("li", page.nN.list);
+				if(page.nN.list.nodes.length) {
+					page.nN.font_size = parseInt(u.gcs(page.nN.list.nodes[1], "font-size"));
+					page.nN.font_size_gap = page.nN.font_size-14;
+					page.nN.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
+					page.nN.top_offset_gap = page.nN.top_offset-10;
+					page.style_tag.sheet.insertRule("#navigation {}", 0);
+					page.nN.css_rule = page.style_tag.sheet.cssRules[0];
+					page.style_tag.sheet.insertRule("#navigation ul li {}", 0);
+					page.nN.list.css_rule = page.style_tag.sheet.cssRules[0];
+				}
 			}
 			nodes = u.qsa("#navigation li,a.logo", page.hN);
 			for(i = 0; node = nodes[i]; i++) {
@@ -7606,6 +7608,91 @@ Util.Objects["memberships"] = new function() {
 	}
 }
 
+
+/*i-stripe.js*/
+Util.Objects["stripe"] = new function() {
+	this.init = function(scene) {
+		u.bug("stripe init:" + u.nodeId(scene))
+		scene.resized = function() {
+			u.bug("scene.resized:" + u.nodeId(this));
+			this.offsetHeight;
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			this.transitioned = function() {
+				this.Stripe.open({
+					opened: this.Stripe.opened.bind(this.Stripe),
+					closed: this.Stripe.closed.bind(this.Stripe)
+				});
+			}
+			u.a.transition(this, "all 0.4s ease-in-out");
+			u.ass(this, {
+				"opacity":1
+			})
+			var amount = Number(u.qs("dd.amount", this).innerHTML)*100;
+			var currency = u.qs("dd.currency", this).innerHTML;
+			var email = u.qs("dd.email", this).innerHTML;
+			var reference = u.qs("dd.reference", this).innerHTML;
+			this.tokenReturned = function(token) {
+				this.processing = true;
+				console.log("token:");
+				console.log(this);
+				console.log(token);
+				var form = u.qs("form.token", this);
+				if(form) {
+					var input = u.qs("input#token", form);
+					if(input) {
+						input.value = token.id
+						form.submit();
+					}
+				}
+			}
+			this.Stripe = StripeCheckout.configure({
+				key: 'pk_test_9JXIVsrick4rvSoLltT9eKny',
+				image: '/img/logo.png',
+				locale: 'auto',
+				token: this.tokenReturned.bind(this),
+				// 	
+				// 	
+				name: 'think.dk',
+				email: email,
+				description: reference,
+				zipCode: true,
+				currency: currency,
+				amount: amount,
+				allowRememberMe:false,
+			});
+			this.Stripe.scene = this;
+			this.Stripe.closed = function() {
+				if(this.scene.processing) {
+					u.qs("h2", this.scene).innerHTML = "We are waiting for the gateway response";
+					u.a.transition(this.scene, "all 0.2s ease-in-out");
+					u.ass(this.scene, {
+						"opacity":1
+					});
+				}
+				else {
+					history.back();
+				}
+				console.log("closed")
+				console.log(this);
+			}
+			this.Stripe.opened = function() {
+				u.a.transition(this.scene, "all 0.2s ease-in-out");
+				u.ass(this.scene, {
+					"opacity":0
+				})
+			}
+			window.addEventListener('popstate', function() {
+			  handler.close();
+			});
+			page.resized();
+		}
+		scene.ready();
+	}
+}
 
 /*i-article.js*/
 Util.Objects["article"] = new function() {
