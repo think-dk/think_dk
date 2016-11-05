@@ -28,7 +28,7 @@ define("DEFAULT_CURRENCY_ISO", "DKK");
 
 // Enable items model
 define("SITE_ITEMS", true);
-define("SITE_SIGNUP", "/signup");
+define("SITE_SIGNUP", "/memberships");
 
 define("SITE_SUBSCRIPTIONS", true);
 define("SITE_MEMBERS", true);
