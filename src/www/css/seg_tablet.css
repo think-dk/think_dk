@@ -889,7 +889,7 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene.shopPayment ul.payment_methods {padding: 0;}
 #content .scene.shopPayment ul.payment_methods li.payment_method {padding-bottom: 10px;}
 #content .scene.shopPayment ul.payment_methods li.payment_method ul.actions {padding-bottom: 0;}
-#content .scene.shopPayment ul.payment_methods li.payment_method.stripe {background: url(/img/gx_creditcards.png) no-repeat 200px 0px;}
+#content .scene.shopPayment ul.payment_methods li.payment_method.stripe {background: url(/img/gx_creditcards.png) no-repeat 260px 0px;}
 #content .scene.shopPayment.stripe dl {display: none;}
 #content .scene.shopPayment.stripe h2,
 #content .scene.shopPayment.stripe p {text-align: center; margin: 0 auto;}
