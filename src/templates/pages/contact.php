@@ -4,7 +4,7 @@ global $IC;
 
 $itemtype = "person";
 
-$page_item = $IC->getItem(array("tags" => "page:contact", "extend" => array("user" => true, "mediae" => true)));
+$page_item = $IC->getItem(array("tags" => "page:contact", "extend" => array("user" => true, "mediae" => true, "tags" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
@@ -22,39 +22,24 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 		<div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
 		<? endif; ?>
 
+
+		<?= $HTML->articleTags($page_item, [
+			"context" => false
+		]) ?>
+
+
 		<h1 itemprop="headline"><?= $page_item["name"] ?></h1>
 
 		<? if($page_item["subheader"]): ?>
 		<h2 itemprop="alternativeHeadline"><?= $page_item["subheader"] ?></h2>
 		<? endif; ?>
 
-		<ul class="info">
-			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($page_item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
-			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page_item["modified_at"])) ?>"></li>
-			<li class="author" itemprop="author"><?= $page_item["user_nickname"] ?></li>
-			<li class="main_entity" itemprop="mainEntityOfPage" content="<?= SITE_URL."/contact" ?>"></li>
-			<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-				<ul class="publisher_info">
-					<li class="name" itemprop="name">think.dk</li>
-					<li class="logo" itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-						<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/img/logo-large.png"></span>
-						<span class="image_width" itemprop="width" content="720"></span>
-						<span class="image_height" itemprop="height" content="405"></span>
-					</li>
-				</ul>
-			</li>
-			<li class="image_info" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-			<? if($media): ?>
-				<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/images/<?= $page_item["item_id"] ?>/<?= $media["variant"] ?>/720x.<?= $media["format"] ?>"></span>
-				<span class="image_width" itemprop="width" content="720"></span>
-				<span class="image_height" itemprop="height" content="<?= floor(720 / ($media["width"] / $media["height"])) ?>"></span>
-			<? else: ?>
-				<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/img/logo-large.png"></span>
-				<span class="image_width" itemprop="width" content="720"></span>
-				<span class="image_height" itemprop="height" content="405"></span>
-			<? endif; ?>
-			</li>
-		</ul>
+
+		<?= $HTML->articleInfo($page_item, "/contact", [
+			"media" => $media,
+			"sharing" => true
+		]) ?>
+
 
 		<? if($page_item["html"]): ?>
 		<div class="articlebody" itemprop="articleBody">
@@ -100,12 +85,16 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 		<h2 class="name fn org" itemprop="name">think.dk</h2>
 
 		<dl class="info basic">
-			<dt class="address">Address</dt>
-			<dd class="address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-				<ul>
+			<dt class="location">Address</dt>
+			<dd class="location" itemprop="location" itemscope itemtype="http://schema.org/Place">
+				<ul class="address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
 					<li class="streetaddress" itemprop="streetAddress">Æbeløgade 4</li>
 					<li class="city"><span class="postal" itemprop="postalCode">2100</span> <span class="locality" itemprop="addressLocality">København Ø</span></li>
 					<li class="country" itemprop="addressCountry">Denmark</li>
+				</ul>
+				<ul class="geo" itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+					<li class="latitude" itemprop="latitude" content="55.681159"></li>
+					<li class="longitude" itemprop="longitude" content="12.58437"></li>
 				</ul>
 			</dd>
 			<dt class="cvr">CVR</dt>
@@ -117,8 +106,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 			<dd class="contact">
 				<ul>
 					<li class="email"><a href="mailto:start@think.dk" itemprop="email" content="start@think.dk">start@think.dk</a></li>
-					<li itemprop="telephone" class="tel" content="+4520742819">+45 2074 2819</li>
-					<li itemprop="telephone" class="tel" content="+4520742819">+45 6069 2819</li>
+					<li itemprop="telephone" class="tel" content="+4560692819">+45 6069 2819</li>
 				</ul>
 			</dd>
 			<dt class="social">Social media</dt>

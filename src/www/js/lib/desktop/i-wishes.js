@@ -55,17 +55,23 @@ Util.Objects["wishes"] = new function() {
 						u.as(node.image_mask, "backgroundImage", "url(/images/0/missing/"+this.image_width+"x.png)");
 					}
 
-					u.ae(node.text_mask, u.qs("h3", node));
-					u.ae(node.text_mask, u.qs("dl", node));
+					node._header = u.qs("h3", node);
+					if(node._header) {
+						u.ae(node.text_mask, node._header);
+					}
+					node._info = u.qs("dl.info", node);
+					if(node._info) {
+						u.ae(node.text_mask, node._info);
+					}
 
 					node._actions = u.qs("ul.actions", node);
 					if(node._actions) {
 						u.ae(node.text_mask, node._actions);
 					}
 
-					node._descriptions = u.qs("div.description", node);
-					if(node._descriptions) {
-						u.ae(node.text_mask, node._descriptions);
+					node._description = u.qs("div.description", node);
+					if(node._description) {
+						u.ae(node.text_mask, node._description);
 					}
 
 				}

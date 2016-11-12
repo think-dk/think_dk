@@ -6394,59 +6394,61 @@ Util.Objects["page"] = new function() {
 		page.initNavigation = function() {
 			page.nN.list = u.qs("ul.navigation", page.nN);
 			this.bn_nav = u.qs(".servicenavigation li.navigation", this.hN);
-			u.ae(this.bn_nav, "div");
-			u.ae(this.bn_nav, "div");
-			u.ae(this.bn_nav, "div");
-			u.ce(this.bn_nav);
-			this.bn_nav.clicked = function(event) {
-				if(u.hc(this, "open")) {
-					u.rc(this, "open");
-					var i, node;
-					for(i = 0; node = page.nN.nodes[i]; i++) {
-						u.a.transition(node, "all 0.2s ease-in "+(i*100)+"ms");
-						u.ass(node, {
-							"opacity": 0,
-							"transform":"translate(0, -30px)"
+			if(this.bn_nav) {
+				u.ae(this.bn_nav, "div");
+				u.ae(this.bn_nav, "div");
+				u.ae(this.bn_nav, "div");
+				u.ce(this.bn_nav);
+				this.bn_nav.clicked = function(event) {
+					if(u.hc(this, "open")) {
+						u.rc(this, "open");
+						var i, node;
+						for(i = 0; node = page.nN.nodes[i]; i++) {
+							u.a.transition(node, "all 0.2s ease-in "+(i*100)+"ms");
+							u.ass(node, {
+								"opacity": 0,
+								"transform":"translate(0, -30px)"
+							});
+						}
+						page.hN.transitioned = function() {
+							u.ass(page.nN, {
+								"display": "none"
+							});
+						}
+						u.a.transition(page.hN, "all 0.3s ease-in "+(page.nN.nodes.length*100)+"ms");
+						u.ass(page.hN, {
+							"height": "60px"
 						});
 					}
-					page.hN.transitioned = function() {
+					else {
+						u.ac(this, "open");
+						var i, node;
+						for(i = 0; node = page.nN.nodes[i]; i++) {
+							u.ass(node, {
+								"opacity": 0,
+								"transform":"translate(0, 30px)"
+							});
+						}
+						u.a.transition(page.hN, "all 0.3s ease-in");
+						u.ass(page.hN, {
+							"height": window.innerHeight+"px",
+						});
 						u.ass(page.nN, {
-							"display": "none"
+							"display": "block"
 						});
+						for(i = 0; node = page.nN.nodes[i]; i++) {
+							u.a.transition(node, "all 0.3s ease-in "+(100 + (i*100))+"ms");
+							u.ass(node, {
+								"opacity": 1,
+								"transform":"translate(0, 0)"
+							});
+						}
 					}
-					u.a.transition(page.hN, "all 0.3s ease-in "+(page.nN.nodes.length*100)+"ms");
-					u.ass(page.hN, {
-						"height": "60px"
-					});
+					page.nN.start_drag_y = (window.innerHeight - 100) - page.nN.offsetHeight;
+					page.nN.end_drag_y = page.nN.offsetHeight;
 				}
-				else {
-					u.ac(this, "open");
-					var i, node;
-					for(i = 0; node = page.nN.nodes[i]; i++) {
-						u.ass(node, {
-							"opacity": 0,
-							"transform":"translate(0, 30px)"
-						});
-					}
-					u.a.transition(page.hN, "all 0.3s ease-in");
-					u.ass(page.hN, {
-						"height": window.innerHeight+"px",
-					});
-					u.ass(page.nN, {
-						"display": "block"
-					});
-					for(i = 0; node = page.nN.nodes[i]; i++) {
-						u.a.transition(node, "all 0.3s ease-in "+(100 + (i*100))+"ms");
-						u.ass(node, {
-							"opacity": 1,
-							"transform":"translate(0, 0)"
-						});
-					}
-				}
-				page.nN.start_drag_y = (window.innerHeight - 100) - page.nN.offsetHeight;
-				page.nN.end_drag_y = page.nN.offsetHeight;
+				u.e.drag(this.nN, [0, (window.innerHeight - 100) - this.nN.offsetHeight, this.hN.offsetWidth, this.nN.offsetHeight], {"strict":false, "elastica":200, "vertical_lock":true});
 			}
-			u.e.drag(this.nN, [0, (window.innerHeight - 100) - this.nN.offsetHeight, this.hN.offsetWidth, this.nN.offsetHeight], {"strict":false, "elastica":200, "vertical_lock":true});
 			if(page.fN.service) {
 				nodes = u.qsa("li", page.fN.service);
 				for(i = 0; node = nodes[i]; i++) {
@@ -6489,9 +6491,11 @@ Util.Objects["page"] = new function() {
 				}
 			}
 			page.nN.nodes = u.qsa("li", page.nN.list);
-			u.ass(page.hN.service, {
-				"opacity":1
-			})
+			if(page.hN.service) {
+				u.ass(page.hN.service, {
+					"opacity":1
+				});
+			}
 		}
 		page.ready();
 	}
@@ -6523,7 +6527,7 @@ u.showScene = function(scene) {
 			"opacity":1,
 		});
 		u._stepA1.call(headline);
-		for(i = 1; node = nodes[i]; i++) {
+		for(i = 0; node = nodes[i]; i++) {
 			u.a.transition(node, "all 0.2s ease-in "+((i*100)+200)+"ms");
 			u.ass(node, {
 				"opacity":1,
@@ -6572,7 +6576,6 @@ u._stepA1 = function() {
 				"opacity":1
 			});
 			span.transitioned = function(event) {
-				u.bug("done")
 				u.ass(this, {
 					"transform":"none"
 				});
@@ -6594,7 +6597,7 @@ u._stepA2 = function() {
 }
 Util.Objects["oneButtonForm"] = new function() {
 	this.init = function(node) {
-	u.bug("oneButtonForm:" + u.nodeId(node));
+		u.bug("oneButtonForm:" + u.nodeId(node));
 		if(!node.childNodes.length) {
 			var csrf_token = node.getAttribute("data-csrf-token");
 			var form_action = node.getAttribute("data-form-action");
@@ -7099,8 +7102,8 @@ Util.Objects["shopAddress"] = new function() {
 Util.Objects["wishes"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
-			if(this.wishes && this.wishes.length) {
-				for(i = 0; node = this.wishes[i]; i++) {
+			if(this.nodes && this.nodes.length) {
+				for(i = 0; node = this.nodes[i]; i++) {
 					if(node.image_mask) {
 						u.ass(node.image_mask, {
 							"height":Math.floor(node.image_mask.offsetWidth / (250/140)) + "px"
@@ -7112,12 +7115,11 @@ Util.Objects["wishes"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			u.bug("scene.ready:" + u.nodeId(this));
 			page.cN.scene = this;
 			var i, node;
-			this.wishes = u.qsa("li.item", this);
-			if(this.wishes.length) {
-				for(i = 0; node = this.wishes[i]; i++) {
+			this.nodes = u.qsa("li.item", this);
+			if(this.nodes.length) {
+				for(i = 0; node = this.nodes[i]; i++) {
 					node.item_id = u.cv(node, "id");
 					node.image_format = u.cv(node, "format");
 					node.image_variant = u.cv(node, "variant");
@@ -7161,10 +7163,90 @@ Util.Objects["memberships"] = new function() {
 }
 
 
+/*i-stripe.js*/
+Util.Objects["stripe"] = new function() {
+	this.init = function(scene) {
+		u.bug("stripe init:" + u.nodeId(scene))
+		scene.resized = function() {
+			u.bug("scene.resized:" + u.nodeId(this));
+			this.offsetHeight;
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			this.transitioned = function() {
+				this.Stripe.open({
+					opened: this.Stripe.opened.bind(this.Stripe),
+					closed: this.Stripe.closed.bind(this.Stripe)
+				});
+			}
+			u.a.transition(this, "all 0.4s ease-in-out");
+			u.ass(this, {
+				"opacity":1
+			})
+			var amount = Number(u.qs("dd.amount", this).innerHTML)*100;
+			var currency = u.qs("dd.currency", this).innerHTML;
+			var email = u.qs("dd.email", this).innerHTML;
+			var reference = u.qs("dd.reference", this).innerHTML;
+			this.tokenReturned = function(token) {
+				this.processing = true;
+				var form = u.qs("form.token", this);
+				if(form) {
+					var input = u.qs("input#token", form);
+					if(input) {
+						input.value = token.id
+						form.submit();
+					}
+				}
+			}
+			this.Stripe = StripeCheckout.configure({
+				key: 'pk_test_9JXIVsrick4rvSoLltT9eKny',
+				image: '/img/logo.png',
+				locale: 'auto',
+				token: this.tokenReturned.bind(this),
+				name: 'think.dk',
+				email: email,
+				description: reference,
+				zipCode: true,
+				currency: currency,
+				amount: amount,
+				allowRememberMe:false,
+			});
+			this.Stripe.scene = this;
+			this.Stripe.closed = function() {
+				if(this.scene.processing) {
+					u.qs("h2", this.scene).innerHTML = "We are waiting for the gateway response";
+					u.a.transition(this.scene, "all 0.2s ease-in-out");
+					u.ass(this.scene, {
+						"opacity":1
+					});
+				}
+				else {
+					history.back();
+				}
+				console.log("closed")
+				console.log(this);
+			}
+			this.Stripe.opened = function() {
+				u.a.transition(this.scene, "all 0.2s ease-in-out");
+				u.ass(this.scene, {
+					"opacity":0
+				})
+			}
+			window.addEventListener('popstate', function() {
+			  handler.close();
+			});
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
 /*i-article.js*/
 Util.Objects["article"] = new function() {
 	this.init = function(article) {
-		u.bug("article init:" + u.nodeId(article) + "," + u.qs("h1,h2,h3", article).innerHTML)
+		u.bug("article init:" + u.nodeId(article));
 		article.csrf_token = article.getAttribute("data-csrf-token");
 		article.header = u.qs("h1,h2,h3", article);
 		article.header.article = article;
@@ -7200,7 +7282,7 @@ Util.Objects["article"] = new function() {
 				u.preloader(image, [image._image_src]);
 			}
 		}
-		article.geolocation = u.qs("dl.geo", article);
+		article.geolocation = u.qs("ul.geo", article);
 		if(article.geolocation && typeof(u.injectGeolocation) == "function") {
 			u.injectGeolocation(article);
 		}

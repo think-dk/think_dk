@@ -18,8 +18,15 @@
 #content div.contact div.teams {display: none;}
 
 
-#content .scene fieldset.subscriptions .field .item label {font-size: 16px;}
-#content .scene fieldset.subscriptions .field .item dl.offer {padding-left: 30px;}
+/* MEMBERSHIPS */
+#content .scene div.memberships ul.memberships > li {padding: 10px; margin: 0 0 10px 0; border: 1px solid #26962d; position: relative;}
+#content .scene div.memberships ul.memberships > li h3 {color: #26962d; padding-bottom: 3px;
+	font-family: "PT Serif", Times, serif;
+}
+#content .scene div.memberships ul.memberships > li ul.actions {padding: 0;}
+#content .scene div.memberships ul.memberships > li ul.actions li {display: block; padding: 0; float: none; margin-top: 10px;}
+
+
 
 
 /* FEEDBACK ELEMENTS */

@@ -27,7 +27,6 @@ $membership = false;
 // attempt to find membership in cart
 if($cart && $cart["items"]) {
 
-
 	foreach($cart["items"] as $cart_item) {
 
 		$item = $IC->getItem(array("id" => $cart_item["item_id"], "extend" => true));
@@ -37,11 +36,8 @@ if($cart && $cart["items"]) {
 		}
 
 	}
-	
+
 }
-
-// TODO: find membership name to display
-
 
 
 $delivery_address = $UC->getAddresses(array("address_id" => $cart["delivery_address_id"]));

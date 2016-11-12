@@ -44,7 +44,7 @@ u.showScene = function(scene) {
 		u._stepA1.call(headline);
 
 		// show content
-		for(i = 1; node = nodes[i]; i++) {
+		for(i = 0; node = nodes[i]; i++) {
 
 			u.a.transition(node, "all 0.2s ease-in "+((i*100)+200)+"ms");
 			u.ass(node, {
@@ -125,7 +125,6 @@ u._stepA1 = function() {
 				"opacity":1
 			});
 			span.transitioned = function(event) {
-				u.bug("done")
 				u.ass(this, {
 					"transform":"none"
 				});
@@ -159,7 +158,7 @@ u._stepA2 = function() {
 
 Util.Objects["oneButtonForm"] = new function() {
 	this.init = function(node) {
-	u.bug("oneButtonForm:" + u.nodeId(node));
+		u.bug("oneButtonForm:" + u.nodeId(node));
 
 		// inject standard form if action node is empty
 		// this is done to minimize HTML in list pages

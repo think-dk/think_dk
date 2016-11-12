@@ -130,16 +130,6 @@ $item = $IC->getItem(array("tags" => "page:wishlist"));
 		<priority>0.5</priority>
 	</url>
 <?
-// SIGNUP PAGE
-//$item = $IC->getItem(array("tags" => "page:Signup"));
-?>
-	<!--url>
-		<loc><?= SITE_URL ?>/signup</loc>
-		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.9</priority>
-	</url-->
-<?
 // MEMBERSHIPS PAGE
 $item = $IC->getItem(array("tags" => "page:Memberships"));
 ?>

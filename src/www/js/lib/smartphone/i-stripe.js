@@ -66,6 +66,12 @@ Util.Objects["stripe"] = new function() {
 
 				}
 
+				
+				// console.log("token:");
+				// console.log(this);
+				// console.log(token);
+				
+				
 			}
 
 

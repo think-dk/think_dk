@@ -42,20 +42,13 @@ if($item) {
 		<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
 		<? endif; ?>
 
-		<ul class="tags">
-		<? if($item["tags"]):
-			$editing_tag = arrayKeyValue($item["tags"], "context", "editing"); ?>
-			<? if($editing_tag !== false): ?>
-			<li class="editing" title="This post is work in progress"><?= $item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"] ?></li>
-			<? endif; ?>
-			<li itemprop="category"><a href="/events">Events</a></li>
-			<? foreach($item["tags"] as $item_tag): ?>
-				<? if($item_tag["context"] == "service"): ?>
-			<li itemprop="category"><?= $item_tag["value"] ?></li>
-				<? endif; ?>
-			<? endforeach; ?>
-		<? endif; ?>
-		</ul>
+
+		<?= $HTML->articleTags($item, [
+			"context" => ["service"],
+			"default" => ["/events", "Events"],
+			"schema" => false
+		]) ?>
+
 
 		<h1 itemprop="name"><?= $item["name"] ?></h1>
 
@@ -131,7 +124,7 @@ if($item) {
 					<dd class="starting_at"><?= date("F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
 				</dl>
 
-				<h3><a href="/events/<?= $item["sindex"] ?>"><?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?></a></h3>
+				<h3><a href="/events/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
 
 				<? if($item["description"]): ?>
 				<div class="description">

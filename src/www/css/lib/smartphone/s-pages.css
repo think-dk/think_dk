@@ -119,6 +119,7 @@
 #content .scene.membership div.article ul.offer {padding: 20px 20px 15px;}
 #content .scene.membership div.article ul.offer li.default {font-size: 14px;}
 #content .scene.membership div.article ul.offer li {font-size: 22px; display: block;}
+#content .scene.membership div.article ul.offer li.description {display: none;}
 #content .scene.membership div.article form {}
 
 #content .scene.membership ul.memberships li.membership {padding-bottom: 0;}
@@ -231,7 +232,15 @@
 
 #content .scene.shopPayment ul.payment_methods {padding: 0;}
 #content .scene.shopPayment ul.payment_methods li.payment_method {padding-bottom: 10px;}
-#content .scene.shopPayment ul.payment_methods li.payment_method ul.actions {padding-bottom: 0;}
+#content .scene.shopPayment ul.payment_methods li.payment_method ul.actions {padding-bottom: 40px;}
+
+#content .scene.shopPayment ul.payment_methods li.payment_method.stripe {background: url(/img/gx_creditcards.png) no-repeat 20px 40px;}
+
+#content .scene.shopPayment.stripe dl {display: none;}
+#content .scene.shopPayment.stripe h2,
+#content .scene.shopPayment.stripe p {text-align: center; margin: 0 auto;}
+#content .scene.shopPayment.stripe p.note {padding-top: 70px;}
+
 
 #content .scene.shopReceipt dl {width: 320px;}
 #content .scene.shopReceipt dl dt {display: inline-block; vertical-align: bottom; width: 90px; text-align: right; padding: 0 0 4px;}

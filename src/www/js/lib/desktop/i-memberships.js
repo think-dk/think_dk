@@ -53,6 +53,19 @@ Util.Objects["memberships"] = new function() {
 				this._membership_nodes = u.qsa(".membership", this._memberships);
 			}
 
+			// required fonts loaded
+			this.fontsLoaded = function() {
+				page.resized();
+			}
+
+			// preload fonts
+			u.fontsReady(this, [
+				{"family":"OpenSans", "weight":"normal", "style":"normal"},
+				{"family":"OpenSans", "weight":"bold", "style":"normal"},
+				{"family":"OpenSans", "weight":"normal", "style":"italic"},
+				{"family":"PT Serif", "weight":"normal", "style":"normal"}
+			]);
+
 
 			u.showScene(this);
 

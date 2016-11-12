@@ -43,33 +43,12 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 		<h2 itemprop="alternativeHeadline"><?= $page_item["subheader"] ?></h2>
 		<? endif; ?>
 
-		<ul class="info">
-			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($page_item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($page_item["published_at"])) ?></li>
-			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($page_item["modified_at"])) ?>"></li>
-			<li class="author" itemprop="author"><?= $page_item["user_nickname"] ?></li>
-			<li class="main_entity share" itemprop="mainEntityOfPage" content="<?= SITE_URL ?>"></li>
-			<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-				<ul class="publisher_info">
-					<li class="name" itemprop="name">think.dk</li>
-					<li class="logo" itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-						<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/img/logo-large.png"></span>
-						<span class="image_width" itemprop="width" content="720"></span>
-						<span class="image_height" itemprop="height" content="405"></span>
-					</li>
-				</ul>
-			</li>
-			<li class="image_info" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-			<? if($media): ?>
-				<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/images/<?= $page_item["item_id"] ?>/<?= $media["variant"] ?>/720x.<?= $media["format"] ?>"></span>
-				<span class="image_width" itemprop="width" content="720"></span>
-				<span class="image_height" itemprop="height" content="<?= floor(720 / ($media["width"] / $media["height"])) ?>"></span>
-			<? else: ?>
-				<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/img/logo-large.png"></span>
-				<span class="image_width" itemprop="width" content="720"></span>
-				<span class="image_height" itemprop="height" content="405"></span>
-			<? endif; ?>
-			</li>
-		</ul>
+
+		<?= $HTML->articleInfo($page_item, "/", [
+			"media" => $media,
+			"sharing" => true
+		]) ?>
+
 
 		<? if($page_item["html"]): ?>
 		<div class="articlebody" itemprop="articleBody">
@@ -94,7 +73,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 					<dd class="starting_at"><?= date("l, F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
 				</dl>
 
-				<h3><a href="/events/<?= $item["sindex"] ?>"><?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?></a></h3>
+				<h3><a href="/events/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
 
 			</li>
 	<?	endforeach; ?>
@@ -115,50 +94,22 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 				data-readstate="<?= $item["readstate"] ?>"
 				>
 
-				<ul class="tags">
-				<? if($item["tags"]):
-					$editing_tag = arrayKeyValue($item["tags"], "context", "editing"); ?>
-					<? if($editing_tag !== false): ?>
-					<li class="editing" title="This post is work in progress"><?= $item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"] ?></li>
-					<? endif; ?>
-					<li><a href="/posts">Posts</a></li>
-					<? foreach($item["tags"] as $item_tag): ?>
-						<? if($item_tag["context"] == "post"): ?>
-					<li itemprop="articleSection"><a href="/posts/tag/<?= urlencode($item_tag["value"]) ?>"><?= $item_tag["value"] ?></a></li>
-						<? endif; ?>
-					<? endforeach; ?>
-				<? endif; ?>
-				</ul>
 
-				<h3 itemprop="headline"><?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?></h3>
+				<?= $HTML->articleTags($item, [
+					"context" => ["post"],
+					"url" => "/posts/tag",
+					"default" => ["/posts", "Posts"]
+				]) ?>
 
-				<ul class="info">
-					<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
-					<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($item["modified_at"])) ?>"></li>
-					<li class="author" itemprop="author"><?= $item["user_nickname"] ?></li>
-					<li class="main_entity" itemprop="mainEntityOfPage" content="<?= SITE_URL."/posts/".$item["sindex"] ?>"></li>
-					<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-						<ul class="publisher_info">
-							<li class="name" itemprop="name">think.dk</li>
-							<li class="logo" itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-								<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/img/logo-large.png"></span>
-								<span class="image_width" itemprop="width" content="720"></span>
-								<span class="image_height" itemprop="height" content="405"></span>
-							</li>
-						</ul>
-					</li>
-					<li class="image_info" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-					<? if($media): ?>
-						<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/images/<?= $item["item_id"] ?>/<?= $media["variant"] ?>/720x.<?= $media["format"] ?>"></span>
-						<span class="image_width" itemprop="width" content="720"></span>
-						<span class="image_height" itemprop="height" content="<?= floor(720 / ($media["width"] / $media["height"])) ?>"></span>
-					<? else: ?>
-						<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/img/logo-large.png"></span>
-						<span class="image_width" itemprop="width" content="720"></span>
-						<span class="image_height" itemprop="height" content="405"></span>
-					<? endif; ?>
-					</li>
-				</ul>
+
+				<h3 itemprop="headline"><?= strip_tags($item["name"]) ?></h3>
+
+
+				<?= $HTML->articleInfo($item, "/posts/".$item["sindex"], [
+					"media" => $media, 
+					"sharing" => true
+				]) ?>
+
 
 				<? if($item["html"]): ?>
 				<div class="articlebody" itemprop="articleBody">

@@ -6,8 +6,8 @@ Util.Objects["wishes"] = new function() {
 		scene.resized = function() {
 //			u.bug("scene.resized:" + u.nodeId(this));
 
-			if(this.wishes && this.wishes.length) {
-				for(i = 0; node = this.wishes[i]; i++) {
+			if(this.nodes && this.nodes.length) {
+				for(i = 0; node = this.nodes[i]; i++) {
 					if(node.image_mask) {
 						u.ass(node.image_mask, {
 							"height":Math.floor(node.image_mask.offsetWidth / (250/140)) + "px"
@@ -22,16 +22,16 @@ Util.Objects["wishes"] = new function() {
 		}
 
 		scene.ready = function() {
-			u.bug("scene.ready:" + u.nodeId(this));
+//			u.bug("scene.ready:" + u.nodeId(this));
 
 			page.cN.scene = this;
 
 			var i, node;
 
-			this.wishes = u.qsa("li.item", this);
-			if(this.wishes.length) {
+			this.nodes = u.qsa("li.item", this);
+			if(this.nodes.length) {
 
-				for(i = 0; node = this.wishes[i]; i++) {
+				for(i = 0; node = this.nodes[i]; i++) {
 
 					node.item_id = u.cv(node, "id");
 					node.image_format = u.cv(node, "format");

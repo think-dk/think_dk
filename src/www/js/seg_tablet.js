@@ -6592,7 +6592,6 @@ Util.Objects["comments"] = new function() {
 
 /*u-sharing.js*/
 u.injectSharing = function(node) {
-	u.bug("sharing")
 	node.sharing = u.ae(node, "div", {"class":"sharing"});
 	node.sharing.node = node;
 	var ref_point = u.qs("div.comments", node);
@@ -6782,7 +6781,6 @@ u.addCheckmark = function(node) {
 		"name":"checkmark",
 		"node":node,
 		"class":"checkmark "+(node.current_readstate ? "read" : "not_read"),
-		"title":(node.current_readstate ? (u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", node.current_readstate)) : u.txt["readstate-not_read"]),
 		"width":17,
 		"height":17,
 		"shapes":[
@@ -6802,9 +6800,27 @@ u.addCheckmark = function(node) {
 			}
 		]
 	});
+	node.checkmark.hint_txt = (node.current_readstate ? (u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", node.current_readstate)) : u.txt["readstate-not_read"]),
 	node.checkmark.node = node;
+	u.e.hover(node.checkmark);
+	node.checkmark.over = function(event) {
+		this.hint = u.ae(document.body, "div", {"class":"hint", "html":this.hint_txt});
+		u.ass(this.hint, {
+			"top":(u.absY(this.parentNode)+parseInt(u.gcs(this, "top"))+(Number(this.getAttribute("width")))) + "px",
+			"left":(u.absX(this.parentNode)+parseInt(u.gcs(this, "left"))+Number(this.getAttribute("width"))) + "px"
+		});
+	}
+	node.checkmark.out = function(event) {
+		if(this.hint) {
+			this.hint.parentNode.removeChild(this.hint);
+			delete this.hint;
+		}
+	}
 }
 u.removeCheckmark = function(node) {
+	if(node.checkmark.hint) {
+		node.checkmark.hint.parentNode.removeChild(node.checkmark.hint);
+	}
 	if(node.checkmark) {
 		node.checkmark.parentNode.removeChild(node.checkmark);
 		node.checkmark = false;
@@ -6895,7 +6911,7 @@ u.showScene = function(scene) {
 			"opacity":1,
 		});
 		u._stepA1.call(headline);
-		for(i = 1; node = nodes[i]; i++) {
+		for(i = 0; node = nodes[i]; i++) {
 			u.a.transition(node, "all 0.2s ease-in "+((i*100)+200)+"ms");
 			u.ass(node, {
 				"opacity":1,
@@ -6944,7 +6960,6 @@ u._stepA1 = function() {
 				"opacity":1
 			});
 			span.transitioned = function(event) {
-				u.bug("done")
 				u.ass(this, {
 					"transform":"none"
 				});
@@ -6966,7 +6981,7 @@ u._stepA2 = function() {
 }
 Util.Objects["oneButtonForm"] = new function() {
 	this.init = function(node) {
-	u.bug("oneButtonForm:" + u.nodeId(node));
+		u.bug("oneButtonForm:" + u.nodeId(node));
 		if(!node.childNodes.length) {
 			var csrf_token = node.getAttribute("data-csrf-token");
 			var form_action = node.getAttribute("data-form-action");
@@ -7327,6 +7342,34 @@ Util.Objects["login"] = new function() {
 }
 
 
+/*i-events.js*/
+Util.Objects["events"] = new function() {
+	this.init = function(scene) {
+		u.bug("scene init:" + u.nodeId(scene))
+		scene.resized = function() {
+			u.bug("scene.resized:" + u.nodeId(this));
+			this.offsetHeight;
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			u.showScene(this);
+			page.acceptCookies();
+			this.all_events = u.qs("div.all_events", this);
+			if(this.all_events) {
+				this.ul_events = u.qs("ul.events", this.all_events);
+				this.li_events = u.qsa("li.event", this.all_events);
+				if(this.li_events.length) {
+					this.ul_views = u.ae(this.all_events, "ul", {"class":"views"});
+				}
+			}
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
 /*i-cart.js*/
 Util.Objects["cart"] = new function() {
 	this.init = function(scene) {
@@ -7491,15 +7534,21 @@ Util.Objects["wishes"] = new function() {
 					else {
 						u.as(node.image_mask, "backgroundImage", "url(/images/0/missing/"+this.image_width+"x.png)");
 					}
-					u.ae(node.text_mask, u.qs("h3", node));
-					u.ae(node.text_mask, u.qs("dl", node));
+					node._header = u.qs("h3", node);
+					if(node._header) {
+						u.ae(node.text_mask, node._header);
+					}
+					node._info = u.qs("dl.info", node);
+					if(node._info) {
+						u.ae(node.text_mask, node._info);
+					}
 					node._actions = u.qs("ul.actions", node);
 					if(node._actions) {
 						u.ae(node.text_mask, node._actions);
 					}
-					node._descriptions = u.qs("div.description", node);
-					if(node._descriptions) {
-						u.ae(node.text_mask, node._descriptions);
+					node._description = u.qs("div.description", node);
+					if(node._description) {
+						u.ae(node.text_mask, node._description);
 					}
 				}
 			}
@@ -7547,6 +7596,15 @@ Util.Objects["memberships"] = new function() {
 			if(this._memberships) {
 				this._membership_nodes = u.qsa(".membership", this._memberships);
 			}
+			this.fontsLoaded = function() {
+				page.resized();
+			}
+			u.fontsReady(this, [
+				{"family":"OpenSans", "weight":"normal", "style":"normal"},
+				{"family":"OpenSans", "weight":"bold", "style":"normal"},
+				{"family":"OpenSans", "weight":"normal", "style":"italic"},
+				{"family":"PT Serif", "weight":"normal", "style":"normal"}
+			]);
 			u.showScene(this);
 			page.resized();
 		}
@@ -7555,10 +7613,90 @@ Util.Objects["memberships"] = new function() {
 }
 
 
+/*i-stripe.js*/
+Util.Objects["stripe"] = new function() {
+	this.init = function(scene) {
+		u.bug("stripe init:" + u.nodeId(scene))
+		scene.resized = function() {
+			u.bug("scene.resized:" + u.nodeId(this));
+			this.offsetHeight;
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			this.transitioned = function() {
+				this.Stripe.open({
+					opened: this.Stripe.opened.bind(this.Stripe),
+					closed: this.Stripe.closed.bind(this.Stripe)
+				});
+			}
+			u.a.transition(this, "all 0.4s ease-in-out");
+			u.ass(this, {
+				"opacity":1
+			})
+			var amount = Number(u.qs("dd.amount", this).innerHTML)*100;
+			var currency = u.qs("dd.currency", this).innerHTML;
+			var email = u.qs("dd.email", this).innerHTML;
+			var reference = u.qs("dd.reference", this).innerHTML;
+			this.tokenReturned = function(token) {
+				this.processing = true;
+				var form = u.qs("form.token", this);
+				if(form) {
+					var input = u.qs("input#token", form);
+					if(input) {
+						input.value = token.id
+						form.submit();
+					}
+				}
+			}
+			this.Stripe = StripeCheckout.configure({
+				key: 'pk_test_9JXIVsrick4rvSoLltT9eKny',
+				image: '/img/logo.png',
+				locale: 'auto',
+				token: this.tokenReturned.bind(this),
+				name: 'think.dk',
+				email: email,
+				description: reference,
+				zipCode: true,
+				currency: currency,
+				amount: amount,
+				allowRememberMe:false,
+			});
+			this.Stripe.scene = this;
+			this.Stripe.closed = function() {
+				if(this.scene.processing) {
+					u.qs("h2", this.scene).innerHTML = "We are waiting for the gateway response";
+					u.a.transition(this.scene, "all 0.2s ease-in-out");
+					u.ass(this.scene, {
+						"opacity":1
+					});
+				}
+				else {
+					history.back();
+				}
+				console.log("closed")
+				console.log(this);
+			}
+			this.Stripe.opened = function() {
+				u.a.transition(this.scene, "all 0.2s ease-in-out");
+				u.ass(this.scene, {
+					"opacity":0
+				})
+			}
+			window.addEventListener('popstate', function() {
+			  handler.close();
+			});
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
 /*i-article.js*/
 Util.Objects["article"] = new function() {
 	this.init = function(article) {
-		u.bug("article init:" + u.nodeId(article) + "," + u.qs("h1,h2,h3", article).innerHTML)
+		u.bug("article init:" + u.nodeId(article));
 		article.csrf_token = article.getAttribute("data-csrf-token");
 		article.header = u.qs("h1,h2,h3", article);
 		article.header.article = article;
@@ -7622,7 +7760,7 @@ Util.Objects["article"] = new function() {
 				u.preloader(image, [image._image_src]);
 			}
 		}
-		article.geolocation = u.qs("dl.geo", article);
+		article.geolocation = u.qs("ul.geo", article);
 		if(article.geolocation && typeof(u.injectGeolocation) == "function") {
 			u.injectGeolocation(article);
 		}
@@ -7637,20 +7775,20 @@ Util.Objects["article"] = new function() {
 			u.injectSharing(article);
 		}
 		article.header.current_readstate = article.getAttribute("data-readstate");
-		article.update_readstate_url = article.getAttribute("data-readstate-update");
+		article.add_readstate_url = article.getAttribute("data-readstate-add");
 		article.delete_readstate_url = article.getAttribute("data-readstate-delete");
-		if(article.header.current_readstate || (article.update_readstate_url && article.delete_readstate_url)) {
-			u.bug("add readstate:" + article.header.current_readstate)
+		if(article.header.current_readstate || (article.add_readstate_url && article.delete_readstate_url)) {
 			u.addCheckmark(article.header);
 			u.ce(article.header.checkmark);
-			article.header.checkmark.clicked = function() {
+			article.header.checkmark.clicked = function(event) {
+				this.out(event);
 				if(this.node.current_readstate) {
 					this.response = function(response) {
 						if(response.cms_status == "success" && response.cms_object) {
 							this.setAttribute("class", "checkmark not_read");
 							this.node.current_readstate = false;
 							this.node.article.setAttribute("data-readstate", "");
-							this.setAttribute("title", u.txt["readstate-not_read"]);
+							this.hint_txt = u.txt["readstate-not_read"];
 						}
 					}
 					u.request(this, this.node.article.delete_readstate_url, {"method":"post", "params":"csrf-token="+this.node.article.csrf_token+"&item_id"});
@@ -7661,10 +7799,10 @@ Util.Objects["article"] = new function() {
 							this.setAttribute("class", "checkmark read");
 							this.node.current_readstate = new Date();
 							this.node.article.setAttribute("data-readstate", this.node.current_readstate);
-							this.setAttribute("title", u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", this.node.current_readstate));
+							this.hint_txt = u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", this.node.current_readstate);
 						}
 					}
-					u.request(this, this.node.article.update_readstate_url, {"method":"post", "params":"csrf-token="+this.node.article.csrf_token});
+					u.request(this, this.node.article.add_readstate_url, {"method":"post", "params":"csrf-token="+this.node.article.csrf_token});
 				}
 			}
 		}
@@ -7681,7 +7819,6 @@ Util.Objects["articleMiniList"] = new function() {
 		for(i = 0; node = list.articles[i]; i++) {
 			var header = u.qs("h2,h3", node);
 			header.current_readstate = node.getAttribute("data-readstate");
-			u.bug("header.current_readstate:" + header.current_readstate )
 			if(header.current_readstate) {
 				u.addCheckmark(header);
 			}

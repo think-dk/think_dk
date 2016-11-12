@@ -136,7 +136,7 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 					<span class="quantity"><?= $cart_item["quantity"] ?></span>
 					<span class="x">x </span>
 					<span class="name"><?= $item["name"] ?> </span>
-					<span class="a">á</span>
+					<span class="a">á </span>
 					<span class="unit_price"><?= formatPrice($price) ?></span>
 					<span class="total_price">
 						<?= formatPrice(array(

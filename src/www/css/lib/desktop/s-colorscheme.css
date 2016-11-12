@@ -12,7 +12,7 @@ body {}
 #navigation ul li {color: #34cc3d;}
 
 #content .scene a,
-#content .scene dl.geo.active dd {color: #34cc3d;}
+#content .scene ul.geo.active li.location {color: #34cc3d;}
 
 #content .scene hr {border-color: #ccdbcd;}
 

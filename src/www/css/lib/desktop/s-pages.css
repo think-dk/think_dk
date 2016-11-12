@@ -125,7 +125,6 @@
 #content .scene div.memberships ul.memberships > li h3 {color: #26962d; padding-bottom: 3px;
 	font-family: "PT Serif", Times, serif;
 }
-#content .scene div.memberships ul.memberships > li ul.offer {padding-bottom: 4px;}
 #content .scene div.memberships ul.memberships > li h2,
 #content .scene div.memberships ul.memberships > li h3,
 #content .scene div.memberships ul.memberships > li h4,
@@ -143,11 +142,13 @@
 #content .scene.membership div.article ul.offer {padding: 20px 70px 15px;}
 #content .scene.membership div.article ul.offer li.default {font-size: 14px;}
 #content .scene.membership div.article ul.offer li {font-size: 30px; display: block;}
+#content .scene.membership div.article ul.offer li.description {display: none;}
 #content .scene.membership div.article form {}
 
 #content .scene.membership ul.memberships li.membership {padding-bottom: 0;}
 #content .scene.membership ul.memberships li.membership h3 {padding-bottom: 5px;}
 #content .scene.membership ul.memberships li.membership ul.offer {padding: 0 70px 10px;}
+#content .scene.membership ul.memberships li.membership ul.offer li {}
 #content .scene.membership ul.memberships li.membership ul.offer li {}
 
 

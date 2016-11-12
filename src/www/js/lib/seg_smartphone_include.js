@@ -17,18 +17,16 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/m
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/u-form-custom.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-page.js"></script>');
-//document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-signup.js"></script>');
 
 
 document.write('<script type="text/javascript" src="/js/lib/u-basics.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-front.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-scene.js"></script>');
-//document.write('<script type="text/javascript" src="/js/lib/smartphone/i-signup.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-login.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-cart.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-wishes.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-memberships.js"></script>');
-//document.write('<script type="text/javascript" src="/js/lib/smartphone/i-subscriptions.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/desktop/i-stripe.js"></script>');
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-article.js"></script>');
 

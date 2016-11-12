@@ -122,8 +122,7 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene div.article+h2,
 #content .scene code+h2 {padding-top: 20px;}
 #content .scene ul.tags+h2,
-#content .scene dl.geo+h2,
-#content .scene dl.info+h2 {padding-top: 0;}
+#content .scene ul.info+h2 {padding-top: 0;}
 #content .scene p+code {margin-top: -13px;}
 #content .scene ul,
 #content .scene ol {padding: 0 20px 15px;}
@@ -148,28 +147,20 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene ul.tags a:active {color: #888888;}
 #content .scene ul.tags li.editing {background: #666666; border-radius: 5px; color: #ffffff; margin: 1px 10px 5px -4px; padding: 2px 10px; display: inline-block; vertical-align: top;}
 #content .scene ul.tags li.editing:after {content: "";}
-#content .scene dl.info {padding-right: 0; width: auto;}
-#content .scene dl.info dt {display: none;}
-#content .scene dl.info dd {color: #cccccc; padding-left: 0; padding-right: 0; padding-bottom: 6px; width: auto; font-size: 12px; display: inline-block; vertical-align: top;}
-#content .scene dl.info dd.author:before {content: "\00a0|\00a0"; color: #dedede;}
-#content .scene dl.info dd.main_entity {display: none;}
-#content .scene dl.info dd.publisher {display: none;}
-#content .scene dl.info dd.image_info {display: none;}
-#content .scene dl.info dd.modified_at {display: none;}
-#content .scene ul.info {position: relative; z-index: 1; padding-bottom: 20px; padding-right: 0; display: inline-block; vertical-align: top; width: auto;}
-#content .scene ul.info li {width: auto; font-size: 12px; color: #cccccc; display: inline-block; vertical-align: top;}
-#content .scene ul.info li.author:before {content: "\00a0|\00a0"; color: #dedede;}
-#content .scene ul.info li.main_entity {display: none;}
-#content .scene ul.info li.publisher {display: none;}
-#content .scene ul.info li.image_info {display: none;}
-#content .scene ul.info li.modified_at {display: none;}
-#content .scene dl.info+dl.geo {margin-top: -15px;}
-#content .scene dl.geo {padding-right: 0; width: auto; padding-bottom: 0;}
-#content .scene dl.geo dd {padding-left: 0; padding-right: 0; padding-bottom: 20px; width: auto; font-size: 12px; color: #999999; display: inline-block; vertical-align: top;}
-#content .scene dl.geo dt {display: none;}
-#content .scene dl.geo .latitude,
-#content .scene dl.geo .longitude {display: none;}
-#content .scene dl.geo.active {cursor: pointer;}
+#content .scene ul.info {position: relative; z-index: 1; padding-bottom: 20px; padding-right: 0; display: inline-block; vertical-align: top; width: auto; font-size: 0;}
+#content .scene ul.info li {width: auto; font-size: 12px; line-height: 12px; color: #cccccc; display: inline-block; vertical-align: top;}
+#content .scene ul.info > li.author:before,
+#content .scene ul.info > li.place:before {content: "\00a0|\00a0"; color: #dedede; display: inline-block; vertical-align: top; font-size: 12px; line-height: 10px; }
+#content .scene ul.info li.main_entity,
+#content .scene ul.info li.url,
+#content .scene ul.info li.publisher,
+#content .scene ul.info li.image_info,
+#content .scene ul.info li.modified_at,
+#content .scene ul.info li.latitude,
+#content .scene ul.info li.longitude {display: none;}
+#content .scene ul.info > li.place {font-size: 0;}
+#content .scene ul.geo.active li.location {cursor: pointer;}
+#content .scene ul.info ul.geo {padding: 0; display: inline-block; vertical-align: top; width: auto;}
 #content .scene div.geomap {height: 200px; margin: -15px 0 20px;}
 #content .scene div.geomap iframe {display: block; width: 100%; height: 100%; border: none; border-top: 1px solid #666666; border-bottom: 1px solid #666666; background-color: #ffffff;}
 #content .scene li div.geomap {padding-left: 0; padding-right: 0;}
@@ -191,6 +182,7 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene div.categories ul.tags li.selected a {color: #000000;  display: inline-block; vertical-align: top; }
 #content .scene div.categories ul.actions {padding-bottom: 0;}
 #content .scene div.categories ul.actions li {padding-bottom: 0; font-size: 15px; display: block;}
+#content .scene div.categories + div.categories{padding-top: 25px;}
 #content .scene ul.articles {padding: 0;}
 #content .scene.articles ul.articles {padding: 20px 0 30px;}
 #content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #ccdbcd;}
@@ -216,6 +208,7 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene ul.offer li.url {display: none;}
 #content .scene ul.offer li {font-size: 11px; width: auto; display: inline-block; vertical-align: top; padding: 0 5px 0 0;}
 #content .scene ul.offer li.default {text-decoration: line-through;}
+#content .scene ul.offer li.description {padding-top: 4px; display: block;}
 #content .scene code {color: #333333; padding: 10px 20px; margin: 0 0 15px; background-color: #ededed; font-size: 11px; display: block; overflow: hidden; white-space: pre-wrap;
 	font-family: "Monaco", "Courier New", "Courier";
 	-webkit-tab-size: 4;
@@ -525,10 +518,14 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene ul.todos > li ul.actions.closed .close {display: none;}
 #content .scene ul.todos > li ul.actions .open {display: none;}
 #content .scene ul.todos > li ul.actions.closed .open {display: inline-block;}
-#content .scene ul.wishlist {}
+#content .scene ul.wishlists {padding-left: 20px; padding-right: 20px;}
 #content .scene ul.wishes > li .image {height: 30px; background-position: center center; background-size: 100% auto; background-repeat: no-repeat; margin-bottom: 10px; cursor: default;}
-#content .scene ul.wishes dl.info dd {font-size: 13px; display: block; padding-bottom: 8px;}
-#content .scene ul.wishes > li ul.actions {padding: 0 25px 10px;}
+#content .scene ul.wishes dl.info dt.price {display: inline-block; vertical-align: top; width: auto;}
+#content .scene ul.wishes dl.info dt.price:after {content: ":";}
+#content .scene ul.wishes dl.info dd.price {display: inline-block; vertical-align: top; width: auto; padding-left: 5px;}
+#content .scene ul.wishes dl.info dt.link {display: none;}
+#content .scene ul.wishes dl.info dd.link {font-size: 13px; display: block; width: auto; padding-left: 0;}
+#content .scene ul.wishes > li ul.actions {padding: 0 20px 10px;}
 #content .scene ul.wishes > li ul.actions.reserved .reserve {display: none;}
 #content .scene ul.wishes > li ul.actions .unreserve {display: none;}
 #content .scene ul.wishes > li ul.actions.reserved .unreserve {display: inline-block;}
@@ -642,7 +639,7 @@ body {}
 #navigation ul li.admin,
 #navigation ul li.user {border-color: #34cc3d}
 #content .scene a,
-#content .scene dl.geo.active dd {color: #34cc3d;}
+#content .scene ul.geo.active li.location {color: #34cc3d;}
 #content .scene hr {border-color: #ccdbcd;}
 #content ul.actions input.button.primary,
 #content ul.actions a.button.primary {background-color: #34cc3d;}
@@ -754,6 +751,7 @@ body {}
 #content .scene.membership div.article ul.offer {padding: 20px 20px 15px;}
 #content .scene.membership div.article ul.offer li.default {font-size: 14px;}
 #content .scene.membership div.article ul.offer li {font-size: 22px; display: block;}
+#content .scene.membership div.article ul.offer li.description {display: none;}
 #content .scene.membership div.article form {}
 #content .scene.membership ul.memberships li.membership {padding-bottom: 0;}
 #content .scene.membership ul.memberships li.membership h3 {padding-bottom: 5px;}
@@ -836,7 +834,12 @@ body {}
 #content .scene.shopPayment dl.amount dd {width: auto; font-size: 28px; display: block; padding: 0;}
 #content .scene.shopPayment ul.payment_methods {padding: 0;}
 #content .scene.shopPayment ul.payment_methods li.payment_method {padding-bottom: 10px;}
-#content .scene.shopPayment ul.payment_methods li.payment_method ul.actions {padding-bottom: 0;}
+#content .scene.shopPayment ul.payment_methods li.payment_method ul.actions {padding-bottom: 40px;}
+#content .scene.shopPayment ul.payment_methods li.payment_method.stripe {background: url(/img/gx_creditcards.png) no-repeat 20px 40px;}
+#content .scene.shopPayment.stripe dl {display: none;}
+#content .scene.shopPayment.stripe h2,
+#content .scene.shopPayment.stripe p {text-align: center; margin: 0 auto;}
+#content .scene.shopPayment.stripe p.note {padding-top: 70px;}
 #content .scene.shopReceipt dl {width: 320px;}
 #content .scene.shopReceipt dl dt {display: inline-block; vertical-align: bottom; width: 90px; text-align: right; padding: 0 0 4px;}
 #content .scene.shopReceipt dl dt:after {content: ":";}

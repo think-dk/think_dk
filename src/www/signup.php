@@ -29,16 +29,37 @@ if(is_array($action) && count($action)) {
 	// /signup/confirm/email|mobile/#email|mobile#/#verification_code#
 	else if($action[0] == "confirm" && count($action) == 4) {
 
+		session()->value("signup_type", $action[1]);
+		session()->value("signup_username", $action[2]);
+
 		if($model->confirmUser($action)) {
-			$page->page(array(
-				"templates" => "signup/confirmed.php"
-			));
+
+			// redirect to leave POST state
+			header("Location: /signup/confirm/receipt");
+			exit();
+
 		}
 		else {
-			$page->page(array(
-				"templates" => "signup/confirmation_failed.php"
-			));
+
+			// redirect to leave POST state
+			header("Location: /signup/confirm/error");
+			exit();
+
 		}
+		exit();
+	}
+	else if($action[0] == "confirm" && $action[1] == "receipt") {
+
+		$page->page(array(
+			"templates" => "signup/confirmed.php"
+		));
+		exit();
+	}
+	else if($action[0] == "confirm" && $action[1] == "error") {
+
+		$page->page(array(
+			"templates" => "signup/confirmation_failed.php"
+		));
 		exit();
 	}
 
