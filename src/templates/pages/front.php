@@ -4,7 +4,7 @@ $IC = new Items();
 $intros = $IC->getItems(array("itemtype" => "page", "tags" => "page:intro", "status" => 1, "extend" => true));
 $intro = $intros[rand(0, count($intros)-1)];
 
-$page_item = $IC->getItem(array("tags" => "page:front", "extend" => array("user" => true, "mediae" => true)));
+$page_item = $IC->getItem(array("tags" => "page:front", "extend" => array("user" => true, "tags" => true, "mediae" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }

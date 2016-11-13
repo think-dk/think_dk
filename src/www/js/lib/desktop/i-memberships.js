@@ -36,17 +36,12 @@ Util.Objects["memberships"] = new function() {
 
 
 			this._memberships = u.qs("div.memberships", this);
-			var description = u.qs("div.articlebody", this);
+			var place_holder = u.qs("div.articlebody .placeholder.memberships", this);
 
-
-			// move membership overview
-			if(this._memberships && u.text(description).match(/\{div\.memberships\}/)) {
-				for(i = 0; node = description.childNodes[i]; i++) {
-					if(u.text(node).match(/\{div\.memberships\}/)) {
-						description.replaceChild(this._memberships, node);
-					}
-				}
+			if(this._memberships && place_holder) {
+				place_holder.parentNode.replaceChild(this._memberships, place_holder);
 			}
+
 
 			// make nodes available for resize calculation
 			if(this._memberships) {

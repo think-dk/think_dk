@@ -3,7 +3,7 @@ global $action;
 global $model;
 
 $IC = new Items();
-$page_item = $IC->getItem(array("tags" => "page:signup-confirmed", "extend" => array("user" => true, "mediae" => true)));
+$page_item = $IC->getItem(array("tags" => "page:signup-confirmed", "extend" => array("user" => true, "tags" => true, "mediae" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
