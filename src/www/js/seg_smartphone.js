@@ -4302,6 +4302,9 @@ u.ga_account = 'UA-10756281-1';
 u.ga_domain = 'think.dk';
 u.txt = {};
 u.txt["share"] = "Share this page";
+u.txt["share-info-headline"] = "(How do I share?)";
+u.txt["share-info-txt"] = "We have not includered social media plugins on this site, because they are frequently abused to collect data about you. Also we don't want to promote some channels over others. Instead, just copy the link and share it wherever you find relevant.";
+u.txt["share-info-ok"] = "OK";
 u.txt["readmore"] = "Read more.";
 u.txt["readstate-not_read"] = "Click to mark as read";
 u.txt["readstate-read"] = "Read";
@@ -6084,6 +6087,7 @@ u.f.addField = function(node, _options) {
 	var field_type = "string";
 	var field_value = "";
 	var field_options = [];
+	var field_checked = false;
 	var field_class = "";
 	var field_id = "";
 	var field_max = false;
@@ -6103,6 +6107,7 @@ u.f.addField = function(node, _options) {
 				case "type"					: field_type			= _options[_argument]; break;
 				case "value"				: field_value			= _options[_argument]; break;
 				case "options"				: field_options			= _options[_argument]; break;
+				case "checked"				: field_checked			= _options[_argument]; break;
 				case "class"				: field_class			= _options[_argument]; break;
 				case "id"					: field_id				= _options[_argument]; break;
 				case "max"					: field_max				= _options[_argument]; break;
@@ -6187,7 +6192,8 @@ u.f.addField = function(node, _options) {
 			"id":field_id, 
 			"value":field_value ? field_value : "true", 
 			"name":field_name, 
-			"disabled":field_disabled
+			"disabled":field_disabled,
+			"checked":field_checked
 		};
 		u.ae(field, "input", {"name":field_name, "value":"false", "type":"hidden"});
 		u.ae(field, "input", u.f.verifyAttributes(attributes));

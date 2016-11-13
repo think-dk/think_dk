@@ -57,8 +57,9 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 #page #notifications {position: fixed; z-index: 110; top: 0; width: 200px; left: 50%; margin-left: -100px; background: #333333; color: #ffffff;}
 #page #notifications div {padding: 10px 20px; color: #ffffff;}
 #page #notifications .error {background: #df0000;}
-body > div.hint {z-index: 100; position: absolute; top: 0; left: 0; padding: 3px 5px; background: #ffffff; color: #888888; border: 1px solid #888888; box-shadow: 2px 2px 2px #888888; border-radius: 5px;}
-
+body > div.hint {z-index: 100; position: absolute; top: 0; left: 0; padding: 3px 5px; background: #ffffff; color: #888888; border: 1px solid #888888; box-shadow: 1px 1px 2px #888888; border-radius: 5px; font-size: 12px; max-width: 300px;}
+body > div.hint p {padding: 0 0 10px; color: #888888; font-size: 12px;}
+body > div.hint a {text-decoration: underline;}
 
 /*s-header.css*/
 #header {position: relative; height: 100px;}
@@ -201,8 +202,9 @@ body > div.hint {z-index: 100; position: absolute; top: 0; left: 0; padding: 3px
 	font-family: "OpenSans";
 }
 #content .scene div.sharing {padding: 0 0 20px; position: relative; height: 40px; overflow: hidden;}
-#content .scene div.sharing p {padding: 0; z-index: 2; position: absolute; top: 22px; left: 120px; display: none; font-size: 11px; color: #999999;}
-#content .scene div.sharing h3 {position: absolute; top: 0px; left: 120px; padding: 0; display: none;}
+#content .scene div.sharing p {z-index: 2; padding: 0; position: absolute; top: 25px; left: 120px; display: none; font-size: 11px; color: #999999;}
+#content .scene div.sharing h3 {z-index: 2; position: absolute; top: 0px; left: 120px; padding: 0; display: none;}
+#content .scene div.sharing h3 span {display: inline-block; vertical-align: top; margin: 9px 0 0 7px; font-size: 11px; line-height: 11px;}
 #content .scene div.sharing.hover {z-index: 2; overflow: visible;}
 #content .scene div.sharing.hover h3,
 #content .scene div.sharing.hover p {display: block;}

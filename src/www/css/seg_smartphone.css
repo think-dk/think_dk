@@ -236,7 +236,7 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene div.vcard dl.info {padding: 0 20px 20px; display: block;}
 #content .scene div.vcard dl.info dt,
 #content .scene div.vcard dl.info dd {display: block; width: auto; text-align: left;}
-#content .scene div.vcard dl.info dd {padding-bottom: 10px;}
+#content .scene div.vcard dl.info dd {padding-bottom: 10px; padding-left: 0;}
 #content .scene div.vcard dl.info dd ul {padding: 0;}
 #content .scene div.vcard dl.info dd li {font-size: 12px; color: #cccccc;}
 #content .scene div.vcard dl.info dd li a {padding-bottom: 10px; display: inline-block;}

@@ -208,8 +208,6 @@ class HTML extends HTMLCore {
 		return $_;
 	}
 
-
-
 }
 
 // create standalone instance to make HTML available without model

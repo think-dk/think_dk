@@ -39,6 +39,12 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 
 		<h1 itemprop="headline"><?= $page_item["name"] ?></h1>
 
+
+		<?= $HTML->articleTags($page_item, [
+			"context" => false
+		]) ?>
+
+
 		<? if($page_item["subheader"]): ?>
 		<h2 itemprop="alternativeHeadline"><?= $page_item["subheader"] ?></h2>
 		<? endif; ?>
@@ -106,8 +112,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 
 
 				<?= $HTML->articleInfo($item, "/posts/".$item["sindex"], [
-					"media" => $media, 
-					"sharing" => true
+					"media" => $media
 				]) ?>
 
 
