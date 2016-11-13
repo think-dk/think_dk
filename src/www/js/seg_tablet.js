@@ -6820,8 +6820,10 @@ u.injectSharing = function(node) {
 	}
 	node.sharing.autohide = function() {
 		u.t.resetTimer(this.button.t_hide);
+		this.button.t_hide = u.t.setTimer(this.button, this.button.out, 500);
 	}
 	u.e.addEvent(node.sharing.button, "mouseover", node.sharing.button.over);
+	u.e.addEvent(node.sharing, "mouseleave", node.sharing.autohide);
 	if(typeof(node.sharingInjected) == "function") {
 		node.sharingInjected();
 	}
