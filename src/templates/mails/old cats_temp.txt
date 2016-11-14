@@ -1,0 +1,18 @@
+SUBJECT: Your Sign Up at think.dk - long live curiosity!
+
+Hi {NICKNAME},
+
+
+and thank you for joining the think.dk community as one of the very first members! We just made e pretty big update to our homepage, so we wanted to let you know that a few things changed in the meantime. Fortsly, all our newsletter subscribers are from now on called Curious Cats! 
+
+You will receive a newsletter on a more regular base now to keep you updated about all developments at the Center for Acceleration of Sustainable Change. We hope you'll join the club of active members as soon as you feel the need for a change :)
+
+We also set up an account on think.dk for you. This allows you to leave comments on our page and update your profile. If you want to login, please visit {SITE_URL}/janitor/admin/profile after activating your account.
+
+We are building a movement, so please tell your friends about us - the bigger our community grows, the more we can accelerate change!
+
+We hope you don’t hesitate to reply to this email if you have any questions.
+
+Insistently hopeful,
+
+{SITE_URL}

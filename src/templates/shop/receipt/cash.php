@@ -48,7 +48,7 @@ if($order) {
 <? if($order): ?>
 
 	<h2>Please be so kind ...</h2>
-	<p>Just bring <?= $amount ?> in cash next time you come to the center.</p>
+	<p>Just bring <?= $amount ?> in cash next time you come to the Center.</p>
 
 <? else: ?>
 
