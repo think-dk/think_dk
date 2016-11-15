@@ -7175,37 +7175,65 @@ Util.Objects["payment"] = new function() {
 		scene.ready = function() {
 			page.cN.scene = this;
 			u.showScene(this);
-			this.stripe_link = u.qs(".payment_method.stripe li.continue", this);
+			this.stripe_link = u.qs(".payment_method.stripe li.continue input.button", this);
 			this.stripe_link.scene = this;
 			if(this.stripe_link) {
-				this.stripe_link.setAttribute("data-success-function", "stripePayment");
-				u.o.oneButtonForm.init(this.stripe_link);
-				this.stripe_link.stripePayment = function(response) {
-					if(response.isHTML) {
-						page.cN.new_scene = u.qs("div.scene", response);
-						u.ass(page.cN.new_scene, {
-							"opacity":0
-						});
-						u.ae(page.cN, page.cN.new_scene);
-						// 	
-						// 	
-						// 	
-						// 	
-						page.cN.scene.transitioned = function(event) {
-							page.cN.removeChild(page.cN.scene);
-							page.cN.scene = this;
-							delete page.cN.new_scene;
-							u.init();
+				u.e.click(this.stripe_link);
+				this.stripe_link.onclick = function(event) {
+					u.e.kill(event);
+					this.scene.tokenReturned = function(token) {
+						this.processing = true;
+						var form = u.qs("form.token", this);
+						if(form) {
+							var input = u.qs("input#token", form);
+							if(input) {
+								input.value = token.id
+								form.submit();
+							}
 						}
-						u.a.transition(page.cN.scene, "all 0.5s ease-in-out");
-						u.ass(page.cN.scene, {
+					}
+					var email = "martin@think.dk";
+					var reference = "asdfa";
+					var currency = "DKK";
+					var amount = 15600;
+					this.scene.Stripe = StripeCheckout.configure({
+						key: 'pk_test_9JXIVsrick4rvSoLltT9eKny',
+						image: '/img/logo.png',
+						locale: 'auto',
+						token: this.scene.tokenReturned.bind(this.scene),
+						name: 'think.dk',
+						email: email,
+						description: reference,
+						zipCode: true,
+						currency: currency,
+						amount: amount,
+						allowRememberMe:false,
+					});
+					this.scene.Stripe.scene = this;
+					this.scene.Stripe.closed = function() {
+						if(this.scene.processing) {
+							u.qs("h2", this.scene).innerHTML = "We are waiting for the gateway response";
+							u.a.transition(this.scene, "all 0.2s ease-in-out");
+							u.ass(this.scene, {
+								"opacity":1
+							});
+						}
+						else {
+							history.back();
+						}
+						console.log("closed")
+						console.log(this);
+					}
+					this.scene.Stripe.opened = function() {
+						u.a.transition(this.scene, "all 0.2s ease-in-out");
+						u.ass(this.scene, {
 							"opacity":0
-						});
+						})
 					}
-					else {
-						page.notify({"cms_status":"error", "cms_message":"Something went wrong. Please reload the page and try again."})
-					}
-					console.log(response);
+					this.scene.Stripe.open({
+						opened: this.scene.Stripe.opened.bind(this.scene.Stripe),
+						closed: this.scene.Stripe.closed.bind(this.scene.Stripe)
+					});
 				}
 			}
 			page.resized();
