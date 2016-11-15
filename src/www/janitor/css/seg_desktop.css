@@ -87,6 +87,7 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 #content .scene h1 + ul.actions li,
 #content .scene h1 + h2 + ul.actions li {padding-bottom: 0;}
 #content .scene > ul.actions li.delete {float: right; padding: 0 0 10px 10px;}
+#content .scene > ul.actions li.duplicate {float: right; padding: 0 0 10px 10px;}
 #content .scene h1 + p,
 #content .scene h1 + h3,
 #content .scene h1 + h2 + p,

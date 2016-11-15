@@ -368,15 +368,15 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 	-webkit-user-select: none;
 	user-select: none;
 }
-#content ul.actions input.button {width: auto; height: 28px; padding: 3px 12px; display: inline-block; vertical-align: top; outline: none; border-radius: 0; border: 0;
+#content ul.actions input.button {width: auto; height: 32px; padding: 3px 12px; display: inline-block; vertical-align: top; outline: none; border-radius: 0; border: 0;
 	-webkit-appearance: none;
 }
 @media all and (-webkit-min-device-pixel-ratio:0) {
 	#content ul.actions input.button {padding-bottom: 5px;}
 }
-#content ul.actions a.button {display: block; text-decoration: none; height: 14px; padding: 6px 12px 8px;}
+#content ul.actions a.button {display: block; text-decoration: none; height: 18px; padding: 6px 12px 8px;}
 #content ul.actions input.button,
-#content ul.actions a.button {font-size: 14px; background-color: #dedede; color: #333333; border: none; cursor: pointer; border-radius: 3px;}
+#content ul.actions a.button {font-size: 16px; background-color: #dedede; color: #333333; border: none; cursor: pointer; border-radius: 3px;}
 #content ul.actions input.button:active,
 #content ul.actions a.button:active {background-color: #bebebe;}
 #content ul.actions input.button.primary,
@@ -832,10 +832,11 @@ body {}
 #content .scene.shopPayment dl.amount {}
 #content .scene.shopPayment dl.amount dt {width: auto; font-size: 18px; display: block; text-align: left;}
 #content .scene.shopPayment dl.amount dd {width: auto; font-size: 28px; display: block; padding: 0;}
-#content .scene.shopPayment ul.payment_methods {padding: 0;}
-#content .scene.shopPayment ul.payment_methods li.payment_method {padding-bottom: 10px;}
-#content .scene.shopPayment ul.payment_methods li.payment_method ul.actions {padding-bottom: 40px;}
+#content .scene.shopPayment ul.payment_methods {padding: 0 0 40px;}
+#content .scene.shopPayment ul.payment_methods li.payment_method {padding-bottom: 30px;}
+#content .scene.shopPayment ul.payment_methods li.payment_method ul.actions {padding-bottom: 0px;}
 #content .scene.shopPayment ul.payment_methods li.payment_method.stripe {background: url(/img/gx_creditcards.png) no-repeat 20px 40px;}
+#content .scene.shopPayment ul.payment_methods li.payment_method.stripe ul.actions {padding-bottom: 40px;}
 #content .scene.shopPayment.stripe dl {display: none;}
 #content .scene.shopPayment.stripe h2,
 #content .scene.shopPayment.stripe p {text-align: center; margin: 0 auto;}
