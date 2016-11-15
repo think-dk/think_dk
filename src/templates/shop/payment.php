@@ -25,9 +25,9 @@ if($order && $order["payment_status"] != 2) {
 
 $payment_methods = $this->paymentMethods();
 
-//print_r($user);
+$this->headerIncludes(["https://checkout.stripe.com/checkout.js"]);
 ?>
-<div class="scene shopPayment i:scene">
+<div class="scene shopPayment i:payment">
 	<h1>Payment</h1>
 
 <? if($order && $amount): ?>

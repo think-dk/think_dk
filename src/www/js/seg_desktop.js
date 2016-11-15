@@ -7415,10 +7415,7 @@ Util.Objects["front"] = new function() {
 /*i-scene.js*/
 Util.Objects["scene"] = new function() {
 	this.init = function(scene) {
-		u.bug("scene init:" + u.nodeId(scene))
 		scene.resized = function() {
-			u.bug("scene.resized:" + u.nodeId(this));
-			this.offsetHeight;
 		}
 		scene.scrolled = function() {
 		}
@@ -7718,6 +7715,23 @@ Util.Objects["memberships"] = new function() {
 	}
 }
 
+
+/*i-payment.js*/
+Util.Objects["payment"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			u.showScene(this);
+			page.acceptCookies();
+			page.resized();
+		}
+		scene.ready();
+	}
+}
 
 /*i-stripe.js*/
 Util.Objects["stripe"] = new function() {

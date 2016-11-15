@@ -1,4 +1,4 @@
-Util.Objects["scene"] = new function() {
+Util.Objects["payment"] = new function() {
 	this.init = function(scene) {
 //		u.bug("scene init:" + u.nodeId(scene))
 		

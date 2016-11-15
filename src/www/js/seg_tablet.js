@@ -7361,10 +7361,7 @@ Util.Objects["front"] = new function() {
 /*i-scene.js*/
 Util.Objects["scene"] = new function() {
 	this.init = function(scene) {
-		u.bug("scene init:" + u.nodeId(scene))
 		scene.resized = function() {
-			u.bug("scene.resized:" + u.nodeId(this));
-			this.offsetHeight;
 		}
 		scene.scrolled = function() {
 		}

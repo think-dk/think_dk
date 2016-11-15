@@ -26,6 +26,7 @@ document.write('<script type="text/javascript" src="/js/lib/smartphone/i-login.j
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-cart.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-wishes.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-memberships.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/smartphone/i-payment.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-stripe.js"></script>');
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-article.js"></script>');

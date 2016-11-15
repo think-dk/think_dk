@@ -7165,6 +7165,55 @@ Util.Objects["memberships"] = new function() {
 }
 
 
+/*i-payment.js*/
+Util.Objects["payment"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			u.showScene(this);
+			this.stripe_link = u.qs(".payment_method.stripe li.continue", this);
+			this.stripe_link.scene = this;
+			if(this.stripe_link) {
+				this.stripe_link.setAttribute("data-success-function", "stripePayment");
+				u.o.oneButtonForm.init(this.stripe_link);
+				this.stripe_link.stripePayment = function(response) {
+					if(response.isHTML) {
+						page.cN.new_scene = u.qs("div.scene", response);
+						u.ass(page.cN.new_scene, {
+							"opacity":0
+						});
+						u.ae(page.cN, page.cN.new_scene);
+						// 	
+						// 	
+						// 	
+						// 	
+						page.cN.scene.transitioned = function(event) {
+							page.cN.removeChild(page.cN.scene);
+							page.cN.scene = this;
+							delete page.cN.new_scene;
+							u.init();
+						}
+						u.a.transition(page.cN.scene, "all 0.5s ease-in-out");
+						u.ass(page.cN.scene, {
+							"opacity":0
+						});
+					}
+					else {
+						page.notify({"cms_status":"error", "cms_message":"Something went wrong. Please reload the page and try again."})
+					}
+					console.log(response);
+				}
+			}
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
 /*i-stripe.js*/
 Util.Objects["stripe"] = new function() {
 	this.init = function(scene) {
