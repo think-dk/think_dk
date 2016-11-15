@@ -6410,6 +6410,7 @@ Util.Objects["page"] = new function() {
 			if(page.cN && page.cN.scene && typeof(page.cN.scene.resized) == "function") {
 				page.cN.scene.resized(event);
 			}
+			page.offsetHeight;
 		}
 		page.scrolled = function(event) {
 			page.scrolled_y = u.scrollY();
@@ -6464,7 +6465,7 @@ Util.Objects["page"] = new function() {
 					u.ce(bn_accept);
 					bn_accept.clicked = function() {
 						this.terms.parentNode.removeChild(this.terms);
-						u.saveCookie(u.terms_version, true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
+						u.saveCookie(u.terms_version, true, {"path":"/", "expires":false});
 					}
 					if(!location.href.match(terms_link.href)) {
 						var bn_details = u.ae(terms, "a", {"class":"details", "html":u.stringOr(u.txt["terms-details"], "Details"), "href":terms_link.href});
@@ -6672,7 +6673,7 @@ u.injectSharing = function(node) {
 				this.bn_ok.share_info = this;
 				u.ce(this.bn_ok);
 				this.bn_ok.clicked = function(event) {
-					u.saveCookie("share-info", 1, {"path":"/"});
+					u.saveCookie("share-info", 1, {"expires":false, "path":"/"});
 					this.share_info.out();
 					this.share_info.parentNode.removeChild(this.share_info);
 					this.share_info.node.sharing.clicked();

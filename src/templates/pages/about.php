@@ -48,8 +48,6 @@ if($page_item) {
 
 	</div>
 
-
-
 <? else:?>
 
 	<h1>About think.dk</h1>
