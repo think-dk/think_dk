@@ -4303,7 +4303,7 @@ u.ga_domain = 'think.dk';
 u.txt = {};
 u.txt["share"] = "Share this page";
 u.txt["share-info-headline"] = "(How do I share?)";
-u.txt["share-info-txt"] = "We have not includered social media plugins on this site, because they are frequently abused to collect data about you. Also we don't want to promote some channels over others. Instead, just copy the link and share it wherever you find relevant.";
+u.txt["share-info-txt"] = "We have not included social media plugins on this site, because they are frequently abused to collect data about you. Also we don't want to promote some channels over others. Instead, just copy the link and share it wherever you find relevant.";
 u.txt["share-info-ok"] = "OK";
 u.txt["readmore"] = "Read more.";
 u.txt["readstate-not_read"] = "Click to mark as read";
@@ -4312,6 +4312,7 @@ u.txt["add_comment"] = "Add comment";
 u.txt["comment"] = "Comment";
 u.txt["cancel"] = "Cancel";
 u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/memberships">Join us</a> to add comments.';
+u.txt["relogin"] = "Your session timed out - please login to continue.";
 u.txt["terms-headline"] = "We love <br />cookies and privacy";
 u.txt["terms-accept"] = "Accept";
 u.txt["terms-details"] = "Details";
@@ -4658,6 +4659,8 @@ u.notifier = function(node) {
 				u.ae(overlay, login);
 				u.as(document.body, "overflow", "hidden");
 				var form = u.qs("form", overlay);
+				var relogin = u.ae(login, "p", {"class":"relogin", "html":(u.txt["relogin"] ? u.txt["relogin"] : "Your session expired")});
+				login.insertBefore(relogin, form);
 				form.overlay = overlay;
 				u.ae(form, "input", {"type":"hidden", "name":"ajaxlogin", "value":"true"})
 				u.f.init(form);
@@ -4962,6 +4965,7 @@ Util.Form = u.f = new function() {
 	this.customInit = {};
 	this.customValidate = {};
 	this.customSend = {};
+	this.customHintPosition = {};
 	this.init = function(_form, _options) {
 		var i, j, field, action, input, hidden_field;
 		if(_form.nodeName.toLowerCase() != "form") {
@@ -5000,7 +5004,7 @@ Util.Form = u.f = new function() {
 		_form.reset = this._reset;
 		_form.fields = {};
 		_form.actions = {};
-		_form.errors = {};
+		_form.error_fields = {};
 		_form.labelstyle = u.cv(_form, "labelstyle");
 		var fields = u.qsa(".field", _form);
 		for(i = 0; field = fields[i]; i++) {
@@ -5228,6 +5232,7 @@ Util.Form = u.f = new function() {
 	this._reset = function (event, iN) {
 		for (name in this.fields) {
 			if (this.fields[name] && this.fields[name].field && this.fields[name].type != "hidden" && !this.fields[name].getAttribute("readonly")) {
+				this.fields[name].used = false;
 				this.fields[name].val("");
 			}
 		}
@@ -5239,12 +5244,7 @@ Util.Form = u.f = new function() {
 				u.f.validate(this.fields[name]);
 			}
 		}
-		if(Object.keys(this.errors).length) {
-			if(typeof(this.validationFailed) == "function") {
-				this.validationFailed();
-			}
-		}
-		else {
+		if(!Object.keys(this.error_fields).length) {
 			if(typeof(this.submitted) == "function") {
 				this.submitted(iN);
 			}
@@ -5511,21 +5511,22 @@ Util.Form = u.f = new function() {
 	}
 	this.positionHint = function(field) {
 		if(field._help) {
-			var f_h =  field.offsetHeight;
-			var f_p_t = parseInt(u.gcs(field, "padding-top"));
-			var f_p_b = parseInt(u.gcs(field, "padding-bottom"));
-			var f_b_t = parseInt(u.gcs(field, "border-top-width"));
-			var f_b_b = parseInt(u.gcs(field, "border-bottom-width"));
-			var f_h_h = field._help.offsetHeight;
-			if(u.hc(field, "html")) {
-				var l_h = field._input._label.offsetHeight;
-				var help_top = (((f_h - (f_p_t + f_p_b + f_b_b + f_b_t)) / 2)) - (f_h_h / 2) + l_h;
-				u.as(field._help, "top", help_top + "px");
+			var custom_hint_position;
+			for(custom_hint_position in this.customHintPosition) {
+				if(u.hc(field, custom_hint_position)) {
+					this.customHintPosition[custom_hint_position](field._form, field);
+					return;
+				}
+			}
+			var input_middle, help_top;
+ 			if(u.hc(field, "html")) {
+				input_middle = field._editor.offsetTop + (field._editor.offsetHeight / 2);
 			}
 			else {
-				var help_top = (((f_h - (f_p_t + f_p_b + f_b_b + f_b_t)) / 2) + 2) - (f_h_h / 2)
-				u.as(field._help, "top", help_top + "px");
+				input_middle = field._input.offsetTop + (field._input.offsetHeight / 2);
 			}
+			help_top = input_middle - field._help.offsetHeight / 2;
+			u.as(field._help, "top", help_top + "px");
 		}
 	}
 	this.activateInput = function(iN) {
@@ -5627,13 +5628,8 @@ Util.Form = u.f = new function() {
 			u.ac(iN, "error");
 			u.ac(iN.field, "error");
 			this.positionHint(iN.field);
-			iN._form.errors[iN.name] = true;
-			if(typeof(iN.validationFailed) == "function") {
-				iN.validationFailed();
-			}
-			if(typeof(iN._form.validationFailed) == "function") {
-				iN._form.validationFailed(iN._form.errors);
-			}
+			iN._form.error_fields[iN.name] = true;
+			this.updateFormValidationState(iN);
 		}
 	}
 	this.fieldCorrect = function(iN) {
@@ -5649,16 +5645,46 @@ Util.Form = u.f = new function() {
 			u.rc(iN, "error");
 			u.rc(iN.field, "error");
 		}
-		delete iN._form.errors[iN.name];
-		if(!Object.keys(iN._form.errors).length) {
-			if(typeof(iN._form.validationPassed) == "function") {
-				iN._form.validationPassed();
+		delete iN._form.error_fields[iN.name];
+		this.updateFormValidationState(iN);
+	}
+	this.checkFormValidation = function(form) {
+		if(Object.keys(form.error_fields).length) {
+			return false;
+		}
+		var x, field;
+		for(x in form.fields) {
+			input = form.fields[x];
+			if(input.field && u.hc(form.fields[x].field, "required") && !u.hc(form.fields[x].field, "correct")) {
+				return false;
 			}
 		}
-		else {
-			if(typeof(iN._form.validationFailed) == "function") {
-				iN._form.validationFailed(iN._form.errors);
+		return true;
+	}
+	this.updateFormValidationState = function(iN) {
+		if(this.checkFormValidation(iN._form)) {
+			if(typeof(iN.validationPassed) == "function") {
+				iN.validationPassed();
 			}
+			if(typeof(iN.field.validationPassed) == "function") {
+				iN.field.validationPassed();
+			}
+			if(typeof(iN._form.validationFailed) == "function") {
+				iN._form.validationPassed();
+			}
+			return true;
+		}
+		else {
+			if(typeof(iN.validationFailed) == "function") {
+				iN.validationFailed(iN._form.error_fields);
+			}
+			if(typeof(iN.field.validationFailed) == "function") {
+				iN.field.validationFailed(iN._form.error_fields);
+			}
+			if(typeof(iN._form.validationFailed) == "function") {
+				iN._form.validationFailed(iN._form.error_fields);
+			}
+			return false;
 		}
 	}
 	this.validate = function(iN) {
@@ -6351,8 +6377,10 @@ Util.Objects["page"] = new function() {
 			if(page.cN && page.cN.scene && typeof(page.cN.scene.resized) == "function") {
 				page.cN.scene.resized();
 			}
+			page.offsetHeight;
 		}
 		page.scrolled = function() {
+			page.scrolled_y = u.scrollY();
 			if(page.cN && page.cN.scene && typeof(page.cN.scene.scrolled) == "function") {
 				page.cN.scene.scrolled();
 			}
@@ -7247,75 +7275,97 @@ Util.Objects["stripe"] = new function() {
 	this.init = function(scene) {
 		u.bug("stripe init:" + u.nodeId(scene))
 		scene.resized = function() {
-			u.bug("scene.resized:" + u.nodeId(this));
-			this.offsetHeight;
 		}
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
 			page.cN.scene = this;
-			this.transitioned = function() {
-				this.Stripe.open({
-					opened: this.Stripe.opened.bind(this.Stripe),
-					closed: this.Stripe.closed.bind(this.Stripe)
-				});
+			this.card_form = u.qs("form.card", this);
+			u.f.customValidate["card"] = function(iN) {
+				var card_number = iN.val().replace(/ /g, "");
+				if(u.paymentCards.validateCardNumber(card_number)) {
+					u.f.fieldCorrect(iN);
+					u.f.validate(iN._form.fields["card_cvc"]);
+				}
+				else {
+					u.f.fieldError(iN);
+				}
 			}
-			u.a.transition(this, "all 0.4s ease-in-out");
-			u.ass(this, {
-				"opacity":1
-			})
-			var amount = Number(u.qs("dd.amount", this).innerHTML)*100;
-			var currency = u.qs("dd.currency", this).innerHTML;
-			var email = u.qs("dd.email", this).innerHTML;
-			var reference = u.qs("dd.reference", this).innerHTML;
-			this.tokenReturned = function(token) {
-				this.processing = true;
-				var form = u.qs("form.token", this);
-				if(form) {
-					var input = u.qs("input#token", form);
-					if(input) {
-						input.value = token.id
-						form.submit();
+			u.f.customValidate["exp_month"] = function(iN) {
+				var month = iN.val();
+				var year = iN._form.fields["card_exp_year"].val();
+				if(year && parseInt(year) < 100) {
+					year = parseInt("20"+year);
+				}
+				if(u.paymentCards.validateExpMonth(month)) {
+					u.f.fieldCorrect(iN);
+				}
+				else {
+					u.f.fieldError(iN);
+				}
+				if(!iN.validating_year) {
+					iN._form.fields["card_exp_year"].validating_month = true;
+					u.f.validate(iN._form.fields["card_exp_year"]);
+					iN._form.fields["card_exp_year"].validating_month = false;
+				}
+			}
+			u.f.customValidate["exp_year"] = function(iN) {
+				var year = iN.val();
+				var month = iN._form.fields["card_exp_month"].val();
+				if(year && parseInt(year) < 100) {
+					year = parseInt("20"+year);
+				}
+				if(!iN.validating_month) {
+					iN._form.fields["card_exp_month"].validating_year = true;
+					u.f.validate(iN._form.fields["card_exp_month"]);
+					iN._form.fields["card_exp_month"].validating_year = false;
+				}
+				if(u.paymentCards.validateExpDate(month, year)) {
+					u.f.fieldCorrect(iN);
+				}
+				else if(!month && u.paymentCards.validateExpYear(year)) {
+					u.rc(iN, "correct");
+					u.rc(iN.field, "correct");
+				}
+				else {
+					u.f.fieldError(iN);
+					u.f.fieldError(iN._form.fields["card_exp_month"]);
+				}
+			}
+			u.f.customValidate["cvc"] = function(iN) {
+				var cvc = iN.val();
+				var card_number = iN._form.fields["card_number"].val().replace(/ /g, "");
+				if(u.paymentCards.validateCVC(cvc, card_number)) {
+					u.f.fieldCorrect(iN);
+				}
+				else {
+					u.f.fieldError(iN);
+				}
+			}
+			u.f.init(this.card_form);
+			this.card_form.fields["card_number"].updated = function(iN) {
+				this.value = u.paymentCards.formatCardNumber(this.val().replace(/ /g, ""));
+			}
+			this.card_form.fields["card_exp_year"].changed = function(iN) {
+				var year = parseInt(this.val());
+				if(year > 99) {
+					if(year > 2000 && year < 2100) {
+						this.val(year-2000);
 					}
 				}
 			}
-			this.Stripe = StripeCheckout.configure({
-				key: 'pk_test_9JXIVsrick4rvSoLltT9eKny',
-				image: '/img/logo.png',
-				locale: 'auto',
-				token: this.tokenReturned.bind(this),
-				name: 'think.dk',
-				email: email,
-				description: reference,
-				zipCode: true,
-				currency: currency,
-				amount: amount,
-				allowRememberMe:false,
-			});
-			this.Stripe.scene = this;
-			this.Stripe.closed = function() {
-				if(this.scene.processing) {
-					u.qs("h2", this.scene).innerHTML = "We are waiting for the gateway response";
-					u.a.transition(this.scene, "all 0.2s ease-in-out");
-					u.ass(this.scene, {
-						"opacity":1
-					});
+			this.card_form.fields["card_exp_month"].changed = function(iN) {
+				var month = parseInt(this.val());
+				if(month < 10) {
+					this.val("0"+month);
 				}
-				else {
-					history.back();
-				}
-				console.log("closed")
-				console.log(this);
 			}
-			this.Stripe.opened = function() {
-				u.a.transition(this.scene, "all 0.2s ease-in-out");
-				u.ass(this.scene, {
-					"opacity":0
-				})
-			}
-			window.addEventListener('popstate', function() {
-			  handler.close();
-			});
+			// 
+			u.showScene(this);
+			// 	
+			// 			
+			// 			
+			// 
 			page.resized();
 		}
 		scene.ready();
