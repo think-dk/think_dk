@@ -37,44 +37,47 @@ if($order) {
 
 }
 
-$this->headerIncludes(["https://checkout.stripe.com/checkout.js"]);
+if($is_membership) {
+	$reference = "Member ".$membership["id"];	
+}
+else {
+	$reference = $order_no;
+}
+
+//$this->headerIncludes(["https://checkout.stripe.com/checkout.js"]);
 
 ?>
 <div class="scene shopPayment stripe <?= $order ? "i:stripe" : "i:scene" ?>">
 
 <? if($order): ?>
 
-	<dl>
-		<dt class="amount">Amount</dt>
-		<dd class="amount"><?= $total_order_price["price"] ?></dd>
-		<dt class="currency">Currency</dt>
-		<dd class="currency"><?= $order["currency"] ?></dd>
-		<dt class="reference">Reference</dt>
-		<? if($is_membership): ?>
-		<dd class="reference">Member <?= $membership["id"] ?></dd>
-		<? else: ?>
-		<dd class="reference"><?= $order_no ?></dd>
-		<? endif; ?>
-		<dt class="email">Email</dt>
-		<dd class="email"><?= $user["email"] ?></dd>
 
-	</dl>
+	<h1>Please, enter you card details</h1>
 
-	<h2>We're loading the payment window</h2>
-	<p>Please wait ...</p>
+	<?= $model->formStart("/shop/gateway/".$order_no."/stripe/process", array("class" => "card")) ?>
+		<?= $model->input("reference", array("type" => "hidden", "value" => $reference)); ?>
+		<?= $model->input("email", array("type" => "hidden", "value" => $user["email"])); ?>
+	
+		<fieldset>
+			<?= $model->input("card_number"); ?>
+			<?= $model->input("card_exp_month"); ?><span class="slash">/</span><?= $model->input("card_exp_year"); ?>
+			<?= $model->input("card_cvc"); ?>
+			
+		</fieldset>
+
+		<ul class="actions">
+			<?= $model->submit("Pay ".formatPrice($total_order_price), array("class" => "primary", "wrapper" => "li.pay")) ?>
+		</ul>
+	<?= $model->formEnd() ?>
+
+	<p>Payment reference: <?= $reference ?>.</p>
 	<p class="note">
-		We are using <a href="https://stripe" target="_blank">Stripe</a> to process the payment. <br />No card information is sent to or stored on our own server.
+		We are using <a href="https://stripe.com" target="_blank">Stripe</a> to process the payment. <br />No card information will be stored on our own server. <br />All communication is encrypted.
 	</p>
-
-
-	<?= $UC->formStart("/shop/gateway/".$order_no."/stripe/token", array("class" => "token labelstyle:inject")) ?>
-		<?= $UC->input("token", array("type" => "hidden", "id" => "token")); ?>
-	<?= $UC->formEnd() ?>
-
 
 <? else: ?>
 
-	<h2>Looking to make a payment?</h2>
+	<h1>Looking to make a payment?</h1>
 	<p>You should <a href="/login">log in</a> to your account and initiate your payment from there.</p>
 
 <? endif;?>

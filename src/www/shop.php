@@ -56,9 +56,9 @@ if(is_array($action) && count($action)) {
 		}
 
 		// specific payment receipt
-		else if(count($action) == 4 && $action[3] == "token" && $page->validateCsrfToken()) {
+		else if(count($action) == 4 && $action[3] == "process" && $page->validateCsrfToken()) {
 
-			if($model->processPayment($action)) {
+			if($model->processOrderPayment($action)) {
 
 				// redirect to leave POST state
 				header("Location: /shop/receipt/".$action[1]."/".$action[2]);
