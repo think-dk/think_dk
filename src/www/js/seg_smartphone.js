@@ -7073,11 +7073,6 @@ Util.Objects["front"] = new function() {
 					if(this._posts) {
 						var i, node;
 						for(i = 0; node = this._posts[i]; i++) {
-							var header = u.qs("h2,h3", node);
-							header.current_readstate = node.getAttribute("data-readstate");
-							if(header.current_readstate) {
-								u.addCheckmark(header);
-							}
 							u.a.transition(node, "all 0.4s ease-in-out "+(100*i)+"ms", "done");
 							u.ass(node, {
 								"opacity": 1
