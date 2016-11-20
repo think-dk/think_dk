@@ -73,7 +73,7 @@ $payment_methods = $this->paymentMethods();
 
 	</ul>
 
-	<p class="note">We cover the transaction fee – so feel free to choose a suited option with the smallest fee.</p>
+	<p class="note">* We pay the transaction fee – so feel free to choose a suited option with the smallest fee for us.</p>
 
 <? else: ?>
 

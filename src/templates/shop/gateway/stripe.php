@@ -52,7 +52,7 @@ else {
 <? if($order): ?>
 
 
-	<h1>Please, enter you card details</h1>
+	<h1>Please enter you card details</h1>
 
 	<?= $model->formStart("/shop/gateway/".$order_no."/stripe/process", array("class" => "card")) ?>
 		<?= $model->input("reference", array("type" => "hidden", "value" => $reference)); ?>
