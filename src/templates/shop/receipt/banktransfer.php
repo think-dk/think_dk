@@ -45,11 +45,9 @@ if($order) {
 
 ?>
 <div class="scene shopReceipt i:scene">
-	<h1>Receipt</h1>
-	<h2>Thank you for supporting change.</h2>
-	<p>We are so thrilled to have you on board - go ahead and check out our <a href="/events">upcoming events</a>!</p>
-
+	
 <? if($order): ?>
+	<h1>Thank you for supporting change!</h1>	
 	<h2>Please be so kind ...</h2>
 
 	<p>
@@ -86,10 +84,11 @@ if($order) {
 		<dt class="swift">SWIFT/BIC</dt>
 		<dd class="swift">FAELDKK1</dd>
 	</dl>
+	<p>We are thrilled to have you on board - now go ahead and check out our <a href="/events">upcoming events</a>.</p>
 
 <? else: ?>
 
-	<h2>Looking to make a payment?</h2>
+	<h1>Looking to make a payment?</h1>
 	<p>You should <a href="/login">log in</a> to your account and initiate your payment from there.</p>
 
 <? endif;?>
