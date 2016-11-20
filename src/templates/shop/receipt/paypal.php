@@ -41,11 +41,10 @@ if($order) {
 
 ?>
 <div class="scene shopReceipt i:scene">
-	<h1>Receipt</h1>
-	<h2>Thank you for supporting change.</h2>
-	<p>We are thrilled to have you on board - go ahead and check out our <a href="/events">upcoming events</a>!</p>
-
+	
+	
 <? if($order): ?>
+	<h1>Thank you for supporting change!</h1>
 	<h2>Please be so kind ...</h2>
 
 	<p>
@@ -66,6 +65,7 @@ if($order) {
 		<dd class="reference"><?= $order_no ?></dd>
 		<? endif; ?>
 	</dl>
+	<p>We are thrilled to have you on board - now go ahead and check out our <a href="/events">upcoming events</a>!</p>
 
 <? else: ?>
 
