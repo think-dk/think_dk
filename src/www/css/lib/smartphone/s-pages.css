@@ -257,11 +257,12 @@
 #content .scene.shopPayment.stripe form ul.actions li input {width: 100%;}
 
 
+#content .scene.shopPayment.stripe form div.field div.help {display: none;}
 #content .scene.shopPayment.stripe form div.field.card div.indicator {display: none;}
 #content .scene.shopPayment.stripe form div.field.card.correct div.indicator {display: inline-block;}
 
 #content .scene.shopPayment.stripe form div.field.exp_month div.indicator {display: none;}
-#content .scene.shopPayment.stripe form div.field div.help {display: none;}
+#content .scene.shopPayment.stripe form div.field.exp_month.correct div.indicator {display: inline-block;}
 #content .scene.shopPayment.stripe form div.field.exp_year div.indicator {display: none;}
 #content .scene.shopPayment.stripe form div.field.exp_year.correct div.indicator {display: inline-block;}
 #content .scene.shopPayment.stripe form span.slash {display: inline-block; vertical-align: top; padding: 16px 4px 0 0; font-size: 16px;}
