@@ -253,10 +253,44 @@
 
 #content .scene.shopPayment ul.payment_methods li.payment_method.stripe {background: url(/img/gx_creditcards.png) no-repeat 260px 0px;}
 
-#content .scene.shopPayment.stripe dl {display: none;}
-#content .scene.shopPayment.stripe h2,
+
+#content .scene.shopPayment.stripe h1,
 #content .scene.shopPayment.stripe p {text-align: center; margin: 0 auto;}
-#content .scene.shopPayment.stripe p.note {padding-top: 70px;}
+#content .scene.shopPayment.stripe h1 {font-size: 30px;}
+#content .scene.shopPayment.stripe p.note {padding-top: 10px;}
+#content .scene.shopPayment.stripe form {width: 200px; margin: 15px auto 20px;}
+#content .scene.shopPayment.stripe form div.field {padding-left: 0; padding-right: 0; padding-bottom: 10px;}
+#content .scene.shopPayment.stripe form div.field label {display: block; font-size: 11px; line-height: 11px; padding: 0 0 1px 4px;}
+#content .scene.shopPayment.stripe form div.field.card input {width: 182px;}
+#content .scene.shopPayment.stripe form div.field.exp_month,
+#content .scene.shopPayment.stripe form div.field.exp_year,
+#content .scene.shopPayment.stripe form div.field.cvc {display: inline-block; vertical-align: top;}
+#content .scene.shopPayment.stripe form div.field.exp_month input {width: 24px;}
+#content .scene.shopPayment.stripe form div.field.exp_year input {width: 24px;}
+#content .scene.shopPayment.stripe form div.field.cvc {float: right;}
+#content .scene.shopPayment.stripe form div.field.cvc input {width: 44px;}
+#content .scene.shopPayment.stripe form ul.actions {padding: 10px 2px;}
+#content .scene.shopPayment.stripe form ul.actions li {padding: 0; display: block;}
+#content .scene.shopPayment.stripe form ul.actions li input {width: 100%;}
+#content .scene.shopPayment.stripe form div.field.card div.indicator {display: none; left: 203px; top: 16px;}
+#content .scene.shopPayment.stripe form div.field.card.correct div.indicator {display: block;}
+#content .scene.shopPayment.stripe form div.field.card div.help {left: 225px;}
+
+#content .scene.shopPayment.stripe form div.field.exp_month div.indicator {display: none;}
+#content .scene.shopPayment.stripe form div.field.exp_month div.help {left: 225px;}
+#content .scene.shopPayment.stripe form div.field.exp_year div.indicator {display: none; left: 45px; top: 16px;}
+#content .scene.shopPayment.stripe form div.field.exp_year.correct div.indicator {display: block;}
+#content .scene.shopPayment.stripe form div.field.exp_year div.help {left: 169px;}
+#content .scene.shopPayment.stripe form span.slash {display: inline-block; vertical-align: top; padding: 16px 4px 0 0; font-size: 16px;}
+
+#content .scene.shopPayment.stripe form div.field.cvc div.indicator {display: none; left: 65px; top: 16px;}
+#content .scene.shopPayment.stripe form div.field.cvc.correct div.indicator {display: block;}
+#content .scene.shopPayment.stripe form div.field.cvc div.help {left: 87px;}
+
+/* DONT SHOW HINT ON HOVER WHEN FIELD IS CORRECT */
+#content .scene.shopPayment.stripe div.field.hover.correct div.hint {display: none;}
+#content .scene.shopPayment.stripe div.field.focus.correct div.hint {display: block;}
+
 
 /* TODOS */
 #content .scene div.todos {padding-bottom: 15px; position: relative; z-index: 1;}

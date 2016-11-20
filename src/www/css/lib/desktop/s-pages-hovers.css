@@ -1,5 +1,6 @@
 /* HOVERS ARE SEPARATED FOR DESKTOP SEGMENT BECAUSE THE CSS IS REUSED FOR TABLET */
-#content ul.actions input.button.primary:hover,
+ul.actions input.button.primary:hover,
+ul.actions a.button.primary:hover,
 #content ul.actions a.button.primary:hover {background-color: #26962d;}
 
 #content .scene.front .link:hover {text-decoration: underline;}

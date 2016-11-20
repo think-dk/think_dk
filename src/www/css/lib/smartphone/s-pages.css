@@ -139,6 +139,7 @@
 #content .scene.cart ul.items li h3 > span {display: inline-block; vertical-align: top; padding-top: 6px;}
 #content .scene.cart ul.items li h3 form {display: inline-block; vertical-align: top; position: relative; margin-left: 20px;}
 #content .scene.cart ul.items li h3 form div.field {padding: 0;}
+#content .scene.cart ul.items li h3 form div.field label {display: none;}
 #content .scene.cart ul.items li h3 form div.field .indicator {display: none;}
 #content .scene.cart ul.items li h3 form div.field .help {left: 47px; display: none;}
 #content .scene.cart ul.items li h3 form div.field input {height: 20px; width: 25px; text-align: right;}
@@ -250,8 +251,8 @@
 
 
 /* FEEDBACK ELEMENTS */
+/*
 #content .scene div.todos {display: none;}
 #content .scene div.qnas {display: none;}
-
-
+*/
 

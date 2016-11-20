@@ -16,8 +16,9 @@ body {}
 
 #content .scene hr {border-color: #ccdbcd;}
 
-#content ul.actions input.button.primary,
-#content ul.actions a.button.primary {background-color: #34cc3d;}
+ul.actions input.button.primary,
+ul.actions a.button.primary,
+#content ul.actions a.button.primary {background-color: #34cc3d; color: #ffffff;}
 
 #content .scene div.categories ul.tags li.selected a,
 #content .scene div.categories ul.tags li.selected:before {color: #26962d;}
