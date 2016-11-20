@@ -22,7 +22,7 @@ Util.Objects["payment"] = new function() {
 
 
 			// accept cookies?
-			page.acceptCookies();
+//			page.acceptCookies();
 
 
 			page.resized();

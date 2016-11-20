@@ -7749,7 +7749,6 @@ Util.Objects["payment"] = new function() {
 		scene.ready = function() {
 			page.cN.scene = this;
 			u.showScene(this);
-			page.acceptCookies();
 			page.resized();
 		}
 		scene.ready();
@@ -7759,7 +7758,6 @@ Util.Objects["payment"] = new function() {
 /*i-stripe.js*/
 Util.Objects["stripe"] = new function() {
 	this.init = function(scene) {
-		u.bug("stripe init:" + u.nodeId(scene))
 		scene.resized = function() {
 		}
 		scene.scrolled = function() {
@@ -7848,10 +7846,6 @@ Util.Objects["stripe"] = new function() {
 			}
 			// 
 			u.showScene(this);
-			// 	
-			// 			
-			// 			
-			// 
 			page.resized();
 		}
 		scene.ready();

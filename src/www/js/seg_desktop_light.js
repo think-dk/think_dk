@@ -3866,3 +3866,25 @@ Util.Objects["newsletter"] = new function() {
 }
 
 
+
+/*i-memberships.js*/
+Util.Objects["memberships"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			this._memberships = u.qs("div.memberships", this);
+			var place_holder = u.qs("div.articlebody .placeholder.memberships", this);
+			if(this._memberships && place_holder) {
+				place_holder.parentNode.replaceChild(this._memberships, place_holder);
+			}
+			u.showScene(this);
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+

@@ -4723,6 +4723,155 @@ u.notifier = function(node) {
 }
 
 
+/*beta-u-paymentcards.js*/
+u.paymentCards = new function() {
+	this.payment_cards = [
+		{
+			"type": 'maestro',
+			"patterns": [5018, 502, 503, 506, 56, 58, 639, 6220, 67],
+			"format": /(\d{1,4})/g,
+			"card_length": [12,13,14,15,16,17,18,19],
+			"cvc_length": [3],
+			"luhn": true
+		},
+		{
+			"type": 'forbrugsforeningen',
+			"patterns": [600],
+			"format": /(\d{1,4})/g,
+			"card_length": [16],
+			"cvc_length": [3],
+			"luhn": true,
+		},
+		{
+			"type": 'dankort',
+			"patterns": [5019],
+			"format": /(\d{1,4})/g,
+			"card_length": [16],
+			"cvc_length": [3],
+			"luhn": true
+		},
+		{
+			"type": 'visa',
+			"patterns": [4],
+			"format": /(\d{1,4})/g,
+			"card_length": [13, 16],
+			"cvc_length": [3],
+			"luhn": true
+		},
+		{
+			"type": 'mastercard',
+			"patterns": [51, 52, 53, 54, 55, 22, 23, 24, 25, 26, 27],
+			"format": /(\d{1,4})/g,
+			"card_length": [16],
+			"cvc_length": [3],
+			"luhn": true
+		},
+		{
+			"type": 'amex',
+			"patterns": [34, 37],
+			"format": /(\d{1,4})([\d]{0,6})?(\d{1,5})?/,
+			"card_length": [15],
+			"cvc_length": [3,4],
+			"luhn": true
+		}
+	];
+	this.validateCardNumber = function(card_number) {
+		var card = this.getCardTypeFromNumber(card_number);
+		if(card && parseInt(card_number) == card_number) {
+			var i, allowed_length;
+			for(i = 0; allowed_length = card.card_length[i]; i++) {
+				if(card_number.length == allowed_length) {
+					if(card.luhn) {
+						return this.luhnCheck(card_number);
+					}
+					else {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	this.validateExpDate = function(month, year) {
+		if(
+			this.validateExpMonth(month) && 
+			this.validateExpYear(year) && 
+			new Date(year, month-1) >= new Date(new Date().getFullYear(), new Date().getMonth())
+		) {
+			return true;
+		}
+		return false;
+	}
+	this.validateExpMonth = function(month) {
+		if(month && parseInt(month) == month && month >= 1 && month <= 12) {
+			return true;
+		}
+		return false;
+	}
+	this.validateExpYear = function(year) {
+		if(year && parseInt(year) == year && new Date(year, 0) >= new Date(new Date().getFullYear(), 0)) {
+			return true;
+		}
+		return false;
+	}
+	this.validateCVC = function(cvc, card_number) {
+		var cvc_length = [3,4];
+		if(card_number && parseInt(card_number) == card_number) {
+			var card = this.getCardTypeFromNumber(card_number);
+			if(card) {
+				cvc_length = card.cvc_length;
+			}
+		}
+		if(cvc && parseInt(cvc) == cvc) {
+			var i, allowed_length;
+			for(i = 0; allowed_length = cvc_length[i]; i++) {
+				if(cvc.toString().length == allowed_length) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	this.getCardTypeFromNumber = function(card_number) {
+		var i, j, card, pattern, regex;
+		for(i = 0; card = this.payment_cards[i]; i++) {
+			for(j = 0; pattern = card.patterns[j]; j++) {
+				if(card_number.match('^' + pattern)) {
+					return card;
+				}
+			}
+		}
+		return false;
+	}
+	this.formatCardNumber = function(card_number) {
+		var card = this.getCardTypeFromNumber(card_number);
+		if(card) {
+			var matches = card_number.match(card.format);
+			if(matches) {
+				if(matches.length > 1 && matches[0] == card_number) {
+					matches.shift();
+					card_number = matches.join(" ").trim();
+				}
+				else {
+					card_number = matches.join(" ");
+				}
+			}
+		}
+		return card_number;
+	}
+	this.luhnCheck = function(card_number) {
+		var ca, sum = 0, mul = 1;
+		var len = card_number.length;
+		while (len--) {
+			ca = parseInt(card_number.charAt(len),10) * mul;
+			sum += ca - (ca>9)*9;
+			mul ^= 3;
+		};
+		return (sum%10 === 0) && (sum > 0);
+	};
+}
+
+
 /*u-textscaler.js*/
 u.textscaler = function(node, _settings) {
 	if(typeof(_settings) != "object") {
@@ -7203,67 +7352,6 @@ Util.Objects["payment"] = new function() {
 		scene.ready = function() {
 			page.cN.scene = this;
 			u.showScene(this);
-			this.stripe_link = u.qs(".payment_method.stripe li.continue input.button", this);
-			this.stripe_link.scene = this;
-			if(this.stripe_link) {
-				u.e.click(this.stripe_link);
-				this.stripe_link.onclick = function(event) {
-					u.e.kill(event);
-					this.scene.tokenReturned = function(token) {
-						this.processing = true;
-						var form = u.qs("form.token", this);
-						if(form) {
-							var input = u.qs("input#token", form);
-							if(input) {
-								input.value = token.id
-								form.submit();
-							}
-						}
-					}
-					var email = "martin@think.dk";
-					var reference = "asdfa";
-					var currency = "DKK";
-					var amount = 15600;
-					this.scene.Stripe = StripeCheckout.configure({
-						key: 'pk_test_9JXIVsrick4rvSoLltT9eKny',
-						image: '/img/logo.png',
-						locale: 'auto',
-						token: this.scene.tokenReturned.bind(this.scene),
-						name: 'think.dk',
-						email: email,
-						description: reference,
-						zipCode: true,
-						currency: currency,
-						amount: amount,
-						allowRememberMe:false,
-					});
-					this.scene.Stripe.scene = this;
-					this.scene.Stripe.closed = function() {
-						if(this.scene.processing) {
-							u.qs("h2", this.scene).innerHTML = "We are waiting for the gateway response";
-							u.a.transition(this.scene, "all 0.2s ease-in-out");
-							u.ass(this.scene, {
-								"opacity":1
-							});
-						}
-						else {
-							history.back();
-						}
-						console.log("closed")
-						console.log(this);
-					}
-					this.scene.Stripe.opened = function() {
-						u.a.transition(this.scene, "all 0.2s ease-in-out");
-						u.ass(this.scene, {
-							"opacity":0
-						})
-					}
-					this.scene.Stripe.open({
-						opened: this.scene.Stripe.opened.bind(this.scene.Stripe),
-						closed: this.scene.Stripe.closed.bind(this.scene.Stripe)
-					});
-				}
-			}
 			page.resized();
 		}
 		scene.ready();
@@ -7273,7 +7361,6 @@ Util.Objects["payment"] = new function() {
 /*i-stripe.js*/
 Util.Objects["stripe"] = new function() {
 	this.init = function(scene) {
-		u.bug("stripe init:" + u.nodeId(scene))
 		scene.resized = function() {
 		}
 		scene.scrolled = function() {
@@ -7362,10 +7449,6 @@ Util.Objects["stripe"] = new function() {
 			}
 			// 
 			u.showScene(this);
-			// 	
-			// 			
-			// 			
-			// 
 			page.resized();
 		}
 		scene.ready();

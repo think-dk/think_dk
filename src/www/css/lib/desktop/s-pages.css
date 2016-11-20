@@ -272,6 +272,7 @@
 #content .scene.shopPayment.stripe form ul.actions {padding: 10px 2px;}
 #content .scene.shopPayment.stripe form ul.actions li {padding: 0; display: block;}
 #content .scene.shopPayment.stripe form ul.actions li input {width: 100%;}
+
 #content .scene.shopPayment.stripe form div.field.card div.indicator {display: none; left: 203px; top: 16px;}
 #content .scene.shopPayment.stripe form div.field.card.correct div.indicator {display: block;}
 #content .scene.shopPayment.stripe form div.field.card div.help {left: 225px;}
