@@ -46,9 +46,9 @@ if($order) {
 	
 
 <? if($order): ?>
-	<h1>Thank you for supporting change!</h1>
+	<h1>Thank you for supporting change.</h1>
 	<h2>Please be so kind ...</h2>
-	<p>and bring <?= $amount ?> in cash next time you come to the Center.</p>
+	<p>Just bring <?= $amount ?> in cash next time you come to the Center.</p>
 	<p>We are thrilled to have you on board - now go ahead and check out our <a href="/events">upcoming events</a>!</p>
 <? else: ?>
 

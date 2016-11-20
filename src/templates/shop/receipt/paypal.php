@@ -44,7 +44,7 @@ if($order) {
 	
 	
 <? if($order): ?>
-	<h1>Thank you for supporting change!</h1>
+	<h1>Thank you for supporting change.</h1>
 	<h2>Please be so kind ...</h2>
 
 	<p>

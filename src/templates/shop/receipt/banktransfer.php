@@ -47,7 +47,7 @@ if($order) {
 <div class="scene shopReceipt i:scene">
 	
 <? if($order): ?>
-	<h1>Thank you for supporting change!</h1>	
+	<h1>Thank you for supporting change.</h1>	
 	<h2>Please be so kind ...</h2>
 
 	<p>
@@ -84,7 +84,7 @@ if($order) {
 		<dt class="swift">SWIFT/BIC</dt>
 		<dd class="swift">FAELDKK1</dd>
 	</dl>
-	<p>We are thrilled to have you on board - now go ahead and check out our <a href="/events">upcoming events</a>.</p>
+	<p>We are thrilled to have you on board - now go ahead and check out our <a href="/events">upcoming events</a>!</p>
 
 <? else: ?>
 
