@@ -4807,7 +4807,7 @@ u.paymentCards = new function() {
 		{
 			"type": 'visa',
 			"patterns": [4],
-			"format": /(\d{1,4})/g,
+			"format": /([\d]{1,4})([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?/,
 			"card_length": [13, 16],
 			"cvc_length": [3],
 			"luhn": true
@@ -8080,7 +8080,21 @@ Util.Objects["stripe"] = new function() {
 			}
 			u.f.init(this.card_form);
 			this.card_form.fields["card_number"].updated = function(iN) {
-				this.value = u.paymentCards.formatCardNumber(this.val().replace(/ /g, ""));
+				var value = this.val();
+				this.value = u.paymentCards.formatCardNumber(value.replace(/ /g, ""));
+				var card = u.paymentCards.getCardTypeFromNumber(value);
+				if(card && card.type != this.current_card) {
+					if(this.current_card) {
+						u.rc(this, this.current_card);
+					}
+					this.current_card = card.type;
+					u.ac(this, this.current_card);
+				}
+				else if(!card) {
+					if(this.current_card) {
+						u.rc(this, this.current_card);
+					}
+				}
 			}
 			this.card_form.fields["card_exp_year"].changed = function(iN) {
 				var year = parseInt(this.val());

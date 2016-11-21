@@ -117,7 +117,22 @@ Util.Objects["stripe"] = new function() {
 
 			// format card as you type
 			this.card_form.fields["card_number"].updated = function(iN) {
-				this.value = u.paymentCards.formatCardNumber(this.val().replace(/ /g, ""));
+				var value = this.val();
+				this.value = u.paymentCards.formatCardNumber(value.replace(/ /g, ""));
+
+				var card = u.paymentCards.getCardTypeFromNumber(value);
+				if(card && card.type != this.current_card) {
+					if(this.current_card) {
+						u.rc(this, this.current_card);
+					}
+					this.current_card = card.type;
+					u.ac(this, this.current_card);
+				}
+				else if(!card) {
+					if(this.current_card) {
+						u.rc(this, this.current_card);
+					}
+				}
 			}
 
 			// remove first two digits in 2000-fullyears

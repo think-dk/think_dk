@@ -855,6 +855,15 @@ body {}
 #content .scene.shopPayment.stripe form ul.actions {padding: 10px 2px;}
 #content .scene.shopPayment.stripe form ul.actions li {padding: 0; display: block;}
 #content .scene.shopPayment.stripe form ul.actions li input {width: 100%;}
+#content .scene.shopPayment.stripe form div.field.card input.visa {
+	background: url(/img/gx_visa_small.png) no-repeat right 7px;
+}
+#content .scene.shopPayment.stripe form div.field.card input.amex {
+	background: url(/img/gx_amex_small.png) no-repeat right 7px;
+}
+#content .scene.shopPayment.stripe form div.field.card input.mastercard {
+	background: url(/img/gx_mastercard_small.png) no-repeat right 7px;
+}
 #content .scene.shopPayment.stripe form div.field div.help {display: none;}
 #content .scene.shopPayment.stripe form div.field.card div.indicator {display: none;}
 #content .scene.shopPayment.stripe form div.field.card.correct div.indicator {display: inline-block;}

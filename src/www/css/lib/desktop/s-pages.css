@@ -253,17 +253,30 @@
 #content .scene.shopPayment ul.payment_methods li.payment_method {padding-bottom: 10px;}
 #content .scene.shopPayment ul.payment_methods li.payment_method ul.actions {padding-bottom: 0;}
 
-#content .scene.shopPayment ul.payment_methods li.payment_method.stripe {background: url(/img/gx_creditcards.png) no-repeat 260px 0px;}
+#content .scene.shopPayment ul.payment_methods li.payment_method.stripe {
+	background: url(/img/gx_creditcards.png) no-repeat 260px 0px;
+}
 
 
 #content .scene.shopPayment.stripe h1,
 #content .scene.shopPayment.stripe p {text-align: center; margin: 0 auto;}
 #content .scene.shopPayment.stripe h1 {font-size: 30px;}
-#content .scene.shopPayment.stripe p.note {padding-top: 10px;}
+#content .scene.shopPayment.stripe p.note {padding-top: 10px; padding-bottom: 40px;
+	background: url(/img/gx_creditcards.png) no-repeat center bottom;
+}
 #content .scene.shopPayment.stripe form {width: 200px; margin: 15px auto 20px;}
 #content .scene.shopPayment.stripe form div.field {padding-left: 0; padding-right: 0; padding-bottom: 10px;}
 #content .scene.shopPayment.stripe form div.field label {display: block; font-size: 11px; line-height: 11px; padding: 0 0 1px 4px;}
 #content .scene.shopPayment.stripe form div.field.card input {width: 182px;}
+#content .scene.shopPayment.stripe form div.field.card input.visa {
+	background: url(/img/gx_visa_small.png) no-repeat right 7px;
+}
+#content .scene.shopPayment.stripe form div.field.card input.amex {
+	background: url(/img/gx_amex_small.png) no-repeat right 7px;
+}
+#content .scene.shopPayment.stripe form div.field.card input.mastercard {
+	background: url(/img/gx_mastercard_small.png) no-repeat right 7px;
+}
 #content .scene.shopPayment.stripe form div.field.exp_month,
 #content .scene.shopPayment.stripe form div.field.exp_year,
 #content .scene.shopPayment.stripe form div.field.cvc {display: inline-block; vertical-align: top;}

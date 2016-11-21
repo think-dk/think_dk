@@ -59,9 +59,9 @@ else {
 		<?= $model->input("email", array("type" => "hidden", "value" => $user["email"])); ?>
 	
 		<fieldset>
-			<?= $model->input("card_number"); ?>
-			<?= $model->input("card_exp_month"); ?><span class="slash">/</span><?= $model->input("card_exp_year"); ?>
-			<?= $model->input("card_cvc"); ?>
+			<?= $model->input("card_number", array("type" => "tel")); ?>
+			<?= $model->input("card_exp_month", array("type" => "tel")); ?><span class="slash">/</span><?= $model->input("card_exp_year", array("type" => "tel")); ?>
+			<?= $model->input("card_cvc", array("type" => "tel")); ?>
 			
 		</fieldset>
 
