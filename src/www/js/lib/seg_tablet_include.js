@@ -22,6 +22,7 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/g
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/u-sharing.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/u-checkmark.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/u-expandarrow.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-pagination.js"></script>');
 
 
 document.write('<script type="text/javascript" src="/js/lib/u-basics.js"></script>');

@@ -872,7 +872,7 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene.cart ul.items li p {padding-bottom: 10px;}
 #content .scene.cart ul.items li p.subscription_method+p.membership {margin-top: -10px;}
 #content .scene.cart ul.items li span.total_price {float: right;}
-#content .scene.cart ul.items li.total {border-top: 1px solid #dedede; }
+#content .scene.cart ul.items li.total {border-top: 1px solid #dedede;}
 #content .scene.cart ul.items li.total h3 {font-size: 20px;}
 #content .scene.cart ul.items li ul.actions {padding: 0; top: 20px; position: absolute; right: 15px;}
 #content .scene.cart ul.items li ul.actions li.delete input {width: 30px; overflow: hidden; text-indent: -9999px;

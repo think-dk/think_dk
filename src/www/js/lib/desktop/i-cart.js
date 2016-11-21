@@ -134,10 +134,6 @@ Util.Objects["checkout"] = new function() {
 
 		scene.resized = function() {
 //			u.bug("scene.resized:" + u.nodeId(this));
-
-
-			// refresh dom
-			//this.offsetHeight;
 		}
 
 		scene.scrolled = function() {
@@ -186,10 +182,6 @@ Util.Objects["shopProfile"] = new function() {
 
 		scene.resized = function() {
 //			u.bug("scene.resized:" + u.nodeId(this));
-
-
-			// refresh dom
-			//this.offsetHeight;
 		}
 
 		scene.scrolled = function() {
@@ -238,10 +230,6 @@ Util.Objects["shopAddress"] = new function() {
 
 		scene.resized = function() {
 //			u.bug("scene.resized:" + u.nodeId(this));
-
-
-			// refresh dom
-			//this.offsetHeight;
 		}
 
 		scene.scrolled = function() {

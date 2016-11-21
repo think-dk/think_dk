@@ -178,7 +178,7 @@
 #content .scene.cart ul.items li p.subscription_method+p.membership {margin-top: -10px;}
 #content .scene.cart ul.items li span.total_price {float: right;}
 
-#content .scene.cart ul.items li.total {border-top: 1px solid #dedede; /*border-bottom: 1px solid #dedede;*/}
+#content .scene.cart ul.items li.total {border-top: 1px solid #dedede;}
 #content .scene.cart ul.items li.total h3 {font-size: 20px;}
 
 
