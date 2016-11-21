@@ -23,7 +23,7 @@ if($item) {
 
 
 	// set related pattern
-	$related_pattern = array("itemtype" => $item["itemtype"], "tags" => $item["tags"], "exclude" => $item["id"]);
+	$related_pattern = array("itemtype" => $item["itemtype"], "status" => 1, "where" => "event.starting_at > NOW()", "tags" => $item["tags"], "exclude" => $item["id"]);
 	// add base pattern properties
 	$related_pattern["limit"] = 5;
 	$related_pattern["extend"] = array("tags" => true, "readstate" => true, "user" => true, "mediae" => true);
