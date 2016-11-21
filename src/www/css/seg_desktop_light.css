@@ -166,7 +166,7 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 #content .scene div.related {padding-top: 10px; position: relative; z-index: 1;}
 #content .scene div.comments {display: none;}
 #content .scene ul.offer,
-#content .scene .articlebody ul.offer {font-size: 0; padding: 0; margin: 0; list-style: none;}
+#content .scene .articlebody ul.offer {font-size: 0; padding: 0; margin: 0; list-style: none; width: auto;}
 #content .scene ul.offer li.name,
 #content .scene ul.offer li.currency,
 #content .scene ul.offer li.url {display: none;}
@@ -227,7 +227,7 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 #content form {}
 #content fieldset {border: none; display: block;}
 #content .field {padding: 0 68px 15px; position: relative; font-size: 0;}
-#content label {display: none;}
+#content label {font-size: 14px; display: block;}
 #content .field input,
 #content .field select,
 #content .field textarea {color: #333333; background: #ffffff; border: 1px solid #dcdcdc; margin: 2px; outline: none; position: relative; z-index: 1;}
@@ -432,13 +432,21 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 #content .scene ul.info {display: none;}
 #content div.login form {display: none;}
 #content div.front div.intro {display: none;}
+#content div.front div.all_events {padding-bottom: 50px;}
+#content div.front div.all_events h2 a {font-size: 13px; display: inline-block; vertical-align: baseline;
+	font-family: "OpenSans";
+}
 #content div.post div.article ul.info {display: block;}
 #content div.contact div.teams {display: none;}
+#content .scene ul.events li.event dl.occurs_at {padding-bottom: 0;}
+#content .scene ul.events li.event dd {font-size: 10px; padding: 0;}
+#content .scene ul.events li.event dt {display: none;}
+#content .scene div.memberships ul.memberships {list-style: none; margin: 0;}
 #content .scene div.memberships ul.memberships > li {padding: 10px; margin: 0 0 10px 0; border: 1px solid #26962d; position: relative;}
 #content .scene div.memberships ul.memberships > li h3 {color: #26962d; padding-bottom: 3px;
 	font-family: "PT Serif", Times, serif;
 }
-#content .scene div.memberships ul.memberships > li ul.actions {padding: 0;}
+#content .scene div.memberships ul.memberships > li ul.actions {padding: 0; width: auto;}
 #content .scene div.memberships ul.memberships > li ul.actions li {display: block; padding: 0; float: none; margin-top: 10px;}
 #content .scene div.todos {display: none;}
 #content .scene div.qnas {display: none;}

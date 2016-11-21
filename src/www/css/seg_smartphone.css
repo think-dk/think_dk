@@ -731,6 +731,7 @@ body {}
 #content .scene.event div.event ul.location {display: block;}
 #content .scene.event div.event ul.location li.name {padding-bottom: 10px; font-size: 15px;}
 #content .scene.event div.event ul.location ul {padding-left: 0; padding-right: 0;}
+#content .scene div.all_events.past_events {padding-top: 50px;}
 #content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-bottom: 0; font-size: 0; position: relative; width: auto;}
 #content .scene div.memberships ul.memberships > li {display: block; padding: 10px 10px 70px; margin: 0 0 10px; border-radius: 5px; border: 1px solid #26962d; position: relative;}
 #content .scene div.memberships ul.memberships > li h3 {color: #26962d; padding-bottom: 3px;

@@ -28,21 +28,21 @@ Util.Objects["events"] = new function() {
 			page.acceptCookies();
 
 
-			// get event list
-			this.all_events = u.qs("div.all_events", this);
-			if(this.all_events) {
-
-				this.ul_events = u.qs("ul.events", this.all_events);
-				this.li_events = u.qsa("li.event", this.all_events);
-				if(this.li_events.length) {
-
-					this.ul_views = u.ae(this.all_events, "ul", {"class":"views"});
-
-					
-					
-				}
-
-			}
+			// // get event list
+			// this.all_events = u.qs("div.all_events", this);
+			// if(this.all_events) {
+			//
+			// 	this.ul_events = u.qs("ul.events", this.all_events);
+			// 	this.li_events = u.qsa("li.event", this.all_events);
+			// 	if(this.li_events.length) {
+			//
+			// 		this.ul_views = u.ae(this.all_events, "ul", {"class":"views"});
+			//
+			//
+			//
+			// 	}
+			//
+			// }
 
 
 			page.resized();

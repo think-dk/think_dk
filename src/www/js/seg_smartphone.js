@@ -7091,7 +7091,6 @@ Util.Objects["front"] = new function() {
 Util.Objects["scene"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
-			this.offsetHeight;
 		}
 		scene.scrolled = function() {
 		}
@@ -7124,6 +7123,23 @@ Util.Objects["login"] = new function() {
 	}
 }
 
+
+/*i-events.js*/
+Util.Objects["events"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			u.showScene(this);
+			page.acceptCookies();
+			page.resized();
+		}
+		scene.ready();
+	}
+}
 
 /*i-cart.js*/
 Util.Objects["cart"] = new function() {

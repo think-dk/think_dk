@@ -8,6 +8,10 @@
 
 /* FRONT */
 #content div.front div.intro {display: none;}
+#content div.front div.all_events {padding-bottom: 50px;}
+#content div.front div.all_events h2 a {font-size: 13px; display: inline-block; vertical-align: baseline;
+	font-family: "OpenSans";
+}
 
 
 /* POST ARTICLE */
@@ -18,12 +22,19 @@
 #content div.contact div.teams {display: none;}
 
 
+/* EVENT */
+#content .scene ul.events li.event dl.occurs_at {padding-bottom: 0;}
+#content .scene ul.events li.event dd {font-size: 10px; padding: 0;}
+#content .scene ul.events li.event dt {display: none;}
+
+
 /* MEMBERSHIPS */
+#content .scene div.memberships ul.memberships {list-style: none; margin: 0;}
 #content .scene div.memberships ul.memberships > li {padding: 10px; margin: 0 0 10px 0; border: 1px solid #26962d; position: relative;}
 #content .scene div.memberships ul.memberships > li h3 {color: #26962d; padding-bottom: 3px;
 	font-family: "PT Serif", Times, serif;
 }
-#content .scene div.memberships ul.memberships > li ul.actions {padding: 0;}
+#content .scene div.memberships ul.memberships > li ul.actions {padding: 0; width: auto;}
 #content .scene div.memberships ul.memberships > li ul.actions li {display: block; padding: 0; float: none; margin-top: 10px;}
 
 

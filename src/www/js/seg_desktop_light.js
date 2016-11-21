@@ -3881,7 +3881,6 @@ Util.Objects["memberships"] = new function() {
 			if(this._memberships && place_holder) {
 				place_holder.parentNode.replaceChild(this._memberships, place_holder);
 			}
-			u.showScene(this);
 			page.resized();
 		}
 		scene.ready();

@@ -7223,6 +7223,62 @@ u.addNextArrow = function(node) {
 }
 
 
+/*i-pagination.js*/
+Util.Objects["pagination"] = new function() {
+	this.init = function(pagination) {
+		if(pagination) {
+			u.ae(document.body, pagination);
+			u.a.removeTransform(pagination);
+			var next = u.qs(".next", pagination);
+			if(next) {
+				u.addNextArrow(next);
+				next.a = u.qs("a", next);
+				u.ce(next, {"type":"link"});
+				u.e.hover(next);
+				next.over = function() {
+					u.ass(this, {
+						"width":this.a.offsetWidth+"px"
+					});
+					u.ass(this.a, {
+						"opacity":1
+					});
+				}
+				next.out = function() {
+					u.ass(this.a, {
+						"opacity":0
+					});
+					u.ass(this, {
+						"width":0
+					});
+				}
+			}
+			var prev = u.qs(".previous", pagination);
+			if(prev) {
+				u.addPreviousArrow(prev);
+				prev.a = u.qs("a", prev);
+				u.ce(prev, {"type":"link"});
+				u.e.hover(prev);
+				prev.over = function() {
+					u.ass(this, {
+						"width":this.a.offsetWidth+"px"
+					});
+					u.ass(this.a, {
+						"opacity":1
+					});
+				}
+				prev.out = function() {
+					u.ass(this.a, {
+						"opacity":0
+					});
+					u.ass(this, {
+						"width":0
+					});
+				}
+			}
+		}
+	}
+}
+
 /*u-basics.js*/
 u.showScene = function(scene) {
 	var i, node;
@@ -7689,14 +7745,7 @@ Util.Objects["events"] = new function() {
 			page.cN.scene = this;
 			u.showScene(this);
 			page.acceptCookies();
-			this.all_events = u.qs("div.all_events", this);
-			if(this.all_events) {
-				this.ul_events = u.qs("ul.events", this.all_events);
-				this.li_events = u.qsa("li.event", this.all_events);
-				if(this.li_events.length) {
-					this.ul_views = u.ae(this.all_events, "ul", {"class":"views"});
-				}
-			}
+			// 
 			page.resized();
 		}
 		scene.ready();

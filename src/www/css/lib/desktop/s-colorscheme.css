@@ -35,6 +35,11 @@ ul.actions a.button.primary,
 #footer {border-color: #ccdbcd;}
 #footer a {color: #34cc3d;}
 
+body > div.pagination li.next > svg.arrow line,
+body > div.pagination li.previous > svg.arrow line {stroke: #26962d;}
+body > div.pagination li.previous,
+body > div.pagination li.next {border-color: #26962d;}
+
 .terms_notification {background-color: #26962d;}
 
 

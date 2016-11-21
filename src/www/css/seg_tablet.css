@@ -269,6 +269,18 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 #content .scene ul.offer li {font-size: 11px; width: auto; display: inline-block; vertical-align: top; padding: 0 5px 0 0;}
 #content .scene ul.offer li.default {text-decoration: line-through;}
 #content .scene ul.offer li.description {padding-top: 4px; display: block;}
+body > div.pagination li.next > svg.arrow {position: absolute; top: 14px; right: 2px;}
+body > div.pagination li.next > svg.arrow line {stroke: #26962d; stroke-width: 3px;}
+body > div.pagination li.previous > svg.arrow {position: absolute; top: 14px; left: 8px;}
+body > div.pagination li.previous > svg.arrow line {stroke: #26962d; stroke-width: 3px;}
+body > div.pagination li.previous,
+body > div.pagination li.next {z-index: 100; position: fixed; top: 50%; margin-top: -20px; height: 40px; width: 0; overflow: hidden; border: 1px solid #26962d; cursor: pointer; background: #ffffff;}
+body > div.pagination li.previous {left: 0; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-left: none; padding-left: 30px;}
+body > div.pagination li.next {right: 0; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-right: none; padding-right: 30px;}
+body > div.pagination li.previous a,
+body > div.pagination li.next a {font-size: 16px; line-height: 16px; display: inline-block; vertical-align: top; padding: 11px 12px 13px; white-space: nowrap; opacity: 0;}
+body > div.pagination li.previous a {padding-left: 0;}
+body > div.pagination li.next a {padding-right: 0;}
 #content .scene code {padding: 10px 20px; margin: 0 50px 15px; background-color: #ededed; color: #333333; font-size: 12px; display: block; overflow: auto; white-space: pre; border-radius: 5px;
 	font-family: "Monaco", "Courier New", "Courier";
 	-webkit-tab-size: 4;
@@ -807,6 +819,7 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene ul.events li.event dl.occurs_at {padding-bottom: 0;}
 #content .scene ul.events li.event dd {width: auto; font-size: 10px; padding-bottom: 0;}
 #content .scene ul.events li.event dt {display: none;}
+#content .scene div.all_events.past_events {padding-top: 50px;}
 #content .scene.event div.event div.description {padding-bottom: 10px;}
 #content .scene.event div.event dl.occurs_at {padding-bottom: 0;}
 #content .scene.event div.event dl.occurs_at dt {display: block; width: auto; font-size: 10px; text-align: left;}
@@ -1013,6 +1026,10 @@ ul.actions a.button.primary,
 #content .scene dd {color: #777777;}
 #footer {border-color: #ccdbcd;}
 #footer a {color: #34cc3d;}
+body > div.pagination li.next > svg.arrow line,
+body > div.pagination li.previous > svg.arrow line {stroke: #26962d;}
+body > div.pagination li.previous,
+body > div.pagination li.next {border-color: #26962d;}
 .terms_notification {background-color: #26962d;}
 .front #header .logo,
 .about #navigation ul li.about,

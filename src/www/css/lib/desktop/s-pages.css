@@ -108,6 +108,8 @@
 #content .scene ul.events li.event dd {width: auto; font-size: 10px; padding-bottom: 0;}
 #content .scene ul.events li.event dt {display: none;}
 
+#content .scene div.all_events.past_events {padding-top: 50px;}
+
 
 #content .scene.event div.event div.description {padding-bottom: 10px;}
 #content .scene.event div.event dl.occurs_at {padding-bottom: 0;}
