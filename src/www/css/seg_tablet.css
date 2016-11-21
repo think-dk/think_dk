@@ -269,6 +269,8 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 #content .scene ul.offer li {font-size: 11px; width: auto; display: inline-block; vertical-align: top; padding: 0 5px 0 0;}
 #content .scene ul.offer li.default {text-decoration: line-through;}
 #content .scene ul.offer li.description {padding-top: 4px; display: block;}
+#content .scene ul.offer li.description ul {list-style: disc;}
+#content .scene ul.offer li.description ul li {display: list-item; padding: 0 0 3px; font-size: 13px;}
 body > div.pagination li.next > svg.arrow {position: absolute; top: 14px; right: 2px;}
 body > div.pagination li.next > svg.arrow line {stroke: #26962d; stroke-width: 3px;}
 body > div.pagination li.previous > svg.arrow {position: absolute; top: 14px; left: 8px;}
