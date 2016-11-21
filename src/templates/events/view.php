@@ -6,10 +6,17 @@ $model = $IC->typeObject($itemtype);
 
 $countries = $this->countries();
 
+$next = false;
+$prev = false;
+
 $sindex = $action[0];
 $item = $IC->getItem(array("sindex" => $sindex, "extend" => array("tags" => true, "user" => true, "mediae" => true, "comments" => true, "readstate" => true)));
 if($item) {
 	$this->sharingMetaData($item);
+
+
+	$next = $IC->getNext($item["item_id"], array("itemtype" => $itemtype, "status" => 1, "where" => "event.starting_at > NOW()", "order" => "event.starting_at ASC", "extend" => true));
+	$prev = $IC->getPrev($item["item_id"], array("itemtype" => $itemtype, "status" => 1, "where" => "event.starting_at > NOW()", "order" => "event.starting_at ASC", "extend" => true));
 
 	// get host info
 	$host = $model->getHosts(array("id" => $item["host"]));
@@ -107,6 +114,20 @@ if($item) {
 
 
 	</div>
+
+
+	<? if($next || $prev): ?>
+	<div class="pagination i:pagination">
+		<ul>
+		<? if($prev): ?>
+			<li class="previous"><a href="/events/<?= $prev[0]["sindex"] ?>"><?= strip_tags($prev[0]["name"]) ?></a></li>
+		<? endif; ?>
+		<? if($next): ?>
+			<li class="next"><a href="/events/<?= $next[0]["sindex"] ?>"><?= strip_tags($next[0]["name"]) ?></a></li>
+		<? endif; ?>
+		</ul>
+	</div>
+	<? endif; ?>
 
 
 	<? if($related_items): ?>

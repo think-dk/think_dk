@@ -10,6 +10,7 @@ if($page_item) {
 }
 
 $items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "event.starting_at > NOW()", "order" => "event.starting_at ASC", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+$past_items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "event.starting_at < NOW()", "order" => "event.starting_at DESC", "limit" => 7, "extend" => array("tags" => true, "mediae" => true, "user" => true)));
 
 ?>
 
@@ -65,6 +66,43 @@ $items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "e
 
 				<dl class="occurs_at">
 					<dt class="starting_at">Starts</dt>
+					<dd class="starting_at"><?= date("l, F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
+				</dl>
+
+				<h3><a href="/events/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
+
+				<? if($item["description"]): ?>
+				<div class="description">
+					<p><?= nl2br($item["description"]) ?></p>
+				</div>
+				<? endif; ?>
+
+			</li>
+		<?	endforeach; ?>
+		</ul>
+
+	<? else: ?>
+
+		<p>No scheduled events.</p>
+
+	<? endif; ?>
+
+	</div>
+
+
+	<div class="all_events past_events">
+		<h2>A small selection of our past events</h2>
+		<p>If you're you missed one, <a href="mailto:start@think.dk">please let us know</a> - we're likely to repeat any event upon request.</p>
+
+	<? if($past_items): ?>
+
+		<ul class="items events">
+		<? foreach($past_items as $item): 
+			$media = $IC->sliceMedia($item); ?>
+			<li class="item event item_id:<?= $item["item_id"] ?>">
+
+				<dl class="occurs_at">
+					<dt class="starting_at">Started at</dt>
 					<dd class="starting_at"><?= date("l, F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
 				</dl>
 
