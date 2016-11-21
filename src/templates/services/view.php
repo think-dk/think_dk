@@ -4,9 +4,17 @@ global $action;
 global $itemtype;
 
 $sindex = $action[0];
+
+$next = false;
+$prev = false;
+
 $item = $IC->getItem(array("sindex" => $sindex, "extend" => array("tags" => true, "user" => true, "mediae" => true, "comments" => true, "readstate" => true)));
 if($item) {
 	$this->sharingMetaData($item);
+
+
+	$next = $IC->getNext($item["item_id"], array("itemtype" => $itemtype, "status" => 1, "order" => "position ASC", "extend" => true));
+	$prev = $IC->getPrev($item["item_id"], array("itemtype" => $itemtype, "status" => 1, "order" => "position ASC", "extend" => true));
 
 	$event_items = false;
 
@@ -77,6 +85,21 @@ if($item) {
 		<?= $HTML->frontendComments($item, "/janitor/service/addComment") ?>
 
 	</div>
+
+
+	<? if($next || $prev): ?>
+	<div class="pagination i:pagination">
+		<ul>
+		<? if($prev): ?>
+			<li class="previous"><a href="/services/<?= $prev[0]["sindex"] ?>"><?= strip_tags($prev[0]["name"]) ?></a></li>
+		<? endif; ?>
+		<? if($next): ?>
+			<li class="next"><a href="/services/<?= $next[0]["sindex"] ?>"><?= strip_tags($next[0]["name"]) ?></a></li>
+		<? endif; ?>
+		</ul>
+	</div>
+	<? endif; ?>
+
 
 	<div class="all_events">
 		<h2>Upcoming events <a href="/events">(see all)</a></h2>
