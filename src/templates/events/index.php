@@ -92,7 +92,7 @@ $past_items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" 
 
 	<div class="all_events past_events">
 		<h2>A small selection of our past events</h2>
-		<p>If you're you missed one, <a href="mailto:start@think.dk">please let us know</a> - we're likely to repeat any event upon request.</p>
+		<p>If you missed one, <a href="mailto:start@think.dk">please let us know</a> - we're likely to repeat any event upon request.</p>
 
 	<? if($past_items): ?>
 
