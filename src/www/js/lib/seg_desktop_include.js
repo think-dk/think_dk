@@ -35,6 +35,7 @@ document.write('<script type="text/javascript" src="/js/lib/desktop/i-wishes.js"
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-memberships.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-payment.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-stripe.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/desktop/i-black.js"></script>');
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-article.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-article_mini_list.js"></script>');

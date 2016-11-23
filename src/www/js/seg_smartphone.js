@@ -7480,6 +7480,22 @@ Util.Objects["stripe"] = new function() {
 	}
 }
 
+/*i-black.js*/
+Util.Objects["black"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			u.showScene(this);
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
 /*i-article.js*/
 Util.Objects["article"] = new function() {
 	this.init = function(article) {

@@ -30,6 +30,7 @@ document.write('<script type="text/javascript" src="/js/lib/smartphone/i-wishes.
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-memberships.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-payment.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-stripe.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/smartphone/i-black.js"></script>');
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-article.js"></script>');
 

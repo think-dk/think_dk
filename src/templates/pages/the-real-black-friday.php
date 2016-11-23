@@ -8,7 +8,7 @@ if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 ?>
-<div class="scene black i:scene">
+<div class="scene black i:black">
 
 <? if($page_item && $page_item["status"]): 
 	$media = $IC->sliceMedia($page_item); ?>
