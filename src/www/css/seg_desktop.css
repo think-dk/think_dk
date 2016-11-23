@@ -1021,6 +1021,15 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene div.qnas ul.qnas > li ul.info li.user:after {content: ",\00a0";}
 #content .scene div.qnas ul.qnas > li p.question {padding-bottom: 15px; font-size: 13px;}
 #content .scene div.qnas .field {padding-bottom: 10px;}
+body.black *,
+body.black #header .logo,
+body.black #content .scene a,
+body.black #content .scene p,
+body.black #content .scene div.comments.open h2,
+body.black #footer a {color: #000000;}
+body.black #content .scene a {text-decoration: underline;}
+body.black #navigation ul,
+body.black #header ul.servicenavigation {display: none;}
 @media print {
 	#header .logo {position: absolute; left: 80px;}
 	#header .servicenavigation {display: none;}
@@ -1084,4 +1093,6 @@ ul.actions a.button.primary:hover,
 #content .scene div.todos h2:hover svg.arrow line {stroke: #34cc3d;}
 #content .scene div.qnas h2:hover {color: #34cc3d;}
 #content .scene div.qnas h2:hover svg.arrow line {stroke: #34cc3d;}
+body.black #content .scene div.comments h2:hover {color: #000000;}
+body.black #content .scene div.comments h2:hover svg.arrow line {stroke: #000000;}
 

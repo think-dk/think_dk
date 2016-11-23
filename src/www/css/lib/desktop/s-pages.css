@@ -357,7 +357,17 @@
 
 
 
+body.black *,
+body.black #header .logo,
+body.black #content .scene a,
+body.black #content .scene p,
+body.black #content .scene div.comments.open h2,
+body.black #footer a {color: #000000;}
+body.black #content .scene a {text-decoration: underline;}
+body.black #navigation ul,
+body.black #header ul.servicenavigation {display: none;}
 
+/*body.black #footer {display: none;}*/
 
 
 /* ABOUT */

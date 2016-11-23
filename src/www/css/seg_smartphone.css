@@ -880,4 +880,15 @@ body {}
 #content .scene.shopReceipt dl dt {display: inline-block; vertical-align: bottom; width: 90px; text-align: right; padding: 0 0 4px;}
 #content .scene.shopReceipt dl dt:after {content: ":";}
 #content .scene.shopReceipt dl dd {display: inline-block; vertical-align: bottom; width: 190px; overflow: hidden; padding: 0 0 4px 4px;}
+body.black *,
+body.black #header .logo,
+body.black #content .scene a,
+body.black #content .scene p,
+body.black #content .scene div.comments.open h2, 
+body.black #footer a {color: #000000;}
+body.black #content .scene a {text-decoration: underline;}
+body.black #navigation ul,
+body.black #header ul.servicenavigation {display: none;}
+body.black #content .scene div.comments h2:active {color: #000000;}
+body.black #content .scene div.comments h2:active svg.arrow line {stroke: #000000;}
 

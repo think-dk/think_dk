@@ -17,3 +17,5 @@ ul.actions a.button.primary:hover,
 #content .scene div.qnas h2:hover {color: #34cc3d;}
 #content .scene div.qnas h2:hover svg.arrow line {stroke: #34cc3d;}
 
+body.black #content .scene div.comments h2:hover {color: #000000;}
+body.black #content .scene div.comments h2:hover svg.arrow line {stroke: #000000;}
