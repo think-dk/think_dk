@@ -1030,6 +1030,9 @@ body.black #footer a {color: #000000;}
 body.black #content .scene a {text-decoration: underline;}
 body.black #navigation ul,
 body.black #header ul.servicenavigation {display: none;}
+#content .scene.front div.news ul.articles li.article:first-child h3 {color: #000000;}
+#content .scene.front div.news ul.articles li.article:first-child p {color: #000000;}
+#content .scene.front div.news ul.articles li.article:first-child a {color: #000000; text-decoration: underline;}
 @media print {
 	#header .logo {position: absolute; left: 80px;}
 	#header .servicenavigation {display: none;}

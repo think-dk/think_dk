@@ -891,4 +891,7 @@ body.black #navigation ul,
 body.black #header ul.servicenavigation {display: none;}
 body.black #content .scene div.comments h2:active {color: #000000;}
 body.black #content .scene div.comments h2:active svg.arrow line {stroke: #000000;}
+#content .scene.front div.news ul.articles li.article:first-child h3 {color: #000000;}
+#content .scene.front div.news ul.articles li.article:first-child p {color: #000000;}
+#content .scene.front div.news ul.articles li.article:first-child a {color: #000000; text-decoration: underline;}
 
