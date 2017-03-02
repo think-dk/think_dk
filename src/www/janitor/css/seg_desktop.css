@@ -6,11 +6,27 @@
 /*s-fonts.css*/
 @font-face {
 	font-family: 'OpenSans';
-	src: url('/janitor/admin/fonts/opensans-regular-webfont.woff') format('woff'),
-		 url('/janitor/admin/fonts/opensans-regular-webfont.ttf') format('truetype'),
-		 url('/janitor/admin/fonts/opensans-regular-webfont.svg#OpenSansRegular') format('svg');
+	src: url('/janitor/admin/css/fonts/opensans-regular-webfont.woff') format('woff'),
+		 url('/janitor/admin/css/fonts/opensans-regular-webfont.ttf') format('truetype'),
+		 url('/janitor/admin/css/fonts/opensans-regular-webfont.svg#OpenSansRegular') format('svg');
 	font-weight: normal;
 	font-style: normal;
+}
+@font-face {
+	font-family: 'OpenSans';
+	src: url('/janitor/admin/css/fonts/opensans-bold-webfont.woff') format('woff'),
+		 url('/janitor/admin/css/fonts/opensans-bold-webfont.ttf') format('truetype'),
+		 url('/janitor/admin/css/fonts/opensans-bold-webfont.svg#open_sansbold') format('svg');
+	font-weight: bold;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'OpenSans';
+	src: url('/janitor/admin/css/fonts/opensans-italic-webfont.woff') format('woff'),
+		 url('/janitor/admin/css/fonts/opensans-italic-webfont.ttf') format('truetype'),
+		 url('/janitor/admin/css/fonts/opensans-italic-webfont.svg#open_sansitalic') format('svg');
+	font-weight: normal;
+	font-style: italic;
 }
 
 
@@ -60,7 +76,7 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 #page > .servicenavigation li:last-child:after {content: "";}
 #page > .servicenavigation li a {display: inline-block; vertical-align: top;}
 #page > .servicenavigation li a:hover {text-decoration: underline;}
-#navigation {opacity: 0;}
+#navigation {opacity: 0; width: 230px;}
 #navigation ul li {color: #8c9399; display: block; text-transform: uppercase;}
 #navigation ul li:hover {color: #ffffff;}
 #navigation ul li a {display: block; padding: 14px 20px 15px;}
@@ -96,6 +112,9 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 #content .scene h1 + ul.actions + h3,
 #content .scene h1 + h2 + ul.actions + p,
 #content .scene h1 + h2 + ul.actions + h3 {padding-top: 20px;}
+#content .scene p {width: 500px;}
+#content .scene ul.items p {width: auto;}
+#content .scene p.note {font-style: italic;}
 #content ul.list {padding: 21px 30px;}
 #content ul.list li {display: block;}
 #content dl.list {padding: 21px 30px; width: 600px;}
@@ -122,6 +141,7 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 #content .warning, #content .warning * {color: orange !important;}
 #content .system_error, #content .system_error * {color: red !important;}
 #content .scene.login form {padding-top: 30px;}
+#content .scene.login form li.forgot {padding-top: 6px; padding-left: 15px;}
 
 /*s-footer.css*/
 #footer {text-align: right; font-size: 0; padding: 10px 20px; position: fixed; z-index: 100; bottom: 0; right: 0; background-color: rgba(255,255,255,0.5);}
@@ -142,6 +162,7 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 #login_overlay .field.error input {margin: 0; border: 3px solid #f8c9bb;}
 #login_overlay ul.actions {padding: 0;}
 #login_overlay ul.actions li {width: auto; height: auto; display: inline-block; padding: 0 0 10px; vertical-align: top;}
+#login_overlay ul.actions li.forgot {padding: 5px 0 0 10px;}
 #login_overlay ul.actions input.button {width: auto; height: 26px; padding: 3px 12px;}
 @media all and (-webkit-min-device-pixel-ratio:0) {#login_overlay ul.actions input.button {padding-bottom: 5px;}}
 #login_overlay ul.actions input.button {background-color: #8c9399; color: #ffffff; border: none; cursor: pointer; border-radius: 3px;}
@@ -306,6 +327,8 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 #content ul.actions li.status.disabled form.disable {display: none;}
 #content ul.actions form input.button.confirm,
 #content ul.actions form input.button.confirm:hover {color: #ffffff; background-color: #df0000;}
+#content ul.actions form input.button.loading,
+#content ul.actions form input.button.loading:hover {padding-left: 35px; background-color: #8c9399; background-image: url(/janitor/admin/img/gx_loader.gif); background-position: 10px center; background-repeat: no-repeat;}
 #content form input.button.disabled,
 #content form input.button.disabled:hover {cursor: default !important; color: #aaaaaa !important; background-color: #eeeeee !important;}
 #content .field div.help {position: absolute; left: 455px; top: 0; width: 200px; line-height: 1.2em;}
@@ -549,7 +572,9 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 
 
 /*s-user.css*/
-#content .defaultList.userList > .actions li.online {float: right; padding: 0 0 10px 10px;}
+#content .defaultList.userList > ul.actions li.online {float: right; padding: 0 0 10px 10px;}
+#content .defaultList.userList > ul.actions li.unconfirmed_accounts {float: right; padding: 0 0 10px 10px;}
+#content .defaultEdit.userEdit > ul.actions li.cancel {float: right; padding: 0 0 10px 10px;}
 #content .scene.userEdit > div.usernames {border-bottom: 1px solid #bbbbbb;}
 #content .scene.userEdit > div.usernames form.email {font-size: 0;}
 #content .scene.userEdit > div.usernames form.mobile {padding-bottom: 15px; font-size: 0;}
@@ -633,8 +658,13 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .defaultView.userMembership div.option p {padding-bottom: 10px;}
 #content .defaultList.memberList dd.payment_status.missing {color: #df0000;}
 #content .defaultList.userContentList div.comments ul.items > li {}
+#content .defaultList.usersNotVerified > ul.actions li.remind {float: right; padding: 0 0 10px 10px;}
 #content .scene.profileEdit div.password label {display: block; padding-left: 3px;}
 #content .scene.profileEdit div.password .indicator {top: 20px;}
+#content .scene.profileEdit div.cancellation div.field.password {display: none;}
+#content .scene.profileEdit div.cancellation ul.actions input.button.confirm,
+#content .scene.profileEdit div.cancellation ul.actions input.button.confirm:hover {color: #ffffff; background-color: #df0000;}
+
 
 /*s-logs.css*/
 #content .defaultList.logList h1 {padding-bottom: 74px; border-bottom: 1px solid #bbbbbb;}
@@ -906,6 +936,8 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.wishList ul.items > li dl dt.reserved {display: none;}
 #content .scene.wishList ul.items > li dl dd.reserved {font-size: 14px;}
 #content .scene.eventList ul.items > li.past {background: #dddddd;}
+#content .scene.cacheList div.details {display: none;}
+#content .scene.cacheList li.show div.details {display: block;}
 
 
 /*s-content.css*/

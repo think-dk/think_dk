@@ -664,11 +664,11 @@ body {}
 .front #header .logo,
 .about #navigation ul li.about,
 .contact #navigation ul li.contact,
-.news #navigation ul li.news,
-.posts #navigation ul li.news,
-.join #navigation ul li.join,
-.services #navigation ul li.services,
-.articles #navigation ul li.articles {color: #26962d;}
+.bulletin #navigation ul li.bulletin,
+.posts #navigation ul li.latest,
+.membership #navigation ul li.membership,
+.events #navigation ul li.events,
+.services #navigation ul li.services {color: #26962d;}
 
 
 /*s-pages.css*/

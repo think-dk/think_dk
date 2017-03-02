@@ -5040,8 +5040,8 @@ Util.svg = function(svg_object) {
 	if(svg_object.title) {
 		svg.setAttributeNS(null, "title", svg_object.title);
 	}
-	if(svg_object.class) {
-		svg.setAttributeNS(null, "class", svg_object.class);
+	if(svg_object["class"]) {
+		svg.setAttributeNS(null, "class", svg_object["class"]);
 	}
 	if(svg_object.width) {
 		svg.setAttributeNS(null, "width", svg_object.width);
@@ -5818,7 +5818,7 @@ Util.Form = u.f = new function() {
 			if(typeof(iN.field.validationPassed) == "function") {
 				iN.field.validationPassed();
 			}
-			if(typeof(iN._form.validationFailed) == "function") {
+			if(typeof(iN._form.validationPassed) == "function") {
 				iN._form.validationPassed();
 			}
 			return true;

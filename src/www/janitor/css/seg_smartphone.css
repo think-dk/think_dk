@@ -6,11 +6,27 @@
 /*s-fonts.css*/
 @font-face {
 	font-family: 'OpenSans';
-	src: url('/janitor/admin/fonts/opensans-regular-webfont.woff') format('woff'),
-		 url('/janitor/admin/fonts/opensans-regular-webfont.ttf') format('truetype'),
-		 url('/janitor/admin/fonts/opensans-regular-webfont.svg#OpenSansRegular') format('svg');
+	src: url('/janitor/admin/css/fonts/opensans-regular-webfont.woff') format('woff'),
+		 url('/janitor/admin/css/fonts/opensans-regular-webfont.ttf') format('truetype'),
+		 url('/janitor/admin/css/fonts/opensans-regular-webfont.svg#OpenSansRegular') format('svg');
 	font-weight: normal;
 	font-style: normal;
+}
+@font-face {
+	font-family: 'OpenSans';
+	src: url('/janitor/admin/css/fonts/opensans-bold-webfont.woff') format('woff'),
+		 url('/janitor/admin/css/fonts/opensans-bold-webfont.ttf') format('truetype'),
+		 url('/janitor/admin/css/fonts/opensans-bold-webfont.svg#open_sansbold') format('svg');
+	font-weight: bold;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'OpenSans';
+	src: url('/janitor/admin/css/fonts/opensans-italic-webfont.woff') format('woff'),
+		 url('/janitor/admin/css/fonts/opensans-italic-webfont.ttf') format('truetype'),
+		 url('/janitor/admin/css/fonts/opensans-italic-webfont.svg#open_sansitalic') format('svg');
+	font-weight: normal;
+	font-style: italic;
 }
 
 
@@ -148,6 +164,7 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 #login_overlay .field.error input {margin: 0; border: 3px solid #f8c9bb;}
 #login_overlay ul.actions {padding: 0;}
 #login_overlay ul.actions li {width: auto; height: auto; display: inline-block; padding: 0 0 10px; vertical-align: top;}
+#login_overlay ul.actions li.forgot {padding: 5px 0 0 10px;}
 #login_overlay ul.actions input.button {width: auto; height: 26px; padding: 3px 12px;}
 @media all and (-webkit-min-device-pixel-ratio:0) {#login_overlay ul.actions input.button {padding-bottom: 5px;}}
 #login_overlay ul.actions input.button {background-color: #8c9399; color: #ffffff; border: none; cursor: pointer; border-radius: 3px;}
@@ -518,7 +535,9 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 
 
 /*s-user.css*/
-#content .defaultList.userList > .actions li.online {float: right; padding: 0 0 10px 10px;}
+#content .defaultList.userList > ul.actions li.online {float: right; padding: 0 0 10px 10px;}
+#content .defaultList.userList > ul.actions li.unconfirmed_accounts {float: right; padding: 0 0 10px 10px;}
+#content .defaultEdit.userEdit > ul.actions li.cancel {float: right; padding: 0 0 10px 10px;}
 #content .scene.userEdit > div.usernames {border-bottom: 1px solid #bbbbbb;}
 #content .scene.userEdit > div.usernames form.email {font-size: 0;}
 #content .scene.userEdit > div.usernames form.mobile {padding-bottom: 15px; font-size: 0;}
@@ -602,8 +621,13 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .defaultView.userMembership div.option p {padding-bottom: 10px;}
 #content .defaultList.memberList dd.payment_status.missing {color: #df0000;}
 #content .defaultList.userContentList div.comments ul.items > li {}
+#content .defaultList.usersNotVerified > ul.actions li.remind {float: right; padding: 0 0 10px 10px;}
 #content .scene.profileEdit div.password label {display: block; padding-left: 3px;}
 #content .scene.profileEdit div.password .indicator {top: 20px;}
+#content .scene.profileEdit div.cancellation div.field.password {display: none;}
+#content .scene.profileEdit div.cancellation ul.actions input.button.confirm,
+#content .scene.profileEdit div.cancellation ul.actions input.button.confirm:hover {color: #ffffff; background-color: #df0000;}
+
 
 /*s-user.css*/
 #content .scene.userEdit > div.usernames fieldset {width: calc(75% - 10px);}
@@ -871,6 +895,8 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.wishList ul.items > li dl dt.reserved {display: none;}
 #content .scene.wishList ul.items > li dl dd.reserved {font-size: 14px;}
 #content .scene.eventList ul.items > li.past {background: #dddddd;}
+#content .scene.cacheList div.details {display: none;}
+#content .scene.cacheList li.show div.details {display: block;}
 
 
 /*s-content.css*/

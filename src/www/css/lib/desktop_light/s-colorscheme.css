@@ -44,7 +44,9 @@ body {}
 .front #header .logo,
 .about #navigation ul li.about a,
 .contact #navigation ul li.contact a,
-.news #navigation ul li.news a,
-.posts #navigation ul li.news a,
-.articles #navigation ul li.articles a {color: #26962d;}
+.bulletin #navigation ul li.bulletin a,
+.posts #navigation ul li.latest a,
+.membership #navigation ul li.membership a,
+.events #navigation ul li.events a,
+.services #navigation ul li.services a {color: #26962d;}
 
