@@ -1,16 +1,17 @@
 <?php
 global $action;
 global $IC;
+global $itemtype;
 
-$itemtype = "post";
-$selected_tag = "Latest";
+//$selected_tag = "post-page:Front";
 
-$page_item = $IC->getItem(array("tags" => "page:latest", "extend" => array("user" => true, "mediae" => true, "tags" => true)));
+$page_item = $IC->getItem(array("tags" => "post-page:Front", "extend" => array("user" => true, "mediae" => true, "tags" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
-$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => "post:".$selected_tag, "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+//$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => "post:".$selected_tag, "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" => array("tags" => true, "user" => true, "readstate" => true, "mediae" => true)));
 
 $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 ?>
@@ -38,7 +39,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 		<? endif; ?>
 
 
-		<?= $HTML->articleInfo($page_item, "/latest", [
+		<?= $HTML->articleInfo($page_item, "/bulletin", [
 			"media" => $media,
 			"sharing" => true
 		]) ?>
@@ -51,15 +52,16 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 		<? endif; ?>
 	</div>
 <? else:?>
-	<h1>News</h1>
+	<h1>Bulletin</h1>
+	<h2>Posts, News, Updates and Notes.</h2>
 <? endif; ?>
 
 <? if($categories): ?>
 	<div class="categories">
 		<ul class="tags">
-			<li><a href="/posts">All posts</a></li>
+			<li class="selected"><a href="/posts">All posts</a></li>
 			<? foreach($categories as $tag): ?>
-			<li<?= ($selected_tag == $tag["value"] ? ' class="selected"' : '') ?>><a href="/posts/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
+			<li><a href="/bulletin/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
 			<? endforeach; ?>
 		</ul>
 	</div>
@@ -76,12 +78,12 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 			<?= $HTML->articleTags($item, [
 				"context" => [$itemtype],
-				"url" => "/posts/tag",
-				"default" => ["/posts", "Posts"]
+				"url" => "/bulletin/tag",
+				"default" => ["/bulletin", "Posts"]
 			]) ?>
 
 
-			<h3 itemprop="headline"><a href="/posts/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
+			<h3 itemprop="headline"><a href="/bulletin/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
 
 
 			<?= $HTML->articleInfo($item, "/posts/".$item["sindex"],[

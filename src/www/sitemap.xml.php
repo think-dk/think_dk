@@ -25,10 +25,10 @@ $item = $IC->getItem(array("tags" => "page:front"));
 	</url>
 <?
 // LATEST PAGE
-$item = $IC->getItem(array("tags" => "page:latest"));
+$item = $IC->getItem(array("tags" => "post-page:Latest"));
 ?>
 	<url>
-		<loc><?= SITE_URL ?>/latest</loc>
+		<loc><?= SITE_URL ?>/bulletin</loc>
 		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
 		<changefreq>daily</changefreq>
 		<priority>1</priority>
@@ -39,7 +39,7 @@ $items = $IC->getItems(array("itemtype" => "post", "status" => 1));
 foreach($items as $item):
 ?>
 	<url>
-		<loc><?= SITE_URL ?>/posts/<?= $item["sindex"] ?></loc>
+		<loc><?= SITE_URL ?>/bulletin/<?= $item["sindex"] ?></loc>
 		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.9</priority>

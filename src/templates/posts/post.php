@@ -46,15 +46,15 @@ $related_items = $IC->getRelatedItems($related_pattern);
 
 		<?= $HTML->articleTags($item, [
 			"context" => [$itemtype],
-			"url" => "/posts/tag",
-			"default" => ["/posts", "Posts"]
+			"url" => "/bulletin/tag",
+			"default" => ["/bulletin", "All posts"]
 		]) ?>
 
 
 		<h1 itemprop="headline"><?= $item["name"] ?></h1>
 
 
-		<?= $HTML->articleInfo($item, "/posts/".$item["sindex"],[
+		<?= $HTML->articleInfo($item, "/bulletin/".$item["sindex"],[
 			"media" => $media,
 			"sharing" => true
 		]) ?>
@@ -92,7 +92,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 
 <? if($related_items): ?>
 	<div class="related">
-		<h2>Related posts <a href="/posts">(see all)</a></h2>
+		<h2>Related posts <a href="/bulletin">(see all)</a></h2>
 
 		<ul class="items articles i:articleMiniList">
 <?		foreach($related_items as $item): 
@@ -104,15 +104,15 @@ $related_items = $IC->getRelatedItems($related_pattern);
 
 				<?= $HTML->articleTags($item, [
 					"context" => [$itemtype],
-					"url" => "/posts/tag",
-					"default" => ["/posts", "Posts"]
+					"url" => "/bulletin/tag",
+					"default" => ["/bulletin", "Posts"]
 				]) ?>
 
 
-				<h3 itemprop="headline"><a href="/posts/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
+				<h3 itemprop="headline"><a href="/bulletin/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
 
 
-				<?= $HTML->articleInfo($item, "/posts/".$item["sindex"],[
+				<?= $HTML->articleInfo($item, "/bulletin/".$item["sindex"],[
 					"media" => $media
 				]) ?>
 
