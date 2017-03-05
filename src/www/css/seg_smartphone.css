@@ -703,8 +703,11 @@ body {}
 #content .scene.front div.news {display: none;}
 #content .scene.front div.news ul.articles li.article h3 {padding-bottom: 15px; color: #26962d;}
 #content .scene.post div.article ul.info {display: block;}
-#content .scene.contact ul.people {padding-bottom: 30px;}
-#content .scene.contact ul.people li.person {padding-bottom: 10px;}
+#content .scene.about ul.people {padding-bottom: 30px;}
+#content .scene.about ul.people li.person {padding-bottom: 10px;}
+#content .scene.about ul.items.people li.item.person ul.info {display: block; padding: 0 20px 20px;}
+#content .scene.about ul.items.people li.item.person ul.info li {display: block; color: #777777;}
+#content .scene.about ul.items.people li.item.person ul.info li.affiliation {display: none;}
 #content .scene.service div.all_events {padding-bottom: 50px;}
 #content .scene ul.services li.service {padding-bottom: 0;}
 #content .scene ul.services li.service h3 {

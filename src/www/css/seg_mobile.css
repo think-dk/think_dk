@@ -359,7 +359,7 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content div.login form {display: none;}
 #content div.front div.intro {display: none;}
 #content div.post div.article ul.info {display: block;}
-#content div.contact div.teams {display: none;}
+#content div.about div.teams {display: none;}
 #content .scene fieldset.subscriptions .field .item label {font-size: 16px;}
 #content .scene fieldset.subscriptions .field .item dl.offer {padding-left: 25px;}
 #content .scene ul.subscriptions > li dl {padding-bottom: 4px;}

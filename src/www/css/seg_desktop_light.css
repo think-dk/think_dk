@@ -434,7 +434,7 @@ div.field.focus div.hint {display: block;}
 #content div.front div.news ul.articles li.article h3 {padding-bottom: 20px; color: #26962d;}
 #content div.post div.article ul.info {display: block;}
 #content div.scene div.pagination {display: none;}
-#content div.contact div.teams {display: none;}
+#content div.about div.teams {display: none;}
 #content div.scene ul.events li.event {padding-bottom: 0;}
 #content div.scene ul.events li.event dl.occurs_at {padding-bottom: 0;}
 #content div.scene ul.events li.event dd {font-size: 10px; padding: 0;}
