@@ -9,7 +9,7 @@ if($page_item) {
 }
 
 ?>
-<div class="scene contact i:scene">
+<div class="scene contact i:contact">
 
 <? if($page_item && $page_item["status"]): 
 	$media = $IC->sliceMedia($page_item); ?>
@@ -62,8 +62,8 @@ if($page_item) {
 					<li class="country" itemprop="addressCountry">Denmark</li>
 				</ul>
 				<ul class="geo" itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
-					<li class="latitude" itemprop="latitude" content="55.681159"></li>
-					<li class="longitude" itemprop="longitude" content="12.58437"></li>
+					<li class="latitude" itemprop="latitude" content="55.711510"></li>
+					<li class="longitude" itemprop="longitude" content="12.564495"></li>
 				</ul>
 			</dd>
 			<dt class="cvr">CVR</dt>

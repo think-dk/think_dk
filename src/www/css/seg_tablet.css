@@ -312,7 +312,7 @@ body > div.pagination li.next a {padding-right: 0;}
 #content .scene div.vcard dl.info {width: 230px; padding: 0 0 30px; display: inline-block; vertical-align: top;}
 #content .scene div.vcard dl.info dt,
 #content .scene div.vcard dl.info dd {display: block; width: auto; text-align: left;}
-#content .scene div.vcard dl.info dd {padding-bottom: 10px;}
+#content .scene div.vcard dl.info dd {padding-bottom: 10px; font-size: 12px; color: #cccccc;}
 #content .scene div.vcard dl.info dd ul {padding: 0;}
 #content .scene div.vcard dl.info dd li {font-size: 12px; color: #cccccc;}
 #content .scene .usedby {min-width: 600px; margin-top: 20px; margin-bottom: -50px; padding-top: 5px; border-top: 1px solid #cccccc;}
@@ -779,13 +779,14 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 }
 #content .scene.front div.news ul.articles li.article h3 {padding-bottom: 20px; color: #26962d;}
 #content .scene.post div.article ul.info {display: block;}
+#content .scene.contact div.map {height: 300px; margin: 0 50px 30px; width: 540px; border-radius: 5px;}
 #content .scene.about div.teams {}
 #content .scene.about div.teams h2 {padding-top: 20px;}
 #content .scene.about ul.people {padding: 0 70px 30px; padding-right: calc(100% - 570px); border-top: 1px solid #dedede;}
 #content .scene.about ul.items.people li.item.person {width: 230px; padding: 20px 20px 20px 0; display: inline-block; vertical-align: top; border: none;}
 #content .scene.about ul.items.people li.item.person h3 {width: auto; padding-left: 0; padding-right: 0;}
 #content .scene.about ul.items.people li.item.person ul.info {display: block; padding: 0 0 20px;}
-#content .scene.about ul.items.people li.item.person ul.info li {display: block; color: #777777;}
+#content .scene.about ul.items.people li.item.person ul.info li {display: block; color: #777777; padding-bottom: 2px;}
 #content .scene.about ul.items.people li.item.person ul.info li.affiliation {display: none;}
 #content .scene.about ul.items.people li.item.person .description h2, 
 #content .scene.about ul.items.people li.item.person .description h3, 
@@ -1013,12 +1014,14 @@ body.black #content .scene a,
 body.black #content .scene p,
 body.black #content .scene div.comments.open h2,
 body.black #footer a {color: #000000;}
-body.black #content .scene a {text-decoration: underline;}
+body.black #content .scene a:not(.button) {text-decoration: underline;}
+body.black #content .scene ul.actions a.button,
+body.black #content .scene ul.actions input.button {background: #000000 !important; color: #ffffff;}
 body.black #navigation ul,
 body.black #header ul.servicenavigation {display: none;}
-#content .scene.front div.news ul.articles li.article:first-child h3 {color: #000000;}
-#content .scene.front div.news ul.articles li.article:first-child p {color: #000000;}
-#content .scene.front div.news ul.articles li.article:first-child a {color: #000000; text-decoration: underline;}
+#content .scene ul.articles li[class='item article id:255'] h3 {color: #000000 !important;}
+#content .scene ul.articles li[class='item article id:255'] p {color: #000000;}
+#content .scene ul.articles li[class='item article id:255'] a {color: #000000; text-decoration: underline;}
 @media print {
 	#header .logo {position: absolute; left: 80px;}
 	#header .servicenavigation {display: none;}

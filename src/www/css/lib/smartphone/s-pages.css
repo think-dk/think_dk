@@ -51,11 +51,14 @@
 #content .scene.post div.article ul.info {display: block;}
 
 
+/* CONTACT */
+#content .scene.contact div.map {height: 200px; margin: 0 0px 30px;}
+
 /* ABOUT */
 #content .scene.about ul.people {padding-bottom: 30px;}
 #content .scene.about ul.people li.person {padding-bottom: 10px;}
 #content .scene.about ul.items.people li.item.person ul.info {display: block; padding: 0 20px 20px;}
-#content .scene.about ul.items.people li.item.person ul.info li {display: block; color: #777777;}
+#content .scene.about ul.items.people li.item.person ul.info li {display: block; color: #777777; padding-bottom: 2px;}
 #content .scene.about ul.items.people li.item.person ul.info li.affiliation {display: none;}
 
 
@@ -298,16 +301,19 @@ body.black #content .scene a,
 body.black #content .scene p,
 body.black #content .scene div.comments.open h2, 
 body.black #footer a {color: #000000;}
-body.black #content .scene a {text-decoration: underline;}
+body.black #content .scene a:not(.button) {text-decoration: underline;}
+body.black #content .scene ul.actions a.button,
+body.black #content .scene ul.actions input.button {background: #000000 !important; color: #ffffff;}
 body.black #navigation ul,
 body.black #header ul.servicenavigation {display: none;}
 
 body.black #content .scene div.comments h2:active {color: #000000;}
 body.black #content .scene div.comments h2:active svg.arrow line {stroke: #000000;}
 
-#content .scene.front div.news ul.articles li.article:first-child h3 {color: #000000;}
-#content .scene.front div.news ul.articles li.article:first-child p {color: #000000;}
-#content .scene.front div.news ul.articles li.article:first-child a {color: #000000; text-decoration: underline;}
+#content .scene ul.articles li[class='item article id:255'] h3 {color: #000000 !important;}
+#content .scene ul.articles li[class='item article id:255'] p {color: #000000;}
+#content .scene ul.articles li[class='item article id:255'] a {color: #000000; text-decoration: underline;}
+
 
 /* FEEDBACK ELEMENTS */
 /*
