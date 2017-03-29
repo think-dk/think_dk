@@ -2,11 +2,13 @@ SUBJECT:Your account on {SITE_NAME} needs you!
 
 Dear {EMAIL},
 
-you signed up to our newsletter some time ago and that made us very happy, because it means that you want to join us in changing the world for a better! However, you did not click the activation link yet. So just in case you were wondering why you did not hear from us yet - that's why :) If it was actually you who signed up, please be so kind to activate your account by clicking the link below:
+you signed up to our newsletter some time ago and that made us very happy. Everyone joining us in changing the world for a better increases our good impact, so thank you!
+
+However, you did not click the activation link yet. So just in case you were wondering why you did not hear from us yet - that's why :) If it was actually you who signed up, please be so kind to activate your account by clicking the link below:
 
 {SITE_URL}/signup/confirm/email/{EMAIL}/{VERIFICATION}
 
-After you did that, it won't take long until you get the latest news from {SITE_NAME}. It would be awesome to have you on board!
+After you have done that, it won't take long until you get the latest news from {SITE_NAME}. It's going to be awesome to have you on board!
 
 And here, just to remind you, are your account details:
 
@@ -17,5 +19,5 @@ Password: (Encrypted)
 If you want to update your profile, please visit {SITE_URL}/janitor/admin/profile after activating your account.
 
 
-Greetings,
+Insistently hopeful,
 {SITE_NAME}
