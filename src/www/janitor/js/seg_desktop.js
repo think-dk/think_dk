@@ -4597,9 +4597,13 @@ u.defaultFilters = function(div) {
 			this.current_filter = query + "," + this.selected_tags.join(",");
 			for(i = 0; node = this.div.nodes[i]; i++) {
 				if(node._c.match(query) && this.checkTags(node)) {
+					node._hidden = false;
+					u.rc(node, "hidden");
 					u.as(node, "display", "block", false);
 				}
 				else {
+					node._hidden = true;
+					u.ac(node, "hidden");
 					u.as(node, "display", "none", false);
 				}
 			}
@@ -7872,7 +7876,7 @@ Util.Objects["oneButtonForm"] = new function() {
 				u.rc(this.confirm_submit_button, "confirm");
 			}
 			node.form.submitted = function() {
-				if(!u.hc(this.confirm_submit_button, "confirm")) {
+				if(!u.hc(this.confirm_submit_button, "confirm") && this.confirm_submit_button.confirm_value) {
 					u.ac(this.confirm_submit_button, "confirm");
 					this.confirm_submit_button.value = this.confirm_submit_button.confirm_value;
 					this.t_confirm = u.t.setTimer(this, this.restore, 3000);
