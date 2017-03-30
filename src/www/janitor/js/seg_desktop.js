@@ -7758,11 +7758,19 @@ Util.Objects["defaultNew"] = new function() {
 		form.submitted = function(iN) {
 			this.response = function(response) {
 				if(response.cms_status == "success" && response.cms_object) {
-					if(this.action.match(/\/save$/)) {
+					if(response.return_to) {
+						if(response.cms_object.item_id) {
+							location.href = response.return_to + response.cms_object.item_id;
+						}
+						else {
+							location.href = response.return_to;
+						}
+					}
+					else if(this.action.match(/\/save$/)) {
 						location.href = this.action.replace(/\/save/, "/edit/")+response.cms_object.item_id;
 					}
 					else if(location.href.match(/\/new$/)) {
-						location.href = location.href.replace(/\/new/, "/edit/")+response.cms_object.item_id;
+						location.href = location.href.replace(/\/new$/, "/edit/")+response.cms_object.item_id;
 					}
 					else if(this.actions["cancel"]) {
 						this.actions["cancel"].clicked();

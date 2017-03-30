@@ -626,6 +626,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .defaultList.memberList dd.payment_status.missing {color: #df0000;}
 #content .defaultList.userContentList div.comments ul.items > li {}
 #content .defaultList.usersNotVerified > ul.actions li.remind {float: right; padding: 0 0 10px 10px;}
+#content .defaultList.newsletterList > ul.actions li.download {float: right; padding: 0 0 10px 10px;}
 #content .scene.profileEdit div.password label {display: block; padding-left: 3px;}
 #content .scene.profileEdit div.password .indicator {top: 20px;}
 #content .scene.profileEdit div.cancellation div.field.password {display: none;}
