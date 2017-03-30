@@ -1,6 +1,6 @@
-SUBJECT:Your account on {SITE_NAME} needs you!
+SUBJECT:Did you sign up for {SITE_NAME}? Please verifiy you email now.
 
-Dear {EMAIL},
+Dear {NICKNAME},
 
 you signed up to our newsletter some time ago and that made us very happy. Everyone joining us in changing the world for a better increases our good impact, so thank you!
 
@@ -20,4 +20,6 @@ If you want to update your profile, please visit {SITE_URL}/janitor/admin/profil
 
 
 Insistently hopeful,
+
+{FROM}
 {SITE_NAME}

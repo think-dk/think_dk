@@ -45,6 +45,7 @@
 					<?= $HTML->link("Users", "/janitor/admin/user/list", array("wrapper" => "li.user")) ?>
 					<?= $HTML->link("Groups", "/janitor/admin/user/group/list", array("wrapper" => "li.usergroup")) ?>
 					<?= $HTML->link("Members", "/janitor/admin/user/members/list", array("wrapper" => "li.members")) ?>
+					<?= $HTML->link("Newsletters", "/janitor/admin/user/newsletters/list", array("wrapper" => "li.newsletters")) ?>
 					<?= $HTML->link("Profile", "/janitor/admin/profile", array("wrapper" => "li.profile")) ?>
 				</ul>
 			</li>
