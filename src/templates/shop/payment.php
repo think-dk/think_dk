@@ -15,9 +15,22 @@ $membership = $UC->getMembership();
 if($order && $order["payment_status"] != 2) {
 
 	$total_order_price = $model->getTotalOrderPrice($order["id"]);
-	if($total_order_price) {
-		$amount = formatPrice($total_order_price);
+
+	$payments = $model->getPayments(["order_id" => $order["id"]]);
+	$total_payments = 0;
+	if($payments) {
+		foreach($payments as $payment) {
+			$total_payments += $payment["payment_amount"];
+		}
 	}
+
+	$total_order_price["price"] = $total_order_price["price"]-$total_payments; //formatPrice($total_order_price);
+	//
+	//
+	//
+	// if($total_order_price) {
+		$amount = formatPrice($total_order_price);
+	// }
 
 	// TODO: should calculate remaining payment (in case partially paid)
 
