@@ -10,7 +10,7 @@ $next = false;
 $prev = false;
 
 $sindex = $action[0];
-$item = $IC->getItem(array("sindex" => $sindex, "extend" => array("tags" => true, "user" => true, "mediae" => true, "comments" => true, "readstate" => true)));
+$item = $IC->getItem(array("sindex" => $sindex, "extend" => array("tags" => true, "user" => true, "mediae" => true, "comments" => true, "readstate" => true, "prices" => true)));
 if($item) {
 	$this->sharingMetaData($item);
 
@@ -69,9 +69,27 @@ if($item) {
 		</dl>
 
 		<h2>Description</h2>
-		<div class="description" itemprop="description">
+		<div class="articlebody" itemprop="description">
 			<?= $item["html"] ?>
 		</div>
+
+		<?
+		/*
+		<? if($item["prices"]): ?>
+			<?= $HTML->frontendOffer($item, SITE_URL."/events/".$item["sindex"]) ?>
+
+			<?= $model->formStart("/shop/addToCart", array("class" => "signup labelstyle:inject")) ?>
+				<?= $model->input("quantity", array("value" => 1, "type" => "hidden")); ?>
+				<?= $model->input("item_id", array("value" => $item["item_id"], "type" => "hidden")); ?>
+
+				<ul class="actions">
+					<?= $model->submit("Get your ticket", array("class" => "primary", "wrapper" => "li.ticket")) ?>
+				</ul>
+			<?= $model->formEnd() ?>
+
+		<? endif; ?>
+		*/
+		?>
 
 		<h2>Location</h2>
 		<ul class="location" itemprop="location" itemscope itemtype="https://schema.org/Place">
@@ -103,6 +121,7 @@ if($item) {
 			<? endif; ?>
 			</li>
 		</ul>
+
 
 		<? if($item["mediae"]): ?>
 			<? foreach($item["mediae"] as $media): ?>
