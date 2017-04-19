@@ -7609,8 +7609,10 @@ Util.Objects["defaultNew"] = new function() {
 						if(response.cms_object.item_id) {
 							location.href = response.return_to + response.cms_object.item_id;
 						}
+						else if(response.cms_object.id) {
+							location.href = response.return_to + response.cms_object.id;
+						}
 						else {
-							location.href = response.return_to;
 						}
 					}
 					else if(this.action.match(/\/save$/)) {
@@ -9065,7 +9067,7 @@ Util.Objects["newOrderFromCart"] = new function() {
 		if(bn_convert) {
 			bn_convert.confirmed = function(response) {
 				u.bug("confirmed checkout")
-				if(response.cms_status == "success") {
+				if(response.cms_status == "success" && response.cms_object) {
 					location.href = location.href.replace(/\/cart\/edit\/.+/, "/order/edit/"+response.cms_object["id"]);
 				}
 			}

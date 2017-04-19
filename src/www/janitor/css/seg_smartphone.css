@@ -591,7 +591,8 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .defaultEdit.accessEdit > div.access ul.points li.action {border-top: 1px solid #dedede; padding: 10px 0 0;}
 #content .defaultEdit.usergroupEdit > ul.actions li.access {float: right; padding-right: 0;}
 #content .defaultList.userContentList div.all_items {padding-bottom: 20px;}
-#content .defaultList.userContentList ul.items > li h3 br {display: none;}
+#content .defaultList.userOrderList div.all_items {padding-bottom: 20px;}
+#content .defaultList.userOrderList div.all_items ul.items dd.payment_status.missing {color: #df0000;}
 #content .defaultNew.userSubscriptions .item {padding-top: 10px;}
 #content .defaultNew.userSubscriptions .item p {padding-bottom: 3px;}
 #content .defaultList.userSubscriptions dd.price.default {text-decoration: line-through;}
@@ -600,7 +601,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .defaultList.userSubscriptions dd.price+dt.price,
 #content .defaultList.userSubscriptions dd.price+dt.price+dd.price {padding-top: 0;}
 #content .defaultList.userSubscriptions dt.membership {display: none;}
-#content .defaultList.userSubscriptions dd.membership {color: #df0000; clear: left; padding-top: 5px;}
+#content .defaultList.userSubscriptions dd.membership {color: green; clear: left; padding-top: 5px;}
 #content .defaultList.userSubscriptions dd.payment_status.missing {color: #df0000;}
 #content .defaultView.userMembership > div > h2 {font-size: 0.8em; text-transform: uppercase; padding-top: 7px; padding-bottom: 10px; margin: 0 0 20px;}
 #content .defaultView.userMembership div.item {position: relative; border-bottom: 1px solid #bbbbbb;}
@@ -622,9 +623,12 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .defaultView.userMembership div.item ul.actions {padding-bottom: 15px;}
 #content .defaultView.userMembership div.orders {border-bottom: 1px solid #bbbbbb;}
 #content .defaultView.userMembership div.orders ul.items {padding-bottom: 25px;}
+#content .defaultView.userMembership div.orders ul.items dd.payment_status.missing {color: #df0000;}
+#content .defaultView.userMembership div.change {border-bottom: 1px solid #bbbbbb;}
 #content .defaultView.userMembership div.change div.option {padding-bottom: 30px;}
 #content .defaultView.userMembership div.change div.option h3 {padding-bottom: 10px; font-size: 18px;}
 #content .defaultView.userMembership div.change div.option p {padding-bottom: 10px;}
+#content .defaultView.userMembership div.cancel {}
 #content .defaultList.memberList dd.payment_status.missing {color: #df0000;}
 #content .defaultEdit.userMember ul.actions li.user {float: right; padding: 0 0 10px 10px;}
 #content .defaultEdit.userMember div.orders {border-bottom: 1px solid #bbbbbb;}
