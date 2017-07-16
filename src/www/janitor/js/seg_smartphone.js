@@ -4429,30 +4429,34 @@ Util.Objects["collapseHeader"] = new function() {
 		u.e.click(div._toggle_header);
 		div._toggle_header.clicked = function() {
 			if(this.div._toggle_is_closed) {
+				u.ac(this.div, "open");
 				u.as(this.div, "height", "auto");
 				this.div._toggle_is_closed = false;
-				u.saveNodeCookie(this.div, "open", 1, {"ignore_classvars":true});
+				u.saveNodeCookie(this.div, "open", 1, {"ignore_classvars":true, "ignore_classnames":"open"});
 				u.addCollapseArrow(this);
 				if(typeof(this.div.headerExpanded) == "function") {
 					this.div.headerExpanded();
 				}
 			}
 			else {
+				u.rc(this.div, "open");
 				u.as(this.div, "height", this.offsetHeight+"px");
 				this.div._toggle_is_closed = true;
-				u.saveNodeCookie(this.div, "open", 0, {"ignore_classvars":true});
+				u.saveNodeCookie(this.div, "open", 0, {"ignore_classvars":true, "ignore_classnames":"open"});
 				u.addExpandArrow(this);
 				if(typeof(this.div.headerCollapsed) == "function") {
 					this.div.headerCollapsed();
 				}
 			}
 		}
-		var state = u.getNodeCookie(div, "open", {"ignore_classvars":true});
+		var state = u.getNodeCookie(div, "open", {"ignore_classvars":true, "ignore_classnames":"open"});
+		console.log("state:" + state + ", " + typeof(state));
 		if(!state) {
 			div._toggle_header.clicked();
 		}
 		else {
 			u.addCollapseArrow(div._toggle_header);
+			u.ac(div, "open");
 			if(typeof(div.headerExpanded) == "function") {
 				div.headerExpanded();
 			}
@@ -7596,6 +7600,7 @@ Util.Objects["defaultEdit"] = new function() {
 /*i-default_new.js*/
 Util.Objects["defaultNew"] = new function() {
 	this.init = function(form) {
+		u.bug("defaultNew:" + u.nodeId(form));
 		u.f.init(form);
 		if(form.actions["cancel"]) {
 			form.actions["cancel"].clicked = function(event) {
@@ -7605,6 +7610,7 @@ Util.Objects["defaultNew"] = new function() {
 		form.submitted = function(iN) {
 			this.response = function(response) {
 				if(response.cms_status == "success" && response.cms_object) {
+					console.log(response)
 					if(response.return_to) {
 						if(response.cms_object.item_id) {
 							location.href = response.return_to + response.cms_object.item_id;
@@ -7613,6 +7619,7 @@ Util.Objects["defaultNew"] = new function() {
 							location.href = response.return_to + response.cms_object.id;
 						}
 						else {
+							location.href = response.return_to;
 						}
 					}
 					else if(this.action.match(/\/save$/)) {
@@ -8999,9 +9006,9 @@ Util.Objects["unconfirmedAccounts"] = new function() {
 					var reminded_at = u.qs("dd.reminded_at", this.node);
 					var total_reminders = u.qs("dd.total_reminders", this.node);
 					reminded_at.innerHTML = response.cms_object[0]["reminded_at"] + " (just now)";
-					u.ac(reminded_at, "warning");
+					u.ac(reminded_at, "system_warning");
 					total_reminders.innerHTML = response.cms_object[0]["total_reminders"];
-					u.ac(total_reminders, "warning");
+					u.ac(total_reminders, "system_warning");
 				}
 				else {
 					page.notify({"cms_status":"error", "cms_message":{"error":["Could not send message"]}, "isJSON":true});
@@ -9196,30 +9203,7 @@ Util.Objects["orderItemsList"] = new function() {
 		}
 	}
 }
-Util.Objects["defaultPayment"] = new function() {
-	this.init = function(form) {
-		u.bug("defaultPayment:" + u.nodeId(form));
-		u.f.init(form);
-		if(form.actions["cancel"]) {
-			form.actions["cancel"].clicked = function(event) {
-				location.href = this.url;
-			}
-		}
-		form.submitted = function(iN) {
-			this.response = function(response) {
-				if(response.cms_status == "success" && response.cms_object) {
-					if(this.actions["cancel"]) {
-						this.actions["cancel"].clicked();
-					}
-				}
-				else {
-					page.notify(response);
-				}
-			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this, {"send_as":"formdata"})});
-		}
-	}
-}
+
 
 /*i-system.js*/
 Util.Objects["cacheList"] = new function() {
@@ -9464,62 +9448,67 @@ Util.Objects["cancellationProfile"] = new function() {
 		u.bug("init cancellationProfile")
 		div.password = u.qs("div.field.password", div);
 		div.form = u.qs("form.cancelaccount", div);
-		div.form.div = div;
-		u.f.init(div.form);
-		div.form.actions["cancelaccount"].org_value = div.form.actions["cancelaccount"].value;
-		div.form.actions["cancelaccount"].confirm_value = "Cancelling you account cannot be undone. OK?";
-		div.form.actions["cancelaccount"].submit_value = "Confirm";
-		div.form.fields["password"].updated = function() {
-			u.bug("typing password")
-			u.t.resetTimer(this._form.t_confirm);
-		}
-		div.form.restore = function(event) {
-			u.t.resetTimer(this.t_confirm);
-			this.actions["cancelaccount"].value = this.actions["cancelaccount"].org_value;
-			u.rc(this.actions["cancelaccount"], "confirm");
-			u.rc(this.actions["cancelaccount"], "signup");
-			u.ass(this.div.password, {
-				"display": "none"
-			})
-		}
-		div.form.actions["cancelaccount"].clicked = function() {
-			if(!u.hc(this, "confirm")) {
-				u.ac(this, "confirm");
-				this.value = this.confirm_value;
-				this._form.t_confirm = u.t.setTimer(this._form, this._form.restore, 3000);
-			}
-			else if(!u.hc(this, "signup")) {
-				u.ac(this, "signup");
+		if(div.form) {
+			div.form.div = div;
+			u.f.init(div.form);
+			div.form.actions["cancelaccount"].org_value = div.form.actions["cancelaccount"].value;
+			div.form.actions["cancelaccount"].confirm_value = "Cancelling you account cannot be undone. OK?";
+			div.form.actions["cancelaccount"].submit_value = "Confirm";
+			div.form.fields["password"].updated = function() {
+				u.bug("typing password")
 				u.t.resetTimer(this._form.t_confirm);
-				u.ass(this._form.div.password, {
-					"display": "block"
-				});
-				this.value = this.submit_value;
-				this._form.t_confirm = u.t.setTimer(this._form, this._form.restore, 5000);
 			}
-			else {
-				this._form.submit();
+			div.form.restore = function(event) {
+				u.t.resetTimer(this.t_confirm);
+				this.actions["cancelaccount"].value = this.actions["cancelaccount"].org_value;
+				u.rc(this.actions["cancelaccount"], "confirm");
+				u.rc(this.actions["cancelaccount"], "signup");
+				u.ass(this.div.password, {
+					"display": "none"
+				})
 			}
-		}
-		div.form.submitted = function() {
-			this.response = function(response) {
-				if(response.cms_status == "success" && !response.cms_object.error) {
-					page.notify({"isJSON":true, "cms_status":"success", "cms_message":"Your account has been cancelled"});
-					u.t.setTimer(this, function() {location.href = "/";}, 2000);
+			div.form.actions["cancelaccount"].clicked = function() {
+				if(!u.hc(this, "confirm")) {
+					u.ac(this, "confirm");
+					this.value = this.confirm_value;
+					this._form.t_confirm = u.t.setTimer(this._form, this._form.restore, 3000);
+				}
+				else if(!u.hc(this, "signup")) {
+					u.ac(this, "signup");
+					u.t.resetTimer(this._form.t_confirm);
+					u.ass(this._form.div.password, {
+						"display": "block"
+					});
+					this.value = this.submit_value;
+					this._form.t_confirm = u.t.setTimer(this._form, this._form.restore, 5000);
 				}
 				else {
-					if(response.cms_object.error == "missing_values") {
-						page.notify({"isJSON":true, "cms_status":"error", "cms_message":"Some information is missing."});
-					}
-					else if(response.cms_object.error == "wrong_password") {
-						page.notify({"isJSON":true, "cms_status":"error", "cms_message":"The password is not correct."});
-					}
-					else {
-						page.notify({"isJSON":true, "cms_status":"error", "cms_message":"An unknown error occured."});
-					}
+					this._form.submit();
 				}
 			}
-			u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
+			div.form.submitted = function() {
+				this.response = function(response) {
+					if(response.cms_status == "success" && !response.cms_object.error) {
+						page.notify({"isJSON":true, "cms_status":"success", "cms_message":"Your account has been cancelled"});
+						u.t.setTimer(this, function() {location.href = "/";}, 2000);
+					}
+					else {
+						if(response.cms_object.error == "missing_values") {
+							page.notify({"isJSON":true, "cms_status":"error", "cms_message":"Some information is missing."});
+						}
+						else if(response.cms_object.error == "wrong_password") {
+							page.notify({"isJSON":true, "cms_status":"error", "cms_message":"The password is not correct."});
+						}
+						else if(response.cms_object.error == "unpaid_orders") {
+							page.notify({"isJSON":true, "cms_status":"error", "cms_message":"You have unpaid orders.."});
+						}
+						else {
+							page.notify({"isJSON":true, "cms_status":"error", "cms_message":"An unknown error occured."});
+						}
+					}
+				}
+				u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
+			}
 		}
 	}
 }

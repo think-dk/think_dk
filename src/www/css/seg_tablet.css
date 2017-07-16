@@ -21,6 +21,7 @@ input, select, textarea {font-size: 14px; color: #333333;}
 input, textarea {outline: none;}
 a, span {font-size: inherit; font-family: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
 em, strong {font-size: inherit; font-family: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
+sup {line-height: 1em; font-family: inherit; color: inherit;}
 h1 {padding: 0 70px 30px; font-size: 48px; line-height: 1.05em;
 	font-family: "PT Serif", Times, serif;
 }
@@ -157,7 +158,7 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 #content .scene div.image {position: relative; z-index: 1;}
 #content .scene div.image img {cursor: zoom-in; margin: 0 50px 30px; width: 540px; border-radius: 5px; overflow: hidden;}
 #content .scene div.image p {margin-top: -20px; padding: 0 70px 40px; font-size: 0;}
-#content .scene div.image p a {font-style: italic; font-size: 13px; display: block; color: #cccccc; display: none; cursor: default;}
+#content .scene div.image p a {font-style: italic; font-size: 13px; color: #cccccc; display: none; cursor: default; text-decoration: none;}
 #content .scene div.image.loaded p a {display: block;}
 #content .scene div.image.fullsize {}
 #content .scene div.image.fullsize img {cursor: zoom-out; width: 100%; margin: 0 0 30px; border-radius: 0;}
@@ -165,7 +166,7 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 #content .scene div.media {}
 #content .scene div.media img {cursor: zoom-in;margin: 0 50px 30px; width: 540px; border-radius: 5px; overflow: hidden;}
 #content .scene div.media p {margin-top: -20px; padding: 0 70px 30px; font-size: 0;}
-#content .scene div.media p a {font-style: italic; font-size: 13px; display: block; color: #cccccc; display: none;}
+#content .scene div.media p a {font-style: italic; font-size: 13px; color: #cccccc; display: none; cursor: default; text-decoration: none;}
 #content .scene div.media.loaded p a {display: block;}
 #content .scene div.media.fullsize {}
 #content .scene div.media.fullsize img {cursor: zoom-out; width: 100%; margin: 0 0 30px; border-radius: 0;}
@@ -184,6 +185,9 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 #content .scene div.article ul.tags {padding-bottom: 30px;}
 #content .scene div.article ul.tags li,
 #content .scene div.article ul.tags li a {color: #cccccc;}
+#content .scene div.article div.articlebody span.sup.reference {font-size: 10px; line-height: 1.1em; vertical-align: top; padding-left: 2px;}
+#content .scene div.article div.articlebody h3.reference {padding-top: 20px;}
+#content .scene div.article div.articlebody p.reference {font-style: italic;}
 #content .scene ul.articles {padding: 0;}
 #content .scene ul.articles li.article {padding: 20px 0 5px; border-top: 1px solid #dedede; position: relative;}
 #content .scene ul.articles li.article ul.tags {padding-bottom: 15px;}
@@ -457,10 +461,12 @@ ul.actions li {width: auto; height: auto; display: inline-block; padding: 0 10px
 }
 ul.actions input.button {width: auto; height: 28px; padding: 3px 9px; display: inline-block; vertical-align: top;}
 @media all and (-webkit-min-device-pixel-ratio:0) {
-	ul.actions input.button {padding: 3px 12px 5px;}
+	ul.actions input.button {padding: 3px 12px 5px;
+		-webkit-appearance: none;
+	}
 }
 ul.actions a.button,
-#content ul.actions a.button {display: block; text-decoration: none; height: 16px; padding: 6px 12px 8px; text-decoration: none;}
+#content ul.actions a.button {display: block; text-decoration: none; height: 16px; padding: 6px 12px 8px;}
 ul.actions input.button,
 ul.actions a.button,
 #content ul.actions a.button {font-size: 14px; background-color: #dedede; color: #333333; border: none; cursor: pointer; border-radius: 3px;}
@@ -607,20 +613,33 @@ body #selection_options ul.actions a.button {background-color: #8c9399; color: #
 #content .scene ul.todos > li ul.actions.closed .open {display: inline-block;}
 #content .scene ul.wishlists {padding-left: 70px; padding-right: 70px;}
 #content .scene ul.wishes {padding-left: 70px; padding-right: 70px;}
-#content .scene ul.wishes > li .image,
-#content .scene ul.wishes > li .text {display: inline-block; vertical-align: top;}
-#content .scene ul.wishes > li .image {width: 250px; height: 140px; background-position: center center; background-size: 100% auto; background-repeat: no-repeat; margin-bottom: 0px; cursor: default;}
-#content .scene ul.wishes > li h3 {padding: 0 25px 10px;}
-#content .scene ul.wishes > li div.description p {padding: 0 25px;}
-#content .scene ul.wishes dl.info {padding: 0 25px 20px;}
+#content .scene ul.wishes > li h3 {padding: 0 0 10px;}
+#content .scene ul.wishes > li div.description p {padding: 0px 0 10px;}
+#content .scene ul.wishes.images > li .image,
+#content .scene ul.wishes.images > li .text {display: inline-block; vertical-align: top;}
+#content .scene ul.wishes.images > li .image {width: 250px; height: 140px; background-position: center center; background-size: 100% auto; background-repeat: no-repeat; margin-bottom: 0px; cursor: default;}
+#content .scene ul.wishes.images > li h3 {padding: 0 25px 10px;}
+#content .scene ul.wishes.images > li div.description p {padding: 0 25px 10px;}
+#content .scene ul.wishes > li div.description p.available,
+#content .scene ul.wishes > li div.description p.reserved {padding-top: 5px;}
+#content .scene ul.wishes > li div.description p.available span
+#content .scene ul.wishes > li div.description p.reserved span {font-style: italic;}
+#content .scene ul.wishes > li div.description p.available span {color: #bbbbbb;}
+#content .scene ul.wishes > li > ul.actions,
+#content .scene ul.wishes > li > .text > ul.actions {position: absolute; top: 20px; right: 0px; padding: 0;}
+#content .scene ul.wishes > li > ul.actions li,
+#content .scene ul.wishes > li > .text > ul.actions li {padding-right: 0;}
+#content .scene ul.wishes > li > ul.actions form div.field,
+#content .scene ul.wishes > li > .text > ul.actions form div.field {display: inline-block; vertical-align: top; padding: 0 10px;}
+#content .scene ul.wishes > li > ul.actions form div.field input,
+#content .scene ul.wishes > li > .text > ul.actions form div.field input {width: 200px; display: none;}
+#content .scene ul.wishes > li > ul.actions form input[type=submit],
+#content .scene ul.wishes > li > .text > ul.actions form input[type=submit] {display: inline-block; vertical-align: top; margin-top: 3px;}
+#content .scene ul.wishes dl.info {padding: 0 25px 10px;}
 #content .scene ul.wishes dl.info dt.price {display: inline-block; vertical-align: top; width: auto;}
 #content .scene ul.wishes dl.info dd.price {display: inline-block; vertical-align: top; width: auto;}
 #content .scene ul.wishes dl.info dt.link {display: none;}
 #content .scene ul.wishes dl.info dd.link {font-size: 13px; display: block; width: auto;}
-#content .scene ul.wishes > li ul.actions {padding: 0 25px;}
-#content .scene ul.wishes > li ul.actions.reserved .reserve {display: none;}
-#content .scene ul.wishes > li ul.actions .unreserve {display: none;}
-#content .scene ul.wishes > li ul.actions.reserved .unreserve {display: inline-block;}
 
 
 /*s-documentation.css*/

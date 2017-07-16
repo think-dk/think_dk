@@ -25,6 +25,7 @@ input, select, textarea {font-size: 14px; color: #333333;}
 input, textarea {outline: none;}
 a, span {font-size: inherit; font-family: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
 em, strong {font-size: inherit; font-family: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
+sup {line-height: 1em; font-family: inherit; color: inherit;}
 h1 {padding: 0 20px 24px; font-size: 34px; line-height: 1.05em;
 	font-family: "PT Serif", Times, serif;
 }
@@ -184,15 +185,18 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene div.categories ul.actions li {padding-bottom: 0; font-size: 15px; display: block;}
 #content .scene div.categories + div.categories{padding-top: 25px;}
 #content .scene ul.articles {padding: 0;}
-#content .scene.articles ul.articles {padding: 20px 0 30px;}
+#content .scene.articles ul.articles {padding: 0 0 30px;}
 #content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #ccdbcd;}
 #content .scene ul.articles li.article ul.tags {padding-bottom: 10px;}
-#content .scene ul.articles li.article ul.tags li {color: #cccccc;}
+#content .scene ul.articles li.article ul.tags li,
+#content .scene ul.articles li.article ul.tags li a {color: #cccccc;}
 #content .scene ul.articles li.article h3 {font-size: 20px; line-height: 1em; padding-bottom: 10px;
 	font-family: "PT Serif", Times, serif;
 }
 #content .scene div.article {padding-bottom: 30px;}
 #content .scene div.article h2 br {display: none;}
+#content .scene div.article ul.tags li,
+#content .scene div.article ul.tags li a {color: #cccccc;}
 #content .scene div.article ul.tags {padding-bottom: 20px;}
 #content .scene div.related {padding-top: 10px; position: relative; z-index: 1;}
 #content .scene div.related h2 {padding-bottom: 15px;}
@@ -522,16 +526,28 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene ul.todos > li ul.actions .open {display: none;}
 #content .scene ul.todos > li ul.actions.closed .open {display: inline-block;}
 #content .scene ul.wishlists {padding-left: 20px; padding-right: 20px;}
-#content .scene ul.wishes > li .image {height: 30px; background-position: center center; background-size: 100% auto; background-repeat: no-repeat; margin-bottom: 10px; cursor: default;}
+#content .scene ul.wishes > li .image { cursor: default;}
+#content .scene ul.wishes > li div.description p.available,
+#content .scene ul.wishes > li div.description p.reserved {}
+#content .scene ul.wishes > li div.description p.available span
+#content .scene ul.wishes > li div.description p.reserved span {font-style: italic;}
+#content .scene ul.wishes > li div.description p.available span {color: #bbbbbb;}
+#content .scene ul.wishes > li form {margin-left: -3px; margin-right: -3px;}
+#content .scene ul.wishes > li > ul.actions,
+#content .scene ul.wishes > li > .text > ul.actions {padding-bottom: 0;}
+#content .scene ul.wishes > li > ul.actions li,
+#content .scene ul.wishes > li > .text > ul.actions li {padding-right: 0; display: block;}
+#content .scene ul.wishes > li > ul.actions form div.field,
+#content .scene ul.wishes > li > .text > ul.actions form div.field {display: none; padding-left: 0; padding-right: 0;}
+#content .scene ul.wishes > li > ul.actions form div.field input,
+#content .scene ul.wishes > li > .text > ul.actions form div.field input {}
+#content .scene ul.wishes > li > ul.actions form input[type=submit],
+#content .scene ul.wishes > li > .text > ul.actions form input[type=submit] {}
 #content .scene ul.wishes dl.info dt.price {display: inline-block; vertical-align: top; width: auto;}
 #content .scene ul.wishes dl.info dt.price:after {content: ":";}
 #content .scene ul.wishes dl.info dd.price {display: inline-block; vertical-align: top; width: auto; padding-left: 5px;}
 #content .scene ul.wishes dl.info dt.link {display: none;}
 #content .scene ul.wishes dl.info dd.link {font-size: 13px; display: block; width: auto; padding-left: 0;}
-#content .scene ul.wishes > li ul.actions {padding: 0 20px 10px;}
-#content .scene ul.wishes > li ul.actions.reserved .reserve {display: none;}
-#content .scene ul.wishes > li ul.actions .unreserve {display: none;}
-#content .scene ul.wishes > li ul.actions.reserved .unreserve {display: inline-block;}
 
 
 /*s-documentation.css*/
