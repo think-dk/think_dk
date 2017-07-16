@@ -34,18 +34,7 @@ $cart = $model->getCart();
 <div class="scene shopAddress i:shopAddress">
 	<h1><?= $type == "delivery" ? "Delivery" : "Billing" ?> address</h1>
 
-<? if(message()->hasMessages()): ?>
-	<div class="messages">
-	<? 
-		$all_messages = message()->getMessages();
-		message()->resetMessages();
-		foreach($all_messages as $type => $messages):
-			foreach($messages as $message): ?>
-				<p class="<?= $type ?>"><?= $message ?></p>
-			<? endforeach;?>
-	<? endforeach;?>
-	</div>
-<? endif; ?>
+	<?= $HTML->serverMessages() ?>
 
 <? if($user["addresses"]): ?>
 

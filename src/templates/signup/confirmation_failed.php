@@ -51,7 +51,7 @@ session()->reset("signup_username");
 	</div>
 <? else:?>
 	<h1>What??</h1>
-	<p>Your <?= $type ?>, <?= $username ?>, could not be verified.</p>
+	<p>Your <?= $type ?>, <?= $username ?>, could not be activated. Maybe you already activated your account?</p>
 <? endif; ?>
 
 </div>

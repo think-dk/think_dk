@@ -1,6 +1,7 @@
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_1/merged/seg_smartphone.js"></script>');
 
 document.write('<script type="text/javascript" src="/js/lib/u-settings.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/global/u-basics.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-googleanalytics.js"></script>');
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-eventchain.js"></script>');

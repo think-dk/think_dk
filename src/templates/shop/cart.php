@@ -23,18 +23,7 @@ $IC = new Items();
 <div class="scene cart i:cart">
 	<h1>Your cart</h1>
 
-<? if(message()->hasMessages()): ?>
-	<div class="messages">
-	<? 
-		$all_messages = message()->getMessages();
-		message()->resetMessages();
-		foreach($all_messages as $type => $messages):
-			foreach($messages as $message): ?>
-				<p class="<?= $type ?>"><?= $message ?></p>
-			<? endforeach;?>
-	<? endforeach;?>
-	</div>
-<? endif; ?>
+	<?= $HTML->serverMessages() ?>
 
 <? if($cart["items"]) :?>
 	<div class="checkout">

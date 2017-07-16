@@ -2,7 +2,9 @@
 $IC = new Items();
 
 $intros = $IC->getItems(array("itemtype" => "page", "tags" => "page:intro", "status" => 1, "extend" => true));
-$intro = $intros[rand(0, count($intros)-1)];
+if($intros) {
+	$intro = $intros[rand(0, count($intros)-1)];
+}
 
 $page_item = $IC->getItem(array("tags" => "page:front", "extend" => array("user" => true, "tags" => true, "mediae" => true)));
 if($page_item) {
@@ -16,7 +18,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 ?>
 <div class="scene front i:front">
 
-<? if($intro && $intro["status"] && $intro["html"]): ?>
+<? if(isset($intro) && $intro["html"]): ?>
 	<div class="intro" itemscope itemtype="http://schema.org/CreativeWork">
 
 		<? if($intro["html"]): ?>

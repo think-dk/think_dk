@@ -65,7 +65,7 @@ if($wishlist) {
 
 
 <?	if($items): ?>
-	<ul class="items wishes">
+	<ul class="items wishes images">
 	<? foreach($items as $item):
 		$media = $IC->sliceMedia($item); ?>
 		<li class="item wish id:<?= $item["id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">

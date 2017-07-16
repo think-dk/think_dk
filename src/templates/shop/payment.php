@@ -66,6 +66,17 @@ $payment_methods = $this->paymentMethods();
 
 				<li><a class="button disabled"><?= $payment_method["name"] ?></a></li>
 
+				<? //elseif($payment_method["gateway"] && $model->canBeCharged(["user_id" => $order["user_id"], "gateway" => $payment_method["gateway"]])): ?>
+
+				<? //= $JML->oneButtonForm($payment_method["name"], "/shop/selectPaymentMethod", array(
+					// "inputs" => array("order_id" => $order["id"], "payment_method" => $payment_method["id"]),
+					// "confirm-value" => false,
+					// "static" => true,
+					// "class" => "primary",
+					// "name" => "continue",
+					// "wrapper" => "li.continue.".$payment_method["classname"],
+				// )) ?>
+
 			<? else: ?>
 
 				<?= $JML->oneButtonForm($payment_method["name"], "/shop/selectPaymentMethod", array(
@@ -91,7 +102,7 @@ $payment_methods = $this->paymentMethods();
 <? else: ?>
 
 	<h2>Looking to make a payment?</h2>
-	<p>You should <a href="/login">log in</a> to your account and initiate your payment from there.</p>
+	<p>You should <a href="/login?forward_url=<?= $this->url ?>">log in</a> to your account and initiate your payment from there.</p>
 
 <? endif;?>
 

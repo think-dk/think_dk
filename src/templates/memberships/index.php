@@ -59,18 +59,8 @@ $memberships = $IC->getItems(array("itemtype" => "membership", "order" => "posit
 
 	<div class="memberships">
 
-		<? if(message()->hasMessages()): ?>
-		<div class="messages">
-		<? 
-			$all_messages = message()->getMessages();
-			message()->resetMessages();
-			foreach($all_messages as $type => $messages):
-				foreach($messages as $message): ?>
-					<p class="<?= $type ?>"><?= $message ?></p>
-				<? endforeach;?>
-		<? endforeach;?>
-		</div>
-		<? endif; ?>
+
+		<?= $HTML->serverMessages() ?>
 
 
 		<ul class="memberships">

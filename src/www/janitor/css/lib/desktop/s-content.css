@@ -1,7 +1,11 @@
-body.article #navigation .article a,
+/*body.article #navigation .article a,
 body.target #navigation .target a,
 body.topic #navigation .topic a {padding-left: 35px; color: #ffffff;}
+*/
 
+body.invoice #content div.scene .basics h1 {color: #26962d; text-transform: lowercase; font-size: 30px;
+	font-family: "PT Serif", Times, serif;
+}
 
 
 #content .topicEdit fieldset h3 {border-top: 1px solid #aaaaaa; font-size: 0.8em; margin: 20px 0 20px; padding-bottom: 10px; padding-top: 7px; text-transform: uppercase;}

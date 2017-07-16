@@ -91,7 +91,7 @@ class HTML extends HTMLCore {
 		$_ .= '<ul class="info">';
 		$_ .= '	<li class="published_at" itemprop="datePublished" content="'. date("Y-m-d", strtotime($item["published_at"])) .'">'. date("Y-m-d, H:i", strtotime($item["published_at"])) .'</li>';
 		$_ .= '	<li class="modified_at" itemprop="dateModified" content="'. date("Y-m-d", strtotime($item["modified_at"])) .'"></li>';
-		$_ .= '	<li class="author" itemprop="author">'. $item["user_nickname"] .'</li>';
+		$_ .= '	<li class="author" itemprop="author">'. (isset($item["user_nickname"]) ? $item["user_nickname"] : SITE_NAME) .'</li>';
 		$_ .= '	<li class="main_entity'. ($sharing ? ' share' : '') .'" itemprop="mainEntityOfPage" content="'. SITE_URL.$url .'"></li>';
 		$_ .= '	<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">';
 		$_ .= '		<ul class="publisher_info">';
@@ -208,6 +208,26 @@ class HTML extends HTMLCore {
 		return $_;
 	}
 
+
+	function serverMessages($type = []) {
+
+		$_ = '';
+		
+		if(message()->hasMessages($type)) {
+			$_ .= '<div class="messages">';
+
+			$all_messages = message()->getMessages($type);
+			message()->resetMessages();
+			foreach($all_messages as $type => $messages) {
+				foreach($messages as $message) {
+					$_ .= '<p class="'.$type.'">'.$message.'</p>';
+				}
+			}
+			$_ .= '</div>';
+		}
+
+		return $_;
+	}
 }
 
 // create standalone instance to make HTML available without model
