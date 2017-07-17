@@ -664,7 +664,14 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .defaultView.userMembership div.change div.option p {padding-bottom: 10px;}
 #content .defaultView.userMembership div.cancel {border-bottom: 1px solid #bbbbbb;}
 #content .defaultView.userMembership div.cancel ul.actions {padding-bottom: 15px;}
-#content .defaultList.memberList dd.payment_status.missing {color: #df0000;}
+#content .scene.memberList ul.items > li dl.info dd.waiting,
+#content .scene.memberList ul.items > li dl.info dd.partial {color: orange;}
+#content .scene.memberList ul.items > li dl.info dd.pending,
+#content .scene.memberList ul.items > li dl.info dd.unpaid,
+#content .scene.memberList ul.items > li dl.info dd.unshipped {color: #df0000;}
+#content .scene.memberList ul.items > li dl.info dd.complete,
+#content .scene.memberList ul.items > li dl.info dd.paid,
+#content .scene.memberList ul.items > li dl.info dd.shipped {color: green;}
 #content .defaultEdit.userMember ul.actions li.user {float: right; padding: 0 0 10px 10px;}
 #content .defaultEdit.userMember div.orders {border-bottom: 1px solid #bbbbbb;}
 #content .defaultEdit.userMember div.orders ul.items {padding-bottom: 25px;}
