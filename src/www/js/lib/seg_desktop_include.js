@@ -16,6 +16,7 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/m
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-date.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-form.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-form-builder.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-form-onebuttonform.js"></script>');
 
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-page.js"></script>');

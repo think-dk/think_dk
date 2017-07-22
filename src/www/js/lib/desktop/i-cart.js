@@ -156,6 +156,13 @@ Util.Objects["checkout"] = new function() {
 			var form_signup = u.qs("form.signup", this);
 			if(form_signup) {
 				u.f.init(form_signup);
+
+				form_signup.preSubmitted = function() {
+					this.actions["signup"].value = "Wait";
+					u.ac(this, "submitting");
+					u.ac(this.actions["signup"], "disabled");
+//					this.DOMsubmit();
+				}
 			}
 
 

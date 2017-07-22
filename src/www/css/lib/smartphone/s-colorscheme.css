@@ -19,10 +19,14 @@ body {}
 #content .scene ul.geo.active li.location {color: #34cc3d;}
 #content .scene hr {border-color: #ccdbcd;}
 
-#content ul.actions input.button.primary,
+ul.actions input.button.primary,
+ul.actions a.button.primary,
 #content ul.actions a.button.primary {background-color: #34cc3d;}
-#content ul.actions input.button.primary:active,
+
+ul.actions input.button.primary:active,
+ul.actions a.button.primary:active,
 #content ul.actions a.button.primary:active {background-color: #26962d;}
+
 #content .scene div.article ul.tags li a:active,
 #content .scene ul.articles li.article ul.tags li a:active {color: #34cc3d;}
 

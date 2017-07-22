@@ -91,7 +91,9 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 		<ul class="actions">
 			<?= $JML->oneButtonForm("Confirm order", "/shop/confirm/".$cart["cart_reference"], array(
 				"confirm-value" => false,
-				"static" => true,
+				"wait-value" => "Confirming",
+				"dom-submit" => true,
+//				"static" => true,
 				"class" => "primary",
 				"name" => "continue",
 				"wrapper" => "li.continue",
@@ -176,7 +178,9 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 		<ul class="actions">
 			<?= $JML->oneButtonForm("Confirm order", "/shop/confirm/".$cart["cart_reference"], array(
 				"confirm-value" => false,
-				"static" => true,
+				"wait-value" => "Confirming",
+				"dom-submit" => true,
+//				"static" => true,
 				"class" => "primary",
 				"name" => "continue",
 				"wrapper" => "li.continue",
@@ -247,7 +251,9 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 		<ul class="actions">
 			<?= $JML->oneButtonForm("Confirm order", "/shop/confirm/".$cart["cart_reference"], array(
 				"confirm-value" => false,
-				"static" => true,
+				"wait-value" => "Confirming",
+				"dom-submit" => true,
+//				"static" => true,
 				"class" => "primary",
 				"name" => "continue",
 				"wrapper" => "li.continue",
