@@ -470,6 +470,14 @@ ul.actions a.button,
 ul.actions input.button,
 ul.actions a.button,
 #content ul.actions a.button {font-size: 14px; background-color: #dedede; color: #333333; border: none; cursor: pointer; border-radius: 3px;}
+.submitting input.button,
+.submitting a.button,
+#content .submitting a.button {padding-left: 40px !important;
+	background-image: url(/img/gx_loader.gif);
+	background-position: 11px 5px;
+	background-repeat: no-repeat;
+	background-size: 17px auto;
+}
 ul.actions input.button.primary,
 ul.actions a.button.primary {background-color: #8c9399; color: #ffffff;}
 ul.actions input.button.secondary,

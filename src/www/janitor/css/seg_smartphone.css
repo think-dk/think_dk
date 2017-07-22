@@ -93,16 +93,18 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 #navigation ul li {color: #8c9399; display: block; text-transform: uppercase;}
 #navigation ul li:active {color: #ffffff;}
 #navigation ul li a {display: block; padding: 19px 20px 20px; font-size: 15px;}
-#navigation > ul.navigation {padding: 20px 0;}
+#navigation > ul.navigation {padding: 0 0 20px;}
 #navigation > ul.navigation > li {overflow: hidden; border-bottom: 1px solid #404a56;}
 #navigation > ul.navigation h3 {color: #cccccc; padding: 19px 20px 20px; font-size: 17px; position: relative;}
-#navigation > ul.navigation h3 svg {position: absolute; top: 11px; right: 20px; stroke: #8c9399; stroke-width: 2px;}
+#navigation > ul.navigation h3 svg {position: absolute; top: 22px; right: 20px; stroke: #8c9399; stroke-width: 2px;}
 #navigation > ul.navigation h3:active {color: #ffffff;}
 #navigation > ul.navigation ul {}
 #navigation > ul.navigation ul li {padding-left: 20px; border-top: 1px solid #404a56;}
 #navigation > ul.navigation > li.empty {display: none;}
-#navigation > ul.navigation li.front {border-bottom: 1px solid #777777;}
+#navigation > ul.navigation li.front {border-bottom: 1px solid #777777; height: 60px;}
+#navigation > ul.navigation li.front a {padding-top: 25px;}
 #navigation > ul.navigation li.web {border-top: 1px solid #777777;}
+#navigation > ul.navigation > li.profile {display: none;}
 #navigation .selected {color: #8c9399; background: #f5f7f8;}
 
 
@@ -117,12 +119,18 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 #content .scene > ul.actions li.delete {float: right; padding-right: 0;}
 #content ul.list {padding: 21px 15px;}
 #content ul.list li {display: block;}
-#content dl.list {padding: 21px 15px; width: 600px;}
-#content dl.list dt,
-#content dl.list dd {padding: 5px 0; border-bottom: 1px solid #dbdfe5; height: 14px;}
-#content dl.list dt {width: 100px;}
-#content dl.list dt:after {content: ":";}
-#content dl.list dd {width: 170px; margin: 0 30px 0 0;}
+#content dl.info {overflow: hidden; padding: 0 15px 6px;}
+#content dl.info dt {float: left; clear: left;}
+#content dl.info dt:after {content: ":\00a0";}
+#content dl.info dd {float: left; clear: right; padding: 0 0 3px; color: #313942;}
+#content dl.info dd.waiting,
+#content dl.info dd.partial {color: orange;}
+#content dl.info dd.pending,
+#content dl.info dd.unpaid,
+#content dl.info dd.unshipped {color: #df0000;}
+#content dl.info dd.complete,
+#content dl.info dd.paid,
+#content dl.info dd.shipped {color: green;}
 #content .scene > ul.actions {padding-bottom: 14px; padding-top: 14px; text-align: left; border-bottom: 1px solid #bbbbbb;}
 #content .scene > ul.actions li {padding: 0 5px 0 0;}
 #content .scene ul.tabs {background-color: #dedede; border-top: 1px solid #bbbbbb;}
@@ -166,135 +174,146 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 
 
 /*s-form.css*/
-#content form {max-width: 600px;}
-#content fieldset {border: none; display: block;}
-#content .field {padding: 0 13px 10px; position: relative; font-size: 0; z-index: 1;}
-#content label {
+form {max-width: 600px;}
+fieldset {border: none; display: block;}
+div.field {padding: 0 13px 10px; position: relative; font-size: 0; z-index: 1;}
+div.field label {
 	font-size: 12px; line-height: 1em; display: block; padding: 0 3px;
 }
-#content .field input,
-#content .field select,
-#content .field textarea {box-shadow: inset 0 1px 2px #dedede; background: #ffffff; border: 1px solid #dcdcdc; 
+div.field input,
+div.field select,
+div.field textarea {box-shadow: inset 0 1px 2px #dedede; background: #ffffff; border: 1px solid #dcdcdc; 
 	display: inline-block; vertical-align: top; border-radius: 3px; margin: 2px; outline: none; position: relative; z-index: 1;}
-#content .field input {width: calc(100% - 18px); height: 24px; padding: 2px 6px;}
-#content .field select {width: calc(100% - 4px); height: 30px; color: #333333; padding: 5px 3px 2px 2px;}
-#content .field select option {padding: 5px 3px 2px 6px;}
+div.field input {width: calc(100% - 18px); height: 24px; padding: 2px 6px;}
+div.field select {width: calc(100% - 4px); height: 30px; color: #333333; padding: 5px 3px 2px 2px;}
+div.field select option {padding: 5px 3px 2px 6px;}
 @media all and (-webkit-min-device-pixel-ratio:0) {
-	#content .field select {padding: 2px 3px 2px 7px;
+	div.field select {padding: 2px 3px 2px 7px;
 		background: #ffffff url(/janitor/admin/img/bg_icons.png) no-repeat calc(100% + 17px) -977px;
 		-webkit-appearance: none;
 	}
 }
-#content .field textarea {width: calc(100% - 18px); height: 80px; overflow: auto; padding: 6px 6px 2px 6px; }
-#content .field.short textarea {height: 40px;}
-#content .field textarea.autoexpand {width: 366px; padding: 6px 6px 2px; overflow: hidden;}
-#content .field .pseudolabel {position: absolute; font-size: 14px; display: inline-block; vertical-align: top; line-height: 1em; padding: 8px 6px; z-index: 2;}
-#content .field.checkbox,
-#content .field.boolean {padding-bottom: 15px;}
-#content .field.checkbox input,
-#content .field.boolean input {display: inline-block; vertical-align: top; width: auto; height: auto; padding: 0; margin: 1px 10px 0 3px; border: 0;}
-#content .field.checkbox label,
-#content .field.boolean label {width: auto; display: inline-block; vertical-align: top; font-size: 1.077rem; line-height: 1em;}
-#content .field.radiobuttons {padding-bottom: 15px;}
-#content .field.radiobuttons > label {display: block; font-size: 1.077rem; line-height: 1em; padding: 0 0 0 3px;}
-#content .field.radiobuttons > label:after {content: ":";}
-#content .field.radiobuttons div.item {padding: 8px 0 0;}
-#content .field.radiobuttons div.item input {width: auto; height: auto; padding: 0; margin: 1px 10px 0 3px; border: 0;}
-#content .field.radiobuttons div.item label {font-size: 1.077rem; line-height: 1em; display: inline-block; vertical-align: top; text-align: left; width: auto;}
-#content .field.files {border: 3px dashed #dedede; width: 374px; display: inline-block; vertical-align: top; border-radius: 5px; position: relative; padding: 0; margin: 2px 30px 20px;}
-#content .field.files input[type="file"] {opacity: 0; width: 374px; border: none; height: 60px; margin: 0; padding: 0;}
-#content .field.files label {display: block; position: absolute; width: 120px; left: 50%; padding: 1px 4px 3px; margin: 20px 0 0 -60px; text-align: center; border-radius: 6px; background: #dedede;}
-#content .field.files.loading label {display: none;}
-#content .field.files.loading {background: transparent url(/janitor/admin/img/gx_loader.gif) no-repeat center center;}
-#content .field.location {}
-#content .field.location div.location {padding-bottom: 2px;}
-#content .field.location div.latitude {padding-right: 2px;}
-#content .field.location div.latitude,
-#content .field.location div.longitude {display: inline-block; vertical-align: top;}
-#content .field.location div.latitude input,
-#content .field.location div.longitude input {width: 173px;}
-#content .field.location.geolocation div.geolocation {width: 30px; height: 30px; display: inline-block; vertical-align: top; cursor: pointer;
+div.field textarea {width: calc(100% - 18px); height: 80px; overflow: auto; padding: 6px 6px 2px 6px; }
+div.field.short textarea {height: 40px;}
+div.field textarea.autoexpand {width: 366px; padding: 6px 6px 2px; overflow: hidden;}
+div.field .pseudolabel {position: absolute; font-size: 14px; display: inline-block; vertical-align: top; line-height: 1em; padding: 8px 6px; z-index: 2;}
+div.field.checkbox,
+div.field.boolean {padding-bottom: 15px;}
+div.field.checkbox input,
+div.field.boolean input {display: inline-block; vertical-align: top; width: auto; height: auto; padding: 0; margin: 1px 10px 0 3px; border: 0;}
+div.field.checkbox label,
+div.field.boolean label {width: auto; display: inline-block; vertical-align: top; font-size: 1.077rem; line-height: 1em;}
+div.field.radiobuttons {padding-bottom: 15px;}
+div.field.radiobuttons > label {display: block; font-size: 1.077rem; line-height: 1em; padding: 0 0 0 3px;}
+div.field.radiobuttons > label:after {content: ":";}
+div.field.radiobuttons div.item {padding: 8px 0 0;}
+div.field.radiobuttons div.item input {width: auto; height: auto; padding: 0; margin: 1px 10px 0 3px; border: 0;}
+div.field.radiobuttons div.item label {font-size: 1.077rem; line-height: 1em; display: inline-block; vertical-align: top; text-align: left; width: auto;}
+div.field.files {border: 3px dashed #dedede; width: 374px; display: inline-block; vertical-align: top; border-radius: 5px; position: relative; padding: 0; margin: 2px 30px 20px;}
+div.field.files input[type="file"] {opacity: 0; width: 374px; border: none; height: 60px; margin: 0; padding: 0;}
+div.field.files label {display: block; position: absolute; width: 120px; left: 50%; padding: 1px 4px 3px; margin: 20px 0 0 -60px; text-align: center; border-radius: 6px; background: #dedede;}
+div.field.files.loading label {display: none;}
+div.field.files.loading {background: transparent url(/janitor/admin/img/gx_loader.gif) no-repeat center center;}
+div.field.location {}
+div.field.location div.location {padding-bottom: 2px;}
+div.field.location div.latitude {padding-right: 2px;}
+div.field.location div.latitude,
+div.field.location div.longitude {display: inline-block; vertical-align: top;}
+div.field.location div.latitude input,
+div.field.location div.longitude input {width: 173px;}
+div.field.location.geolocation div.geolocation {width: 30px; height: 30px; display: inline-block; vertical-align: top; cursor: pointer;
 	background: transparent url(/janitor/admin/img/gx_geolocation.png) no-repeat 5px 8px;
 }
-#content .field.location.geolocation div.latitude input,
-#content .field.location.geolocation div.longitude input {width: 158px;}
+div.field.location.geolocation div.latitude input,
+div.field.location.geolocation div.longitude input {width: 158px;}
 iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; left: 0; z-index: 100; border: 1px solid #666666; background-color: #ffffff;}
-#content .field.focus input,
-#content .field.focus textarea {}
-#content .field.focus select {padding: 4px 3px 1px 0px;}
+div.field.focus input,
+div.field.focus textarea {}
+div.field.focus select {padding: 4px 3px 1px 0px;}
 @media all and (-webkit-min-device-pixel-ratio:0) {
-	#content .field.focus select {padding: 2px 3px 3px 5px;
+	div.field.focus select {padding: 2px 3px 3px 5px;
 		background-position: 358px -979px;
 	}
 }
-#content .field.focus input,
-#content .field.focus select,
-#content .field.focus textarea {border: 3px solid #5c5c5c; margin: 0;}
-#content .field.radiobuttons.focus input,
-#content .field.checkbox.focus input,
-#content .field.boolean.focus input {margin: 1px 10px 0 3px; border: none;}
-#content .field.location.focus input {margin: 2px; border: 1px solid #dcdcdc;}
-#content .field.location.focus input.focus {margin: 0; border: 3px solid #5c5c5c;}
-#content .field.files.focus {border-color: #c8e183;}
-#content .field.files.focus input[type="file"] {margin: 0; border: none;}
-#content .field.files.focus label {background-color: #c8e183;}
-#content .field input.default,
-#content .field select.default,
-#content .field textarea.default,
-#content .field .pseudolabel {color: #aaaaaa;}
-#content .field .indicator { display: inline-block; vertical-align: top; width: 20px; height: 18px;}
-#content .field.required .indicator {
+div.field.focus input,
+div.field.focus select,
+div.field.focus textarea {border: 3px solid #5c5c5c; margin: 0;}
+div.field.radiobuttons.focus input,
+div.field.checkbox.focus input,
+div.field.boolean.focus input {margin: 1px 10px 0 3px; border: none;}
+div.field.location.focus input {margin: 2px; border: 1px solid #dcdcdc;}
+div.field.location.focus input.focus {margin: 0; border: 3px solid #5c5c5c;}
+div.field.files.focus {border-color: #c8e183;}
+div.field.files.focus input[type="file"] {margin: 0; border: none;}
+div.field.files.focus label {background-color: #c8e183;}
+div.field input.default,
+div.field select.default,
+div.field textarea.default,
+div.field .pseudolabel {color: #aaaaaa;}
+div.field .indicator { display: inline-block; vertical-align: top; width: 20px; height: 18px;}
+div.field.required .indicator {
 	background: transparent url(/janitor/admin/img/bg_icons.png) no-repeat 5px -299px;
 }
-#content .field.text.required .indicator {background-position: 5px -299px;}
-#content .field.radiobuttons .indicator,
-#content .field.checkbox .indicator,
-#content .field.boolean .indicator {top: -5px;}
-#content .field.files .indicator {left: 387px; top: -1px;}
-#content .field.correct .indicator {background-position: 5px -328px;}
-#content .field.text.correct .indicator {background-position: 5px -328px;}
-#content .field.error input,
-#content .field.error textarea {}
-#content .field.error select {padding: 3px 3px 2px 0px;}
-#content .field.error input,
-#content .field.error select,
-#content .field.error textarea {border: 3px solid #f8c9bb; margin: 0;}
+div.field.text.required .indicator {background-position: 5px -299px;}
+div.field.radiobuttons .indicator,
+div.field.checkbox .indicator,
+div.field.boolean .indicator {top: -5px;}
+div.field.files .indicator {left: 387px; top: -1px;}
+div.field.correct .indicator {background-position: 5px -328px;}
+div.field.text.correct .indicator {background-position: 5px -328px;}
+div.field.error input,
+div.field.error textarea {}
+div.field.error select {padding: 3px 3px 2px 0px;}
+div.field.error input,
+div.field.error select,
+div.field.error textarea {border: 3px solid #f8c9bb; margin: 0;}
 @media all and (-webkit-min-device-pixel-ratio:0) {
-	#content .field.error select {padding: 2px 3px 3px 5px;
+	div.field.error select {padding: 2px 3px 3px 5px;
 		background-position: 358px -979px;
 	}
 }
-#content .field.radiobuttons.error input,
-#content .field.checkbox.error input,
-#content .field.boolean.error input {margin: 1px 10px 0 3px; border: none;}
-#content .field.location.error input {margin: 2px; border: 1px solid #dcdcdc;}
-#content .field.location.error input.error {margin: 0; border: 3px solid #f8c9bb;}
-#content .field.files.error {border-color: #f8c9bb;}
-#content ul.actions {padding: 0 15px;}
-#content ul.actions li {width: auto; height: auto; display: inline-block; padding: 0 5px 10px 0; vertical-align: top;
+div.field.radiobuttons.error input,
+div.field.checkbox.error input,
+div.field.boolean.error input {margin: 1px 10px 0 3px; border: none;}
+div.field.location.error input {margin: 2px; border: 1px solid #dcdcdc;}
+div.field.location.error input.error {margin: 0; border: 3px solid #f8c9bb;}
+div.field.files.error {border-color: #f8c9bb;}
+ul.actions {padding: 0 15px;}
+ul.actions li {width: auto; height: auto; display: inline-block; padding: 0 5px 10px 0; vertical-align: top;
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	user-select: none;
 }
-#content ul.actions input.button {width: auto; height: 32px; padding: 8px 7px;}
-#content ul.actions a.button {display: block; text-decoration: none; height: 14px; padding: 9px 10px;}
+ul.actions input.button {width: auto; height: 32px; padding: 8px 7px;}
+ul.actions a.button {display: block; text-decoration: none; height: 14px; padding: 9px 10px;}
 @media all and (-webkit-min-device-pixel-ratio:0) {
-	#content ul.actions input.button {padding-bottom: 9px;
+	ul.actions input.button {padding-bottom: 9px;
 		-webkit-appearance: none;
 	}
 }
-#content ul.actions input.button,
+ul.actions input.button,
+ul.actions a.button,
 #content ul.actions a.button {font-size: 14px; line-height: 1em; background-color: #8c9399; color: #ffffff; border: none; cursor: pointer; border-radius: 3px;}
-#content ul.actions input.button:active,
+ul.actions input.button:active,
+ul.actions a.button:active,
 #content ul.actions a.button:active {background-color: #313942;}
-#content ul.actions input.button.primary,
+ul.actions input.button.primary,
+ul.actions a.button.primary,
 #content ul.actions a.button.primary {background-color: #64ad8e;}
-#content ul.actions input.button.primary:active,
+ul.actions input.button.primary:active,
+ul.actions a.button.primary:active,
 #content ul.actions a.button.primary:active {background-color: #313942;}
-#content ul.actions input.button.secondary,
-#content ul.actions a.button.secondary {background-color: #fecd60; color: #9f742c;}
-#content ul.actions input.button.secondary:hover,
-#content ul.actions a.button.secondary:hover {background-color: #fed76e;}
+.submitting input.button,
+.submitting a.button,
+#content .submitting a.button {padding-left: 40px !important;
+	background-image: url(/janitor/admin/img/gx_loader.gif);
+	background-position: 9px 9px;
+	background-repeat: no-repeat;
+}
+ul.actions input.button.secondary,
+ul.actions a.button.secondary {background-color: #fecd60; color: #9f742c;}
+ul.actions input.button.secondary:hover,
+ul.actions a.button.secondary:hover {background-color: #fed76e;}
 #content ul.actions li.status input.button {font-size: 0; height: 26px; width: 26px; padding: 3px 12px;}
 #content ul.actions li.status form.disable input.button {background-color: #f4f5f5; border-left: 3px solid #8c9399; border-top: 3px solid #8c9399; border-right: 27px solid #8c9399; border-bottom: 3px solid #8c9399;}
 #content ul.actions li.status form.enable input.button {background-color: #f4f5f5; border-right: 3px solid orange; border-top: 3px solid orange; border-left: 27px solid orange; border-bottom: 3px solid orange;}
@@ -306,6 +325,8 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 #content form input.button.delete.confirm:hover {}
 #content form input.button.disabled,
 #content form input.button.disabled:hover {cursor: default !important; color: #aaaaaa !important; background-color: #eeeeee !important;}
+#content ul.actions form input.button.confirm,
+#content ul.actions form input.button.confirm:hover {color: #ffffff; background-color: #df0000;}
 #content .field div.help {width: 100%; line-height: 1.2em;}
 #content .field.files div.help {left: 422px;}
 #content .field div.error,
@@ -470,28 +491,25 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.shopList ul.tabs li.waiting {color: orange;}
 #content .scene.shopList ul.tabs li.pending {color: red;}
 #content .scene.shopList ul.tabs li.complete {color: green;}
-#content .scene.shopList div.all_items ul.items dd.missing {color: #df0000;}
 #content .scene.shopList ul.items > li dl.info dt.price {display: none;}
 #content .scene.shopList ul.items > li dl.info dd.price {position: absolute; top: 10px; right: 100px; font-size: 26px;}
-#content .scene.shopList ul.items > li dl.info dd.waiting,
-#content .scene.shopList ul.items > li dl.info dd.partial {color: orange;}
-#content .scene.shopList ul.items > li dl.info dd.pending,
-#content .scene.shopList ul.items > li dl.info dd.unpaid,
-#content .scene.shopList ul.items > li dl.info dd.unshipped {color: #df0000;}
-#content .scene.shopList ul.items > li dl.info dd.complete,
-#content .scene.shopList ul.items > li dl.info dd.paid,
-#content .scene.shopList ul.items > li dl.info dd.shipped {color: green;}
 #content .scene.shopView > ul.actions li.invoice {float: right; padding: 0 0 10px 10px;}
 #content .scene.shopView > ul.actions li.creditnote {float: right; padding: 0 0 10px 10px;}
 #content .scene.shopView > ul.actions li.ship {float: right; padding: 0 0 10px 10px;}
 #content .scene.shopView > ul.actions li.pay {float: right; padding: 0 0 10px 10px;}
-#content .scene.shopView dl.list {padding-top: 3px; padding-right: 0; padding-bottom: 25px; width: 370px;}
-#content .scene.shopView dl.list dt {width: 120px;}
-#content .scene.shopView dl.list dt:after {content: ":";}
-#content .scene.shopView dl.list dd {width: 250px; margin: 0;}
-#content .scene.shopView > div > form {display: none; padding-top: 10px; padding-bottom: 10px;}
+#content .scene.shopView > div > h2 + form {display: none; padding-top: 10px; padding-bottom: 10px;}
 #content .scene.shopView > div > h2 > span {color: #7d848c; cursor: pointer;}
 #content .scene.shopView > div > h2 > span:before {content: "\00a0-\00a0";}
+#content .scene.shopView > div > dl.info,
+#content .scene.shopView div.payments dl.info {padding-top: 3px; padding-right: 0; padding-bottom: 25px; width: 370px;}
+#content .scene.shopView > div > dl.info dt,
+#content .scene.shopView > div > dl.info dd, 
+#content .scene.shopView div.payments dl.info dt,
+#content .scene.shopView div.payments dl.info dd {padding: 5px 0; border-bottom: 1px solid #dbdfe5; height: 14px;}
+#content .scene.shopView > div > dl.info dt,
+#content .scene.shopView div.payments dl.info dt {width: 120px; float: none;}
+#content .scene.shopView > div > dl.info dd,
+#content .scene.shopView div.payments dl.info dd {width: 250px; margin: 0; float: none;}
 #content .scene.shopView div.basics,
 #content .scene.shopView div.contact,
 #content .scene.shopView div.delivery,
@@ -524,6 +542,9 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.cartView div.order {border-bottom: 1px solid #bbbbbb;}
 #content .scene.cartView div.order ul.actions {padding-bottom: 15px;}
 #content .scene.orderView {}
+#content .scene.orderView div.orderstatus h2.waiting {color: orange;}
+#content .scene.orderView div.orderstatus h2.pending {color: #df0000;}
+#content .scene.orderView div.orderstatus h2.complete {color: green;}
 #content .scene.orderView div.all_items > ul.items {padding-bottom: 25px;}
 #content .scene.orderView div.orderstatus {border-bottom: 1px solid #bbbbbb;}
 #content .scene.orderView div.comment {border-bottom: 1px solid #bbbbbb;}
@@ -532,7 +553,6 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.orderView div.payments ul.actions {padding-bottom: 15px;}
 #content .scene.paymentList ul.items > li dl.info dd.price {right: 140px;}
 #content .scene.newPayment div.basics {border-top: 1px solid #bbbbbb;}
-#content .scene.newPayment div.basics,
 #content .scene.newPayment div.charge,
 #content .scene.newPayment div.reminder,
 #content .scene.newPayment div.register {border-bottom: 1px solid #bbbbbb;}
@@ -558,7 +578,7 @@ body.invoice #content div.scene .basics h2 {padding-top: 25px;}
 body.invoice #content div.scene .basics dl.info {padding: 10px 30px;}
 body.invoice #content div.scene .basics dl.info dt {font-weight: 700;}
 body.invoice #content div.scene .basics dl.info dd,
-body.invoice #content div.scene .basics dl.info dt {display: block; padding: 0 0 5px;}
+body.invoice #content div.scene .basics dl.info dt {display: block; float: none; padding: 0 0 5px;}
 body.invoice #content div.scene .buyer ul.info {padding-bottom: 20px;}
 body.invoice #content div.scene .all_items {padding-top: 20px;}
 body.invoice #content div.scene .all_items ul.items li h3 {padding-right: 30px;}
@@ -567,6 +587,10 @@ body.invoice #content div.scene .all_items ul.items li h3 span.total_price {floa
 body.invoice #content div.scene .all_items ul.items li.order_total {font-size: 20px; padding: 20px 30px 5px; border-bottom: none;}
 body.invoice #content div.scene .all_items ul.items li.order_vat {font-size: 14px; padding: 0 30px 20px;}
 body.invoice #content div.scene .all_items ul.items li span.amount {float: right;}
+
+
+/*s-shop.css*/
+#content .scene.shopList ul.items > li dl.info dd.price {position: static; top: auto; right: auto; clear: both; padding-top: 5px; font-size: 26px;}
 
 
 /*s-user.css*/
@@ -636,14 +660,10 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .defaultList.userSubscriptions dd.price+dt.price+dd.price {padding-top: 0;}
 #content .defaultList.userSubscriptions dt.membership {display: none;}
 #content .defaultList.userSubscriptions dd.membership {color: green; clear: left; padding-top: 5px;}
-#content .defaultList.userSubscriptions dd.payment_status.missing {color: #df0000;}
 #content .defaultView.userMembership > div > h2 {font-size: 0.8em; text-transform: uppercase; padding-top: 7px; padding-bottom: 10px; margin: 0 0 20px;}
 #content .defaultView.userMembership div.item {position: relative; border-bottom: 1px solid #bbbbbb;}
 #content .defaultView.userMembership div.item h3 {padding-bottom: 20px; font-size: 28px;}
-#content .defaultView.userMembership div.item dl {margin-top: -5px; overflow: hidden; padding: 0 30px 20px;}
-#content .defaultView.userMembership div.item dt::after {content: ":\00a0";}
-#content .defaultView.userMembership div.item dt {clear: left; float: left;}
-#content .defaultView.userMembership div.item dd {clear: right; float: left; padding: 0 0 3px;}
+#content .defaultView.userMembership div.item dl {margin-top: -5px; padding-bottom: 30px;}
 #content .defaultView.userMembership div.item dd.price.default {text-decoration: line-through;}
 #content .defaultView.userMembership div.item dt.price,
 #content .defaultView.userMembership div.item dd.price {padding-top: 5px;}
@@ -653,25 +673,15 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .defaultView.userMembership div.item dd.membership {color: #df0000; clear: left; padding-top: 5px;}
 #content .defaultView.userMembership div.item dt.payment_method,
 #content .defaultView.userMembership div.item dd.payment_method {padding-top: 5px;}
-#content .defaultView.userMembership div.item dd.payment_status.missing {color: #df0000;}
 #content .defaultView.userMembership div.item ul.actions {padding-bottom: 15px;}
 #content .defaultView.userMembership div.orders {border-bottom: 1px solid #bbbbbb;}
 #content .defaultView.userMembership div.orders ul.items {padding-bottom: 25px;}
-#content .defaultView.userMembership div.orders ul.items dd.payment_status.missing {color: #df0000;}
 #content .defaultView.userMembership div.change {border-bottom: 1px solid #bbbbbb;}
 #content .defaultView.userMembership div.change div.option {padding-bottom: 30px;}
 #content .defaultView.userMembership div.change div.option h3 {padding-bottom: 10px; font-size: 18px;}
 #content .defaultView.userMembership div.change div.option p {padding-bottom: 10px;}
 #content .defaultView.userMembership div.cancel {border-bottom: 1px solid #bbbbbb;}
 #content .defaultView.userMembership div.cancel ul.actions {padding-bottom: 15px;}
-#content .scene.memberList ul.items > li dl.info dd.waiting,
-#content .scene.memberList ul.items > li dl.info dd.partial {color: orange;}
-#content .scene.memberList ul.items > li dl.info dd.pending,
-#content .scene.memberList ul.items > li dl.info dd.unpaid,
-#content .scene.memberList ul.items > li dl.info dd.unshipped {color: #df0000;}
-#content .scene.memberList ul.items > li dl.info dd.complete,
-#content .scene.memberList ul.items > li dl.info dd.paid,
-#content .scene.memberList ul.items > li dl.info dd.shipped {color: green;}
 #content .defaultEdit.userMember ul.actions li.user {float: right; padding: 0 0 10px 10px;}
 #content .defaultEdit.userMember div.orders {border-bottom: 1px solid #bbbbbb;}
 #content .defaultEdit.userMember div.orders ul.items {padding-bottom: 25px;}
@@ -769,19 +779,20 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content div.all_items > h2 + ul.items,
 #content div.all_items > p + ul.items {border-top: 1px solid #dedede;}
 #content div.all_items ul.items > li {display: block; position: relative; border-bottom: 1px solid #dedede;}
-#content div.all_items ul.items > li:hover {background-color: #edf0f2;}
+#content div.all_items ul.items > li:active {background-color: #edf0f2;}
 #content div.all_items ul.items > li h3 {padding: 12px 80px 12px 15px;}
 #content div.all_items ul.items > li .description {padding-bottom: 15px; margin-top: -10px; font-size: 12px; line-height: 1em;}
-#content div.all_items ul.items > li dl {overflow: hidden; padding: 0 15px 6px; margin-top: -10px;}
-#content div.all_items ul.items > li dt {float: left; clear: left;}
-#content div.all_items ul.items > li dt:after {content: ":\00a0";}
-#content div.all_items ul.items > li dd {float: left; clear: right; padding: 0 0 3px;}
+#content div.all_items ul.items > li dl.info {margin-top: -5px;}
 #content div.all_items ul.items > li ul.actions {position: absolute; top: 2px; padding: 0; right: 15px;}
 #content div.all_items ul.items > li ul.actions li {padding: 5px 0 5px 5px;}
 #content div.all_items ul.items > li ul.actions li a.button {padding: 5px 12px 7px;}
 #content div.all_items ul.items > li ul.actions li input.button {height: 24px;}
 #content div.all_items ul.items > li ul.actions li.delete,
 #content div.all_items ul.items > li ul.actions li.status {display: none;}
+#content div.all_items ul.items > li dl.info+ul.actions li,
+#content div.all_items ul.items > li ul.info+ul.actions li,
+#content div.all_items ul.items > li p+ul.actions li,
+#content div.all_items ul.items > li ul.tags+ul.actions li {padding-top: 10px;}
 #content div.all_items div.filter {padding: 10px 0 4px; min-height: 28px; background: #f5f7f8; border-bottom: 1px solid #bbbbbb; position: relative; overflow: hidden;}
 #content div.all_items div.filter ul.tags {padding-right: 15px;}
 #content div.all_items div.filter ul.tags li {font-size: 15px; background-color: #dedede; color: #313942; cursor: pointer;}
@@ -896,10 +907,7 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .scene.defaultEdit > div.prices ul.prices li.pricedetails ul.info li.bulk:before {content: "- ";}
 #content .scene.defaultEdit > div.prices ul.prices > li > ul.actions {position: absolute; top: 3px; right: 0;}
 #content .scene.defaultEdit > div.subscription_method {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
-#content .scene.defaultEdit > div.subscription_method dl.settings {padding: 0 30px 20px;}
-#content .scene.defaultEdit > div.subscription_method dl.settings dt,
-#content .scene.defaultEdit > div.subscription_method dl.settings dd {display: block; font-size: 13px; line-height: 1.38em;}
-#content .scene.defaultEdit > div.subscription_method dl.settings dt {color: #313942;}
+#content .scene.defaultEdit > div.subscription_method dl.info {padding-bottom: 20px;}
 #content .scene.defaultEdit > div.subscription_method ul.actions.change {padding-bottom: 10px;}
 #content .scene.defaultEdit > div.subscription_method div.change_subscription_method {display: none;}
 #content .scene.defaultEdit > div.subscription_method form {padding-bottom: 10px; padding-top: 5px;}
@@ -925,6 +933,7 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 /*s-default_edit.css*/
 #content .scene.defaultEdit > div.status .actions li.status form {padding-right: 15px;}
 #content .scene.defaultEdit > div.item .actions li {padding: 0 5px 10px 0;}
+#content .scene div.togglable h2 svg {right: 10px;}
 
 
 /*s-default_new.css*/

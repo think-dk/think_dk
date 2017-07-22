@@ -117,12 +117,18 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 #content .scene p.note {font-style: italic;}
 #content ul.list {padding: 21px 30px;}
 #content ul.list li {display: block;}
-#content dl.list {padding: 21px 30px; width: 600px;}
-#content dl.list dt,
-#content dl.list dd {padding: 5px 0; border-bottom: 1px solid #dbdfe5; height: 14px;}
-#content dl.list dt {width: 100px;}
-#content dl.list dt:after {content: ":";}
-#content dl.list dd {width: 170px; margin: 0 30px 0 0;}
+#content dl.info {overflow: hidden; padding: 0 30px 6px;}
+#content dl.info dt {float: left; clear: left;}
+#content dl.info dt:after {content: ":\00a0";}
+#content dl.info dd {float: left; clear: right; padding: 0 0 3px; color: #313942;}
+#content dl.info dd.waiting,
+#content dl.info dd.partial {color: orange;}
+#content dl.info dd.pending,
+#content dl.info dd.unpaid,
+#content dl.info dd.unshipped {color: #df0000;}
+#content dl.info dd.complete,
+#content dl.info dd.paid,
+#content dl.info dd.shipped {color: green;}
 #content .scene > ul.actions {padding-bottom: 20px; padding-top: 20px; text-align: left;}
 #content .scene > ul.actions li {padding: 0 10px 10px 0;}
 #content .scene ul.tabs {background-color: #dedede; border-top: 1px solid #bbbbbb;}
@@ -304,6 +310,13 @@ ul.actions a.button.primary,
 ul.actions input.button.primary:hover,
 ul.actions a.button.primary:hover,
 #content ul.actions a.button.primary:hover {background-color: #313942;}
+.submitting input.button,
+.submitting a.button,
+#content .submitting a.button {padding-left: 40px !important;
+	background-image: url(/janitor/admin/img/gx_loader.gif);
+	background-position: 9px 7px;
+	background-repeat: no-repeat;
+}
 ul.actions input.button.secondary,
 ul.actions a.button.secondary,
 #content ul.actions a.button.secondary {background-color: #fecd60; color: #9f742c;}
@@ -509,41 +522,32 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content div.all_items ul.items > li div.tagoptions ul.actions li {padding-top: 1px;}
 #content div.sortable div.tagoptions .field {padding-left: 48px;}
 #content .scene.tagList ul.items > li.unused {background: orange;}
-#content .scene.tagList ul.items > li > h3 > span {font-size: 12px;}
-#content .scene.tagEdit ul.tag_items {padding: 16px 30px;}
-#content .scene.tagEdit ul.tag_items li {display: block; padding: 2px 0;}
-#content .scene.tagEdit ul.tag_items dt {display: none;}
-#content .scene.tagEdit ul.tag_items dd.name {font-weight: bold; padding: 0 15px 0 0;}
-#content .scene.tagEdit ul.tag_items dd.name a {font-weight: bold;}
-#content .scene.tagEdit ul.tag_items dd.itemtype:after {content: "/";}
+#content .scene.tagList ul.items > li h3 span {font-size: 12px;}
 
 
 /*s-shop.css*/
 #content .scene.shopList ul.tabs li.waiting {color: orange;}
 #content .scene.shopList ul.tabs li.pending {color: red;}
 #content .scene.shopList ul.tabs li.complete {color: green;}
-#content .scene.shopList div.all_items ul.items dd.missing {color: #df0000;}
 #content .scene.shopList ul.items > li dl.info dt.price {display: none;}
 #content .scene.shopList ul.items > li dl.info dd.price {position: absolute; top: 10px; right: 100px; font-size: 26px;}
-#content .scene.shopList ul.items > li dl.info dd.waiting,
-#content .scene.shopList ul.items > li dl.info dd.partial {color: orange;}
-#content .scene.shopList ul.items > li dl.info dd.pending,
-#content .scene.shopList ul.items > li dl.info dd.unpaid,
-#content .scene.shopList ul.items > li dl.info dd.unshipped {color: #df0000;}
-#content .scene.shopList ul.items > li dl.info dd.complete,
-#content .scene.shopList ul.items > li dl.info dd.paid,
-#content .scene.shopList ul.items > li dl.info dd.shipped {color: green;}
 #content .scene.shopView > ul.actions li.invoice {float: right; padding: 0 0 10px 10px;}
 #content .scene.shopView > ul.actions li.creditnote {float: right; padding: 0 0 10px 10px;}
 #content .scene.shopView > ul.actions li.ship {float: right; padding: 0 0 10px 10px;}
 #content .scene.shopView > ul.actions li.pay {float: right; padding: 0 0 10px 10px;}
-#content .scene.shopView dl.list {padding-top: 3px; padding-right: 0; padding-bottom: 25px; width: 370px;}
-#content .scene.shopView dl.list dt {width: 120px;}
-#content .scene.shopView dl.list dt:after {content: ":";}
-#content .scene.shopView dl.list dd {width: 250px; margin: 0;}
-#content .scene.shopView > div > form {display: none; padding-top: 10px; padding-bottom: 10px;}
+#content .scene.shopView > div > h2 + form {display: none; padding-top: 10px; padding-bottom: 10px;}
 #content .scene.shopView > div > h2 > span {color: #7d848c; cursor: pointer;}
 #content .scene.shopView > div > h2 > span:before {content: "\00a0-\00a0";}
+#content .scene.shopView > div > dl.info,
+#content .scene.shopView div.payments dl.info {padding-top: 3px; padding-right: 0; padding-bottom: 25px; width: 370px;}
+#content .scene.shopView > div > dl.info dt,
+#content .scene.shopView > div > dl.info dd, 
+#content .scene.shopView div.payments dl.info dt,
+#content .scene.shopView div.payments dl.info dd {padding: 5px 0; border-bottom: 1px solid #dbdfe5; height: 14px;}
+#content .scene.shopView > div > dl.info dt,
+#content .scene.shopView div.payments dl.info dt {width: 120px; float: none;}
+#content .scene.shopView > div > dl.info dd,
+#content .scene.shopView div.payments dl.info dd {width: 250px; margin: 0; float: none;}
 #content .scene.shopView div.basics,
 #content .scene.shopView div.contact,
 #content .scene.shopView div.delivery,
@@ -576,6 +580,9 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.cartView div.order {border-bottom: 1px solid #bbbbbb;}
 #content .scene.cartView div.order ul.actions {padding-bottom: 15px;}
 #content .scene.orderView {}
+#content .scene.orderView div.orderstatus h2.waiting {color: orange;}
+#content .scene.orderView div.orderstatus h2.pending {color: #df0000;}
+#content .scene.orderView div.orderstatus h2.complete {color: green;}
 #content .scene.orderView div.all_items > ul.items {padding-bottom: 25px;}
 #content .scene.orderView div.orderstatus {border-bottom: 1px solid #bbbbbb;}
 #content .scene.orderView div.comment {border-bottom: 1px solid #bbbbbb;}
@@ -584,7 +591,6 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.orderView div.payments ul.actions {padding-bottom: 15px;}
 #content .scene.paymentList ul.items > li dl.info dd.price {right: 140px;}
 #content .scene.newPayment div.basics {border-top: 1px solid #bbbbbb;}
-#content .scene.newPayment div.basics,
 #content .scene.newPayment div.charge,
 #content .scene.newPayment div.reminder,
 #content .scene.newPayment div.register {border-bottom: 1px solid #bbbbbb;}
@@ -610,7 +616,7 @@ body.invoice #content div.scene .basics h2 {padding-top: 25px;}
 body.invoice #content div.scene .basics dl.info {padding: 10px 30px;}
 body.invoice #content div.scene .basics dl.info dt {font-weight: 700;}
 body.invoice #content div.scene .basics dl.info dd,
-body.invoice #content div.scene .basics dl.info dt {display: block; padding: 0 0 5px;}
+body.invoice #content div.scene .basics dl.info dt {display: block; float: none; padding: 0 0 5px;}
 body.invoice #content div.scene .buyer ul.info {padding-bottom: 20px;}
 body.invoice #content div.scene .all_items {padding-top: 20px;}
 body.invoice #content div.scene .all_items ul.items li h3 {padding-right: 30px;}
@@ -688,14 +694,10 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .defaultList.userSubscriptions dd.price+dt.price+dd.price {padding-top: 0;}
 #content .defaultList.userSubscriptions dt.membership {display: none;}
 #content .defaultList.userSubscriptions dd.membership {color: green; clear: left; padding-top: 5px;}
-#content .defaultList.userSubscriptions dd.payment_status.missing {color: #df0000;}
 #content .defaultView.userMembership > div > h2 {font-size: 0.8em; text-transform: uppercase; padding-top: 7px; padding-bottom: 10px; margin: 0 0 20px;}
 #content .defaultView.userMembership div.item {position: relative; border-bottom: 1px solid #bbbbbb;}
 #content .defaultView.userMembership div.item h3 {padding-bottom: 20px; font-size: 28px;}
-#content .defaultView.userMembership div.item dl {margin-top: -5px; overflow: hidden; padding: 0 30px 20px;}
-#content .defaultView.userMembership div.item dt::after {content: ":\00a0";}
-#content .defaultView.userMembership div.item dt {clear: left; float: left;}
-#content .defaultView.userMembership div.item dd {clear: right; float: left; padding: 0 0 3px;}
+#content .defaultView.userMembership div.item dl {margin-top: -5px; padding-bottom: 30px;}
 #content .defaultView.userMembership div.item dd.price.default {text-decoration: line-through;}
 #content .defaultView.userMembership div.item dt.price,
 #content .defaultView.userMembership div.item dd.price {padding-top: 5px;}
@@ -705,25 +707,15 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .defaultView.userMembership div.item dd.membership {color: #df0000; clear: left; padding-top: 5px;}
 #content .defaultView.userMembership div.item dt.payment_method,
 #content .defaultView.userMembership div.item dd.payment_method {padding-top: 5px;}
-#content .defaultView.userMembership div.item dd.payment_status.missing {color: #df0000;}
 #content .defaultView.userMembership div.item ul.actions {padding-bottom: 15px;}
 #content .defaultView.userMembership div.orders {border-bottom: 1px solid #bbbbbb;}
 #content .defaultView.userMembership div.orders ul.items {padding-bottom: 25px;}
-#content .defaultView.userMembership div.orders ul.items dd.payment_status.missing {color: #df0000;}
 #content .defaultView.userMembership div.change {border-bottom: 1px solid #bbbbbb;}
 #content .defaultView.userMembership div.change div.option {padding-bottom: 30px;}
 #content .defaultView.userMembership div.change div.option h3 {padding-bottom: 10px; font-size: 18px;}
 #content .defaultView.userMembership div.change div.option p {padding-bottom: 10px;}
 #content .defaultView.userMembership div.cancel {border-bottom: 1px solid #bbbbbb;}
 #content .defaultView.userMembership div.cancel ul.actions {padding-bottom: 15px;}
-#content .scene.memberList ul.items > li dl.info dd.waiting,
-#content .scene.memberList ul.items > li dl.info dd.partial {color: orange;}
-#content .scene.memberList ul.items > li dl.info dd.pending,
-#content .scene.memberList ul.items > li dl.info dd.unpaid,
-#content .scene.memberList ul.items > li dl.info dd.unshipped {color: #df0000;}
-#content .scene.memberList ul.items > li dl.info dd.complete,
-#content .scene.memberList ul.items > li dl.info dd.paid,
-#content .scene.memberList ul.items > li dl.info dd.shipped {color: green;}
 #content .defaultEdit.userMember ul.actions li.user {float: right; padding: 0 0 10px 10px;}
 #content .defaultEdit.userMember div.orders {border-bottom: 1px solid #bbbbbb;}
 #content .defaultEdit.userMember div.orders ul.items {padding-bottom: 25px;}
@@ -822,10 +814,7 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 }
 #content div.all_items.videos ul.items > li.playing div.videoplayer {background-position: 0px -100px;}
 #content div.all_items ul.items > li .description {padding-bottom: 10px; margin-top: -5px; font-size: 12px; line-height: 1em;}
-#content div.all_items ul.items > li dl {overflow: hidden; padding: 0 30px 6px; margin-top: -5px;}
-#content div.all_items ul.items > li dt {float: left; clear: left;}
-#content div.all_items ul.items > li dt:after {content: ":\00a0";}
-#content div.all_items ul.items > li dd {float: left; clear: right; padding: 0 0 3px;}
+#content div.all_items ul.items > li dl.info {margin-top: -5px;}
 #content div.all_items ul.items > li ul.actions {position: absolute; top: 0px; padding: 0; right: 30px;}
 #content div.all_items ul.items > li ul.actions li {padding: 5px 0 5px 5px;}
 #content div.all_items ul.items > li ul.actions li a.button {padding: 4px 12px 6px;}
@@ -965,10 +954,7 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .scene.defaultEdit > div.prices ul.prices li.pricedetails ul.info li.bulk:before {content: "- ";}
 #content .scene.defaultEdit > div.prices ul.prices > li > ul.actions {position: absolute; top: 3px; right: 0;}
 #content .scene.defaultEdit > div.subscription_method {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
-#content .scene.defaultEdit > div.subscription_method dl.settings {padding: 0 30px 20px;}
-#content .scene.defaultEdit > div.subscription_method dl.settings dt,
-#content .scene.defaultEdit > div.subscription_method dl.settings dd {display: block; font-size: 13px; line-height: 1.38em;}
-#content .scene.defaultEdit > div.subscription_method dl.settings dt {color: #313942;}
+#content .scene.defaultEdit > div.subscription_method dl.info {padding-bottom: 20px;}
 #content .scene.defaultEdit > div.subscription_method ul.actions.change {padding-bottom: 10px;}
 #content .scene.defaultEdit > div.subscription_method div.change_subscription_method {display: none;}
 #content .scene.defaultEdit > div.subscription_method form {padding-bottom: 10px; padding-top: 5px;}
