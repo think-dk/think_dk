@@ -764,7 +764,15 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 
 /*s-front.css*/
 #content .scene.front > div > h2 {font-size: 0.8em; text-transform: uppercase; padding-top: 7px; padding-bottom: 10px; margin: 0 0 20px;}
-#content .scene.front div.todos {border-top: 1px solid #bbbbbb; padding-bottom: 10px;}
+#content .scene.front > div {border-bottom: 1px solid #bbbbbb; padding-bottom: 10px;}
+#content .scene.front div.orders ul.orders {}
+#content .scene.front div.orders ul.orders li {width: 25%; text-align: center;}
+#content .scene.front div.orders ul.orders li h3 a {display: block;}
+#content .scene.front div.orders ul.orders li h3 span {display: block; font-size: 50px; line-height: 60px;}
+#content .scene.front div.members ul.members {}
+#content .scene.front div.members ul.members li {width: 25%; text-align: center;}
+#content .scene.front div.members ul.members li h3 a {display: block;}
+#content .scene.front div.members ul.members li h3 span {display: block; font-size: 50px; line-height: 60px;}
 #content .scene.front div.todos ul.todos {}
 #content .scene.front div.todos ul.todos > li.todo {position: relative; border-bottom: 1px solid #dedede; display: block; padding: 0 0 10px; margin-bottom: 10px;}
 #content .scene.front div.todos ul.todos > li.todo:last-child {border: none;}
@@ -779,7 +787,7 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .scene.front div.todos ul.todos dd.overdue,
 #content .scene.front div.todos ul.todos dd.high {color: #df0000 !important;}
 #content .scene.front div.todos ul.todos ul.tags {padding: 0; position: absolute; right: 30px; top: 0;}
-#content .scene.front div.qnas {position: relative; border-top: 1px solid #bbbbbb; padding-bottom: 15px;}
+#content .scene.front div.qnas {position: relative; border-bottom: 1px solid #bbbbbb; padding-bottom: 15px;}
 #content .scene.front div.qnas ul.qnas {}
 #content .scene.front div.qnas ul.qnas > li.qna {position: relative; border-bottom: 1px solid #dedede; display: block; padding: 0 0 10px; margin-bottom: 10px;}
 #content .scene.front div.qnas ul.qnas > li.qna:last-child {border: none;}

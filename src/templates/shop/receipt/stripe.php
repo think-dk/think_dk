@@ -3,6 +3,9 @@ global $action;
 global $model;
 $UC = new User();
 
+message()->resetMessages();
+
+
 // get current user id
 $user_id = session()->value("user_id");
 $order_no = $action[1];

@@ -21,6 +21,9 @@ $page->pageTitle("the Janitor @ ".SITE_URL)
 <div class="scene front">
 	<h1><?= SITE_NAME ?></h1>
 
+	<?= $JML->listOrderStatus() ?>
+
+	<?= $JML->listMemberStatus() ?>
 
 	<?= $JML->listUserTodos() ?>
 
