@@ -40,6 +40,7 @@ if(defined("SITE_SHOP") && SITE_SHOP) {
 	<div id="header">
 		<ul class="servicenavigation">
 			<li class="keynav navigation nofollow"><a href="#navigation">To navigation</a></li>
+			<li class="keynav contact"><a href="/contact">Contact</a></li>
 <? if(defined("SITE_SHOP") && SITE_SHOP): ?>
 			<li class="keynav cart nofollow<?= $cart && $cart["total_items"] ? " used" : "" ?>"><a href="/shop/cart">Cart<?= ($cart ? ' (<span class="total">'.$cart["total_items"].'</span>)' : '') ?></a></li>
 <? endif; ?>
