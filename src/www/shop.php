@@ -100,7 +100,6 @@ if(is_array($action) && count($action)) {
 	else if($action[0] == "confirm" && count($action) == 2) {
 
 		$order = $model->newOrderFromCart($action);
-
 		if($order) {
 
 			$price = $model->getTotalOrderPrice($order["id"]);
@@ -260,9 +259,35 @@ if(is_array($action) && count($action)) {
 				"templates" => "shop/checkout.php"
 			));
 		}
+		// signup was completed
 		else {
-			// redirect to leave POST state
-			header("Location: /shop/checkout");
+
+			// check if there is a cart
+			$cart = $model->getCart();
+			// cart exists
+			if($cart) {
+				$total_price = $model->getTotalCartPrice($cart["id"]);
+
+				// if order has price
+				if($total_price && $total_price["price"]) {
+					// redirect to leave POST state
+					// to checkout and confirm order
+					header("Location: /shop/checkout");
+				}
+				// order is zero priced
+				else {
+
+					// confirm free order directly (this will redirect to receipt)
+					header("Location: /shop/confirm/".$cart["cart_reference"]);
+				}
+			}
+			// no cart - go to receipt
+			else {
+
+				// Assume simple signup
+				header("Location: /shop/receipt");
+			}
+
 		}
 		exit();
 	}
