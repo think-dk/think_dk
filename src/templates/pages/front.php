@@ -94,7 +94,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 
 <? if($post_items): ?>
 	<div class="news">
-		<h2>Latest news <a href="/bulletin">(see all)</a></h2>
+		<h2>Latest bulletins <a href="/bulletin">(see all)</a></h2>
 		<ul class="items articles">
 		<? foreach($post_items as $item): 
 			$media = $IC->sliceMedia($item); ?>
