@@ -16,8 +16,8 @@
 	<link type="text/css" rel="stylesheet" media="all" href="/janitor/css/lib/seg_<?= $this->segment(array("type" => "janitor")) ?>_include.css" />
 	<script type="text/javascript" src="/janitor/js/lib/seg_<?= $this->segment(array("type" => "janitor")) ?>_include.js"></script>
 <? } else { ?>
-	<link type="text/css" rel="stylesheet" media="all" href="/janitor/css/seg_<?= $this->segment(array("type" => "janitor")) ?>.css" />
-	<script type="text/javascript" src="/janitor/js/seg_<?= $this->segment(array("type" => "janitor")) ?>.js"></script>
+	<link type="text/css" rel="stylesheet" media="all" href="/janitor/css/seg_<?= $this->segment(array("type" => "janitor")) ?>.css?rev=5" />
+	<script type="text/javascript" src="/janitor/js/seg_<?= $this->segment(array("type" => "janitor")) ?>.js?rev=5"></script>
 <? } ?>
 
 	<?= $this->headerIncludes() ?>
