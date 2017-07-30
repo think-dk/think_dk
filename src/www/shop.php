@@ -20,15 +20,26 @@ if(is_array($action) && count($action)) {
 	// /shop/receipt
 	if($action[0] == "receipt") {
 
-		// specific payment receipt
-		if(count($action) == 3) {
+
+		if(count($action) == 3 && $action[2] == "error") {
 
 			$page->page(array(
-				"templates" => "shop/receipt/".$action[2].".php"
+				"templates" => "shop/receipt/error.php"
 			));
 			exit();
 
 		}
+
+		// ALL OTHER VARIATIONS (THAN ERROR) ARE HANDLED IN RECEIPT TEMPLATE
+		// specific payment receipt
+		// if(count($action) == 3) {
+		//
+		// 	$page->page(array(
+		// 		"templates" => "shop/receipt/".$action[2].".php"
+		// 	));
+		// 	exit();
+		//
+		// }
 		// general receipt
 		else {
 
@@ -44,7 +55,7 @@ if(is_array($action) && count($action)) {
 	// /shop/gateway
 	else if($action[0] == "gateway") {
 
-		// specific payment receipt
+		// specific gateway payment window
 		if(count($action) == 3) {
 
 			$page->page(array(
@@ -55,7 +66,7 @@ if(is_array($action) && count($action)) {
 
 		}
 
-		// specific payment receipt
+		// process payment
 		else if(count($action) == 4 && $action[3] == "process" && $page->validateCsrfToken()) {
 
 			if($model->processOrderPayment($action)) {

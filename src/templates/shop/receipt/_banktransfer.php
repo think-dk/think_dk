@@ -51,7 +51,7 @@ if($order) {
 	
 <? if($order): ?>
 	<h1>Thank you for supporting change.</h1>	
-	<h2>Please be so kind ...</h2>
+	<h2>Bank transfer</h2>
 
 	<p>
 	<? if($subscription_method && $payment_date): ?>

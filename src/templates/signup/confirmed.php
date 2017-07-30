@@ -3,16 +3,23 @@ global $action;
 global $model;
 
 $IC = new Items();
+$SC = new Shop();
+
 $page_item = $IC->getItem(array("tags" => "page:signup-confirmed", "extend" => array("user" => true, "tags" => true, "mediae" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
+// values save while redirecting in controller
 $type = session()->value("signup_type");
 $username = session()->value("signup_username");
 
 session()->reset("signup_type");
 session()->reset("signup_username");
+
+
+$cart = $SC->getCart();
+
 
 ?>
 <div class="scene signup i:scene">
@@ -51,9 +58,20 @@ session()->reset("signup_username");
 		<? endif; ?>
 	</div>
 <? else:?>
+
 	<h1>Thank you!</h1>
 	<p>Your <?= $type ?>: <?= $username ?>, has been confirmed.</p>
+
 <? endif; ?>
 
+<? if($cart && $cart["items"]): ?>
+
+	<h2>Checkout</h2>
+	<p>You have <?= pluralize(count($cart["items"]), "item", "items") ?> in your cart.</p>
+	<ul class="actions">
+		<li class="checkout"><a href="/shop/checkout" class="button primary">Proceed to checkout</a></li>
+	</ul>
+
+<? endif; ?>
 
 </div>
