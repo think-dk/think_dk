@@ -839,6 +839,87 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene div.all_services div.servicegroup > p {font-style: italic; padding-left: 20px; padding-right: 20px; padding-bottom: 30px;}
 #content .scene div.all_services div.servicegroup ul.services h3,
 #content .scene div.all_services div.servicegroup ul.services p {padding-left: 0; padding-right: 0;}
+#content .scene.events div.calendar {
+	box-sizing: border-box;
+	text-align: center;
+	position: relative;
+	padding: 0 70px 50px;
+	font-size: 0;
+}
+#content .scene.events div.calendar span.prev {z-index: 5; position: absolute; top: 4px; left: 50%; margin-left: -110px; width: 25px; height: 22px; cursor: pointer;}
+#content .scene.events div.calendar span.prev > svg.arrow line {stroke: #34cc3d; stroke-width: 3px;}
+#content .scene.events div.calendar span.next {z-index: 5; position: absolute; top: 4px; left: 50%; margin-left: 85px; width: 25px; height: 22px; cursor: pointer;}
+#content .scene.events div.calendar span.next > svg.arrow line {stroke: #34cc3d; stroke-width: 3px;}
+#content .scene.events div.calendar div.month {text-align: center; box-sizing: border-box;}
+#content .scene.events div.calendar div.month h3 {
+	text-align: center;
+	width: auto;
+	font-size: 18px;
+	line-height: 20px;
+	font-weight: 600;
+}
+#content .scene.events div.calendar div.month h3 span {
+	display: inline-block;
+	vertical-align: top;
+	padding: 0 2px;
+}
+#content .scene.events div.calendar div.month h4 {
+	text-align: center;
+	margin: 0;
+	font-size: 11px;
+	font-weight: 100;
+}
+#content .scene.events div.calendar ul.weekdays {
+	padding: 0;
+	list-style: none;
+}
+#content .scene.events div.calendar ul.weekdays li {
+	font-size: 14px;
+	display: inline-block;
+	vertical-align: top;
+	box-sizing: border-box;
+	width: 14.28%;
+	height: 25px;
+	padding: 2px 4px;
+}
+#content .scene.events div.calendar ul.month {
+	padding: 0;
+	list-style: none;
+	text-align: left;
+}
+#content .scene.events div.calendar ul.month li {
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	width: 14.28%;
+	height: 100px;
+	box-sizing: border-box;
+	text-align: left;
+	font-size: 12px;
+	border: 1px solid #666666;
+	margin: -1px -1px 0 0;
+}
+#content .scene.events div.calendar ul.month li span {
+	display: block;
+	display: inline-block;
+	padding: 2px 4px;}
+#content .scene.events div.calendar ul.month li h3 {
+	padding: 2px 4px 2px 4px; font-size: 12px; text-align: left;
+	font-weight: 400; line-height: 13px;
+}
+#content .scene.events div.calendar ul.month li h3 a:first-child {padding-right: 3px;}
+#content .scene.events div.calendar ul.month li.day {}
+#content .scene.events div.calendar ul.month li.today span {background-color: #26962d; color: #ffffff;
+	font-weight: 700;
+}
+#content .scene.events div.calendar ul.month li.weekend {background: #ededed;
+	font-weight: 100;
+}
+#content .scene.events div.calendar ul.month li.empty {color: #dedede;
+	font-weight: 100;
+}
+#content .scene.events div.calendar ul.month li.empty.weekend {color: #bbbbbb;}
+#content .scene div.all_events {display: none;}
 #content .scene div.all_events h2 {padding-bottom: 15px;}
 #content .scene div.all_events h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
 	font-family: "OpenSans";
@@ -850,7 +931,9 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene ul.events li.event dl.occurs_at {padding-bottom: 0;}
 #content .scene ul.events li.event dd {width: auto; font-size: 10px; padding-bottom: 0;}
 #content .scene ul.events li.event dt {display: none;}
-#content .scene div.all_events.past_events {padding-top: 50px;}
+#content .scene div.all_events.past_events {padding-top: 50px;
+	display: none;
+}
 #content .scene.event div.event div.description {padding-bottom: 10px;}
 #content .scene.event div.event dl.occurs_at {padding-bottom: 0;}
 #content .scene.event div.event dl.occurs_at dt {display: block; width: auto; font-size: 10px; text-align: left;}
