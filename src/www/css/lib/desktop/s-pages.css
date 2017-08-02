@@ -106,6 +106,7 @@
 #content .scene.events div.calendar {
 /*	border: 1px solid #26962d;*/
 
+	height: 700px;
 	box-sizing: border-box;
 	text-align: center;
 	position: relative;
@@ -206,7 +207,8 @@
 #content .scene.events div.calendar ul.month li.weekend {background: #ededed;
 	font-weight: 100;
 }
-#content .scene.events div.calendar ul.month li.empty {color: #dedede;
+#content .scene.events div.calendar ul.month li.prev_month,
+#content .scene.events div.calendar ul.month li.next_month {color: #dedede;
 	font-weight: 100;
 /*	background: red;*/
 }

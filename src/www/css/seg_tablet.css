@@ -840,6 +840,7 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene div.all_services div.servicegroup ul.services h3,
 #content .scene div.all_services div.servicegroup ul.services p {padding-left: 0; padding-right: 0;}
 #content .scene.events div.calendar {
+	height: 700px;
 	box-sizing: border-box;
 	text-align: center;
 	position: relative;
@@ -915,7 +916,8 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene.events div.calendar ul.month li.weekend {background: #ededed;
 	font-weight: 100;
 }
-#content .scene.events div.calendar ul.month li.empty {color: #dedede;
+#content .scene.events div.calendar ul.month li.prev_month,
+#content .scene.events div.calendar ul.month li.next_month {color: #dedede;
 	font-weight: 100;
 }
 #content .scene.events div.calendar ul.month li.empty.weekend {color: #bbbbbb;}

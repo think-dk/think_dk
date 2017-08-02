@@ -1,10 +1,10 @@
 Util.Objects["events"] = new function() {
 	this.init = function(scene) {
-		u.bug("scene init:" + u.nodeId(scene))
+//		u.bug("scene init:" + u.nodeId(scene));
 		
 
 		scene.resized = function() {
-			u.bug("scene.resized:" + u.nodeId(this));
+//			u.bug("scene.resized:" + u.nodeId(this));
 
 			// refresh dom
 			this.offsetHeight;
@@ -28,19 +28,9 @@ Util.Objects["events"] = new function() {
 			page.acceptCookies();
 
 
-			// get event list
-//			this.div_calendar = u.ae(this, "div", {"class":"calendar"});
-
 			// Object for storing all event data
 			this.events = {};
 			var events = u.qsa("li.event", this);
-			// console.log("this.li_events.length:" + events.length);
-			// console.log(events);
-
-//			var all_events = u.qs("div.all_events", this);
-
-
-
 			if(events.length) {
 
 				var event, i;
@@ -50,7 +40,6 @@ Util.Objects["events"] = new function() {
 
 			}
 
-			console.log(this.events);
 
 			this.createCalendar();
 
@@ -60,62 +49,60 @@ Util.Objects["events"] = new function() {
 
 		scene.indexEvent = function(event) {
 
-			var event_date, timestamp_fragments, dd_starting_at, starting_at;
+			var event_date, timestamp_fragments, dd_starting_at, starting_at, year, month, date, hour, minute;
 
 			dd_starting_at = u.qs("dd.starting_at", event);
 			if(dd_starting_at) {
 
 				// readsafe datetime stored in content attribute
 				starting_at = dd_starting_at.getAttribute("content");
-				event.date = new Date(starting_at);
 				event.item_id = u.cv(event, "item_id");
 
-				// console.log(starting_at);
-				//
-				// timestamp_fragments = starting_at.match(/(\d\d\d\d)\-(\d\d)\-(\d\d)/);
-				// timestamp_fragments = starting_at.match(/(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d)/);
-				// if(timestamp_fragments) {
-				// 	year = timestamp_fragments[1];
-				// 	month = timestamp_fragments[2];
-				// 	date = timestamp_fragments[3];
-				//
-				// 	hour = timestamp_fragments[4];
-				// 	minute = timestamp_fragments[5];
-				// 	event.date = new Date(year, month, date, hour, minute);
-				// 	console.log(event.date);
-				// }
+				console.log(starting_at);
 
-			}
+				// Simple data parsing Not working in Safari
+				// event.date = new Date(starting_at);
+				// Parse date manually
+				timestamp_fragments = starting_at.match(/(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d)/);
+				if(timestamp_fragments) {
+					year = timestamp_fragments[1];
+					month = timestamp_fragments[2]-1;
+					date = timestamp_fragments[3];
+
+					hour = timestamp_fragments[4];
+					minute = timestamp_fragments[5];
+					event.date = new Date(year, month, date, hour, minute);
 
 
-			event_date = u.date("Y-m-d", event.date.getTime());
-//			console.log(event_date);
-//						event_time = event.getAttribute("data-time");
+					console.log(event.date);
+					event_date = u.date("Y-m-d", event.date.getTime());
 
 
-			// check if event date exists in event object
-			if(!this.events[event_date]) {
-				this.events[event_date] = []
-			}
-			// event date exists
-			// check if event already exists on that day
-			else {
-				var i, e;
-				for(i = 0; i < this.events[event_date].length; i++) {
-					e = this.events[event_date][i];
-
-					// if it exists remove it
-					if(e.item_id == event.item_id) {
-						this.events[event_date].splice(i, 1);
+					// check if event date exists in event object
+					if(!this.events[event_date]) {
+						this.events[event_date] = []
 					}
-				}
-			}
-			// if(!this.events[event_date][event_time]) {
-			// 	this.events[event_date][event_time] = [];
-			// }
+					// event date exists
+					// check if event already exists on that day
+					else {
+						var i, e;
+						for(i = 0; i < this.events[event_date].length; i++) {
+							e = this.events[event_date][i];
 
-			// Add current event to event list for that date
-			this.events[event_date].push(event);
+							// if it exists remove it
+							if(e.item_id == event.item_id) {
+								this.events[event_date].splice(i, 1);
+							}
+						}
+					}
+
+					// Add current event to event list for that date
+					this.events[event_date].push(event);
+				}
+
+			}
+
+
 			
 		}
 
@@ -129,14 +116,9 @@ Util.Objects["events"] = new function() {
 		scene.prevMonth = function() {
 
 			this.response = function(response) {
+
+				// index returned events
 				var events = u.qsa("div.all_events li.event", response);
-				console.log("events.length:" + events.length);
-				// console.log(events);
-
-	//			var all_events = u.qs("div.all_events", this);
-
-
-
 				if(events.length) {
 
 					var event, i;
@@ -146,10 +128,12 @@ Util.Objects["events"] = new function() {
 
 				}
 
+				// build new month
 				this.div_calendar.removeChild(this.current_month);
 				this.current_month = u.ie(this.div_calendar, this.getMonth(this.current_month.year, this.current_month.month-1));
 			}
-			u.request(this, "/events/"+this.current_month.year+"/"+(this.current_month.month-1));
+			// request previous month to fill out grid
+			u.request(this, "/events/"+this.current_month.year+"/"+(this.current_month.month-2));
 
 
 		}
@@ -210,14 +194,19 @@ Util.Objects["events"] = new function() {
 			var month_object = [];
 			var first_weekday = this.getFirstWeekdayOfMonth(year, month);
 			var last_day = this.getLastDayOfMonth(year, month);
-			var i, day, date;
 
+			var i, j, day, date, date_in_prev_month, last_day_last_month, date_obj, event;
+			var weekday_counter = 1;
+
+
+			// if first weekday is not monday
+			// get the last day of previous month to pad grid correctly
 			if(first_weekday > 1) {
 				last_day_last_month = this.getLastDayOfMonth(year, month-1);
 			}
 
 
-	//		u.bug("range:" + (first_weekday) + " - " + (last_day));
+			// create month container
 			var new_month = document.createElement("div");
 			new_month.month = month;
 			new_month.year = year;
@@ -235,78 +224,110 @@ Util.Objects["events"] = new function() {
 				day = u.ae(ul, "li", {"class":"weekday", "html":u.txt["weekday-"+i+"-abbr"]});
 			}
 
+			// create day grid
 			var ul = u.ae(new_month, "ul", {"class":"month"});
 
-			var date_in_prev_month, date;
-			var weekday_counter = 1;
+
+
+
+			// PREVIOUS MONTH
+			// Pad with days from previous month to full up grid
 			for(i = 1; i < first_weekday; i++) {
+
+				// find correct date for this position in grid
 				date_in_prev_month = last_day_last_month + 1 + (i - first_weekday);
-				day = u.ae(ul, "li", {"class":"empty"});
+				day = u.ae(ul, "li", {"class":"prev_month"});
 				u.ae(day, "span", {"html":date_in_prev_month});
 
-				if(weekday_counter%7 == 0 || weekday_counter%7 == 6) {
-					u.ac(day, "weekend");
-				}
 
-				weekday_counter++;
-//				console.log(this.events);
-//				console.log(new Date(year, month-2, date_in_prev_month).getTime())
-
-				date = u.date("Y-m-d", new Date(year, month-2, date_in_prev_month).getTime());
-//				u.bug("date:" + date)
-
+				// get date marker for this day
+				date_obj = new Date(year, month-2, date_in_prev_month);
+				date = u.date("Y-m-d", date_obj.getTime());
+				// if there are event for this date, then add them
 				if(this.events[date]) {
 					for(j = 0; event = this.events[date][j]; j++) {
 						this.insertEvent(day, event);
 					}
 				}
+
+
+				// add today class
+				if(this.now.year == date_obj.getFullYear() && this.now.month == (date_obj.getMonth()+1) && this.now.date == date_in_prev_month) {
+					u.ac(day, "today");
+				}
+
+				// add weekend class
+				if(weekday_counter%7 == 0 || weekday_counter%7 == 6) {
+					u.ac(day, "weekend");
+				}
+				weekday_counter++;
+
+
 			}
 
+			// CURRENT MONTH
+			// add days of current month
 			for(i = 1; i <= last_day; i++) {
 				day = u.ae(ul, "li", {"class":"day"});
 				u.ae(day, "span", {"html":i});
 
 
-				day.date = i < 10 ? "0"+i : i;
-				day.month = new_month;
-
-
-				date = u.date("Y-m-d", new Date(year, month-1, i).getTime());
-//				u.bug("date:" + date)
+				// get date marker for this day
+				date_obj = new Date(year, month-1, i);
+				date = u.date("Y-m-d", date_obj.getTime());
+				// if there are event for this date, then add them
 				if(this.events[date]) {
-
 					for(j = 0; event = this.events[date][j]; j++) {
 						this.insertEvent(day, event, year, month);
 					}
-
 				}
 
-	// 			u.ce(day);
-	// 			day.clicked = function() {
-	// 				u.bug("day clicked")
-	// 			}
 
-				if(this.now.year == year && this.now.month == month && this.now.date == i) {
+				// add today class
+				if(this.now.year == date_obj.getFullYear() && this.now.month == (date_obj.getMonth()+1) && this.now.date == i) {
 					u.ac(day, "today");
 				}
 
-
+				// add weekend class
 				if(weekday_counter%7 == 0 || weekday_counter%7 == 6) {
 					u.ac(day, "weekend");
 				}
 				weekday_counter++;
+				
 			}
-			// fill up with next month
+
+			// NEXT MONTH
+			// fill up with next month to fill out grid
 			if((weekday_counter-1)%7) {
 				i = 1;
 				while((weekday_counter-1)%7) {
-					day = u.ae(ul, "li", {"class":"empty"});
-					u.ae(day, "span", {"html":i++});
+					day = u.ae(ul, "li", {"class":"next_month"});
+					u.ae(day, "span", {"html":i});
 
+
+					// get date marker for this day
+					date_obj = new Date(year, month, i);
+					date = u.date("Y-m-d", date_obj.getTime());
+					// if there are event for this date, then add them
+					if(this.events[date]) {
+						for(j = 0; event = this.events[date][j]; j++) {
+							this.insertEvent(day, event, year, month);
+						}
+					}
+
+
+					// add today class
+					if(this.now.year == date_obj.getFullYear() && this.now.month == (date_obj.getMonth()+1) && this.now.date == i) {
+						u.ac(day, "today");
+					}
+
+					// add weekend class
 					if(weekday_counter%7 == 0 || weekday_counter%7 == 6) {
 						u.ac(day, "weekend");
 					}
 					weekday_counter++;
+					i++;
+
 				}
 
 			}
@@ -333,7 +354,7 @@ Util.Objects["events"] = new function() {
 			else {
 				return first_day;
 			}
-			// dateObj = new Date(year, month, date[, hours[, minutes[, seconds[,ms]]]]) 
+
 		}
 
 		scene.getLastDayOfMonth = function(year, month) {

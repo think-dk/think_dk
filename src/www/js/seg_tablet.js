@@ -7906,9 +7906,7 @@ Util.Objects["contact"] = new function() {
 /*i-events.js*/
 Util.Objects["events"] = new function() {
 	this.init = function(scene) {
-		u.bug("scene init:" + u.nodeId(scene))
 		scene.resized = function() {
-			u.bug("scene.resized:" + u.nodeId(this));
 			this.offsetHeight;
 		}
 		scene.scrolled = function() {
@@ -7925,32 +7923,41 @@ Util.Objects["events"] = new function() {
 					this.indexEvent(event);
 				}
 			}
-			console.log(this.events);
 			this.createCalendar();
 			page.resized();
 		}
 		scene.indexEvent = function(event) {
-			var event_date, timestamp_fragments, dd_starting_at, starting_at;
+			var event_date, timestamp_fragments, dd_starting_at, starting_at, year, month, date, hour, minute;
 			dd_starting_at = u.qs("dd.starting_at", event);
 			if(dd_starting_at) {
 				starting_at = dd_starting_at.getAttribute("content");
-				event.date = new Date(starting_at);
 				event.item_id = u.cv(event, "item_id");
-			}
-			event_date = u.date("Y-m-d", event.date.getTime());
-			if(!this.events[event_date]) {
-				this.events[event_date] = []
-			}
-			else {
-				var i, e;
-				for(i = 0; i < this.events[event_date].length; i++) {
-					e = this.events[event_date][i];
-					if(e.item_id == event.item_id) {
-						this.events[event_date].splice(i, 1);
+				console.log(starting_at);
+				timestamp_fragments = starting_at.match(/(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d)/);
+				if(timestamp_fragments) {
+					year = timestamp_fragments[1];
+					month = timestamp_fragments[2]-1;
+					date = timestamp_fragments[3];
+					hour = timestamp_fragments[4];
+					minute = timestamp_fragments[5];
+					event.date = new Date(year, month, date, hour, minute);
+					console.log(event.date);
+					event_date = u.date("Y-m-d", event.date.getTime());
+					if(!this.events[event_date]) {
+						this.events[event_date] = []
 					}
+					else {
+						var i, e;
+						for(i = 0; i < this.events[event_date].length; i++) {
+							e = this.events[event_date][i];
+							if(e.item_id == event.item_id) {
+								this.events[event_date].splice(i, 1);
+							}
+						}
+					}
+					this.events[event_date].push(event);
 				}
 			}
-			this.events[event_date].push(event);
 		}
 		scene.nextMonth = function() {
 			this.div_calendar.removeChild(this.current_month);
@@ -7959,7 +7966,6 @@ Util.Objects["events"] = new function() {
 		scene.prevMonth = function() {
 			this.response = function(response) {
 				var events = u.qsa("div.all_events li.event", response);
-				console.log("events.length:" + events.length);
 				if(events.length) {
 					var event, i;
 					for(i = 0; event = events[i]; i++) {
@@ -7969,7 +7975,7 @@ Util.Objects["events"] = new function() {
 				this.div_calendar.removeChild(this.current_month);
 				this.current_month = u.ie(this.div_calendar, this.getMonth(this.current_month.year, this.current_month.month-1));
 			}
-			u.request(this, "/events/"+this.current_month.year+"/"+(this.current_month.month-1));
+			u.request(this, "/events/"+this.current_month.year+"/"+(this.current_month.month-2));
 		}
 		scene.createCalendar = function() {
 			if(!this.div_calendar) {
@@ -8006,7 +8012,8 @@ Util.Objects["events"] = new function() {
 			var month_object = [];
 			var first_weekday = this.getFirstWeekdayOfMonth(year, month);
 			var last_day = this.getLastDayOfMonth(year, month);
-			var i, day, date;
+			var i, j, day, date, date_in_prev_month, last_day_last_month, date_obj, event;
+			var weekday_counter = 1;
 			if(first_weekday > 1) {
 				last_day_last_month = this.getLastDayOfMonth(year, month-1);
 			}
@@ -8023,35 +8030,36 @@ Util.Objects["events"] = new function() {
 				day = u.ae(ul, "li", {"class":"weekday", "html":u.txt["weekday-"+i+"-abbr"]});
 			}
 			var ul = u.ae(new_month, "ul", {"class":"month"});
-			var date_in_prev_month, date;
-			var weekday_counter = 1;
 			for(i = 1; i < first_weekday; i++) {
 				date_in_prev_month = last_day_last_month + 1 + (i - first_weekday);
-				day = u.ae(ul, "li", {"class":"empty"});
+				day = u.ae(ul, "li", {"class":"prev_month"});
 				u.ae(day, "span", {"html":date_in_prev_month});
-				if(weekday_counter%7 == 0 || weekday_counter%7 == 6) {
-					u.ac(day, "weekend");
-				}
-				weekday_counter++;
-				date = u.date("Y-m-d", new Date(year, month-2, date_in_prev_month).getTime());
+				date_obj = new Date(year, month-2, date_in_prev_month);
+				date = u.date("Y-m-d", date_obj.getTime());
 				if(this.events[date]) {
 					for(j = 0; event = this.events[date][j]; j++) {
 						this.insertEvent(day, event);
 					}
 				}
+				if(this.now.year == date_obj.getFullYear() && this.now.month == (date_obj.getMonth()+1) && this.now.date == date_in_prev_month) {
+					u.ac(day, "today");
+				}
+				if(weekday_counter%7 == 0 || weekday_counter%7 == 6) {
+					u.ac(day, "weekend");
+				}
+				weekday_counter++;
 			}
 			for(i = 1; i <= last_day; i++) {
 				day = u.ae(ul, "li", {"class":"day"});
 				u.ae(day, "span", {"html":i});
-				day.date = i < 10 ? "0"+i : i;
-				day.month = new_month;
-				date = u.date("Y-m-d", new Date(year, month-1, i).getTime());
+				date_obj = new Date(year, month-1, i);
+				date = u.date("Y-m-d", date_obj.getTime());
 				if(this.events[date]) {
 					for(j = 0; event = this.events[date][j]; j++) {
 						this.insertEvent(day, event, year, month);
 					}
 				}
-				if(this.now.year == year && this.now.month == month && this.now.date == i) {
+				if(this.now.year == date_obj.getFullYear() && this.now.month == (date_obj.getMonth()+1) && this.now.date == i) {
 					u.ac(day, "today");
 				}
 				if(weekday_counter%7 == 0 || weekday_counter%7 == 6) {
@@ -8062,12 +8070,23 @@ Util.Objects["events"] = new function() {
 			if((weekday_counter-1)%7) {
 				i = 1;
 				while((weekday_counter-1)%7) {
-					day = u.ae(ul, "li", {"class":"empty"});
-					u.ae(day, "span", {"html":i++});
+					day = u.ae(ul, "li", {"class":"next_month"});
+					u.ae(day, "span", {"html":i});
+					date_obj = new Date(year, month, i);
+					date = u.date("Y-m-d", date_obj.getTime());
+					if(this.events[date]) {
+						for(j = 0; event = this.events[date][j]; j++) {
+							this.insertEvent(day, event, year, month);
+						}
+					}
+					if(this.now.year == date_obj.getFullYear() && this.now.month == (date_obj.getMonth()+1) && this.now.date == i) {
+						u.ac(day, "today");
+					}
 					if(weekday_counter%7 == 0 || weekday_counter%7 == 6) {
 						u.ac(day, "weekend");
 					}
 					weekday_counter++;
+					i++;
 				}
 			}
 			return new_month;
