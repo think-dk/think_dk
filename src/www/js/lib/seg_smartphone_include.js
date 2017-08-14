@@ -22,6 +22,9 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/m
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/u-form-custom.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-page.js"></script>');
 
+//document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/u-expandarrow.js"></script>');
+//document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-pagination.js"></script>');
+
 
 document.write('<script type="text/javascript" src="/js/lib/u-basics.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-front.js"></script>');

@@ -16,11 +16,14 @@ if($item) {
 	$this->sharingMetaData($item);
 
 
+	$next = $IC->getNext($item["item_id"], array("itemtype" => $item["itemtype"], "tags" => $item["tags"], "order" => "position ASC", "status" => 1, "extend" => true));
+	$prev = $IC->getPrev($item["item_id"], array("itemtype" => $item["itemtype"], "tags" => $item["tags"], "order" => "position ASC", "status" => 1, "extend" => true));
+
 	// set related pattern
 	$related_pattern = array("itemtype" => $item["itemtype"], "tags" => $item["tags"], "exclude" => $item["id"]);
 	// add base pattern properties
-	$related_pattern["limit"] = 5;
-	$related_pattern["extend"] = array("tags" => true, "readstate" => true, "user" => true, "mediae" => true, "prices" => true, "subscription_method" => true);
+	$related_pattern["limit"] = 3;
+	$related_pattern["extend"] = array("tags" => true, "user" => true, "mediae" => true, "prices" => true, "subscription_method" => true);
 
 	// get related items
 	$related_items = $IC->getRelatedItems($related_pattern);
@@ -36,9 +39,6 @@ if($item) {
 
 	<div class="article i:article id:<?= $item["item_id"] ?> service" itemscope itemtype="http://schema.org/Article"
 		data-csrf-token="<?= session()->value("csrf") ?>"
-		data-readstate="<?= $item["readstate"] ?>"
-		data-readstate-add="<?= $this->validPath("/janitor/admin/profile/addReadstate/".$item["item_id"]) ?>" 
-		data-readstate-delete="<?= $this->validPath("/janitor/admin/profile/deleteReadstate/".$item["item_id"]) ?>" 
 		>
 
 		<? if($media): ?>
@@ -88,6 +88,20 @@ if($item) {
 		<?= $HTML->frontendComments($item, "/janitor/service/addComment") ?>
 
 	</div>
+
+
+	<? if($next || $prev): ?>
+	<div class="pagination i:pagination">
+		<ul>
+		<? if($prev): ?>
+			<li class="previous"><a href="/memberships/<?= $prev[0]["sindex"] ?>"><?= strip_tags($prev[0]["name"]) ?></a></li>
+		<? endif; ?>
+		<? if($next): ?>
+			<li class="next"><a href="/memberships/<?= $next[0]["sindex"] ?>"><?= strip_tags($next[0]["name"]) ?></a></li>
+		<? endif; ?>
+		</ul>
+	</div>
+	<? endif; ?>
 
 
 	<? if($related_items): ?>

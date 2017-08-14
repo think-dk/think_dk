@@ -102,11 +102,13 @@
 
 
 
-#content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-bottom: 0; font-size: 0; position: relative; width: auto;}
-#content .scene div.memberships ul.memberships > li {display: block; padding: 10px 10px 70px; margin: 0 0 10px; border-radius: 5px; border: 1px solid #26962d; position: relative;}
-#content .scene div.memberships ul.memberships > li h3 {color: #26962d; padding-bottom: 3px;
-	font-family: "PT Serif", Times, serif;
+/* MEMBERSHIP LIST / JOIN */
+#content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-bottom: 30px; font-size: 0; position: relative; width: auto;}
+#content .scene div.memberships ul.memberships > li {display: inline-block; vertical-align: top; padding: 10px 10px 70px; margin: 0 0 10px; 
+	border-right: 1px solid #26962d; position: relative;
+	width: calc(25% - 21px); 
 }
+#content .scene div.memberships ul.memberships > li:last-child {border: none;}
 #content .scene div.memberships ul.memberships > li .articlebody {display: none;}
 #content .scene div.memberships ul.memberships > li ul.offer {padding-bottom: 4px;}
 #content .scene div.memberships ul.memberships > li h2,
@@ -120,6 +122,43 @@
 #content .scene div.memberships ul.memberships > li ul.actions li {display: block; padding: 0;}
 #content .scene div.memberships ul.memberships > li ul.actions li.readmore {text-align: center; padding-bottom: 10px;}
 #content .scene div.memberships ul.memberships > li ul.actions li input {display: block; width: 100%;}
+
+#content .scene div.memberships ul.memberships > li h3 {font-size: 14px;
+	font-family: "PT Serif", Times, serif;
+}
+#content .scene div.memberships ul.memberships > li h3 span.table {display: table; height: 35px; width: 100%;}
+#content .scene div.memberships ul.memberships > li h3 span.cell {display: table-cell; vertical-align: middle; text-align: center; color: #26962d;}
+
+#content .scene div.memberships ul.memberships > li ul.offer {padding-bottom: 30px;}
+#content .scene div.memberships ul.memberships > li ul.offer li.price {height: 53px; text-align: center; line-height: 1.1em; padding: 0; display: block;}
+#content .scene div.memberships ul.memberships > li ul.offer li.description {padding: 0;}
+#content .scene div.memberships ul.memberships > li ul.offer li.description p {height: 63px; text-align: center; line-height: 1.2em;}
+#content .scene div.memberships ul.memberships > li ul.offer li.description ul {list-style: none; margin: 0;}
+#content .scene div.memberships ul.memberships > li ul.offer li.description li {border-bottom: 1px solid #26962d;
+	height: 20px; padding: 30px 10px 10px; position: relative;
+	text-indent: -9999px;
+}
+#content .scene div.memberships ul.memberships > li ul.offer .description li:last-child {border: none;}
+
+#content .scene div.memberships ul.memberships > li ul.offer .description li > svg.checkmark {position: absolute; top: calc(50% - 8px); left: calc(50% - 8px);}
+#content .scene div.memberships ul.memberships > li ul.offer .description li > svg.checkmark line {stroke: #26962d; stroke-width: 2px;}
+
+
+#content .scene div.memberships ul.memberships > li.benefits {z-index: 2; border: none; width: 100%;
+	position: absolute;
+	padding: 0;
+	top: 186px; left: 0;
+}
+#content .scene div.memberships ul.memberships > li.benefits ul {padding: 0; list-style: none; margin: 0;}
+#content .scene div.memberships ul.memberships > li.benefits ul li {
+	background-color: #26962d;
+	color: #ffffff;
+	padding: 3px 10px;
+	font-size: 14px; line-height: 1em;
+	margin: 0 20px 40px;
+	text-align: center;
+}
+
 
 
 /* MEMBERSHIP VIEW */

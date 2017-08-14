@@ -11,7 +11,9 @@ if($page_item) {
 
 $email = $model->getProperty("email", "value");
 
-$memberships = $IC->getItems(array("itemtype" => "membership", "order" => "position ASC", "status" => 1, "extend" => array("prices" => true, "subscription_method" => true)));
+$memberships = $IC->getItems(array("itemtype" => "membership", "tags" => "membership:v2", "order" => "position ASC", "status" => 1, "extend" => array("prices" => true, "subscription_method" => true)));
+
+
 ?>
 <div class="scene signup i:memberships">
 

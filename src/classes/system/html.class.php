@@ -54,8 +54,11 @@ class HTML extends HTMLCore {
 					$_ .= '<li class="price default">'.formatPrice($item["prices"][$default_key]).(isset($item["subscription_method"]) && $item["subscription_method"] && $item["prices"][$default_key]["price"] ? ' / '.$item["subscription_method"]["name"] : '').'</li>';
 					$_ .= '<li class="price offer" itemprop="price" content="'.$item["prices"][$offer_key]["price"].'">'.formatPrice($item["prices"][$offer_key]).(isset($item["subscription_method"]) && $item["subscription_method"] && $item["prices"][$default_key]["price"] ? ' / '.$item["subscription_method"]["name"] : '').'</li>';
 				}
-				else {
+				else if($item["prices"][$default_key]["price"]) {
 					$_ .= '<li class="price" itemprop="price" content="'.$item["prices"][$default_key]["price"].'">'.formatPrice($item["prices"][$default_key]).(isset($item["subscription_method"]) && $item["subscription_method"] && $item["prices"][$default_key]["price"] ? ' / '.$item["subscription_method"]["name"] : '').'</li>';
+				}
+				else {
+					$_ .= '<li class="price" itemprop="price" content="'.$item["prices"][$default_key]["price"].'">Free</li>';
 				}
 
 				$_ .= '<li class="url" itemprop="url" content="'.$url.'"></li>';
