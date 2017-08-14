@@ -448,7 +448,9 @@ div.field.focus div.hint {display: block;}
 #content div.memberships ul.memberships > li h3 {color: #26962d; padding-bottom: 3px;
 	font-family: "PT Serif", Times, serif;
 }
-#content div.memberships ul.memberships > li ul.actions {padding: 0; width: auto; display: none;}
+#content div.memberships ul.memberships > li ul.offer li.description ul {margin: 0;}
+#content div.memberships ul.memberships > li ul.offer li.description ul li {display: block; padding-bottom: 4px;}
+#content div.memberships ul.memberships > li ul.actions {padding: 0; width: auto; }
 #content div.memberships ul.memberships > li ul.actions li {display: block; padding: 0; float: none; margin-top: 10px;}
 #content div.membership div.article ul.offer li {font-size: 30px; display: block;}
 #content div.membership div.article ul.offer li.description {display: none;}

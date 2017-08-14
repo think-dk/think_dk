@@ -7553,10 +7553,75 @@ Util.Objects["memberships"] = new function() {
 		}
 		scene.ready = function() {
 			page.cN.scene = this;
-			this._memberships = u.qs("div.memberships", this);
+			this.div_memberships = u.qs("div.memberships", this);
 			var place_holder = u.qs("div.articlebody .placeholder.memberships", this);
-			if(this._memberships && place_holder) {
-				place_holder.parentNode.replaceChild(this._memberships, place_holder);
+			if(this.div_memberships && place_holder) {
+				place_holder.parentNode.replaceChild(this.div_memberships, place_holder);
+			}
+			if(this.div_memberships) {
+				this.membership_nodes = u.qsa("li.membership", this.div_memberships);
+				var total_benefits = 0;
+				var total_benefits_node;
+				var i, node, benefit, j, li, table;
+				for(i = 0; node = this.membership_nodes[i]; i++) {
+					node.benefits = u.qsa(".description li", node);
+					if(node.benefits.length > total_benefits) {
+						total_benefits = node.benefits.length;
+						total_benefits_node = node;
+					}
+					u.wc(u.qs("h3", node), "span", {"class":"cell"});
+					u.wc(u.qs("h3", node), "span", {"class":"table"});
+				}
+			}
+			if(total_benefits_node) {
+				this.ul_memberships = u.qs("ul.memberships", this.div_memberships);
+				var benefits_node = u.ie(this.ul_memberships, "li", {"class":"benefits"})
+				var ul = u.ae(benefits_node, "ul");
+				for(j = 0; benefit = total_benefits_node.benefits[j]; j++) {
+					li = u.ae(ul, "li");
+					table = u.ae(li, "span", {"class":"table"});
+					u.ae(table, "span", {"class":"cell", "html":benefit.innerHTML});
+				}
+				this.benefits = u.qsa("li", ul);
+			}
+			for(i = 0; node = this.membership_nodes[i]; i++) {
+				var j, benefit, not_included;
+				for(j = 0; j < total_benefits_node.benefits.length; j++) {
+					benefit = node.benefits[j];
+					if(!benefit) {
+						u.ae(node.benefits[0].parentNode, "li", {"class":"no"});
+					}
+					else if(u.text(benefit) != u.text(total_benefits_node.benefits[j])) {
+						not_included = u.ae(benefit.parentNode, "li", {"class":"no"});
+						benefit.parentNode.insertBefore(not_included, benefit);
+						node.benefits = u.qsa(".description li", node);
+					}
+					else if(benefit) {
+						benefit.checkmark = u.svg({
+							"name":"checkmark",
+							"node":benefit,
+							"class":"checkmark",
+							"width":17,
+							"height":17,
+							"shapes":[
+								{
+									"type": "line",
+									"x1": 2,
+									"y1": 8,
+									"x2": 7,
+									"y2": 15
+								},
+								{
+									"type": "line",
+									"x1": 6,
+									"y1": 15,
+									"x2": 12,
+									"y2": 2
+								}
+							]
+						});
+					}
+				}
 			}
 			u.showScene(this);
 			page.resized();

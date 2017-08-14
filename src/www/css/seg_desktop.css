@@ -866,28 +866,14 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.events div.calendar span.next {z-index: 5; position: absolute; top: 4px; left: 50%; margin-left: 85px; width: 25px; height: 22px; cursor: pointer;}
 #content .scene.events div.calendar span.next > svg.arrow line {stroke: #34cc3d; stroke-width: 3px;}
 #content .scene.events div.calendar div.month {text-align: center; box-sizing: border-box;}
-#content .scene.events div.calendar div.month h3 {
-	text-align: center;
-	width: auto;
-	font-size: 18px;
-	line-height: 20px;
+#content .scene.events div.calendar div.month h3 {text-align: center; width: auto; font-size: 18px; line-height: 20px; 
 	font-weight: 600;
 }
-#content .scene.events div.calendar div.month h3 span {
-	display: inline-block;
-	vertical-align: top;
-	padding: 0 2px;
-}
-#content .scene.events div.calendar div.month h4 {
-	text-align: center;
-	margin: 0;
-	font-size: 11px;
+#content .scene.events div.calendar div.month h3 span {display: inline-block; vertical-align: top; padding: 0 2px;}
+#content .scene.events div.calendar div.month h4 {text-align: center; margin: 0; font-size: 11px;
 	font-weight: 100;
 }
-#content .scene.events div.calendar ul.weekdays {
-	padding: 0;
-	list-style: none;
-}
+#content .scene.events div.calendar ul.weekdays {padding: 0; list-style: none;}
 #content .scene.events div.calendar ul.weekdays li {
 	font-size: 14px;
 	display: inline-block;
@@ -957,8 +943,14 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.event div.event ul.location {display: block;}
 #content .scene.event div.event ul.location li.name {padding-bottom: 10px; font-size: 15px;}
 #content .scene.event div.event ul.location ul {padding-left: 0; padding-right: 0;}
-#content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-bottom: 0; font-size: 0; position: relative; width: auto;}
-#content .scene div.memberships ul.memberships > li {display: inline-block; vertical-align: top; width: calc(25% - 32px); padding: 10px; margin: 0 10px 10px 0; border-radius: 5px; border: 1px solid #26962d; position: relative;}
+#content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-top: 20px; padding-bottom: 50px; font-size: 0; position: relative; width: auto;}
+#content .scene div.memberships ul.memberships > li {display: inline-block; vertical-align: top; 
+	height: 510px;
+	width: calc(20% - 27px); 
+	padding: 10px; 
+	margin: 0 5px 5px 0;
+	border: 1px solid #26962d; position: relative;
+}
 #content .scene div.memberships ul.memberships > li h3 {color: #26962d; padding-bottom: 3px;
 	font-family: "PT Serif", Times, serif;
 }
@@ -966,12 +958,43 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene div.memberships ul.memberships > li h3,
 #content .scene div.memberships ul.memberships > li h4,
 #content .scene div.memberships ul.memberships > li p,
-#content .scene div.memberships ul.memberships > li dl {width: auto; padding-left: 0px; padding-right: 0px;}
-#content .scene div.memberships ul.memberships > li ul {padding: 0; width: auto;}
+#content .scene div.memberships ul.memberships > li dl {width: auto; padding-left: 0px; padding-right: 0px; text-align: center; white-space: nowrap;}
+#content .scene div.memberships ul.memberships > li ul {padding: 0; width: auto; text-align: center;}
 #content .scene div.memberships ul.memberships > li ul.actions {position: absolute; bottom: 10px; left: 10px; width: calc(100% - 20px);}
 #content .scene div.memberships ul.memberships > li ul.actions li {display: block; padding: 0;}
 #content .scene div.memberships ul.memberships > li ul.actions li.readmore {text-align: center; padding-bottom: 7px;}
 #content .scene div.memberships ul.memberships > li ul.actions li input {display: block; width: 100%;}
+#content .scene div.memberships ul.memberships > li h3 {height: 25px;}
+#content .scene div.memberships ul.memberships > li ul.offer li.price {height: 14px;}
+#content .scene div.memberships ul.memberships > li ul.offer .description p {height: 20px;}
+#content .scene div.memberships ul.memberships > li ul.offer .description ul {list-style: none; margin: 0;}
+#content .scene div.memberships ul.memberships > li ul.offer .description li {border-bottom: 1px solid #26962d;
+	height: 20px; padding: 10px; position: relative;
+	text-indent: -9999px;
+}
+#content .scene div.memberships ul.memberships > li ul.offer .description li:last-child {border: none;}
+#content .scene div.memberships ul.memberships > li ul.offer .description li > svg.checkmark {top: calc(50% - 8px); left: calc(50% - 8px);}
+#content .scene div.memberships ul.memberships > li ul.offer .description li > svg.checkmark line {stroke: #26962d;}
+#content .scene div.memberships ul.memberships > li.benefits ul {padding: 91px 0 0;}
+#content .scene div.memberships ul.memberships > li.benefits {border: none;
+	padding: 10px 5px 10px 15px;
+}
+#content .scene div.memberships ul.memberships > li.benefits li {list-style: none; font-size: 13px; border-bottom: 1px solid #26962d;
+	text-align: right; height: 40px; padding: 0 10px;
+}
+#content .scene div.memberships ul.memberships > li.benefits li:last-child {border: none;}
+#content .scene div.memberships ul.memberships > li.benefits li span.table {display: table; border: none; margin: 0; padding: 0; height: 40px; width: 100%;}
+#content .scene div.memberships ul.memberships > li.benefits li span.cell {display: table-cell; vertical-align: middle; color: #26962d;}
+#content .scene div.memberships ul.memberships > li.all-in {z-index: 2; border-width: 2px; background-color: #ffffff; width: calc(20% - 7px); padding-top: 15px; margin: -12px -6px 0 -11px; height: 531px;}
+#content .scene div.memberships ul.memberships > li.all-in h3 {
+	font-size: 24px;
+	height: 30px;
+	padding-bottom: 4px;
+}
+#content .scene div.memberships ul.memberships > li.all-in ul.actions {bottom: 10px;}
+#content .scene div.memberships ul.memberships > li.all-in ul.actions li input {height: 52px; padding-top: 2px; 
+	font-weight: 600; font-size: 18px;
+}
 #content .scene.membership div.article ul.offer {padding: 20px 70px 15px;}
 #content .scene.membership div.article ul.offer li.default {font-size: 14px;}
 #content .scene.membership div.article ul.offer li {font-size: 30px; display: block;}
