@@ -161,7 +161,7 @@ Util.Objects["memberships"] = new function() {
 						"min_size":14,
 						"max_size":20,
 					},
-					"li.all-in h3":{
+					"li.all h3":{
 						"min_size":18,
 						"max_size":24,
 					},

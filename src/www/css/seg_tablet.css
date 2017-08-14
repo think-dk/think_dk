@@ -971,14 +971,14 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene div.memberships ul.memberships > li.benefits li:last-child {border: none;}
 #content .scene div.memberships ul.memberships > li.benefits li span.table {display: table; border: none; margin: 0; padding: 0; height: 40px; width: 100%;}
 #content .scene div.memberships ul.memberships > li.benefits li span.cell {display: table-cell; vertical-align: middle; color: #26962d;}
-#content .scene div.memberships ul.memberships > li.all-in {z-index: 2; border-width: 2px; background-color: #ffffff; width: calc(20% - 7px); padding-top: 15px; margin: -12px -6px 0 -11px; height: 531px;}
-#content .scene div.memberships ul.memberships > li.all-in h3 {
+#content .scene div.memberships ul.memberships > li.all {z-index: 2; border-width: 2px; background-color: #ffffff; width: calc(20% - 7px); padding-top: 15px; margin: -12px -6px 0 -11px; height: 531px;}
+#content .scene div.memberships ul.memberships > li.all h3 {
 	font-size: 24px;
 	height: 30px;
 	padding-bottom: 4px;
 }
-#content .scene div.memberships ul.memberships > li.all-in ul.actions {bottom: 10px;}
-#content .scene div.memberships ul.memberships > li.all-in ul.actions li input {height: 52px; padding-top: 2px; 
+#content .scene div.memberships ul.memberships > li.all ul.actions {bottom: 10px;}
+#content .scene div.memberships ul.memberships > li.all ul.actions li input {height: 52px; padding-top: 2px; 
 	font-weight: 600; font-size: 18px;
 }
 #content .scene.membership div.article ul.offer {padding: 20px 70px 15px;}
