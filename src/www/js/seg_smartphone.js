@@ -4576,14 +4576,20 @@ u.fontsReady = function(node, fonts, _options) {
 			}
 		}
 	}
+	var fontApi = false;
 	var font, node, i;
-	var loadkey = u.randomString(8);
 	if(typeof(fonts.length) == "undefined") {
 		font = fonts;
 		fonts = new Array();
 		fonts.push(font);
 	}
-	window["_man_fonts_"+loadkey] = u.ae(document.body, "div");
+	var loadkey = u.randomString(8);
+	if(!fontApi) {
+		window["_man_fonts_"+loadkey] = u.ae(document.body, "div");
+	}
+	else {
+		window["_man_fonts_"+loadkey] = {};
+	}
 	window["_man_fonts_"+loadkey].nodes = [];
 	window["_man_fonts_"+loadkey].font_style_weight = {};
 	window["_man_fonts_"+loadkey].callback_node = node;
@@ -4592,21 +4598,42 @@ u.fontsReady = function(node, fonts, _options) {
 	window["_man_fonts_"+loadkey].max_time = max_time;
 	window["_man_fonts_"+loadkey].start_time = new Date().getTime();
 	for(i = 0; font = fonts[i]; i++) {
-		font.style = font.style ? font.style : "normal";
-		font.weight = font.weight ? font.weight : "400";
-		if(!window["_man_fonts_"+loadkey].font_style_weight[font.style+font.weight]) {
-			window["_man_fonts_"+loadkey].font_style_weight[font.style+font.weight] = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!","style":"font-family: Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: 20px !important; line-height: 1em !important; opacity: 0 !important;"});
+		if(!fontApi) {
+			font.style = font.style ? font.style : "normal";
+			font.weight = font.weight ? font.weight : "400";
+			if(!window["_man_fonts_"+loadkey].font_style_weight[font.style+font.weight]) {
+				window["_man_fonts_"+loadkey].font_style_weight[font.style+font.weight] = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!","style":"font-family: Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: 20px !important; line-height: 1em !important; opacity: 0 !important;"});
+			}
+			node = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!+?","style":"font-family: '"+font.family+"', Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: 20px !important; line-height: 1em !important; opacity: 0 !important;"});
 		}
-		node = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!+?","style":"font-family: '"+font.family+"', Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: 20px !important; line-height: 1em !important; opacity: 0 !important;"});
-		node._family = font.family;
-		node._weight = font.weight;
-		node._style = font.style;
+		else {
+			node = {};
+		}
+		node.font_family = font.family;
+		node.font_weight = font.weight;
+		node.font_style = font.style;
 		window["_man_fonts_"+loadkey].nodes.push(node);
+	}
+	window["_man_fonts_"+loadkey].checkfontsAPI = function() {
+			document.fonts.ready.then(function (fontFaceSetEvent) {
+					   console.log('Roboto loaded? ' + document.fonts.check('1em Roboto'));  
+					   console.log(this);
+					}.bind(this));
+			for(i = 0; font = this.nodes[i]; i++) {
+				var font_string = "14px " + font.font_family;
+				var font_string = font.style + " " + font.font_weight + " 14px " + font.font_family;
+				console.log(font_string);
+				document.fonts.load(font_string).then(function(fontFaceSetEvent) {
+					console.log("font loaded");
+					console.log(fontFaceSetEvent);
+				   console.log(this);
+				}.bind(this));
+			}
 	}
 	window["_man_fonts_"+loadkey].checkfonts = function() {
 		var basenode, i, node, loaded = 0;
 		for(i = 0; node = this.nodes[i]; i++) {
-			basenode = this.font_style_weight[node._style+node._weight];
+			basenode = this.font_style_weight[node.font_style+node.font_weight];
 			if(node.offsetWidth != basenode.offsetWidth || node.offsetHeight != basenode.offsetHeight) {
 				loaded++;
 			}
@@ -4631,7 +4658,12 @@ u.fontsReady = function(node, fonts, _options) {
 			}
 		}
 	}
-	window["_man_fonts_"+loadkey].checkfonts();
+	if(fontApi) {
+		window["_man_fonts_"+loadkey].checkfontsAPI();
+	}
+	else {
+		window["_man_fonts_"+loadkey].checkfonts();
+	}
 }
 
 /*beta-u-notifier.js*/
@@ -6659,6 +6691,90 @@ u.f.addAction = function(node, _options) {
 	return action;
 }
 
+
+/*u-string.js*/
+Util.cutString = function(string, length) {
+	var matches, match, i;
+	if(string.length <= length) {
+		return string;
+	}
+	else {
+		length = length-3;
+	}
+	matches = string.match(/\&[\w\d]+\;/g);
+	if(matches) {
+		for(i = 0; match = matches[i]; i++){
+			if(string.indexOf(match) < length){
+				length += match.length-1;
+			}
+		}
+	}
+	return string.substring(0, length) + (string.length > length ? "..." : "");
+}
+Util.prefix = function(string, length, prefix) {
+	string = string.toString();
+	prefix = prefix ? prefix : "0";
+	while(string.length < length) {
+		string = prefix + string;
+	}
+	return string;
+}
+Util.randomString = function(length) {
+	var key = "", i;
+	length = length ? length : 8;
+	var pattern = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+	for(i = 0; i < length; i++) {
+		key += pattern[u.random(0,35)];
+	}
+	return key;
+}
+Util.uuid = function() {
+	var chars = '0123456789abcdef'.split('');
+	var uuid = [], rnd = Math.random, r, i;
+	uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+	uuid[14] = '4';
+	for(i = 0; i < 36; i++) {
+		if(!uuid[i]) {
+			r = 0 | rnd()*16;
+			uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r & 0xf];
+		}
+ 	}
+	return uuid.join('');
+}
+Util.stringOr = u.eitherOr = function(value, replacement) {
+	if(value !== undefined && value !== null) {
+		return value;
+	}
+	else {
+		return replacement ? replacement : "";
+	}	
+}
+Util.getMatches = function(string, regex) {
+	var match, matches = [];
+	while(match = regex.exec(string)) {
+		matches.push(match[1]);
+	}
+	return matches;
+}
+Util.upperCaseFirst = u.ucfirst = function(string) {
+	return string.replace(/^(.){1}/, function($1) {return $1.toUpperCase()});
+}
+Util.lowerCaseFirst = u.lcfirst = function(string) {
+	return string.replace(/^(.){1}/, function($1) {return $1.toLowerCase()});
+}
+Util.normalize = function(string) {
+	string = string.toLowerCase();
+	string = string.replace(/[^a-z0-9\_]/g, '-');
+	string = string.replace(/-+/g, '-');
+	string = string.replace(/^-|-$/g, '');
+	return string;
+}
+Util.pluralize = function(count, singular, plural) {
+	if(count != 1) {
+		return count + " " + plural;
+	}
+	return count + " " + singular;
+}
 
 /*beta-u-form-onebuttonform.js*/
 Util.Objects["oneButtonForm"] = new function() {

@@ -82,6 +82,31 @@ Util.Objects["memberships"] = new function() {
 						li = u.ae(ul, "li");
 						table = u.ae(li, "span", {"class":"table"});
 						u.ae(table, "span", {"class":"cell", "html":benefit.innerHTML});
+
+						// look for benefit explation to be shown on mouseover
+						li.explanation = u.qs("p.hint_"+ u.normalize(benefit.innerHTML).replace(/-/, "_"), this);
+
+						// add explanation mouseover if explanation was found
+						if(li.explanation) {
+
+							u.e.hover(li);
+							li.over = function() {
+								this.div_explanation = u.ae(this, "div", {"class":"explanation", "html":this.explanation.innerHTML});
+								u.ass(this.div_explanation, {
+									"left": (this.offsetWidth + 20) + "px",
+									"top": (this.offsetHeight / 2) - (this.div_explanation.offsetHeight / 2) + "px"
+								});
+								
+							}
+							li.out = function() {
+
+								if(this.div_explanation) {
+									this.removeChild(this.div_explanation);
+									delete this.div_explanation;
+								}
+							}
+							
+						}
 					}
 					
 					// query this as the sum of benefits
@@ -184,6 +209,9 @@ Util.Objects["memberships"] = new function() {
 			u.fontsReady(this, [
 				{"family":"OpenSans", "weight":"normal", "style":"normal"},
 				{"family":"OpenSans", "weight":"bold", "style":"normal"},
+
+				{"family":"Martin", "weight":"normal", "style":"normal"},
+
 				{"family":"OpenSans", "weight":"normal", "style":"italic"},
 				{"family":"PT Serif", "weight":"normal", "style":"normal"}
 			]);
