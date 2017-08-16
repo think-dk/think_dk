@@ -4576,7 +4576,9 @@ u.fontsReady = function(node, fonts, _options) {
 			}
 		}
 	}
-	var fontApi = false;
+	window["_man_fonts_"] = window["_man_fonts_"] || {};
+	window["_man_fonts_"].fontApi = document.fonts && typeof(document.fonts.check) == "function" ? true : false;
+	window["_man_fonts_"].fonts = window["_man_fonts_"].fonts || {};
 	var font, node, i;
 	if(typeof(fonts.length) == "undefined") {
 		font = fonts;
@@ -4584,56 +4586,98 @@ u.fontsReady = function(node, fonts, _options) {
 		fonts.push(font);
 	}
 	var loadkey = u.randomString(8);
-	if(!fontApi) {
-		window["_man_fonts_"+loadkey] = u.ae(document.body, "div");
+	if(window["_man_fonts_"].fontApi) {
+		window["_man_fonts_"+loadkey] = {};
+		window["_man_fonts_"+loadkey].t_timeout = u.t.setTimer(window["_man_fonts_"+loadkey], "checkFontsStatus", max_time);
 	}
 	else {
-		window["_man_fonts_"+loadkey] = {};
+		window["_man_fonts_"+loadkey] = u.ae(document.body, "div");
+		window["_man_fonts_"+loadkey].basenodes = {};
 	}
 	window["_man_fonts_"+loadkey].nodes = [];
-	window["_man_fonts_"+loadkey].font_style_weight = {};
+	window["_man_fonts_"+loadkey].loadkey = loadkey;
 	window["_man_fonts_"+loadkey].callback_node = node;
 	window["_man_fonts_"+loadkey].callback_name = callback_loaded;
 	window["_man_fonts_"+loadkey].callback_timeout = callback_timeout;
 	window["_man_fonts_"+loadkey].max_time = max_time;
 	window["_man_fonts_"+loadkey].start_time = new Date().getTime();
 	for(i = 0; font = fonts[i]; i++) {
-		if(!fontApi) {
-			font.style = font.style ? font.style : "normal";
-			font.weight = font.weight ? font.weight : "400";
-			if(!window["_man_fonts_"+loadkey].font_style_weight[font.style+font.weight]) {
-				window["_man_fonts_"+loadkey].font_style_weight[font.style+font.weight] = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!","style":"font-family: Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: 20px !important; line-height: 1em !important; opacity: 0 !important;"});
-			}
-			node = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!+?","style":"font-family: '"+font.family+"', Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: 20px !important; line-height: 1em !important; opacity: 0 !important;"});
+		font.style = font.style || "normal";
+		font.weight = font.weight || "400";
+		font.size = font.size || "16px";
+		font.status = "waiting";
+		font.id = u.normalize(font.family+font.style+font.weight);
+		if(!window["_man_fonts_"].fonts[font.id]) {
+			window["_man_fonts_"].fonts[font.id] = font;
 		}
-		else {
+		if(window["_man_fonts_"].fontApi) {
 			node = {};
 		}
+		else {
+			if(!window["_man_fonts_"+loadkey].basenodes[font.style+font.weight]) {
+				window["_man_fonts_"+loadkey].basenodes[font.style+font.weight] = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!","style":"font-family: Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: "+font.size+" !important; line-height: 1em !important; opacity: 0 !important;"});
+			}
+			node = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!","style":"font-family: '"+font.family+"', Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: "+font.size+" !important; line-height: 1em !important; opacity: 0 !important;"});
+		}
+		node.font_size = font.size;
 		node.font_family = font.family;
 		node.font_weight = font.weight;
 		node.font_style = font.style;
+		node.font_id = font.id;
+		node.loadkey = loadkey;
 		window["_man_fonts_"+loadkey].nodes.push(node);
 	}
-	window["_man_fonts_"+loadkey].checkfontsAPI = function() {
-			document.fonts.ready.then(function (fontFaceSetEvent) {
-					   console.log('Roboto loaded? ' + document.fonts.check('1em Roboto'));  
-					   console.log(this);
-					}.bind(this));
-			for(i = 0; font = this.nodes[i]; i++) {
-				var font_string = "14px " + font.font_family;
-				var font_string = font.style + " " + font.font_weight + " 14px " + font.font_family;
-				console.log(font_string);
+	window["_man_fonts_"+loadkey].checkFontsAPI = function() {
+		var i, node, font_string;
+		for(i = 0; node = this.nodes[i]; i++) {
+			if(window["_man_fonts_"].fonts[node.font_id] && window["_man_fonts_"].fonts[node.font_id].status == "waiting") {
+				font_string = node.font_style + " " + node.font_weight + " " + node.font_size + " " + node.font_family;
 				document.fonts.load(font_string).then(function(fontFaceSetEvent) {
-					console.log("font loaded");
-					console.log(fontFaceSetEvent);
-				   console.log(this);
-				}.bind(this));
+					if(fontFaceSetEvent && fontFaceSetEvent.length && fontFaceSetEvent[0].status == "loaded") {
+						window["_man_fonts_"].fonts[this.font_id].status = "loaded";
+					}
+					else {
+						window["_man_fonts_"].fonts[this.font_id].status = "failed";
+					}
+					if(window["_man_fonts_"+this.loadkey] && typeof(window["_man_fonts_"+this.loadkey].checkFontsStatus) == "function") {
+						window["_man_fonts_"+this.loadkey].checkFontsStatus();
+					}
+				}.bind(node));
 			}
+			else {
+			}
+		}
+		if(typeof(this.checkFontsStatus) == "function") {
+			this.checkFontsStatus();
+		}
 	}
-	window["_man_fonts_"+loadkey].checkfonts = function() {
+	window["_man_fonts_"+loadkey].checkFontsStatus = function(event) {
+		var i, node;
+		for(i = 0; node = this.nodes[i]; i++) {
+			if(window["_man_fonts_"].fonts[node.font_id].status == "waiting") {
+				if(this.start_time + this.max_time <= new Date().getTime()) {
+					if(typeof(this.callback_node[this.callback_timeout]) == "function") {
+						this.callback_node[this.callback_timeout]();
+					}
+					else if(typeof(this.callback_node[this.callback_name]) == "function") {
+						this.callback_node[this.callback_name]();
+					}
+					u.t.resetTimer(this.t_timeout);
+					delete window["_man_fonts_"+this.loadkey];
+				}
+				return;
+			}
+		}
+		if(typeof(this.callback_node[this.callback_name]) == "function") {
+			this.callback_node[this.callback_name]();
+		}
+		u.t.resetTimer(this.t_timeout);
+		delete window["_man_fonts_"+this.loadkey];
+	}
+	window["_man_fonts_"+loadkey].checkFontsFallback = function() {
 		var basenode, i, node, loaded = 0;
 		for(i = 0; node = this.nodes[i]; i++) {
-			basenode = this.font_style_weight[node.font_style+node.font_weight];
+			basenode = this.basenodes[node.font_style+node.font_weight];
 			if(node.offsetWidth != basenode.offsetWidth || node.offsetHeight != basenode.offsetHeight) {
 				loaded++;
 			}
@@ -4658,11 +4702,11 @@ u.fontsReady = function(node, fonts, _options) {
 			}
 		}
 	}
-	if(fontApi) {
-		window["_man_fonts_"+loadkey].checkfontsAPI();
+	if(window["_man_fonts_"].fontApi) {
+		window["_man_fonts_"+loadkey].checkFontsAPI();
 	}
 	else {
-		window["_man_fonts_"+loadkey].checkfonts();
+		window["_man_fonts_"+loadkey].checkFontsFallback();
 	}
 }
 
@@ -8557,7 +8601,6 @@ Util.Objects["memberships"] = new function() {
 			u.fontsReady(this, [
 				{"family":"OpenSans", "weight":"normal", "style":"normal"},
 				{"family":"OpenSans", "weight":"bold", "style":"normal"},
-				{"family":"Martin", "weight":"normal", "style":"normal"},
 				{"family":"OpenSans", "weight":"normal", "style":"italic"},
 				{"family":"PT Serif", "weight":"normal", "style":"normal"}
 			]);

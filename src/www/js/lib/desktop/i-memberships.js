@@ -173,6 +173,8 @@ Util.Objects["memberships"] = new function() {
 
 			// required fonts loaded
 			this.fontsLoaded = function() {
+//				u.bug("fontsLoaded callback");
+
 				page.resized();
 
 
@@ -209,9 +211,6 @@ Util.Objects["memberships"] = new function() {
 			u.fontsReady(this, [
 				{"family":"OpenSans", "weight":"normal", "style":"normal"},
 				{"family":"OpenSans", "weight":"bold", "style":"normal"},
-
-				{"family":"Martin", "weight":"normal", "style":"normal"},
-
 				{"family":"OpenSans", "weight":"normal", "style":"italic"},
 				{"family":"PT Serif", "weight":"normal", "style":"normal"}
 			]);
