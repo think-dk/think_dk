@@ -5,7 +5,7 @@ Hi {NICKNAME},
 
 and thank you for joining the think.dk community - you are herewith officially confirmed as a Curious Cat! 
 
-From now on you will receive our newsletter, which means you'll stay up to date on all developments at the Center for Acceleration of Sustainable Change. We hope you'll join the club of active members as soon as you feel the need for a change :)
+From now on you will receive our newsletter, which means you'll stay up to date on all developments at the Center for Acceleration of Change. We hope you'll join the club of active members as soon as you feel the need for a change :)
 
 We also set up an account on think.dk for you. This allows you to leave comments on our page and update your profile. If you want to login, please visit {SITE_URL}/janitor/admin/profile after activating your account.
 

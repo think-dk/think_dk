@@ -1,0 +1,33 @@
+SUBJECT:Your All In Membership!
+
+Hi {NICKNAME},
+
+
+and thank you for joining the think.dk community - your All In membership is herewith officially confirmed. We are very happy to have you on board and extremely grateful for your generosity!
+
+From now on you’ll get to enjoy the following benefits:
+
+	- Our newsletter and first notice on special events
+	- An account on think.dk that allows you to leave comments on our page
+	- Access to all our regular events for free
+	- A 20% discount on special events
+	- Access to our Library of Things
+	- The opportunity to host your own event!
+	- Access to our co-working space
+	- Access to our meeting space
+	
+And all of this costs you only {PRICE} per month! Thank you so much for your support, it means a lot.
+
+If you are still yet to pay, you can find your payment information at {SITE_URL}/shop/payment/{ORDER_NO}.
+
+You are member number {MEMBERID} and your membership begins at the day of your sign up. You can cancel your subscription anytime - just send us an email with the title 'Membership cancellation'.
+
+If you want to login to leave comments or update your profile, please visit {SITE_URL}/janitor/admin/profile after activating your account - you received the confirmation link in a separate email.
+
+We are building a movement, so please tell your friends about us - the bigger our community grows, the more we can accelerate change :)
+
+We hope you don’t hesitate to reply to this email if you have any questions.
+
+Insistently hopeful,
+
+{SITE_URL}
