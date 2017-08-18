@@ -1,10 +1,10 @@
-SUBJECT:Did you sign up for {SITE_NAME}? Please verifiy you email now.
+SUBJECT:Did you sign up for {SITE_NAME}? Please verify your email now.
 
 Dear {NICKNAME},
 
-you signed up to our newsletter some time ago and that made us very happy. Everyone joining us in changing the world for a better increases our good impact, so thank you!
+you signed up to our newsletter some time ago and that made us very happy. The more people joining us in changing the world for the better increases our impact, so thank you!
 
-However, you did not click the activation link yet. So just in case you were wondering why you did not hear from us yet - that's why :) If it was actually you who signed up, please be so kind to activate your account by clicking the link below:
+However, you have not clicked the activation link yet. So just in case you were wondering why you did not hear from us yet - that's why. :) If it was actually you who signed up, please be so kind as to activate your account by clicking the link below:
 
 {SITE_URL}/signup/confirm/email/{EMAIL}/{VERIFICATION}
 

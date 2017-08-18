@@ -3,11 +3,11 @@ SUBJECT:Your All In Membership!
 Hi {NICKNAME},
 
 
-and thank you for joining the think.dk community - your All In membership is herewith officially confirmed. We are very happy to have you on board and extremely grateful for your generosity!
+and thank you for joining the think.dk community - your 'All In' membership is herewith officially confirmed. We are very happy to have you on board and extremely grateful for your generosity!
 
 From now on you’ll get to enjoy the following benefits:
 
-	- Our newsletter and first notice on special events
+	- Our newsletter and first to be notified about special events
 	- An account on think.dk that allows you to leave comments on our page
 	- Access to all our regular events for free
 	- A 20% discount on special events
@@ -24,7 +24,10 @@ You are member number {MEMBERID} and your membership begins at the day of your s
 
 If you want to login to leave comments or update your profile, please visit {SITE_URL}/janitor/admin/profile after activating your account - you received the confirmation link in a separate email.
 
-We are building a movement, so please tell your friends about us - the bigger our community grows, the more we can accelerate change :)
+We are building a movement, so please tell your friends about us - the bigger our community grows, the more we can accelerate change :) If you're a fan of social media, we would be happy to see you there - follow us on:
+	 - https://www.facebook.com/thinkcopenhagen
+	 - https://www.instagram.com/think.dk/
+	 - https://twitter.com/think_denmark
 
 We hope you don’t hesitate to reply to this email if you have any questions.
 
