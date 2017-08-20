@@ -17,7 +17,7 @@ Your username: {EMAIL}
 Your password: {PASSWORD}
 
 
-If you signed up to become a think.dk member, you will receive a second email after you complete the chekcout process.
+If you signed up to become a think.dk member, you will receive a second email after you complete the checkout process.
 
 
 Insistently hopeful,
