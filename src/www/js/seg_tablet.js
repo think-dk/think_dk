@@ -4652,6 +4652,7 @@ u.fontsReady = function(node, fonts, _options) {
 		}
 	}
 	window["_man_fonts_"+loadkey].checkFontsStatus = function(event) {
+		u.bug("checkFontsStatus");
 		var i, node;
 		for(i = 0; node = this.nodes[i]; i++) {
 			if(window["_man_fonts_"].fonts[node.font_id].status == "waiting") {

@@ -836,6 +836,7 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .scene.defaultEdit > div.item {padding: 0; border-bottom: 1px solid #bbbbbb;}
 #content .scene.defaultEdit > div.item .actions {text-align: left; padding-bottom: 10px;}
 #content .scene.defaultEdit > div.item .actions li {padding: 0 5px 10px;}
+#content .scene.defaultEdit > div.owner {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
 #content .scene.defaultEdit > div.media {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
 #content .scene.defaultEdit > div.media form.upload {text-align: left; position: relative; z-index: 2;}
 #content .scene.defaultEdit > div.media form.upload .actions {display: none;}

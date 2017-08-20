@@ -1231,9 +1231,13 @@ body > div.pagination li.next {border-color: #26962d;}
 .contact #navigation ul li.contact,
 .bulletin #navigation ul li.bulletin,
 .posts #navigation ul li.latest,
-.membership #navigation ul li.membership,
 .events #navigation ul li.events,
 .services #navigation ul li.services {color: #26962d;}
+#navigation ul li.membership {color: #ffffff;
+	margin: 3px 0 3px 10px;
+	padding: 7px 10px;
+	background-color: #26962d;
+}
 
 
 /*s-pages-hovers.css*/
