@@ -8563,7 +8563,7 @@ Util.Objects["memberships"] = new function() {
 						li = u.ae(ul, "li");
 						table = u.ae(li, "span", {"class":"table"});
 						u.ae(table, "span", {"class":"cell", "html":benefit.innerHTML});
-						li.explanation = u.qs("p.hint_"+ u.normalize(benefit.innerHTML).replace(/-/, "_"), this);
+						li.explanation = u.qs("p.hint_"+ u.normalize(benefit.innerHTML).replace(/-/g, "_"), this);
 						if(li.explanation) {
 							u.e.hover(li);
 							li.over = function() {
