@@ -449,7 +449,9 @@ div.field.error textarea {border: 3px solid #a62300;}
 }
 div.field.radiobuttons.error input,
 div.field.checkbox.error input,
-div.field.boolean.error input {margin: 1px 10px 0 3px; border: none;}
+div.field.boolean.error input {margin: 1px 10px 0 3px; border: none;
+	box-shadow: 0px 0px 0px 1px #df0000;
+}
 div.field.location.error input {margin: 2px; border: 1px solid #dcdcdc;}
 div.field.location.error input.error {margin: 0; border: 3px solid #a62300;}
 div.field.files.error {border-color: #a62300;}
@@ -1204,7 +1206,8 @@ ul.actions a.button.primary,
 #content .scene h6,
 #content .scene p,
 #content .scene li,
-#content .scene dd {color: #777777;}
+#content .scene dd,
+label {color: #777777;}
 #footer {border-color: #ccdbcd;}
 #footer a {color: #34cc3d;}
 body > div.pagination li.next > svg.arrow line,
@@ -1220,9 +1223,10 @@ body > div.pagination li.next {border-color: #26962d;}
 .events #navigation ul li.events,
 .services #navigation ul li.services {color: #26962d;}
 #navigation ul li.membership {color: #ffffff;
-	margin: 3px 0 3px 10px;
-	padding: 7px 10px;
-	background-color: #26962d;
+	margin: 5px 0 5px 10px;
+	padding: 5px 13px;
+	background-color: #34cc3d;
+	border-radius: 5px;
 }
 
 

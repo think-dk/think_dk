@@ -57,11 +57,12 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 		<?= $UC->formStart("signup", array("class" => "signup labelstyle:inject")) ?>
 			<?= $UC->input("newsletter", array("type" => "hidden", "value" => "curious")); ?>
 			<fieldset>
-				<?= $UC->input("firstname", array("label" => "Firstname", "value" => $firstname)); ?>
-				<?= $UC->input("lastname", array("label" => "Lastname", "value" => $lastname)); ?>
-				<?= $UC->input("email", array("label" => "Your email", "value" => $email, "required" => true, "value" => $email, "hint_message" => "Type your email.", "error_message" => "You entered an invalid email.")); ?>
+				<?= $UC->input("firstname", array("value" => $firstname)); ?>
+				<?= $UC->input("lastname", array("value" => $lastname)); ?>
+				<?= $UC->input("email", array("value" => $email, "required" => true, "value" => $email, "hint_message" => "Type your email.", "error_message" => "You entered an invalid email.")); ?>
 				<?= $UC->input("mobile", array("value" => $mobile)); ?>
 				<?= $UC->input("password", array("hint_message" => "Type your new password - or leave it blank and we'll generate one for you.", "error_message" => "Your password must be between 8 and 20 characters.")); ?>
+				<?= $UC->input("terms"); ?>
 			</fieldset>
 
 			<ul class="actions">
