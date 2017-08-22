@@ -294,14 +294,14 @@
 }
 
 
-#content .scene div.memberships ul.memberships > li.all {z-index: 2; border-width: 2px; background-color: #ffffff; width: calc(20% - 7px); padding-top: 15px; margin: -12px -6px 0 -11px; height: 531px;}
-#content .scene div.memberships ul.memberships > li.all h3 {
+#content .scene div.memberships ul.memberships > li.allin {z-index: 2; border-width: 2px; background-color: #ffffff; width: calc(20% - 7px); padding-top: 15px; margin: -12px -6px 0 -11px; height: 531px;}
+#content .scene div.memberships ul.memberships > li.allin h3 {
 	font-size: 24px;
 	height: 30px;
 	padding-bottom: 4px;
 }
-#content .scene div.memberships ul.memberships > li.all ul.actions {bottom: 10px;}
-#content .scene div.memberships ul.memberships > li.all ul.actions li input {height: 52px; padding-top: 2px; 
+#content .scene div.memberships ul.memberships > li.allin ul.actions {bottom: 10px;}
+#content .scene div.memberships ul.memberships > li.allin ul.actions li input {height: 52px; padding-top: 2px; 
 	font-weight: 600; font-size: 18px;
 }
 

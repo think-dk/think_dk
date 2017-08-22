@@ -1002,14 +1002,14 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 	border-radius: 5px;
 	box-shadow: 0 1px 1px #777777;
 }
-#content .scene div.memberships ul.memberships > li.all {z-index: 2; border-width: 2px; background-color: #ffffff; width: calc(20% - 7px); padding-top: 15px; margin: -12px -6px 0 -11px; height: 531px;}
-#content .scene div.memberships ul.memberships > li.all h3 {
+#content .scene div.memberships ul.memberships > li.allin {z-index: 2; border-width: 2px; background-color: #ffffff; width: calc(20% - 7px); padding-top: 15px; margin: -12px -6px 0 -11px; height: 531px;}
+#content .scene div.memberships ul.memberships > li.allin h3 {
 	font-size: 24px;
 	height: 30px;
 	padding-bottom: 4px;
 }
-#content .scene div.memberships ul.memberships > li.all ul.actions {bottom: 10px;}
-#content .scene div.memberships ul.memberships > li.all ul.actions li input {height: 52px; padding-top: 2px; 
+#content .scene div.memberships ul.memberships > li.allin ul.actions {bottom: 10px;}
+#content .scene div.memberships ul.memberships > li.allin ul.actions li input {height: 52px; padding-top: 2px; 
 	font-weight: 600; font-size: 18px;
 }
 #content .scene.membership div.article ul.offer {padding: 20px 70px 15px;}
