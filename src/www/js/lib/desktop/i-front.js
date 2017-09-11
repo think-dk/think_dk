@@ -5,6 +5,11 @@ Util.Objects["front"] = new function() {
 		scene.resized = function() {
 //			u.bug("scene.resized:" + u.nodeId(this));
 
+			if(this.intro) {
+				u.ass(this.intro, {
+					"height": page.browser_h + "px"
+				});
+			}
 			// re-position text nodes
 			// if(this.intro && this.intro._textnodes) {
 			// 	var i, node;
@@ -84,8 +89,11 @@ Util.Objects["front"] = new function() {
 
 				// end intro on click
 				u.e.click(this.intro);
-				this.intro.clicked = function() {
+				this.intro.clicked = function(event) {
 
+					if(this.is_active) {
+						u.scrollTo(window, {"node":this.scene._article, "offset_y":100});
+					}
 
 					// stop event chain
 					// if(typeof(this.stop) == "function") {
@@ -152,22 +160,6 @@ Util.Objects["front"] = new function() {
 					"height":this.intro.offsetHeight - page.hN.offsetHeight+"px"
 				});
 
-// 794 =
-// 669 = 125
-//
-//
-// 744
-// 569 = 175
-	
-				
-				// apply start-intro event listener
-				// if(u.e.event_support == "mouse") {
-				// 	this.intro_event_id = u.e.addWindowEvent(this, "mousemove", this.showIntro);
-				// 	this.t_autoplay = u.t.setTimer(this, "showIntro", 1500);
-				// }
-				// else {
-				// 	this.t_autoplay = u.t.setTimer(this, "showIntro", 500);
-				// }
 
 				u.preloader(this.intro, [
 					"/assets/images/bg_front_1.jpg",
@@ -189,9 +181,6 @@ Util.Objects["front"] = new function() {
 
 				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg6"}));
 				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg7"}));
-
-
-
 
 				// prepare audioPlayer
 				this.intro.loaded = function() {
@@ -261,13 +250,9 @@ Util.Objects["front"] = new function() {
 			// }
 
 
-			this.intro.audioPlayer.play();
-
-
 			this.intro.showFrame = function(frame) {
 				
 				if(this.frame != frame) {
-
 
 //					console.log("on " + frame)
 					u.ass(this.bgs[frame], {
@@ -293,24 +278,42 @@ Util.Objects["front"] = new function() {
 					
 				}
 				// // this.frame++;
-				console.log("this.frame:" + this.frame);
+//				console.log("this.frame:" + this.frame);
 				// var colors = ["","red",  "yellow", "green", "blue", "orange", "purple", "cyan"];
 				// u.ass(this, {
 				// 	"background-color":colors[this.frame],
 				// });
 			}
 
-			this.intro.timestamps = ["", 25, 315, 605, 895, 1185, 2045, 2335];
+
+			this.intro.audioPlayer.playing = function(event) {
+
+//				console.log(event)
+				// current time
+				var _time = event.target.currentTime;
+				// tmp_intro.mp3
+//				this.intro.timestamps = ["", 25, 315, 605, 895, 1185, 2045, 2335];
+
+				// long intro (intro.mp3)
+				this.intro.timestamps = ["", 2239, 2625, 2900, 3200, 3487, 4349, 4645];
 
 
-			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[1], 1);
-			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[2], 2);
-			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[3], 3);
-			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[4], 4);
-			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[5], 5);
+				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[1]+_time, 1);
+				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[2]+_time, 2);
+				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[3]+_time, 3);
+				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[4]+_time, 4);
+				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[5]+_time, 5);
 
-			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[6], 6);
-			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[7], 7);
+				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[6]+_time, 6);
+				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[7]+_time, 7);
+
+				// only once
+				delete this.playing;
+			}
+			this.intro.audioPlayer.play();
+
+
+
 
 
 
@@ -357,7 +360,7 @@ Util.Objects["front"] = new function() {
 //				u.bug("eventChainEnded")
 
 				// hide intro
-				this.scene.hideIntro();
+				// this.scene.hideIntro();
 			}
 
 
@@ -372,7 +375,9 @@ Util.Objects["front"] = new function() {
 
 				this.intro.hotspots.push(u.ae(this.intro, "div", {"class":"hotspot hotspot6"}));
 				this.intro.hotspots.push(u.ae(this.intro, "div", {"class":"hotspot hotspot7"}));
-	u.bug(this.intro.hotspots.length)
+
+//				u.bug(this.intro.hotspots.length)
+
 				var i, hotspot;
 	//			for(i = 0; hotspot = this.intro.hotspots[i]; i++) {
 				for(i = 1; i < this.intro.hotspots.length; i++) {
@@ -380,6 +385,14 @@ Util.Objects["front"] = new function() {
 					u.bug(this.intro.hotspots[i]);
 					u.bug(hotspot + ", " + i)
 
+// 					var height = this.intro.offsetHeight();
+// 					var width = this.intro.offsetWidth();
+// 					u.ass(hotspot, {
+//
+// //						"top":(((height-200) / 5) * i) - i%2 + "px",
+// 						// "left":width-200 / 100 /
+//
+// 					});
 					u.e.hover(this.intro.hotspots[i]);
 					this.intro.hotspots[i].intro = this.intro;
 					this.intro.hotspots[i].i = i;
@@ -389,7 +402,7 @@ Util.Objects["front"] = new function() {
 						this.blink = function() {
 							console.log("blink");
 
-							u.a.transition(this, "all 0.1s ease-in-out");
+							u.a.transition(this, "all 0.4s ease-in-out");
 							u.ass(this, {
 								"opacity":0
 							});
@@ -413,11 +426,17 @@ Util.Objects["front"] = new function() {
 				}
 				
 				this.intro.play();
+
+
+				this.hideIntro();
+
+
+				this.intro.is_active = true;
 			}
 
 
 
-			u.t.setTimer(this	, this.activateIntro, 2235);
+			u.t.setTimer(this, this.activateIntro, 6045);
 
 			// start event chain playback
 //			this.intro.play();
@@ -445,40 +464,42 @@ Util.Objects["front"] = new function() {
 			// }
 
 
-
-			u.ass(this, {
-				"height":"auto"
-			});
+			if(!this.intro.is_active) {
+				u.ass(this, {
+					"height":"auto"
+				});
 			
 
-			// show header and footer
-			u.a.transition(page.hN, "none");
-			u.ass(page.hN, {
-				"opacity":0,
-				"display":"block"
-			});
+				// show header and footer
+				u.a.transition(page.hN, "none");
+				u.ass(page.hN, {
+					"opacity":0,
+					"display":"block"
+				});
 
-			u.a.transition(page.fN, "none");
-			u.ass(page.fN, {
-				"opacity":0,
-				"display":"block"
-			});
+				u.a.transition(page.fN, "none");
+				u.ass(page.fN, {
+					"opacity":0,
+					"display":"block"
+				});
 
-			u.a.transition(page.hN, "all 0.5s ease-in");
-			u.ass(page.hN, {
-				"opacity":1,
-			});
+				u.a.transition(page.hN, "all 0.5s ease-in");
+				u.ass(page.hN, {
+					"opacity":1,
+				});
 
-			u.a.transition(page.fN, "all 0.5s ease-in");
-			u.ass(page.fN, {
-				"opacity":1,
-			});
+				u.a.transition(page.fN, "all 0.5s ease-in");
+				u.ass(page.fN, {
+					"opacity":1,
+				});
 
-			// accept cookies?
-			page.acceptCookies();
+				// accept cookies?
+				page.acceptCookies();
 
-			// start showing article
-			this.showArticle();
+				// start showing article
+				this.showArticle();
+				
+			}
 		}
 
 

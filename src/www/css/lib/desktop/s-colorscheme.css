@@ -59,5 +59,6 @@ body > div.pagination li.next {border-color: #26962d;}
 	padding: 5px 13px;
 	background-color: #34cc3d;
 	border-radius: 5px;
+	text-shadow: none;
 }
 

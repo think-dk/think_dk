@@ -40,7 +40,8 @@ body.front #page {overflow: hidden;}
 	background-size: cover;
 	background-repeat: no-repeat;
 /*	background-color: #000000;*/
-	display: none;
+	opacity: 0.001;
+	display: block;
 }
 
 #content .scene.front div.intro div.bg.bg1 {
@@ -75,7 +76,8 @@ body.front #page {overflow: hidden;}
 
 
 #content .scene.front div.intro div.hotspot {
-	opacity: 0;
+	font-family: "PT Serif",Times,serif;	
+	opacity: 0.1;
 	position: absolute;
 	z-index: 15;
 	top: 0;
@@ -83,31 +85,37 @@ body.front #page {overflow: hidden;}
 	width: 15%;
 	height: 15%;
 	border-radius: 50%;
+/*	border: 1px solid #26962d;*/
+/*	background: #26962d;*/
+	color: #ffffff;
 	margin-left: -7.5%;
 	margin-top: -7.5%;
-/*	background: red;*/
+	font-size: 30px;
+	text-align: center;
+
 	background: radial-gradient(ellipse at center, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 70%);
+
 }
 #content .scene.front div.intro div.hotspot.hotspot1 {
 	top: 30%; left: 50%;
 }	
 #content .scene.front div.intro div.hotspot.hotspot2 {
-	top: 35%; left: 25%;
+	top: 40%; left: 30%;
 }	
 #content .scene.front div.intro div.hotspot.hotspot3 {
-	top: 35%; left: 75%;
+	top: 40%; left: 70%;
 }	
 #content .scene.front div.intro div.hotspot.hotspot4 {
-	top: 60%; left: 17%;
+	top: 65%; left: 25%;
 }	
 #content .scene.front div.intro div.hotspot.hotspot5 {
-	top: 60%; left: 83%;
+	top: 65%; left: 75%;
 }	
 #content .scene.front div.intro div.hotspot.hotspot6 {
-	top: 85%; left: 35%;
+	top: 85%; left: 40%;
 }	
 #content .scene.front div.intro div.hotspot.hotspot7 {
-	top: 85%; left: 65%;
+	top: 85%; left: 60%;
 }	
 
 /* FRONT - ARTICLE */

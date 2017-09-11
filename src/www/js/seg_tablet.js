@@ -7764,6 +7764,11 @@ u._stepA2 = function() {
 Util.Objects["front"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
+			if(this.intro) {
+				u.ass(this.intro, {
+					"height": page.browser_h + "px"
+				});
+			}
 			this.offsetHeight;
 		}
 		scene.scrolled = function() {
@@ -7796,7 +7801,10 @@ Util.Objects["front"] = new function() {
 			this.intro._textnodes = u.qsa("p,h2,h3,h4", this.intro);
 			if(this.intro._textnodes.length) {
 				u.e.click(this.intro);
-				this.intro.clicked = function() {
+				this.intro.clicked = function(event) {
+					if(this.is_active) {
+						u.scrollTo(window, {"node":this.scene._article, "offset_y":100});
+					}
 					// 	
 					// 
 					// 	
@@ -7871,7 +7879,6 @@ Util.Objects["front"] = new function() {
 			this.intro.audioPlayer.intro = this.intro;
 			this.intro.audioPlayer.load("/assets/audio/intro.mp3");
 			// 	
-			this.intro.audioPlayer.play();
 			this.intro.showFrame = function(frame) {
 				if(this.frame != frame) {
 					u.ass(this.bgs[frame], {
@@ -7891,16 +7898,20 @@ Util.Objects["front"] = new function() {
 					this.frame = frame;
 				}
 				// 
-				console.log("this.frame:" + this.frame);
 			}
-			this.intro.timestamps = ["", 25, 315, 605, 895, 1185, 2045, 2335];
-			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[1], 1);
-			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[2], 2);
-			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[3], 3);
-			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[4], 4);
-			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[5], 5);
-			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[6], 6);
-			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[7], 7);
+			this.intro.audioPlayer.playing = function(event) {
+				var _time = event.target.currentTime;
+				this.intro.timestamps = ["", 2239, 2625, 2900, 3200, 3487, 4349, 4645];
+				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[1]+_time, 1);
+				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[2]+_time, 2);
+				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[3]+_time, 3);
+				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[4]+_time, 4);
+				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[5]+_time, 5);
+				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[6]+_time, 6);
+				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[7]+_time, 7);
+				delete this.playing;
+			}
+			this.intro.audioPlayer.play();
 			// 
 			// 	
 			u.eventChain(this.intro);
@@ -7918,7 +7929,6 @@ Util.Objects["front"] = new function() {
 			// 
 			// 
 			this.intro.eventChainEnded = function() {
-				this.scene.hideIntro();
 			}
 			this.activateIntro = function() {
 				this.intro.hotspots = [""];
@@ -7929,7 +7939,6 @@ Util.Objects["front"] = new function() {
 				this.intro.hotspots.push(u.ae(this.intro, "div", {"class":"hotspot hotspot5"}));
 				this.intro.hotspots.push(u.ae(this.intro, "div", {"class":"hotspot hotspot6"}));
 				this.intro.hotspots.push(u.ae(this.intro, "div", {"class":"hotspot hotspot7"}));
-	u.bug(this.intro.hotspots.length)
 				var i, hotspot;
 				for(i = 1; i < this.intro.hotspots.length; i++) {
 					hotspot = this.intro.hotspots[i];
@@ -7941,7 +7950,7 @@ Util.Objects["front"] = new function() {
 					this.intro.hotspots[i].over = function() {
 						this.blink = function() {
 							console.log("blink");
-							u.a.transition(this, "all 0.1s ease-in-out");
+							u.a.transition(this, "all 0.4s ease-in-out");
 							u.ass(this, {
 								"opacity":0
 							});
@@ -7956,36 +7965,40 @@ Util.Objects["front"] = new function() {
 					}
 				}
 				this.intro.play();
+				this.hideIntro();
+				this.intro.is_active = true;
 			}
-			u.t.setTimer(this	, this.activateIntro, 2235);
+			u.t.setTimer(this, this.activateIntro, 6045);
 		}
 		scene.hideIntro = function() {
 			// 	
 			// 	
 			// 	
-			u.ass(this, {
-				"height":"auto"
-			});
-			u.a.transition(page.hN, "none");
-			u.ass(page.hN, {
-				"opacity":0,
-				"display":"block"
-			});
-			u.a.transition(page.fN, "none");
-			u.ass(page.fN, {
-				"opacity":0,
-				"display":"block"
-			});
-			u.a.transition(page.hN, "all 0.5s ease-in");
-			u.ass(page.hN, {
-				"opacity":1,
-			});
-			u.a.transition(page.fN, "all 0.5s ease-in");
-			u.ass(page.fN, {
-				"opacity":1,
-			});
-			page.acceptCookies();
-			this.showArticle();
+			if(!this.intro.is_active) {
+				u.ass(this, {
+					"height":"auto"
+				});
+				u.a.transition(page.hN, "none");
+				u.ass(page.hN, {
+					"opacity":0,
+					"display":"block"
+				});
+				u.a.transition(page.fN, "none");
+				u.ass(page.fN, {
+					"opacity":0,
+					"display":"block"
+				});
+				u.a.transition(page.hN, "all 0.5s ease-in");
+				u.ass(page.hN, {
+					"opacity":1,
+				});
+				u.a.transition(page.fN, "all 0.5s ease-in");
+				u.ass(page.fN, {
+					"opacity":1,
+				});
+				page.acceptCookies();
+				this.showArticle();
+			}
 		}
 		scene.showArticle = function() {
 			this._article = u.qs("div.article", this);
