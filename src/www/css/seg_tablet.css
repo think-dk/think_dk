@@ -77,7 +77,7 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 #header .servicenavigation li:first-child:before {content: "";}
 #header .servicenavigation li.github {margin: 0 0 0 10px; padding: 4px 12px; background: #8c9399; border-radius: 3px; cursor: pointer; font-size: 12px; color: #ffffff;}
 #header .servicenavigation li.cart.used {color: #df0000;}
-#navigation {z-index: 10; position: fixed; right: 60px; top: 65px; background-color: rgba(255,255,255, 0.8); border-radius: 5px;}
+#navigation {z-index: 10; position: fixed; right: 30px; top: 65px; background-color: rgba(255,255,255, 0.8); border-radius: 5px;}
 #navigation ul {}
 #navigation ul li {display: inline-block; vertical-align: top; padding: 10px; font-size: 20px; color: #888888;
 	font-family: "PT Serif", Times, serif;
@@ -780,19 +780,85 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene {opacity: 0;}
 #content .scene h1 span {display: inline-block;}
 #content .scene ul.info {display: none;}
-#content .scene.front {opacity: 1;}
-#content .scene.front div.intro {opacity: 0; overflow: hidden;
+#content .scene.front {opacity: 1;
+	box-sizing: border-box;
+}
+body.front #header { opacity: 0;}
+body.front #footer {display: none;}
+body.front #page {overflow: hidden;}
+#content .scene.front div.intro {opacity: 0; overflow: hidden; position: relative; 
+	box-sizing: border-box;
+	top: -150px;
 	-o-user-select: none;
 	-ms-user-select: none;
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	user-select: none;
 }
+#content .scene.front div.intro .text {z-index: 10; position: relative; height: 100%;}
 #content .scene.front div.intro p,
 #content .scene.front div.intro h2,
 #content .scene.front div.intro h3,
-#content .scene.front div.intro span {display: inline-block; width: auto; color: #26962d; padding: 0;}
-#content .scene.front div.article {display: none;}
+#content .scene.front div.intro span {display: inline-block; width: auto; color: #ffffff; padding: 0;}
+#content .scene.front div.intro div.bg {position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 9;
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	display: none;
+}
+#content .scene.front div.intro div.bg.bg1 {
+	background-image: url(/assets/images/bg_front_1.jpg);
+}
+#content .scene.front div.intro div.bg.bg2 {
+	background-image: url(/assets/images/bg_front_2.jpg);
+}
+#content .scene.front div.intro div.bg.bg3 {
+	background-image: url(/assets/images/bg_front_3.jpg);
+}
+#content .scene.front div.intro div.bg.bg4 {
+	background-image: url(/assets/images/bg_front_4.jpg);
+}
+#content .scene.front div.intro div.bg.bg5 {
+	background-image: url(/assets/images/bg_front_5.jpg);
+}
+#content .scene.front div.intro div.bg.bg6 {
+	background-image: url(/assets/images/bg_front_6.jpg);
+}
+#content .scene.front div.intro div.bg.bg7 {
+	background-image: url(/assets/images/bg_front_7.jpg);
+}
+#content .scene.front div.intro div.hotspot {
+	position: absolute;
+	z-index: 15;
+	top: 0;
+	left: 0;
+	width: 15%;
+	height: 15%;
+	margin-left: -7.5%;
+	margin-top: -7.5%;
+}
+#content .scene.front div.intro div.hotspot.hotspot1 {
+	top: 30%; left: 50%;
+}	
+#content .scene.front div.intro div.hotspot.hotspot2 {
+	top: 35%; left: 25%;
+}	
+#content .scene.front div.intro div.hotspot.hotspot3 {
+	top: 35%; left: 75%;
+}	
+#content .scene.front div.intro div.hotspot.hotspot4 {
+	top: 60%; left: 17%;
+}	
+#content .scene.front div.intro div.hotspot.hotspot5 {
+	top: 60%; left: 83%;
+}	
+#content .scene.front div.intro div.hotspot.hotspot6 {
+	top: 85%; left: 35%;
+}	
+#content .scene.front div.intro div.hotspot.hotspot7 {
+	top: 85%; left: 65%;
+}	
+#content .scene.front div.article {display: none; margin-top: -50px;}
 #content .scene.front div.all_events {display: none; padding-bottom: 50px;}
 #content .scene.front div.all_events h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
 	font-family: "OpenSans";
@@ -1223,7 +1289,7 @@ body > div.pagination li.next {border-color: #26962d;}
 .events #navigation ul li.events,
 .services #navigation ul li.services {color: #26962d;}
 #navigation ul li.membership {color: #ffffff;
-	margin: 5px 0 5px 10px;
+	margin: 5px 5px 5px 10px;
 	padding: 5px 13px;
 	background-color: #34cc3d;
 	border-radius: 5px;

@@ -3,27 +3,112 @@
 #content .scene h1 span {display: inline-block;}
 #content .scene ul.info {display: none;}
 
+/*body.front #header .logo {background-color: rgba(255,255,255, 0);}
+body.front #navigation {background-color: rgba(255,255,255, 0);}
+*/
 
 /* FRONT */
-#content .scene.front {opacity: 1;}
+#content .scene.front {opacity: 1;
+	box-sizing: border-box;
+	/*	background-color: green;*/
+}
 
+/* HIDE HEADER AND FOOTER FOR INTRO SEQUENCE */
+body.front #header {/*display: none;*/ opacity: 0;}
+body.front #footer {display: none;}
+body.front #page {overflow: hidden;}
 
 /* FRONT - INTRO */
-#content .scene.front div.intro {opacity: 0; overflow: hidden;
+#content .scene.front div.intro {opacity: 0; overflow: hidden; position: relative; /*absolute; top: -100px; left: 0; width: 100%;*/
+	/*background-color: #000000;*/
+	box-sizing: border-box;
+	top: -150px;
+/*	background-color: red;*/
 	-o-user-select: none;
 	-ms-user-select: none;
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	user-select: none;
 }
+#content .scene.front div.intro .text {z-index: 10; position: relative; height: 100%;}
 #content .scene.front div.intro p,
 #content .scene.front div.intro h2,
 #content .scene.front div.intro h3,
-#content .scene.front div.intro span {display: inline-block; width: auto; color: #26962d; padding: 0;}
+#content .scene.front div.intro span {display: inline-block; width: auto; color: #ffffff; padding: 0;}
+#content .scene.front div.intro div.bg {position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 9;
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+/*	background-color: #000000;*/
+	display: none;
+}
 
+#content .scene.front div.intro div.bg.bg1 {
+/*	background-color: red;*/
+	background-image: url(/assets/images/bg_front_1.jpg);
+}
+#content .scene.front div.intro div.bg.bg2 {
+/*	background-color: yellow;*/
+	background-image: url(/assets/images/bg_front_2.jpg);
+}
+#content .scene.front div.intro div.bg.bg3 {
+/*	background-color: green;*/
+	background-image: url(/assets/images/bg_front_3.jpg);
+}
+#content .scene.front div.intro div.bg.bg4 {
+/*	background-color: blue;*/
+	background-image: url(/assets/images/bg_front_4.jpg);
+}
+#content .scene.front div.intro div.bg.bg5 {
+/*	background-color: orange;*/
+	background-image: url(/assets/images/bg_front_5.jpg);
+}
+
+#content .scene.front div.intro div.bg.bg6 {
+/*	background-color: purple;*/
+	background-image: url(/assets/images/bg_front_6.jpg);
+}
+#content .scene.front div.intro div.bg.bg7 {
+/*	background-color: cyan;*/
+	background-image: url(/assets/images/bg_front_7.jpg);
+}
+
+
+#content .scene.front div.intro div.hotspot {
+	position: absolute;
+	z-index: 15;
+	top: 0;
+	left: 0;
+	width: 15%;
+	height: 15%;
+	margin-left: -7.5%;
+	margin-top: -7.5%;
+/*	background: red;
+*/}
+#content .scene.front div.intro div.hotspot.hotspot1 {
+	top: 30%; left: 50%;
+}	
+#content .scene.front div.intro div.hotspot.hotspot2 {
+	top: 35%; left: 25%;
+}	
+#content .scene.front div.intro div.hotspot.hotspot3 {
+	top: 35%; left: 75%;
+}	
+#content .scene.front div.intro div.hotspot.hotspot4 {
+	top: 60%; left: 17%;
+}	
+#content .scene.front div.intro div.hotspot.hotspot5 {
+	top: 60%; left: 83%;
+}	
+#content .scene.front div.intro div.hotspot.hotspot6 {
+	top: 85%; left: 35%;
+}	
+#content .scene.front div.intro div.hotspot.hotspot7 {
+	top: 85%; left: 65%;
+}	
 
 /* FRONT - ARTICLE */
-#content .scene.front div.article {display: none;}
+#content .scene.front div.article {display: none; margin-top: -50px;}
 
 
 /* FRONT - EVENTS */

@@ -7764,17 +7764,6 @@ u._stepA2 = function() {
 Util.Objects["front"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
-			if(this.intro && this.intro._textnodes) {
-				var i, node;
-				for(i = 0; node = this.intro._textnodes[i]; i++) {
-					var node_x = (page.cN.offsetWidth-node.offsetWidth) / 2;
-					var node_y = ((page.cN.offsetHeight-node.offsetHeight) / 2) - page.hN.offsetHeight / 2;
-					u.ass(node, {
-						"left": node_x+"px", 
-						"top": node_y+"px",
-					}, false);
-				}
-			}
 			this.offsetHeight;
 		}
 		scene.scrolled = function() {
@@ -7802,18 +7791,16 @@ Util.Objects["front"] = new function() {
 			}
 		}
 		scene.initIntro = function() {
+			 u.bug("initIntro")
 			this.intro.scene = this;
 			this.intro._textnodes = u.qsa("p,h2,h3,h4", this.intro);
 			if(this.intro._textnodes.length) {
 				u.e.click(this.intro);
 				this.intro.clicked = function() {
-					if(typeof(this.stop) == "function") {
-						this.stop();
-					}
-					else {
-						u.e.removeWindowEvent(this.scene, "mousemove", this.scene.intro_event_id);
-						this.scene.hideIntro();
-					}
+					// 	
+					// 
+					// 	
+					// 	
 				}
 				u.textscaler(this.intro, {
 					"min_height":400,
@@ -7834,27 +7821,43 @@ Util.Objects["front"] = new function() {
 						"max_size":4
 					}
 				});
+				u.ass(this.intro, {
+					"height": u.browserH() + "px",
+					"opacity": 1
+				});
 				var i, node;
 				for(i = 0; node = this.intro._textnodes[i]; i++) {
-					var node_x = (page.cN.offsetWidth-node.offsetWidth) / 2;
-					var node_y = ((page.cN.offsetHeight-node.offsetHeight) / 2) - page.hN.offsetHeight / 2;
+					u.bug(node.offsetHeight);
 					u.ass(node, {
 						"position":"absolute",
 						"opacity": 0, 
-						"left": node_x+"px", 
-						"top": node_y+"px",
+						"right": "50px", 
+						"bottom": (50) + "px",
 					});
 				}
-				u.ass(this.intro, {
-					"height": u.browserH()-(page.hN.offsetHeight+page.fN.offsetHeight+125) + "px",
-					"opacity": 1
+				u.ass(this, {
+					"height":this.intro.offsetHeight - page.hN.offsetHeight+"px"
 				});
-				if(u.e.event_support == "mouse") {
-					this.intro_event_id = u.e.addWindowEvent(this, "mousemove", this.showIntro);
-					this.t_autoplay = u.t.setTimer(this, "showIntro", 1500);
-				}
-				else {
-					this.t_autoplay = u.t.setTimer(this, "showIntro", 500);
+				u.preloader(this.intro, [
+					"/assets/images/bg_front_1.jpg",
+					"/assets/images/bg_front_2.jpg",
+					"/assets/images/bg_front_3.jpg",
+					"/assets/images/bg_front_4.jpg",
+					"/assets/images/bg_front_5.jpg",
+					"/assets/images/bg_front_6.jpg",
+					"/assets/images/bg_front_7.jpg",
+					"/assets/audio/intro.mp3",
+				]);
+				this.intro.bgs = [""];
+				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg1"}));
+				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg2"}));
+				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg3"}));
+				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg4"}));
+				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg5"}));
+				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg6"}));
+				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg7"}));
+				this.intro.loaded = function() {
+					this.scene.showIntro();
 				}
 			}
 			else {
@@ -7862,11 +7865,44 @@ Util.Objects["front"] = new function() {
 			}
 		}
 		scene.showIntro = function() {
+			u.bug("scene.showIntro");
 			var node, duration, i;
-			u.t.resetTimer(this.t_autoplay);
-			if(u.e.event_support == "mouse") {
-				u.e.removeWindowEvent(this, "mousemove", this.intro_event_id);
+			this.intro.audioPlayer = u.audioPlayer();
+			this.intro.audioPlayer.intro = this.intro;
+			this.intro.audioPlayer.load("/assets/audio/intro.mp3");
+			// 	
+			this.intro.audioPlayer.play();
+			this.intro.showFrame = function(frame) {
+				if(this.frame != frame) {
+					u.ass(this.bgs[frame], {
+						"opacity":0,
+						"display":"block",
+					});
+					u.a.transition(this.bgs[frame], "all 0.1s ease-in-out");
+					u.ass(this.bgs[frame], {
+						"opacity":1,
+					});
+					if(this.frame) {
+						u.a.transition(this.bgs[this.frame], "all 0.05s ease-in-out 0.05s");
+						u.ass(this.bgs[this.frame], {
+							"opacity":0,
+						});
+					}
+					this.frame = frame;
+				}
+				// 
+				console.log("this.frame:" + this.frame);
 			}
+			this.intro.timestamps = ["", 25, 315, 605, 895, 1185, 2045, 2335];
+			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[1], 1);
+			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[2], 2);
+			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[3], 3);
+			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[4], 4);
+			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[5], 5);
+			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[6], 6);
+			u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[7], 7);
+			// 
+			// 	
 			u.eventChain(this.intro);
 			node = this.intro._textnodes[0];
 			duration = node.innerHTML.length*100 > 1500 ? node.innerHTML.length*100 : 1500;
@@ -7878,24 +7914,65 @@ Util.Objects["front"] = new function() {
 				this.intro.addEvent(node, u._stepA1, duration);
 				this.intro.addEvent(node, u._stepA2, 400);
 			}
-			node = this.intro._textnodes[this.intro._textnodes.length-1];
-			duration = node.innerHTML.length*100 > 1500 ? node.innerHTML.length*100 : 1500;
-			this.intro.addEvent(node, u._stepA1, duration);
-			this.intro.addEvent(node, u._stepA2, 400);
+			// 
+			// 
+			// 
 			this.intro.eventChainEnded = function() {
 				this.scene.hideIntro();
 			}
-			this.intro.play();
+			this.activateIntro = function() {
+				this.intro.hotspots = [""];
+				this.intro.hotspots.push(u.ae(this.intro, "div", {"class":"hotspot hotspot1"}));
+				this.intro.hotspots.push(u.ae(this.intro, "div", {"class":"hotspot hotspot2"}));
+				this.intro.hotspots.push(u.ae(this.intro, "div", {"class":"hotspot hotspot3"}));
+				this.intro.hotspots.push(u.ae(this.intro, "div", {"class":"hotspot hotspot4"}));
+				this.intro.hotspots.push(u.ae(this.intro, "div", {"class":"hotspot hotspot5"}));
+				this.intro.hotspots.push(u.ae(this.intro, "div", {"class":"hotspot hotspot6"}));
+				this.intro.hotspots.push(u.ae(this.intro, "div", {"class":"hotspot hotspot7"}));
+	u.bug(this.intro.hotspots.length)
+				var i, hotspot;
+				for(i = 1; i < this.intro.hotspots.length; i++) {
+					hotspot = this.intro.hotspots[i];
+					u.bug(this.intro.hotspots[i]);
+					u.bug(hotspot + ", " + i)
+					u.e.hover(this.intro.hotspots[i]);
+					this.intro.hotspots[i].intro = this.intro;
+					this.intro.hotspots[i].i = i;
+					this.intro.hotspots[i].over = function() {
+						u.bug("over:" + this.i)
+						this.intro.showFrame(this.i);
+						this.intro.audioPlayer.play(this.intro.timestamps[this.i]/1000);
+					}
+				}
+				this.intro.play();
+			}
+			u.t.setTimer(this	, this.activateIntro, 2235);
 		}
 		scene.hideIntro = function() {
-			if(this.intro) {
-				u.ass(this.intro, {
-					"opacity": 0,
-					"display": "none"
-				});
-				this.intro.parentNode.removeChild(this.intro);
-				delete this.intro;
-			}
+			// 	
+			// 	
+			// 	
+			u.ass(this, {
+				"height":"auto"
+			});
+			u.a.transition(page.hN, "none");
+			u.ass(page.hN, {
+				"opacity":0,
+				"display":"block"
+			});
+			u.a.transition(page.fN, "none");
+			u.ass(page.fN, {
+				"opacity":0,
+				"display":"block"
+			});
+			u.a.transition(page.hN, "all 0.5s ease-in");
+			u.ass(page.hN, {
+				"opacity":1,
+			});
+			u.a.transition(page.fN, "all 0.5s ease-in");
+			u.ass(page.fN, {
+				"opacity":1,
+			});
 			page.acceptCookies();
 			this.showArticle();
 		}
