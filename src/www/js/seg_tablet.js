@@ -7939,6 +7939,17 @@ Util.Objects["front"] = new function() {
 					this.intro.hotspots[i].intro = this.intro;
 					this.intro.hotspots[i].i = i;
 					this.intro.hotspots[i].over = function() {
+						this.blink = function() {
+							console.log("blink");
+							u.a.transition(this, "all 0.1s ease-in-out");
+							u.ass(this, {
+								"opacity":0
+							});
+						}
+						u.a.transition(this, "all 0.1s ease-in-out", "blink");
+						u.ass(this, {
+							"opacity":1
+						});
 						u.bug("over:" + this.i)
 						this.intro.showFrame(this.i);
 						this.intro.audioPlayer.play(this.intro.timestamps[this.i]/1000);
