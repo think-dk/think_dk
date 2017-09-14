@@ -8255,8 +8255,8 @@ Util.Objects["front"] = new function() {
 				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg3", "html":"<h2>to make</h2>"}));
 				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg4", "html":"<h2>a</h2>"}));
 				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg5", "html":"<h2>differenc?</h2>"}));
-				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg6", "html":"<h2>welcome to</h2>"}));
-				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg7", "html":"<h2>the club</h2>"}));
+				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg6", "html":"<h2>welcome</h2>"}));
+				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg7", "html":"<h2>to the club</h2>"}));
 				this.intro.loaded = function() {
 					this.scene.showIntro();
 				}
