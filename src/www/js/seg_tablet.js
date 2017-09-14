@@ -7857,13 +7857,13 @@ Util.Objects["front"] = new function() {
 					"/assets/audio/intro.mp3",
 				]);
 				this.intro.bgs = [""];
-				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg1"}));
-				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg2"}));
-				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg3"}));
-				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg4"}));
-				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg5"}));
-				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg6"}));
-				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg7"}));
+				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg1", "html":"<h2>do you</h2>"}));
+				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg2", "html":"<h2>want</h2>"}));
+				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg3", "html":"<h2>to make</h2>"}));
+				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg4", "html":"<h2>a</h2>"}));
+				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg5", "html":"<h2>differenc?</h2>"}));
+				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg6", "html":"<h2>welcome to</h2>"}));
+				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg7", "html":"<h2>the club</h2>"}));
 				this.intro.loaded = function() {
 					this.scene.showIntro();
 				}
@@ -7914,57 +7914,33 @@ Util.Objects["front"] = new function() {
 			this.intro.audioPlayer.play();
 			// 
 			// 	
-			u.eventChain(this.intro);
-			node = this.intro._textnodes[0];
-			duration = node.innerHTML.length*100 > 1500 ? node.innerHTML.length*100 : 1500;
-			this.intro.addEvent(node, u._stepA1, duration);
-			this.intro.addEvent(node, u._stepA2, 300);
-			for(i = 1; i < this.intro._textnodes.length-1; i++) {
-				node = this.intro._textnodes[i];
-				duration = node.innerHTML.length*100 > 1500 ? node.innerHTML.length*75 : 1500;
-				this.intro.addEvent(node, u._stepA1, duration);
-				this.intro.addEvent(node, u._stepA2, 400);
-			}
-			// 
-			// 
-			// 
-			this.intro.eventChainEnded = function() {
-			}
 			this.activateIntro = function() {
+				var ul_hotspots = u.ae(this.intro, "ul", {"class":"hotspots"});
+				u.ce(ul_hotspots);
+				ul_hotspots.clicked = function(event) {
+					u.e.kill(event);
+				}
 				this.intro.hotspots = [""];
-				this.intro.hotspots.push(u.ae(this.intro, "div", {"class":"hotspot hotspot1"}));
-				this.intro.hotspots.push(u.ae(this.intro, "div", {"class":"hotspot hotspot2"}));
-				this.intro.hotspots.push(u.ae(this.intro, "div", {"class":"hotspot hotspot3"}));
-				this.intro.hotspots.push(u.ae(this.intro, "div", {"class":"hotspot hotspot4"}));
-				this.intro.hotspots.push(u.ae(this.intro, "div", {"class":"hotspot hotspot5"}));
-				this.intro.hotspots.push(u.ae(this.intro, "div", {"class":"hotspot hotspot6"}));
-				this.intro.hotspots.push(u.ae(this.intro, "div", {"class":"hotspot hotspot7"}));
+				this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot1"}));
+				this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot2"}));
+				this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot3"}));
+				this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot4"}));
+				this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot5"}));
+				this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot6"}));
+				this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot7"}));
 				var i, hotspot;
 				for(i = 1; i < this.intro.hotspots.length; i++) {
 					hotspot = this.intro.hotspots[i];
-					u.bug(this.intro.hotspots[i]);
-					u.bug(hotspot + ", " + i)
-					u.e.hover(this.intro.hotspots[i]);
+					this.intro.hotspots[i].inputStarted = function(event) {
+						u.bug("click")
+						u.e.kill(event);
+						this.intro.showFrame(this.i);
+					}
+					u.e.addStartEvent(this.intro.hotspots[i], this.inputStarted);
+					u.ce(this.intro.hotspots[i])
 					this.intro.hotspots[i].intro = this.intro;
 					this.intro.hotspots[i].i = i;
-					this.intro.hotspots[i].over = function() {
-						this.blink = function() {
-							console.log("blink");
-							u.a.transition(this, "all 0.4s ease-in-out");
-							u.ass(this, {
-								"opacity":0
-							});
-						}
-						u.a.transition(this, "all 0.1s ease-in-out", "blink");
-						u.ass(this, {
-							"opacity":1
-						});
-						u.bug("over:" + this.i)
-						this.intro.showFrame(this.i);
-						this.intro.audioPlayer.play(this.intro.timestamps[this.i]/1000);
-					}
 				}
-				this.intro.play();
 				this.hideIntro();
 				this.intro.is_active = true;
 			}
@@ -7977,6 +7953,17 @@ Util.Objects["front"] = new function() {
 			if(!this.intro.is_active) {
 				u.ass(this, {
 					"height":"auto"
+				});
+				u.ass(u.qs("h2", this.intro.bgs[1]), {"opacity":0});
+				u.ass(u.qs("h2", this.intro.bgs[2]), {"opacity":0});
+				u.ass(u.qs("h2", this.intro.bgs[3]), {"opacity":0});
+				u.ass(u.qs("h2", this.intro.bgs[4]), {"opacity":0});
+				u.ass(u.qs("h2", this.intro.bgs[5]), {"opacity":0});
+				u.ass(u.qs("h2", this.intro.bgs[6]), {"opacity":0});
+				var last_bg_header = u.qs("h2", this.intro.bgs[7]);
+				u.a.transition(last_bg_header, "all 0.2s ease-in-out");
+				u.ass(last_bg_header, {
+					"opacity":0
 				});
 				u.a.transition(page.hN, "none");
 				u.ass(page.hN, {

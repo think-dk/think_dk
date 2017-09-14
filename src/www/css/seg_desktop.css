@@ -64,7 +64,8 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 
 /*s-header.css*/
 #header {position: relative; height: 100px;}
-#header .logo {z-index: 50; position: absolute; top: 10px; left: 30px; font-size: 30px; padding: 10px; color: #888888; cursor: pointer; 
+#header .logo {z-index: 50; position: absolute; top: 10px; left: 30px; font-size: 30px; padding: 10px 13px; color: #888888; cursor: pointer; 
+	background-color: rgba(255,255,255, 0.8); border-radius: 5px;
 	font-family: "PT Serif", Times, serif;
 }
 #header .logo {position: fixed;}
@@ -78,6 +79,7 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 #header .servicenavigation li.github {margin: 0 0 0 10px; padding: 4px 12px; background: #8c9399; border-radius: 3px; cursor: pointer; font-size: 12px; color: #ffffff;}
 #header .servicenavigation li.cart.used {color: #df0000;}
 #navigation {z-index: 50; position: fixed; right: 30px; top: 65px; 
+	background-color: rgba(255,255,255, 0.8); border-radius: 5px;
 }
 #navigation ul {}
 #navigation ul li {display: inline-block; vertical-align: top; padding: 10px; font-size: 20px; color: #888888;
@@ -810,18 +812,20 @@ body.front #page {overflow: hidden;}
 	-webkit-user-select: none;
 	user-select: none;
 }
-#content .scene.front div.intro .text {z-index: 10; position: relative; height: 100%;}
+#content .scene.front div.intro .text {z-index: 10; position: relative; height: 100%; display: none;}
 #content .scene.front div.intro p,
 #content .scene.front div.intro h2,
 #content .scene.front div.intro h3,
 #content .scene.front div.intro span {display: inline-block; width: auto; color: #ffffff; padding: 0;}
 #content .scene.front div.intro div.bg {position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 9;
+	cursor: pointer;
 	background-position: center center;
 	background-size: cover;
 	background-repeat: no-repeat;
 	opacity: 0.001;
 	display: block;
 }
+#content .scene.front div.intro div.bg h2 {position: absolute; bottom: 50px; right: 50px;}
 #content .scene.front div.intro div.bg.bg1 {
 	background-image: url(/assets/images/bg_front_1.jpg);
 }
@@ -843,45 +847,30 @@ body.front #page {overflow: hidden;}
 #content .scene.front div.intro div.bg.bg7 {
 	background-image: url(/assets/images/bg_front_7.jpg);
 }
-#content .scene.front div.intro div.hotspot {
-	font-family: "PT Serif",Times,serif;	
-	opacity: 0.1;
+#content .scene.front div.intro ul.hotspots {
+	cursor: default;
 	position: absolute;
 	z-index: 15;
-	top: 0;
-	left: 0;
-	width: 15%;
-	height: 15%;
-	border-radius: 50%;
-	color: #ffffff;
-	margin-left: -7.5%;
-	margin-top: -7.5%;
-	font-size: 30px;
+	bottom: 50px;
+	left: 50%;
+	margin-left: -250px;
+	width: 500px;
 	text-align: center;
-	background: radial-gradient(ellipse at center, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 70%);
+	white-space: nowrap;
+	padding: 0;
 }
-#content .scene.front div.intro div.hotspot.hotspot1 {
-	top: 30%; left: 50%;
-}	
-#content .scene.front div.intro div.hotspot.hotspot2 {
-	top: 40%; left: 30%;
-}	
-#content .scene.front div.intro div.hotspot.hotspot3 {
-	top: 40%; left: 70%;
-}	
-#content .scene.front div.intro div.hotspot.hotspot4 {
-	top: 65%; left: 25%;
-}	
-#content .scene.front div.intro div.hotspot.hotspot5 {
-	top: 65%; left: 75%;
-}	
-#content .scene.front div.intro div.hotspot.hotspot6 {
-	top: 85%; left: 40%;
-}	
-#content .scene.front div.intro div.hotspot.hotspot7 {
-	top: 85%; left: 60%;
-}	
-#content .scene.front div.article {display: none; margin-top: -50px;}
+#content .scene.front div.intro li.hotspot {
+	cursor: pointer;
+	display: inline-block;
+	vertical-align: top;
+	font-family: "PT Serif",Times,serif;
+	opacity: 1;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%; margin: 20px;
+	background-color: rgba(255,255,255, 0.5);
+}
+#content .scene.front div.article {z-index: 11; display: none; margin-top: -170px;}
 #content .scene.front div.all_events {display: none; padding-bottom: 50px;}
 #content .scene.front div.all_events h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
 	font-family: "OpenSans";
