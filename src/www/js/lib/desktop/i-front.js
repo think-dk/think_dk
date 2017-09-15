@@ -139,7 +139,9 @@ Util.Objects["front"] = new function() {
 					"height": u.browserH() + "px",
 //					"margin-top": - (page.hN.offsetHeight + this.intro.offsetTop) + "px",
 //					"margin-buttom": - (page.hN.offsetHeight + this.intro.offsetTop) + "px",
-					"opacity": 1
+					"opacity": 1,
+					// "width":u.browserW()+"px",
+					// "margin-left": -((u.browserW() - this.offsetWidth) / 2) + "px"
 				});
 
 				var i, node;
@@ -169,7 +171,7 @@ Util.Objects["front"] = new function() {
 					"/assets/images/bg_front_5.jpg",
 					"/assets/images/bg_front_6.jpg",
 					"/assets/images/bg_front_7.jpg",
-					"/assets/audio/intro.mp3",
+					"/assets/audio/intro-4-1.mp3",
 				]);
 
 				this.intro.bgs = [""];
@@ -177,7 +179,7 @@ Util.Objects["front"] = new function() {
 				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg2", "html":"<h2>want</h2>"}));
 				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg3", "html":"<h2>to make</h2>"}));
 				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg4", "html":"<h2>a</h2>"}));
-				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg5", "html":"<h2>differenc?</h2>"}));
+				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg5", "html":"<h2>difference?</h2>"}));
 
 				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg6", "html":"<h2>welcome</h2>"}));
 				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg7", "html":"<h2>to the club</h2>"}));
@@ -207,7 +209,7 @@ Util.Objects["front"] = new function() {
 
 			this.intro.audioPlayer = u.audioPlayer();
 			this.intro.audioPlayer.intro = this.intro;
-			this.intro.audioPlayer.load("/assets/audio/intro.mp3");
+			this.intro.audioPlayer.load("/assets/audio/intro-4-1.mp3");
 
 
 			// this.intro.audioPlayer.timeupdate = function(event) {
@@ -295,7 +297,10 @@ Util.Objects["front"] = new function() {
 //				this.intro.timestamps = ["", 25, 315, 605, 895, 1185, 2045, 2335];
 
 				// long intro (intro.mp3)
-				this.intro.timestamps = ["", 2239, 2625, 2900, 3200, 3487, 4349, 4645];
+//				this.intro.timestamps = ["", 2239, 2625, 2900, 3200, 3487, 4349, 4645];
+
+				// 4.1
+				this.intro.timestamps = ["", 2330, 2625, 2900, 3200, 3487, 4349, 4645];
 
 
 				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[1]+_time, 1);

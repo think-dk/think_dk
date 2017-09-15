@@ -803,6 +803,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 body.front #header { opacity: 0;}
 body.front #footer {display: none;}
 body.front #page {overflow: hidden;}
+body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.front div.intro {opacity: 0; overflow: hidden; position: relative; 
 	box-sizing: border-box;
 	top: -150px;
@@ -865,8 +866,8 @@ body.front #page {overflow: hidden;}
 	vertical-align: top;
 	font-family: "PT Serif",Times,serif;
 	opacity: 1;
-	width: 20px;
-	height: 20px;
+	width: 14px;
+	height: 14px;
 	border-radius: 50%; margin: 20px;
 	background-color: rgba(255,255,255, 0.5);
 }
