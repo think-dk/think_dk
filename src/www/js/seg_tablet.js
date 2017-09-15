@@ -7854,7 +7854,7 @@ Util.Objects["front"] = new function() {
 					"/assets/images/bg_front_5.jpg",
 					"/assets/images/bg_front_6.jpg",
 					"/assets/images/bg_front_7.jpg",
-					"/assets/audio/intro-4-1.mp3",
+					"/assets/audio/intro-4-2.mp3",
 				]);
 				this.intro.bgs = [""];
 				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg1", "html":"<h2>do you</h2>"}));
@@ -7877,7 +7877,7 @@ Util.Objects["front"] = new function() {
 			var node, duration, i;
 			this.intro.audioPlayer = u.audioPlayer();
 			this.intro.audioPlayer.intro = this.intro;
-			this.intro.audioPlayer.load("/assets/audio/intro-4-1.mp3");
+			this.intro.audioPlayer.load("/assets/audio/intro-4-2.mp3");
 			// 	
 			this.intro.showFrame = function(frame) {
 				if(this.frame != frame) {
