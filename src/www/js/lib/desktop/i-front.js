@@ -406,7 +406,7 @@ Util.Objects["front"] = new function() {
 		scene.hideIntro = function() {
 //			u.bug("exit intro")
 
-//			u.saveCookie("intro_v1", 1);
+			u.saveCookie("intro_v1", 1, {"expires":false});
 
 			// could also be called if no intro is present
 			// if(this.intro) {

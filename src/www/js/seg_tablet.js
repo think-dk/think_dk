@@ -7994,6 +7994,7 @@ Util.Objects["front"] = new function() {
 			this.intro.audioPlayer.play();
 		}
 		scene.hideIntro = function() {
+			u.saveCookie("intro_v1", 1, {"expires":false});
 			// 	
 			// 	
 			// 	
