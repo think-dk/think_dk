@@ -9,8 +9,10 @@ From now on you will receive our newsletter, which means you'll stay up to date 
 
 We also set up an account on think.dk for you. This allows you to leave comments on our page and update your profile. If you want to login, please visit {SITE_URL}/janitor/admin/profile after activating your account.
 
+Curious what you missed until now? Go ahead and check our past newsletters at https://think.dk/bulletin!
+
 We are building a movement, so please tell your friends about us - the bigger our community grows, the more we can accelerate change!
- If you're a fan of social media, we would be happy to see you there - follow us on:
+If you're a fan of social media, we would be happy to see you there - follow us on:
 	 - https://www.facebook.com/thinkcopenhagen
 	 - https://www.instagram.com/think.dk/
 	 - https://twitter.com/think_denmark

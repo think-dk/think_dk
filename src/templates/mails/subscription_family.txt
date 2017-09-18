@@ -24,7 +24,9 @@ You are member number {MEMBERID} and your membership begins at the day of your s
 
 If you want to login to leave comments or update your profile, please visit {SITE_URL}/janitor/admin/profile after activating your account - you received the confirmation link in a separate email.
 
-We are building a movement, so please tell your friends about us - the bigger our community grows, the more we can accelerate change :)  If you're a fan of social media, we would be happy to see you there - follow us on:
+Curious what you missed until now? Go ahead and check our past newsletters at https://think.dk/bulletin!
+
+We are building a movement, so please tell your friends about us - the bigger our community grows, the more we can accelerate change :) If you're a fan of social media, we would be happy to see you there - follow us on:
 	 - https://www.facebook.com/thinkcopenhagen
 	 - https://www.instagram.com/think.dk/
 	 - https://twitter.com/think_denmark
