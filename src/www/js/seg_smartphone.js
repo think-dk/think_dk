@@ -4652,7 +4652,6 @@ u.fontsReady = function(node, fonts, _options) {
 		}
 	}
 	window["_man_fonts_"+loadkey].checkFontsStatus = function(event) {
-		u.bug("checkFontsStatus");
 		var i, node;
 		for(i = 0; node = this.nodes[i]; i++) {
 			if(window["_man_fonts_"].fonts[node.font_id].status == "waiting") {
@@ -5193,6 +5192,8 @@ u.textscaler = function(node, _settings) {
 		window._man_text._width = u.browserW();
 		window._man_text._height = u.browserH();
 		window._man_text.scale = function() {
+			var _width = u.browserW();
+			var _height = u.browserH();
 			window._man_text._width = u.browserW();
 			window._man_text._height = u.browserH();
 			var i, node;
@@ -5251,7 +5252,7 @@ u.textscaler = function(node, _settings) {
 	var tag;
 	node._man_text = {};
 	for(tag in node.text_settings) {
-		if(tag == "min_height" || tag == "max_height" || tag == "min_width" || tag == "max_width" || tag == "unit") {
+		if(tag == "min_height" || tag == "max_height" || tag == "min_width" || tag == "max_width" || tag == "unit" || tag == "ref") {
 			node._man_text[tag] = node.text_settings[tag];
 			node.text_settings[tag] = null;
 			delete node.text_settings[tag];

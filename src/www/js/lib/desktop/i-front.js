@@ -5,9 +5,10 @@ Util.Objects["front"] = new function() {
 		scene.resized = function() {
 //			u.bug("scene.resized:" + u.nodeId(this));
 
-			if(this.intro) {
+			if(this.intro && !this.intro.is_small) {
 				u.ass(this.intro, {
-					"height": page.browser_h + "px"
+					"height": page.browser_h + "px",
+					"width": page.browser_w + "px"
 				});
 			}
 			// re-position text nodes
@@ -59,13 +60,21 @@ Util.Objects["front"] = new function() {
 
 		scene.build = function() {
 //			u.bug("scene.build:" + u.nodeId(this));
+			var intro_cookie = u.getCookie("intro_v1");
 
 			this.intro = u.qs(".intro", this);
-			if(this.intro) {
+			this.intro.scene = this;
+
+			this.showLoader();
+
+			if(!intro_cookie && this.intro) {
+				this.show_full_intro = true;
 				this.initIntro();
 			}
+			// just show end result of intro
 			else {
-				this.showArticle();
+				this.show_full_intro = false;
+				this.initShortIntro();
 			}
 
 		}
@@ -74,41 +83,203 @@ Util.Objects["front"] = new function() {
 
 		// INTRO
 
+		scene.showLoader = function() {
+
+			this.intro_loader = u.ae(this.intro, "div", {"class":"loader"});
+			this.intro_loader_dot = u.ae(this.intro_loader, "div", {"class":"dot"});
+			this.intro_loader_dot.scene = this;
+			this.intro_loader_dot.loaderAnimation = function() {
+				
+//				console.log("loop:" + this.loaderAnimationA)
+				var random = u.random(0, 5);
+				u.a.transition(this, "all 0.3s ease-in-out");
+				u.ass(this, {
+					"transform":"scale("+random+")",
+				});
+
+			}
+			this.t_intro_loader = u.t.setInterval(this.intro_loader_dot, "loaderAnimation", 300);
+//			this.intro_loader_dot.loaderAnimationA();
+
+			// u.ass(this.intro, {
+			// 	"background":"red"
+			// });
+//			console.log("loader on");
+		}
+
+
+
+		scene.removeLoader = function() {
+
+			u.t.resetInterval(this.t_intro_loader);
+			this.intro_loader_dot.transitioned = function() {
+				this.scene.intro_loader.parentNode.removeChild(this.scene.intro_loader);
+			}
+			u.a.transition(this.intro_loader_dot, "all 0.2s ease-in-out");
+			u.ass(this.intro_loader_dot, {
+				"transform":"scale(25)",
+			});
+			// u.ass(this.intro, {
+			// 	"background":"white"
+			// });
+//			console.log("loader off");
+		}
+
+		
+		scene.createIntroBgs = function() {
+//			u.bug("createIntroBgs");
+
+			u.preloader(this.intro, [
+				"/assets/images/bg_front_1.jpg",
+				"/assets/images/bg_front_2.jpg",
+				"/assets/images/bg_front_3.jpg",
+				"/assets/images/bg_front_4.jpg",
+				"/assets/images/bg_front_5.jpg",
+				"/assets/images/bg_front_6.jpg",
+				"/assets/images/bg_front_7.jpg",
+				"/assets/audio/intro-4-2.mp3",
+			]);
+
+			this.intro.bgs = [""];
+			this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg1", "html":"<h2>do you</h2>"}));
+			this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg2", "html":"<h2>want</h2>"}));
+			this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg3", "html":"<h2>to make</h2>"}));
+			this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg4", "html":"<h2>a</h2>"}));
+			this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg5", "html":"<h2>difference?</h2>"}));
+
+			this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg6", "html":"<h2>welcome</h2>"}));
+			this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg7", "html":"<h2>to the club</h2>"}));
+
+		}
+
+		scene.injectHotspots = function() {
+//			u.bug("injectHotspots");
+
+			var ul_hotspots = u.ae(this.intro, "ul", {"class":"hotspots"});
+			u.ce(ul_hotspots);
+			ul_hotspots.clicked = function(event) {
+				u.e.kill(event);
+			}
+			this.intro.hotspots = [""];
+			this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot1", "html":"t"}));
+			this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot2", "html":"h"}));
+			this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot3", "html":"i"}));
+			this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot4", "html":"n"}));
+			this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot5", "html":"k"}));
+
+			this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot6", "html":"d"}));
+			this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot7", "html":"k"}));
+
+
+			var i;
+//			for(i = 0; hotspot = this.intro.hotspots[i]; i++) {
+			for(i = 1; i < this.intro.hotspots.length; i++) {
+//				hotspot = this.intro.hotspots[i];
+
+				this.intro.hotspots[i].intro = this.intro;
+				this.intro.hotspots[i].i = i;
+
+				this.intro.hotspots[i].over = function(event) {
+					this.intro.scene.showIntroFrame(this.i);
+				}
+				u.e.addOverEvent(this.intro.hotspots[i], this.intro.hotspots[i].over);
+
+			}
+
+
+			this.hideIntro();
+
+			this.intro.is_active = true;
+
+		}
+
+		scene.showIntroFrame = function(frame) {
+//			u.bug("showIntroFrame");
+
+			if(this.frame != frame) {
+
+//					console.log("on " + frame)
+				u.ass(this.intro.bgs[frame], {
+					"opacity":0,
+					"display":"block",
+				});
+
+				u.a.transition(this.intro.bgs[frame], "all 0.15s ease-in-out");
+				u.ass(this.intro.bgs[frame], {
+					"opacity":1,
+				});
+
+				if(this.intro.hotspots) {
+					u.ac(this.intro.hotspots[frame], "selected");
+				}
+
+
+				if(this.frame) {
+					u.a.transition(this.intro.bgs[this.frame], "all 0.15s ease-in-out 0.05s");
+					u.ass(this.intro.bgs[this.frame], {
+						"opacity":0,
+					});
+
+					if(this.intro.hotspots) {
+						u.rc(this.intro.hotspots[this.frame], "selected");
+					}
+				}
+
+				this.frame = frame;
+				
+			}
+			// // this.frame++;
+//				console.log("this.frame:" + this.frame);
+			// var colors = ["","red",  "yellow", "green", "blue", "orange", "purple", "cyan"];
+			// u.ass(this, {
+			// 	"background-color":colors[this.frame],
+			// });
+		}
+
+		scene.initShortIntro = function() {
+
+			this.intro.loaded = function() {
+
+				this.scene.removeLoader();
+
+				this.scene.injectHotspots();
+
+				// apply text-scaling
+				u.textscaler(this, {
+					"min_height":400,
+					"max_height":1000,
+					"min_width":600,
+					"max_width":1300,
+					"unit":"rem",
+					"h2":{
+						"min_size":4,
+						"max_size":6
+					},
+					"h3":{
+						"min_size":3,
+						"max_size":6
+					},
+					"p":{
+						"min_size":2,
+						"max_size":4
+					}
+
+				});
+
+				this.scene.showIntroFrame(u.random(1, this.bgs.length-1));
+
+			}
+			this.createIntroBgs();
+			
+		}
+
 		// Prepare intro content for playback
 		scene.initIntro = function() {
-			 u.bug("initIntro")
-
-			// map reference
-			this.intro.scene = this;
-
-
+//			 u.bug("initIntro")
 
 			// does intro contain any text?
 			this.intro._textnodes = u.qsa("p,h2,h3,h4", this.intro);
 			if(this.intro._textnodes.length) {
-
-				// end intro on click
-				u.e.click(this.intro);
-				this.intro.clicked = function(event) {
-
-					if(this.is_active) {
-						u.scrollTo(window, {"node":this.scene._article, "offset_y":100});
-					}
-
-					// stop event chain
-					// if(typeof(this.stop) == "function") {
-					// 	// stop any playback
-					// 	this.stop();
-					// }
-					// // or just hide intro
-					// else {
-					// 	// remove trigger event listener (just to be on the safe side)
-					// 	u.e.removeWindowEvent(this.scene, "mousemove", this.scene.intro_event_id);
-					//
-					// 	// hide intro
-					// 	this.scene.hideIntro();
-					// }
-				}
 
 				// apply text-scaling
 				u.textscaler(this.intro, {
@@ -119,7 +290,7 @@ Util.Objects["front"] = new function() {
 					"unit":"rem",
 					"h2":{
 						"min_size":4,
-						"max_size":8
+						"max_size":6
 					},
 					"h3":{
 						"min_size":3,
@@ -135,21 +306,14 @@ Util.Objects["front"] = new function() {
 
 				// set height of intro and show it
 				u.ass(this.intro, {
-//					"height": u.browserH()-(page.hN.offsetHeight+page.fN.offsetHeight+125) + "px",
-					"height": u.browserH() + "px",
-//					"margin-top": - (page.hN.offsetHeight + this.intro.offsetTop) + "px",
-//					"margin-buttom": - (page.hN.offsetHeight + this.intro.offsetTop) + "px",
+					"height": page.browser_h + "px",
+					"width": page.browser_w + "px",
 					"opacity": 1,
-					// "width":u.browserW()+"px",
-					// "margin-left": -((u.browserW() - this.offsetWidth) / 2) + "px"
 				});
 
 				var i, node;
 				// set initial state for all intro content
 				for(i = 0; node = this.intro._textnodes[i]; i++) {
-					// var node_x = (this.intro.offsetWidth-(node.offsetWidth+50));
-					// var node_y = (this.intro.offsetHeight-(node.offsetHeight+150));
-					u.bug(node.offsetHeight);
 					u.ass(node, {
 						"position":"absolute",
 						"opacity": 0, 
@@ -163,32 +327,15 @@ Util.Objects["front"] = new function() {
 				});
 
 
-				u.preloader(this.intro, [
-					"/assets/images/bg_front_1.jpg",
-					"/assets/images/bg_front_2.jpg",
-					"/assets/images/bg_front_3.jpg",
-					"/assets/images/bg_front_4.jpg",
-					"/assets/images/bg_front_5.jpg",
-					"/assets/images/bg_front_6.jpg",
-					"/assets/images/bg_front_7.jpg",
-					"/assets/audio/intro-4-2.mp3",
-				]);
-
-				this.intro.bgs = [""];
-				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg1", "html":"<h2>do you</h2>"}));
-				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg2", "html":"<h2>want</h2>"}));
-				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg3", "html":"<h2>to make</h2>"}));
-				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg4", "html":"<h2>a</h2>"}));
-				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg5", "html":"<h2>difference?</h2>"}));
-
-				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg6", "html":"<h2>welcome</h2>"}));
-				this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg7", "html":"<h2>to the club</h2>"}));
 
 				// prepare audioPlayer
 				this.intro.loaded = function() {
+//					this.scene.removeLoader();
+
 					this.scene.showIntro();
 					
 				}
+				this.createIntroBgs();
 			}
 
 			// skip intro if it has no content
@@ -198,9 +345,10 @@ Util.Objects["front"] = new function() {
 
 		}
 
+
 		// start intro animation playback
 		scene.showIntro = function() {
-			u.bug("scene.showIntro");
+//			u.bug("scene.showIntro");
 
 			var node, duration, i;
 
@@ -212,87 +360,11 @@ Util.Objects["front"] = new function() {
 			this.intro.audioPlayer.load("/assets/audio/intro-4-2.mp3");
 
 
-			// this.intro.audioPlayer.timeupdate = function(event) {
-			// 	console.log(this.currentTime);
-			//
-				// var tone_length = 0.28;
-				// var frame = Math.round(this.currentTime/tone_length);
-				// console.log(frame)
-
-				// if(this.currentTime >= 0 && this.currentTime < tone_length*1) {
-				// 	this.intro.showFrame(1);
-				// }
-				// else if(this.currentTime >= tone_length*1 && this.currentTime < tone_length*2) {
-				// 	this.intro.showFrame(2);
-				// }
-				// else if(this.currentTime >= tone_length*2 && this.currentTime < tone_length*3) {
-				// 	this.intro.showFrame(3);
-				// }
-				// else if(this.currentTime >= tone_length*3 && this.currentTime < tone_length*4) {
-				// 	this.intro.showFrame(4);
-				// }
-				// else if(this.currentTime >= tone_length*4 && this.currentTime < tone_length*6) {
-				// 	this.intro.showFrame(5);
-				// }
-				// else if(this.currentTime >= tone_length*6 && this.currentTime < tone_length*7) {
-				// 	this.intro.showFrame(6);
-				// }
-				// else if(this.currentTime >= tone_length*7) {
-				// 	this.intro.showFrame(7);
-				// }
-
-
-
-			// }
-			// this.intro.audioPlayer.ended = function() {
-			//
-			// 	// start event chain playback
-			// 	this.intro.play();
-			//
-			// }
-
-
-			this.intro.showFrame = function(frame) {
-				
-				if(this.frame != frame) {
-
-//					console.log("on " + frame)
-					u.ass(this.bgs[frame], {
-						"opacity":0,
-						"display":"block",
-					});
-
-					u.a.transition(this.bgs[frame], "all 0.1s ease-in-out");
-					u.ass(this.bgs[frame], {
-						"opacity":1,
-					});
-
-
-					if(this.frame) {
-						u.a.transition(this.bgs[this.frame], "all 0.05s ease-in-out 0.05s");
-						u.ass(this.bgs[this.frame], {
-							"opacity":0,
-						});
-					}
-
-
-					this.frame = frame;
-					
-				}
-				// // this.frame++;
-//				console.log("this.frame:" + this.frame);
-				// var colors = ["","red",  "yellow", "green", "blue", "orange", "purple", "cyan"];
-				// u.ass(this, {
-				// 	"background-color":colors[this.frame],
-				// });
-			}
-
-
 			this.intro.audioPlayer.playing = function(event) {
 
-//				console.log(event)
 				// current time
 				var _time = event.target.currentTime;
+
 				// tmp_intro.mp3
 //				this.intro.timestamps = ["", 25, 315, 605, 895, 1185, 2045, 2335];
 
@@ -302,15 +374,18 @@ Util.Objects["front"] = new function() {
 				// 4.1
 				this.intro.timestamps = ["", 2330, 2625, 2900, 3200, 3487, 4349, 4645];
 
+				u.t.setTimer(this.intro.scene, "removeLoader", this.intro.timestamps[1]+_time - 200);
 
-				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[1]+_time, 1);
-				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[2]+_time, 2);
-				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[3]+_time, 3);
-				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[4]+_time, 4);
-				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[5]+_time, 5);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[1]+_time, 1);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[2]+_time, 2);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[3]+_time, 3);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[4]+_time, 4);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[5]+_time, 5);
 
-				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[6]+_time, 6);
-				u.t.setTimer(this.intro, this.intro.showFrame, this.intro.timestamps[7]+_time, 7);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[6]+_time, 6);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[7]+_time, 7);
+
+				u.t.setTimer(this.intro.scene, "injectHotspots", 6045 + _time);
 
 				// only once
 				delete this.playing;
@@ -319,152 +394,19 @@ Util.Objects["front"] = new function() {
 
 
 
-
-
-
-			// // remove trigger event listener
-			// if(u.e.event_support == "mouse") {
-			// 	// remove trigger event listener
-			// 	u.e.removeWindowEvent(this, "mousemove", this.intro_event_id);
-			// }
-
-			// start new event chain
-// 			u.eventChain(this.intro);
-//
-// 			// first node
-// 			node = this.intro._textnodes[0];
-// 			// calculate duration based on text length
-// 			duration = node.innerHTML.length*100 > 1500 ? node.innerHTML.length*100 : 1500;
-//
-// 			// add events to event chain
-// 			this.intro.addEvent(node, u._stepA1, duration);
-// 			this.intro.addEvent(node, u._stepA2, 300);
-//
-// 			// loop through middle child nodes
-// 			for(i = 1; i < this.intro._textnodes.length-1; i++) {
-// 				node = this.intro._textnodes[i];
-// 				// calculate duration based on text length
-// 				duration = node.innerHTML.length*100 > 1500 ? node.innerHTML.length*75 : 1500;
-//
-// 				// add events to event chain
-// 				this.intro.addEvent(node, u._stepA1, duration);
-// 				this.intro.addEvent(node, u._stepA2, 400);
-// 			}
-//
-// 			// // last node
-// 			// node = this.intro._textnodes[this.intro._textnodes.length-1];
-// 			// // calculate duration based on text length
-// 			// duration = node.innerHTML.length*100 > 1500 ? node.innerHTML.length*100 : 1500;
-// 			//
-// 			// // add events to event chain
-// 			// this.intro.addEvent(node, u._stepA1, duration);
-// 			// this.intro.addEvent(node, u._stepA2, 400);
-//
-// 			// event chain ended
-// 			this.intro.eventChainEnded = function() {
-// //				u.bug("eventChainEnded")
-//
-// 				// hide intro
-// 				// this.scene.hideIntro();
-// 			}
-
-
-			this.activateIntro = function() {
-
-				var ul_hotspots = u.ae(this.intro, "ul", {"class":"hotspots"});
-				u.ce(ul_hotspots);
-				ul_hotspots.clicked = function(event) {
-					u.e.kill(event);
-				}
-				this.intro.hotspots = [""];
-				this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot1"}));
-				this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot2"}));
-				this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot3"}));
-				this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot4"}));
-				this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot5"}));
-
-				this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot6"}));
-				this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot7"}));
-
-//				u.bug(this.intro.hotspots.length)
-
-				var i, hotspot;
-	//			for(i = 0; hotspot = this.intro.hotspots[i]; i++) {
-				for(i = 1; i < this.intro.hotspots.length; i++) {
-					hotspot = this.intro.hotspots[i];
-					// u.bug(this.intro.hotspots[i]);
-					// u.bug(hotspot + ", " + i)
-
-// 					var height = this.intro.offsetHeight();
-// 					var width = this.intro.offsetWidth();
-// 					u.ass(hotspot, {
-//
-// //						"top":(((height-200) / 5) * i) - i%2 + "px",
-// 						// "left":width-200 / 100 /
-//
-// 					});
-
-					this.intro.hotspots[i].inputStarted = function(event) {
-						u.bug("click")
-						u.e.kill(event);
-						this.intro.showFrame(this.i);
-					}
-					u.e.addStartEvent(this.intro.hotspots[i], this.inputStarted);
-					u.ce(this.intro.hotspots[i])
-
-					// u.e.hover(this.intro.hotspots[i]);
-					this.intro.hotspots[i].intro = this.intro;
-					this.intro.hotspots[i].i = i;
-					// this.intro.hotspots[i].over = function() {
-					//
-					//
-					// 	this.blink = function() {
-					// 		console.log("blink");
-					//
-					// 		u.a.transition(this, "all 0.4s ease-in-out");
-					// 		u.ass(this, {
-					// 			"opacity":0
-					// 		});
-					// 	}
-					//
-					// 	u.a.transition(this, "all 0.1s ease-in-out", "blink");
-					// 	u.ass(this, {
-					// 		"opacity":1
-					// 	});
-					//
-					//
-					//
-					// 	u.bug("over:" + this.i)
-					// 	this.intro.showFrame(this.i);
-					//
-					// 	this.intro.audioPlayer.play(this.intro.timestamps[this.i]/1000);
-					//
-					//
-					// }
-
-				}
-				
-//				this.intro.play();
-
-
-				this.hideIntro();
-
-
-				this.intro.is_active = true;
-			}
-
-
-
-			u.t.setTimer(this, this.activateIntro, 6045);
-
 			// start event chain playback
 //			this.intro.play();
 
 		}
 
+
+
+
 		// hide intro and continue to article
 		scene.hideIntro = function() {
 //			u.bug("exit intro")
+
+//			u.saveCookie("intro_v1", 1);
 
 			// could also be called if no intro is present
 			// if(this.intro) {
@@ -484,24 +426,90 @@ Util.Objects["front"] = new function() {
 
 
 			if(!this.intro.is_active) {
+
 				u.ass(this, {
 					"height":"auto"
 				});
 
 
-				u.ass(u.qs("h2", this.intro.bgs[1]), {"opacity":0});
-				u.ass(u.qs("h2", this.intro.bgs[2]), {"opacity":0});
-				u.ass(u.qs("h2", this.intro.bgs[3]), {"opacity":0});
-				u.ass(u.qs("h2", this.intro.bgs[4]), {"opacity":0});
-				u.ass(u.qs("h2", this.intro.bgs[5]), {"opacity":0});
-				u.ass(u.qs("h2", this.intro.bgs[6]), {"opacity":0});
+				// u.ass(u.qs("h2", this.intro.bgs[1]), {"opacity":0});
+				// u.ass(u.qs("h2", this.intro.bgs[2]), {"opacity":0});
+				// u.ass(u.qs("h2", this.intro.bgs[3]), {"opacity":0});
+				// u.ass(u.qs("h2", this.intro.bgs[4]), {"opacity":0});
+				// u.ass(u.qs("h2", this.intro.bgs[5]), {"opacity":0});
+				// u.ass(u.qs("h2", this.intro.bgs[6]), {"opacity":0});
+				//
+				// var last_bg_header = u.qs("h2", this.intro.bgs[7]);
+				// u.a.transition(last_bg_header, "all 0.2s ease-in-out");
+				// u.ass(last_bg_header, {
+				// 	"opacity":0
+				// });
 
-				var last_bg_header = u.qs("h2", this.intro.bgs[7]);
-				u.a.transition(last_bg_header, "all 0.2s ease-in-out");
-				u.ass(last_bg_header, {
-					"opacity":0
+				u.ce(this.intro);
+				this.intro.clicked = function() {
+
+					u.a.transition(this, "all .5s ease-in-out");
+					u.a.transition(this.scene._article, "all .5s ease-in-out");
+
+					if(this.is_small) {
+						u.ass(this, {
+							"width": page.browser_w + "px",
+							"height": page.browser_h + "px",
+							"top": "-150px",
+							// "height": 350 + "px",
+							"left": "0px",
+							"border-radius":"0px"
+						});
+
+						u.ass(this.scene._article, {
+							"margin-top": "-70px",
+						});
+
+						this.is_small = false;
+					}
+					else {
+						u.ass(this, {
+							"width": "540px",
+							"top": 0,
+							"height": 350 + "px",
+							"left": "50px",
+							"border-radius":"5px"
+						});
+
+						u.ass(this.scene._article, {
+							"margin-top": "50px",
+						});
+
+						this.is_small = true;
+					}
+					
+					
+				}
+
+//				console.log(this.intro.hotspots + ", " + this.frame)
+				if(this.frame) {
+					u.ac(this.intro.hotspots[this.frame], "selected");
+				}
+
+
+				if(this.show_full_intro) {
+					u.a.transition(this.intro, "all .5s ease-in-out");
+				}
+				u.ass(this.intro, {
+					"width": "540px",
+					"top": 0,
+					"height": "350px",
+					"left": "50px",
+					"border-radius":"5px"
 				});
-			
+
+				this.intro.is_small = true;
+
+
+				u.a.transition(this.intro, "all .5s ease-in-out");
+				u.ass(this.intro, {
+					"opacity":1,
+				});
 
 				// show header and footer
 				u.a.transition(page.hN, "none");

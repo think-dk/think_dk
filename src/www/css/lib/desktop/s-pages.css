@@ -24,6 +24,8 @@ body.front #page.fixed {width: auto; margin: 0;}
 	/*background-color: #000000;*/
 	box-sizing: border-box;
 	top: -150px;
+	left: 0;
+	border-radius: 0;
 /*	background-color: red;*/
 	-o-user-select: none;
 	-ms-user-select: none;
@@ -31,13 +33,22 @@ body.front #page.fixed {width: auto; margin: 0;}
 	-webkit-user-select: none;
 	user-select: none;
 }
+#content .scene.front div.intro div.loader {
+	width: 100%; height: 100%; position: absolute; top: 0; left: 0;
+}
+#content .scene.front div.intro div.loader div.dot {
+	width: 50px; height: 50px; position: absolute; top: 50%; left: 50%; margin-top: -25px; margin-left: -25px;
+	border-radius: 50%;
+	background: #26962d;
+}
+
 #content .scene.front div.intro .text {z-index: 10; position: relative; height: 100%; display: none;}
 #content .scene.front div.intro p,
 #content .scene.front div.intro h2,
 #content .scene.front div.intro h3,
 #content .scene.front div.intro span {display: inline-block; width: auto; color: #ffffff; padding: 0;}
 #content .scene.front div.intro div.bg {position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 9;
-	cursor: pointer;
+/*	cursor: pointer;*/
 	background-position: center center;
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -46,7 +57,7 @@ body.front #page.fixed {width: auto; margin: 0;}
 	display: block;
 }
 
-#content .scene.front div.intro div.bg h2 {position: absolute; bottom: 50px; right: 50px;}
+#content .scene.front div.intro div.bg h2 {position: absolute; top: 50%; margin-top: -50px; width: 100%; left: 0; text-align: center;}
 #content .scene.front div.intro div.bg.bg1 {
 /*	background-color: red;*/
 	background-image: url(/assets/images/bg_front_1.jpg);
@@ -81,7 +92,7 @@ body.front #page.fixed {width: auto; margin: 0;}
 	cursor: default;
 	position: absolute;
 	z-index: 15;
-	bottom: 50px;
+	bottom: 40px;
 	left: 50%;
 	margin-left: -250px;
 	width: 500px;
@@ -99,16 +110,24 @@ body.front #page.fixed {width: auto; margin: 0;}
 	vertical-align: top;
 	font-family: "PT Serif",Times,serif;
 	opacity: 1;
-	width: 14px;
-	height: 14px;
-	border-radius: 50%; margin: 20px;
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
 /*	border: 1px solid #26962d;*/
 /*	background: #26962d;*/
 
-	background-color: rgba(255,255,255, 0.5);
+	background-color: rgba(255,255,255, 0.8);
 /*	background: #26962d;*/
 /*	background: radial-gradient(ellipse at center, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 70%);*/
 
+	color: #26962d;
+	padding: 9px 10px 11px;
+	margin: 0 5px;
+	font-size: 20px;
+}
+#content .scene.front div.intro li.hotspot.selected {
+	color: #ffffff;
+	background: rgba(38, 150, 45, 0.8);
 }
 /*#content .scene.front div.intro li.hotspot.hotspot1 {
 	top: 30%; left: 50%;
@@ -122,9 +141,11 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.front div.intro li.hotspot.hotspot4 {
 	top: 65%; left: 25%;
 }
+*/
 #content .scene.front div.intro li.hotspot.hotspot5 {
-	top: 65%; left: 75%;
+	margin-right: 40px;
 }
+/*
 #content .scene.front div.intro li.hotspot.hotspot6 {
 	top: 85%; left: 40%;
 }
@@ -133,7 +154,7 @@ body.front #page.fixed {width: auto; margin: 0;}
 }*/
 
 /* FRONT - ARTICLE */
-#content .scene.front div.article {z-index: 11; display: none; margin-top: -170px;}
+#content .scene.front div.article {z-index: 11; display: none; margin-top: 50px; /*margin-top: -70px;*/}
 
 
 /* FRONT - EVENTS */
