@@ -456,9 +456,9 @@ Util.Objects["front"] = new function() {
 							"width": page.browser_w + "px",
 							"height": page.browser_h + "px",
 							"top": "-150px",
-							// "height": 350 + "px",
 							"left": "0px",
-							"border-radius":"0px"
+							"border-radius":"0px",
+							"cursor":"zoom-out",
 						});
 
 						u.ass(this.scene._article, {
@@ -473,7 +473,8 @@ Util.Objects["front"] = new function() {
 							"top": 0,
 							"height": 350 + "px",
 							"left": "50px",
-							"border-radius":"5px"
+							"border-radius":"5px",
+							"cursor":"zoom-in",
 						});
 
 						u.ass(this.scene._article, {
@@ -500,7 +501,8 @@ Util.Objects["front"] = new function() {
 					"top": 0,
 					"height": "350px",
 					"left": "50px",
-					"border-radius":"5px"
+					"border-radius":"5px",
+					"cursor":"zoom-in",
 				});
 
 				this.intro.is_small = true;

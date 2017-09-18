@@ -8567,7 +8567,8 @@ Util.Objects["front"] = new function() {
 							"height": page.browser_h + "px",
 							"top": "-150px",
 							"left": "0px",
-							"border-radius":"0px"
+							"border-radius":"0px",
+							"cursor":"zoom-out",
 						});
 						u.ass(this.scene._article, {
 							"margin-top": "-70px",
@@ -8580,7 +8581,8 @@ Util.Objects["front"] = new function() {
 							"top": 0,
 							"height": 350 + "px",
 							"left": "50px",
-							"border-radius":"5px"
+							"border-radius":"5px",
+							"cursor":"zoom-in",
 						});
 						u.ass(this.scene._article, {
 							"margin-top": "50px",
@@ -8599,7 +8601,8 @@ Util.Objects["front"] = new function() {
 					"top": 0,
 					"height": "350px",
 					"left": "50px",
-					"border-radius":"5px"
+					"border-radius":"5px",
+					"cursor":"zoom-in",
 				});
 				this.intro.is_small = true;
 				u.a.transition(this.intro, "all .5s ease-in-out");
