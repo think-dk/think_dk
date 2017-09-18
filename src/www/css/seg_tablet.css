@@ -821,7 +821,9 @@ body.front #page.fixed {width: auto; margin: 0;}
 	opacity: 0.001;
 	display: block;
 }
-#content .scene.front div.intro div.bg h2 {position: absolute; top: 50%; margin-top: -50px; width: 100%; left: 0; text-align: center;}
+#content .scene.front div.intro div.bg h2 {position: absolute; top: 50%; margin-top: -50px; width: 100%; left: 0; text-align: center;
+	text-shadow: 0px 0px 3px #666666;
+}
 #content .scene.front div.intro div.bg.bg1 {
 	background-image: url(/assets/images/bg_front_1.jpg);
 }
