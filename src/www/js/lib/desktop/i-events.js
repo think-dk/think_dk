@@ -58,7 +58,7 @@ Util.Objects["events"] = new function() {
 				starting_at = dd_starting_at.getAttribute("content");
 				event.item_id = u.cv(event, "item_id");
 
-				console.log(starting_at);
+//				console.log(starting_at);
 
 				// Simple data parsing Not working in Safari
 				// event.date = new Date(starting_at);
@@ -74,7 +74,7 @@ Util.Objects["events"] = new function() {
 					event.date = new Date(year, month, date, hour, minute);
 
 
-					console.log(event.date);
+//					console.log(event.date);
 					event_date = u.date("Y-m-d", event.date.getTime());
 
 
@@ -143,6 +143,19 @@ Util.Objects["events"] = new function() {
 			if(!this.div_calendar) {
 
 				this.div_calendar = u.ae(this, "div", {"class":"calendar"});
+
+
+				// apply text-scaling
+				u.textscaler(this.div_calendar, {
+					"min_width":600,
+					"max_width":1300,
+					"unit":"px",
+					"ul.month h3":{
+						"min_size":9,
+						"max_size":12
+					}
+				});
+
 
 				this.now = {
 					"date":new Date().getDate(),
@@ -338,8 +351,29 @@ Util.Objects["events"] = new function() {
 		scene.insertEvent = function(day, event, year, month) {
 
 			var h3 = u.ae(day, u.qs("h3", event).cloneNode(true));
+			h3.day = day;
+			h3.description = u.text(u.qs("div.description", event));
 			u.ie(h3, "a", {"html":u.date("H:i", event.date.getTime())});
 
+			u.e.hover(h3);
+			h3.over = function() {
+				this.div_description = u.ae(this, "div", {"class":"description", "html":this.description});
+				if(u.hc(this.day, "weekend")) {
+					u.ass(this.div_description, {
+						"left":-(150) + "px"
+					})
+				}
+				else {
+					u.ass(this.div_description, {
+						"left":(this.offsetWidth - 15) + "px"
+					})
+				}
+//				console.log(this.description);
+			}
+
+			h3.out = function() {
+				this.removeChild(this.div_description);
+			}
 		}
 
 		// get first day of month as 1-7 (mon-sun)
