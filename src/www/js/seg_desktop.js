@@ -5380,7 +5380,7 @@ Util.audioPlayer = function(_options) {
 				this.audio.currentTime = position;
 			}
 			if(this.audio.src) {
-				this.audio.play();
+				return this.audio.play();
 			}
 		}
 		player.loadAndPlay = function(src, _options) {
@@ -5394,7 +5394,7 @@ Util.audioPlayer = function(_options) {
 				}
 			}
 			this.load(src, _options);
-			this.play(position);
+			return this.play(position);
 		}
 		player.pause = function() {
 			this.audio.pause();
@@ -5474,7 +5474,14 @@ Util.audioPlayer = function(_options) {
 					this.player.stalled(event);
 				}
 			}
-			u.e.addEvent(this.audio, "stalled", this.audio._paused);
+			u.e.addEvent(this.audio, "stalled", this.audio._stalled);
+			this.audio._error = function(event) {
+				u.bug("_error");
+				if(typeof(this.player.error) == "function") {
+					this.player.error(event);
+				}
+			}
+			u.e.addEvent(this.audio, "error", this.audio._error);
 			this.audio._ended = function(event) {
 				u.rc(this.player, "playing|paused");
 				if(typeof(this.player.ended) == "function") {
@@ -7594,7 +7601,7 @@ Util.Objects["page"] = new function() {
 			page.nN.list = u.qs("ul", page.nN);
 			if(page.nN.list) {
 				page.nN.list.nodes = u.qsa("li", page.nN.list);
-				if(page.nN.list.nodes.length) {
+				if(page.nN.list.nodes.length > 1) {
 					page.nN.font_size = parseInt(u.gcs(page.nN.list.nodes[1], "font-size"));
 					page.nN.font_size_gap = page.nN.font_size-14;
 					page.nN.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
@@ -8453,6 +8460,7 @@ Util.Objects["front"] = new function() {
 			// 
 		}
 		scene.initShortIntro = function() {
+			u.bug("initShortIntro");
 			this.intro.loaded = function() {
 				this.scene.removeLoader();
 				this.scene.injectHotspots();
@@ -8480,6 +8488,7 @@ Util.Objects["front"] = new function() {
 			this.createIntroBgs();
 		}
 		scene.initIntro = function() {
+			 u.bug("initIntro")
 			this.intro._textnodes = u.qsa("p,h2,h3,h4", this.intro);
 			if(this.intro._textnodes.length) {
 				u.textscaler(this.intro, {
@@ -8528,8 +8537,15 @@ Util.Objects["front"] = new function() {
 			}
 		}
 		scene.showIntro = function() {
+			u.bug("scene.showIntro");
 			var node, duration, i;
 			this.intro.audioPlayer = u.audioPlayer();
+			this.intro.audioPlayer.stalled = function() {
+				console.log("we really got a stalled");
+			}
+			this.intro.audioPlayer.error = function() {
+				console.log("we really got an error");
+			}
 			this.intro.audioPlayer.intro = this.intro;
 			this.intro.audioPlayer.load("/assets/audio/intro-4-2.mp3");
 			this.intro.audioPlayer.playing = function(event) {
@@ -8546,7 +8562,14 @@ Util.Objects["front"] = new function() {
 				u.t.setTimer(this.intro.scene, "injectHotspots", 6045 + _time);
 				delete this.playing;
 			}
-			this.intro.audioPlayer.play();
+			var promise = this.intro.audioPlayer.play();
+			if (promise !== undefined) {
+				promise.catch(error => {
+					console.log("shiite");
+			    }).then(() => {
+					console.log("all good");
+			    });
+			}
 		}
 		scene.hideIntro = function() {
 			u.saveCookie("intro_v1", 1, {"expires":false});
