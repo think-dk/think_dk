@@ -67,6 +67,10 @@ Util.Objects["front"] = new function() {
 
 			this.showLoader();
 
+
+			// TODO: maybe also check for tablet? It does not play audio and then the intro loop breaks
+
+
 			if(!intro_cookie && this.intro) {
 				this.show_full_intro = true;
 				this.initIntro();
@@ -237,6 +241,7 @@ Util.Objects["front"] = new function() {
 		}
 
 		scene.initShortIntro = function() {
+			u.bug("initShortIntro");
 
 			this.intro.loaded = function() {
 
@@ -275,7 +280,7 @@ Util.Objects["front"] = new function() {
 
 		// Prepare intro content for playback
 		scene.initIntro = function() {
-//			 u.bug("initIntro")
+			 u.bug("initIntro")
 
 			// does intro contain any text?
 			this.intro._textnodes = u.qsa("p,h2,h3,h4", this.intro);
@@ -348,16 +353,27 @@ Util.Objects["front"] = new function() {
 
 		// start intro animation playback
 		scene.showIntro = function() {
-//			u.bug("scene.showIntro");
+			u.bug("scene.showIntro");
 
 			var node, duration, i;
 
 			// cancel autoplay timer
 //			u.t.resetTimer(this.t_autoplay);
 
-			this.intro.audioPlayer = u.audioPlayer();
+			
+			this.intro.audioPlayer = u.audioPlayer({autoplay:true});
+			u.ae(this, this.intro.audioPlayer);
+			this.intro.audioPlayer.ready = function() {
+				u.bug("this.intro.audioPlayer.ready");
+				if(this.can_autoplay) {
+					this.load("/assets/audio/intro-4-2.mp3");
+				}
+				else {
+					this.playing({"target":{"currentTime":2000}});
+				}
+			}
+
 			this.intro.audioPlayer.intro = this.intro;
-			this.intro.audioPlayer.load("/assets/audio/intro-4-2.mp3");
 
 
 			this.intro.audioPlayer.playing = function(event) {
@@ -374,24 +390,33 @@ Util.Objects["front"] = new function() {
 				// 4.1
 				this.intro.timestamps = ["", 2330, 2625, 2900, 3200, 3487, 4349, 4645];
 
-				u.t.setTimer(this.intro.scene, "removeLoader", this.intro.timestamps[1]+_time - 200);
+				u.t.setTimer(this.intro.scene, "removeLoader", this.intro.timestamps[1]-_time - 200);
 
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[1]+_time, 1);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[2]+_time, 2);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[3]+_time, 3);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[4]+_time, 4);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[5]+_time, 5);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[1]-_time, 1);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[2]-_time, 2);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[3]-_time, 3);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[4]-_time, 4);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[5]-_time, 5);
 
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[6]+_time, 6);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[7]+_time, 7);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[6]-_time, 6);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[7]-_time, 7);
 
-				u.t.setTimer(this.intro.scene, "injectHotspots", 6045 + _time);
+				u.t.setTimer(this.intro.scene, "injectHotspots", 6045 - _time);
 
 				// only once
 				delete this.playing;
 			}
-			this.intro.audioPlayer.play();
 
+			// var promise = this.intro.audioPlayer.play();
+			// if (promise !== undefined) {
+			// 	promise.catch(error => {
+			// 		console.log("shiite");
+			//         // Auto-play was prevented
+			//         // Show a UI element to let the user manually start playback
+			//     }).then(() => {
+			// 		console.log("all good");
+			//     });
+			// }
 
 
 			// start event chain playback

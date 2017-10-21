@@ -1,6 +1,17 @@
 
 /*seg_desktop_include.js*/
 
+/*u.js*/
+if(!u || !Util) {
+	var u, Util = u = new function() {};
+	u.version = "0.9.2";
+	u.bug = u.nodeId = u.exception = function() {};
+	u.stats = new function() {this.pageView = function(){};this.event = function(){};}
+}
+function fun(v) {return (typeof(v) === "function")}
+function obj(v) {return (typeof(v) === "object")}
+function str(v) {return (typeof(v) === "string")}
+
 /*seg_desktop.js*/
 if(!u || !Util) {
 	var u, Util = u = new function() {};
@@ -5322,351 +5333,6 @@ u.textscaler = function(node, _settings) {
 	node.scaleText();
 }
 
-/*u-audio.js*/
-Util.audioPlayer = function(_options) {
-	var player = document.createElement("div");
-	u.ac(player, "audioplayer");
-	player._autoplay = false;
-	player._controls = false;
-	player._controls_playpause = false;
-	player._controls_volume = false;
-	player._controls_search = false;
-	player._ff_skip = 2;
-	player._rw_skip = 2;
-	if(typeof(_options) == "object") {
-		var _argument;
-		for(_argument in _options) {
-			switch(_argument) {
-				case "autoplay"     : player._autoplay               = _options[_argument]; break;
-				case "controls"     : player._controls               = _options[_argument]; break;
-				case "playpause"    : player._controls_playpause     = _options[_argument]; break;
-				case "volume"       : player._controls_volume        = _options[_argument]; break;
-				case "search"       : player._controls_search        = _options[_argument]; break;
-				case "ff_skip"      : player._ff_skip                = _options[_argument]; break;
-				case "rw_skip"      : player._rw_skip                = _options[_argument]; break;
-			}
-		}
-	}
-	player.audio = u.ae(player, "audio");
-	if(typeof(player.audio.play) == "function") {
-		player.load = function(src, _options) {
-			if(typeof(_options) == "object") {
-				var _argument;
-				for(_argument in _options) {
-					switch(_argument) {
-						case "autoplay"     : this._autoplay               = _options[_argument]; break;
-						case "controls"     : this._controls               = _options[_argument]; break;
-						case "playpause"    : this._controls_playpause     = _options[_argument]; break;
-						case "volume"       : this._controls_volume        = _options[_argument]; break;
-						case "search"       : this._controls_search        = _options[_argument]; break;
-						case "ff_skip"      : this._ff_skip                = _options[_argument]; break;
-						case "rw_skip"      : this._rw_skip                = _options[_argument]; break;
-					}
-				}
-			}
-			if(u.hc(this, "playing")) {
-				this.stop();
-			}
-			this.setup();
-			if(src) {
-				this.audio.src = this.correctSource(src);
-				this.audio.load();
-				this.audio.controls = player._controls;
-				this.audio.autoplay = player._autoplay;
-			}
-		}
-		player.play = function(position) {
-			if(typeof(this.audio.currentTime) == "number" && position !== undefined) {
-				this.audio.currentTime = position;
-			}
-			if(this.audio.src) {
-				return this.audio.play();
-			}
-		}
-		player.loadAndPlay = function(src, _options) {
-			var position = 0;
-			if(typeof(_options) == "object") {
-				var _argument;
-				for(_argument in _options) {
-					switch(_argument) {
-						case "position"		: position		= _options[_argument]; break;
-					}
-				}
-			}
-			this.load(src, _options);
-			return this.play(position);
-		}
-		player.pause = function() {
-			this.audio.pause();
-		}
-		player.stop = function() {
-			this.audio.pause();
-			if(this.audio.currentTime) {
-				this.audio.currentTime = 0;
-			}
-		}
-		player.ff = function() {
-			if(this.audio.src && this.audio.currentTime && this.audioLoaded) {
-				this.audio.currentTime = (this.audio.duration - this.audio.currentTime >= this._ff_skip) ? (this.audio.currentTime + this._ff_skip) : this.audio.duration;
-				this.audio._timeupdate();
-			}
-		}
-		player.rw = function() {
-			if(this.audio.src && this.audio.currentTime && this.audioLoaded) {
-				this.audio.currentTime = (this.audio.currentTime >= this._rw_skip) ? (this.audio.currentTime - this._rw_skip) : 0;
-				this.audio._timeupdate();
-			}
-		}
-		player.togglePlay = function() {
-			if(u.hc(this, "playing")) {
-				this.pause();
-			}
-			else {
-				this.play();
-			}
-		}
-		player.setup = function() {
-			if(this.audio) {
-				var audio = this.removeChild(this.audio);
-				delete audio;
-			}
-			this.audio = u.ie(this, "audio");
-			this.audio.player = this;
-			this.setControls();
-			this.currentTime = 0;
-			this.duration = 0;
-			this.audioLoaded = false;
-			this.metaLoaded = false;
-			this.audio._loadstart = function(event) {
-				u.ac(this.player, "loading");
-				if(typeof(this.player.loading) == "function") {
-					this.player.loading(event);
-				}
-			}
-			u.e.addEvent(this.audio, "loadstart", this.audio._loadstart);
-			this.audio._canplaythrough = function(event) {
-				u.rc(this.player, "loading");
-				if(typeof(this.player.canplaythrough) == "function") {
-					this.player.canplaythrough(event);
-				}
-			}
-			u.e.addEvent(this.audio, "canplaythrough", this.audio._canplaythrough);
-			this.audio._playing = function(event) {
-				u.rc(this.player, "loading|paused");
-				u.ac(this.player, "playing");
-				if(typeof(this.player.playing) == "function") {
-					this.player.playing(event);
-				}
-			}
-			u.e.addEvent(this.audio, "playing", this.audio._playing);
-			this.audio._paused = function(event) {
-				u.rc(this.player, "playing|loading");
-				u.ac(this.player, "paused");
-				if(typeof(this.player.paused) == "function") {
-					this.player.paused(event);
-				}
-			}
-			u.e.addEvent(this.audio, "pause", this.audio._paused);
-			this.audio._stalled = function(event) {
-				u.rc(this.player, "playing|paused");
-				u.ac(this.player, "loading");
-				if(typeof(this.player.stalled) == "function") {
-					this.player.stalled(event);
-				}
-			}
-			u.e.addEvent(this.audio, "stalled", this.audio._stalled);
-			this.audio._error = function(event) {
-				u.bug("_error");
-				if(typeof(this.player.error) == "function") {
-					this.player.error(event);
-				}
-			}
-			u.e.addEvent(this.audio, "error", this.audio._error);
-			this.audio._ended = function(event) {
-				u.rc(this.player, "playing|paused");
-				if(typeof(this.player.ended) == "function") {
-					this.player.ended(event);
-				}
-			}
-			u.e.addEvent(this.audio, "ended", this.audio._ended);
-			this.audio._loadedmetadata = function(event) {
-				this.player.duration = this.duration;
-				this.player.currentTime = this.currentTime;
-				this.player.metaLoaded = true;
-				if(typeof(this.player.loadedmetadata) == "function") {
-					this.player.loadedmetadata(event);
-				}
-			}
-			u.e.addEvent(this.audio, "loadedmetadata", this.audio._loadedmetadata);
-			this.audio._loadeddata = function(event) {
-				this.player.audioLoaded = true;
-				if(typeof(this.player.loadeddata) == "function") {
-					this.player.loadeddata(event);
-				}
-			}
-			u.e.addEvent(this.audio, "loadeddata", this.audio._loadeddata);
-			this.audio._timeupdate = function(event) {
-				this.player.currentTime = this.currentTime;
-				if(typeof(this.player.timeupdate) == "function") {
-					this.player.timeupdate(event);
-				}
-			}
-			u.e.addEvent(this.audio, "timeupdate", this.audio._timeupdate);
-		}
-	}
-	else if(typeof(u.audioPlayerFallback) == "function") {
-		player.removeChild(player.video);
-		player = u.audioPlayerFallback(player);
-	}
-	else {
-		player.load = function() {}
-		player.play = function() {}
-		player.loadAndPlay = function() {}
-		player.pause = function() {}
-		player.stop = function() {}
-		player.ff = function() {}
-		player.rw = function() {}
-		player.togglePlay = function() {}
-	}
-	player.correctSource = function(src) {
-		var param = src.match(/\?[^$]+/) ? src.match(/(\?[^$]+)/)[1] : "";
-		src = src.replace(/\?[^$]+/, "");
-		src = src.replace(/(.mp3|.ogg|.wav)$/, "");
-		if(this.flash) {
-			return src+".mp3"+param;
-		}
-		if(this.audio.canPlayType("audio/mpeg")) {
-			return src+".mp3"+param;
-		}
-		else if(this.audio.canPlayType("audio/ogg")) {
-			return src+".ogg"+param;
-		}
-		else {
-			return src+".wav"+param;
-		}
-	}
-	player.setControls = function() {
-		if(this.showControls) {
-			if(u.e.event_pref == "mouse") {
-				u.e.removeEvent(this, "mousemove", this.showControls);
-				u.e.removeEvent(this.controls, "mouseenter", this._keepControls);
-				u.e.removeEvent(this.controls, "mouseleave", this._unkeepControls);
-			}
-			else {
-				u.e.removeEvent(this, "touchstart", this.showControls);
-			}
-		}
-		if(this._controls_playpause || this._controls_zoom || this._controls_volume || this._controls_search) {
-			if(!this.controls) {
-				this.controls = u.ae(this, "div", {"class":"controls"});
-				this.controls.player = this;
-				this.controls._default_display = u.gcs(this.controls, "display");
-				this.hideControls = function() {
-					if(!this._keep) {
-						this.t_controls = u.t.resetTimer(this.t_controls);
-						u.a.transition(this.controls, "all 0.3s ease-out");
-						u.a.setOpacity(this.controls, 0);
-					}
-				}
-				this.showControls = function() {
-					if(this.t_controls) {
-						this.t_controls = u.t.resetTimer(this.t_controls);
-					}
-					else {
-						u.a.transition(this.controls, "all 0.5s ease-out");
-						u.a.setOpacity(this.controls, 1);
-					}
-					this.t_controls = u.t.setTimer(this, this.hideControls, 1500);
-				}
-				this._keepControls = function() {
-					this.player._keep = true;
-				}
-				this._unkeepControls = function() {
-					this.player._keep = false;
-				}
-			}
-			else {
-				u.as(this.controls, "display", this.controls._default_display);
-			}
-			if(this._controls_playpause) {
-				if(!this.controls.playpause) {
-					this.controls.playpause = u.ae(this.controls, "a", {"class":"playpause"});
-					this.controls.playpause._default_display = u.gcs(this.controls.playpause, "display");
-					this.controls.playpause.player = this;
-					u.e.click(this.controls.playpause);
-					this.controls.playpause.clicked = function(event) {
-						this.player.togglePlay();
-					}
-				}
-				else {
-					u.as(this.controls.playpause, "display", this.controls.playpause._default_display);
-				}
-			}
-			else if(this.controls.playpause) {
-				u.as(this.controls.playpause, "display", "none");
-			}
-			if(this._controls_search) {
-				if(!this.controls.search) {
-					this.controls.search_ff = u.ae(this.controls, "a", {"class":"ff"});
-					this.controls.search_ff._default_display = u.gcs(this.controls.search_ff, "display");
-					this.controls.search_ff.player = this;
-					this.controls.search_rw = u.ae(this.controls, "a", {"class":"rw"});
-					this.controls.search_rw._default_display = u.gcs(this.controls.search_rw, "display");
-					this.controls.search_rw.player = this;
-					u.e.click(this.controls.search_ff);
-					this.controls.search_ff.ffing = function() {
-						this.t_ffing = u.t.setTimer(this, this.ffing, 100);
-						this.player.ff();
-					}
-					this.controls.search_ff.inputStarted = function(event) {
-						this.ffing();
-					}
-					this.controls.search_ff.clicked = function(event) {
-						u.t.resetTimer(this.t_ffing);
-					}
-					u.e.click(this.controls.search_rw);
-					this.controls.search_rw.rwing = function() {
-						this.t_rwing = u.t.setTimer(this, this.rwing, 100);
-						this.player.rw();
-					}
-					this.controls.search_rw.inputStarted = function(event) {
-						this.rwing();
-					}
-					this.controls.search_rw.clicked = function(event) {
-						u.t.resetTimer(this.t_rwing);
-						this.player.rw();
-					}
-					this.controls.search = true;
-				}
-				else {
-					u.as(this.controls.search_ff, "display", this.controls.search_ff._default_display);
-					u.as(this.controls.search_rw, "display", this.controls.search_rw._default_display);
-				}
-			}
-			else if(this.controls.search) {
-				u.as(this.controls.search_ff, "display", "none");
-				u.as(this.controls.search_rw, "display", "none");
-			}
-			if(this._controls_zoom && !this.controls.zoom) {}
-			else if(this.controls.zoom) {}
-			if(this._controls_volume && !this.controls.volume) {}
-			else if(this.controls.volume) {}
-			if(u.e.event_pref == "mouse") {
-				u.e.addEvent(this.controls, "mouseenter", this._keepControls);
-				u.e.addEvent(this.controls, "mouseleave", this._unkeepControls);
-				u.e.addEvent(this, "mousemove", this.showControls);
-			}
-			else {
-				u.e.addEvent(this, "touchstart", this.showControls);
-			}
-		}
-		else if(this.controls) {
-			u.as(this.controls, "display", "none");
-		}
-	}
-	return player;
-}
-
 /*u-svg.js*/
 Util.svg = function(svg_object) {
 	var svg, shape, svg_shape;
@@ -7479,6 +7145,504 @@ Util.Objects["oneButtonForm"] = new function() {
 	}
 }
 
+/*u-media.js*/
+Util.audioPlayer = function(_options) {
+	_options = _options || {};
+	_options.type = "audio";
+	return u.mediaPlayer(_options);
+}
+Util.videoPlayer = function(_options) {
+	_options = _options || {};
+	_options.type = "video";
+	return u.mediaPlayer(_options);
+}
+Util.mediaPlayer = function(_options) {
+	var player = document.createElement("div");
+	player.type = _options.type || "video";
+	u.ac(player, player.type+"player");
+	player._autoplay = false;
+	player._muted = false;
+	player._loop = false;
+	player._playsinline = false;
+	player._crossorigin = "anonymous";
+	player._controls = false;
+	player._controls_playpause = false;
+	player._controls_play = false;
+	player._controls_pause = false;
+	player._controls_stop = false;
+	player._controls_zoom = false;
+	player._controls_volume = false;
+	player._controls_search = false;
+	player._ff_skip = 2;
+	player._rw_skip = 2;
+	player.media = u.ae(player, player.type);
+	if(player.media && typeof(player.media.play) == "function") {
+		player.load = function(src, _options) {
+			u.bug("load media:" + src);
+			if(u.hc(this, "playing")) {
+				this.stop();
+			}
+			u.setupMedia(this, _options);
+			if(src) {
+				this.media.src = u.correctMediaSource(this, src);
+				this.media.load();
+			}
+		}
+		player.play = function(position) {
+			if(this.media.currentTime && position !== undefined) {
+				this.media.currentTime = position;
+			}
+			if(this.media.src) {
+				return this.media.play();
+			}
+		}
+		player.loadAndPlay = function(src, _options) {
+			var position = 0;
+			if(typeof(_options) == "object") {
+				var _argument;
+				for(_argument in _options) {
+					switch(_argument) {
+						case "position"		: position		= _options[_argument]; break;
+					}
+				}
+			}
+			this.load(src, _options);
+			return this.play(position);
+		}
+		player.pause = function() {
+			u.bug("pause");
+			this.media.pause();
+		}
+		player.stop = function() {
+			u.bug("stop");
+			this.media.pause();
+			if(this.media.currentTime) {
+				this.media.currentTime = 0;
+			}
+		}
+		player.ff = function() {
+			if(this.media.src && this.media.currentTime && this.mediaLoaded) {
+				this.media.currentTime = (this.media.duration - this.media.currentTime >= this._ff_skip) ? (this.media.currentTime + this._ff_skip) : this.media.duration;
+				this.media._timeupdate();
+			}
+		}
+		player.rw = function() {
+			if(this.media.src && this.media.currentTime && this.mediaLoaded) {
+				this.media.currentTime = (this.media.currentTime >= this._rw_skip) ? (this.media.currentTime - this._rw_skip) : 0;
+				this.media._timeupdate();
+			}
+		}
+		player.togglePlay = function() {
+			if(u.hc(this, "playing")) {
+				this.pause();
+			}
+			else {
+				this.play();
+			}
+		}
+		player.volume = function(value) {
+			this.media.volume = value;
+			if(value === 0) {
+				u.ac(this, "muted");
+			}
+			else {
+				u.rc(this, "muted");
+			}
+		}
+		player.toggleSound = function() {
+			if(this.media.volume) {
+				this.media.volume = 0;
+				u.ac(this, "muted");
+			}
+			else {
+				this.media.volume = 1;
+				u.rc(this, "muted");
+			}
+		}
+		player.mute = function() {
+			this.media.muted = true;
+		}
+		player.unmute = function() {
+			this.media.removeAttribute(muted);
+		}
+	}
+	else {
+		player.load = function() {}
+		player.play = function() {}
+		player.loadAndPlay = function() {}
+		player.pause = function() {}
+		player.stop = function() {}
+		player.ff = function() {}
+		player.rw = function() {}
+		player.togglePlay = function() {}
+	}
+	u.setupMedia(player, _options);
+	u.detectMediaAutoplay(player);
+	return player;
+}
+u.setupMedia = function(player, _options) {
+	if(typeof(_options) == "object") {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "autoplay"     : player._autoplay               = _options[_argument]; break;
+				case "muted"        : player._muted                  = _options[_argument]; break;
+				case "loop"         : player._loop                   = _options[_argument]; break;
+				case "playsinline"  : player._playsinline            = _options[_argument]; break;
+				case "controls"     : player._controls               = _options[_argument]; break;
+				case "ff_skip"      : player._ff_skip                = _options[_argument]; break;
+				case "rw_skip"      : player._rw_skip                = _options[_argument]; break;
+			}
+		}
+	}
+	player.media.autoplay = player._autoplay;
+	player.media.loop = player._loop;
+	player.media.muted = player._muted;
+	player.media.playsinline = player._playsinline;
+	player.media.setAttribute("crossorigin", player._crossorigin);
+	u.setupMediaControls(player, player._controls);
+	player.currentTime = 0;
+	player.duration = 0;
+	player.mediaLoaded = false;
+	player.metaLoaded = false;
+	if(!player.media.player) {
+		player.media.player = player;
+		player.media._loadstart = function(event) {
+			u.ac(this.player, "loading");
+			if(typeof(this.player.loading) == "function") {
+				this.player.loading(event);
+			}
+		}
+		u.e.addEvent(player.media, "loadstart", player.media._loadstart);
+		player.media._canplaythrough = function(event) {
+			u.rc(this.player, "loading");
+			if(typeof(this.player.canplaythrough) == "function") {
+				this.player.canplaythrough(event);
+			}
+		}
+		u.e.addEvent(player.media, "canplaythrough", player.media._canplaythrough);
+		player.media._playing = function(event) {
+			u.bug("_playing");
+			u.rc(this.player, "loading|paused");
+			u.ac(this.player, "playing");
+			if(typeof(this.player.playing) == "function") {
+				this.player.playing(event);
+			}
+		}
+		u.e.addEvent(player.media, "playing", player.media._playing);
+		player.media._paused = function(event) {
+			u.bug("_paused");
+			u.rc(this.player, "playing|loading");
+			u.ac(this.player, "paused");
+			if(typeof(this.player.paused) == "function") {
+				this.player.paused(event);
+			}
+		}
+		u.e.addEvent(player.media, "pause", player.media._paused);
+		player.media._stalled = function(event) {
+			u.rc(this.player, "playing|paused");
+			u.ac(this.player, "loading");
+			if(typeof(this.player.stalled) == "function") {
+				this.player.stalled(event);
+			}
+		}
+		u.e.addEvent(player.media, "stalled", player.media._paused);
+		player.media._error = function(event) {
+			u.bug("_error");
+			if(typeof(this.player.error) == "function") {
+				this.player.error(event);
+			}
+		}
+		u.e.addEvent(player.media, "error", player.media._error);
+		player.media._ended = function(event) {
+			u.rc(this.player, "playing|paused");
+			if(typeof(this.player.ended) == "function") {
+				this.player.ended(event);
+			}
+		}
+		u.e.addEvent(player.media, "ended", player.media._ended);
+		player.media._loadedmetadata = function(event) {
+			this.player.duration = this.duration;
+			this.player.currentTime = this.currentTime;
+			this.player.metaLoaded = true;
+			if(typeof(this.player.loadedmetadata) == "function") {
+				this.player.loadedmetadata(event);
+			}
+		}
+		u.e.addEvent(player.media, "loadedmetadata", player.media._loadedmetadata);
+		player.media._loadeddata = function(event) {
+			this.player.mediaLoaded = true;
+			if(typeof(this.player.loadeddata) == "function") {
+				this.player.loadeddata(event);
+			}
+		}
+		u.e.addEvent(player.media, "loadeddata", player.media._loadeddata);
+		player.media._timeupdate = function(event) {
+			this.player.currentTime = this.currentTime;
+			if(typeof(this.player.timeupdate) == "function") {
+				this.player.timeupdate(event);
+			}
+		}
+		u.e.addEvent(player.media, "timeupdate", player.media._timeupdate);
+	}
+}
+u.correctMediaSource = function(player, src) {
+	var param = src.match(/\?[^$]+/) ? src.match(/(\?[^$]+)/)[1] : "";
+	src = src.replace(/\?[^$]+/, "");
+	console.log(player)
+	if(player.type == "video") {
+		src = src.replace(/(\.m4v|\.mp4|\.webm|\.ogv|\.3gp|\.mov)$/, "");
+		if(player.flash) {
+			return src+".mp4"+param;
+		}
+		else if(player.media.canPlayType("video/mp4")) {
+			return src+".mp4"+param;
+		}
+		else if(player.media.canPlayType("video/ogg")) {
+			return src+".ogv"+param;
+		}
+		else if(player.media.canPlayType("video/3gpp")) {
+			return src+".3gp"+param;
+		}
+		else {
+			return src+".mov"+param;
+		}
+	}
+	else {
+		src = src.replace(/(.mp3|.ogg|.wav)$/, "");
+		if(player.flash) {
+			return src+".mp3"+param;
+		}
+		if(player.media.canPlayType("audio/mpeg")) {
+			return src+".mp3"+param;
+		}
+		else if(player.media.canPlayType("audio/ogg")) {
+			return src+".ogg"+param;
+		}
+		else {
+			return src+".wav"+param;
+		}
+	}
+}
+u.setupMediaControls = function(player, _options) {
+	u.bug("u.setupMediaControls");
+	if(typeof(_options) == "object") {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "playpause"    : player._controls_playpause     = _options[_argument]; break;
+				case "play"         : player._controls_play          = _options[_argument]; break;
+				case "stop"         : player._controls_stop          = _options[_argument]; break;
+				case "pause"        : player._controls_pause         = _options[_argument]; break;
+				case "volume"       : player._controls_volume        = _options[_argument]; break;
+				case "search"       : player._controls_search        = _options[_argument]; break;
+			}
+		}
+	}
+	player._custom_controls = obj(_options) && (
+		player._controls_playpause ||
+		player._controls_play ||
+		player._controls_stop ||
+		player._controls_pause ||
+		player._controls_volume ||
+		player._controls_search
+	) || false;
+	if(player._custom_controls || !_options) {
+		player.media.removeAttribute("controls");
+	}
+	else{
+		player.media.controls = player._controls;
+	}
+	if(!player._custom_controls && player.controls) {
+		player.removeChild(player.controls);
+		delete player.controls;
+	}
+	else if(player._custom_controls) {
+		if(!player.controls) {
+			player.controls = u.ae(player, "div", {"class":"controls"});
+			player.controls.player = player;
+			player.controls.out = function() {
+				u.a.transition(this, "all 0.3s ease-out");
+				u.ass(this, {
+					"opacity":0
+				});
+			}
+			player.controls.over = function() {
+				u.a.transition(this, "all 0.5s ease-out");
+				u.ass(this, {
+					"opacity":1
+				});
+			}
+			u.e.hover(player.controls);
+		}
+		if(player._controls_playpause) {
+			if(!player.controls.playpause) {
+				player.controls.playpause = u.ae(player.controls, "a", {"class":"playpause"});
+				player.controls.playpause.player = player;
+				u.e.click(player.controls.playpause);
+				player.controls.playpause.clicked = function(event) {
+					this.player.togglePlay();
+				}
+			}
+		}
+		else if(player.controls.playpause) {
+			player.controls.playpause.parentNode.removeChild(player.controls.playpause);
+			delete player.controls.playpause;
+		}
+		if(player._controls_play) {
+			if(!player.controls.play) {
+				player.controls.play = u.ae(player.controls, "a", {"class":"play"});
+				player.controls.play.player = player;
+				u.e.click(player.controls.play);
+				player.controls.play.clicked = function(event) {
+					this.player.togglePlay();
+				}
+			}
+		}
+		else if(player.controls.play) {
+			player.controls.play.parentNode.removeChild(player.controls.play);
+			delete player.controls.play;
+		}
+		if(player._controls_pause) {
+			if(!player.controls.pause) {
+				player.controls.pause = u.ae(player.controls, "a", {"class":"pause"});
+				player.controls.pause.player = player;
+				u.e.click(player.controls.pause);
+				player.controls.pause.clicked = function(event) {
+					this.player.togglePlay();
+				}
+			}
+		}
+		else if(player.controls.pause) {
+			player.controls.pause.parentNode.removeChild(player.controls.pause);
+			delete player.controls.pause;
+		}
+		if(player._controls_stop) {
+			if(!player.controls.stop) {
+				player.controls.stop = u.ae(player.controls, "a", {"class":"stop" });
+				player.controls.stop.player = player;
+				u.e.click(player.controls.stop);
+				player.controls.stop.clicked = function(event) {
+					this.player.stop();
+				}
+			}
+		}
+		else if(player.controls.stop) {
+			player.controls.stop.parentNode.removeChild(player.controls.stop);
+			delete player.controls.stop;
+		}
+		if(player._controls_search) {
+			if(!player.controls.search) {
+				player.controls.search_ff = u.ae(player.controls, "a", {"class":"ff"});
+				player.controls.search_ff._default_display = u.gcs(player.controls.search_ff, "display");
+				player.controls.search_ff.player = player;
+				player.controls.search_rw = u.ae(player.controls, "a", {"class":"rw"});
+				player.controls.search_rw._default_display = u.gcs(player.controls.search_rw, "display");
+				player.controls.search_rw.player = player;
+				u.e.click(player.controls.search_ff);
+				player.controls.search_ff.ffing = function() {
+					this.t_ffing = u.t.setTimer(this, this.ffing, 100);
+					this.player.ff();
+				}
+				player.controls.search_ff.inputStarted = function(event) {
+					this.ffing();
+				}
+				player.controls.search_ff.clicked = function(event) {
+					u.t.resetTimer(this.t_ffing);
+				}
+				u.e.click(player.controls.search_rw);
+				player.controls.search_rw.rwing = function() {
+					this.t_rwing = u.t.setTimer(this, this.rwing, 100);
+					this.player.rw();
+				}
+				player.controls.search_rw.inputStarted = function(event) {
+					this.rwing();
+				}
+				player.controls.search_rw.clicked = function(event) {
+					u.t.resetTimer(this.t_rwing);
+					this.player.rw();
+				}
+				player.controls.search = true;
+			}
+			else {
+				u.as(player.controls.search_ff, "display", player.controls.search_ff._default_display);
+				u.as(player.controls.search_rw, "display", player.controls.search_rw._default_display);
+			}
+		}
+		else if(player.controls.search) {
+			u.as(player.controls.search_ff, "display", "none");
+			u.as(player.controls.search_rw, "display", "none");
+		}
+		if(player._controls_zoom && !player.controls.zoom) {}
+		else if(player.controls.zoom) {}
+		if(player._controls_volume && !player.controls.volume) {}
+		else if(player.controls.volume) {}
+		// 
+	}
+}
+u.detectMediaAutoplay = function(player) {
+	if(!u.media_autoplay_detection) {
+		u.media_autoplay_detection = [player];
+		u.test_autoplay = document.createElement("video");
+		u.test_autoplay.check = function() {
+			if(u.media_can_autoplay !== undefined && u.media_can_autoplay_muted !== undefined) {
+				for(var i = 0, player; i < u.media_autoplay_detection.length; i++) {
+					player = u.media_autoplay_detection[i];
+					player.can_autoplay = u.media_can_autoplay;
+					player.can_autoplay_muted = u.media_can_autoplay_muted;
+					if(typeof(player.ready) == "function") {
+						player.ready();
+					}
+				}
+				u.media_autoplay_detection = true;
+				delete u.test_autoplay;
+			}
+		}
+		u.test_autoplay.playing = function() {
+			u.bug("playing");
+			u.media_can_autoplay = true;
+			u.media_can_autoplay_muted = true;
+			this.check();
+		}
+		u.test_autoplay.notplaying = function() {
+			u.media_can_autoplay = false;
+			u.test_autoplay.muted = true;
+			u.test_autoplay.play().then(
+				u.test_autoplay.playing_muted.bind(u.test_autoplay)
+			).catch(
+				u.test_autoplay.notplaying_muted.bind(u.test_autoplay)
+			);
+		}
+		u.test_autoplay.playing_muted = function() {
+			u.bug("playing_muted");
+			u.media_can_autoplay_muted = true;
+			this.check();
+		}
+		u.test_autoplay.notplaying_muted = function() {
+			u.bug("notplaying_muted");
+			u.media_can_autoplay_muted = false;
+			this.check();
+		}
+		var mp3 = "data:audio/mpeg;base64,/+MYxAAAAANIAUAAAASEEB/jwOFM/0MM/90b/+RhST//w4NFwOjf///PZu////9lns5GFDv//l9GlUIEEIAAAgIg8Ir/JGq3/+MYxDsLIj5QMYcoAP0dv9HIjUcH//yYSg+CIbkGP//8w0bLVjUP///3Z0x5QCAv/yLjwtGKTEFNRTMuOTeqqqqqqqqqqqqq/+MYxEkNmdJkUYc4AKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq";
+		u.test_autoplay.volume = 0.01;
+		u.test_autoplay.autoplay = true;
+		u.test_autoplay.playsinline = true;
+		u.test_autoplay.src = mp3;
+		u.test_autoplay.play().then(
+			u.test_autoplay.playing.bind(u.test_autoplay)
+		).catch(
+			u.test_autoplay.notplaying.bind(u.test_autoplay)
+		);
+	}
+	else if(u.media_can_autoplay_muted !== undefined && u.media_can_autoplay !== undefined) {
+		u.media_autoplay_detection.push(player)
+	}
+	else if(typeof(player.ready) == "function") {
+		u.t.setTimer(player, "ready", 20);
+	}
+}
+
+
 /*i-page.js*/
 u.bug_console_only = true;
 Util.Objects["page"] = new function() {
@@ -8539,37 +8703,34 @@ Util.Objects["front"] = new function() {
 		scene.showIntro = function() {
 			u.bug("scene.showIntro");
 			var node, duration, i;
-			this.intro.audioPlayer = u.audioPlayer();
-			this.intro.audioPlayer.stalled = function() {
-				console.log("we really got a stalled");
-			}
-			this.intro.audioPlayer.error = function() {
-				console.log("we really got an error");
+			this.intro.audioPlayer = u.audioPlayer({autoplay:true});
+			u.ae(this, this.intro.audioPlayer);
+			this.intro.audioPlayer.ready = function() {
+				u.bug("this.intro.audioPlayer.ready");
+				if(this.can_autoplay) {
+					this.load("/assets/audio/intro-4-2.mp3");
+				}
+				else {
+					this.playing({"target":{"currentTime":2000}});
+				}
 			}
 			this.intro.audioPlayer.intro = this.intro;
-			this.intro.audioPlayer.load("/assets/audio/intro-4-2.mp3");
 			this.intro.audioPlayer.playing = function(event) {
 				var _time = event.target.currentTime;
 				this.intro.timestamps = ["", 2330, 2625, 2900, 3200, 3487, 4349, 4645];
-				u.t.setTimer(this.intro.scene, "removeLoader", this.intro.timestamps[1]+_time - 200);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[1]+_time, 1);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[2]+_time, 2);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[3]+_time, 3);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[4]+_time, 4);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[5]+_time, 5);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[6]+_time, 6);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[7]+_time, 7);
-				u.t.setTimer(this.intro.scene, "injectHotspots", 6045 + _time);
+				u.t.setTimer(this.intro.scene, "removeLoader", this.intro.timestamps[1]-_time - 200);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[1]-_time, 1);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[2]-_time, 2);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[3]-_time, 3);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[4]-_time, 4);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[5]-_time, 5);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[6]-_time, 6);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[7]-_time, 7);
+				u.t.setTimer(this.intro.scene, "injectHotspots", 6045 - _time);
 				delete this.playing;
 			}
-			var promise = this.intro.audioPlayer.play();
-			if (promise !== undefined) {
-				promise.catch(error => {
-					console.log("shiite");
-			    }).then(() => {
-					console.log("all good");
-			    });
-			}
+			//         
+			//         
 		}
 		scene.hideIntro = function() {
 			u.saveCookie("intro_v1", 1, {"expires":false});

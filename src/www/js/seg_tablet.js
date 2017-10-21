@@ -1,6 +1,17 @@
 
 /*seg_tablet_include.js*/
 
+/*u.js*/
+if(!u || !Util) {
+	var u, Util = u = new function() {};
+	u.version = "0.9.2";
+	u.bug = u.nodeId = u.exception = function() {};
+	u.stats = new function() {this.pageView = function(){};this.event = function(){};}
+}
+function fun(v) {return (typeof(v) === "function")}
+function obj(v) {return (typeof(v) === "object")}
+function str(v) {return (typeof(v) === "string")}
+
 /*seg_tablet.js*/
 if(!u || !Util) {
 	var u, Util = u = new function() {};
@@ -6822,6 +6833,169 @@ Util.pluralize = function(count, singular, plural) {
 	return count + " " + singular;
 }
 
+/*u-cookie.js*/
+Util.saveCookie = function(name, value, _options) {
+	var expires = true;
+	var path = false;
+	var force = false;
+	if(typeof(_options) == "object") {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "expires"	: expires	= _options[_argument]; break;
+				case "path"		: path		= _options[_argument]; break;
+				case "force"	: force		= _options[_argument]; break;
+			}
+		}
+	}
+	if(!force && typeof(window.localStorage) == "object" && typeof(window.sessionStorage) == "object") {
+		if(expires === false) {
+			window.sessionStorage.setItem(name, value);
+		}
+		else {
+			window.localStorage.setItem(name, value);
+		}
+		return;
+	}
+	if(expires === false) {
+		expires = ";expires=Mon, 04-Apr-2020 05:00:00 GMT";
+	}
+	else if(typeof(expires) === "string") {
+		expires = ";expires="+expires;
+	}
+	else {
+		expires = "";
+	}
+	if(typeof(path) === "string") {
+		path = ";path="+path;
+	}
+	else {
+		path = "";
+	}
+	document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + path + expires;
+}
+Util.getCookie = function(name) {
+	var matches;
+	if(typeof(window.sessionStorage) == "object" && window.sessionStorage.getItem(name)) {
+		return window.sessionStorage.getItem(name)
+	}
+	else if(typeof(window.localStorage) == "object" && window.localStorage.getItem(name)) {
+		return window.localStorage.getItem(name)
+	}
+	return (matches = document.cookie.match(encodeURIComponent(name) + "=([^;]+)")) ? decodeURIComponent(matches[1]) : false;
+}
+Util.deleteCookie = function(name, _options) {
+	var path = false;
+	if(typeof(_options) == "object") {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "path"	: path	= _options[_argument]; break;
+			}
+		}
+	}
+	if(typeof(window.sessionStorage) == "object") {
+		window.sessionStorage.removeItem(name);
+	}
+	if(typeof(window.localStorage) == "object") {
+		window.localStorage.removeItem(name);
+	}
+	if(typeof(path) === "string") {
+		path = ";path="+path;
+	}
+	else {
+		path = "";
+	}
+	document.cookie = encodeURIComponent(name) + "=" + path + ";expires=Thu, 01-Jan-70 00:00:01 GMT";
+}
+Util.saveNodeCookie = function(node, name, value, _options) {
+	var ref = u.cookieReference(node, _options);
+	var mem = JSON.parse(u.getCookie("man_mem"));
+	if(!mem) {
+		mem = {};
+	}
+	if(!mem[ref]) {
+		mem[ref] = {};
+	}
+	mem[ref][name] = (value !== false && value !== undefined) ? value : "";
+	u.saveCookie("man_mem", JSON.stringify(mem), {"path":"/"});
+}
+Util.getNodeCookie = function(node, name, _options) {
+	var ref = u.cookieReference(node, _options);
+	var mem = JSON.parse(u.getCookie("man_mem"));
+	if(mem && mem[ref]) {
+		if(name) {
+			return mem[ref][name] ? mem[ref][name] : "";
+		}
+		else {
+			return mem[ref];
+		}
+	}
+	return false;
+}
+Util.deleteNodeCookie = function(node, name, _options) {
+	var ref = u.cookieReference(node, _options);
+	var mem = JSON.parse(u.getCookie("man_mem"));
+	if(mem && mem[ref]) {
+		if(name) {
+			delete mem[ref][name];
+		}
+		else {
+			delete mem[ref];
+		}
+	}
+	u.saveCookie("man_mem", JSON.stringify(mem), {"path":"/"});
+}
+Util.cookieReference = function(node, _options) {
+	var ref;
+	var ignore_classnames = false;
+	var ignore_classvars = false;
+	if(typeof(_options) == "object") {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "ignore_classnames"	: ignore_classnames	= _options[_argument]; break;
+				case "ignore_classvars" 	: ignore_classvars	= _options[_argument]; break;
+			}
+		}
+	}
+	if(node.id) {
+		ref = node.nodeName + "#" + node.id;
+	}
+	else {
+		var node_identifier = "";
+		if(node.name) {
+			node_identifier = node.nodeName + "["+node.name+"]";
+		}
+		else if(node.className) {
+			var classname = node.className;
+			if(ignore_classnames) {
+				var regex = new RegExp("(^| )("+ignore_classnames.split(",").join("|")+")($| )", "g");
+				classname = classname.replace(regex, " ").replace(/[ ]{2,4}/, " ");
+			}
+			if(ignore_classvars) {
+				classname = classname.replace(/(^| )[a-zA-Z_]+\:[\?\=\w\/\\#~\:\.\,\+\&\%\@\!\-]+(^| )/g, " ").replace(/[ ]{2,4}/g, " ");
+			}
+			node_identifier = node.nodeName+"."+classname.trim().replace(/ /g, ".");
+		}
+		else {
+			node_identifier = node.nodeName
+		}
+		var id_node = node;
+		while(!id_node.id) {
+			id_node = id_node.parentNode;
+		}
+		if(id_node.id) {
+			ref = id_node.nodeName + "#" + id_node.id + " " + node_identifier;
+		}
+		else {
+			ref = node_identifier;
+		}
+	}
+	return ref;
+}
+
+
 /*beta-u-form-onebuttonform.js*/
 Util.Objects["oneButtonForm"] = new function() {
 	this.init = function(node) {
@@ -6916,6 +7090,504 @@ Util.Objects["oneButtonForm"] = new function() {
 		}
 	}
 }
+
+/*u-media.js*/
+Util.audioPlayer = function(_options) {
+	_options = _options || {};
+	_options.type = "audio";
+	return u.mediaPlayer(_options);
+}
+Util.videoPlayer = function(_options) {
+	_options = _options || {};
+	_options.type = "video";
+	return u.mediaPlayer(_options);
+}
+Util.mediaPlayer = function(_options) {
+	var player = document.createElement("div");
+	player.type = _options.type || "video";
+	u.ac(player, player.type+"player");
+	player._autoplay = false;
+	player._muted = false;
+	player._loop = false;
+	player._playsinline = false;
+	player._crossorigin = "anonymous";
+	player._controls = false;
+	player._controls_playpause = false;
+	player._controls_play = false;
+	player._controls_pause = false;
+	player._controls_stop = false;
+	player._controls_zoom = false;
+	player._controls_volume = false;
+	player._controls_search = false;
+	player._ff_skip = 2;
+	player._rw_skip = 2;
+	player.media = u.ae(player, player.type);
+	if(player.media && typeof(player.media.play) == "function") {
+		player.load = function(src, _options) {
+			u.bug("load media:" + src);
+			if(u.hc(this, "playing")) {
+				this.stop();
+			}
+			u.setupMedia(this, _options);
+			if(src) {
+				this.media.src = u.correctMediaSource(this, src);
+				this.media.load();
+			}
+		}
+		player.play = function(position) {
+			if(this.media.currentTime && position !== undefined) {
+				this.media.currentTime = position;
+			}
+			if(this.media.src) {
+				return this.media.play();
+			}
+		}
+		player.loadAndPlay = function(src, _options) {
+			var position = 0;
+			if(typeof(_options) == "object") {
+				var _argument;
+				for(_argument in _options) {
+					switch(_argument) {
+						case "position"		: position		= _options[_argument]; break;
+					}
+				}
+			}
+			this.load(src, _options);
+			return this.play(position);
+		}
+		player.pause = function() {
+			u.bug("pause");
+			this.media.pause();
+		}
+		player.stop = function() {
+			u.bug("stop");
+			this.media.pause();
+			if(this.media.currentTime) {
+				this.media.currentTime = 0;
+			}
+		}
+		player.ff = function() {
+			if(this.media.src && this.media.currentTime && this.mediaLoaded) {
+				this.media.currentTime = (this.media.duration - this.media.currentTime >= this._ff_skip) ? (this.media.currentTime + this._ff_skip) : this.media.duration;
+				this.media._timeupdate();
+			}
+		}
+		player.rw = function() {
+			if(this.media.src && this.media.currentTime && this.mediaLoaded) {
+				this.media.currentTime = (this.media.currentTime >= this._rw_skip) ? (this.media.currentTime - this._rw_skip) : 0;
+				this.media._timeupdate();
+			}
+		}
+		player.togglePlay = function() {
+			if(u.hc(this, "playing")) {
+				this.pause();
+			}
+			else {
+				this.play();
+			}
+		}
+		player.volume = function(value) {
+			this.media.volume = value;
+			if(value === 0) {
+				u.ac(this, "muted");
+			}
+			else {
+				u.rc(this, "muted");
+			}
+		}
+		player.toggleSound = function() {
+			if(this.media.volume) {
+				this.media.volume = 0;
+				u.ac(this, "muted");
+			}
+			else {
+				this.media.volume = 1;
+				u.rc(this, "muted");
+			}
+		}
+		player.mute = function() {
+			this.media.muted = true;
+		}
+		player.unmute = function() {
+			this.media.removeAttribute(muted);
+		}
+	}
+	else {
+		player.load = function() {}
+		player.play = function() {}
+		player.loadAndPlay = function() {}
+		player.pause = function() {}
+		player.stop = function() {}
+		player.ff = function() {}
+		player.rw = function() {}
+		player.togglePlay = function() {}
+	}
+	u.setupMedia(player, _options);
+	u.detectMediaAutoplay(player);
+	return player;
+}
+u.setupMedia = function(player, _options) {
+	if(typeof(_options) == "object") {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "autoplay"     : player._autoplay               = _options[_argument]; break;
+				case "muted"        : player._muted                  = _options[_argument]; break;
+				case "loop"         : player._loop                   = _options[_argument]; break;
+				case "playsinline"  : player._playsinline            = _options[_argument]; break;
+				case "controls"     : player._controls               = _options[_argument]; break;
+				case "ff_skip"      : player._ff_skip                = _options[_argument]; break;
+				case "rw_skip"      : player._rw_skip                = _options[_argument]; break;
+			}
+		}
+	}
+	player.media.autoplay = player._autoplay;
+	player.media.loop = player._loop;
+	player.media.muted = player._muted;
+	player.media.playsinline = player._playsinline;
+	player.media.setAttribute("crossorigin", player._crossorigin);
+	u.setupMediaControls(player, player._controls);
+	player.currentTime = 0;
+	player.duration = 0;
+	player.mediaLoaded = false;
+	player.metaLoaded = false;
+	if(!player.media.player) {
+		player.media.player = player;
+		player.media._loadstart = function(event) {
+			u.ac(this.player, "loading");
+			if(typeof(this.player.loading) == "function") {
+				this.player.loading(event);
+			}
+		}
+		u.e.addEvent(player.media, "loadstart", player.media._loadstart);
+		player.media._canplaythrough = function(event) {
+			u.rc(this.player, "loading");
+			if(typeof(this.player.canplaythrough) == "function") {
+				this.player.canplaythrough(event);
+			}
+		}
+		u.e.addEvent(player.media, "canplaythrough", player.media._canplaythrough);
+		player.media._playing = function(event) {
+			u.bug("_playing");
+			u.rc(this.player, "loading|paused");
+			u.ac(this.player, "playing");
+			if(typeof(this.player.playing) == "function") {
+				this.player.playing(event);
+			}
+		}
+		u.e.addEvent(player.media, "playing", player.media._playing);
+		player.media._paused = function(event) {
+			u.bug("_paused");
+			u.rc(this.player, "playing|loading");
+			u.ac(this.player, "paused");
+			if(typeof(this.player.paused) == "function") {
+				this.player.paused(event);
+			}
+		}
+		u.e.addEvent(player.media, "pause", player.media._paused);
+		player.media._stalled = function(event) {
+			u.rc(this.player, "playing|paused");
+			u.ac(this.player, "loading");
+			if(typeof(this.player.stalled) == "function") {
+				this.player.stalled(event);
+			}
+		}
+		u.e.addEvent(player.media, "stalled", player.media._paused);
+		player.media._error = function(event) {
+			u.bug("_error");
+			if(typeof(this.player.error) == "function") {
+				this.player.error(event);
+			}
+		}
+		u.e.addEvent(player.media, "error", player.media._error);
+		player.media._ended = function(event) {
+			u.rc(this.player, "playing|paused");
+			if(typeof(this.player.ended) == "function") {
+				this.player.ended(event);
+			}
+		}
+		u.e.addEvent(player.media, "ended", player.media._ended);
+		player.media._loadedmetadata = function(event) {
+			this.player.duration = this.duration;
+			this.player.currentTime = this.currentTime;
+			this.player.metaLoaded = true;
+			if(typeof(this.player.loadedmetadata) == "function") {
+				this.player.loadedmetadata(event);
+			}
+		}
+		u.e.addEvent(player.media, "loadedmetadata", player.media._loadedmetadata);
+		player.media._loadeddata = function(event) {
+			this.player.mediaLoaded = true;
+			if(typeof(this.player.loadeddata) == "function") {
+				this.player.loadeddata(event);
+			}
+		}
+		u.e.addEvent(player.media, "loadeddata", player.media._loadeddata);
+		player.media._timeupdate = function(event) {
+			this.player.currentTime = this.currentTime;
+			if(typeof(this.player.timeupdate) == "function") {
+				this.player.timeupdate(event);
+			}
+		}
+		u.e.addEvent(player.media, "timeupdate", player.media._timeupdate);
+	}
+}
+u.correctMediaSource = function(player, src) {
+	var param = src.match(/\?[^$]+/) ? src.match(/(\?[^$]+)/)[1] : "";
+	src = src.replace(/\?[^$]+/, "");
+	console.log(player)
+	if(player.type == "video") {
+		src = src.replace(/(\.m4v|\.mp4|\.webm|\.ogv|\.3gp|\.mov)$/, "");
+		if(player.flash) {
+			return src+".mp4"+param;
+		}
+		else if(player.media.canPlayType("video/mp4")) {
+			return src+".mp4"+param;
+		}
+		else if(player.media.canPlayType("video/ogg")) {
+			return src+".ogv"+param;
+		}
+		else if(player.media.canPlayType("video/3gpp")) {
+			return src+".3gp"+param;
+		}
+		else {
+			return src+".mov"+param;
+		}
+	}
+	else {
+		src = src.replace(/(.mp3|.ogg|.wav)$/, "");
+		if(player.flash) {
+			return src+".mp3"+param;
+		}
+		if(player.media.canPlayType("audio/mpeg")) {
+			return src+".mp3"+param;
+		}
+		else if(player.media.canPlayType("audio/ogg")) {
+			return src+".ogg"+param;
+		}
+		else {
+			return src+".wav"+param;
+		}
+	}
+}
+u.setupMediaControls = function(player, _options) {
+	u.bug("u.setupMediaControls");
+	if(typeof(_options) == "object") {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "playpause"    : player._controls_playpause     = _options[_argument]; break;
+				case "play"         : player._controls_play          = _options[_argument]; break;
+				case "stop"         : player._controls_stop          = _options[_argument]; break;
+				case "pause"        : player._controls_pause         = _options[_argument]; break;
+				case "volume"       : player._controls_volume        = _options[_argument]; break;
+				case "search"       : player._controls_search        = _options[_argument]; break;
+			}
+		}
+	}
+	player._custom_controls = obj(_options) && (
+		player._controls_playpause ||
+		player._controls_play ||
+		player._controls_stop ||
+		player._controls_pause ||
+		player._controls_volume ||
+		player._controls_search
+	) || false;
+	if(player._custom_controls || !_options) {
+		player.media.removeAttribute("controls");
+	}
+	else{
+		player.media.controls = player._controls;
+	}
+	if(!player._custom_controls && player.controls) {
+		player.removeChild(player.controls);
+		delete player.controls;
+	}
+	else if(player._custom_controls) {
+		if(!player.controls) {
+			player.controls = u.ae(player, "div", {"class":"controls"});
+			player.controls.player = player;
+			player.controls.out = function() {
+				u.a.transition(this, "all 0.3s ease-out");
+				u.ass(this, {
+					"opacity":0
+				});
+			}
+			player.controls.over = function() {
+				u.a.transition(this, "all 0.5s ease-out");
+				u.ass(this, {
+					"opacity":1
+				});
+			}
+			u.e.hover(player.controls);
+		}
+		if(player._controls_playpause) {
+			if(!player.controls.playpause) {
+				player.controls.playpause = u.ae(player.controls, "a", {"class":"playpause"});
+				player.controls.playpause.player = player;
+				u.e.click(player.controls.playpause);
+				player.controls.playpause.clicked = function(event) {
+					this.player.togglePlay();
+				}
+			}
+		}
+		else if(player.controls.playpause) {
+			player.controls.playpause.parentNode.removeChild(player.controls.playpause);
+			delete player.controls.playpause;
+		}
+		if(player._controls_play) {
+			if(!player.controls.play) {
+				player.controls.play = u.ae(player.controls, "a", {"class":"play"});
+				player.controls.play.player = player;
+				u.e.click(player.controls.play);
+				player.controls.play.clicked = function(event) {
+					this.player.togglePlay();
+				}
+			}
+		}
+		else if(player.controls.play) {
+			player.controls.play.parentNode.removeChild(player.controls.play);
+			delete player.controls.play;
+		}
+		if(player._controls_pause) {
+			if(!player.controls.pause) {
+				player.controls.pause = u.ae(player.controls, "a", {"class":"pause"});
+				player.controls.pause.player = player;
+				u.e.click(player.controls.pause);
+				player.controls.pause.clicked = function(event) {
+					this.player.togglePlay();
+				}
+			}
+		}
+		else if(player.controls.pause) {
+			player.controls.pause.parentNode.removeChild(player.controls.pause);
+			delete player.controls.pause;
+		}
+		if(player._controls_stop) {
+			if(!player.controls.stop) {
+				player.controls.stop = u.ae(player.controls, "a", {"class":"stop" });
+				player.controls.stop.player = player;
+				u.e.click(player.controls.stop);
+				player.controls.stop.clicked = function(event) {
+					this.player.stop();
+				}
+			}
+		}
+		else if(player.controls.stop) {
+			player.controls.stop.parentNode.removeChild(player.controls.stop);
+			delete player.controls.stop;
+		}
+		if(player._controls_search) {
+			if(!player.controls.search) {
+				player.controls.search_ff = u.ae(player.controls, "a", {"class":"ff"});
+				player.controls.search_ff._default_display = u.gcs(player.controls.search_ff, "display");
+				player.controls.search_ff.player = player;
+				player.controls.search_rw = u.ae(player.controls, "a", {"class":"rw"});
+				player.controls.search_rw._default_display = u.gcs(player.controls.search_rw, "display");
+				player.controls.search_rw.player = player;
+				u.e.click(player.controls.search_ff);
+				player.controls.search_ff.ffing = function() {
+					this.t_ffing = u.t.setTimer(this, this.ffing, 100);
+					this.player.ff();
+				}
+				player.controls.search_ff.inputStarted = function(event) {
+					this.ffing();
+				}
+				player.controls.search_ff.clicked = function(event) {
+					u.t.resetTimer(this.t_ffing);
+				}
+				u.e.click(player.controls.search_rw);
+				player.controls.search_rw.rwing = function() {
+					this.t_rwing = u.t.setTimer(this, this.rwing, 100);
+					this.player.rw();
+				}
+				player.controls.search_rw.inputStarted = function(event) {
+					this.rwing();
+				}
+				player.controls.search_rw.clicked = function(event) {
+					u.t.resetTimer(this.t_rwing);
+					this.player.rw();
+				}
+				player.controls.search = true;
+			}
+			else {
+				u.as(player.controls.search_ff, "display", player.controls.search_ff._default_display);
+				u.as(player.controls.search_rw, "display", player.controls.search_rw._default_display);
+			}
+		}
+		else if(player.controls.search) {
+			u.as(player.controls.search_ff, "display", "none");
+			u.as(player.controls.search_rw, "display", "none");
+		}
+		if(player._controls_zoom && !player.controls.zoom) {}
+		else if(player.controls.zoom) {}
+		if(player._controls_volume && !player.controls.volume) {}
+		else if(player.controls.volume) {}
+		// 
+	}
+}
+u.detectMediaAutoplay = function(player) {
+	if(!u.media_autoplay_detection) {
+		u.media_autoplay_detection = [player];
+		u.test_autoplay = document.createElement("video");
+		u.test_autoplay.check = function() {
+			if(u.media_can_autoplay !== undefined && u.media_can_autoplay_muted !== undefined) {
+				for(var i = 0, player; i < u.media_autoplay_detection.length; i++) {
+					player = u.media_autoplay_detection[i];
+					player.can_autoplay = u.media_can_autoplay;
+					player.can_autoplay_muted = u.media_can_autoplay_muted;
+					if(typeof(player.ready) == "function") {
+						player.ready();
+					}
+				}
+				u.media_autoplay_detection = true;
+				delete u.test_autoplay;
+			}
+		}
+		u.test_autoplay.playing = function() {
+			u.bug("playing");
+			u.media_can_autoplay = true;
+			u.media_can_autoplay_muted = true;
+			this.check();
+		}
+		u.test_autoplay.notplaying = function() {
+			u.media_can_autoplay = false;
+			u.test_autoplay.muted = true;
+			u.test_autoplay.play().then(
+				u.test_autoplay.playing_muted.bind(u.test_autoplay)
+			).catch(
+				u.test_autoplay.notplaying_muted.bind(u.test_autoplay)
+			);
+		}
+		u.test_autoplay.playing_muted = function() {
+			u.bug("playing_muted");
+			u.media_can_autoplay_muted = true;
+			this.check();
+		}
+		u.test_autoplay.notplaying_muted = function() {
+			u.bug("notplaying_muted");
+			u.media_can_autoplay_muted = false;
+			this.check();
+		}
+		var mp3 = "data:audio/mpeg;base64,/+MYxAAAAANIAUAAAASEEB/jwOFM/0MM/90b/+RhST//w4NFwOjf///PZu////9lns5GFDv//l9GlUIEEIAAAgIg8Ir/JGq3/+MYxDsLIj5QMYcoAP0dv9HIjUcH//yYSg+CIbkGP//8w0bLVjUP///3Z0x5QCAv/yLjwtGKTEFNRTMuOTeqqqqqqqqqqqqq/+MYxEkNmdJkUYc4AKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq";
+		u.test_autoplay.volume = 0.01;
+		u.test_autoplay.autoplay = true;
+		u.test_autoplay.playsinline = true;
+		u.test_autoplay.src = mp3;
+		u.test_autoplay.play().then(
+			u.test_autoplay.playing.bind(u.test_autoplay)
+		).catch(
+			u.test_autoplay.notplaying.bind(u.test_autoplay)
+		);
+	}
+	else if(u.media_can_autoplay_muted !== undefined && u.media_can_autoplay !== undefined) {
+		u.media_autoplay_detection.push(player)
+	}
+	else if(typeof(player.ready) == "function") {
+		u.t.setTimer(player, "ready", 20);
+	}
+}
+
 
 /*i-page.js*/
 u.bug_console_only = true;
@@ -7039,7 +7711,7 @@ Util.Objects["page"] = new function() {
 			page.nN.list = u.qs("ul", page.nN);
 			if(page.nN.list) {
 				page.nN.list.nodes = u.qsa("li", page.nN.list);
-				if(page.nN.list.nodes.length) {
+				if(page.nN.list.nodes.length > 1) {
 					page.nN.font_size = parseInt(u.gcs(page.nN.list.nodes[1], "font-size"));
 					page.nN.font_size_gap = page.nN.font_size-14;
 					page.nN.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
@@ -7898,6 +8570,7 @@ Util.Objects["front"] = new function() {
 			// 
 		}
 		scene.initShortIntro = function() {
+			u.bug("initShortIntro");
 			this.intro.loaded = function() {
 				this.scene.removeLoader();
 				this.scene.injectHotspots();
@@ -7925,6 +8598,7 @@ Util.Objects["front"] = new function() {
 			this.createIntroBgs();
 		}
 		scene.initIntro = function() {
+			 u.bug("initIntro")
 			this.intro._textnodes = u.qsa("p,h2,h3,h4", this.intro);
 			if(this.intro._textnodes.length) {
 				u.textscaler(this.intro, {
@@ -7973,25 +8647,36 @@ Util.Objects["front"] = new function() {
 			}
 		}
 		scene.showIntro = function() {
+			u.bug("scene.showIntro");
 			var node, duration, i;
-			this.intro.audioPlayer = u.audioPlayer();
+			this.intro.audioPlayer = u.audioPlayer({autoplay:true});
+			u.ae(this, this.intro.audioPlayer);
+			this.intro.audioPlayer.ready = function() {
+				u.bug("this.intro.audioPlayer.ready");
+				if(this.can_autoplay) {
+					this.load("/assets/audio/intro-4-2.mp3");
+				}
+				else {
+					this.playing({"target":{"currentTime":2000}});
+				}
+			}
 			this.intro.audioPlayer.intro = this.intro;
-			this.intro.audioPlayer.load("/assets/audio/intro-4-2.mp3");
 			this.intro.audioPlayer.playing = function(event) {
 				var _time = event.target.currentTime;
 				this.intro.timestamps = ["", 2330, 2625, 2900, 3200, 3487, 4349, 4645];
-				u.t.setTimer(this.intro.scene, "removeLoader", this.intro.timestamps[1]+_time - 200);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[1]+_time, 1);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[2]+_time, 2);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[3]+_time, 3);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[4]+_time, 4);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[5]+_time, 5);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[6]+_time, 6);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[7]+_time, 7);
-				u.t.setTimer(this.intro.scene, "injectHotspots", 6045 + _time);
+				u.t.setTimer(this.intro.scene, "removeLoader", this.intro.timestamps[1]-_time - 200);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[1]-_time, 1);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[2]-_time, 2);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[3]-_time, 3);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[4]-_time, 4);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[5]-_time, 5);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[6]-_time, 6);
+				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[7]-_time, 7);
+				u.t.setTimer(this.intro.scene, "injectHotspots", 6045 - _time);
 				delete this.playing;
 			}
-			this.intro.audioPlayer.play();
+			//         
+			//         
 		}
 		scene.hideIntro = function() {
 			u.saveCookie("intro_v1", 1, {"expires":false});

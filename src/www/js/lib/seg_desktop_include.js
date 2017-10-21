@@ -1,3 +1,4 @@
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_1/merged/seg_desktop.js"></script>');
 
 document.write('<script type="text/javascript" src="/js/lib/u-settings.js"></script>');
@@ -12,7 +13,6 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/m
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-paymentcards.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-googlemaps.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-textscaler.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-audio.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-svg.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-date.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-form.js"></script>');
@@ -20,6 +20,7 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/m
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-string.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-cookie.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-form-onebuttonform.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-media.js"></script>');
 
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-page.js"></script>');
