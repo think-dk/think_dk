@@ -198,7 +198,7 @@ Util.Objects["front"] = new function() {
 		}
 
 		scene.showIntroFrame = function(frame) {
-//			u.bug("showIntroFrame");
+			u.bug("showIntroFrame:" + frame);
 
 			if(this.frame != frame) {
 
@@ -362,22 +362,9 @@ Util.Objects["front"] = new function() {
 
 			
 			this.intro.audioPlayer = u.audioPlayer({autoplay:true});
-			u.ae(this, this.intro.audioPlayer);
-			this.intro.audioPlayer.ready = function() {
-				u.bug("this.intro.audioPlayer.ready");
-				if(this.can_autoplay) {
-					this.load("/assets/audio/intro-4-2.mp3");
-				}
-				else {
-					this.playing({"target":{"currentTime":2000}});
-				}
-			}
-
-			this.intro.audioPlayer.intro = this.intro;
-
-
 			this.intro.audioPlayer.playing = function(event) {
-
+				u.bug("this.intro.audioPlayer.playing");
+				u.t.resetTimer(this.t_timeout);
 				// current time
 				var _time = event.target.currentTime;
 
@@ -406,6 +393,31 @@ Util.Objects["front"] = new function() {
 				// only once
 				delete this.playing;
 			}
+			u.ae(this, this.intro.audioPlayer);
+			this.intro.audioPlayer.timeout = function() {
+				if(this.currentTime) {
+					this.playing({"target":{"currentTime":this.currentTime}});
+					
+				}
+				else {
+					this.stop();
+					this.playing({"target":{"currentTime":2000}});
+				}
+			}
+			this.intro.audioPlayer.ready = function() {
+				u.bug("this.intro.audioPlayer.ready");
+				if(this.can_autoplay) {
+					this.t_timeout = u.t.setTimer(this, "timeout", 4000);
+					this.load("/assets/audio/intro-4-2.mp3");
+				}
+				else {
+					this.playing({"target":{"currentTime":2000}});
+				}
+			}
+
+			this.intro.audioPlayer.intro = this.intro;
+
+
 
 			// var promise = this.intro.audioPlayer.play();
 			// if (promise !== undefined) {

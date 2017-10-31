@@ -7595,11 +7595,11 @@ u.detectMediaAutoplay = function(player) {
 					}
 				}
 				u.media_autoplay_detection = true;
+				u.test_autoplay.pause();
 				delete u.test_autoplay;
 			}
 		}
 		u.test_autoplay.playing = function() {
-			u.bug("playing");
 			u.media_can_autoplay = true;
 			u.media_can_autoplay_muted = true;
 			this.check();
@@ -7607,14 +7607,16 @@ u.detectMediaAutoplay = function(player) {
 		u.test_autoplay.notplaying = function() {
 			u.media_can_autoplay = false;
 			u.test_autoplay.muted = true;
-			u.test_autoplay.play().then(
-				u.test_autoplay.playing_muted.bind(u.test_autoplay)
-			).catch(
-				u.test_autoplay.notplaying_muted.bind(u.test_autoplay)
-			);
+			var promise = u.test_autoplay.play();
+			if(promise) {
+				promise.then(
+					u.test_autoplay.playing_muted.bind(u.test_autoplay)
+				).catch(
+					u.test_autoplay.notplaying_muted.bind(u.test_autoplay)
+				);
+			}
 		}
 		u.test_autoplay.playing_muted = function() {
-			u.bug("playing_muted");
 			u.media_can_autoplay_muted = true;
 			this.check();
 		}
@@ -7623,16 +7625,26 @@ u.detectMediaAutoplay = function(player) {
 			u.media_can_autoplay_muted = false;
 			this.check();
 		}
-		var mp3 = "data:audio/mpeg;base64,/+MYxAAAAANIAUAAAASEEB/jwOFM/0MM/90b/+RhST//w4NFwOjf///PZu////9lns5GFDv//l9GlUIEEIAAAgIg8Ir/JGq3/+MYxDsLIj5QMYcoAP0dv9HIjUcH//yYSg+CIbkGP//8w0bLVjUP///3Z0x5QCAv/yLjwtGKTEFNRTMuOTeqqqqqqqqqqqqq/+MYxEkNmdJkUYc4AKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq";
+		u.test_autoplay.error = function() {
+			u.media_can_autoplay = false;
+			u.media_can_autoplay_muted = false;
+			this.check();
+		}
+		u.e.addEvent(u.test_autoplay, "playing", u.test_autoplay.playing);
+		u.e.addEvent(u.test_autoplay, "error", u.test_autoplay.error);
+		var mp3 = "data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU2LjQwLjEwMQAAAAAAAAAAAAAA//NYwAAAAAAAAAAAAEluZm8AAAAPAAAAAwAAASAAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg////////////////////////////////////////////AAAAAExhdmM1Ni42MAAAAAAAAAAAAAAAACQAAAAAAAAAAAEgAk6hJgAAAAAAAAAAAAAA//MYxAAAAANIAAAAAExBTUUzLjk5LjVVVVVVVVVVVVVVVVVV//MYxBcAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//MYxC4AAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV";
 		u.test_autoplay.volume = 0.01;
 		u.test_autoplay.autoplay = true;
 		u.test_autoplay.playsinline = true;
 		u.test_autoplay.src = mp3;
-		u.test_autoplay.play().then(
-			u.test_autoplay.playing.bind(u.test_autoplay)
-		).catch(
-			u.test_autoplay.notplaying.bind(u.test_autoplay)
-		);
+		var promise = u.test_autoplay.play();
+		if(promise) {
+			promise.then(
+				u.test_autoplay.playing.bind(u.test_autoplay)
+			).catch(
+				u.test_autoplay.notplaying.bind(u.test_autoplay)
+			);
+		}
 	}
 	else if(u.media_can_autoplay_muted !== undefined && u.media_can_autoplay !== undefined) {
 		u.media_autoplay_detection.push(player)
@@ -8598,6 +8610,7 @@ Util.Objects["front"] = new function() {
 			this.intro.is_active = true;
 		}
 		scene.showIntroFrame = function(frame) {
+			u.bug("showIntroFrame:" + frame);
 			if(this.frame != frame) {
 				u.ass(this.intro.bgs[frame], {
 					"opacity":0,
@@ -8704,18 +8717,9 @@ Util.Objects["front"] = new function() {
 			u.bug("scene.showIntro");
 			var node, duration, i;
 			this.intro.audioPlayer = u.audioPlayer({autoplay:true});
-			u.ae(this, this.intro.audioPlayer);
-			this.intro.audioPlayer.ready = function() {
-				u.bug("this.intro.audioPlayer.ready");
-				if(this.can_autoplay) {
-					this.load("/assets/audio/intro-4-2.mp3");
-				}
-				else {
-					this.playing({"target":{"currentTime":2000}});
-				}
-			}
-			this.intro.audioPlayer.intro = this.intro;
 			this.intro.audioPlayer.playing = function(event) {
+				u.bug("this.intro.audioPlayer.playing");
+				u.t.resetTimer(this.t_timeout);
 				var _time = event.target.currentTime;
 				this.intro.timestamps = ["", 2330, 2625, 2900, 3200, 3487, 4349, 4645];
 				u.t.setTimer(this.intro.scene, "removeLoader", this.intro.timestamps[1]-_time - 200);
@@ -8729,6 +8733,27 @@ Util.Objects["front"] = new function() {
 				u.t.setTimer(this.intro.scene, "injectHotspots", 6045 - _time);
 				delete this.playing;
 			}
+			u.ae(this, this.intro.audioPlayer);
+			this.intro.audioPlayer.timeout = function() {
+				if(this.currentTime) {
+					this.playing({"target":{"currentTime":this.currentTime}});
+				}
+				else {
+					this.stop();
+					this.playing({"target":{"currentTime":2000}});
+				}
+			}
+			this.intro.audioPlayer.ready = function() {
+				u.bug("this.intro.audioPlayer.ready");
+				if(this.can_autoplay) {
+					this.t_timeout = u.t.setTimer(this, "timeout", 4000);
+					this.load("/assets/audio/intro-4-2.mp3");
+				}
+				else {
+					this.playing({"target":{"currentTime":2000}});
+				}
+			}
+			this.intro.audioPlayer.intro = this.intro;
 			//         
 			//         
 		}
