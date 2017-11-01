@@ -198,7 +198,7 @@ Util.Objects["front"] = new function() {
 		}
 
 		scene.showIntroFrame = function(frame) {
-			u.bug("showIntroFrame:" + frame);
+//			u.bug("showIntroFrame:" + frame);
 
 			if(this.frame != frame) {
 
@@ -353,7 +353,7 @@ Util.Objects["front"] = new function() {
 
 		// start intro animation playback
 		scene.showIntro = function() {
-			u.bug("scene.showIntro");
+//			u.bug("scene.showIntro");
 
 			var node, duration, i;
 
@@ -363,7 +363,7 @@ Util.Objects["front"] = new function() {
 			
 			this.intro.audioPlayer = u.audioPlayer({autoplay:true});
 			this.intro.audioPlayer.playing = function(event) {
-				u.bug("this.intro.audioPlayer.playing");
+//				u.bug("this.intro.audioPlayer.playing");
 				u.t.resetTimer(this.t_timeout);
 				// current time
 				var _time = event.target.currentTime;
@@ -405,7 +405,7 @@ Util.Objects["front"] = new function() {
 				}
 			}
 			this.intro.audioPlayer.ready = function() {
-				u.bug("this.intro.audioPlayer.ready");
+//				u.bug("this.intro.audioPlayer.ready");
 				if(this.can_autoplay) {
 					this.t_timeout = u.t.setTimer(this, "timeout", 4000);
 					this.load("/assets/audio/intro-4-2.mp3");
