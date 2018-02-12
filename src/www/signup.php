@@ -89,11 +89,40 @@ if(is_array($action) && count($action)) {
 	//
 	// }
 
-	// /signup/unsubscribe
-	// post email + newsletter
+	// post username, maillist_id and verification_token
 	else if($action[0] == "unsubscribe" && $page->validateCsrfToken()) {
 
-		// TODO
+		// successful creation
+		if($model->unsubscribeUserFromMaillist(["unsubscribe", "unsubscribeUserFromMaillist"])) {
+
+			// redirect to leave POST state
+			header("Location: /signup/unsubscribed");
+			exit();
+
+		}
+
+		$page->page(array(
+			"templates" => "signup/unsubscribe.php"
+		));
+		exit();
+
+	}
+	// /signup/unsubscribe/#maillist_id#/#username#/#verification_code#
+	else if($action[0] == "unsubscribe") {
+
+		$page->page(array(
+			"templates" => "signup/unsubscribe.php"
+		));
+		exit();
+
+	}
+	// /signup/unsubscribed
+	else if($action[0] == "unsubscribed") {
+
+		$page->page(array(
+			"templates" => "signup/unsubscribed.php"
+		));
+		exit();
 
 	}
 
