@@ -61,7 +61,7 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 		<h2>Or sign up</h2>
 		<p>Enter your details below and create your account now.</h2>
 		<?= $UC->formStart("/shop/signup", array("class" => "signup labelstyle:inject")) ?>
-			<?= $UC->input("newsletter", array("type" => "hidden", "value" => "curious")); ?>
+			<?= $UC->input("maillist", array("type" => "hidden", "value" => "curious")); ?>
 			<fieldset>
 				<?= $UC->input("firstname", array("value" => $firstname)); ?>
 				<?= $UC->input("lastname", array("value" => $lastname)); ?>
