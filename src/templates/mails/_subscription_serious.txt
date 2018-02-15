@@ -17,7 +17,7 @@ And all of this for only {PRICE}! Thank you so much for your support, you make u
 
 If you are still yet to pay, you can find your payment information at {SITE_URL}/shop/payment/{ORDER_NO}.
 
-You are member number {MEMBERID} and your membership begins at the day of your sign up. You can cancel your subscription anytime - just send us an email with the title 'Membership cancellation'.
+You are member number {MEMBER_ID} and your membership begins at the day of your sign up. You can cancel your subscription anytime - just send us an email with the title 'Membership cancellation'.
 
 If you want to login to leave comments or update your profile, please visit {SITE_URL}/janitor/admin/profile after activating your account - you received the confirmation link in a separate email.
 
