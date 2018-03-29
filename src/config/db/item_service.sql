@@ -3,9 +3,9 @@ CREATE TABLE `SITE_DB`.`item_service` (
   `item_id` int(11) NOT NULL,
 
   `name` varchar(100) NOT NULL,
-  `classname` varchar(50) NOT NULL,
-  `description` text NOT NULL,
-  `html` text NOT NULL,
+  `classname` varchar(50) NOT NULL DEFAULT '',
+  `description` text NOT NULL DEFAULT '',
+  `html` text NOT NULL DEFAULT '',
 
   `position` int(11) DEFAULT '0',
 
