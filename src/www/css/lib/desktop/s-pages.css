@@ -363,6 +363,9 @@ body.front #page.fixed {width: auto; margin: 0;}
 
 
 
+#content .scene.messages ul.info,
+#content .scene.messages ul.info li.modified_at {display: block;}
+
 
 /* MEMBERSHIP LIST / JOIN */
 #content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-top: 20px; padding-bottom: 50px; font-size: 0; position: relative; width: auto;}

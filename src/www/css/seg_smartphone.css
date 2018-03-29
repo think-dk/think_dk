@@ -68,6 +68,9 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 }
 #page #notifications div {padding: 10px 20px; color: #ffffff;}
 #page #notifications .error {background: #df0000;}
+#desktop_switch {z-index: 11000; position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255, 255, 255, 0.9); text-align: center;
+}
+#desktop_switch {padding: 40px 20px; font-size: 36px;}
 
 
 /*s-header.css*/
@@ -542,7 +545,7 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene .articlebody ol {list-style-position: outside; margin-left: 20px;}
 #content .scene .articlebody ul {list-style-type: disc;}
 #content .scene .articlebody ol {list-style-type: decimal;}
-#content .scene .articlebody li {font-size: 13px; padding-bottom: 15px; padding-left: 3px; line-height: 1.538em;}
+#content .scene .articlebody li {font-size: 13px; padding-bottom: 8px; padding-left: 3px; line-height: 1.538em;}
 #content .scene .articlebody ul.actions {list-style: none; margin: 0;}
 #content .scene .articlebody ul.actions li {padding-left: 0;}
 #content .scene ul.todos dl.info {padding-bottom: 10px;}

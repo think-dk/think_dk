@@ -61,6 +61,12 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 body > div.hint {z-index: 100; position: absolute; top: 0; left: 0; padding: 3px 5px; background: #ffffff; color: #888888; border: 1px solid #888888; box-shadow: 0 1px 1px #888888; border-radius: 5px; font-size: 12px; max-width: 400px;}
 body > div.hint p {padding: 5px; color: #888888; font-size: 12px;}
 body > div.hint a {text-decoration: underline; display: inline-block; vertical-align: top; padding: 5px;}
+#smartphone_switch {z-index: 11000; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.9); text-align: left; opacity: 0;}
+#smartphone_switch h1 {padding: 40px 20px; font-size: 36px; width: 300px;}
+#smartphone_switch p {padding: 0 20px 20px; width: 250px;}
+#smartphone_switch ul {padding: 30px 20px 20px;}
+#smartphone_switch li.switch {float: right;}
+
 
 /*s-header.css*/
 #header {position: relative; height: 100px;}
@@ -69,7 +75,7 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 	font-family: "PT Serif", Times, serif;
 }
 #header .logo {position: fixed;}
-#header .servicenavigation {position: absolute; top: 5px; right: 40px;}
+#header .servicenavigation {position: absolute; top: 5px; right: 43px;}
 #header .servicenavigation li {display: inline-block; vertical-align: top; color: #bbbbbb; padding: 3px 0;}
 #header .servicenavigation li.navigation {display: none;}
 #header .servicenavigation li:before {content: "\00a0\00a0|\00a0\00a0"; color: #bbbbbb;}
@@ -78,7 +84,7 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 #header .servicenavigation li:first-child:before {content: "";}
 #header .servicenavigation li.github {margin: 0 0 0 10px; padding: 4px 12px; background: #8c9399; border-radius: 3px; cursor: pointer; font-size: 12px; color: #ffffff;}
 #header .servicenavigation li.cart.used {color: #df0000;}
-#navigation {z-index: 50; position: fixed; right: 30px; top: 65px; 
+#navigation {z-index: 50; position: fixed; right: 33px; top: 65px; 
 	background-color: rgba(255,255,255, 0.8); border-radius: 5px;
 }
 #navigation ul {}
@@ -466,14 +472,14 @@ ul.actions li {width: auto; height: auto; display: inline-block; padding: 0 10px
 	-webkit-user-select: none;
 	user-select: none;
 }
-ul.actions input.button {width: auto; height: 28px; padding: 3px 9px; display: inline-block; vertical-align: top;}
+ul.actions input.button {width: auto; height: 30px; padding: 3px 9px; display: inline-block; vertical-align: top;}
 @media all and (-webkit-min-device-pixel-ratio:0) {
 	ul.actions input.button {padding: 3px 12px 5px;
 		-webkit-appearance: none;
 	}
 }
 ul.actions a.button,
-#content ul.actions a.button {display: block; text-decoration: none; height: 16px; padding: 6px 12px 8px;}
+#content ul.actions a.button {display: block; text-decoration: none; height: 16px; padding: 7px 12px;}
 ul.actions input.button,
 ul.actions a.button,
 #content ul.actions a.button {font-size: 14px; background-color: #dedede; color: #333333; border: none; cursor: pointer; border-radius: 3px;}
@@ -1039,6 +1045,8 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.event div.event ul.location {display: block;}
 #content .scene.event div.event ul.location li.name {padding-bottom: 10px; font-size: 15px;}
 #content .scene.event div.event ul.location ul {padding-left: 0; padding-right: 0;}
+#content .scene.messages ul.info,
+#content .scene.messages ul.info li.modified_at {display: block;}
 #content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-top: 20px; padding-bottom: 50px; font-size: 0; position: relative; width: auto;}
 #content .scene div.memberships ul.memberships > li {display: inline-block; vertical-align: top; 
 	height: 510px;
@@ -1331,7 +1339,7 @@ body > div.pagination li.next {border-color: #26962d;}
 .events #navigation ul li.events,
 .services #navigation ul li.services {color: #26962d;}
 #navigation ul li.membership {color: #ffffff;
-	margin: 5px 5px 5px 10px;
+	margin: 5px 10px;
 	padding: 5px 13px;
 	background-color: #34cc3d;
 	border-radius: 5px;
