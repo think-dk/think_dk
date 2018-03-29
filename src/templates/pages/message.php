@@ -49,6 +49,10 @@ if(count($action) == 1) {
 <? if($message_item && $message_item["status"]): ?>
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 
+		<ul class="info">
+			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($message_item["modified_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($message_item["modified_at"])) ?></li>
+		</ul>
+
 		<h1 itemprop="headline"><?= $message_item["name"] ?></h1>
 
 		<div class="articlebody" itemprop="articleBody">
