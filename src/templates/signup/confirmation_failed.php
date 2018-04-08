@@ -38,7 +38,7 @@ session()->reset("signup_username");
 		<? endif; ?>
 
 
-		<?= $HTML->articleInfo($item, "/signup/confirm/error", [
+		<?= $HTML->articleInfo($page_item, "/signup/confirm/error", [
 			"media" => $media
 		]) ?>
 
