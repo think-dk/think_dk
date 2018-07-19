@@ -4394,7 +4394,7 @@ u.smartphoneSwitch = new function() {
 			u.e.click(bn_switch);
 			bn_switch.clicked = function() {
 				u.saveCookie("smartphoneSwitch", "on");
-				location.href = location.href + (location.href.match(/\?/) ? "&" : "?") + "segment=smartphone";
+				location.href = location.href.replace(/[&]segment\=desktop|segment\=desktop[&]?/, "") + (location.href.match(/\?/) ? "&" : "?") + "segment=smartphone";
 			}
 			u.e.click(bn_hide);
 			bn_hide.clicked = function() {
@@ -6173,10 +6173,10 @@ Util.Form = u.f = new function() {
 		}
 	}
 	this.validate = function(iN) {
-		if(!iN._form._validation || !iN._form.field) {
+		if(!iN._form._validation || !iN.field) {
 			return true;
 		}
-		var min, max, pattern;
+		var min, max, pattern, compare_to;
 		var validated = false;
 		if(!u.hc(iN.field, "required") && iN.val() === "") {
 			this.fieldCorrect(iN);
@@ -6200,10 +6200,12 @@ Util.Form = u.f = new function() {
 				min = min ? min : 8;
 				max = max ? max : 20;
 				pattern = iN.getAttribute("pattern");
+				compare_to = iN.getAttribute("data-compare-to");
 				if(
 					iN.val().length >= min && 
 					iN.val().length <= max && 
-					(!pattern || iN.val().match("^"+pattern+"$"))
+					(!pattern || iN.val().match("^"+pattern+"$")) &&
+					(!compare_to || iN.val() == iN._form.fields[compare_to].val())
 				) {
 					this.fieldCorrect(iN);
 				}
@@ -7195,6 +7197,12 @@ Util.Objects["oneButtonForm"] = new function() {
 								}
 							}
 						}
+						else {
+							if(typeof(this.node.confirmedError) == "function") {
+								u.bug("confirmedError");
+								this.node.confirmedError(response);
+							}
+						}
 					}
 					u.ac(this.confirm_submit_button, "disabled");
 					u.ac(this, "submitting");
@@ -7208,7 +7216,7 @@ Util.Objects["oneButtonForm"] = new function() {
 						this.DOMsubmit();
 					}
 					else {
-						u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
+						u.request(this, this.action, {"method":"post", "data":u.f.getParams(this)});
 					}
 				}
 			}
@@ -7229,7 +7237,7 @@ Util.videoPlayer = function(_options) {
 }
 Util.mediaPlayer = function(_options) {
 	var player = document.createElement("div");
-	player.type = _options.type || "video";
+	player.type = _options && _options.type || "video";
 	u.ac(player, player.type+"player");
 	player._autoplay = false;
 	player._muted = false;
@@ -7490,7 +7498,7 @@ u.correctMediaSource = function(player, src) {
 	}
 }
 u.setupMediaControls = function(player, _options) {
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -7514,7 +7522,7 @@ u.setupMediaControls = function(player, _options) {
 	if(player._custom_controls || !_options) {
 		player.media.removeAttribute("controls");
 	}
-	else{
+	else {
 		player.media.controls = player._controls;
 	}
 	if(!player._custom_controls && player.controls) {
@@ -7668,7 +7676,7 @@ u.detectMediaAutoplay = function(player) {
 			u.media_can_autoplay_muted = true;
 			this.check();
 		}
-		u.test_autoplay.notplaying = function(event) {
+		u.test_autoplay.notplaying = function() {
 			u.media_can_autoplay = false;
 			u.test_autoplay.muted = true;
 			var promise = u.test_autoplay.play();
@@ -7712,11 +7720,17 @@ u.detectMediaAutoplay = function(player) {
 			);
 		}
 	}
-	else if(u.media_can_autoplay_muted !== undefined && u.media_can_autoplay !== undefined) {
-		u.media_autoplay_detection.push(player)
+	else if(u.media_autoplay_detection !== true) {
+		u.media_autoplay_detection.push(player);
 	}
-	else if(typeof(player.ready) == "function") {
-		u.t.setTimer(player, "ready", 20);
+	else {
+		u.t.setTimer(player, function() {
+			this.can_autoplay = u.media_can_autoplay;
+			this.can_autoplay_muted = u.media_can_autoplay_muted;
+			if(fun(this.ready)){
+				this.ready();
+			}
+		}, 20);
 	}
 }
 
@@ -8643,7 +8657,6 @@ Util.Objects["front"] = new function() {
 				"/assets/images/bg_front_5.jpg",
 				"/assets/images/bg_front_6.jpg",
 				"/assets/images/bg_front_7.jpg",
-				"/assets/audio/intro-4-2.mp3",
 			]);
 			this.intro.bgs = [""];
 			this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg1", "html":"<h2>do you</h2>"}));

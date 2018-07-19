@@ -1,35 +1,31 @@
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_1/merged/seg_desktop.js"></script>');
+document.write('<script type="text/javascript" src="/js/manipulator/v0_9_2-think_dk/merged/seg_desktop.js"></script>');
 
 document.write('<script type="text/javascript" src="/js/lib/u-settings.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/u-basics.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-googleanalytics.js"></script>');
+document.write('<script type="text/javascript" src="/js/manipulator/v0_9_2-think_dk/src/u-googleanalytics.js"></script>');
 
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-eventchain.js"></script>');
 
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-animation-to.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-fontsReady.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-notifier.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-paymentcards.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-googlemaps.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-textscaler.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-svg.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-date.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-form.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-form-builder.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-string.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-cookie.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-form-onebuttonform.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-media.js"></script>');
+document.write('<script type="text/javascript" src="/js/manipulator/v0_9_2-think_dk/src/u-media.js"></script>');
+
+document.write('<script type="text/javascript" src="/js/manipulator/v0_9_2-think_dk/src/beta-u-eventchain.js"></script>');
+document.write('<script type="text/javascript" src="/js/manipulator/v0_9_2-think_dk/src/beta-u-animation-to.js"></script>');
+document.write('<script type="text/javascript" src="/js/manipulator/v0_9_2-think_dk/src/beta-u-fontsReady.js"></script>');
+document.write('<script type="text/javascript" src="/js/manipulator/v0_9_2-think_dk/src/beta-u-notifier.js"></script>');
+document.write('<script type="text/javascript" src="/js/manipulator/v0_9_2-think_dk/src/beta-u-paymentcards.js"></script>');
+document.write('<script type="text/javascript" src="/js/manipulator/v0_9_2-think_dk/src/beta-u-googlemaps.js"></script>');
+document.write('<script type="text/javascript" src="/js/manipulator/v0_9_2-think_dk/src/beta-u-form-onebuttonform.js"></script>');
+
+
 
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-page.js"></script>');
-
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-comments.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/u-sharing.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/u-checkmark.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/u-expandarrow.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-pagination.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-article.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-article_mini_list.js"></script>');
 
 
 document.write('<script type="text/javascript" src="/js/lib/u-basics.js"></script>');
@@ -45,6 +41,4 @@ document.write('<script type="text/javascript" src="/js/lib/desktop/i-payment.js
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-stripe.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-black.js"></script>');
 
-document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-article.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-article_mini_list.js"></script>');
 

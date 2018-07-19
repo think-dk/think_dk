@@ -141,7 +141,7 @@ Util.Objects["front"] = new function() {
 				"/assets/images/bg_front_5.jpg",
 				"/assets/images/bg_front_6.jpg",
 				"/assets/images/bg_front_7.jpg",
-				"/assets/audio/intro-4-2.mp3",
+//				"/assets/audio/intro-4-2.mp3",
 			]);
 
 			this.intro.bgs = [""];
