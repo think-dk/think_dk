@@ -9,7 +9,7 @@ document.write('<script type="text/javascript" src="/js/manipulator/v0_9_2-think
 
 document.write('<script type="text/javascript" src="/js/manipulator/v0_9_2-think_dk/src/beta-u-eventchain.js"></script>');
 document.write('<script type="text/javascript" src="/js/manipulator/v0_9_2-think_dk/src/beta-u-animation-to.js"></script>');
-document.write('<script type="text/javascript" src="/js/manipulator/v0_9_2-think_dk/src/beta-u-fontsReady.js"></script>');
+document.write('<script type="text/javascript" src="/js/manipulator/v0_9_2-think_dk/src/beta-u-fontsready.js"></script>');
 document.write('<script type="text/javascript" src="/js/manipulator/v0_9_2-think_dk/src/beta-u-notifier.js"></script>');
 document.write('<script type="text/javascript" src="/js/manipulator/v0_9_2-think_dk/src/beta-u-paymentcards.js"></script>');
 document.write('<script type="text/javascript" src="/js/manipulator/v0_9_2-think_dk/src/beta-u-googlemaps.js"></script>');
