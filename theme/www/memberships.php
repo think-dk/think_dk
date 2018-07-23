@@ -30,16 +30,6 @@ if(is_array($action) && count($action)) {
 		exit();
 
 	}
-
-	// handle login flow
-	else if($action[0] == "login") {
-
-		$_POST["username"] = "mam";
-		session()->value("login_forward", "/shop/checkout");
-
-		header("Location: /login");
-		exit();
-	}
 	
 	# /memberships/checkout
 	else if($action[0] == "checkout") {
