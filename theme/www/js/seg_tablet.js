@@ -9669,6 +9669,10 @@ Util.Objects["payment"] = new function() {
 		}
 		scene.ready = function() {
 			page.cN.scene = this;
+			var form = u.qs("form", this);
+			if(form) {
+				u.f.init(form);
+			}
 			u.showScene(this);
 			page.resized();
 		}

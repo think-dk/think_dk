@@ -5524,7 +5524,7 @@ u.eventChain = function(node, _options) {
 	}
 
 
-/*beta-u-fontsReady.js*/
+/*beta-u-fontsready.js*/
 u.fontsReady = function(node, fonts, _options) {
 	var callback_loaded = "fontsLoaded";
 	var callback_timeout = "fontsNotLoaded";
@@ -8272,6 +8272,10 @@ Util.Objects["payment"] = new function() {
 		}
 		scene.ready = function() {
 			page.cN.scene = this;
+			var form = u.qs("form", this);
+			if(form) {
+				u.f.init(form);
+			}
 			u.showScene(this);
 			page.resized();
 		}
