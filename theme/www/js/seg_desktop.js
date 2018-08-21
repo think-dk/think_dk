@@ -7663,6 +7663,23 @@ Util.Objects["login"] = new function() {
 }
 
 
+/*i-unsubscribe.js*/
+Util.Objects["unsubscribe"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			u.showScene(this);
+			page.acceptCookies();
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
 /*i-contact.js*/
 Util.Objects["contact"] = new function() {
 	this.init = function(scene) {
