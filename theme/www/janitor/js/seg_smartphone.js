@@ -3130,7 +3130,7 @@ u.f.addAction = function(node, _options) {
 			}
 		}
 	}
-	var p_ul = node.nodeName.toLowerCase() == "ul" ? node : u.pn(node, {"include":"ul"});
+	var p_ul = node.nodeName.toLowerCase() == "ul" ? node : u.pn(node, {"include":"ul.actions"});
 	if(!p_ul || !u.hc(p_ul, "actions")) {
 		if(node.nodeName.toLowerCase() == "form") {
 			p_ul = u.qs("ul.actions", node);
@@ -4904,6 +4904,172 @@ u.activateTag = function(tag_node) {
 					}
 				}
 				u.request(this, this.node.data_div.add_tag_url+"/"+this.node._item_id, {"method":"post", "params":"tags="+this._id+"&csrf-token=" + this.node.data_div.csrf_token});
+			}
+		}
+	}
+}
+u.defaultSelectable = function(div) {
+	div.bn_all = u.ie(div.list, "li", {"class":"all"});
+	div.bn_all._text = u.ae(div.bn_all, "span", {"html":"Select all"});
+	div.bn_all._checkbox = u.ie(div.bn_all, "input", {"type":"checkbox"});
+	div.bn_all.onclick = function(event) {u.e.kill(event);}
+	div.bn_all.div = div;
+	div.bn_all._checkbox.div = div;
+	u.e.click(div.bn_all._checkbox);
+	div.bn_all._checkbox.clicked = function(event) {
+		var i, node;
+		u.e.kill(event);
+		var inputs = u.qsa("li.item:not(.hidden) input:checked", this.div.list);
+		for(i = 0; i < this.div.nodes.length; i++) {
+			node = this.div.nodes[i];
+			if(inputs.length) {
+				node._checkbox.checked = false;
+			}
+			else if(!node._hidden) {
+				node._checkbox.checked = true;
+			}
+		}
+		this.div.bn_range._from.value = "";
+		this.div.bn_range._to.value = "";
+		this.div.bn_all.updateState();
+	}
+	div.bn_all.updateState = function() {
+		this.div.checked_inputs = u.qsa("li.item input:checked", this.div.list);
+		this.div.visible_inputs = u.qsa("li.item:not(.hidden) input", this.div.list);
+		if(this.div.checked_inputs.length == this.div.visible_inputs.length) {
+			this._text.innerHTML = "Deselect all";
+			u.rc(this, "deselect");
+			this._checkbox.checked = true;
+		}
+		else if(this.div.checked_inputs.length) {
+			this._text.innerHTML = "Deselect all";
+			u.ac(this, "deselect");
+			this._checkbox.checked = true;
+		}
+		else {
+			this._text.innerHTML = "Select all";
+			u.rc(this, "deselect");
+			this._checkbox.checked = false;
+		}
+		if(fun(this.div.selectionUpdated)) {
+			this.div.selectionUpdated(this.div.checked_inputs);
+		}
+	}
+	div.bn_range = u.ae(div.bn_all, "div", {class:"range"});
+	div.bn_range._text = u.ae(div.bn_range, "span", {html:"Select range:"});
+	div.bn_range._from = u.ae(div.bn_range, "input", {type:"text", name:"range_from", maxlength:4});
+	div.bn_range._text = u.ae(div.bn_range, "span", {html:"to"});
+	div.bn_range._to = u.ae(div.bn_range, "input", {type:"text", name:"range_to", maxlength:4});
+	div.bn_range.div = div;
+	div.bn_range._from.bn_range = div.bn_range;
+	div.bn_range._to.bn_range = div.bn_range;
+	div.bn_range._updated = function(event) {
+		var key = event.key;
+		if(key == "ArrowUp" && event.shiftKey) {
+			u.e.kill(event);
+			this.value = this.value > 0 ? Number(this.value)+10 : 10;
+		}
+		else if(key == "ArrowUp") {
+			u.e.kill(event);
+			this.value = this.value > 0 ? Number(this.value)+1 : 1;
+		}
+		else if(key == "ArrowDown" && event.shiftKey) {
+			u.e.kill(event);
+			this.value = this.value > 10 ? Number(this.value)-10 : 1;
+		}
+		else if(key == "ArrowDown") {
+			u.e.kill(event);
+			this.value = this.value > 1 ? Number(this.value)-1 : 1;
+		}
+		else if((parseInt(key) != key) && (key != "Backspace" && key != "Delete" && key != "Tab" && key != "ArrowLeft" && key != "ArrowRight" && !event.metaKey && !event.ctrlKey)) {
+			u.e.kill(event);
+		}
+		var value = false;
+		var to, from;
+		if(parseInt(key) == key) {
+			value = this.value.length < 4 ? this.value + key : this.value;
+		}
+		else if(key == "Backspace") {
+			value = this.value.substring(0, this.value.length-1);
+		}
+		else if(key == "Delete") {
+			value = this.value.substring(1);
+		}
+		else if(key == "ArrowUp" || key == "ArrowDown") {
+			value = this.value;
+		}
+		if(value !== false) {
+			value = Number(value);
+			if(this.name == "range_from") {
+				if(Number(this.bn_range._to.value) < value) {
+					this.bn_range._to.value = value;
+				}
+				from = value;
+				to = Number(this.bn_range._to.value);
+			}
+			else if(this.name == "range_to") {
+				if(!this.bn_range._from.value) {
+					this.bn_range._from.value = 1;
+				}
+				else if(Number(this.bn_range._from.value) > value) {
+					this.bn_range._from.value = value;
+				}
+				to = value;
+				from = Number(this.bn_range._from.value);
+			}
+			to = to-1;
+			from = from-1;
+			if(!isNaN(from && !isNaN(to))) {
+				var inputs = u.qsa("li.item:not(.hidden) input", this.bn_range.div.list);
+				var i, input;
+				for(i = 0; i < inputs.length; i++) {
+					input = inputs[i];
+					if(i >= from && i <= to) {
+						input.checked = true;
+					}
+					else {
+						input.checked = false;
+					}
+				}
+				this.bn_range.div.bn_all.updateState();
+			}
+		}
+	}
+	u.e.addEvent(div.bn_range._from, "keypress", div.bn_range._updated);
+	u.e.addEvent(div.bn_range._to, "keypress", div.bn_range._updated);
+	for(i = 0; i < div.nodes.length; i++) {
+		node = div.nodes[i];
+		node.ua_id = u.cv(node, "ua_id");
+		node.div = div;
+		node._checkbox = u.ie(node, "input", {"type":"checkbox"});
+		node._checkbox.node = node;
+		u.e.click(node._checkbox);
+		node._checkbox.onclick = function(event) {u.e.kill(event);}
+		node._checkbox.inputStarted = function(event) {
+			u.e.kill(event);
+			document.body.selection_div = this.node.div;
+			if(this.checked) {
+				this.checked = false;
+				document.body._multideselection = true;
+			}
+			else {
+				this.checked = true;
+				document.body._multiselection = true;
+			}
+			document.body.onmouseup = function(event) {
+				this.onmouseup = null;
+				this._multiselection = false;
+				this._multideselection = false;
+				this.selection_div.bn_all.updateState();
+				delete document.body.selection_div;
+			}
+		}
+		node._checkbox.onmouseover = function() {
+			if(document.body._multiselection) {
+				this.checked = true;
+			}
+			else if(document.body._multideselection) {
+				this.checked = false;
 			}
 		}
 	}
