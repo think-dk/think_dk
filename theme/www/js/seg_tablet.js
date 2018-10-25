@@ -8389,6 +8389,12 @@ Util.Objects["stripe"] = new function() {
 				}
 			}
 			u.f.init(this.card_form);
+			this.card_form.submitted = function() {
+				if(!this.is_submitting) {
+					this.is_submitting = true;
+					this.DOMsubmit();
+				}
+			}
 			this.card_form.fields["card_number"].updated = function(iN) {
 				var value = this.val();
 				this.value = u.paymentCards.formatCardNumber(value.replace(/ /g, ""));

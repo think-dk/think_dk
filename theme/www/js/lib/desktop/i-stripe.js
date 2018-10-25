@@ -115,6 +115,17 @@ Util.Objects["stripe"] = new function() {
 			// initalize form
 			u.f.init(this.card_form);
 
+			this.card_form.submitted = function() {
+				
+				if(!this.is_submitting) {
+					this.is_submitting = true;
+
+					this.DOMsubmit();
+				}
+
+			}
+
+
 			// format card as you type
 			this.card_form.fields["card_number"].updated = function(iN) {
 				var value = this.val();
