@@ -4745,6 +4745,7 @@ u.defaultFilters = function(div) {
 	}
 }
 u.defaultSortableList = function(list) {
+	console.log("defaultSortableList");
 	list.div.save_order_url = list.div.getAttribute("data-item-order");
 	if(list.div.save_order_url && list.div.csrf_token) {
 		for(i = 0; node = list.div.nodes[i]; i++) {
@@ -4759,7 +4760,7 @@ u.defaultSortableList = function(list) {
 			var order = new Array();
 			this.nodes = u.qsa("li.item", this);
 			for(i = 0; node = this.nodes[i]; i++) {
-				order.push(u.cv(node, "id"));
+				order.push(u.cv(node, "item_id"));
 			}
 			this.orderResponse = function(response) {
 				page.notify(response);

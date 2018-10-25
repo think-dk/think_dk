@@ -1,10 +1,10 @@
 Util.Objects["front"] = new function() {
 	this.init = function(scene) {
-//		u.bug("scene init:" + u.nodeId(scene))
+//		u.bug("scene init:", this);
 		
 
 		scene.resized = function() {
-//			u.bug("scene.resized:" + u.nodeId(this));
+//			u.bug("scene.resized:", this);
 
 			// re-position text nodes
 			if(this.intro && this.intro._textnodes) {
@@ -24,15 +24,15 @@ Util.Objects["front"] = new function() {
 		}
 
 		scene.scrolled = function() {
-//			u.bug("scrolled:" + u.nodeId(this))
+//			u.bug("scrolled:", this);;
 		}
 
 		scene.orientationchanged = function() {
-//			u.bug("orientationchanged:" + u.nodeId(this))
+//			u.bug("orientationchanged:, this)
 		}
 
 		scene.ready = function() {
-//			u.bug("scene.ready:" + u.nodeId(this));
+//			u.bug("scene.ready:", this);
 
 			// map reference
 			page.cN.scene = this;
@@ -56,7 +56,7 @@ Util.Objects["front"] = new function() {
 
 
 		scene.build = function() {
-//			u.bug("scene.build:" + u.nodeId(this));
+//			u.bug("scene.build:, this);
 
 			this.intro = u.qs(".intro", this);
 			if(this.intro) {

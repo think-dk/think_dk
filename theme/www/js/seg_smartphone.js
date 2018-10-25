@@ -4449,7 +4449,7 @@ if(u.ga_account) {
 			var eventValue = null;
 			var nonInteraction = false;
 			var hitCallback = null;
-			if(typeof(_options) == "object") {
+			if(obj(_options)) {
 				var _argument;
 				for(_argument in _options) {
 					switch(_argument) {
@@ -4511,14 +4511,14 @@ u.eventChain = function(node, _options) {
 			this.t_eventchain = u.t.setTimer(this, "play", _event.duration);
 		}
 		else {
-			if(typeof(this.eventChainEnded) == "function") {
+			if(fun(this.eventChainEnded)) {
 				this.eventChainEnded();
 			}
 		}
 	}
 	node.stop = function() {
 		u.t.resetTimer(this.t_eventchain);
-		if(typeof(this.eventChainEnded) == "function") {
+		if(fun(this.eventChainEnded)) {
 			this.eventChainEnded();
 		}
 	}
@@ -4647,7 +4647,7 @@ u.fontsReady = function(node, fonts, _options) {
 	var callback_loaded = "fontsLoaded";
 	var callback_timeout = "fontsNotLoaded";
 	var max_time = 3000;
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -4658,7 +4658,7 @@ u.fontsReady = function(node, fonts, _options) {
 		}
 	}
 	window["_man_fonts_"] = window["_man_fonts_"] || {};
-	window["_man_fonts_"].fontApi = document.fonts && typeof(document.fonts.check) == "function" ? true : false;
+	window["_man_fonts_"].fontApi = document.fonts && fun(document.fonts.check) ? true : false;
 	window["_man_fonts_"].fonts = window["_man_fonts_"].fonts || {};
 	var font, node, i;
 	if(typeof(fonts.length) == "undefined") {
@@ -4682,7 +4682,8 @@ u.fontsReady = function(node, fonts, _options) {
 	window["_man_fonts_"+loadkey].callback_timeout = callback_timeout;
 	window["_man_fonts_"+loadkey].max_time = max_time;
 	window["_man_fonts_"+loadkey].start_time = new Date().getTime();
-	for(i = 0; font = fonts[i]; i++) {
+	for(i = 0; i < fonts.length; i++) {
+		font = fonts[i];
 		font.style = font.style || "normal";
 		font.weight = font.weight || "400";
 		font.size = font.size || "16px";
@@ -4710,7 +4711,8 @@ u.fontsReady = function(node, fonts, _options) {
 	}
 	window["_man_fonts_"+loadkey].checkFontsAPI = function() {
 		var i, node, font_string;
-		for(i = 0; node = this.nodes[i]; i++) {
+		for(i = 0; i < this.nodes.length; i++) {
+			node = this.nodes[i];
 			if(window["_man_fonts_"].fonts[node.font_id] && window["_man_fonts_"].fonts[node.font_id].status == "waiting") {
 				font_string = node.font_style + " " + node.font_weight + " " + node.font_size + " " + node.font_family;
 				document.fonts.load(font_string).then(function(fontFaceSetEvent) {
@@ -4720,7 +4722,7 @@ u.fontsReady = function(node, fonts, _options) {
 					else {
 						window["_man_fonts_"].fonts[this.font_id].status = "failed";
 					}
-					if(window["_man_fonts_"+this.loadkey] && typeof(window["_man_fonts_"+this.loadkey].checkFontsStatus) == "function") {
+					if(window["_man_fonts_"+this.loadkey] && fun(window["_man_fonts_"+this.loadkey].checkFontsStatus)) {
 						window["_man_fonts_"+this.loadkey].checkFontsStatus();
 					}
 				}.bind(node));
@@ -4728,19 +4730,20 @@ u.fontsReady = function(node, fonts, _options) {
 			else {
 			}
 		}
-		if(typeof(this.checkFontsStatus) == "function") {
+		if(fun(this.checkFontsStatus)) {
 			this.checkFontsStatus();
 		}
 	}
 	window["_man_fonts_"+loadkey].checkFontsStatus = function(event) {
 		var i, node;
-		for(i = 0; node = this.nodes[i]; i++) {
+		for(i = 0; i < this.nodes.length; i++) {
+			node = this.nodes[i];
 			if(window["_man_fonts_"].fonts[node.font_id].status == "waiting") {
 				if(this.start_time + this.max_time <= new Date().getTime()) {
-					if(typeof(this.callback_node[this.callback_timeout]) == "function") {
+					if(fun(this.callback_node[this.callback_timeout])) {
 						this.callback_node[this.callback_timeout]();
 					}
-					else if(typeof(this.callback_node[this.callback_name]) == "function") {
+					else if(fun(this.callback_node[this.callback_name])) {
 						this.callback_node[this.callback_name]();
 					}
 					u.t.resetTimer(this.t_timeout);
@@ -4749,7 +4752,7 @@ u.fontsReady = function(node, fonts, _options) {
 				return;
 			}
 		}
-		if(typeof(this.callback_node[this.callback_name]) == "function") {
+		if(fun(this.callback_node[this.callback_name])) {
 			this.callback_node[this.callback_name]();
 		}
 		u.t.resetTimer(this.t_timeout);
@@ -4757,14 +4760,15 @@ u.fontsReady = function(node, fonts, _options) {
 	}
 	window["_man_fonts_"+loadkey].checkFontsFallback = function() {
 		var basenode, i, node, loaded = 0;
-		for(i = 0; node = this.nodes[i]; i++) {
+		for(i = 0; i < this.nodes.length; i++) {
+			node = this.nodes[i];
 			basenode = this.basenodes[node.font_style+node.font_weight];
 			if(node.offsetWidth != basenode.offsetWidth || node.offsetHeight != basenode.offsetHeight) {
 				loaded++;
 			}
 		}
 		if(loaded == this.nodes.length) {
-			if(typeof(this.callback_node[this.callback_name]) == "function") {
+			if(fun(this.callback_node[this.callback_name])) {
 				this.callback_node[this.callback_name]();
 			}
 			this.parentNode.removeChild(this);
@@ -4774,10 +4778,10 @@ u.fontsReady = function(node, fonts, _options) {
 				u.t.setTimer(this, "checkfonts", 30);
 			}
 			else {
-				if(typeof(this.callback_node[this.callback_timeout]) == "function") {
+				if(fun(this.callback_node[this.callback_timeout])) {
 					this.callback_node[this.callback_timeout]();
 				}
-				else if(typeof(this.callback_node[this.callback_name]) == "function") {
+				else if(fun(this.callback_node[this.callback_name])) {
 					this.callback_node[this.callback_name]();
 				}
 			}
@@ -4806,7 +4810,7 @@ u.notifier = function(node) {
 	}
 	node.notify = function(response, _options) {
 		var class_name = "message";
-		if(typeof(_options) == "object") {
+		if(obj(_options)) {
 			var argument;
 			for(argument in _options) {
 				switch(argument) {
@@ -4815,30 +4819,31 @@ u.notifier = function(node) {
 			}
 		}
 		var output = [];
-		if(typeof(response) == "object") {
+		if(obj(response)) {
 			var message = response.cms_message;
 			var cms_status = typeof(response.cms_status) != "undefined" ? response.cms_status : "";
-			if(typeof(message) == "object") {
+			if(obj(message)) {
 				for(type in message) {
-					if(typeof(message[type]) == "string") {
+					if(str(message[type])) {
 						output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":message[type]}));
 					}
-					else if(typeof(message[type]) == "object" && message[type].length) {
+					else if(obj(message[type]) && message[type].length) {
 						var node, i;
-						for(i = 0; _message = message[type][i]; i++) {
+						for(i = 0; i < message[type].length; i++) {
+							_message = message[type][i];
 							output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":_message}));
 						}
 					}
 				}
 			}
-			else if(typeof(message) == "string") {
+			else if(str(message)) {
 				output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message}));
 			}
-			if(typeof(this.notifications.show) == "function") {
+			if(fun(this.notifications.show)) {
 				this.notifications.show();
 			}
 		}
-		else if(typeof(response) == "object" && response.isHTML) {
+		else if(obj(response) && response.isHTML) {
 			var login = u.qs(".scene.login form", response);
 			var messages = u.qsa(".scene div.messages p", response);
 			if(login && !u.qs("#login_overlay")) {
@@ -4865,13 +4870,16 @@ u.notifier = function(node) {
 							var input_vars = u.qsa("[name=csrf-token]", page);
 							var dom_vars = u.qsa("*", page);
 							var i, node;
-							for(i = 0; node = data_vars[i]; i++) {
+							for(i = 0; i < data_vars.length; i++) {
+								node = data_vars[i];
 								node.setAttribute("data-csrf-token", csrf_token);
 							}
-							for(i = 0; node = input_vars[i]; i++) {
+							for(i = 0; ni <input_vars.length; i++) {
+								node = input_vars[i];
 								node.value = csrf_token;
 							}
-							for(i = 0; node = dom_vars[i]; i++) {
+							for(i = 0;i <= dom_vars.length; i++) {
+								node = dom_vars[i];
 								if(node.csrf_token) {
 									node.csrf_token = csrf_token;
 								}
@@ -4879,7 +4887,8 @@ u.notifier = function(node) {
 							this.overlay.parentNode.removeChild(this.overlay);
 							var multiple_overlays = u.qsa("#login_overlay");
 							if(multiple_overlays) {
-								for(i = 0; overlay = multiple_overlays[i]; i++) {
+								for(i = 0; i < multiple_overlays.length; i++) {
+									overlay = multiple_overlays[i];
 									overlay.parentNode.removeChild(overlay);
 								}
 							}
@@ -4905,7 +4914,8 @@ u.notifier = function(node) {
 				}
 			}
 			else if(messages) {
-				for(i = 0; message = messages[i]; i++) {
+				for(i = 0; i < messages.length; i++) {
+					message = messages[i];
 					output.push(u.ae(this.notifications, "div", {"class":message.className, "html":message.innerHTML}));
 				}
 			}
@@ -4971,7 +4981,8 @@ u.paymentCards = new function() {
 		var card = this.getCardTypeFromNumber(card_number);
 		if(card && parseInt(card_number) == card_number) {
 			var i, allowed_length;
-			for(i = 0; allowed_length = card.card_length[i]; i++) {
+			for(i = 0; i < card.card_length.length; i++) {
+				allowed_length = card.card_length[i];
 				if(card_number.length == allowed_length) {
 					if(card.luhn) {
 						return this.luhnCheck(card_number);
@@ -5016,7 +5027,8 @@ u.paymentCards = new function() {
 		}
 		if(cvc && parseInt(cvc) == cvc) {
 			var i, allowed_length;
-			for(i = 0; allowed_length = cvc_length[i]; i++) {
+			for(i = 0; i < cvc_length.length; i++) {
+				allowed_length = cvc_length[i];
 				if(cvc.toString().length == allowed_length) {
 					return true;
 				}
@@ -5027,7 +5039,8 @@ u.paymentCards = new function() {
 	this.getCardTypeFromNumber = function(card_number) {
 		var i, j, card, pattern, regex;
 		for(i = 0; card = this.payment_cards[i]; i++) {
-			for(j = 0; pattern = card.patterns[j]; j++) {
+			for(j = 0; j < card.patterns.length; j++) {
+				pattern = card.patterns[j];
 				if(card_number.match('^' + pattern)) {
 					return card;
 				}
@@ -5074,7 +5087,7 @@ u.googlemaps = new function() {
 		map._maps_zoom = 10;
 		map._center_latitude = center[0];
 		map._center_longitude = center[1];
-		if(typeof(_options) == "object") {
+		if(obj(_options)) {
 			var _argument;
 			for(_argument in _options) {
 				switch(_argument) {
@@ -5088,11 +5101,11 @@ u.googlemaps = new function() {
 		(window[map_key] = function() {
 			var mapOptions = {center: new google.maps.LatLng(center[0], center[1]), zoom: map._maps_zoom, scrollwheel: map._maps_scrollwheel, streetViewControl: map._maps_streetview, zoomControlOptions: {position: google.maps.ControlPosition.LEFT_TOP}};
 			map.g_map = new google.maps.Map(map, mapOptions);
-			if(typeof(map.APIloaded) == "function") {
+			if(fun(map.APIloaded)) {
 				map.APIloaded();
 			}
 			google.maps.event.addListener(map.g_map, 'tilesloaded', function() {
-				if(typeof(map.loaded) == "function") {
+				if(fun(map.loaded)) {
 					map.loaded();
 				}
 			});
@@ -5107,7 +5120,7 @@ u.googlemaps = new function() {
 	}
 	this.addMarker = function(map, coords, _options) {
 		var _info = false;
-		if(typeof(_options) == "object") {
+		if(obj(_options)) {
 			var _argument;
 			for(_argument in _options) {
 				switch(_argument) {
@@ -5119,17 +5132,17 @@ u.googlemaps = new function() {
 		marker.setMap(map);
 		marker.g_map = map;
 		google.maps.event.addListener(marker, 'click', function() {
-			if(typeof(this.clicked) == "function") {
+			if(fun(this.clicked)) {
 				this.clicked();
 			}
 		});
 		google.maps.event.addListener(marker, 'mouseover', function() {
-			if(typeof(this.entered) == "function") {
+			if(fun(this.entered)) {
 				this.entered();
 			}
 		});
 		google.maps.event.addListener(marker, 'mouseout', function() {
-			if(typeof(this.exited) == "function") {
+			if(fun(this.exited)) {
 				this.exited();
 			}
 		});
@@ -5137,7 +5150,7 @@ u.googlemaps = new function() {
 	}
 	this.removeMarker = function(map, marker, _options) {
 		marker._animation = true;
-		if(typeof(_options) == "object") {
+		if(obj(_options)) {
 			var _argument;
 			for(_argument in _options) {
 				switch(_argument) {
@@ -5158,7 +5171,7 @@ u.googlemaps = new function() {
 				this.setPosition(new_position);
 				if(this.c_exit < new_position.lat()) {
 					this.setMap(null);
-					if(typeof(this.removed) == "function") {
+					if(fun(this.removed)) {
 						this.removed();
 					}
 				}
@@ -5176,7 +5189,7 @@ u.googlemaps = new function() {
 	this.infoWindow = function(map) {
 		map.g_infowindow = new google.maps.InfoWindow({"maxWidth":250});
 		google.maps.event.addListener(map.g_infowindow, 'closeclick', function() {
-			if(this._marker && typeof(this._marker.closed) == "function") {
+			if(this._marker && fun(this._marker.closed)) {
 				this._marker.closed();
 				this._marker = false;
 			}
@@ -5189,7 +5202,7 @@ u.googlemaps = new function() {
 	}
 	this.hideInfoWindow = function(map) {
 		map.g_infowindow.close();
-		if(map.g_infowindow._marker && typeof(map.g_infowindow._marker.closed) == "function") {
+		if(map.g_infowindow._marker && fun(map.g_infowindow._marker.closed)) {
 			map.g_infowindow._marker.closed();
 			map.g_infowindow._marker = false;
 		}
@@ -5280,7 +5293,8 @@ u.textscaler = function(node, _settings) {
 			window._man_text._width = u.browserW();
 			window._man_text._height = u.browserH();
 			var i, node;
-			for(i = 0; node = window._man_text.nodes[i]; i++) {
+			for(i = 0; i < window._man_text.nodes.length; i++) {
+				node = window._man_text.nodes[i];
 				if(node.parentNode) { 
 					node.scaleText();
 				}
@@ -5297,7 +5311,8 @@ u.textscaler = function(node, _settings) {
 		u.e.addEvent(window, "resize", window._man_text.scale);
 		window._man_text.precalculate = function() {
 			var i, node, tag;
-			for(i = 0; node = window._man_text.nodes[i]; i++) {
+			for(i = 0; i < window._man_text.nodes.length; i++) {
+				node = window._man_text.nodes[i];
 				if(node.parentNode) { 
 					var settings = node.text_settings;
 					for(tag in settings) {
@@ -5463,7 +5478,7 @@ Util.Form = u.f = new function() {
 		_form._hover_z_index = 49;
 		_form._validation = true;
 		_form._debug_init = false;
-		if(typeof(_options) == "object") {
+		if(obj(_options)) {
 			var _argument;
 			for(_argument in _options) {
 				switch(_argument) {
@@ -5488,13 +5503,14 @@ Util.Form = u.f = new function() {
 		_form.error_fields = {};
 		_form.labelstyle = u.cv(_form, "labelstyle");
 		var fields = u.qsa(".field", _form);
-		for(i = 0; field = fields[i]; i++) {
+		for(i = 0; i < fields.length; i++) {
+			field = fields[i];
 			field._base_z_index = u.gcs(field, "z-index");
 			field._help = u.qs(".help", field);
 			field._hint = u.qs(".hint", field);
 			field._error = u.qs(".error", field);
 			field._indicator = u.ae(field, "div", {"class":"indicator"});
-			if(typeof(u.f.fixFieldHTML) == "function") {
+			if(fun(u.f.fixFieldHTML)) {
 				u.f.fixFieldHTML(field);
 			}
 			field._initialized = false;
@@ -5610,7 +5626,8 @@ Util.Form = u.f = new function() {
 					field._inputs = u.qsa("input", field);
 					field._input = field._inputs[0];
 					_form.fields[field._input.name] = field._input;
-					for(j = 0; input = field._inputs[j]; j++) {
+					for(j = 0; j < field._inputs.length; j++) {
+						input = field._inputs[j];
 						input.field = field;
 						input._form = _form;
 						input._label = u.qs("label[for='"+input.id+"']", field);
@@ -5625,7 +5642,8 @@ Util.Form = u.f = new function() {
 									this._changed(window.event);
 									this._updated(window.event);
 								}
-								for(i = 0; input = this.field._input[i]; i++) {
+								for(i = 0; i < field._input.length; i++) {
+									input = this.field._input[i];
 									input.pre_state = input.checked;
 								}
 							}
@@ -5692,7 +5710,8 @@ Util.Form = u.f = new function() {
 			}
 		}
 		var hidden_fields = u.qsa("input[type=hidden]", _form);
-		for(i = 0; hidden_field = hidden_fields[i]; i++) {
+		for(i = 0; i < hidden_fields.length; i++) {
+			hidden_field = hidden_fields[i];
 			if(!_form.fields[hidden_field.name]) {
 				_form.fields[hidden_field.name] = hidden_field;
 				hidden_field._form = _form;
@@ -5700,7 +5719,8 @@ Util.Form = u.f = new function() {
 			}
 		}
 		var actions = u.qsa(".actions li input[type=button],.actions li input[type=submit],.actions li input[type=reset],.actions li a.button", _form);
-		for(i = 0; action = actions[i]; i++) {
+		for(i = 0; i < actions.length; i++) {
+			action = actions[i];
 				action._form = _form;
 			this.activateButton(action);
 		}
@@ -5721,21 +5741,21 @@ Util.Form = u.f = new function() {
 	}
 	this._submit = function(event, iN) {
 		for(name in this.fields) {
-			if(this.fields[name] && this.fields[name].field && typeof(this.fields[name].val) == "function") {
+			if(this.fields[name] && this.fields[name].field && fun(this.fields[name].val)) {
 				this.fields[name].used = true;
 				u.f.validate(this.fields[name]);
 			}
 		}
 		if(!Object.keys(this.error_fields).length) {
-			if(typeof(this.preSubmitted) == "function") {
+			if(fun(this.preSubmitted)) {
 				this.preSubmitted(iN);
 			}
-			if(typeof(this.submitted) == "function") {
+			if(fun(this.submitted)) {
 				this.submitted(iN);
 			}
 			else {
 				for(name in this.fields) {
-					if(this.fields[name] && this.fields[name].default_value && typeof(this.fields[name].val) == "function" && !this.fields[name].val()) {
+					if(this.fields[name] && this.fields[name].default_value && fun(this.fields[name].val) && !this.fields[name].val()) {
 						if(this.fields[name].nodeName.match(/^(input|textarea)$/i)) {
 							this.fields[name].value = "";
 						}
@@ -5761,7 +5781,8 @@ Util.Form = u.f = new function() {
 	this._value_radiobutton = function(value) {
 		var i, option;
 		if(value !== undefined) {
-			for(i = 0; option = this.field._inputs[i]; i++) {
+			for(i = 0; i < this.field._inputs.length; i++) {
+				option = this.field._inputs[i];
 				if(option.value == value || (option.value == "true" && value) || (option.value == "false" && value === false)) {
 					option.checked = true;
 					u.f.validate(this);
@@ -5772,7 +5793,8 @@ Util.Form = u.f = new function() {
 			}
 		}
 		else {
-			for(i = 0; option = this.field._inputs[i]; i++) {
+			for(i = 0; i < this.field._inputs.length; i++) {
+				option = this.field._inputs[i];
 				if(option.checked) {
 					return option.value;
 				}
@@ -5802,7 +5824,8 @@ Util.Form = u.f = new function() {
 	this._value_select = function(value) {
 		if(value !== undefined) {
 			var i, option;
-			for(i = 0; option = this.options[i]; i++) {
+			for(i = 0; i < this.options.length; i++) {
+				option = this.options[i];
 				if(option.value == value) {
 					this.selectedIndex = i;
 					u.f.validate(this);
@@ -5830,7 +5853,8 @@ Util.Form = u.f = new function() {
 		else {
 			if(this.value && this.files && this.files.length) {
 				var i, file, files = [];
-				for(i = 0; file = this.files[i]; i++) {
+				for(i = 0; i < this.files.length; i++) {
+					file = this.files[i];
 					files.push(file);
 				}
 				return files;
@@ -5872,7 +5896,7 @@ Util.Form = u.f = new function() {
 	}
 	this.buttonOnEnter = function(node) {
 		node.keyPressed = function(event) {
-			if(event.keyCode == 13 && !u.hc(this, "disabled") && typeof(this.clicked) == "function") {
+			if(event.keyCode == 13 && !u.hc(this, "disabled") && fun(this.clicked)) {
 				u.e.kill(event);
 				this.clicked(event);
 				// 
@@ -5883,16 +5907,16 @@ Util.Form = u.f = new function() {
 	}
 	this._changed = function(event) {
 		this.used = true;
-		if(typeof(this.changed) == "function") {
+		if(fun(this.changed)) {
 			this.changed(this);
 		}
-		else if(this.field._input && typeof(this.field._input.changed) == "function") {
+		else if(this.field._input && fun(this.field._input.changed)) {
 			this.field._input.changed(this);
 		}
-		if(typeof(this.field.changed) == "function") {
+		if(fun(this.field.changed)) {
 			this.field.changed(this);
 		}
-		if(typeof(this._form.changed) == "function") {
+		if(fun(this._form.changed)) {
 			this._form.changed(this);
 		}
 	}
@@ -5901,16 +5925,16 @@ Util.Form = u.f = new function() {
 			if(this.used || u.hc(this.field, "error")) {
 				u.f.validate(this);
 			}
-			if(typeof(this.updated) == "function") {
+			if(fun(this.updated)) {
 				this.updated(this);
 			}
-			else if(this.field._input && typeof(this.field._input.updated) == "function") {
+			else if(this.field._input && fun(this.field._input.updated)) {
 				this.field._input.updated(this);
 			}
-			if(typeof(this.field.updated) == "function") {
+			if(fun(this.field.updated)) {
 				this.field.updated(this);
 			}
-			if(typeof(this._form.updated) == "function") {
+			if(fun(this._form.updated)) {
 				this._form.updated(this);
 			}
 		}
@@ -5945,13 +5969,13 @@ Util.Form = u.f = new function() {
 		u.ac(this, "focus");
 		u.as(this.field, "zIndex", this._form._focus_z_index);
 		u.f.positionHint(this.field);
-		if(typeof(this.focused) == "function") {
+		if(fun(this.focused)) {
 			this.focused();
 		}
-		else if(this.field._input && typeof(this.field._input.focused) == "function") {
+		else if(this.field._input && fun(this.field._input.focused)) {
 			this.field._input.focused(this);
 		}
-		if(typeof(this._form.focused) == "function") {
+		if(fun(this._form.focused)) {
 			this._form.focused(this);
 		}
 	}
@@ -5963,31 +5987,31 @@ Util.Form = u.f = new function() {
 		u.as(this.field, "zIndex", this.field._base_z_index);
 		u.f.positionHint(this.field);
 		this.used = true;
-		if(typeof(this.blurred) == "function") {
+		if(fun(this.blurred)) {
 			this.blurred();
 		}
-		else if(this.field._input && typeof(this.field._input.blurred) == "function") {
+		else if(this.field._input && fun(this.field._input.blurred)) {
 			this.field._input.blurred(this);
 		}
-		if(typeof(this._form.blurred) == "function") {
+		if(fun(this._form.blurred)) {
 			this._form.blurred(this);
 		}
 	}
 	this._button_focus = function(event) {
 		u.ac(this, "focus");
-		if(typeof(this.focused) == "function") {
+		if(fun(this.focused)) {
 			this.focused();
 		}
-		if(typeof(this._form.focused) == "function") {
+		if(fun(this._form.focused)) {
 			this._form.focused(this);
 		}
 	}
 	this._button_blur = function(event) {
 		u.rc(this, "focus");
-		if(typeof(this.blurred) == "function") {
+		if(fun(this.blurred)) {
 			this.blurred();
 		}
-		if(typeof(this._form.blurred) == "function") {
+		if(fun(this._form.blurred)) {
 			this._form.blurred(this);
 		}
 	}
@@ -6077,7 +6101,7 @@ Util.Form = u.f = new function() {
 		if(action_name) {
 			action._form.actions[action_name] = action;
 		}
-		if(typeof(u.k) == "object" && u.hc(action, "key:[a-z0-9]+")) {
+		if(obj(u.k) && u.hc(action, "key:[a-z0-9]+")) {
 			u.k.addKey(action, u.cv(action, "key"));
 		}
 		u.e.addEvent(action, "focus", this._button_focus);
@@ -6148,25 +6172,25 @@ Util.Form = u.f = new function() {
 	}
 	this.updateFormValidationState = function(iN) {
 		if(this.checkFormValidation(iN._form)) {
-			if(typeof(iN.validationPassed) == "function") {
+			if(fun(iN.validationPassed)) {
 				iN.validationPassed();
 			}
-			if(typeof(iN.field.validationPassed) == "function") {
+			if(fun(iN.field.validationPassed)) {
 				iN.field.validationPassed();
 			}
-			if(typeof(iN._form.validationPassed) == "function") {
+			if(fun(iN._form.validationPassed)) {
 				iN._form.validationPassed();
 			}
 			return true;
 		}
 		else {
-			if(typeof(iN.validationFailed) == "function") {
+			if(fun(iN.validationFailed)) {
 				iN.validationFailed(iN._form.error_fields);
 			}
-			if(typeof(iN.field.validationFailed) == "function") {
+			if(fun(iN.field.validationFailed)) {
 				iN.field.validationFailed(iN._form.error_fields);
 			}
-			if(typeof(iN._form.validationFailed) == "function") {
+			if(fun(iN._form.validationFailed)) {
 				iN._form.validationFailed(iN._form.error_fields);
 			}
 			return false;
@@ -6396,7 +6420,7 @@ Util.Form = u.f = new function() {
 u.f.getParams = function(_form, _options) {
 	var send_as = "params";
 	var ignore_inputs = "ignoreinput";
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -6406,7 +6430,7 @@ u.f.getParams = function(_form, _options) {
 		}
 	}
 	var i, input, select, textarea, param, params;
-	if(send_as == "formdata" && (typeof(window.FormData) == "function" || typeof(window.FormData) == "object")) {
+	if(send_as == "formdata" && (fun(window.FormData) || obj(window.FormData))) {
 		params = new FormData();
 	}
 	else {
@@ -6424,10 +6448,11 @@ u.f.getParams = function(_form, _options) {
 	var inputs = u.qsa("input", _form);
 	var selects = u.qsa("select", _form)
 	var textareas = u.qsa("textarea", _form)
-	for(i = 0; input = inputs[i]; i++) {
+	for(i = 0; i < inputs.length; i++) {
+		input = inputs[i];
 		if(!u.hc(input, ignore_inputs)) {
 			if((input.type == "checkbox" || input.type == "radio") && input.checked) {
-				if(typeof(input.val) == "function") {
+				if(fun(input.val)) {
 					params.append(input.name, input.val());
 				}
 				else {
@@ -6436,14 +6461,15 @@ u.f.getParams = function(_form, _options) {
 			}
 			else if(input.type == "file") {
 				var f, file, files;
-				if(typeof(input.val) == "function") {
+				if(fun(input.val)) {
 					files = input.val();
 				}
 				else {
 					files = input.value;
 				}
 				if(files) {
-					for(f = 0; file = files[f]; f++) {
+					for(f = 0; i < files.length; f++) {
+						file = files[f];
 						params.append(input.name, file, file.name);
 					}
 				}
@@ -6452,7 +6478,7 @@ u.f.getParams = function(_form, _options) {
 				}
 			}
 			else if(!input.type.match(/button|submit|reset|file|checkbox|radio/i)) {
-				if(typeof(input.val) == "function") {
+				if(fun(input.val)) {
 					params.append(input.name, input.val());
 				}
 				else {
@@ -6461,9 +6487,10 @@ u.f.getParams = function(_form, _options) {
 			}
 		}
 	}
-	for(i = 0; select = selects[i]; i++) {
+	for(i = 0; i < selects.length; i++) {
+		select = selects[i];
 		if(!u.hc(select, ignore_inputs)) {
-			if(typeof(select.val) == "function") {
+			if(fun(select.val)) {
 				params.append(select.name, select.val());
 			}
 			else {
@@ -6471,9 +6498,10 @@ u.f.getParams = function(_form, _options) {
 			}
 		}
 	}
-	for(i = 0; textarea = textareas[i]; i++) {
+	for(i = 0; i < textareas.length; i++) {
+		textarea = textareas[i];
 		if(!u.hc(textarea, ignore_inputs)) {
-			if(typeof(textarea.val) == "function") {
+			if(fun(textarea.val)) {
 				params.append(textarea.name, textarea.val());
 			}
 			else {
@@ -6481,7 +6509,7 @@ u.f.getParams = function(_form, _options) {
 			}
 		}
 	}
-	if(send_as && typeof(this.customSend[send_as]) == "function") {
+	if(send_as && fun(this.customSend[send_as])) {
 		return this.customSend[send_as](params, _form);
 	}
 	else if(send_as == "json") {
@@ -6497,7 +6525,7 @@ u.f.getParams = function(_form, _options) {
 	else {
 		var string = "";
 		for(param in params) {
-			if(typeof(params[param]) != "function") {
+			if(!fun(params[param])) {
 				string += (string ? "&" : "") + param + "=" + encodeURIComponent(params[param]);
 			}
 		}
@@ -6568,7 +6596,7 @@ u.f.addForm = function(node, _options) {
 	var form_action = "#";
 	var form_method = "post";
 	var form_class = "";
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -6584,7 +6612,7 @@ u.f.addForm = function(node, _options) {
 }
 u.f.addFieldset = function(node, _options) {
 	var fieldset_class = "";
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -6611,7 +6639,7 @@ u.f.addField = function(node, _options) {
 	var field_pattern = false;
 	var field_error_message = "There is an error in your input";
 	var field_hint_message = "";
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -6736,7 +6764,8 @@ u.f.addField = function(node, _options) {
 		var select = u.ae(field, "select", u.f.verifyAttributes(attributes));
 		if(field_options) {
 			var i, option;
-			for(i = 0; option = field_options[i]; i++) {
+			for(i = 0; i < field_options.length; i++) {
+				option = field_options[i];
 				if(option.value == field_value) {
 					u.ae(select, "option", {"value":option.value, "html":option.text, "selected":"selected"});
 				}
@@ -6750,7 +6779,8 @@ u.f.addField = function(node, _options) {
 		u.ae(field, "label", {"html":field_label});
 		if(field_options) {
 			var i, option;
-			for(i = 0; option = field_options[i]; i++) {
+			for(i = 0; i < field_options.length; i++) {
+				option = field_options[i];
 				var div = u.ae(field, "div", {"class":"item"});
 				if(option.value == field_value) {
 					u.ae(div, "input", {"value":option.value, "id":field_id+"-"+i, "type":"radio", "name":field_name, "checked":"checked"});
@@ -6794,7 +6824,7 @@ u.f.addAction = function(node, _options) {
 	var action_name = "js_name";
 	var action_value = "";
 	var action_class = "";
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -6805,7 +6835,7 @@ u.f.addAction = function(node, _options) {
 			}
 		}
 	}
-	var p_ul = node.nodeName.toLowerCase() == "ul" ? node : u.pn(node, {"include":"ul"});
+	var p_ul = node.nodeName.toLowerCase() == "ul" ? node : u.pn(node, {"include":"ul.actions"});
 	if(!p_ul || !u.hc(p_ul, "actions")) {
 		if(node.nodeName.toLowerCase() == "form") {
 			p_ul = u.qs("ul.actions", node);
@@ -6835,7 +6865,8 @@ Util.cutString = function(string, length) {
 	}
 	matches = string.match(/\&[\w\d]+\;/g);
 	if(matches) {
-		for(i = 0; match = matches[i]; i++){
+		for(i = 0; i < matches.length; i++){
+			match = matches[i];
 			if(string.indexOf(match) < length){
 				length += match.length-1;
 			}
@@ -6911,7 +6942,7 @@ Util.isStringJSON = function(string) {
 	if(string.trim().substr(0, 1).match(/[\{\[]/i) && string.trim().substr(-1, 1).match(/[\}\]]/i)) {
 		try {
 			var test = JSON.parse(string);
-			if(typeof(test) == "object") {
+			if(obj(test)) {
 				test.isJSON = true;
 				return test;
 			}
@@ -6997,7 +7028,7 @@ Util.Objects["oneButtonForm"] = new function() {
 				}
 				else {
 					u.t.resetTimer(this.t_confirm);
-					if(typeof(this.node.submitted) == "function") {
+					if(fun(this.node.submitted)) {
 						u.bug("oneButtonForm");
 						this.node.submitted();
 					}
@@ -7021,11 +7052,11 @@ Util.Objects["oneButtonForm"] = new function() {
 								}
 								else if(this.success_function) {
 									u.bug("function:" + this.success_function);
-									if(typeof(this.node[this.success_function]) == "function") {
+									if(fun(this.node[this.success_function])) {
 										this.node[this.success_function](response);
 									}
 								}
-								else if(typeof(this.node.confirmed) == "function") {
+								else if(fun(this.node.confirmed)) {
 									u.bug("confirmed");
 									this.node.confirmed(response);
 								}
@@ -7035,7 +7066,7 @@ Util.Objects["oneButtonForm"] = new function() {
 							}
 						}
 						else {
-							if(typeof(this.node.confirmedError) == "function") {
+							if(fun(this.node.confirmedError)) {
 								u.bug("confirmedError");
 								this.node.confirmedError(response);
 							}
@@ -7983,6 +8014,27 @@ Util.Objects["payment"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
+			page.cN.scene = this;
+			var form = u.qs("form", this);
+			if(form) {
+				u.f.init(form);
+			}
+			u.showScene(this);
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
+/*i-payments.js*/
+Util.Objects["payments"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			u.bug("scene.ready:", this);
 			page.cN.scene = this;
 			var form = u.qs("form", this);
 			if(form) {

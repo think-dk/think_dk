@@ -3964,7 +3964,7 @@ Util.Form = u.f = new function() {
 		_form._hover_z_index = 49;
 		_form._validation = true;
 		_form._debug_init = false;
-		if(typeof(_options) == "object") {
+		if(obj(_options)) {
 			var _argument;
 			for(_argument in _options) {
 				switch(_argument) {
@@ -3989,12 +3989,13 @@ Util.Form = u.f = new function() {
 		_form.error_fields = {};
 		_form.labelstyle = u.cv(_form, "labelstyle");
 		var fields = u.qsa(".field", _form);
-		for(i = 0; field = fields[i]; i++) {
+		for(i = 0; i < fields.length; i++) {
+			field = fields[i];
 			field._base_z_index = u.gcs(field, "z-index");
 			field._help = u.qs(".help", field);
 			field._hint = u.qs(".hint", field);
 			field._error = u.qs(".error", field);
-			if(typeof(u.f.fixFieldHTML) == "function") {
+			if(fun(u.f.fixFieldHTML)) {
 				u.f.fixFieldHTML(field);
 			}
 			field._initialized = false;
@@ -4110,7 +4111,8 @@ Util.Form = u.f = new function() {
 					field._inputs = u.qsa("input", field);
 					field._input = field._inputs[0];
 					_form.fields[field._input.name] = field._input;
-					for(j = 0; input = field._inputs[j]; j++) {
+					for(j = 0; j < field._inputs.length; j++) {
+						input = field._inputs[j];
 						input.field = field;
 						input._form = _form;
 						input._label = u.qs("label[for='"+input.id+"']", field);
@@ -4125,7 +4127,8 @@ Util.Form = u.f = new function() {
 									this._changed(window.event);
 									this._updated(window.event);
 								}
-								for(i = 0; input = this.field._input[i]; i++) {
+								for(i = 0; i < this.field._input.length; i++) {
+									input = this.field._input[i];
 									input.pre_state = input.checked;
 								}
 							}
@@ -4193,14 +4196,16 @@ Util.Form = u.f = new function() {
 			field._indicator = u.ae(field._input._label, "span", {"class":"indicator", "html":"&nbsp;*"});
 		}
 		var hidden_fields = u.qsa("input[type=hidden]", _form);
-		for(i = 0; hidden_field = hidden_fields[i]; i++) {
+		for(i = 0; i < hidden_fields.length; i++) {
+			hidden_field = hidden_fields[i];
 			if(!_form.fields[hidden_field.name]) {
 				_form.fields[hidden_field.name] = hidden_field;
 				hidden_field.val = this._value;
 			}
 		}
 		var actions = u.qsa(".actions li input[type=button],.actions li input[type=submit],.actions li input[type=reset],.actions li a.button", _form);
-		for(i = 0; action = actions[i]; i++) {
+		for(i = 0; i < actions.length; i++) {
+			action = actions[i];
 				action._form = _form;
 			this.activateButton(action);
 		}
@@ -4221,18 +4226,18 @@ Util.Form = u.f = new function() {
 	}
 	this._submit = function(event, iN) {
 		for(name in this.fields) {
-			if(this.fields[name] && this.fields[name].field && typeof(this.fields[name].val) == "function") {
+			if(this.fields[name] && this.fields[name].field && fun(this.fields[name].val)) {
 				this.fields[name].used = true;
 				u.f.validate(this.fields[name]);
 			}
 		}
 		if(!Object.keys(this.error_fields).length) {
-			if(typeof(this.submitted) == "function") {
+			if(fun(this.submitted)) {
 				this.submitted(iN);
 			}
 			else {
 				for(name in this.fields) {
-					if(this.fields[name] && this.fields[name].default_value && typeof(this.fields[name].val) == "function" && !this.fields[name].val()) {
+					if(this.fields[name] && this.fields[name].default_value && fun(this.fields[name].val) && !this.fields[name].val()) {
 						if(this.fields[name].nodeName.match(/^(input|textarea)$/i)) {
 							this.fields[name].value = "";
 						}
@@ -4258,7 +4263,8 @@ Util.Form = u.f = new function() {
 	this._value_radiobutton = function(value) {
 		var i, option;
 		if(value !== undefined) {
-			for(i = 0; option = this.field._inputs[i]; i++) {
+			for(i = 0; i < this.field._inputs[i]; i++) {
+				option = this.field._inputs[i];
 				if(option.value == value || (option.value == "true" && value) || (option.value == "false" && value === false)) {
 					option.checked = true;
 					u.f.validate(this);
@@ -4269,7 +4275,8 @@ Util.Form = u.f = new function() {
 			}
 		}
 		else {
-			for(i = 0; option = this.field._inputs[i]; i++) {
+			for(i = 0; i < this.field._inputs.length; i++) {
+				option = this.field._inputs[i];
 				if(option.checked) {
 					return option.value;
 				}
@@ -4299,7 +4306,8 @@ Util.Form = u.f = new function() {
 	this._value_select = function(value) {
 		if(value !== undefined) {
 			var i, option;
-			for(i = 0; option = this.options[i]; i++) {
+			for(i = 0; i < this.options.length; i++) {
+				option = this.options[i];
 				if(option.value == value) {
 					this.selectedIndex = i;
 					u.f.validate(this);
@@ -4327,7 +4335,8 @@ Util.Form = u.f = new function() {
 		else {
 			if(this.value && this.files && this.files.length) {
 				var i, file, files = [];
-				for(i = 0; file = this.files[i]; i++) {
+				for(i = 0; i < this.files.length; i++) {
+					file = this.files[i];
 					files.push(file);
 				}
 				return files;
@@ -4369,7 +4378,7 @@ Util.Form = u.f = new function() {
 	}
 	this.buttonOnEnter = function(node) {
 		node.keyPressed = function(event) {
-			if(event.keyCode == 13 && !u.hc(this, "disabled") && typeof(this.clicked) == "function") {
+			if(event.keyCode == 13 && !u.hc(this, "disabled") && fun(this.clicked)) {
 				u.e.kill(event);
 				this.clicked(event);
 				// 
@@ -4380,16 +4389,16 @@ Util.Form = u.f = new function() {
 	}
 	this._changed = function(event) {
 		this.used = true;
-		if(typeof(this.changed) == "function") {
+		if(fun(this.changed)) {
 			this.changed(this);
 		}
-		else if(this.field._input && typeof(this.field._input.changed) == "function") {
+		else if(this.field._input && fun(this.field._input.changed)) {
 			this.field._input.changed(this);
 		}
-		if(typeof(this.field.changed) == "function") {
+		if(fun(this.field.changed)) {
 			this.field.changed(this);
 		}
-		if(typeof(this._form.changed) == "function") {
+		if(fun(this._form.changed)) {
 			this._form.changed(this);
 		}
 	}
@@ -4398,16 +4407,16 @@ Util.Form = u.f = new function() {
 			if(this.used || u.hc(this.field, "error")) {
 				u.f.validate(this);
 			}
-			if(typeof(this.updated) == "function") {
+			if(fun(this.updated)) {
 				this.updated(this);
 			}
-			else if(this.field._input && typeof(this.field._input.updated) == "function") {
+			else if(this.field._input && fun(this.field._input.updated)) {
 				this.field._input.updated(this);
 			}
-			if(typeof(this.field.updated) == "function") {
+			if(fun(this.field.updated)) {
 				this.field.updated(this);
 			}
-			if(typeof(this._form.updated) == "function") {
+			if(fun(this._form.updated)) {
 				this._form.updated(this);
 			}
 		}
@@ -4442,13 +4451,13 @@ Util.Form = u.f = new function() {
 		u.ac(this, "focus");
 		u.as(this.field, "zIndex", this._form._focus_z_index);
 		u.f.positionHint(this.field);
-		if(typeof(this.focused) == "function") {
+		if(fun(this.focused)) {
 			this.focused();
 		}
-		else if(this.field._input && typeof(this.field._input.focused) == "function") {
+		else if(this.field._input && fun(this.field._input.focused)) {
 			this.field._input.focused(this);
 		}
-		if(typeof(this._form.focused) == "function") {
+		if(fun(this._form.focused)) {
 			this._form.focused(this);
 		}
 	}
@@ -4460,31 +4469,31 @@ Util.Form = u.f = new function() {
 		u.as(this.field, "zIndex", this.field._base_z_index);
 		u.f.positionHint(this.field);
 		this.used = true;
-		if(typeof(this.blurred) == "function") {
+		if(fun(this.blurred)) {
 			this.blurred();
 		}
-		else if(this.field._input && typeof(this.field._input.blurred) == "function") {
+		else if(this.field._input && fun(this.field._input.blurred)) {
 			this.field._input.blurred(this);
 		}
-		if(typeof(this._form.blurred) == "function") {
+		if(fun(this._form.blurred)) {
 			this._form.blurred(this);
 		}
 	}
 	this._button_focus = function(event) {
 		u.ac(this, "focus");
-		if(typeof(this.focused) == "function") {
+		if(fun(this.focused)) {
 			this.focused();
 		}
-		if(typeof(this._form.focused) == "function") {
+		if(fun(this._form.focused)) {
 			this._form.focused(this);
 		}
 	}
 	this._button_blur = function(event) {
 		u.rc(this, "focus");
-		if(typeof(this.blurred) == "function") {
+		if(fun(this.blurred)) {
 			this.blurred();
 		}
-		if(typeof(this._form.blurred) == "function") {
+		if(fun(this._form.blurred)) {
 			this._form.blurred(this);
 		}
 	}
@@ -4539,7 +4548,7 @@ Util.Form = u.f = new function() {
 		if(action_name) {
 			action._form.actions[action_name] = action;
 		}
-		if(typeof(u.k) == "object" && u.hc(action, "key:[a-z0-9]+")) {
+		if(obj(u.k) && u.hc(action, "key:[a-z0-9]+")) {
 			u.k.addKey(action, u.cv(action, "key"));
 		}
 		u.e.addEvent(action, "focus", this._button_focus);
@@ -4610,25 +4619,25 @@ Util.Form = u.f = new function() {
 	}
 	this.updateFormValidationState = function(iN) {
 		if(this.checkFormValidation(iN._form)) {
-			if(typeof(iN.validationPassed) == "function") {
+			if(fun(iN.validationPassed)) {
 				iN.validationPassed();
 			}
-			if(typeof(iN.field.validationPassed) == "function") {
+			if(fun(iN.field.validationPassed)) {
 				iN.field.validationPassed();
 			}
-			if(typeof(iN._form.validationFailed) == "function") {
+			if(fun(iN._form.validationFailed)) {
 				iN._form.validationPassed();
 			}
 			return true;
 		}
 		else {
-			if(typeof(iN.validationFailed) == "function") {
+			if(fun(iN.validationFailed)) {
 				iN.validationFailed(iN._form.error_fields);
 			}
-			if(typeof(iN.field.validationFailed) == "function") {
+			if(fun(iN.field.validationFailed)) {
 				iN.field.validationFailed(iN._form.error_fields);
 			}
-			if(typeof(iN._form.validationFailed) == "function") {
+			if(fun(iN._form.validationFailed)) {
 				iN._form.validationFailed(iN._form.error_fields);
 			}
 			return false;
@@ -4856,7 +4865,7 @@ Util.Form = u.f = new function() {
 u.f.getParams = function(_form, _options) {
 	var send_as = "params";
 	var ignore_inputs = "ignoreinput";
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -4866,7 +4875,7 @@ u.f.getParams = function(_form, _options) {
 		}
 	}
 	var i, input, select, textarea, param, params;
-	if(send_as == "formdata" && (typeof(window.FormData) == "function" || typeof(window.FormData) == "object")) {
+	if(send_as == "formdata" && (fun(window.FormData) || obj(window.FormData))) {
 		params = new FormData();
 	}
 	else {
@@ -4884,10 +4893,11 @@ u.f.getParams = function(_form, _options) {
 	var inputs = u.qsa("input", _form);
 	var selects = u.qsa("select", _form)
 	var textareas = u.qsa("textarea", _form)
-	for(i = 0; input = inputs[i]; i++) {
+	for(i = 0; i < inputs.length; i++) {
+		input = inputs[i];
 		if(!u.hc(input, ignore_inputs)) {
 			if((input.type == "checkbox" || input.type == "radio") && input.checked) {
-				if(typeof(input.val) == "function") {
+				if(fun(input.val)) {
 					params.append(input.name, input.val());
 				}
 				else {
@@ -4896,14 +4906,15 @@ u.f.getParams = function(_form, _options) {
 			}
 			else if(input.type == "file") {
 				var f, file, files;
-				if(typeof(input.val) == "function") {
+				if(fun(input.val)) {
 					files = input.val();
 				}
 				else {
 					files = input.value;
 				}
 				if(files) {
-					for(f = 0; file = files[f]; f++) {
+					for(f = 0; i < files.length; f++) {
+						file = files[f];
 						params.append(input.name, file, file.name);
 					}
 				}
@@ -4912,7 +4923,7 @@ u.f.getParams = function(_form, _options) {
 				}
 			}
 			else if(!input.type.match(/button|submit|reset|file|checkbox|radio/i)) {
-				if(typeof(input.val) == "function") {
+				if(fun(input.val)) {
 					params.append(input.name, input.val());
 				}
 				else {
@@ -4921,9 +4932,10 @@ u.f.getParams = function(_form, _options) {
 			}
 		}
 	}
-	for(i = 0; select = selects[i]; i++) {
+	for(i = 0; i < selects.length; i++) {
+		select = selects[i];
 		if(!u.hc(select, ignore_inputs)) {
-			if(typeof(select.val) == "function") {
+			if(fun(select.val)) {
 				params.append(select.name, select.val());
 			}
 			else {
@@ -4931,9 +4943,10 @@ u.f.getParams = function(_form, _options) {
 			}
 		}
 	}
-	for(i = 0; textarea = textareas[i]; i++) {
+	for(i = 0; i < textareas.length; i++) {
+		textarea = textareas[i];
 		if(!u.hc(textarea, ignore_inputs)) {
-			if(typeof(textarea.val) == "function") {
+			if(fun(textarea.val)) {
 				params.append(textarea.name, textarea.val());
 			}
 			else {
@@ -4941,7 +4954,7 @@ u.f.getParams = function(_form, _options) {
 			}
 		}
 	}
-	if(send_as && typeof(this.customSend[send_as]) == "function") {
+	if(send_as && fun(this.customSend[send_as])) {
 		return this.customSend[send_as](params, _form);
 	}
 	else if(send_as == "json") {

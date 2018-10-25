@@ -1,4 +1,4 @@
-Util.Objects["payment"] = new function() {
+Util.Objects["payments"] = new function() {
 	this.init = function(scene) {
 //		u.bug("scene init:", this);
 		
@@ -12,7 +12,7 @@ Util.Objects["payment"] = new function() {
 		}
 
 		scene.ready = function() {
-//			u.bug("scene.ready:", this);
+			u.bug("scene.ready:", this);
 
 
 			page.cN.scene = this;

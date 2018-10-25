@@ -30,17 +30,16 @@ if(is_array($action) && count($action)) {
 
 		}
 
+		// if payment id exists (gateway payment receipt)
+		else if(count($action) == 4) {
+
+			$page->page(array(
+				"templates" => "shop/receipt/".$action[2].".php"
+			));
+			exit();
+
+		}
 		// ALL OTHER VARIATIONS (THAN ERROR) ARE HANDLED IN RECEIPT TEMPLATE
-		// specific payment receipt
-		// if(count($action) == 3) {
-		//
-		// 	$page->page(array(
-		// 		"templates" => "shop/receipt/".$action[2].".php"
-		// 	));
-		// 	exit();
-		//
-		// }
-		// general receipt
 		else {
 
 			$page->page(array(
@@ -52,8 +51,42 @@ if(is_array($action) && count($action)) {
 
 	}
 
-	// /shop/gateway
-	else if($action[0] == "gateway") {
+	// /shop/bulk-receipt
+	else if($action[0] == "bulk-receipt") {
+
+		if(count($action) == 3 && $action[2] == "error") {
+
+			$page->page(array(
+				"templates" => "shop/receipt/error.php"
+			));
+			exit();
+
+		}
+
+		// if payment id exists (gateway payment receipt)
+		else if(count($action) == 4) {
+
+			$page->page(array(
+				"templates" => "shop/receipt/".$action[2]."-bulk.php"
+			));
+			exit();
+
+		}
+
+		// ALL OTHER VARIATIONS (THAN ERROR) ARE HANDLED IN RECEIPT TEMPLATE
+		else {
+
+			$page->page(array(
+				"templates" => "shop/receipt/index-bulk.php"
+			));
+			exit();
+
+		}
+
+	}
+
+	// /shop/payment-gateway/#order_ids#/#gateway#/[process]
+	else if($action[0] == "payment-gateway") {
 
 		// specific gateway payment window
 		if(count($action) == 3) {
@@ -69,10 +102,11 @@ if(is_array($action) && count($action)) {
 		// process payment
 		else if(count($action) == 4 && $action[3] == "process" && $page->validateCsrfToken()) {
 
-			if($model->processOrderPayment($action)) {
+			$payment_id = $model->processOrderPayment($action);
+			if($payment_id) {
 
 				// redirect to leave POST state
-				header("Location: /shop/receipt/".$action[1]."/".$action[2]);
+				header("Location: /shop/receipt/".$action[1]."/".$action[2]."/".$payment_id);
 				exit();
 
 			}
@@ -80,6 +114,43 @@ if(is_array($action) && count($action)) {
 
 				// redirect to leave POST state
 				header("Location: /shop/receipt/".$action[1]."/error");
+				exit();
+
+			}
+
+		}
+
+	}
+
+	// /shop/bulk-payment-gateway/#order_ids#/#gateway#/[process]
+	else if($action[0] == "bulk-payment-gateway") {
+
+		// specific gateway payment window
+		if(count($action) == 3) {
+
+			$page->page(array(
+				"type" => "payment",
+				"templates" => "shop/gateway/".$action[2]."-bulk.php"
+			));
+			exit();
+
+		}
+
+		// process payment
+		else if(count($action) == 4 && $action[3] == "process" && $page->validateCsrfToken()) {
+
+			$payment_id = $model->processBulkOrderPayment($action);
+			if($payment_id) {
+
+				// redirect to leave POST state
+				header("Location: /shop/bulk-receipt/".$action[1]."/".$action[2]."/".$payment_id);
+				exit();
+
+			}
+			else {
+
+				// redirect to leave POST state
+				header("Location: /shop/bulk-receipt/".$action[1]."/error");
 				exit();
 
 			}
@@ -148,6 +219,14 @@ if(is_array($action) && count($action)) {
 		));
 		exit();
 	}
+	# /shop/payments (all open payments)
+	else if($action[0] == "payments" && count($action) == 1) {
+
+		$page->page(array(
+			"templates" => "shop/payments.php"
+		));
+		exit();
+	}
 
 	# /shop/selectPaymentMethod
 	else if($action[0] == "selectPaymentMethod" && $page->validateCsrfToken()) {
@@ -155,12 +234,11 @@ if(is_array($action) && count($action)) {
 		// register payment method
 		$payment_method = $model->selectPaymentMethod(array("selectPaymentMethod"));
 
-//		print_r($payment_method);
-
 		// if gateway is specified - proceed to gateway
 		if($payment_method["gateway"]) {
 
-			header("Location: /shop/gateway/".$payment_method["order_no"]."/".$payment_method["gateway"]);
+			// redirect to leave POST state
+			header("Location: /shop/payment-gateway/".$payment_method["order_no"]."/".$payment_method["gateway"]);
 			exit();
 
 		}
@@ -168,8 +246,6 @@ if(is_array($action) && count($action)) {
 		else if($payment_method["classname"] && $payment_method["classname"] !== "disabled") {
 
 			// redirect to leave POST state
-//			print "location: /shop/receipt/".$payment_method["order_no"]."/".$payment_method["classname"];
-
 			header("Location: /shop/receipt/".$payment_method["order_no"]."/".$payment_method["classname"]);
 			exit();
 			
@@ -178,15 +254,47 @@ if(is_array($action) && count($action)) {
 		else {
 
 			// redirect to leave POST state
-//			print "location: /shop/receipt/".$payment_method["order_no"];
-
 			header("Location: /shop/receipt/".$payment_method["order_no"]);
+			exit();
+
+		}
+
+	}
+
+
+	# /shop/bulkPayment
+	else if($action[0] == "selectBulkPaymentMethod" && $page->validateCsrfToken()) {
+
+		// register payment method
+		$payment_method = $model->selectBulkPaymentMethod(array("selectBulkPaymentMethod"));
+
+		// if gateway is specified - proceed to gateway
+		if($payment_method["gateway"]) {
+
+			// redirect to leave POST state
+			header("Location: /shop/bulk-payment-gateway/".$payment_method["order_ids"]."/".$payment_method["gateway"]);
+			exit();
+
+		}
+		// no gateway, means manual payment - go to receipt page
+		else if($payment_method["classname"] && $payment_method["classname"] !== "disabled") {
+
+			// redirect to leave POST state
+			header("Location: /shop/bulk-receipt/".$payment_method["order_ids"]."/".$payment_method["classname"]);
 			exit();
 			
 		}
-		
+		// no gateway, no custom receipt
+		else {
+
+			// redirect to leave POST state
+			header("Location: /shop/bulk-receipt/".$payment_method["order_ids"]);
+			exit();
+
+		}
 
 	}
+
 
 	# /shop/addToCart
 	else if($action[0] == "addToCart" && $page->validateCsrfToken()) {

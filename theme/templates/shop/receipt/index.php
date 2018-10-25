@@ -3,28 +3,28 @@ global $action;
 global $model;
 $UC = new User();
 
-// get current user id
-$user_id = session()->value("user_id");
-$user = $UC->getUser();
-
-//print_r($user);
 
 $order = false;
 $receipt_type = false;
 
 $is_membership = false;
 $subscription_method = false;
-$amount = false;
 $payment_date = false;
 
 $active_account = false;
 
 
-// TODO: check if account has been activated
+// get current user id
+$user_id = session()->value("user_id");
+$user = $UC->getUser();
+// has account been activated
 if($user) {
 	$active_account = $user["status"];
 }
-//print_r($action);
+print_r($active_account);
+
+
+
 
 // order no indicated in url
 if(isset($action[1])) {
@@ -40,9 +40,7 @@ if(isset($action[1])) {
 
 		if($order) {
 			$total_order_price = $model->getTotalOrderPrice($order["id"]);
-			if($total_order_price) {
-				$amount = formatPrice($total_order_price);
-			}
+			$remaining_order_price = $model->getRemainingOrderPrice($order["id"]);
 
 
 			if($membership && $membership["order"]) {
@@ -81,7 +79,7 @@ if(isset($action[2])) {
 	<h2>Pay with Bank transfer</h2>
 
 	<p>
-	<? if($subscription_method && $payment_date): ?>
+	<? if($subscription_method && $payment_date && $remaining_order_price["price"] == $total_order_price["price"]): ?>
 		Set up a re-occuring payment every <?= strtolower($subscription_method["name"]) ?> on the <?= $payment_date ?> to our bankaccount, using the information below:
 	<? else: ?>
 		Make a payment to our bankaccount, using the information below:
@@ -90,7 +88,7 @@ if(isset($action[2])) {
 
 	<dl>
 		<dt class="amount">Amount</dt>
-		<dd class="amount"><?= $amount ?></dd>
+		<dd class="amount"><?= formatPrice($remaining_order_price) ?></dd>
 
 		<dt class="recipient">Recipient</dt>
 		<dd class="recipient">think.dk</dd>
@@ -115,14 +113,6 @@ if(isset($action[2])) {
 		<dd class="swift">FAELDKK1</dd>
 	</dl>
 
-<?	elseif($receipt_type == "stripe"): ?>
-
-
-	<h2>Your payment has been processed successfully.</h2>
-
-
-<?	// elseif($receipt_type == "mobilepay"): ?>
-
 
 <?	elseif($receipt_type == "paypal"): ?>
 
@@ -134,7 +124,7 @@ if(isset($action[2])) {
 
 	<dl>
 		<dt class="amount">Amount</dt>
-		<dd class="amount"><?= $amount ?></dd>
+		<dd class="amount"><?= formatPrice($remaining_order_price) ?></dd>
 
 		<dt class="recipient">PayPal account</dt>
 		<dd class="recipient">payment@think.dk</dd>
@@ -152,7 +142,7 @@ if(isset($action[2])) {
 
 
 	<h2>Cash payment</h2>
-	<p>Just bring <?= $amount ?> in cash next time you come to the Center.</p>
+	<p>Just bring <?= formatPrice($remaining_order_price) ?> in cash next time you come to the Center.</p>
 
 
 <?	endif; ?>
@@ -173,7 +163,7 @@ if(isset($action[2])) {
 
 
 <? if(!$active_account): ?>
-	<p>Remember to activate your account, othervise you won't get our newsletter. Check your inbox for the Activation email.</p>
+	<p>Remember to activate your account, otherwise you won't get our newsletter. Check your inbox for the Activation email.</p>
 <? endif; ?>
 
 

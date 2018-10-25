@@ -1,6 +1,6 @@
 /*
 Manipulator v0.9.2-think_dk Copyright 2018 http://manipulator.parentnode.dk
-js-merged @ 2018-07-19 11:32:01
+js-merged @ 2018-10-25 10:12:45
 */
 
 /*seg_seo_include.js*/

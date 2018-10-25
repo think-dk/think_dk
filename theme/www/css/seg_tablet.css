@@ -1229,6 +1229,7 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.shopPayment.stripe form div.field.cvc div.help {left: 87px;}
 #content .scene.shopPayment.stripe div.field.hover.correct div.hint {display: none;}
 #content .scene.shopPayment.stripe div.field.focus.correct div.hint {display: block;}
+#content .scene.shopPayment ul.orders {padding: 0 0 10px;}
 #content .scene div.todos {padding-bottom: 15px; position: relative; z-index: 1;}
 #content .scene div.todos h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
 #content .scene div.todos h2 svg.arrow {position: absolute; top: 6px; right: 55px;}

@@ -48,17 +48,17 @@ Util.exception = function(name, _arguments, _exception) {
 Util.bug = function() {
 	if(u.debugURL()) {
 		if(!u.bug_console_only) {
-			if(typeof(console) == "object") {
-				console.log(message);
+			var i, message;
+			if(obj(console)) {
+				for(i = 0; i < arguments.length; i++) {
+					if(arguments[i] || typeof(arguments[i]) == "undefined") {
+						console.log(arguments[i]);
+					}
+				}
 			}
 			var option, options = new Array([0, "auto", "auto", 0], [0, 0, "auto", "auto"], ["auto", 0, 0, "auto"], ["auto", "auto", 0, 0]);
-			if(isNaN(corner)) {
-				color = corner;
-				corner = 0;
-			}
-			if(typeof(color) != "string") {
-				color = "black";
-			}
+			var corner = u.bug_corner ? u.bug_corner : 0;
+			var color = u.bug_color ? u.bug_color : "black";
 			option = options[corner];
 			if(!document.getElementById("debug_id_"+corner)) {
 				var d_target = u.ae(document.body, "div", {"class":"debug_"+corner, "id":"debug_id_"+corner});
@@ -78,14 +78,22 @@ Util.bug = function() {
 				}
 				d_target.style.padding = "2px 3px";
 			}
-			if(typeof(message) != "string") {
-				message = message.toString();
+			for(i = 0; i < arguments.length; i++) {
+				if(arguments[i] === undefined) {
+					message = "undefined";
+				}
+				else if(!str(arguments[i]) && fun(arguments[i].toString)) {
+					message = arguments[i].toString();
+				}
+				else {
+					message = arguments[i];
+				}
+				var debug_div = document.getElementById("debug_id_"+corner);
+				message = message ? message.replace(/\>/g, "&gt;").replace(/\</g, "&lt;").replace(/&lt;br&gt;/g, "<br>") : "Util.bug with no message?";
+				u.ae(debug_div, "div", {"style":"color: " + color, "html": message});
 			}
-			var debug_div = document.getElementById("debug_id_"+corner);
-			message = message ? message.replace(/\>/g, "&gt;").replace(/\</g, "&lt;").replace(/&lt;br&gt;/g, "<br>") : "Util.bug with no message?";
-			u.ae(debug_div, "div", {"style":"color: " + color, "html": message});
 		}
-		else if(typeof(console) == "object") {
+		else if(obj(console)) {
 			var i;
 			for(i = 0; i < arguments.length; i++) {
 				console.log(arguments[i]);
@@ -97,7 +105,7 @@ Util.xInObject = function(object, _options) {
 	if(u.debugURL()) {
 		var return_string = false;
 		var explore_objects = false;
-		if(typeof(_options) == "object") {
+		if(obj(_options)) {
 			var _argument;
 			for(_argument in _options) {
 				switch(_argument) {
@@ -108,14 +116,14 @@ Util.xInObject = function(object, _options) {
 		}
 		var x, s = "--- start object ---\n";
 		for(x in object) {
-			if(explore_objects && object[x] && typeof(object[x]) == "object" && typeof(object[x].nodeName) != "string") {
+			if(explore_objects && object[x] && obj(object[x]) && !str(object[x].nodeName)) {
 				s += x + "=" + object[x]+" => \n";
 				s += u.xInObject(object[x], true);
 			}
-			else if(object[x] && typeof(object[x]) == "object" && typeof(object[x].nodeName) == "string") {
+			else if(object[x] && obj(object[x]) && str(object[x].nodeName)) {
 				s += x + "=" + object[x]+" -> " + u.nodeId(object[x], 1) + "\n";
 			}
-			else if(object[x] && typeof(object[x]) == "function") {
+			else if(object[x] && fun(object[x])) {
 				s += x + "=function\n";
 			}
 			else {
@@ -140,7 +148,7 @@ Util.Animation = u.a = new function() {
 				if(u.gcs(node, "transform").match(/matrix3d\(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 10, 10, 10, 1\)/)) {
 					this._support3d = true;
 				}
-				else {
+	 			else {
 					this._support3d = false;
 				}
 			}
@@ -162,14 +170,14 @@ Util.Animation = u.a = new function() {
 						u.e.removeEvent(event.target, u.a.transitionEndEventName(), transitioned);
 						if(event.target == this) {
 							u.a.transition(this, "none");
-							if(typeof(callback) == "function") {
+							if(fun(callback)) {
 								var key = u.randomString(4);
 								node[key] = callback;
 								node[key](event);
 								node[key] = null;
 								callback = null;
 							}
-							else if(typeof(this[callback]) == "function") {
+							else if(fun(this[callback])) {
 								this[callback](event);
 								this[callback] = null;
 							}
@@ -215,7 +223,7 @@ Util.Animation = u.a = new function() {
 	this._transitioned = function(event) {
 		u.e.removeEvent(event.target, u.a.transitionEndEventName(), u.a._transitioned);
 		u.a.transition(event.target, "none");
-		if(event.target == this && typeof(this.transitioned) == "function") {
+		if(event.target == this && fun(this.transitioned)) {
 			this.transitioned(event);
 			this.transitioned = null;
 		}
@@ -312,7 +320,7 @@ Util.Animation = u.a = new function() {
 		if(fun(animation.node[animation.callback])) {
 			animation.node[animation.callback](1);
 		}
-		if(typeof(animation.node.transitioned) == "function") {
+		if(fun(animation.node.transitioned)) {
 			animation.node.transitioned({});
 		}
 		delete u.a._animationqueue[id];
@@ -335,7 +343,7 @@ Util.saveCookie = function(name, value, _options) {
 	var expires = true;
 	var path = false;
 	var force = false;
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -345,7 +353,7 @@ Util.saveCookie = function(name, value, _options) {
 			}
 		}
 	}
-	if(!force && typeof(window.localStorage) == "object" && typeof(window.sessionStorage) == "object") {
+	if(!force && obj(window.localStorage) && obj(window.sessionStorage)) {
 		if(expires === true) {
 			window.sessionStorage.setItem(name, value);
 		}
@@ -357,13 +365,13 @@ Util.saveCookie = function(name, value, _options) {
 	if(expires === false) {
 		expires = ";expires=Mon, 04-Apr-2020 05:00:00 GMT";
 	}
-	else if(typeof(expires) === "string") {
+	else if(str(expires)) {
 		expires = ";expires="+expires;
 	}
 	else {
 		expires = "";
 	}
-	if(typeof(path) === "string") {
+	if(str(path)) {
 		path = ";path="+path;
 	}
 	else {
@@ -373,17 +381,17 @@ Util.saveCookie = function(name, value, _options) {
 }
 Util.getCookie = function(name) {
 	var matches;
-	if(typeof(window.sessionStorage) == "object" && window.sessionStorage.getItem(name)) {
+	if(obj(window.sessionStorage) && window.sessionStorage.getItem(name)) {
 		return window.sessionStorage.getItem(name)
 	}
-	else if(typeof(window.localStorage) == "object" && window.localStorage.getItem(name)) {
+	else if(obj(window.localStorage) && window.localStorage.getItem(name)) {
 		return window.localStorage.getItem(name)
 	}
 	return (matches = document.cookie.match(encodeURIComponent(name) + "=([^;]+)")) ? decodeURIComponent(matches[1]) : false;
 }
 Util.deleteCookie = function(name, _options) {
 	var path = false;
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -391,13 +399,13 @@ Util.deleteCookie = function(name, _options) {
 			}
 		}
 	}
-	if(typeof(window.sessionStorage) == "object") {
+	if(obj(window.sessionStorage)) {
 		window.sessionStorage.removeItem(name);
 	}
-	if(typeof(window.localStorage) == "object") {
+	if(obj(window.localStorage)) {
 		window.localStorage.removeItem(name);
 	}
-	if(typeof(path) === "string") {
+	if(str(path)) {
 		path = ";path="+path;
 	}
 	else {
@@ -447,7 +455,7 @@ Util.cookieReference = function(node, _options) {
 	var ref;
 	var ignore_classnames = false;
 	var ignore_classvars = false;
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -547,7 +555,8 @@ Util.getElement = u.ge = function(identifier, scope) {
 	}
 	scope = scope ? scope : document;
 	regexp = new RegExp("(^|\\s)" + identifier + "(\\s|$|\:)");
-	for(i = 0; node = scope.getElementsByTagName("*")[i]; i++) {
+	for(i = 0; i < scope.getElementsByTagName("*").length; i++) {
+		node = scope.getElementsByTagName("*")[i];
 		if(regexp.test(node.className)) {
 			return node;
 		}
@@ -559,7 +568,8 @@ Util.getElements = u.ges = function(identifier, scope) {
 	var nodes = new Array();
 	scope = scope ? scope : document;
 	regexp = new RegExp("(^|\\s)" + identifier + "(\\s|$|\:)");
-	for(i = 0; node = scope.getElementsByTagName("*")[i]; i++) {
+	for(i = 0; i < scope.getElementsByTagName("*").length; i++) {
+		node = scope.getElementsByTagName("*")[i];
 		if(regexp.test(node.className)) {
 			nodes.push(node);
 		}
@@ -569,7 +579,7 @@ Util.getElements = u.ges = function(identifier, scope) {
 Util.parentNode = u.pn = function(node, _options) {
 	var exclude = "";
 	var include = "";
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -589,7 +599,7 @@ Util.parentNode = u.pn = function(node, _options) {
 Util.previousSibling = u.ps = function(node, _options) {
 	var exclude = "";
 	var include = "";
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -609,7 +619,7 @@ Util.previousSibling = u.ps = function(node, _options) {
 Util.nextSibling = u.ns = function(node, _options) {
 	var exclude = "";
 	var include = "";
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -629,7 +639,7 @@ Util.nextSibling = u.ns = function(node, _options) {
 Util.childNodes = u.cn = function(node, _options) {
 	var exclude = "";
 	var include = "";
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -642,7 +652,8 @@ Util.childNodes = u.cn = function(node, _options) {
 	var include_nodes = include ? u.qsa(include, node) : [];
 	var i, child;
 	var children = new Array();
-	for(i = 0; child = node.childNodes[i]; i++) {
+	for(i = 0; i < node.childNodes.length; i++) {
+		child = node.childNodes[i]
 		if(child && child.nodeType != 3 && child.nodeType != 8 && (!exclude || (!u.inNodeList(child, exclude_nodes))) && (!include || (u.inNodeList(child, include_nodes)))) {
 			children.push(child);
 		}
@@ -651,7 +662,7 @@ Util.childNodes = u.cn = function(node, _options) {
 }
 Util.appendElement = u.ae = function(_parent, node_type, attributes) {
 	try {
-		var node = (typeof(node_type) == "object") ? node_type : document.createElement(node_type);
+		var node = (obj(node_type)) ? node_type : document.createElement(node_type);
 		node = _parent.appendChild(node);
 		if(attributes) {
 			var attribute;
@@ -673,7 +684,7 @@ Util.appendElement = u.ae = function(_parent, node_type, attributes) {
 }
 Util.insertElement = u.ie = function(_parent, node_type, attributes) {
 	try {
-		var node = (typeof(node_type) == "object") ? node_type : document.createElement(node_type);
+		var node = (obj(node_type)) ? node_type : document.createElement(node_type);
 		node = _parent.insertBefore(node, _parent.firstChild);
 		if(attributes) {
 			var attribute;
@@ -742,7 +753,7 @@ Util.textContent = u.text = function(node) {
 Util.clickableElement = u.ce = function(node, _options) {
 	node._use_link = "a";
 	node._click_type = "manual";
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -763,18 +774,18 @@ Util.clickableElement = u.ce = function(node, _options) {
 	else {
 		u.ac(node, "clickable");
 	}
-	if(typeof(u.e) != "undefined" && typeof(u.e.click) == "function") {
+	if(obj(u.e) && fun(u.e.click)) {
 		u.e.click(node, _options);
 		if(node._click_type == "link") {
 			node.clicked = function(event) {
-				if(typeof(node.preClicked) == "function") {
+				if(fun(node.preClicked)) {
 					node.preClicked();
 				}
 				if(event && (event.metaKey || event.ctrlKey)) {
 					window.open(this.url);
 				}
 				else {
-					if(typeof(u.h) != "undefined" && u.h.is_listening) {
+					if(obj(u.h) && u.h.is_listening) {
 						u.h.navigate(this.url, this);
 					}
 					else {
@@ -953,7 +964,8 @@ Util.selectText = function(node) {
 }
 Util.inNodeList = function(node, list) {
 	var i, list_node;
-	for(i = 0; list_node = list[i]; i++) {
+	for(i = 0; i < list.length; i++) {
+		list_node = list[i]
 		if(list_node === node) {
 			return true;
 		}
@@ -1168,7 +1180,7 @@ Util.Events = u.e = new function() {
 	}
 	this.resetEvents = function(node) {
 		this.resetClickEvents(node);
-		if(typeof(this.resetDragEvents) == "function") {
+		if(fun(this.resetDragEvents)) {
 			this.resetDragEvents(node);
 		}
 	}
@@ -1219,7 +1231,7 @@ Util.Events = u.e = new function() {
 			u.e.addMoveEvent(this, u.e._scrollStart);
 			u.e.addEndEvent(this, u.e._scrollEnd);
 		}
-		if(typeof(this.inputStarted) == "function") {
+		if(fun(this.inputStarted)) {
 			this.inputStarted(event);
 		}
 	}
@@ -1228,13 +1240,13 @@ Util.Events = u.e = new function() {
 		var offset_y = u.eventY(event) - this.start_event_y;
 		if(event.type.match(/mouseout/) || (event.type.match(/move/) && (Math.abs(offset_x) > 15 || Math.abs(offset_y) > 15))) {
 			u.e.resetClickEvents(this);
-			if(typeof(this.clickCancelled) == "function") {
+			if(fun(this.clickCancelled)) {
 				this.clickCancelled(event);
 			}
 		}
 	}
 	this._move = function(event) {
-		if(typeof(this.moved) == "function") {
+		if(fun(this.moved)) {
 			this.current_x = u.eventX(event) - this.start_event_x;
 			this.current_y = u.eventY(event) - this.start_event_y;
 			this.current_xps = Math.round(((this.current_x - this.move_last_x) / (event.timeStamp - this.move_timestamp)) * 1000);
@@ -1255,7 +1267,7 @@ Util.Events = u.e = new function() {
 		this.e_hold_options.event = event;
 		u.stats.event(this, this.e_hold_options);
 		u.e.resetNestedEvents(this);
-		if(typeof(this.held) == "function") {
+		if(fun(this.held)) {
 			this.held(event);
 		}
 	}
@@ -1271,7 +1283,7 @@ Util.Events = u.e = new function() {
 			u.stats.event(this, this.e_click_options);
 		}
 		u.e.resetNestedEvents(this);
-		if(typeof(this.clicked) == "function") {
+		if(fun(this.clicked)) {
 			this.clicked(event);
 		}
 	}
@@ -1286,7 +1298,7 @@ Util.Events = u.e = new function() {
 			this.e_dblclick_options.event = event;
 			u.stats.event(this, this.e_dblclick_options);
 			u.e.resetNestedEvents(this);
-			if(typeof(this.dblclicked) == "function") {
+			if(fun(this.dblclicked)) {
 				this.dblclicked(event);
 			}
 			return;
@@ -1309,7 +1321,7 @@ Util.Events = u.e = new function() {
 		node._hover_over_delay = 0;
 		node._callback_out = "out";
 		node._callback_over = "over";
-		if(typeof(_options) == "object") {
+		if(obj(_options)) {
 			var argument;
 			for(argument in _options) {
 				switch(argument) {
@@ -1339,7 +1351,7 @@ Util.Events = u.e = new function() {
 			this.is_hovered = true;
 			u.e.removeOverEvent(this, u.e._over);
 			u.e.addOverEvent(this, u.e.__over);
-			if(typeof(this[this._callback_over]) == "function") {
+			if(fun(this[this._callback_over])) {
 				this[this._callback_over](event);
 			}
 		}
@@ -1353,7 +1365,7 @@ Util.Events = u.e = new function() {
 		this.is_hovered = false;
 		u.e.removeOverEvent(this, u.e.__over);
 		u.e.addOverEvent(this, u.e._over);
-		if(typeof(this[this._callback_out]) == "function") {
+		if(fun(this[this._callback_out])) {
 			this[this._callback_out](event);
 		}
 	}
@@ -1388,11 +1400,11 @@ u.e.addOnloadEvent = function(action) {
 u.e.addWindowEvent = function(node, type, action) {
 	var id = u.randomString();
 	window["_OnWindowEvent_node_"+ id] = node;
-	if(typeof(action) == "function") {
+	if(fun(action)) {
 		eval('window["_OnWindowEvent_callback_' + id + '"] = function(event) {window["_OnWindowEvent_node_'+ id + '"]._OnWindowEvent_callback_'+id+' = '+action+'; window["_OnWindowEvent_node_'+ id + '"]._OnWindowEvent_callback_'+id+'(event);};');
 	} 
 	else {
-		eval('window["_OnWindowEvent_callback_' + id + '"] = function(event) {if(typeof(window["_OnWindowEvent_node_'+ id + '"]["'+action+'"]) == "function") {window["_OnWindowEvent_node_'+id+'"]["'+action+'"](event);}};');
+		eval('window["_OnWindowEvent_callback_' + id + '"] = function(event) {if(fun(window["_OnWindowEvent_node_'+ id + '"]["'+action+'"])) {window["_OnWindowEvent_node_'+id+'"]["'+action+'"](event);}};');
 	}
 	u.e.addEvent(window, type, window["_OnWindowEvent_callback_" + id]);
 	return id;
@@ -1405,11 +1417,11 @@ u.e.removeWindowEvent = function(node, type, id) {
 u.e.addWindowStartEvent = function(node, action) {
 	var id = u.randomString();
 	window["_Onstart_node_"+ id] = node;
-	if(typeof(action) == "function") {
+	if(fun(action)) {
 		eval('window["_Onstart_callback_' + id + '"] = function(event) {window["_Onstart_node_'+ id + '"]._Onstart_callback_'+id+' = '+action+'; window["_Onstart_node_'+ id + '"]._Onstart_callback_'+id+'(event);};');
 	} 
 	else {
-		eval('window["_Onstart_callback_' + id + '"] = function(event) {if(typeof(window["_Onstart_node_'+ id + '"]["'+action+'"]) == "function") {window["_Onstart_node_'+id+'"]["'+action+'"](event);}};');
+		eval('window["_Onstart_callback_' + id + '"] = function(event) {if(fun(window["_Onstart_node_'+ id + '"]["'+action+'"])) {window["_Onstart_node_'+id+'"]["'+action+'"](event);}};');
 	}
 	u.e.addStartEvent(window, window["_Onstart_callback_" + id]);
 	return id;
@@ -1423,11 +1435,11 @@ u.e.removeWindowStartEvent = function(node, id) {
 u.e.addWindowMoveEvent = function(node, action) {
 	var id = u.randomString();
 	window["_Onmove_node_"+ id] = node;
-	if(typeof(action) == "function") {
+	if(fun(action)) {
 		eval('window["_Onmove_callback_' + id + '"] = function(event) {window["_Onmove_node_'+ id + '"]._Onmove_callback_'+id+' = '+action+'; window["_Onmove_node_'+ id + '"]._Onmove_callback_'+id+'(event);};');
 	} 
 	else {
-		eval('window["_Onmove_callback_' + id + '"] = function(event) {if(typeof(window["_Onmove_node_'+ id + '"]["'+action+'"]) == "function") {window["_Onmove_node_'+id+'"]["'+action+'"](event);}};');
+		eval('window["_Onmove_callback_' + id + '"] = function(event) {if(fun(window["_Onmove_node_'+ id + '"]["'+action+'"])) {window["_Onmove_node_'+id+'"]["'+action+'"](event);}};');
 	}
 	u.e.addMoveEvent(window, window["_Onmove_callback_" + id]);
 	return id;
@@ -1441,11 +1453,11 @@ u.e.removeWindowMoveEvent = function(node, id) {
 u.e.addWindowEndEvent = function(node, action) {
 	var id = u.randomString();
 	window["_Onend_node_"+ id] = node;
-	if(typeof(action) == "function") {
+	if(fun(action)) {
 		eval('window["_Onend_callback_' + id + '"] = function(event) {window["_Onend_node_'+ id + '"]._Onend_callback_'+id+' = '+action+'; window["_Onend_node_'+ id + '"]._Onend_callback_'+id+'(event);};');
 	} 
 	else {
-		eval('window["_Onend_callback_' + id + '"] = function(event) {if(typeof(window["_Onend_node_'+ id + '"]["'+action+'"]) == "function") {window["_Onend_node_'+id+'"]["'+action+'"](event);}};');
+		eval('window["_Onend_callback_' + id + '"] = function(event) {if(fun(window["_Onend_node_'+ id + '"]["'+action+'"])) {window["_Onend_node_'+id+'"]["'+action+'"](event);}};');
 	}
 	u.e.addEndEvent(window, window["_Onend_callback_" + id]);
 	return id;
@@ -1517,7 +1529,7 @@ u.e.drag = function(node, boundaries, _options) {
 	node.callback_picked = "picked";
 	node.callback_moved = "moved";
 	node.callback_dropped = "dropped";
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -1601,7 +1613,7 @@ u.e._pick = function(event) {
 			u.a.transition(this, "none");
 			u.e.addMoveEvent(this, u.e._drag);
 			u.e.addEndEvent(this, u.e._drop);
-			if(typeof(this[this.callback_picked]) == "function") {
+			if(fun(this[this.callback_picked])) {
 				this[this.callback_picked](event);
 			}
 			if(this.drag_dropout && event.type.match(/mouse/)) {
@@ -1730,7 +1742,7 @@ u.e._drag = function(event) {
 			u.a.translate(this, this._x, this._y);
 		}
 	}
-	if(typeof(this[this.callback_moved]) == "function") {
+	if(fun(this[this.callback_moved])) {
 		this[this.callback_moved](event);
 	}
 }
@@ -1739,16 +1751,16 @@ u.e._drop = function(event) {
 	if(this.e_swipe && this.swiped) {
 		this.e_swipe_options.eventAction = "Swiped "+ this.swiped;
 		u.stats.event(this, this.e_swipe_options);
-		if(this.swiped == "left" && typeof(this.swipedLeft) == "function") {
+		if(this.swiped == "left" && fun(this.swipedLeft)) {
 			this.swipedLeft(event);
 		}
-		else if(this.swiped == "right" && typeof(this.swipedRight) == "function") {
+		else if(this.swiped == "right" && fun(this.swipedRight)) {
 			this.swipedRight(event);
 		}
-		else if(this.swiped == "down" && typeof(this.swipedDown) == "function") {
+		else if(this.swiped == "down" && fun(this.swipedDown)) {
 			this.swipedDown(event);
 		}
-		else if(this.swiped == "up" && typeof(this.swipedUp) == "function") {
+		else if(this.swiped == "up" && fun(this.swipedUp)) {
 			this.swipedUp(event);
 		}
 	}
@@ -1770,7 +1782,7 @@ u.e._drop = function(event) {
 		this.transitioned = function() {
 			this.transitioned = null;
 			u.a.transition(this, "none");
-			if(typeof(this.projected) == "function") {
+			if(fun(this.projected)) {
 				this.projected(event);
 			}
 		}
@@ -1786,7 +1798,7 @@ u.e._drop = function(event) {
 		this.e_drag_options.eventAction = u.stringOr(this.e_drag_options.eventAction, "Dropped");
 		u.stats.event(this, this.e_drag_options);
 	}
-	if(typeof(this[this.callback_dropped]) == "function") {
+	if(fun(this[this.callback_dropped])) {
 		this[this.callback_dropped](event);
 	}
 }
@@ -1826,7 +1838,7 @@ Util.Form = u.f = new function() {
 		_form._hover_z_index = 49;
 		_form._validation = true;
 		_form._debug_init = false;
-		if(typeof(_options) == "object") {
+		if(obj(_options)) {
 			var _argument;
 			for(_argument in _options) {
 				switch(_argument) {
@@ -1851,13 +1863,14 @@ Util.Form = u.f = new function() {
 		_form.error_fields = {};
 		_form.labelstyle = u.cv(_form, "labelstyle");
 		var fields = u.qsa(".field", _form);
-		for(i = 0; field = fields[i]; i++) {
+		for(i = 0; i < fields.length; i++) {
+			field = fields[i];
 			field._base_z_index = u.gcs(field, "z-index");
 			field._help = u.qs(".help", field);
 			field._hint = u.qs(".hint", field);
 			field._error = u.qs(".error", field);
 			field._indicator = u.ae(field, "div", {"class":"indicator"});
-			if(typeof(u.f.fixFieldHTML) == "function") {
+			if(fun(u.f.fixFieldHTML)) {
 				u.f.fixFieldHTML(field);
 			}
 			field._initialized = false;
@@ -1973,7 +1986,8 @@ Util.Form = u.f = new function() {
 					field._inputs = u.qsa("input", field);
 					field._input = field._inputs[0];
 					_form.fields[field._input.name] = field._input;
-					for(j = 0; input = field._inputs[j]; j++) {
+					for(j = 0; j < field._inputs.length; j++) {
+						input = field._inputs[j];
 						input.field = field;
 						input._form = _form;
 						input._label = u.qs("label[for='"+input.id+"']", field);
@@ -1988,7 +2002,8 @@ Util.Form = u.f = new function() {
 									this._changed(window.event);
 									this._updated(window.event);
 								}
-								for(i = 0; input = this.field._input[i]; i++) {
+								for(i = 0; i < field._input.length; i++) {
+									input = this.field._input[i];
 									input.pre_state = input.checked;
 								}
 							}
@@ -2055,7 +2070,8 @@ Util.Form = u.f = new function() {
 			}
 		}
 		var hidden_fields = u.qsa("input[type=hidden]", _form);
-		for(i = 0; hidden_field = hidden_fields[i]; i++) {
+		for(i = 0; i < hidden_fields.length; i++) {
+			hidden_field = hidden_fields[i];
 			if(!_form.fields[hidden_field.name]) {
 				_form.fields[hidden_field.name] = hidden_field;
 				hidden_field._form = _form;
@@ -2063,7 +2079,8 @@ Util.Form = u.f = new function() {
 			}
 		}
 		var actions = u.qsa(".actions li input[type=button],.actions li input[type=submit],.actions li input[type=reset],.actions li a.button", _form);
-		for(i = 0; action = actions[i]; i++) {
+		for(i = 0; i < actions.length; i++) {
+			action = actions[i];
 				action._form = _form;
 			this.activateButton(action);
 		}
@@ -2084,21 +2101,21 @@ Util.Form = u.f = new function() {
 	}
 	this._submit = function(event, iN) {
 		for(name in this.fields) {
-			if(this.fields[name] && this.fields[name].field && typeof(this.fields[name].val) == "function") {
+			if(this.fields[name] && this.fields[name].field && fun(this.fields[name].val)) {
 				this.fields[name].used = true;
 				u.f.validate(this.fields[name]);
 			}
 		}
 		if(!Object.keys(this.error_fields).length) {
-			if(typeof(this.preSubmitted) == "function") {
+			if(fun(this.preSubmitted)) {
 				this.preSubmitted(iN);
 			}
-			if(typeof(this.submitted) == "function") {
+			if(fun(this.submitted)) {
 				this.submitted(iN);
 			}
 			else {
 				for(name in this.fields) {
-					if(this.fields[name] && this.fields[name].default_value && typeof(this.fields[name].val) == "function" && !this.fields[name].val()) {
+					if(this.fields[name] && this.fields[name].default_value && fun(this.fields[name].val) && !this.fields[name].val()) {
 						if(this.fields[name].nodeName.match(/^(input|textarea)$/i)) {
 							this.fields[name].value = "";
 						}
@@ -2124,7 +2141,8 @@ Util.Form = u.f = new function() {
 	this._value_radiobutton = function(value) {
 		var i, option;
 		if(value !== undefined) {
-			for(i = 0; option = this.field._inputs[i]; i++) {
+			for(i = 0; i < this.field._inputs.length; i++) {
+				option = this.field._inputs[i];
 				if(option.value == value || (option.value == "true" && value) || (option.value == "false" && value === false)) {
 					option.checked = true;
 					u.f.validate(this);
@@ -2135,7 +2153,8 @@ Util.Form = u.f = new function() {
 			}
 		}
 		else {
-			for(i = 0; option = this.field._inputs[i]; i++) {
+			for(i = 0; i < this.field._inputs.length; i++) {
+				option = this.field._inputs[i];
 				if(option.checked) {
 					return option.value;
 				}
@@ -2165,7 +2184,8 @@ Util.Form = u.f = new function() {
 	this._value_select = function(value) {
 		if(value !== undefined) {
 			var i, option;
-			for(i = 0; option = this.options[i]; i++) {
+			for(i = 0; i < this.options.length; i++) {
+				option = this.options[i];
 				if(option.value == value) {
 					this.selectedIndex = i;
 					u.f.validate(this);
@@ -2193,7 +2213,8 @@ Util.Form = u.f = new function() {
 		else {
 			if(this.value && this.files && this.files.length) {
 				var i, file, files = [];
-				for(i = 0; file = this.files[i]; i++) {
+				for(i = 0; i < this.files.length; i++) {
+					file = this.files[i];
 					files.push(file);
 				}
 				return files;
@@ -2235,7 +2256,7 @@ Util.Form = u.f = new function() {
 	}
 	this.buttonOnEnter = function(node) {
 		node.keyPressed = function(event) {
-			if(event.keyCode == 13 && !u.hc(this, "disabled") && typeof(this.clicked) == "function") {
+			if(event.keyCode == 13 && !u.hc(this, "disabled") && fun(this.clicked)) {
 				u.e.kill(event);
 				this.clicked(event);
 			}
@@ -2244,16 +2265,16 @@ Util.Form = u.f = new function() {
 	}
 	this._changed = function(event) {
 		this.used = true;
-		if(typeof(this.changed) == "function") {
+		if(fun(this.changed)) {
 			this.changed(this);
 		}
-		else if(this.field._input && typeof(this.field._input.changed) == "function") {
+		else if(this.field._input && fun(this.field._input.changed)) {
 			this.field._input.changed(this);
 		}
-		if(typeof(this.field.changed) == "function") {
+		if(fun(this.field.changed)) {
 			this.field.changed(this);
 		}
-		if(typeof(this._form.changed) == "function") {
+		if(fun(this._form.changed)) {
 			this._form.changed(this);
 		}
 	}
@@ -2262,16 +2283,16 @@ Util.Form = u.f = new function() {
 			if(this.used || u.hc(this.field, "error")) {
 				u.f.validate(this);
 			}
-			if(typeof(this.updated) == "function") {
+			if(fun(this.updated)) {
 				this.updated(this);
 			}
-			else if(this.field._input && typeof(this.field._input.updated) == "function") {
+			else if(this.field._input && fun(this.field._input.updated)) {
 				this.field._input.updated(this);
 			}
-			if(typeof(this.field.updated) == "function") {
+			if(fun(this.field.updated)) {
 				this.field.updated(this);
 			}
-			if(typeof(this._form.updated) == "function") {
+			if(fun(this._form.updated)) {
 				this._form.updated(this);
 			}
 		}
@@ -2306,13 +2327,13 @@ Util.Form = u.f = new function() {
 		u.ac(this, "focus");
 		u.as(this.field, "zIndex", this._form._focus_z_index);
 		u.f.positionHint(this.field);
-		if(typeof(this.focused) == "function") {
+		if(fun(this.focused)) {
 			this.focused();
 		}
-		else if(this.field._input && typeof(this.field._input.focused) == "function") {
+		else if(this.field._input && fun(this.field._input.focused)) {
 			this.field._input.focused(this);
 		}
-		if(typeof(this._form.focused) == "function") {
+		if(fun(this._form.focused)) {
 			this._form.focused(this);
 		}
 	}
@@ -2324,31 +2345,31 @@ Util.Form = u.f = new function() {
 		u.as(this.field, "zIndex", this.field._base_z_index);
 		u.f.positionHint(this.field);
 		this.used = true;
-		if(typeof(this.blurred) == "function") {
+		if(fun(this.blurred)) {
 			this.blurred();
 		}
-		else if(this.field._input && typeof(this.field._input.blurred) == "function") {
+		else if(this.field._input && fun(this.field._input.blurred)) {
 			this.field._input.blurred(this);
 		}
-		if(typeof(this._form.blurred) == "function") {
+		if(fun(this._form.blurred)) {
 			this._form.blurred(this);
 		}
 	}
 	this._button_focus = function(event) {
 		u.ac(this, "focus");
-		if(typeof(this.focused) == "function") {
+		if(fun(this.focused)) {
 			this.focused();
 		}
-		if(typeof(this._form.focused) == "function") {
+		if(fun(this._form.focused)) {
 			this._form.focused(this);
 		}
 	}
 	this._button_blur = function(event) {
 		u.rc(this, "focus");
-		if(typeof(this.blurred) == "function") {
+		if(fun(this.blurred)) {
 			this.blurred();
 		}
-		if(typeof(this._form.blurred) == "function") {
+		if(fun(this._form.blurred)) {
 			this._form.blurred(this);
 		}
 	}
@@ -2438,7 +2459,7 @@ Util.Form = u.f = new function() {
 		if(action_name) {
 			action._form.actions[action_name] = action;
 		}
-		if(typeof(u.k) == "object" && u.hc(action, "key:[a-z0-9]+")) {
+		if(obj(u.k) && u.hc(action, "key:[a-z0-9]+")) {
 			u.k.addKey(action, u.cv(action, "key"));
 		}
 		u.e.addEvent(action, "focus", this._button_focus);
@@ -2509,25 +2530,25 @@ Util.Form = u.f = new function() {
 	}
 	this.updateFormValidationState = function(iN) {
 		if(this.checkFormValidation(iN._form)) {
-			if(typeof(iN.validationPassed) == "function") {
+			if(fun(iN.validationPassed)) {
 				iN.validationPassed();
 			}
-			if(typeof(iN.field.validationPassed) == "function") {
+			if(fun(iN.field.validationPassed)) {
 				iN.field.validationPassed();
 			}
-			if(typeof(iN._form.validationPassed) == "function") {
+			if(fun(iN._form.validationPassed)) {
 				iN._form.validationPassed();
 			}
 			return true;
 		}
 		else {
-			if(typeof(iN.validationFailed) == "function") {
+			if(fun(iN.validationFailed)) {
 				iN.validationFailed(iN._form.error_fields);
 			}
-			if(typeof(iN.field.validationFailed) == "function") {
+			if(fun(iN.field.validationFailed)) {
 				iN.field.validationFailed(iN._form.error_fields);
 			}
-			if(typeof(iN._form.validationFailed) == "function") {
+			if(fun(iN._form.validationFailed)) {
 				iN._form.validationFailed(iN._form.error_fields);
 			}
 			return false;
@@ -2757,7 +2778,7 @@ Util.Form = u.f = new function() {
 u.f.getParams = function(_form, _options) {
 	var send_as = "params";
 	var ignore_inputs = "ignoreinput";
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -2767,7 +2788,7 @@ u.f.getParams = function(_form, _options) {
 		}
 	}
 	var i, input, select, textarea, param, params;
-	if(send_as == "formdata" && (typeof(window.FormData) == "function" || typeof(window.FormData) == "object")) {
+	if(send_as == "formdata" && (fun(window.FormData) || obj(window.FormData))) {
 		params = new FormData();
 	}
 	else {
@@ -2785,10 +2806,11 @@ u.f.getParams = function(_form, _options) {
 	var inputs = u.qsa("input", _form);
 	var selects = u.qsa("select", _form)
 	var textareas = u.qsa("textarea", _form)
-	for(i = 0; input = inputs[i]; i++) {
+	for(i = 0; i < inputs.length; i++) {
+		input = inputs[i];
 		if(!u.hc(input, ignore_inputs)) {
 			if((input.type == "checkbox" || input.type == "radio") && input.checked) {
-				if(typeof(input.val) == "function") {
+				if(fun(input.val)) {
 					params.append(input.name, input.val());
 				}
 				else {
@@ -2797,14 +2819,15 @@ u.f.getParams = function(_form, _options) {
 			}
 			else if(input.type == "file") {
 				var f, file, files;
-				if(typeof(input.val) == "function") {
+				if(fun(input.val)) {
 					files = input.val();
 				}
 				else {
 					files = input.value;
 				}
 				if(files) {
-					for(f = 0; file = files[f]; f++) {
+					for(f = 0; i < files.length; f++) {
+						file = files[f];
 						params.append(input.name, file, file.name);
 					}
 				}
@@ -2813,7 +2836,7 @@ u.f.getParams = function(_form, _options) {
 				}
 			}
 			else if(!input.type.match(/button|submit|reset|file|checkbox|radio/i)) {
-				if(typeof(input.val) == "function") {
+				if(fun(input.val)) {
 					params.append(input.name, input.val());
 				}
 				else {
@@ -2822,9 +2845,10 @@ u.f.getParams = function(_form, _options) {
 			}
 		}
 	}
-	for(i = 0; select = selects[i]; i++) {
+	for(i = 0; i < selects.length; i++) {
+		select = selects[i];
 		if(!u.hc(select, ignore_inputs)) {
-			if(typeof(select.val) == "function") {
+			if(fun(select.val)) {
 				params.append(select.name, select.val());
 			}
 			else {
@@ -2832,9 +2856,10 @@ u.f.getParams = function(_form, _options) {
 			}
 		}
 	}
-	for(i = 0; textarea = textareas[i]; i++) {
+	for(i = 0; i < textareas.length; i++) {
+		textarea = textareas[i];
 		if(!u.hc(textarea, ignore_inputs)) {
-			if(typeof(textarea.val) == "function") {
+			if(fun(textarea.val)) {
 				params.append(textarea.name, textarea.val());
 			}
 			else {
@@ -2842,7 +2867,7 @@ u.f.getParams = function(_form, _options) {
 			}
 		}
 	}
-	if(send_as && typeof(this.customSend[send_as]) == "function") {
+	if(send_as && fun(this.customSend[send_as])) {
 		return this.customSend[send_as](params, _form);
 	}
 	else if(send_as == "json") {
@@ -2858,7 +2883,7 @@ u.f.getParams = function(_form, _options) {
 	else {
 		var string = "";
 		for(param in params) {
-			if(typeof(params[param]) != "function") {
+			if(!fun(params[param])) {
 				string += (string ? "&" : "") + param + "=" + encodeURIComponent(params[param]);
 			}
 		}
@@ -2926,7 +2951,7 @@ u.f.addForm = function(node, _options) {
 	var form_action = "#";
 	var form_method = "post";
 	var form_class = "";
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -2942,7 +2967,7 @@ u.f.addForm = function(node, _options) {
 }
 u.f.addFieldset = function(node, _options) {
 	var fieldset_class = "";
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -2969,7 +2994,7 @@ u.f.addField = function(node, _options) {
 	var field_pattern = false;
 	var field_error_message = "There is an error in your input";
 	var field_hint_message = "";
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -3094,7 +3119,8 @@ u.f.addField = function(node, _options) {
 		var select = u.ae(field, "select", u.f.verifyAttributes(attributes));
 		if(field_options) {
 			var i, option;
-			for(i = 0; option = field_options[i]; i++) {
+			for(i = 0; i < field_options.length; i++) {
+				option = field_options[i];
 				if(option.value == field_value) {
 					u.ae(select, "option", {"value":option.value, "html":option.text, "selected":"selected"});
 				}
@@ -3108,7 +3134,8 @@ u.f.addField = function(node, _options) {
 		u.ae(field, "label", {"html":field_label});
 		if(field_options) {
 			var i, option;
-			for(i = 0; option = field_options[i]; i++) {
+			for(i = 0; i < field_options.length; i++) {
+				option = field_options[i];
 				var div = u.ae(field, "div", {"class":"item"});
 				if(option.value == field_value) {
 					u.ae(div, "input", {"value":option.value, "id":field_id+"-"+i, "type":"radio", "name":field_name, "checked":"checked"});
@@ -3152,7 +3179,7 @@ u.f.addAction = function(node, _options) {
 	var action_name = "js_name";
 	var action_value = "";
 	var action_class = "";
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -3163,7 +3190,7 @@ u.f.addAction = function(node, _options) {
 			}
 		}
 	}
-	var p_ul = node.nodeName.toLowerCase() == "ul" ? node : u.pn(node, {"include":"ul"});
+	var p_ul = node.nodeName.toLowerCase() == "ul" ? node : u.pn(node, {"include":"ul.actions"});
 	if(!p_ul || !u.hc(p_ul, "actions")) {
 		if(node.nodeName.toLowerCase() == "form") {
 			p_ul = u.qs("ul.actions", node);
@@ -3249,15 +3276,16 @@ Util.History = u.h = new function() {
 	}
 	this.callback = function(url) {
 		var i, recipient;
-		for(i = 0; recipient = this.callbacks[i]; i++) {
-			if(typeof(recipient.node[recipient.callback]) == "function") {
+		for(i = 0; i < this.callbacks.length; i++) {
+			recipient = this.callbacks[i];
+			if(fun(recipient.node[recipient.callback])) {
 				recipient.node[recipient.callback](url);
 			}
 		}
 	}
 	this.removeEvent = function(node, _options) {
 		var callback_urlchange = "navigate";
-		if(typeof(_options) == "object") {
+		if(obj(_options)) {
 			var argument;
 			for(argument in _options) {
 				switch(argument) {
@@ -3275,7 +3303,7 @@ Util.History = u.h = new function() {
 	}
 	this.addEvent = function(node, _options) {
 		var callback_urlchange = "navigate";
-		if(typeof(_options) == "object") {
+		if(obj(_options)) {
 			var argument;
 			for(argument in _options) {
 				switch(argument) {
@@ -3366,10 +3394,11 @@ Util.init = function(scope) {
 	var i, node, nodes, object;
 	scope = scope && scope.nodeName ? scope : document;
 	nodes = u.ges("i\:([_a-zA-Z0-9])+", scope);
-	for(i = 0; node = nodes[i]; i++) {
+	for(i = 0; i < nodes.length; i++) {
+		node = nodes[i];
 		while((object = u.cv(node, "i"))) {
 			u.rc(node, "i:"+object);
-			if(object && typeof(u.o[object]) == "object") {
+			if(object && obj(u.o[object])) {
 				u.o[object].init(node);
 			}
 		}
@@ -3383,7 +3412,7 @@ Util.Keyboard = u.k = new function() {
 	this.addKey = function(node, key, _options) {
 		node.callback_keyboard = "clicked";
 		node.metakey_required = true;
-		if(typeof(_options) == "object") {
+		if(obj(_options)) {
 			var argument;
 			for(argument in _options) {
 				switch(argument) {
@@ -3409,11 +3438,12 @@ Util.Keyboard = u.k = new function() {
 		if(this.shortcuts[key]) {
 			var nodes, node, i;
 			nodes = this.shortcuts[key];
-			for(i = 0; node = nodes[i]; i++) {
+			for(i = 0; i < nodes.length; i++) {
+				node = nodes[i];
 				if(u.nodeWithin(node, document.body)) {
 					if(node.offsetHeight && ((event.ctrlKey || event.metaKey) || (!node.metakey_required || key == "ESC"))) {
 						u.e.kill(event);
-						if(typeof(node[node.callback_keyboard]) == "function") {
+						if(fun(node[node.callback_keyboard])) {
 							node[node.callback_keyboard](event);
 						}
 					}
@@ -3449,7 +3479,7 @@ u.navigation = function(_options) {
 	var navigation_node = page;
 	var callback_navigate = "_navigate";
 	var initialization_scope = page.cN;
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var argument;
 		for(argument in _options) {
 			switch(argument) {
@@ -3468,15 +3498,15 @@ u.navigation = function(_options) {
 			(!u.h.popstate && window._man_nav_path != u.h.getCleanHash(location.hash, 1)) || 
 			(u.h.popstate && window._man_nav_path != u.h.getCleanUrl(location.href, 1))
 		) {
-			if(this.cN && typeof(this.cN.navigate) == "function") {
+			if(this.cN && fun(this.cN.navigate)) {
 				this.cN.navigate(url);
 			}
 		}
 		else {
-			if(this.cN.scene && this.cN.scene.parentNode && typeof(this.cN.scene.navigate) == "function") {
+			if(this.cN.scene && this.cN.scene.parentNode && fun(this.cN.scene.navigate)) {
 				this.cN.scene.navigate(url);
 			}
-			else if(this.cN && typeof(this.cN.navigate) == "function") {
+			else if(this.cN && fun(this.cN.navigate)) {
 				this.cN.navigate(url);
 			}
 		}
@@ -3534,7 +3564,7 @@ u.preloader = function(node, files, _options) {
 	var callback_preloader_loading = "loading";
 	var callback_preloader_waiting = "waiting";
 	node._callback_min_delay = 0;
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -3565,14 +3595,15 @@ u.preloader = function(node, files, _options) {
 		new_queue._files = files;
 		new_queue.nodes = new Array();
 		new_queue._start_time = new Date().getTime();
-		for(i = 0; file = files[i]; i++) {
+		for(i = 0; i < files.length; i++) {
+			file = files[i];
 			entry = u.ae(new_queue, "li", {"class":"waiting"});
 			entry.i = i;
 			entry._queue = new_queue
 			entry._file = file;
 		}
 		u.ac(node, "waiting");
-		if(typeof(node[new_queue._callback_waiting]) == "function") {
+		if(fun(node[new_queue._callback_waiting])) {
 			node[new_queue._callback_waiting](new_queue.nodes);
 		}
 	}
@@ -3587,7 +3618,7 @@ u._queueLoader = function() {
 				if(u.hc(next._queue._node, "waiting")) {
 					u.rc(next._queue._node, "waiting");
 					u.ac(next._queue._node, "loading");
-					if(typeof(next._queue._node[next._queue._callback_loading]) == "function") {
+					if(fun(next._queue._node[next._queue._callback_loading])) {
 						next._queue._node[next._queue._callback_loading](next._queue.nodes);
 					}
 				}
@@ -3604,7 +3635,7 @@ u._queueLoader = function() {
 						u._preloader_processes--;
 						if(!u.qs("li.waiting,li.loading", this._queue)) {
 							u.rc(this._queue._node, "loading");
-							if(typeof(this._queue._node[this._queue._callback_loaded]) == "function") {
+							if(fun(this._queue._node[this._queue._callback_loaded])) {
 								this._queue._node[this._queue._callback_loaded](this._queue.nodes);
 							}
 						}
@@ -3621,13 +3652,13 @@ u._queueLoader = function() {
 						u._preloader_processes--;
 						if(!u.qs("li.waiting,li.loading", this._queue)) {
 							u.rc(this._queue._node, "loading");
-							if(typeof(this._queue._node[this._queue._callback_loaded]) == "function") {
+							if(fun(this._queue._node[this._queue._callback_loaded])) {
 								this._queue._node[this._queue._callback_loaded](this._queue.nodes);
 							}
 						}
 						u._queueLoader();
 					}
-					if(typeof(u.audioPlayer) == "function") {
+					if(fun(u.audioPlayer)) {
 						next.audioPlayer = u.audioPlayer();
 						next.load(next._file);
 					}
@@ -3654,23 +3685,23 @@ u.loadImage = function(node, src) {
 }
 u._imageLoaded = function(event) {
 	u.rc(this.node, "loading");
-	if(typeof(this.node.loaded) == "function") {
+	if(fun(this.node.loaded)) {
 		this.node.loaded(event);
 	}
 }
 u._imageLoadError = function(event) {
 	u.rc(this.node, "loading");
 	u.ac(this.node, "error");
-	if(typeof(this.node.loaded) == "function" && typeof(this.node.failed) != "function") {
+	if(fun(this.node.loaded) && typeof(this.node.failed) != "function") {
 		this.node.loaded(event);
 	}
-	else if(typeof(this.node.failed) == "function") {
+	else if(fun(this.node.failed)) {
 		this.node.failed(event);
 	}
 }
 u._imageLoadProgress = function(event) {
 	u.bug("progress")
-	if(typeof(this.node.progress) == "function") {
+	if(fun(this.node.progress)) {
 		this.node.progress(event);
 	}
 }
@@ -3695,7 +3726,7 @@ Util.request = function(node, url, _options) {
 	node[request_id].callback_error = "responseError";
 	node[request_id].jsonp_callback = "callback";
 	node[request_id].request_timeout = false;
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var argument;
 		for(argument in _options) {
 			switch(argument) {
@@ -3726,7 +3757,7 @@ Util.request = function(node, url, _options) {
 					u.validateResponse(this);
 				}
 			}
-			if(typeof(node[request_id].HTTPRequest.addEventListener) == "function") {
+			if(fun(node[request_id].HTTPRequest.addEventListener)) {
 				u.e.addEvent(node[request_id].HTTPRequest, "readystatechange", node[request_id].HTTPRequest.statechanged);
 			}
 		}
@@ -3744,7 +3775,7 @@ Util.request = function(node, url, _options) {
 				if(typeof(node[request_id].request_headers) != "object" || (!node[request_id].request_headers["Content-Type"] && !node[request_id].request_headers["content-type"])) {
 					node[request_id].HTTPRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 				}
-				if(typeof(node[request_id].request_headers) == "object") {
+				if(obj(node[request_id].request_headers)) {
 					var header;
 					for(header in node[request_id].request_headers) {
 						node[request_id].HTTPRequest.setRequestHeader(header, node[request_id].request_headers[header]);
@@ -3754,7 +3785,7 @@ Util.request = function(node, url, _options) {
 			}
 			else if(node[request_id].request_method.match(/POST|PUT|PATCH/i)) {
 				var params;
-				if(typeof(node[request_id].request_data) == "object" && node[request_id].request_data.constructor.toString().match(/function Object/i)) {
+				if(obj(node[request_id].request_data) && node[request_id].request_data.constructor.toString().match(/function Object/i)) {
 					params = JSON.stringify(node[request_id].request_data);
 				}
 				else {
@@ -3770,7 +3801,7 @@ Util.request = function(node, url, _options) {
 				if(!params.constructor.toString().match(/FormData/i) && (typeof(node[request_id].request_headers) != "object" || (!node[request_id].request_headers["Content-Type"] && !node[request_id].request_headers["content-type"]))) {
 					node[request_id].HTTPRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 				}
-				if(typeof(node[request_id].request_headers) == "object") {
+				if(obj(node[request_id].request_headers)) {
 					var header;
 					for(header in node[request_id].request_headers) {
 						node[request_id].HTTPRequest.setRequestHeader(header, node[request_id].request_headers[header]);
@@ -3824,7 +3855,7 @@ Util.request = function(node, url, _options) {
 	return request_id;
 }
 Util.JSONtoParams = function(json) {
-	if(typeof(json) == "object") {
+	if(obj(json)) {
 		var params = "", param;
 		for(param in json) {
 			params += (params ? "&" : "") + param + "=" + json[param];
@@ -3839,7 +3870,7 @@ Util.JSONtoParams = function(json) {
 }
 Util.evaluateResponseText = function(responseText) {
 	var object;
-	if(typeof(responseText) == "object") {
+	if(obj(responseText)) {
 		responseText.isJSON = true;
 		return responseText;
 	}
@@ -3896,24 +3927,24 @@ Util.validateResponse = function(HTTPRequest){
 		return;
 	}
 	if(object !== false) {
-		if(typeof(request.callback_response) == "function") {
+		if(fun(request.callback_response)) {
 			request.callback_response(object, request_id);
 		}
-		else if(typeof(node[request.callback_response]) == "function") {
+		else if(fun(node[request.callback_response])) {
 			node[request.callback_response](object, request_id);
 		}
 	}
 	else {
-		if(typeof(request.callback_error) == "function") {
+		if(fun(request.callback_error)) {
 			request.callback_error({error:true,status:request.status}, request_id);
 		}
-		else if(typeof(node[request.callback_error]) == "function") {
+		else if(fun(node[request.callback_error])) {
 			node[request.callback_error]({error:true,status:request.status}, request_id);
 		}
-		else if(typeof(request.callback_response) == "function") {
+		else if(fun(request.callback_response)) {
 			request.callback_response({error:true,status:request.status}, request_id);
 		}
-		else if(typeof(node[request.callback_response]) == "function") {
+		else if(fun(node[request.callback_response])) {
 			node[request.callback_response]({error:true,status:request.status}, request_id);
 		}
 	}
@@ -3927,7 +3958,7 @@ u.scrollTo = function(node, _options) {
 	var scroll_to_y = 0;
 	var to_node = false;
 	node._force_scroll_to = false;
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -4022,7 +4053,7 @@ u.scrollTo = function(node, _options) {
 			if(this._scroll_to_x == this._to_x && this._scroll_to_y == this._to_y) {
 				this.scrollToFinished();
 				this.scrollTo(this._to_x, this._to_y);
-				if(typeof(this[this.callback_scroll_to]) == "function") {
+				if(fun(this[this.callback_scroll_to])) {
 					this[this.callback_scroll_to]();
 				}
 				return;
@@ -4031,7 +4062,7 @@ u.scrollTo = function(node, _options) {
 		}
 		else {
 			this.cancelScrollTo();
-			if(typeof(this[this.callback_scroll_cancelled]) == "function") {
+			if(fun(this[this.callback_scroll_cancelled])) {
 				this[this.callback_scroll_cancelled]();
 			}
 		}	
@@ -4048,7 +4079,8 @@ Util.cutString = function(string, length) {
 	}
 	matches = string.match(/\&[\w\d]+\;/g);
 	if(matches) {
-		for(i = 0; match = matches[i]; i++){
+		for(i = 0; i < matches.length; i++){
+			match = matches[i];
 			if(string.indexOf(match) < length){
 				length += match.length-1;
 			}
@@ -4124,7 +4156,7 @@ Util.isStringJSON = function(string) {
 	if(string.trim().substr(0, 1).match(/[\{\[]/i) && string.trim().substr(-1, 1).match(/[\}\]]/i)) {
 		try {
 			var test = JSON.parse(string);
-			if(typeof(test) == "object") {
+			if(obj(test)) {
 				test.isJSON = true;
 				return test;
 			}
@@ -4233,7 +4265,8 @@ Util.browser = function(model, version) {
 		}
 	}
 	if(model.match(/\bsafari\b/i)) {
-		if(!window.chrome && document.body.style.webkitTransform != undefined && !u.browser("ie,edge")) {
+		u.bug(navigator.userAgent);
+		if(!window.chrome && navigator.userAgent.match(/WebKit[^$]+Version\/(\d+)(.\d)/i) && !u.browser("ie,edge")) {
 			current_version = navigator.userAgent.match(/Version\/(\d+)(.\d)/i)[1];
 		}
 	}
@@ -4268,7 +4301,8 @@ Util.segment = function(segment) {
 	if(!u.current_segment) {
 		var scripts = document.getElementsByTagName("script");
 		var script, i, src;
-		for(i = 0; script = scripts[i]; i++) {
+		for(i = 0; i < scripts.length; i++) {
+			script = scripts[i];
 			seg_src = script.src.match(/\/seg_([a-z_]+)/);
 			if(seg_src) {
 				u.current_segment = seg_src[1];
@@ -4361,11 +4395,12 @@ Util.vendor_prefix = false;
 Util.vendorPrefix = function() {
 	if(Util.vendor_prefix === false) {
 		Util.vendor_prefix = "";
-		if(document.documentElement && typeof(window.getComputedStyle) == "function") {
+		if(document.documentElement && fun(window.getComputedStyle)) {
 			var styles = window.getComputedStyle(document.documentElement, "");
 			if(styles.length) {
 				var i, style, match;
-				for(i = 0; style = styles[i]; i++) {
+				for(i = 0; i < styles.length; i++) {
+					style = styles[i];
 					match = style.match(/^-(moz|webkit|ms)-/);
 					if(match) {
 						Util.vendor_prefix = match[1];
@@ -4470,7 +4505,8 @@ u.textscaler = function(node, _settings) {
 			window._man_text._width = u.browserW();
 			window._man_text._height = u.browserH();
 			var i, node;
-			for(i = 0; node = window._man_text.nodes[i]; i++) {
+			for(i = 0; i < window._man_text.nodes.length; i++) {
+				node = window._man_text.nodes[i];
 				if(node.parentNode) { 
 					node.scaleText();
 				}
@@ -4487,7 +4523,8 @@ u.textscaler = function(node, _settings) {
 		u.e.addEvent(window, "resize", window._man_text.scale);
 		window._man_text.precalculate = function() {
 			var i, node, tag;
-			for(i = 0; node = window._man_text.nodes[i]; i++) {
+			for(i = 0; i < window._man_text.nodes.length; i++) {
+				node = window._man_text.nodes[i];
 				if(node.parentNode) { 
 					var settings = node.text_settings;
 					for(tag in settings) {
@@ -4558,12 +4595,12 @@ Util.Timer = u.t = new function() {
 		var timer = this._timers[id];
 		this._timers[id] = false;
 		var node = timer._n;
-		if(typeof(timer._a) == "function") {
+		if(fun(timer._a)) {
 			node._timer_action = timer._a;
 			node._timer_action(timer._p);
 			node._timer_action = null;
 		}
-		else if(typeof(node[timer._a]) == "function") {
+		else if(fun(node[timer._a])) {
 			node[timer._a](timer._p);
 		}
 	}
@@ -4581,12 +4618,12 @@ Util.Timer = u.t = new function() {
 	}
 	this._executeInterval = function(id) {
 		var node = this._timers[id]._n;
-		if(typeof(this._timers[id]._a) == "function") {
+		if(fun(this._timers[id]._a)) {
 			node._interval_action = this._timers[id]._a;
 			node._interval_action(this._timers[id]._p);
 			node._interval_action = null;
 		}
-		else if(typeof(node[this._timers[id]._a]) == "function") {
+		else if(fun(node[this._timers[id]._a])) {
 			node[this._timers[id]._a](this._timers[id]._p);
 		}
 	}
@@ -4624,7 +4661,7 @@ Util.getVar = function(param, url) {
 if(false && document.documentMode <= 10) {
 	Util.appendElement = u.ae = function(_parent, node_type, attributes) {
 		try {
-			var node = (typeof(node_type) == "object") ? node_type : document.createElement(node_type);
+			var node = (obj(node_type)) ? node_type : document.createElement(node_type);
 			if(attributes) {
 				var attribute;
 				for(attribute in attributes) {
@@ -4650,7 +4687,7 @@ if(false && document.documentMode <= 10) {
 	}
 	Util.insertElement = u.ie = function(_parent, node_type, attributes) {
 		try {
-			var node = (typeof(node_type) == "object") ? node_type : document.createElement(node_type);
+			var node = (obj(node_type)) ? node_type : document.createElement(node_type);
 			if(attributes) {
 				var attribute;
 				for(attribute in attributes) {
@@ -4820,7 +4857,7 @@ if(u.ga_account) {
 			var eventValue = null;
 			var nonInteraction = false;
 			var hitCallback = null;
-			if(typeof(_options) == "object") {
+			if(obj(_options)) {
 				var _argument;
 				for(_argument in _options) {
 					switch(_argument) {
@@ -4899,7 +4936,7 @@ Util.mediaPlayer = function(_options) {
 	player._ff_skip = 2;
 	player._rw_skip = 2;
 	player.media = u.ae(player, player.type);
-	if(player.media && typeof(player.media.play) == "function") {
+	if(player.media && fun(player.media.play)) {
 		player.load = function(src, _options) {
 			if(u.hc(this, "playing")) {
 				this.stop();
@@ -4920,7 +4957,7 @@ Util.mediaPlayer = function(_options) {
 		}
 		player.loadAndPlay = function(src, _options) {
 			var position = 0;
-			if(typeof(_options) == "object") {
+			if(obj(_options)) {
 				var _argument;
 				for(_argument in _options) {
 					switch(_argument) {
@@ -5001,7 +5038,7 @@ Util.mediaPlayer = function(_options) {
 	return player;
 }
 u.setupMedia = function(player, _options) {
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -5030,14 +5067,14 @@ u.setupMedia = function(player, _options) {
 		player.media.player = player;
 		player.media._loadstart = function(event) {
 			u.ac(this.player, "loading");
-			if(typeof(this.player.loading) == "function") {
+			if(fun(this.player.loading)) {
 				this.player.loading(event);
 			}
 		}
 		u.e.addEvent(player.media, "loadstart", player.media._loadstart);
 		player.media._canplaythrough = function(event) {
 			u.rc(this.player, "loading");
-			if(typeof(this.player.canplaythrough) == "function") {
+			if(fun(this.player.canplaythrough)) {
 				this.player.canplaythrough(event);
 			}
 		}
@@ -5045,7 +5082,7 @@ u.setupMedia = function(player, _options) {
 		player.media._playing = function(event) {
 			u.rc(this.player, "loading|paused");
 			u.ac(this.player, "playing");
-			if(typeof(this.player.playing) == "function") {
+			if(fun(this.player.playing)) {
 				this.player.playing(event);
 			}
 		}
@@ -5053,7 +5090,7 @@ u.setupMedia = function(player, _options) {
 		player.media._paused = function(event) {
 			u.rc(this.player, "playing|loading");
 			u.ac(this.player, "paused");
-			if(typeof(this.player.paused) == "function") {
+			if(fun(this.player.paused)) {
 				this.player.paused(event);
 			}
 		}
@@ -5061,20 +5098,20 @@ u.setupMedia = function(player, _options) {
 		player.media._stalled = function(event) {
 			u.rc(this.player, "playing|paused");
 			u.ac(this.player, "loading");
-			if(typeof(this.player.stalled) == "function") {
+			if(fun(this.player.stalled)) {
 				this.player.stalled(event);
 			}
 		}
 		u.e.addEvent(player.media, "stalled", player.media._paused);
 		player.media._error = function(event) {
-			if(typeof(this.player.error) == "function") {
+			if(fun(this.player.error)) {
 				this.player.error(event);
 			}
 		}
 		u.e.addEvent(player.media, "error", player.media._error);
 		player.media._ended = function(event) {
 			u.rc(this.player, "playing|paused");
-			if(typeof(this.player.ended) == "function") {
+			if(fun(this.player.ended)) {
 				this.player.ended(event);
 			}
 		}
@@ -5083,21 +5120,21 @@ u.setupMedia = function(player, _options) {
 			this.player.duration = this.duration;
 			this.player.currentTime = this.currentTime;
 			this.player.metaLoaded = true;
-			if(typeof(this.player.loadedmetadata) == "function") {
+			if(fun(this.player.loadedmetadata)) {
 				this.player.loadedmetadata(event);
 			}
 		}
 		u.e.addEvent(player.media, "loadedmetadata", player.media._loadedmetadata);
 		player.media._loadeddata = function(event) {
 			this.player.mediaLoaded = true;
-			if(typeof(this.player.loadeddata) == "function") {
+			if(fun(this.player.loadeddata)) {
 				this.player.loadeddata(event);
 			}
 		}
 		u.e.addEvent(player.media, "loadeddata", player.media._loadeddata);
 		player.media._timeupdate = function(event) {
 			this.player.currentTime = this.currentTime;
-			if(typeof(this.player.timeupdate) == "function") {
+			if(fun(this.player.timeupdate)) {
 				this.player.timeupdate(event);
 			}
 		}
@@ -5306,7 +5343,7 @@ u.detectMediaAutoplay = function(player) {
 					player = u.media_autoplay_detection[i];
 					player.can_autoplay = u.media_can_autoplay;
 					player.can_autoplay_muted = u.media_can_autoplay_muted;
-					if(typeof(player.ready) == "function") {
+					if(fun(player.ready)) {
 						player.ready();
 					}
 				}
@@ -5324,7 +5361,7 @@ u.detectMediaAutoplay = function(player) {
 			u.media_can_autoplay = false;
 			u.test_autoplay.muted = true;
 			var promise = u.test_autoplay.play();
-			if(promise && typeof(promise.then) == "function") {
+			if(promise && fun(promise.then)) {
 				promise.then(
 					u.test_autoplay.playing_muted.bind(u.test_autoplay)
 				).catch(
@@ -5332,11 +5369,11 @@ u.detectMediaAutoplay = function(player) {
 				);
 			}
 		}
-		u.test_autoplay.playing_muted = function(event) {
+		u.test_autoplay.playing_muted = function() {
 			u.media_can_autoplay_muted = true;
 			this.check();
 		}
-		u.test_autoplay.notplaying_muted = function(event) {
+		u.test_autoplay.notplaying_muted = function() {
 			u.media_can_autoplay_muted = false;
 			this.check();
 		}
@@ -5354,7 +5391,7 @@ u.detectMediaAutoplay = function(player) {
 		u.test_autoplay.setAttribute("playsinline", true);
 		u.test_autoplay.src = data;
 		var promise = u.test_autoplay.play();
-		if(promise && typeof(promise.then) == "function") {
+		if(promise && fun(promise.then)) {
 			u.e.removeEvent(u.test_autoplay, "playing", u.test_autoplay.playing);
 			u.e.removeEvent(u.test_autoplay, "error", u.test_autoplay.error);
 			promise.then(
@@ -5393,14 +5430,14 @@ u.eventChain = function(node, _options) {
 			this.t_eventchain = u.t.setTimer(this, "play", _event.duration);
 		}
 		else {
-			if(typeof(this.eventChainEnded) == "function") {
+			if(fun(this.eventChainEnded)) {
 				this.eventChainEnded();
 			}
 		}
 	}
 	node.stop = function() {
 		u.t.resetTimer(this.t_eventchain);
-		if(typeof(this.eventChainEnded) == "function") {
+		if(fun(this.eventChainEnded)) {
 			this.eventChainEnded();
 		}
 	}
@@ -5529,7 +5566,7 @@ u.fontsReady = function(node, fonts, _options) {
 	var callback_loaded = "fontsLoaded";
 	var callback_timeout = "fontsNotLoaded";
 	var max_time = 3000;
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -5540,7 +5577,7 @@ u.fontsReady = function(node, fonts, _options) {
 		}
 	}
 	window["_man_fonts_"] = window["_man_fonts_"] || {};
-	window["_man_fonts_"].fontApi = document.fonts && typeof(document.fonts.check) == "function" ? true : false;
+	window["_man_fonts_"].fontApi = document.fonts && fun(document.fonts.check) ? true : false;
 	window["_man_fonts_"].fonts = window["_man_fonts_"].fonts || {};
 	var font, node, i;
 	if(typeof(fonts.length) == "undefined") {
@@ -5564,7 +5601,8 @@ u.fontsReady = function(node, fonts, _options) {
 	window["_man_fonts_"+loadkey].callback_timeout = callback_timeout;
 	window["_man_fonts_"+loadkey].max_time = max_time;
 	window["_man_fonts_"+loadkey].start_time = new Date().getTime();
-	for(i = 0; font = fonts[i]; i++) {
+	for(i = 0; i < fonts.length; i++) {
+		font = fonts[i];
 		font.style = font.style || "normal";
 		font.weight = font.weight || "400";
 		font.size = font.size || "16px";
@@ -5592,7 +5630,8 @@ u.fontsReady = function(node, fonts, _options) {
 	}
 	window["_man_fonts_"+loadkey].checkFontsAPI = function() {
 		var i, node, font_string;
-		for(i = 0; node = this.nodes[i]; i++) {
+		for(i = 0; i < this.nodes.length; i++) {
+			node = this.nodes[i];
 			if(window["_man_fonts_"].fonts[node.font_id] && window["_man_fonts_"].fonts[node.font_id].status == "waiting") {
 				font_string = node.font_style + " " + node.font_weight + " " + node.font_size + " " + node.font_family;
 				document.fonts.load(font_string).then(function(fontFaceSetEvent) {
@@ -5602,7 +5641,7 @@ u.fontsReady = function(node, fonts, _options) {
 					else {
 						window["_man_fonts_"].fonts[this.font_id].status = "failed";
 					}
-					if(window["_man_fonts_"+this.loadkey] && typeof(window["_man_fonts_"+this.loadkey].checkFontsStatus) == "function") {
+					if(window["_man_fonts_"+this.loadkey] && fun(window["_man_fonts_"+this.loadkey].checkFontsStatus)) {
 						window["_man_fonts_"+this.loadkey].checkFontsStatus();
 					}
 				}.bind(node));
@@ -5610,19 +5649,20 @@ u.fontsReady = function(node, fonts, _options) {
 			else {
 			}
 		}
-		if(typeof(this.checkFontsStatus) == "function") {
+		if(fun(this.checkFontsStatus)) {
 			this.checkFontsStatus();
 		}
 	}
 	window["_man_fonts_"+loadkey].checkFontsStatus = function(event) {
 		var i, node;
-		for(i = 0; node = this.nodes[i]; i++) {
+		for(i = 0; i < this.nodes.length; i++) {
+			node = this.nodes[i];
 			if(window["_man_fonts_"].fonts[node.font_id].status == "waiting") {
 				if(this.start_time + this.max_time <= new Date().getTime()) {
-					if(typeof(this.callback_node[this.callback_timeout]) == "function") {
+					if(fun(this.callback_node[this.callback_timeout])) {
 						this.callback_node[this.callback_timeout]();
 					}
-					else if(typeof(this.callback_node[this.callback_name]) == "function") {
+					else if(fun(this.callback_node[this.callback_name])) {
 						this.callback_node[this.callback_name]();
 					}
 					u.t.resetTimer(this.t_timeout);
@@ -5631,7 +5671,7 @@ u.fontsReady = function(node, fonts, _options) {
 				return;
 			}
 		}
-		if(typeof(this.callback_node[this.callback_name]) == "function") {
+		if(fun(this.callback_node[this.callback_name])) {
 			this.callback_node[this.callback_name]();
 		}
 		u.t.resetTimer(this.t_timeout);
@@ -5639,14 +5679,15 @@ u.fontsReady = function(node, fonts, _options) {
 	}
 	window["_man_fonts_"+loadkey].checkFontsFallback = function() {
 		var basenode, i, node, loaded = 0;
-		for(i = 0; node = this.nodes[i]; i++) {
+		for(i = 0; i < this.nodes.length; i++) {
+			node = this.nodes[i];
 			basenode = this.basenodes[node.font_style+node.font_weight];
 			if(node.offsetWidth != basenode.offsetWidth || node.offsetHeight != basenode.offsetHeight) {
 				loaded++;
 			}
 		}
 		if(loaded == this.nodes.length) {
-			if(typeof(this.callback_node[this.callback_name]) == "function") {
+			if(fun(this.callback_node[this.callback_name])) {
 				this.callback_node[this.callback_name]();
 			}
 			this.parentNode.removeChild(this);
@@ -5656,10 +5697,10 @@ u.fontsReady = function(node, fonts, _options) {
 				u.t.setTimer(this, "checkfonts", 30);
 			}
 			else {
-				if(typeof(this.callback_node[this.callback_timeout]) == "function") {
+				if(fun(this.callback_node[this.callback_timeout])) {
 					this.callback_node[this.callback_timeout]();
 				}
-				else if(typeof(this.callback_node[this.callback_name]) == "function") {
+				else if(fun(this.callback_node[this.callback_name])) {
 					this.callback_node[this.callback_name]();
 				}
 			}
@@ -5688,7 +5729,7 @@ u.notifier = function(node) {
 	}
 	node.notify = function(response, _options) {
 		var class_name = "message";
-		if(typeof(_options) == "object") {
+		if(obj(_options)) {
 			var argument;
 			for(argument in _options) {
 				switch(argument) {
@@ -5697,30 +5738,31 @@ u.notifier = function(node) {
 			}
 		}
 		var output = [];
-		if(typeof(response) == "object") {
+		if(obj(response)) {
 			var message = response.cms_message;
 			var cms_status = typeof(response.cms_status) != "undefined" ? response.cms_status : "";
-			if(typeof(message) == "object") {
+			if(obj(message)) {
 				for(type in message) {
-					if(typeof(message[type]) == "string") {
+					if(str(message[type])) {
 						output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":message[type]}));
 					}
-					else if(typeof(message[type]) == "object" && message[type].length) {
+					else if(obj(message[type]) && message[type].length) {
 						var node, i;
-						for(i = 0; _message = message[type][i]; i++) {
+						for(i = 0; i < message[type].length; i++) {
+							_message = message[type][i];
 							output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":_message}));
 						}
 					}
 				}
 			}
-			else if(typeof(message) == "string") {
+			else if(str(message)) {
 				output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message}));
 			}
-			if(typeof(this.notifications.show) == "function") {
+			if(fun(this.notifications.show)) {
 				this.notifications.show();
 			}
 		}
-		else if(typeof(response) == "object" && response.isHTML) {
+		else if(obj(response) && response.isHTML) {
 			var login = u.qs(".scene.login form", response);
 			var messages = u.qsa(".scene div.messages p", response);
 			if(login && !u.qs("#login_overlay")) {
@@ -5747,13 +5789,16 @@ u.notifier = function(node) {
 							var input_vars = u.qsa("[name=csrf-token]", page);
 							var dom_vars = u.qsa("*", page);
 							var i, node;
-							for(i = 0; node = data_vars[i]; i++) {
+							for(i = 0; i < data_vars.length; i++) {
+								node = data_vars[i];
 								node.setAttribute("data-csrf-token", csrf_token);
 							}
-							for(i = 0; node = input_vars[i]; i++) {
+							for(i = 0; ni <input_vars.length; i++) {
+								node = input_vars[i];
 								node.value = csrf_token;
 							}
-							for(i = 0; node = dom_vars[i]; i++) {
+							for(i = 0;i <= dom_vars.length; i++) {
+								node = dom_vars[i];
 								if(node.csrf_token) {
 									node.csrf_token = csrf_token;
 								}
@@ -5761,7 +5806,8 @@ u.notifier = function(node) {
 							this.overlay.parentNode.removeChild(this.overlay);
 							var multiple_overlays = u.qsa("#login_overlay");
 							if(multiple_overlays) {
-								for(i = 0; overlay = multiple_overlays[i]; i++) {
+								for(i = 0; i < multiple_overlays.length; i++) {
+									overlay = multiple_overlays[i];
 									overlay.parentNode.removeChild(overlay);
 								}
 							}
@@ -5787,7 +5833,8 @@ u.notifier = function(node) {
 				}
 			}
 			else if(messages) {
-				for(i = 0; message = messages[i]; i++) {
+				for(i = 0; i < messages.length; i++) {
+					message = messages[i];
 					output.push(u.ae(this.notifications, "div", {"class":message.className, "html":message.innerHTML}));
 				}
 			}
@@ -5853,7 +5900,8 @@ u.paymentCards = new function() {
 		var card = this.getCardTypeFromNumber(card_number);
 		if(card && parseInt(card_number) == card_number) {
 			var i, allowed_length;
-			for(i = 0; allowed_length = card.card_length[i]; i++) {
+			for(i = 0; i < card.card_length.length; i++) {
+				allowed_length = card.card_length[i];
 				if(card_number.length == allowed_length) {
 					if(card.luhn) {
 						return this.luhnCheck(card_number);
@@ -5898,7 +5946,8 @@ u.paymentCards = new function() {
 		}
 		if(cvc && parseInt(cvc) == cvc) {
 			var i, allowed_length;
-			for(i = 0; allowed_length = cvc_length[i]; i++) {
+			for(i = 0; i < cvc_length.length; i++) {
+				allowed_length = cvc_length[i];
 				if(cvc.toString().length == allowed_length) {
 					return true;
 				}
@@ -5909,7 +5958,8 @@ u.paymentCards = new function() {
 	this.getCardTypeFromNumber = function(card_number) {
 		var i, j, card, pattern, regex;
 		for(i = 0; card = this.payment_cards[i]; i++) {
-			for(j = 0; pattern = card.patterns[j]; j++) {
+			for(j = 0; j < card.patterns.length; j++) {
+				pattern = card.patterns[j];
 				if(card_number.match('^' + pattern)) {
 					return card;
 				}
@@ -5956,7 +6006,7 @@ u.googlemaps = new function() {
 		map._maps_zoom = 10;
 		map._center_latitude = center[0];
 		map._center_longitude = center[1];
-		if(typeof(_options) == "object") {
+		if(obj(_options)) {
 			var _argument;
 			for(_argument in _options) {
 				switch(_argument) {
@@ -5970,11 +6020,11 @@ u.googlemaps = new function() {
 		(window[map_key] = function() {
 			var mapOptions = {center: new google.maps.LatLng(center[0], center[1]), zoom: map._maps_zoom, scrollwheel: map._maps_scrollwheel, streetViewControl: map._maps_streetview, zoomControlOptions: {position: google.maps.ControlPosition.LEFT_TOP}};
 			map.g_map = new google.maps.Map(map, mapOptions);
-			if(typeof(map.APIloaded) == "function") {
+			if(fun(map.APIloaded)) {
 				map.APIloaded();
 			}
 			google.maps.event.addListener(map.g_map, 'tilesloaded', function() {
-				if(typeof(map.loaded) == "function") {
+				if(fun(map.loaded)) {
 					map.loaded();
 				}
 			});
@@ -5989,7 +6039,7 @@ u.googlemaps = new function() {
 	}
 	this.addMarker = function(map, coords, _options) {
 		var _info = false;
-		if(typeof(_options) == "object") {
+		if(obj(_options)) {
 			var _argument;
 			for(_argument in _options) {
 				switch(_argument) {
@@ -6001,17 +6051,17 @@ u.googlemaps = new function() {
 		marker.setMap(map);
 		marker.g_map = map;
 		google.maps.event.addListener(marker, 'click', function() {
-			if(typeof(this.clicked) == "function") {
+			if(fun(this.clicked)) {
 				this.clicked();
 			}
 		});
 		google.maps.event.addListener(marker, 'mouseover', function() {
-			if(typeof(this.entered) == "function") {
+			if(fun(this.entered)) {
 				this.entered();
 			}
 		});
 		google.maps.event.addListener(marker, 'mouseout', function() {
-			if(typeof(this.exited) == "function") {
+			if(fun(this.exited)) {
 				this.exited();
 			}
 		});
@@ -6019,7 +6069,7 @@ u.googlemaps = new function() {
 	}
 	this.removeMarker = function(map, marker, _options) {
 		marker._animation = true;
-		if(typeof(_options) == "object") {
+		if(obj(_options)) {
 			var _argument;
 			for(_argument in _options) {
 				switch(_argument) {
@@ -6040,7 +6090,7 @@ u.googlemaps = new function() {
 				this.setPosition(new_position);
 				if(this.c_exit < new_position.lat()) {
 					this.setMap(null);
-					if(typeof(this.removed) == "function") {
+					if(fun(this.removed)) {
 						this.removed();
 					}
 				}
@@ -6058,7 +6108,7 @@ u.googlemaps = new function() {
 	this.infoWindow = function(map) {
 		map.g_infowindow = new google.maps.InfoWindow({"maxWidth":250});
 		google.maps.event.addListener(map.g_infowindow, 'closeclick', function() {
-			if(this._marker && typeof(this._marker.closed) == "function") {
+			if(this._marker && fun(this._marker.closed)) {
 				this._marker.closed();
 				this._marker = false;
 			}
@@ -6071,7 +6121,7 @@ u.googlemaps = new function() {
 	}
 	this.hideInfoWindow = function(map) {
 		map.g_infowindow.close();
-		if(map.g_infowindow._marker && typeof(map.g_infowindow._marker.closed) == "function") {
+		if(map.g_infowindow._marker && fun(map.g_infowindow._marker.closed)) {
 			map.g_infowindow._marker.closed();
 			map.g_infowindow._marker = false;
 		}
@@ -6139,7 +6189,7 @@ Util.Objects["oneButtonForm"] = new function() {
 				}
 				else {
 					u.t.resetTimer(this.t_confirm);
-					if(typeof(this.node.submitted) == "function") {
+					if(fun(this.node.submitted)) {
 						u.bug("oneButtonForm");
 						this.node.submitted();
 					}
@@ -6163,11 +6213,11 @@ Util.Objects["oneButtonForm"] = new function() {
 								}
 								else if(this.success_function) {
 									u.bug("function:" + this.success_function);
-									if(typeof(this.node[this.success_function]) == "function") {
+									if(fun(this.node[this.success_function])) {
 										this.node[this.success_function](response);
 									}
 								}
-								else if(typeof(this.node.confirmed) == "function") {
+								else if(fun(this.node.confirmed)) {
 									u.bug("confirmed");
 									this.node.confirmed(response);
 								}
@@ -6177,7 +6227,7 @@ Util.Objects["oneButtonForm"] = new function() {
 							}
 						}
 						else {
-							if(typeof(this.node.confirmedError) == "function") {
+							if(fun(this.node.confirmedError)) {
 								u.bug("confirmedError");
 								this.node.confirmedError(response);
 							}
@@ -8095,7 +8145,7 @@ Util.Objects["wishes"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			u.bug("scene.ready:" + u.nodeId(this));
+			u.bug("scene.ready:", this);
 			page.cN.scene = this;
 			var i, node;
 			this.nodes = u.qsa("li.item", this);
@@ -8288,6 +8338,27 @@ Util.Objects["payment"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
+			page.cN.scene = this;
+			var form = u.qs("form", this);
+			if(form) {
+				u.f.init(form);
+			}
+			u.showScene(this);
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
+/*i-payments.js*/
+Util.Objects["payments"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			u.bug("scene.ready:", this);
 			page.cN.scene = this;
 			var form = u.qs("form", this);
 			if(form) {

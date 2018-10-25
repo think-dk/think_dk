@@ -1,13 +1,13 @@
 Util.Objects["wishes"] = new function() {
 	this.init = function(scene) {
-//		u.bug("scene init:" + u.nodeId(scene))
+//		u.bug("scene init:", this);
 
 
 		scene.image_width = 250;
 
 
 		scene.resized = function() {
-//			u.bug("scene.resized:" + u.nodeId(this));
+//			u.bug("scene.resized:", this);
 
 			// resize text nodes
 			if(this.nodes.length) {
@@ -22,11 +22,11 @@ Util.Objects["wishes"] = new function() {
 		}
 
 		scene.scrolled = function() {
-//			u.bug("scene.scrolled:" + u.nodeId(this));
+//			u.bug("scene.scrolled:, this);
 		}
 
 		scene.ready = function() {
-			u.bug("scene.ready:" + u.nodeId(this));
+			u.bug("scene.ready:", this);
 
 			page.cN.scene = this;
 

@@ -1,9 +1,9 @@
 Util.Objects["front"] = new function() {
 	this.init = function(scene) {
-//		u.bug("scene init:" + u.nodeId(scene))
+//		u.bug("scene init:", this);
 
 		scene.resized = function() {
-//			u.bug("scene.resized:" + u.nodeId(this));
+//			u.bug("scene.resized:", this);
 
 			if(this.intro && !this.intro.is_small) {
 				u.ass(this.intro, {
@@ -31,11 +31,11 @@ Util.Objects["front"] = new function() {
 		}
 
 		scene.scrolled = function() {
-//			u.bug("scrolled:" + u.nodeId(this))
+//			u.bug("scrolled:", this);;
 		}
 
 		scene.ready = function() {
-//			u.bug("scene.ready:" + u.nodeId(this));
+//			u.bug("scene.ready:", this);
 
 			// map reference
 			page.cN.scene = this;
@@ -59,7 +59,7 @@ Util.Objects["front"] = new function() {
 
 
 		scene.build = function() {
-//			u.bug("scene.build:" + u.nodeId(this));
+//			u.bug("scene.build:, this);
 			var intro_cookie = u.getCookie("intro_v1");
 
 			this.intro = u.qs(".intro", this);

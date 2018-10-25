@@ -5,42 +5,59 @@ $UC = new User();
 
 // get current user id
 $user_id = session()->value("user_id");
-$order_no = $action[1];
-$remaining_order_price = false;
+//$order_no = $action[1];
+$amount = "";
 
 // Will only return orders from current user, so no need to check order ownership
-$order = $model->getOrders(array("order_no" => $order_no));
-$membership = $UC->getMembership();
+$orders = $model->getUnpaidOrders();
 
-if($order && $order["payment_status"] != 2) {
 
-	$remaining_order_price = $model->getRemainingOrderPrice($order["id"]);
+// Calculate total outstanding payment
+$total_payment = 0;
+$order_list = [];
+$order_comment_list = [];
 
+if($orders) {
+
+	// Loop through all orders to get total payment amount
+	foreach($orders as $order) {
+
+		$remaining_order_price = $model->getRemainingOrderPrice($order["id"]);
+
+		$order_comment_list[] = $order["order_no"] . " - " . $order["comment"];
+		$order_list[] = $order["id"];
+
+		$total_payment += $remaining_order_price["price"];
+
+	}
 }
-
 
 $payment_methods = $this->paymentMethods();
 
 ?>
-<div class="scene shopPayment i:payment">
-	<h1>Payment</h1>
+<div class="scene shopPayment shopPayments i:payments">
+	<h1>Payments</h1>
 
-<? if($order && $remaining_order_price["price"]): ?>
+<? 
+// Outstanding payments
+if($orders && $total_payment): ?>
 
 	<dl class="amount">
 		<dt class="amount">Due amount</dt>
-		<dd class="amount"><?= formatPrice($remaining_order_price) ?></dd>
+		<dd class="amount"><?= formatPrice(["price" => $total_payment, "currency" => $remaining_order_price["currency"]]) ?></dd>
 	</dl>
 
 
 	<h2>For the payment of:</h2>
-
 	<ul class="orders">
-		<li><h3><?= $order["order_no"] ?> - <?= $order["comment"] ?></h3></li>
+	<? foreach($order_comment_list as $order_comment): ?>
+		<li><h3><?= $order_comment ?></h3></li>
+	<? endforeach; ?>
 	</ul>
 
 
 	<h2>Please choose a payment method:</h2>
+
 	<ul class="payment_methods">
 
 	<? foreach($payment_methods as $payment_method): ?>
@@ -49,8 +66,8 @@ $payment_methods = $this->paymentMethods();
 		<li class="payment_method<?= $payment_method["classname"] ? " ".$payment_method["classname"] : "" ?>">
 
 			<ul class="actions">
-				<?= $JML->oneButtonForm($payment_method["name"], "/shop/selectPaymentMethod", array(
-					"inputs" => array("order_id" => $order["id"], "payment_method" => $payment_method["id"]),
+				<?= $JML->oneButtonForm($payment_method["name"], "/shop/selectBulkPaymentMethod", array(
+					"inputs" => array("order_ids" => implode($order_list, ","), "payment_method" => $payment_method["id"]),
 					"confirm-value" => false,
 					"static" => true,
 					"class" => "primary",
@@ -68,7 +85,8 @@ $payment_methods = $this->paymentMethods();
 
 	<p class="note">* We pay the transaction fee – so feel free to choose a suited option with the smallest fee for us.</p>
 
-<? // No payments
+<? 
+// No payments
 elseif(session()->value("user_group_id") > 1): ?>
 
 	<h2>Great news</h2>
@@ -82,7 +100,7 @@ else:
 	$username = stringOr(getPost("username"));
 	?>
 
-	<h2>Looking to make a payment?</h2>
+	<h2>Looking to make payments?</h2>
 	<p>Please log in to your account.</p>
 
 

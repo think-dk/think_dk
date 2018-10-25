@@ -14,7 +14,7 @@ u.template = function(template, json, _options) {
 	var append_to_node = false;
 
 	// apply parameters
-	if (typeof(_options) == "object") {
+	if (obj(_options)) {
 		var _argument;
 		for (_argument in _options) {
 			switch (_argument) {
@@ -29,31 +29,31 @@ u.template = function(template, json, _options) {
 	// IE 7 doesn't accept constructor to identify node, using nodeName as replacement
 
 	// HTML Object
-	if(typeof(template) == "object" && typeof(template.nodeName) != "undefined") {
+	if(obj(template) && typeof(template.nodeName) != "undefined") {
 //		u.bug("HTML template")
 
 		type_template = "HTML";
 	}
 	// JSON Object
-	else if(typeof(template) == "object" && JSON.stringify(template)) {
+	else if(obj(template) && JSON.stringify(template)) {
 //		u.bug("JSON template")
 
 		type_template = "JSON";
 	}
 	// JSON String
-	else if(typeof(template) == "string" && template.match(/^(\{|\[)/)) {
+	else if(str(template) && template.match(/^(\{|\[)/)) {
 //		u.bug("JSON string template")
 
 		type_template = "JSON_STRING";
 	}
 	// HTML String
-	else if(typeof(template) == "string" && template.match(/^<.+>$/)) {
+	else if(str(template) && template.match(/^<.+>$/)) {
 //		u.bug("HTML string template")
 
 		type_template = "HTML_STRING";
 	}
 	// plain string
-	else if(typeof(template) == "string") {
+	else if(str(template)) {
 //		u.bug("plain string template")
 
 		type_template = "STRING";
@@ -126,7 +126,9 @@ u.template = function(template, json, _options) {
 
 
 	// is JSON object or array of objects
-	if(typeof(json) == "object" && ((json.length == undefined && Object.keys(json).length) || json.length)) {
+	if(obj(json) && ((json.length == undefined && Object.keys(json).length) || json.length)) {
+
+//		console.log("OBJECT:", json, json["pattern"]);
 
 		// multiple results
 		if(json.length) {
@@ -192,8 +194,8 @@ u.template = function(template, json, _options) {
 						var key = string.toString().replace(/[\{\}]/g, "");
 
 						// clean up strings
-						if(typeof(json[_item][key]) == "string" && json[_item][key]) {
-							return json[_item][key].toString().replace(/(\"|\')/g, "\\$1");
+						if(str(json[_item][key]) && json[_item][key]) {
+							return json[_item][key].toString().replace(/(\\|\"|\')/g, "\\$1");
 						}
 						// return numbers correct
 						else if(typeof(json[_item][key]) == "number") {
@@ -214,7 +216,7 @@ u.template = function(template, json, _options) {
 							return "MAN_NULL";
 						}
 						// return objects correct
-						else if(typeof(json[_item][key]) == "object") {
+						else if(obj(json[_item][key])) {
 							// Insert OBJ marker, to be replaced with real object
 							// (not encapsulated in quotes) before string is returned as JSON
 							return "MAN_OBJ" + JSON.stringify(json[_item][key]).replace(/(\"|\')/g, "\\$1") + "MAN_OBJ";
@@ -229,15 +231,15 @@ u.template = function(template, json, _options) {
 		}
 		// only one result (or empty array)
 		else {
-//			u.bug("single result");
+			// u.bug("single result");
 
 			string += template_string.replace(/\{(.+?)\}/g, function(string) {
 
 				var key = string.toString().replace(/[\{\}]/g, "");
 
 				// clean up strings
-				if(typeof(json[key]) == "string" && json[key]) {
-					return json[key].replace(/(\"|\')/g, "\\$1");
+				if(str(json[key]) && json[key]) {
+					return json[key].replace(/(\\|\"|\')/g, "\\$1");
 				}
 				// return numbers correct
 				else if(typeof(json[key]) == "number") {
@@ -258,7 +260,7 @@ u.template = function(template, json, _options) {
 					return "MAN_NULL";
 				}
 				// return objects correct
-				else if(typeof(json[key]) == "object") {
+				else if(obj(json[key])) {
 					// Insert OBJ marker, to be replaced with real object
 					// (not encapsulated in quotes) before string is returned as JSON
 					return "MAN_OBJ" + JSON.stringify(json[key]).replace(/(\"|\')/g, "\\$1") + "MAN_OBJ";
@@ -272,8 +274,6 @@ u.template = function(template, json, _options) {
 	// else {
 	// 	console.log("no results");
 	// }
-
-
 
 	// Post process string for MARKERS
 	// Prepare final return object/string
@@ -292,11 +292,11 @@ u.template = function(template, json, _options) {
 			// remove marker
 			string = string.replace(/MAN_OBJ(.+?(?=MAN_OBJ))MAN_OBJ/g, "$1");
 			// unescape quotes
-			return string.replace(/\\("|')/g, "$1");
+			return string.replace(/\\(\\|"|')/g, "$1");
 		});
 
 		// unescape quotes when outputting to HTML
-		string = string.replace(/\\("|')/g, "$1");
+		string = string.replace(/\\(\\|"|')/g, "$1");
 
 		// IE <=9 doesn't support table.innerHTML, so wrap node in div and innerHTML entire table
 		if(type_parent == "table") {
@@ -342,7 +342,6 @@ u.template = function(template, json, _options) {
 			return string.replace(/\\("|')/g, "$1");
 		});
 
-		// u.bug(string.replace(/MAN_JSON_START/g, "{").replace(/MAN_JSON_END/g, "},"))
 		return eval("["+string.replace(/MAN_JSON_START/g, "{").replace(/MAN_JSON_END/g, "},")+"]");
 	}
 
@@ -360,11 +359,11 @@ u.template = function(template, json, _options) {
 			// remove marker
 			string = string.replace(/MAN_OBJ(.+?(?=MAN_OBJ))MAN_OBJ/g, "$1");
 			// unescape quotes
-			return string.replace(/\\("|')/g, "$1");
+			return string.replace(/\\(\\|"|')/g, "$1");
 		});
 
 		// remove any double escapes
-		return string.replace(/\\("|')/g, "$1");
+		return string.replace(/\\(\\|"|')/g, "$1");
 	}
 
 }

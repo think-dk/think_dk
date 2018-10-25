@@ -615,6 +615,11 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.shopPayment.stripe div.field.focus.correct div.hint {display: block;}
 
 
+/* BULK PAYMENTS */
+#content .scene.shopPayment ul.orders {padding: 0 0 10px;}
+
+
+
 /* TODOS */
 #content .scene div.todos {padding-bottom: 15px; position: relative; z-index: 1;}
 #content .scene div.todos h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}

@@ -54,9 +54,9 @@ else {
 
 	<h1>Please enter you card details</h1>
 
-	<?= $model->formStart("/shop/gateway/".$order_no."/stripe/process", array("class" => "card")) ?>
-		<?= $model->input("reference", array("type" => "hidden", "value" => $reference)); ?>
-		<?= $model->input("email", array("type" => "hidden", "value" => $user["email"])); ?>
+	<?= $model->formStart("/shop/payment-gateway/".$order_no."/stripe/process", array("class" => "card")) ?>
+		<? //= $model->input("reference", array("type" => "hidden", "value" => $reference)); ?>
+		<? //= $model->input("email", array("type" => "hidden", "value" => $user["email"])); ?>
 	
 		<fieldset>
 			<?= $model->input("card_number", array("type" => "tel")); ?>
