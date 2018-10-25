@@ -23,7 +23,7 @@ if($item) {
 	$related_pattern = array("itemtype" => $item["itemtype"], "tags" => $item["tags"], "exclude" => $item["id"]);
 	// add base pattern properties
 	$related_pattern["limit"] = 3;
-	$related_pattern["extend"] = array("tags" => true, "user" => true, "mediae" => true, "prices" => true, "subscription_method" => true);
+	$related_pattern["extend"] = array("tags" => true, "user" => true, "mediae" => true, "prices" => true, "subscription_method" => true, "readstate" => true);
 
 	// get related items
 	$related_items = $IC->getRelatedItems($related_pattern);
