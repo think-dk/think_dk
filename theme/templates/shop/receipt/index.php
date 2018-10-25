@@ -21,9 +21,6 @@ $user = $UC->getUser();
 if($user) {
 	$active_account = $user["status"];
 }
-print_r($active_account);
-
-
 
 
 // order no indicated in url

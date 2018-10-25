@@ -9,6 +9,7 @@ $order = false;
 $is_membership = false;
 $subscription_method = false;
 $payment_date = false;
+$total_payment = 0;
 
 $active_account = false;
 
@@ -21,25 +22,19 @@ if($user) {
 	$active_account = $user["status"];
 }
 
-
 // order no indicated in url
 if(count($action) == 4) {
 
-	$order_id = $action[1];
-	$payment_id = $action[3];
-
-	if($order_id) {
-		$order = $model->getOrders(array("order_id" => $order_id));
+	$payment_ids = $action[3];
+	if($payment_ids) {
+		$payment_ids = explode(",", $payment_ids);
 
 
-		// get potential user membership
-		$membership = $UC->getMembership();
+		// Loop through all orders to get total payment amount
+		foreach($payment_ids as $payment_id) {
 
-
-		if($order) {
-
-			$payment_id = $action[3];
 			$payment = $model->getPayments(["payment_id" => $payment_id]);
+			$total_payment += $payment["payment_amount"];
 
 		}
 
@@ -47,15 +42,19 @@ if(count($action) == 4) {
 
 }
 
-
 ?>
 <div class="scene shopReceipt i:scene">
 
-<? if($order): ?>
+<? if($payment_ids && $total_payment): ?>
 
-	<h1>Thank you for supporting change.</h1>
+	<h1>Thank you for supporting change</h1>
 
-	<h2>Your payment of <?= formatPrice(["price" => $payment["payment_amount"], "currency" => $payment["currency"]]) ?> has been processed successfully.</h2>
+	<h2>Your payment of <?= formatPrice(["price" => $total_payment, "currency" => $payment["currency"]]) ?> has been processed successfully.</h2>
+
+<? else: ?>
+
+	<h1>No payment was made</h1>
+	<p>Perhaps your dues was already paid.</p>
 
 <? endif; ?>
 

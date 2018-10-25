@@ -139,8 +139,17 @@ if(is_array($action) && count($action)) {
 		// process payment
 		else if(count($action) == 4 && $action[3] == "process" && $page->validateCsrfToken()) {
 
+
+
+
 			$payment_id = $model->processBulkOrderPayment($action);
+
+			// TODO: find better way to avoid messages spilling over
+			// suppress messages
+			message()->resetMessages();
+
 			if($payment_id) {
+
 
 				// redirect to leave POST state
 				header("Location: /shop/bulk-receipt/".$action[1]."/".$action[2]."/".$payment_id);
