@@ -192,7 +192,7 @@
 #content .scene.cart ul.items li h3 form > ul.actions {padding: 0; right: 48px; top: 0;}
 #content .scene.cart ul.items li h3 form > ul.actions li {padding: 8px 0 0;}
 #content .scene.cart ul.items li h3 form > ul.actions input.button {width: 16px; height: 16px; padding: 0; text-indent: -9999px; border-radius: 15px;
-	background-image: url(/janitor/admin/img/gx_refresh.png);
+	background-image: url(../../../janitor/admin/img/gx_refresh.png);
 	background-position: center center;
 	background-repeat: no-repeat;
 }
@@ -210,7 +210,7 @@
 #content .scene.cart ul.items li ul.actions {padding: 0; top: 20px; position: absolute; right: 15px;}
 #content .scene.cart ul.items li ul.actions li.delete {padding: 0;}
 #content .scene.cart ul.items li ul.actions li.delete input {width: 30px; overflow: hidden; text-indent: -9999px;
-	background-image: url(/janitor/admin/img/bg_icons.png);
+	background-image: url(../../../janitor/admin/img/bg_icons.png);
 	background-position: 8px -42px;
 	background-repeat: no-repeat;
 }
@@ -281,7 +281,7 @@
 #content .scene.shopPayment ul.payment_methods li.payment_method {padding-bottom: 10px;}
 #content .scene.shopPayment ul.payment_methods li.payment_method ul.actions {padding-bottom: 0px;}
 
-#content .scene.shopPayment ul.payment_methods li.payment_method.stripe {background: url(/img/gx_creditcards.png) no-repeat 20px 40px;}
+#content .scene.shopPayment ul.payment_methods li.payment_method.stripe {background: url(../../../img/gx_creditcards.png) no-repeat 20px 40px;}
 #content .scene.shopPayment ul.payment_methods li.payment_method.stripe ul.actions {padding-bottom: 40px;}
 
 #content .scene.shopPayment.stripe h1,
@@ -302,13 +302,13 @@
 #content .scene.shopPayment.stripe form ul.actions li {padding: 0; display: block;}
 #content .scene.shopPayment.stripe form ul.actions li input {width: 100%;}
 #content .scene.shopPayment.stripe form div.field.card input.visa {
-	background: url(/img/gx_visa_small.png) no-repeat right 7px;
+	background: url(../../../img/gx_visa_small.png) no-repeat right 7px;
 }
 #content .scene.shopPayment.stripe form div.field.card input.amex {
-	background: url(/img/gx_amex_small.png) no-repeat right 7px;
+	background: url(../../../img/gx_amex_small.png) no-repeat right 7px;
 }
 #content .scene.shopPayment.stripe form div.field.card input.mastercard {
-	background: url(/img/gx_mastercard_small.png) no-repeat right 7px;
+	background: url(../../../img/gx_mastercard_small.png) no-repeat right 7px;
 }
 
 
