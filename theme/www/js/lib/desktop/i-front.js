@@ -62,10 +62,12 @@ Util.Objects["front"] = new function() {
 //			u.bug("scene.build:, this);
 			var intro_cookie = u.getCookie("intro_v1");
 
-			this.intro = u.qs(".intro", this);
-			this.intro.scene = this;
-
-			this.showLoader();
+			if (u.qs(".intro", this)) {
+				this.intro = u.qs(".intro", this);
+				this.intro.scene = this;
+	
+				this.showLoader();
+			}
 
 
 			// TODO: maybe also check for tablet? It does not play audio and then the intro loop breaks
@@ -76,9 +78,13 @@ Util.Objects["front"] = new function() {
 				this.initIntro();
 			}
 			// just show end result of intro
-			else {
+			else if (intro_cookie && this.intro) {
 				this.show_full_intro = false;
 				this.initShortIntro();
+			}
+			// there is no intro
+			else {
+				this.initNoIntro();
 			}
 
 		}
@@ -583,6 +589,35 @@ Util.Objects["front"] = new function() {
 		}
 
 
+		// In case there is no intro
+		scene.initNoIntro = function() {
+
+			// show header and footer
+			u.a.transition(page.hN, "none");
+			u.ass(page.hN, {
+				"opacity":0,
+				"display":"block"
+			});
+
+			u.a.transition(page.fN, "none");
+			u.ass(page.fN, {
+				"opacity":0,
+				"display":"block"
+			});
+
+			u.a.transition(page.hN, "all 0.5s ease-in");
+			u.ass(page.hN, {
+				"opacity":1,
+			});
+
+			u.a.transition(page.fN, "all 0.5s ease-in");
+			u.ass(page.fN, {
+				"opacity":1,
+			});
+
+			// Show article
+			this.showArticle();
+		}
 
 		// ARTICLE
 
