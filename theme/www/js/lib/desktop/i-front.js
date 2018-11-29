@@ -82,7 +82,7 @@ Util.Objects["front"] = new function() {
 				this.show_full_intro = false;
 				this.initShortIntro();
 			}
-			// there is no intro
+			// there is no intro page
 			else {
 				this.initNoIntro();
 			}
@@ -246,12 +246,8 @@ Util.Objects["front"] = new function() {
 			// });
 		}
 
-		scene.initShortIntro = function() {
-			u.bug("initShortIntro");
-
+		scene.showCarousel = function() {
 			this.intro.loaded = function() {
-
-				this.scene.removeLoader();
 
 				this.scene.injectHotspots();
 
@@ -281,7 +277,24 @@ Util.Objects["front"] = new function() {
 
 			}
 			this.createIntroBgs();
-			
+		}
+
+		scene.initNoIntro = function() {
+			u.bug("initNoIntro");
+
+			// Inject needed div for image carousel
+			this.intro = u.ie(scene, "div", {class:"intro"});
+			this.intro.scene = this;
+
+			this.showCarousel();
+		}
+
+		scene.initShortIntro = function() {
+			u.bug("initShortIntro");
+
+			this.removeLoader();
+
+			this.showCarousel();
 		}
 
 		// Prepare intro content for playback
@@ -586,37 +599,6 @@ Util.Objects["front"] = new function() {
 				this.showArticle();
 				
 			}
-		}
-
-
-		// In case there is no intro
-		scene.initNoIntro = function() {
-
-			// show header and footer
-			u.a.transition(page.hN, "none");
-			u.ass(page.hN, {
-				"opacity":0,
-				"display":"block"
-			});
-
-			u.a.transition(page.fN, "none");
-			u.ass(page.fN, {
-				"opacity":0,
-				"display":"block"
-			});
-
-			u.a.transition(page.hN, "all 0.5s ease-in");
-			u.ass(page.hN, {
-				"opacity":1,
-			});
-
-			u.a.transition(page.fN, "all 0.5s ease-in");
-			u.ass(page.fN, {
-				"opacity":1,
-			});
-
-			// Show article
-			this.showArticle();
 		}
 
 		// ARTICLE
