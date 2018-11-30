@@ -18,19 +18,17 @@ document.write('<script type="text/javascript" src="/assets/parentnode-skin-defa
 
 document.write('<script type="text/javascript" src="/js/lib/u-settings.js"></script>');
 
-document.write('<script type="text/javascript" src="/js/lib/u-basics.js"></script>');
-document.write('<script type="text/javascript" src="/js/lib/smartphone/i-front.js"></script>');
-document.write('<script type="text/javascript" src="/js/lib/smartphone/i-scene.js"></script>');
-document.write('<script type="text/javascript" src="/js/lib/smartphone/i-login.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/smartphone/i-front.js"></script>'); // Different
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-unsubscribe.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-contact.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-events.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-cart.js"></script>');
-document.write('<script type="text/javascript" src="/js/lib/smartphone/i-wishes.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-memberships.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-payment.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-payments.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-stripe.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-black.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/smartphone/i-wishes.js"></script>');
+
 
 
