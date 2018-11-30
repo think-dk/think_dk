@@ -10,10 +10,15 @@ document.write('<script type="text/javascript" src="/assets/parentnode-skin-defa
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/beta-u-paymentcards.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/beta-u-googlemaps.js"></script>');
 
-document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/i-comments.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/beta-u-form-onebuttonform.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/beta-u-animation-to.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/beta-u-fontsReady.js"></script>');
+
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/u-sharing.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/u-checkmark.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/u-expandarrow.js"></script>');
+
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/i-comments.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/i-pagination.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/i-article_mini_list.js"></script>');
 
@@ -34,11 +39,5 @@ document.write('<script type="text/javascript" src="/js/lib/desktop/i-payment.js
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-payments.js"></script>'); // not in parentNode skin
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-stripe.js"></script>'); // not in parentNode skin
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-black.js"></script>'); // not in parentNode skin
-
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/i-login.js"></script>'); // Include from skin
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/i-wishes.js"></script>'); // Include from skin
-
-
-// document.write('<script type="text/javascript" src="/js/lib/u-basics.js"></script>'); // Already in skin's seg_
-
-// document.write('<script type="text/javascript" src="/js/lib/desktop/i-scene.js"></script>'); // Already in skin's seg_
-// document.write('<script type="text/javascript" src="/js/lib/desktop/i-login.js"></script>'); // Already in skin's seg_

@@ -13,6 +13,7 @@ document.write('<script type="text/javascript" src="/assets/parentnode-skin-defa
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-date.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-form.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-form-builder.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-form-custom.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-string.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/beta-u-form-onebuttonform.js"></script>');
 
@@ -28,6 +29,7 @@ document.write('<script type="text/javascript" src="/js/lib/smartphone/i-payment
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-payments.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-stripe.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-black.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/smartphone/i-login.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/smartphone/i-wishes.js"></script>');
 
 
