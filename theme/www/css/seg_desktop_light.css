@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2018-12-03 09:38:09
+asset-builder @ 2018-12-04 15:40:38
 */
 
 /*seg_desktop_light_include.css*/
@@ -175,37 +175,18 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 #content .scene ul.info li.publisher,
 #content .scene ul.info li.image_info,
 #content .scene ul.info li.modified_at {display: none;}
-#content .scene ul.info ul.geo {padding: 0;}
 #content .scene div.image,
 #content .scene div.media {display: none;}
-#content .scene .pagination {margin: 0 70px 30px; padding: 20px 0;}
-#content .scene .pagination ul {padding: 0; overflow: hidden;}
-#content .scene .pagination .next,
-#content .scene .pagination .previous {background-color: #8c9399; text-decoration: none; height: 14px; padding: 6px 12px 10px; display: inline; float: right; color: #ffffff; border: none; cursor: pointer; font-size: 14px;}
-#content .scene .pagination .previous {float: left;}
-#content .scene .pagination .next a,
-#content .scene .pagination .previous a {color: #ffffff;}
-#content .scene .pagination .next:hover,
-#content .scene .pagination .previous:hover {background-color: #313942;}
 #content .scene div.categories {padding-bottom: 25px; display: block; vertical-align: top;}
 #content .scene div.categories ul {padding-right: 0;}
 #content .scene div.categories ul.tags li {font-size: 14px; padding-bottom: 5px; display: block;}
 #content .scene div.categories ul.tags li.selected a {color: #000000;}
 #content .scene div.categories ul.actions {padding-bottom: 0;}
 #content .scene div.categories ul.actions li {padding-bottom: 0; font-size: 15px; display: block;}
-#content .scene div.article {padding-bottom: 30px;}
-#content .scene div.article ul.tags {padding-bottom: 20px;}
-#content .scene ul.tags a:hover {color: #888888;}
-#content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #dedede; position: relative;}
-#content .scene ul.articles li.article ul.tags {padding-bottom: 15px;}
-#content .scene ul.articles li.article h3 {font-size: 22px; line-height: 1em; padding-bottom: 15px;
-	font-family: "PT Serif", Times, serif;
-}
 #content .scene div.related {padding-top: 10px; position: relative; z-index: 1;}
 #content .scene div.related h2 a {font-size: 13px; display: inline; vertical-align: baseline;
 	font-family: "OpenSans";
 }
-#content .scene div.comments {display: none;}
 #content .scene ul.offer,
 #content .scene .articlebody ul.offer {font-size: 0; margin: 0; list-style: none; width: auto;}
 #content .scene .articlebody ul.offer {padding: 0;}
@@ -246,26 +227,85 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 #content .scene div.vcard dl.info dd {padding-bottom: 10px; color: #cccccc;}
 #content .scene div.vcard dl.info dd ul {padding: 0;}
 #content .scene div.vcard dl.info dd li {font-size: 12px; color: #cccccc;}
-#content .scene .usedby {min-width: 600px; margin-top: 20px; margin-bottom: -50px; padding-top: 5px; border-top: 1px solid #cccccc;}
-#content .scene .usedby h2 {display: none; text-align: center; padding-bottom: 5px; font-size: 11px; width: auto; color: #bbbbbb; text-transform: uppercase;
-	font-family: "OpenSans", Verdana, Arial, sans-serif;
-}
-#content .scene .usedby ul {padding-bottom: 0;}
-#content .scene .usedby ul li {display: inline-block; width: 20%; background-position: center center; background-repeat: no-repeat; height: 150px; text-indent: -9999px;}
-#content .scene .usedby ul li.metro {background-image: url(../img/logos/metro.png); background-size: 70px auto;}
-#content .scene .usedby ul li.soulland {background-image: url(../img/logos/soulland.png); background-size: 70px auto;}
-#content .scene .usedby ul li.cphpix {background-image: url(../img/logos/cphpix.png);}
-#content .scene .usedby ul li.tuborg {background-image: url(../img/logos/tuborg.png);}
-#content .scene .usedby ul li.distortion {background-image: url(../img/logos/distortion.png);}
-#content .scene .usedby ul li.landskabsarkitekter {background-image: url(../img/logos/landskabsarkitekter.png);}
-#content .scene .usedby ul li.urbangreen {background-image: url(../img/logos/urbangreen.png);}
-#content .scene .usedby ul li.oeo {background-image: url(../img/logos/oeo.png);}
-#content .scene .usedby ul li.torvehallerne {background-image: url(../img/logos/torvehallerne.png);}
-#content .scene .usedby ul li.peoplegroup {background-image: url(../img/logos/peoplegroup.png);}
-#content .scene .usedby ul li.lsb {background-image: url(../img/logos/lsb.png);}
-#content .scene .usedby ul li.punkt1 {background-image: url(../img/logos/punkt1.png);}
 #content .scene.login form {padding-bottom: 20px;}
 #content .scene div.messages > p.error {color: #df0000;}
+#content .scene div.article {padding-bottom: 30px;}
+#content .scene div.article ul.tags {padding-bottom: 20px;}
+#content .scene ul.tags a:hover {color: #888888;}
+#content .scene .articlebody ul,
+#content .scene .articlebody ol {list-style-position: outside; margin-left: 15px; width: 485px;}
+#content .scene .articlebody ul {list-style-type: disc;}
+#content .scene .articlebody ol {list-style-type: decimal;}
+#content .scene .articlebody li {font-size: 14px; padding-bottom: 7px; padding-left: 3px; display: list-item;}
+#content .scene .articlebody ul.actions {list-style: none; margin: 0;}
+#content .scene .articlebody ul.actions li {padding-left: 0;}
+#content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #dedede; position: relative;}
+#content .scene ul.articles li.article ul.tags {padding-bottom: 15px;}
+#content .scene ul.articles li.article h3 {font-size: 22px; line-height: 1em; padding-bottom: 15px;
+	font-family: "PT Serif", Times, serif;
+}
+#content .scene .article ul.info ul.geo {padding: 0;}
+
+
+/*s-comments.css*/
+#content .scene div.comments {display: none;}
+
+/*s-documentation.css*/
+#content .scene.docsindex {}
+#content .scene.docsindex ul.actions {display: none;}
+#content .scene.docsindex .notes {display: none;}
+#content .scene.docsindex .tests {display: none;}
+#content .scene.docsindex .files {padding-top: 25px;}
+#content .scene.docsindex .files h2 {padding-bottom: 15px;}
+#content .scene.docsindex .files ul {max-width: 500px;}
+#content .scene.docsindex .files li {position: relative; padding: 5px; border-top: 1px solid #dedede;}
+#content .scene.docsindex .files li h3 {font-size: 16px; padding: 0;}
+#content .scene.docsindex .files li p {font-size: 13px; color: #999999; padding: 0;}
+#content .scene.docsindex .search {padding-top: 15px;}
+#content .scene.docsindex .search.loading {background: transparent url(../img/gx_loader.gif) no-repeat 438px 68px;}
+#content .scene.docsindex .search h2 {padding-bottom: 15px;}
+#content .scene.docsindex .search .results .function {padding: 15px 0 0; border-top: 1px solid #dedede; cursor: pointer;}
+#content .scene.docsindex .search .results .function:hover {background: #ededed;}
+#content .scene.docsindex .search .results .function .header h3 {padding-bottom: 5px;}
+#content .scene.docsindex .search .results .function .definition dl {width: auto;}
+#content .scene.docsindex .search .results .function .definition dd {padding-bottom: 0; width: auto; display: block;}
+#content .scene.docsindex .search .results .function .parameters,
+#content .scene.docsindex .search .results .function .examples,
+#content .scene.docsindex .search .results .function .return,
+#content .scene.docsindex .search .results .function .uses,
+#content .scene.docsindex .search .results .function .description,
+#content .scene.docsindex .search .results .function .callbacks,
+#content .scene.docsindex .search .results .function .definition h4,
+#content .scene.docsindex .search .results .function .definition .name,
+#content .scene.docsindex .search .results .function .definition dt {display: none;}
+#content .scene div.functions {padding-bottom: 25px;}
+#content .scene div.functions .function .body {}
+#content .scene div.functions .header {cursor: pointer;}
+#content .scene div.functions .body {border-bottom: 1px solid #bbbbbb;}
+#content .scene div.functions .function {padding: 10px 0 0; overflow: hidden; border-top: 1px solid #bbbbbb; background: #ffffff;}
+#content .scene div.functions .function .header {}
+#content .scene div.functions .function .body {padding: 20px 0 0; border: none;}
+#content .scene div.functions .function .body .definition dd {white-space: nowrap;}
+#content .scene div.functions .function .body .parameters dl.options {margin-left: -10px; width: 475px;}
+#content .scene div.functions .function .body .parameters dl.options dt {width: 130px;}
+#content .scene div.functions .function .body .callbacks dl {padding-left: 70px;}
+#content .scene div.functions .function .body .callbacks dt {width: auto; display: block; text-align: left;}
+#content .scene div.functions .function .body .callbacks dd {width: auto; display: block;}
+#content .scene div.functions .function .body .example {padding: 0 0 20px;}
+#content .scene div.functions .function .body .examples h4 {padding-bottom: 10px;}
+#content .scene div.functions .function .body .example h5 {padding-bottom: 10px; font-size: 13px;}
+#content .scene div.functions .function .body .example p {padding-bottom: 5px;}
+#content .scene div.functions .function .body .uses .javascript {padding: 5px 0 0 20px;}
+#content .scene div.functions .function .body .uses .manipulator {padding: 5px 0 0 20px;}
+#content .scene div.functions dd {padding-bottom: 5px;}
+#content .scene div.includefiles {}
+#content .scene div.includefiles .header {cursor: pointer;}
+#content .scene div.segmentsupport {padding-top: 15px;}
+#content .scene div.segmentsupport .header {cursor: pointer;}
+#content .scene div.segmentsupport dd {padding-bottom: 5px;}
+
+
+/*s-form.css*/
 form {}
 fieldset {border: none; display: block;}
 div.field {padding: 0 70px 15px; position: relative; font-size: 0;}
@@ -340,71 +380,49 @@ div.field div.error {border: 1px solid #a62300; color: #a62300; background: #ffd
 div.field.error div.error {display: block;}
 div.field div.hint {z-index: 9; border: 1px solid #007633; color: #007633; background: #d0f4e0;}
 div.field.focus div.hint {display: block;}
-#content .scene .articlebody ul,
-#content .scene .articlebody ol {list-style-position: outside; margin-left: 15px; width: 485px;}
-#content .scene .articlebody ul {list-style-type: disc;}
-#content .scene .articlebody ol {list-style-type: decimal;}
-#content .scene .articlebody li {font-size: 14px; padding-bottom: 7px; padding-left: 3px; display: list-item;}
-#content .scene .articlebody ul.actions {list-style: none; margin: 0;}
-#content .scene .articlebody ul.actions li {padding-left: 0;}
+
+
+/*s-pagination.css*/
+#content .scene .pagination {margin: 0 70px 30px; padding: 20px 0;}
+#content .scene .pagination ul {padding: 0; overflow: hidden;}
+#content .scene .pagination .next,
+#content .scene .pagination .previous {background-color: #8c9399; text-decoration: none; height: 14px; padding: 6px 12px 10px; display: inline; float: right; color: #ffffff; border: none; cursor: pointer; font-size: 14px;}
+#content .scene .pagination .previous {float: left;}
+#content .scene .pagination .next a,
+#content .scene .pagination .previous a {color: #ffffff;}
+#content .scene .pagination .next:hover,
+#content .scene .pagination .previous:hover {background-color: #313942;}
+
+/*s-todos.css*/
 #content .scene ul.todos dl.info {padding-bottom: 10px;}
 #content .scene ul.todos > li ul.actions {display: none;}
+
+
+/*s-wishlist.css*/
 #content .scene ul.wishlist {}
 #content .scene ul.wishes dl.info dt {display: none;}
 #content .scene ul.wishes dl.info dd {padding-left: 0;}
 #content .scene ul.wishes > li ul.actions {display: none;}
-#content .scene.docsindex {}
-#content .scene.docsindex ul.actions {display: none;}
-#content .scene.docsindex .notes {display: none;}
-#content .scene.docsindex .tests {display: none;}
-#content .scene.docsindex .files {padding-top: 25px;}
-#content .scene.docsindex .files h2 {padding-bottom: 15px;}
-#content .scene.docsindex .files ul {max-width: 500px;}
-#content .scene.docsindex .files li {position: relative; padding: 5px; border-top: 1px solid #dedede;}
-#content .scene.docsindex .files li h3 {font-size: 16px; padding: 0;}
-#content .scene.docsindex .files li p {font-size: 13px; color: #999999; padding: 0;}
-#content .scene.docsindex .search {padding-top: 15px;}
-#content .scene.docsindex .search.loading {background: transparent url(../img/gx_loader.gif) no-repeat 438px 68px;}
-#content .scene.docsindex .search h2 {padding-bottom: 15px;}
-#content .scene.docsindex .search .results .function {padding: 15px 0 0; border-top: 1px solid #dedede; cursor: pointer;}
-#content .scene.docsindex .search .results .function:hover {background: #ededed;}
-#content .scene.docsindex .search .results .function .header h3 {padding-bottom: 5px;}
-#content .scene.docsindex .search .results .function .definition dl {width: auto;}
-#content .scene.docsindex .search .results .function .definition dd {padding-bottom: 0; width: auto; display: block;}
-#content .scene.docsindex .search .results .function .parameters,
-#content .scene.docsindex .search .results .function .examples,
-#content .scene.docsindex .search .results .function .return,
-#content .scene.docsindex .search .results .function .uses,
-#content .scene.docsindex .search .results .function .description,
-#content .scene.docsindex .search .results .function .callbacks,
-#content .scene.docsindex .search .results .function .definition h4,
-#content .scene.docsindex .search .results .function .definition .name,
-#content .scene.docsindex .search .results .function .definition dt {display: none;}
-#content .scene div.functions {padding-bottom: 25px;}
-#content .scene div.functions .function .body {}
-#content .scene div.functions .header {cursor: pointer;}
-#content .scene div.functions .body {border-bottom: 1px solid #bbbbbb;}
-#content .scene div.functions .function {padding: 10px 0 0; overflow: hidden; border-top: 1px solid #bbbbbb; background: #ffffff;}
-#content .scene div.functions .function .header {}
-#content .scene div.functions .function .body {padding: 20px 0 0; border: none;}
-#content .scene div.functions .function .body .definition dd {white-space: nowrap;}
-#content .scene div.functions .function .body .parameters dl.options {margin-left: -10px; width: 475px;}
-#content .scene div.functions .function .body .parameters dl.options dt {width: 130px;}
-#content .scene div.functions .function .body .callbacks dl {padding-left: 70px;}
-#content .scene div.functions .function .body .callbacks dt {width: auto; display: block; text-align: left;}
-#content .scene div.functions .function .body .callbacks dd {width: auto; display: block;}
-#content .scene div.functions .function .body .example {padding: 0 0 20px;}
-#content .scene div.functions .function .body .examples h4 {padding-bottom: 10px;}
-#content .scene div.functions .function .body .example h5 {padding-bottom: 10px; font-size: 13px;}
-#content .scene div.functions .function .body .example p {padding-bottom: 5px;}
-#content .scene div.functions .function .body .uses .javascript {padding: 5px 0 0 20px;}
-#content .scene div.functions .function .body .uses .manipulator {padding: 5px 0 0 20px;}
-#content .scene div.functions dd {padding-bottom: 5px;}
-#content .scene div.includefiles {}
-#content .scene div.includefiles .header {cursor: pointer;}
-#content .scene div.segmentsupport {padding-top: 15px;}
-#content .scene div.segmentsupport .header {cursor: pointer;}
-#content .scene div.segmentsupport dd {padding-bottom: 5px;}
+
+/*s-used_by.css*/
+#content .scene .usedby {min-width: 600px; margin-top: 20px; margin-bottom: -50px; padding-top: 5px; border-top: 1px solid #cccccc;}
+#content .scene .usedby h2 {display: none; text-align: center; padding-bottom: 5px; font-size: 11px; width: auto; color: #bbbbbb; text-transform: uppercase;
+	font-family: "OpenSans", Verdana, Arial, sans-serif;
+}
+#content .scene .usedby ul {padding-bottom: 0;}
+#content .scene .usedby ul li {display: inline-block; width: 20%; background-position: center center; background-repeat: no-repeat; height: 150px; text-indent: -9999px;}
+#content .scene .usedby ul li.metro {background-image: url(../img/logos/metro.png); background-size: 70px auto;}
+#content .scene .usedby ul li.soulland {background-image: url(../img/logos/soulland.png); background-size: 70px auto;}
+#content .scene .usedby ul li.cphpix {background-image: url(../img/logos/cphpix.png);}
+#content .scene .usedby ul li.tuborg {background-image: url(../img/logos/tuborg.png);}
+#content .scene .usedby ul li.distortion {background-image: url(../img/logos/distortion.png);}
+#content .scene .usedby ul li.landskabsarkitekter {background-image: url(../img/logos/landskabsarkitekter.png);}
+#content .scene .usedby ul li.urbangreen {background-image: url(../img/logos/urbangreen.png);}
+#content .scene .usedby ul li.oeo {background-image: url(../img/logos/oeo.png);}
+#content .scene .usedby ul li.torvehallerne {background-image: url(../img/logos/torvehallerne.png);}
+#content .scene .usedby ul li.peoplegroup {background-image: url(../img/logos/peoplegroup.png);}
+#content .scene .usedby ul li.lsb {background-image: url(../img/logos/lsb.png);}
+#content .scene .usedby ul li.punkt1 {background-image: url(../img/logos/punkt1.png);}
 
 
 /*s-pages.css*/

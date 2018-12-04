@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2018-12-03 09:38:08
+asset-builder @ 2018-12-04 15:40:38
 */
 
 /*seg_tablet_include.js*/
@@ -4410,271 +4410,30 @@ u._stepA2 = function() {
 		}
 	}
 }
-	u.a.parseSVGPolygon = function(value) {
-		var pairs = value.trim().split(" ");
-		var sets = [];
-		var part;
-		for(x in pairs) {
-			parts = pairs[x].trim().split(",");
-			for(part in parts) {
-				parts[part] = Number(parts[part]);
-			}
-			sets[x] = parts;
-		}
-		return sets;
-	}
-	u.a.parseSVGPath = function(value) {
-		var pairs = {"m":2, "l":2, "a":7, "c":6, "s":4, "q":4, "z":0};
-		var x, sets;
-		value = value.replace(/-/g, " -");
-		value = value.replace(/,/g, " ");
-		value = value.replace(/(m|l|a|c|s|q|M|L|A|C|S|Q)/g, " $1 ");
-		value = value.replace(/  /g, " ");
-		sets = value.match(/(m|l|a|c|s|q|M|L|A|C|S|Q)([0-9 \-\.]+)/g);
-		for(x in sets) {
-			parts = sets[x].trim().split(" ");
-			sets[x] = parts;
-			if(parts && pairs[parts[0].toLowerCase()] == parts.length-1) {
-			}
-			else {
-			}
-		}
-		return sets;
-	}
-	u.a.getInitialValue = function(node, attribute) {
-		var value = (node.getAttribute(attribute) ? node.getAttribute(attribute) : u.gcs(node, attribute)).replace(node._unit[attribute], "")
-		if(attribute.match(/^(d|points)$/)) {
-			return value;
-		}
-		else {
-			return Number(value.replace(/auto/, 0));
-		}
-	}
-	u.a.to = function(node, transition, attributes) {
-		var transition_parts = transition.split(" ");
-		if(transition_parts.length >= 3) {
-			node._target = transition_parts[0];
-			node.duration = transition_parts[1].match("ms") ? parseFloat(transition_parts[1]) : (parseFloat(transition_parts[1]) * 1000);
-			node._ease = transition_parts[2];
-			if(transition_parts.length == 4) {
-				node.delay = transition_parts[3].match("ms") ? parseFloat(transition_parts[3]) : (parseFloat(transition_parts[3]) * 1000);
-			}
-		}
-		var value, d;
-		node._start = {};
-		node._end = {};
-		node._unit = {};
-		for(attribute in attributes) {
-			if(attribute.match(/^(d)$/)) {
-				node._start[attribute] = this.parseSVGPath(this.getInitialValue(node, attribute));
-				node._end[attribute] = this.parseSVGPath(attributes[attribute]);
-			}
-			else if(attribute.match(/^(points)$/)) {
-				node._start[attribute] = this.parseSVGPolygon(this.getInitialValue(node, attribute));
-				node._end[attribute] = this.parseSVGPolygon(attributes[attribute]);
-			}
-			else {
-				node._unit[attribute] = attributes[attribute].toString().match(/\%|px/);
-				node._start[attribute] = this.getInitialValue(node, attribute);
-				node._end[attribute] = attributes[attribute].toString().replace(node._unit[attribute], "");
-			}
-		}
-		node.easing = u.easings[node._ease];
-		node.transitionTo = function(progress) {
-			var easing = node.easing(progress);
-			for(attribute in attributes) {
-				if(attribute.match(/^(translate|rotate|scale)$/)) {
-					if(attribute == "translate") {
-						u.a.translate(this, Math.round((this._end_x - this._start_x) * easing), Math.round((this._end_y - this._start_y) * easing))
-					}
-					else if(attribute == "rotate") {
-					}
-				}
-				else if(attribute.match(/^(x1|y1|x2|y2|r|cx|cy|stroke-width)$/)) {
-					var new_value = (this._start[attribute] + ((this._end[attribute] - this._start[attribute]) * easing)) +  this._unit[attribute]
-					this.setAttribute(attribute, new_value);
-				}
-				else if(attribute.match(/^(d)$/)) {
-					var new_value = "";
-					for(x in this._start[attribute]) {
-						for(y in this._start[attribute][x]) {
-							if(parseFloat(this._start[attribute][x][y]) == this._start[attribute][x][y]) {
-								new_value += (Number(this._start[attribute][x][y]) + ((Number(this._end[attribute][x][y]) - Number(this._start[attribute][x][y])) * easing)) + " ";
-							}
-							else {
-								new_value += this._end[attribute][x][y] + " ";
-							}
-						}
-					}
-					this.setAttribute(attribute, new_value);
-				}
-				else if(attribute.match(/^(points)$/)) {
-					var new_value = "";
-					for(x in this._start[attribute]) {
-						new_value += (this._start[attribute][x][0] + ((this._end[attribute][x][0] - this._start[attribute][x][0]) * easing)) + ",";
-						new_value += (this._start[attribute][x][1] + ((this._end[attribute][x][1] - this._start[attribute][x][1]) * easing)) + " ";
-					}
-					this.setAttribute(attribute, new_value);
-				}
-				else {
-					var new_value = (this._start[attribute] + ((this._end[attribute] - this._start[attribute]) * easing)) +  this._unit[attribute]
-					u.as(node, attribute, new_value, false);
-				}
-			}
-		}
-		u.a.requestAnimationFrame(node, "transitionTo", node.duration);
-	}
-u.fontsReady = function(node, fonts, _options) {
-	var callback_loaded = "fontsLoaded";
-	var callback_timeout = "fontsNotLoaded";
-	var max_time = 3000;
-	if(obj(_options)) {
-		var _argument;
-		for(_argument in _options) {
-			switch(_argument) {
-				case "callback"					: callback_loaded		= _options[_argument]; break;
-				case "timeout"					: callback_timeout		= _options[_argument]; break;
-				case "max"						: max_time				= _options[_argument]; break;
-			}
-		}
-	}
-	window["_man_fonts_"] = window["_man_fonts_"] || {};
-	window["_man_fonts_"].fontApi = document.fonts && fun(document.fonts.check) ? true : false;
-	window["_man_fonts_"].fonts = window["_man_fonts_"].fonts || {};
-	var font, node, i;
-	if(typeof(fonts.length) == "undefined") {
-		font = fonts;
-		fonts = new Array();
-		fonts.push(font);
-	}
-	var loadkey = u.randomString(8);
-	if(window["_man_fonts_"].fontApi) {
-		window["_man_fonts_"+loadkey] = {};
-		window["_man_fonts_"+loadkey].t_timeout = u.t.setTimer(window["_man_fonts_"+loadkey], "checkFontsStatus", max_time);
-	}
-	else {
-		window["_man_fonts_"+loadkey] = u.ae(document.body, "div");
-		window["_man_fonts_"+loadkey].basenodes = {};
-	}
-	window["_man_fonts_"+loadkey].nodes = [];
-	window["_man_fonts_"+loadkey].loadkey = loadkey;
-	window["_man_fonts_"+loadkey].callback_node = node;
-	window["_man_fonts_"+loadkey].callback_name = callback_loaded;
-	window["_man_fonts_"+loadkey].callback_timeout = callback_timeout;
-	window["_man_fonts_"+loadkey].max_time = max_time;
-	window["_man_fonts_"+loadkey].start_time = new Date().getTime();
-	for(i = 0; i < fonts.length; i++) {
-		font = fonts[i];
-		font.style = font.style || "normal";
-		font.weight = font.weight || "400";
-		font.size = font.size || "16px";
-		font.status = "waiting";
-		font.id = u.normalize(font.family+font.style+font.weight);
-		if(!window["_man_fonts_"].fonts[font.id]) {
-			window["_man_fonts_"].fonts[font.id] = font;
-		}
-		if(window["_man_fonts_"].fontApi) {
-			node = {};
-		}
-		else {
-			if(!window["_man_fonts_"+loadkey].basenodes[font.style+font.weight]) {
-				window["_man_fonts_"+loadkey].basenodes[font.style+font.weight] = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!","style":"font-family: Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: "+font.size+" !important; line-height: 1em !important; opacity: 0 !important;"});
-			}
-			node = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!","style":"font-family: '"+font.family+"', Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: "+font.size+" !important; line-height: 1em !important; opacity: 0 !important;"});
-		}
-		node.font_size = font.size;
-		node.font_family = font.family;
-		node.font_weight = font.weight;
-		node.font_style = font.style;
-		node.font_id = font.id;
-		node.loadkey = loadkey;
-		window["_man_fonts_"+loadkey].nodes.push(node);
-	}
-	window["_man_fonts_"+loadkey].checkFontsAPI = function() {
-		var i, node, font_string;
-		for(i = 0; i < this.nodes.length; i++) {
-			node = this.nodes[i];
-			if(window["_man_fonts_"].fonts[node.font_id] && window["_man_fonts_"].fonts[node.font_id].status == "waiting") {
-				font_string = node.font_style + " " + node.font_weight + " " + node.font_size + " " + node.font_family;
-				document.fonts.load(font_string).then(function(fontFaceSetEvent) {
-					if(fontFaceSetEvent && fontFaceSetEvent.length && fontFaceSetEvent[0].status == "loaded") {
-						window["_man_fonts_"].fonts[this.font_id].status = "loaded";
-					}
-					else {
-						window["_man_fonts_"].fonts[this.font_id].status = "failed";
-					}
-					if(window["_man_fonts_"+this.loadkey] && fun(window["_man_fonts_"+this.loadkey].checkFontsStatus)) {
-						window["_man_fonts_"+this.loadkey].checkFontsStatus();
-					}
-				}.bind(node));
-			}
-			else {
-			}
-		}
-		if(fun(this.checkFontsStatus)) {
-			this.checkFontsStatus();
-		}
-	}
-	window["_man_fonts_"+loadkey].checkFontsStatus = function(event) {
-		var i, node;
-		for(i = 0; i < this.nodes.length; i++) {
-			node = this.nodes[i];
-			if(window["_man_fonts_"].fonts[node.font_id].status == "waiting") {
-				if(this.start_time + this.max_time <= new Date().getTime()) {
-					if(fun(this.callback_node[this.callback_timeout])) {
-						this.callback_node[this.callback_timeout]();
-					}
-					else if(fun(this.callback_node[this.callback_name])) {
-						this.callback_node[this.callback_name]();
-					}
-					u.t.resetTimer(this.t_timeout);
-					delete window["_man_fonts_"+this.loadkey];
-				}
-				return;
-			}
-		}
-		if(fun(this.callback_node[this.callback_name])) {
-			this.callback_node[this.callback_name]();
-		}
-		u.t.resetTimer(this.t_timeout);
-		delete window["_man_fonts_"+this.loadkey];
-	}
-	window["_man_fonts_"+loadkey].checkFontsFallback = function() {
-		var basenode, i, node, loaded = 0;
-		for(i = 0; i < this.nodes.length; i++) {
-			node = this.nodes[i];
-			basenode = this.basenodes[node.font_style+node.font_weight];
-			if(node.offsetWidth != basenode.offsetWidth || node.offsetHeight != basenode.offsetHeight) {
-				loaded++;
-			}
-		}
-		if(loaded == this.nodes.length) {
-			if(fun(this.callback_node[this.callback_name])) {
-				this.callback_node[this.callback_name]();
-			}
-			this.parentNode.removeChild(this);
-		}
-		else {
-			if(this.start_time + this.max_time > new Date().getTime()) {
-				u.t.setTimer(this, "checkfonts", 30);
-			}
-			else {
-				if(fun(this.callback_node[this.callback_timeout])) {
-					this.callback_node[this.callback_timeout]();
-				}
-				else if(fun(this.callback_node[this.callback_name])) {
-					this.callback_node[this.callback_name]();
-				}
-			}
-		}
-	}
-	if(window["_man_fonts_"].fontApi) {
-		window["_man_fonts_"+loadkey].checkFontsAPI();
-	}
-	else {
-		window["_man_fonts_"+loadkey].checkFontsFallback();
-	}
-}
+u.txt = {};
+u.txt["share"] = "Share this page";
+u.txt["share-info-headline"] = "(How do I share?)";
+u.txt["share-info-txt"] = "We have not included social media plugins on this site, because they are frequently abused to collect data about you. Also we don't want to promote some channels over others. Instead, just copy the link and share it wherever you find relevant.";
+u.txt["share-info-ok"] = "OK";
+u.txt["readmore"] = "Read more.";
+u.txt["readstate-not_read"] = "Click to mark as read";
+u.txt["readstate-read"] = "Read";
+u.txt["add_comment"] = "Add comment";
+u.txt["comment"] = "Comment";
+u.txt["cancel"] = "Cancel";
+u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/signup">Sign up</a> to add comments.';
+u.txt["relogin"] = "Your session timed out - please login to continue.";
+u.txt["terms-headline"] = "We love <br />cookies and privacy";
+u.txt["terms-accept"] = "Accept";
+u.txt["terms-details"] = "Details";
+u.txt["smartphone-switch-headline"] = "Hello curious";
+u.txt["smartphone-switch-text"] = [
+	"If you are looking for a mobile version of this site, using an actual mobile phone is a better starting point.",
+	"We care about our endusers and <em>one-size fits one device</em>, the parentNode way, provides an optimized user experience with a smaller footprint, because it doesn't come with all sizes included.",
+	"But, since it is our mission to accommodate users, feel free to switch to the Smartphone segment and see if it serves your purpose better for the moment. We'll make sure to leave you with an option to return back to the Desktop segment.",
+];
+u.txt["smartphone-switch-bn-hide"] = "Hide";
+u.txt["smartphone-switch-bn-switch"] = "Go to Smartphone version";
 u.notifier = function(node) {
 	u.bug_force = true;
 	u.bug("enable notifier");
@@ -5008,22 +4767,6 @@ Util.Objects["page"] = new function() {
 	}
 }
 u.e.addDOMReadyEvent(u.init);
-Util.Objects["front"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-			this.offsetHeight;
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			page.cN.scene = this;
-			u.showScene(this);
-			page.acceptCookies();
-			page.resized();
-		}
-		scene.ready();
-	}
-}
 Util.Objects["scene"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
@@ -5035,61 +4778,6 @@ Util.Objects["scene"] = new function() {
 			page.cN.scene = this;
 			u.showScene(this);
 			page.acceptCookies();
-			page.resized();
-		}
-		scene.ready();
-	}
-}
-Util.Objects["login"] = new function() {
-	this.init = function(scene) {
-		u.bug("scene init:", scene);
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			this._form = u.qs("form", this);
-			u.f.init(this._form);
-			this._form.fields["username"].focus();
-			page.cN.scene = this;
-			u.showScene(this);
-			page.resized();
-		}
-		scene.ready();
-	}
-}
-Util.Objects["signup"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			page.cN.scene = this;
-			var signup_form = u.qs("form.signup", this);
-			var place_holder = u.qs("div.articlebody .placeholder.signup", this);
-			if(signup_form && place_holder) {
-				place_holder.parentNode.replaceChild(signup_form, place_holder);
-			}
-			if(signup_form) {
-				u.f.init(signup_form);
-			}
-			page.acceptCookies();
-			page.resized();
-		}
-		scene.ready();
-	}
-}
-Util.Objects["newsletter"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			this._form = u.qs("form", this);
-			u.f.init(this._form);
-			page.cN.scene = this;
 			page.resized();
 		}
 		scene.ready();
@@ -5209,68 +4897,9 @@ Util.Objects["article"] = new function() {
 		}
 	}
 }
-Util.Objects["todolist"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			u.bug("scene.ready:", this);
-			this.nodes = u.qsa("li.item", this);
-			if(this.nodes.length) {
-				var i, node;
-				for(i = 0; node = this.nodes[i]; i++) {
-					node.item_id = u.cv(node, "id");
-					node.actions = u.qs("ul.actions", node);
-					node.close_form = u.qs("li.close form", node);
-					u.f.init(node.close_form);
-					node.bn_close = u.qs("input[type=submit]", node.close_form);
-					node.bn_close.node = node;
-					u.e.click(node.bn_close)
-					node.bn_close.clicked = function(event) {
-						u.e.kill(event);
-						this.response = function(response) {
-							if(response.cms_status == "success") {
-								u.ac(this.node.actions, "closed");
-							}
-							else {
-							}
-						}
-						u.request(this, this.form.action, {"method":this.form.method, "params":u.f.getParams(this.form)});
-					}
-					node.open_form = u.qs("li.open form", node);
-					u.f.init(node.open_form);
-					node.bn_open = u.qs("input[type=submit]", node.open_form);
-					node.bn_open.node = node;
-					u.e.click(node.bn_open)
-					node.bn_open.clicked = function(event) {
-						u.e.kill(event);
-						this.response = function(response) {
-							if(response.cms_status == "success") {
-								u.rc(this.node.actions, "closed");
-							}
-							else {
-							}
-						}
-						u.request(this, this.form.action, {"method":this.form.method, "params":u.f.getParams(this.form)});
-					}
-				}
-			}
-			page.cN.scene = this;
-			page.resized();
-		}
-		scene.ready();
-	}
-}
 
 
 /*u-settings.js*/
-u.site_name = "think.dk";
-u.terms_version = "terms_v1";
-u.ga_account = 'UA-10756281-1';
-u.ga_domain = 'think.dk';
-u.gapi_key = "AIzaSyAVqnYpqFln-qAYsp5rkEGs84mrhmGQB_I";
 u.txt = {};
 u.txt["share"] = "Share this page";
 u.txt["share-info-headline"] = "(How do I share?)";
@@ -5282,11 +4911,28 @@ u.txt["readstate-read"] = "Read";
 u.txt["add_comment"] = "Add comment";
 u.txt["comment"] = "Comment";
 u.txt["cancel"] = "Cancel";
-u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/memberships">Join us</a> to add comments.';
+u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/signup">Sign up</a> to add comments.';
 u.txt["relogin"] = "Your session timed out - please login to continue.";
 u.txt["terms-headline"] = "We love <br />cookies and privacy";
 u.txt["terms-accept"] = "Accept";
 u.txt["terms-details"] = "Details";
+u.txt["smartphone-switch-headline"] = "Hello curious";
+u.txt["smartphone-switch-text"] = [
+	"If you are looking for a mobile version of this site, using an actual mobile phone is a better starting point.",
+	"We care about our endusers and <em>one-size fits one device</em>, the parentNode way, provides an optimized user experience with a smaller footprint, because it doesn't come with all sizes included.",
+	"But, since it is our mission to accommodate users, feel free to switch to the Smartphone segment and see if it serves your purpose better for the moment. We'll make sure to leave you with an option to return back to the Desktop segment.",
+];
+u.txt["smartphone-switch-bn-hide"] = "Hide";
+u.txt["smartphone-switch-bn-switch"] = "Go to Smartphone version";
+
+
+/*u-settings.js*/
+u.site_name = "think.dk";
+u.terms_version = "terms_v1";
+u.ga_account = 'UA-10756281-1';
+u.ga_domain = 'think.dk';
+u.gapi_key = "AIzaSyAVqnYpqFln-qAYsp5rkEGs84mrhmGQB_I";
+u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/memberships">Join us</a> to add comments.';
 u.txt["weekday-1"] = "Monday";
 u.txt["weekday-2"] = "Tuesday";
 u.txt["weekday-3"] = "Wednesday";
@@ -6044,6 +5690,271 @@ u.textscaler = function(node, _settings) {
 	window._man_text.precalculate();
 	node.scaleText();
 }
+
+/*u-form-builder.js*/
+u.f.customBuild = {};
+u.f.addForm = function(node, _options) {
+	var form_name = "js_form";
+	var form_action = "#";
+	var form_method = "post";
+	var form_class = "";
+	if(obj(_options)) {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "name"			: form_name				= _options[_argument]; break;
+				case "action"		: form_action			= _options[_argument]; break;
+				case "method"		: form_method			= _options[_argument]; break;
+				case "class"		: form_class			= _options[_argument]; break;
+			}
+		}
+	}
+	var form = u.ae(node, "form", {"class":form_class, "name": form_name, "action":form_action, "method":form_method});
+	return form;
+}
+u.f.addFieldset = function(node, _options) {
+	var fieldset_class = "";
+	if(obj(_options)) {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "class"			: fieldset_class			= _options[_argument]; break;
+			}
+		}
+	}
+	return u.ae(node, "fieldset", {"class":fieldset_class});
+}
+u.f.addField = function(node, _options) {
+	var field_name = "js_name";
+	var field_label = "Label";
+	var field_type = "string";
+	var field_value = "";
+	var field_options = [];
+	var field_checked = false;
+	var field_class = "";
+	var field_id = "";
+	var field_max = false;
+	var field_min = false;
+	var field_disabled = false;
+	var field_readonly = false;
+	var field_required = false;
+	var field_pattern = false;
+	var field_error_message = "There is an error in your input";
+	var field_hint_message = "";
+	if(obj(_options)) {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "name"					: field_name			= _options[_argument]; break;
+				case "label"				: field_label			= _options[_argument]; break;
+				case "type"					: field_type			= _options[_argument]; break;
+				case "value"				: field_value			= _options[_argument]; break;
+				case "options"				: field_options			= _options[_argument]; break;
+				case "checked"				: field_checked			= _options[_argument]; break;
+				case "class"				: field_class			= _options[_argument]; break;
+				case "id"					: field_id				= _options[_argument]; break;
+				case "max"					: field_max				= _options[_argument]; break;
+				case "min"					: field_min				= _options[_argument]; break;
+				case "disabled"				: field_disabled		= _options[_argument]; break;
+				case "readonly"				: field_readonly		= _options[_argument]; break;
+				case "required"				: field_required		= _options[_argument]; break;
+				case "pattern"				: field_pattern			= _options[_argument]; break;
+				case "error_message"		: field_error_message	= _options[_argument]; break;
+				case "hint_message"			: field_hint_message	= _options[_argument]; break;
+			}
+		}
+	}
+	var custom_build;
+	if(field_type in u.f.customBuild) {
+		return u.f.customBuild[field_type](node, _options);
+	}
+	field_id = field_id ? field_id : "input_"+field_type+"_"+field_name;
+	field_disabled = !field_disabled ? (field_class.match(/(^| )disabled( |$)/) ? "disabled" : false) : "disabled";
+	field_readonly = !field_readonly ? (field_class.match(/(^| )readonly( |$)/) ? "readonly" : false) : "readonly";
+	field_required = !field_required ? (field_class.match(/(^| )required( |$)/) ? true : false) : true;
+	field_class += field_disabled ? (!field_class.match(/(^| )disabled( |$)/) ? " disabled" : "") : "";
+	field_class += field_readonly ? (!field_class.match(/(^| )readonly( |$)/) ? " readonly" : "") : "";
+	field_class += field_required ? (!field_class.match(/(^| )required( |$)/) ? " required" : "") : "";
+	field_class += field_min ? (!field_class.match(/(^| )min:[0-9]+( |$)/) ? " min:"+field_min : "") : "";
+	field_class += field_max ? (!field_class.match(/(^| )max:[0-9]+( |$)/) ? " max:"+field_max : "") : "";
+	if (field_type == "hidden") {
+		return u.ae(node, "input", {"type":"hidden", "name":field_name, "value":field_value, "id":field_id});
+	}
+	var field = u.ae(node, "div", {"class":"field "+field_type+" "+field_class});
+	var attributes = {};
+	if(field_type == "string") {
+		field_max = field_max ? field_max : 255;
+		attributes = {
+			"type":"text", 
+			"id":field_id, 
+			"value":field_value, 
+			"name":field_name, 
+			"maxlength":field_max, 
+			"minlength":field_min,
+			"pattern":field_pattern,
+			"readonly":field_readonly,
+			"disabled":field_disabled
+		};
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+		u.ae(field, "input", u.f.verifyAttributes(attributes));
+	}
+	else if(field_type == "email" || field_type == "tel" || field_type == "password") {
+		field_max = field_max ? field_max : 255;
+		attributes = {
+			"type":field_type, 
+			"id":field_id, 
+			"value":field_value, 
+			"name":field_name, 
+			"maxlength":field_max, 
+			"minlength":field_min,
+			"pattern":field_pattern,
+			"readonly":field_readonly,
+			"disabled":field_disabled
+		};
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+		u.ae(field, "input", u.f.verifyAttributes(attributes));
+	}
+	else if(field_type == "number" || field_type == "integer" || field_type == "date" || field_type == "datetime") {
+		attributes = {
+			"type":field_type, 
+			"id":field_id, 
+			"value":field_value, 
+			"name":field_name, 
+			"max":field_max, 
+			"min":field_min,
+			"pattern":field_pattern,
+			"readonly":field_readonly,
+			"disabled":field_disabled
+		};
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+		u.ae(field, "input", u.f.verifyAttributes(attributes));
+	}
+	else if(field_type == "checkbox") {
+		attributes = {
+			"type":field_type, 
+			"id":field_id, 
+			"value":field_value ? field_value : "true", 
+			"name":field_name, 
+			"disabled":field_disabled,
+			"checked":field_checked
+		};
+		u.ae(field, "input", {"name":field_name, "value":"false", "type":"hidden"});
+		u.ae(field, "input", u.f.verifyAttributes(attributes));
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+	}
+	else if(field_type == "text") {
+		attributes = {
+			"id":field_id, 
+			"html":field_value, 
+			"name":field_name, 
+			"maxlength":field_max, 
+			"minlength":field_min,
+			"pattern":field_pattern,
+			"readonly":field_readonly,
+			"disabled":field_disabled
+		};
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+		u.ae(field, "textarea", u.f.verifyAttributes(attributes));
+	}
+	else if(field_type == "select") {
+		attributes = {
+			"id":field_id, 
+			"name":field_name, 
+			"disabled":field_disabled
+		};
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+		var select = u.ae(field, "select", u.f.verifyAttributes(attributes));
+		if(field_options) {
+			var i, option;
+			for(i = 0; i < field_options.length; i++) {
+				option = field_options[i];
+				if(option.value == field_value) {
+					u.ae(select, "option", {"value":option.value, "html":option.text, "selected":"selected"});
+				}
+				else {
+					u.ae(select, "option", {"value":option.value, "html":option.text});
+				}
+			}
+		}
+	}
+	else if(field_type == "radiobuttons") {
+		u.ae(field, "label", {"html":field_label});
+		if(field_options) {
+			var i, option;
+			for(i = 0; i < field_options.length; i++) {
+				option = field_options[i];
+				var div = u.ae(field, "div", {"class":"item"});
+				if(option.value == field_value) {
+					u.ae(div, "input", {"value":option.value, "id":field_id+"-"+i, "type":"radio", "name":field_name, "checked":"checked"});
+					u.ae(div, "label", {"for":field_id+"-"+i, "html":option.text});
+				}
+				else {
+					u.ae(div, "input", {"value":option.value, "id":field_id+"-"+i, "type":"radio", "name":field_name});
+					u.ae(div, "label", {"for":field_id+"-"+i, "html":option.text});
+				}
+			}
+		}
+	}
+	else if(field_type == "files") {
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+		u.ae(field, "input", {"id":field_id, "name":field_name, "type":"file"});
+	}
+	else {
+		u.bug("input type not implemented")
+	}
+	if(field_hint_message || field_error_message) {
+		var help = u.ae(field, "div", {"class":"help"});
+		if (field_hint_message) {
+			u.ae(help, "div", { "class": "hint", "html": field_hint_message });
+		}
+		if(field_error_message) {
+			u.ae(help, "div", { "class": "error", "html": field_error_message });
+		}
+	}
+	return field;
+}
+u.f.verifyAttributes = function(attributes) {
+	for(attribute in attributes) {
+		if(attributes[attribute] === undefined || attributes[attribute] === false || attributes[attribute] === null) {
+			delete attributes[attribute];
+		}
+	}
+	return attributes;
+}
+u.f.addAction = function(node, _options) {
+	var action_type = "submit";
+	var action_name = "js_name";
+	var action_value = "";
+	var action_class = "";
+	if(obj(_options)) {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "type"			: action_type			= _options[_argument]; break;
+				case "name"			: action_name			= _options[_argument]; break;
+				case "value"		: action_value			= _options[_argument]; break;
+				case "class"		: action_class			= _options[_argument]; break;
+			}
+		}
+	}
+	var p_ul = node.nodeName.toLowerCase() == "ul" ? node : u.pn(node, {"include":"ul.actions"});
+	if(!p_ul || !u.hc(p_ul, "actions")) {
+		if(node.nodeName.toLowerCase() == "form") {
+			p_ul = u.qs("ul.actions", node);
+		}
+		p_ul = p_ul ? p_ul : u.ae(node, "ul", {"class":"actions"});
+	}
+	var p_li = node.nodeName.toLowerCase() == "li" ? node : u.pn(node, {"include":"li"});
+	if(!p_li || p_ul != p_li.parentNode) {
+		p_li = u.ae(p_ul, "li", {"class":action_name});
+	}
+	else {
+		p_li = node;
+	}
+	var action = u.ae(p_li, "input", {"type":action_type, "class":action_class, "value":action_value, "name":action_name})
+	return action;
+}
+
 
 /*beta-u-eventchain.js*/
 u.eventChain = function(node, _options) {
