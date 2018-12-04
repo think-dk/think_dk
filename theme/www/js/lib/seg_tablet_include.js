@@ -1,7 +1,7 @@
+// Skin
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/seg_tablet.js"></script>');
 
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/u-settings.js"></script>');
-document.write('<script type="text/javascript" src="/js/lib/u-settings.js"></script>'); // Overrides
 
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-googleanalytics.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-media.js"></script>');
@@ -24,8 +24,8 @@ document.write('<script type="text/javascript" src="/assets/parentnode-skin-defa
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/i-pagination.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/i-article_mini_list.js"></script>');
 
-
-
+// Project
+document.write('<script type="text/javascript" src="/js/lib/u-settings.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-front.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-unsubscribe.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-contact.js"></script>');
