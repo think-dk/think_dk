@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2018-12-04 15:40:37
+asset-builder @ 2018-12-04 17:18:06
 */
 
 /*seg_smartphone_include.js*/
@@ -4671,6 +4671,81 @@ Util.Objects["article"] = new function() {
 		}
 	}
 }
+u.injectGeolocation = function(node) {
+	node.geolocation.node = node;
+	u.bug("node.geolocation:" + node.geolocation);
+	var li_longitude = u.qs("li.longitude", node.geolocation);
+	var li_latitude = u.qs("li.latitude", node.geolocation);
+	if(li_longitude && li_latitude) {
+		node.geo_longitude = parseFloat(li_longitude.getAttribute("content"));
+		node.geo_latitude = parseFloat(li_latitude.getAttribute("content"));
+		node.showMap = function() {
+			if(!this.geomap) {
+				var injection_point = u.ns(u.qs("ul.info", this));
+				this.geomap = u.ae(this, "div", {"class":"geomap"});
+				if(injection_point) {
+					this.insertBefore(this.geomap, injection_point);
+				}
+				else {
+					this.appendChild(this.geomap);
+				}
+				var maps_url = "https://maps.googleapis.com/maps/api/js" + (u.gapi_key ? "?key="+u.gapi_key : "");
+				var html = '<html><head>';
+				html += '<style type="text/css">body {margin: 0;}#map {height: 100%;}</style>';
+				html += '<script type="text/javascript" src="'+maps_url+'"></script>';
+				html += '<script type="text/javascript">';
+				html += 'var map, marker;';
+				html += 'var initialize = function() {';
+				html += '	window._map_loaded = true;';
+				html += '	var mapOptions = {center: new google.maps.LatLng('+this.geo_latitude+', '+this.geo_longitude+'),zoom: 12, scrollwheel: false, draggable: false};';
+				html += '	map = new google.maps.Map(document.getElementById("map"),mapOptions);';
+				html += '	marker = new google.maps.Marker({position: new google.maps.LatLng('+this.geo_latitude+', '+this.geo_longitude+'), draggable:true});';
+				html += '	marker.setMap(map);';
+				html += '};';
+				html += 'google.maps.event.addDomListener(window, "load", initialize);';
+				html += '</script>';
+				html += '</head><body><div id="map"></div></body></html>';
+				this.mapsiframe = u.ae(this.geomap, "iframe");
+				this.mapsiframe.doc = this.mapsiframe.contentDocument? this.mapsiframe.contentDocument: this.mapsiframe.contentWindow.document;
+				this.mapsiframe.doc.open();
+				this.mapsiframe.doc.write(html);
+				this.mapsiframe.doc.close();
+			}
+		}
+		node.geolocation.clicked = function() {
+			this.node.showMap();
+		}
+		u.ce(node.geolocation);
+		u.ac(node.geolocation, "active");
+	}
+}
+
+
+/*u-settings.js*/
+u.txt = {};
+u.txt["share"] = "Share this page";
+u.txt["share-info-headline"] = "(How do I share?)";
+u.txt["share-info-txt"] = "We have not included social media plugins on this site, because they are frequently abused to collect data about you. Also we don't want to promote some channels over others. Instead, just copy the link and share it wherever you find relevant.";
+u.txt["share-info-ok"] = "OK";
+u.txt["readmore"] = "Read more.";
+u.txt["readstate-not_read"] = "Click to mark as read";
+u.txt["readstate-read"] = "Read";
+u.txt["add_comment"] = "Add comment";
+u.txt["comment"] = "Comment";
+u.txt["cancel"] = "Cancel";
+u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/signup">Sign up</a> to add comments.';
+u.txt["relogin"] = "Your session timed out - please login to continue.";
+u.txt["terms-headline"] = "We love <br />cookies and privacy";
+u.txt["terms-accept"] = "Accept";
+u.txt["terms-details"] = "Details";
+u.txt["smartphone-switch-headline"] = "Hello curious";
+u.txt["smartphone-switch-text"] = [
+	"If you are looking for a mobile version of this site, using an actual mobile phone is a better starting point.",
+	"We care about our endusers and <em>one-size fits one device</em>, the parentNode way, provides an optimized user experience with a smaller footprint, because it doesn't come with all sizes included.",
+	"But, since it is our mission to accommodate users, feel free to switch to the Smartphone segment and see if it serves your purpose better for the moment. We'll make sure to leave you with an option to return back to the Desktop segment.",
+];
+u.txt["smartphone-switch-bn-hide"] = "Hide";
+u.txt["smartphone-switch-bn-switch"] = "Go to Smartphone version";
 
 
 /*u-googleanalytics.js*/
@@ -5003,724 +5078,6 @@ u.f.addAction = function(node, _options) {
 	}
 	var action = u.ae(p_li, "input", {"type":action_type, "class":action_class, "value":action_value, "name":action_name})
 	return action;
-}
-
-
-/*beta-u-eventchain.js*/
-u.eventChain = function(node, _options) {
-	node._ec_events = [];
-	node.addEvent = function(node, action, duration) {
-		this._ec_events.push({"node":node, "action":action, "duration":duration});
-	}
-	node.play = function() {
-		u.t.resetTimer(this.t_eventchain);
-		if(this._ec_events.length) {
-			var _event = this._ec_events.shift();
-			_event.action.call(_event.node);
-			this.t_eventchain = u.t.setTimer(this, "play", _event.duration);
-		}
-		else {
-			if(fun(this.eventChainEnded)) {
-				this.eventChainEnded();
-			}
-		}
-	}
-	node.stop = function() {
-		u.t.resetTimer(this.t_eventchain);
-		if(fun(this.eventChainEnded)) {
-			this.eventChainEnded();
-		}
-	}
-}
-
-
-/*beta-u-animation-to.js*/
-	u.a.parseSVGPolygon = function(value) {
-		var pairs = value.trim().split(" ");
-		var sets = [];
-		var part;
-		for(x in pairs) {
-			parts = pairs[x].trim().split(",");
-			for(part in parts) {
-				parts[part] = Number(parts[part]);
-			}
-			sets[x] = parts;
-		}
-		return sets;
-	}
-	u.a.parseSVGPath = function(value) {
-		var pairs = {"m":2, "l":2, "a":7, "c":6, "s":4, "q":4, "z":0};
-		var x, sets;
-		value = value.replace(/-/g, " -");
-		value = value.replace(/,/g, " ");
-		value = value.replace(/(m|l|a|c|s|q|M|L|A|C|S|Q)/g, " $1 ");
-		value = value.replace(/  /g, " ");
-		sets = value.match(/(m|l|a|c|s|q|M|L|A|C|S|Q)([0-9 \-\.]+)/g);
-		for(x in sets) {
-			parts = sets[x].trim().split(" ");
-			sets[x] = parts;
-			if(parts && pairs[parts[0].toLowerCase()] == parts.length-1) {
-			}
-			else {
-			}
-		}
-		return sets;
-	}
-	u.a.getInitialValue = function(node, attribute) {
-		var value = (node.getAttribute(attribute) ? node.getAttribute(attribute) : u.gcs(node, attribute)).replace(node._unit[attribute], "")
-		if(attribute.match(/^(d|points)$/)) {
-			return value;
-		}
-		else {
-			return Number(value.replace(/auto/, 0));
-		}
-	}
-	u.a.to = function(node, transition, attributes) {
-		var transition_parts = transition.split(" ");
-		if(transition_parts.length >= 3) {
-			node._target = transition_parts[0];
-			node.duration = transition_parts[1].match("ms") ? parseFloat(transition_parts[1]) : (parseFloat(transition_parts[1]) * 1000);
-			node._ease = transition_parts[2];
-			if(transition_parts.length == 4) {
-				node.delay = transition_parts[3].match("ms") ? parseFloat(transition_parts[3]) : (parseFloat(transition_parts[3]) * 1000);
-			}
-		}
-		var value, d;
-		node._start = {};
-		node._end = {};
-		node._unit = {};
-		for(attribute in attributes) {
-			if(attribute.match(/^(d)$/)) {
-				node._start[attribute] = this.parseSVGPath(this.getInitialValue(node, attribute));
-				node._end[attribute] = this.parseSVGPath(attributes[attribute]);
-			}
-			else if(attribute.match(/^(points)$/)) {
-				node._start[attribute] = this.parseSVGPolygon(this.getInitialValue(node, attribute));
-				node._end[attribute] = this.parseSVGPolygon(attributes[attribute]);
-			}
-			else {
-				node._unit[attribute] = attributes[attribute].toString().match(/\%|px/);
-				node._start[attribute] = this.getInitialValue(node, attribute);
-				node._end[attribute] = attributes[attribute].toString().replace(node._unit[attribute], "");
-			}
-		}
-		node.easing = u.easings[node._ease];
-		node.transitionTo = function(progress) {
-			var easing = node.easing(progress);
-			for(attribute in attributes) {
-				if(attribute.match(/^(translate|rotate|scale)$/)) {
-					if(attribute == "translate") {
-						u.a.translate(this, Math.round((this._end_x - this._start_x) * easing), Math.round((this._end_y - this._start_y) * easing))
-					}
-					else if(attribute == "rotate") {
-					}
-				}
-				else if(attribute.match(/^(x1|y1|x2|y2|r|cx|cy|stroke-width)$/)) {
-					var new_value = (this._start[attribute] + ((this._end[attribute] - this._start[attribute]) * easing)) +  this._unit[attribute]
-					this.setAttribute(attribute, new_value);
-				}
-				else if(attribute.match(/^(d)$/)) {
-					var new_value = "";
-					for(x in this._start[attribute]) {
-						for(y in this._start[attribute][x]) {
-							if(parseFloat(this._start[attribute][x][y]) == this._start[attribute][x][y]) {
-								new_value += (Number(this._start[attribute][x][y]) + ((Number(this._end[attribute][x][y]) - Number(this._start[attribute][x][y])) * easing)) + " ";
-							}
-							else {
-								new_value += this._end[attribute][x][y] + " ";
-							}
-						}
-					}
-					this.setAttribute(attribute, new_value);
-				}
-				else if(attribute.match(/^(points)$/)) {
-					var new_value = "";
-					for(x in this._start[attribute]) {
-						new_value += (this._start[attribute][x][0] + ((this._end[attribute][x][0] - this._start[attribute][x][0]) * easing)) + ",";
-						new_value += (this._start[attribute][x][1] + ((this._end[attribute][x][1] - this._start[attribute][x][1]) * easing)) + " ";
-					}
-					this.setAttribute(attribute, new_value);
-				}
-				else {
-					var new_value = (this._start[attribute] + ((this._end[attribute] - this._start[attribute]) * easing)) +  this._unit[attribute]
-					u.as(node, attribute, new_value, false);
-				}
-			}
-		}
-		u.a.requestAnimationFrame(node, "transitionTo", node.duration);
-	}
-
-
-/*beta-u-fontsReady.js*/
-u.fontsReady = function(node, fonts, _options) {
-	var callback_loaded = "fontsLoaded";
-	var callback_timeout = "fontsNotLoaded";
-	var max_time = 3000;
-	if(obj(_options)) {
-		var _argument;
-		for(_argument in _options) {
-			switch(_argument) {
-				case "callback"					: callback_loaded		= _options[_argument]; break;
-				case "timeout"					: callback_timeout		= _options[_argument]; break;
-				case "max"						: max_time				= _options[_argument]; break;
-			}
-		}
-	}
-	window["_man_fonts_"] = window["_man_fonts_"] || {};
-	window["_man_fonts_"].fontApi = document.fonts && fun(document.fonts.check) ? true : false;
-	window["_man_fonts_"].fonts = window["_man_fonts_"].fonts || {};
-	var font, node, i;
-	if(typeof(fonts.length) == "undefined") {
-		font = fonts;
-		fonts = new Array();
-		fonts.push(font);
-	}
-	var loadkey = u.randomString(8);
-	if(window["_man_fonts_"].fontApi) {
-		window["_man_fonts_"+loadkey] = {};
-		window["_man_fonts_"+loadkey].t_timeout = u.t.setTimer(window["_man_fonts_"+loadkey], "checkFontsStatus", max_time);
-	}
-	else {
-		window["_man_fonts_"+loadkey] = u.ae(document.body, "div");
-		window["_man_fonts_"+loadkey].basenodes = {};
-	}
-	window["_man_fonts_"+loadkey].nodes = [];
-	window["_man_fonts_"+loadkey].loadkey = loadkey;
-	window["_man_fonts_"+loadkey].callback_node = node;
-	window["_man_fonts_"+loadkey].callback_name = callback_loaded;
-	window["_man_fonts_"+loadkey].callback_timeout = callback_timeout;
-	window["_man_fonts_"+loadkey].max_time = max_time;
-	window["_man_fonts_"+loadkey].start_time = new Date().getTime();
-	for(i = 0; i < fonts.length; i++) {
-		font = fonts[i];
-		font.style = font.style || "normal";
-		font.weight = font.weight || "400";
-		font.size = font.size || "16px";
-		font.status = "waiting";
-		font.id = u.normalize(font.family+font.style+font.weight);
-		if(!window["_man_fonts_"].fonts[font.id]) {
-			window["_man_fonts_"].fonts[font.id] = font;
-		}
-		if(window["_man_fonts_"].fontApi) {
-			node = {};
-		}
-		else {
-			if(!window["_man_fonts_"+loadkey].basenodes[font.style+font.weight]) {
-				window["_man_fonts_"+loadkey].basenodes[font.style+font.weight] = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!","style":"font-family: Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: "+font.size+" !important; line-height: 1em !important; opacity: 0 !important;"});
-			}
-			node = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!","style":"font-family: '"+font.family+"', Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: "+font.size+" !important; line-height: 1em !important; opacity: 0 !important;"});
-		}
-		node.font_size = font.size;
-		node.font_family = font.family;
-		node.font_weight = font.weight;
-		node.font_style = font.style;
-		node.font_id = font.id;
-		node.loadkey = loadkey;
-		window["_man_fonts_"+loadkey].nodes.push(node);
-	}
-	window["_man_fonts_"+loadkey].checkFontsAPI = function() {
-		var i, node, font_string;
-		for(i = 0; i < this.nodes.length; i++) {
-			node = this.nodes[i];
-			if(window["_man_fonts_"].fonts[node.font_id] && window["_man_fonts_"].fonts[node.font_id].status == "waiting") {
-				font_string = node.font_style + " " + node.font_weight + " " + node.font_size + " " + node.font_family;
-				document.fonts.load(font_string).then(function(fontFaceSetEvent) {
-					if(fontFaceSetEvent && fontFaceSetEvent.length && fontFaceSetEvent[0].status == "loaded") {
-						window["_man_fonts_"].fonts[this.font_id].status = "loaded";
-					}
-					else {
-						window["_man_fonts_"].fonts[this.font_id].status = "failed";
-					}
-					if(window["_man_fonts_"+this.loadkey] && fun(window["_man_fonts_"+this.loadkey].checkFontsStatus)) {
-						window["_man_fonts_"+this.loadkey].checkFontsStatus();
-					}
-				}.bind(node));
-			}
-			else {
-			}
-		}
-		if(fun(this.checkFontsStatus)) {
-			this.checkFontsStatus();
-		}
-	}
-	window["_man_fonts_"+loadkey].checkFontsStatus = function(event) {
-		var i, node;
-		for(i = 0; i < this.nodes.length; i++) {
-			node = this.nodes[i];
-			if(window["_man_fonts_"].fonts[node.font_id].status == "waiting") {
-				if(this.start_time + this.max_time <= new Date().getTime()) {
-					if(fun(this.callback_node[this.callback_timeout])) {
-						this.callback_node[this.callback_timeout]();
-					}
-					else if(fun(this.callback_node[this.callback_name])) {
-						this.callback_node[this.callback_name]();
-					}
-					u.t.resetTimer(this.t_timeout);
-					delete window["_man_fonts_"+this.loadkey];
-				}
-				return;
-			}
-		}
-		if(fun(this.callback_node[this.callback_name])) {
-			this.callback_node[this.callback_name]();
-		}
-		u.t.resetTimer(this.t_timeout);
-		delete window["_man_fonts_"+this.loadkey];
-	}
-	window["_man_fonts_"+loadkey].checkFontsFallback = function() {
-		var basenode, i, node, loaded = 0;
-		for(i = 0; i < this.nodes.length; i++) {
-			node = this.nodes[i];
-			basenode = this.basenodes[node.font_style+node.font_weight];
-			if(node.offsetWidth != basenode.offsetWidth || node.offsetHeight != basenode.offsetHeight) {
-				loaded++;
-			}
-		}
-		if(loaded == this.nodes.length) {
-			if(fun(this.callback_node[this.callback_name])) {
-				this.callback_node[this.callback_name]();
-			}
-			this.parentNode.removeChild(this);
-		}
-		else {
-			if(this.start_time + this.max_time > new Date().getTime()) {
-				u.t.setTimer(this, "checkfonts", 30);
-			}
-			else {
-				if(fun(this.callback_node[this.callback_timeout])) {
-					this.callback_node[this.callback_timeout]();
-				}
-				else if(fun(this.callback_node[this.callback_name])) {
-					this.callback_node[this.callback_name]();
-				}
-			}
-		}
-	}
-	if(window["_man_fonts_"].fontApi) {
-		window["_man_fonts_"+loadkey].checkFontsAPI();
-	}
-	else {
-		window["_man_fonts_"+loadkey].checkFontsFallback();
-	}
-}
-
-/*beta-u-notifier.js*/
-u.notifier = function(node) {
-	u.bug_force = true;
-	u.bug("enable notifier");
-	var notifications = u.qs("div.notifications", node);
-	if(!notifications) {
-		node.notifications = u.ae(node, "div", {"id":"notifications"});
-	}
-	node.notifications.hide_delay = 4500;
-	node.notifications.hide = function(node) {
-		u.a.transition(this, "all 0.5s ease-in-out");
-		u.a.translate(this, 0, -this.offsetHeight);
-	}
-	node.notify = function(response, _options) {
-		var class_name = "message";
-		if(obj(_options)) {
-			var argument;
-			for(argument in _options) {
-				switch(argument) {
-					case "class"	: class_name	= _options[argument]; break;
-				}
-			}
-		}
-		var output = [];
-		if(obj(response) && response.isJSON) {
-			var message = response.cms_message;
-			var cms_status = typeof(response.cms_status) != "undefined" ? response.cms_status : "";
-			if(obj(message)) {
-				for(type in message) {
-					if(str(message[type])) {
-						output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":message[type]}));
-					}
-					else if(obj(message[type]) && message[type].length) {
-						var node, i;
-						for(i = 0; i < message[type].length; i++) {
-							_message = message[type][i];
-							output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":_message}));
-						}
-					}
-				}
-			}
-			else if(str(message)) {
-				output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message}));
-			}
-			if(fun(this.notifications.show)) {
-				this.notifications.show();
-			}
-		}
-		else if(obj(response) && response.isHTML) {
-			var login = u.qs(".scene.login form", response);
-			var messages = u.qsa(".scene div.messages p", response);
-			if(login && !u.qs("#login_overlay")) {
-				// 
-				// 
-				this.autosave_disabled = true;
-				if(page.t_autosave) {
-					u.t.resetTimer(page.t_autosave);
-				}
-				var overlay = u.ae(document.body, "div", {"id":"login_overlay"});
-				overlay.node = this;
-				u.ae(overlay, login);
-				u.as(document.body, "overflow", "hidden");
-				var relogin = u.ie(login, "h1", {"class":"relogin", "html":(u.txt["relogin"] ? u.txt["relogin"] : "Your session expired")});
-				login.overlay = overlay;
-				u.ae(login, "input", {"type":"hidden", "name":"ajaxlogin", "value":"true"})
-				u.f.init(login);
-				login.fields["username"].focus();
-				login.submitted = function() {
-					this.response = function(response) {
-						if(response.isJSON && response.cms_status == "success") {
-							var csrf_token = response.cms_object["csrf-token"];
-							var data_vars = u.qsa("[data-csrf-token]", page);
-							var input_vars = u.qsa("[name=csrf-token]", page);
-							var dom_vars = u.qsa("*", page);
-							var i, node;
-							for(i = 0; i < data_vars.length; i++) {
-								node = data_vars[i];
-								node.setAttribute("data-csrf-token", csrf_token);
-							}
-							for(i = 0; i < input_vars.length; i++) {
-								node = input_vars[i];
-								node.value = csrf_token;
-							}
-							for(i = 0; i < dom_vars.length; i++) {
-								node = dom_vars[i];
-								if(node.csrf_token) {
-									node.csrf_token = csrf_token;
-								}
-							}
-							this.overlay.parentNode.removeChild(this.overlay);
-							var multiple_overlays = u.qsa("#login_overlay");
-							if(multiple_overlays) {
-								for(i = 0; i < multiple_overlays.length; i++) {
-									overlay = multiple_overlays[i];
-									overlay.parentNode.removeChild(overlay);
-								}
-							}
-							u.as(document.body, "overflow", "auto");
-							this.overlay.node.autosave_disabled = false;
-							if(this.overlay.node._autosave_node && this.overlay.node._autosave_interval) {
-								u.t.setTimer(this.overlay.node._autosave_node, "autosave", this.overlay.node._autosave_interval);
-							}
-						}
-						else {
-							this.fields["username"].focus();
-							this.fields["password"].val("");
-							var error_message = u.qs(".errormessage", response);
-							if(error_message) {
-								this.overlay.node.notify({"isJSON":true, "cms_status":"error", "cms_message":error_message.innerHTML});
-							}
-							else {
-								this.overlay.node.notify({"isJSON":true, "cms_status":"error", "cms_message":"An error occured"});
-							}
-						}
-					}
-					u.request(this, this.action, {"method":this.method, "params":u.f.getParams(this)});
-				}
-			}
-			else if(messages) {
-				for(i = 0; i < messages.length; i++) {
-					message = messages[i];
-					output.push(u.ae(this.notifications, "div", {"class":message.className, "html":message.innerHTML}));
-				}
-			}
-		}
-		this.t_notifier = u.t.setTimer(this.notifications, this.notifications.hide, this.notifications.hide_delay, output);
-	}
-}
-
-
-/*beta-u-paymentcards.js*/
-u.paymentCards = new function() {
-	this.payment_cards = [
-		{
-			"type": 'maestro',
-			"patterns": [5018, 502, 503, 506, 56, 58, 639, 6220, 67],
-			"format": /(\d{1,4})/g,
-			"card_length": [12,13,14,15,16,17,18,19],
-			"cvc_length": [3],
-			"luhn": true
-		},
-		{
-			"type": 'forbrugsforeningen',
-			"patterns": [600],
-			"format": /(\d{1,4})/g,
-			"card_length": [16],
-			"cvc_length": [3],
-			"luhn": true,
-		},
-		{
-			"type": 'dankort',
-			"patterns": [5019],
-			"format": /(\d{1,4})/g,
-			"card_length": [16],
-			"cvc_length": [3],
-			"luhn": true
-		},
-		{
-			"type": 'visa',
-			"patterns": [4],
-			"format": /([\d]{1,4})([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?/,
-			"card_length": [13, 16],
-			"cvc_length": [3],
-			"luhn": true
-		},
-		{
-			"type": 'mastercard',
-			"patterns": [51, 52, 53, 54, 55, 22, 23, 24, 25, 26, 27],
-			"format": /(\d{1,4})/g,
-			"card_length": [16],
-			"cvc_length": [3],
-			"luhn": true
-		},
-		{
-			"type": 'amex',
-			"patterns": [34, 37],
-			"format": /(\d{1,4})([\d]{0,6})?(\d{1,5})?/,
-			"card_length": [15],
-			"cvc_length": [3,4],
-			"luhn": true
-		}
-	];
-	this.validateCardNumber = function(card_number) {
-		var card = this.getCardTypeFromNumber(card_number);
-		if(card && parseInt(card_number) == card_number) {
-			var i, allowed_length;
-			for(i = 0; i < card.card_length.length; i++) {
-				allowed_length = card.card_length[i];
-				if(card_number.length == allowed_length) {
-					if(card.luhn) {
-						return this.luhnCheck(card_number);
-					}
-					else {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-	this.validateExpDate = function(month, year) {
-		if(
-			this.validateExpMonth(month) && 
-			this.validateExpYear(year) && 
-			new Date(year, month-1) >= new Date(new Date().getFullYear(), new Date().getMonth())
-		) {
-			return true;
-		}
-		return false;
-	}
-	this.validateExpMonth = function(month) {
-		if(month && parseInt(month) == month && month >= 1 && month <= 12) {
-			return true;
-		}
-		return false;
-	}
-	this.validateExpYear = function(year) {
-		if(year && parseInt(year) == year && new Date(year, 0) >= new Date(new Date().getFullYear(), 0)) {
-			return true;
-		}
-		return false;
-	}
-	this.validateCVC = function(cvc, card_number) {
-		var cvc_length = [3,4];
-		if(card_number && parseInt(card_number) == card_number) {
-			var card = this.getCardTypeFromNumber(card_number);
-			if(card) {
-				cvc_length = card.cvc_length;
-			}
-		}
-		if(cvc && parseInt(cvc) == cvc) {
-			var i, allowed_length;
-			for(i = 0; i < cvc_length.length; i++) {
-				allowed_length = cvc_length[i];
-				if(cvc.toString().length == allowed_length) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	this.getCardTypeFromNumber = function(card_number) {
-		var i, j, card, pattern, regex;
-		for(i = 0; card = this.payment_cards[i]; i++) {
-			for(j = 0; j < card.patterns.length; j++) {
-				pattern = card.patterns[j];
-				if(card_number.match('^' + pattern)) {
-					return card;
-				}
-			}
-		}
-		return false;
-	}
-	this.formatCardNumber = function(card_number) {
-		var card = this.getCardTypeFromNumber(card_number);
-		if(card) {
-			var matches = card_number.match(card.format);
-			if(matches) {
-				if(matches.length > 1 && matches[0] == card_number) {
-					matches.shift();
-					card_number = matches.join(" ").trim();
-				}
-				else {
-					card_number = matches.join(" ");
-				}
-			}
-		}
-		return card_number;
-	}
-	this.luhnCheck = function(card_number) {
-		var ca, sum = 0, mul = 1;
-		var len = card_number.length;
-		while (len--) {
-			ca = parseInt(card_number.charAt(len),10) * mul;
-			sum += ca - (ca>9)*9;
-			mul ^= 3;
-		};
-		return (sum%10 === 0) && (sum > 0);
-	};
-}
-
-
-/*beta-u-googlemaps.js*/
-u.googlemaps = new function() {
-	this.api_loaded = false;
-	this.map = function(map, center, _options) {
-		map._maps_streetview = false;
-		map._maps_zoom = 10;
-		map._maps_scrollwheel = true;
-		map._maps_zoom = 10;
-		map._center_latitude = center[0];
-		map._center_longitude = center[1];
-		if(obj(_options)) {
-			var _argument;
-			for(_argument in _options) {
-				switch(_argument) {
-					case "zoom"           : map._maps_zoom               = _options[_argument]; break;
-					case "scrollwheel"    : map._maps_scrollwheel        = _options[_argument]; break;
-					case "streetview"     : map._maps_streetview         = _options[_argument]; break;
-				}
-			}
-		}
-		var map_key = u.randomString(8);
-		(window[map_key] = function() {
-			var mapOptions = {center: new google.maps.LatLng(center[0], center[1]), zoom: map._maps_zoom, scrollwheel: map._maps_scrollwheel, streetViewControl: map._maps_streetview, zoomControlOptions: {position: google.maps.ControlPosition.LEFT_TOP}};
-			map.g_map = new google.maps.Map(map, mapOptions);
-			if(fun(map.APIloaded)) {
-				map.APIloaded();
-			}
-			google.maps.event.addListener(map.g_map, 'tilesloaded', function() {
-				if(fun(map.loaded)) {
-					map.loaded();
-				}
-			});
-		});
-		if(!this.api_loaded) {
-			u.ae(document.head, "script", {"src":"https://maps.googleapis.com/maps/api/js?callback="+map_key+(u.gapi_key ? "&key="+u.gapi_key : "")});
-			this.api_loaded = true;
-		}
-		else {
-			window[map_key]();
-		}
-	}
-	this.addMarker = function(map, coords, _options) {
-		var _info = false;
-		if(obj(_options)) {
-			var _argument;
-			for(_argument in _options) {
-				switch(_argument) {
-					case "info"           : _info               = _options[_argument]; break;
-				}
-			}
-		}
-		var marker = new google.maps.Marker({position: new google.maps.LatLng(coords[0], coords[1]), animation:google.maps.Animation.DROP, InfoWindow: {content:"hest"}});
-		marker.setMap(map);
-		marker.g_map = map;
-		google.maps.event.addListener(marker, 'click', function() {
-			if(fun(this.clicked)) {
-				this.clicked();
-			}
-		});
-		google.maps.event.addListener(marker, 'mouseover', function() {
-			if(fun(this.entered)) {
-				this.entered();
-			}
-		});
-		google.maps.event.addListener(marker, 'mouseout', function() {
-			if(fun(this.exited)) {
-				this.exited();
-			}
-		});
-		return marker;
-	}
-	this.removeMarker = function(map, marker, _options) {
-		marker._animation = true;
-		if(obj(_options)) {
-			var _argument;
-			for(_argument in _options) {
-				switch(_argument) {
-					case "animation"      : marker._animation            = _options[_argument]; break;
-				}
-			}
-		}
-		if(marker._animation) {
-			var key = u.randomString(8);
-			marker.pick_step = 0;
-			marker.c_zoom = (1 << map.getZoom());
-			marker.c_projection = map.getProjection();
-			marker.c_exit = map.getBounds().getNorthEast().lat();
-			marker._pickUp = function() {
-				var new_position = this.c_projection.fromLatLngToPoint(this.getPosition());
-				new_position.y -= (20*this.pick_step) / this.c_zoom; 
-				new_position = this.c_projection.fromPointToLatLng(new_position);
-				this.setPosition(new_position);
-				if(this.c_exit < new_position.lat()) {
-					this.setMap(null);
-					if(fun(this.removed)) {
-						this.removed();
-					}
-				}
-				else{
-					this.pick_step++;
-					u.t.setTimer(this, this._pickUp, 20);
-				}
-			}
-			marker._pickUp();
-		}
-		else {
-			marker.setMap(null);
-		}
-	}
-	this.infoWindow = function(map) {
-		map.g_infowindow = new google.maps.InfoWindow({"maxWidth":250});
-		google.maps.event.addListener(map.g_infowindow, 'closeclick', function() {
-			if(this._marker && fun(this._marker.closed)) {
-				this._marker.closed();
-				this._marker = false;
-			}
-		});
-	}
-	this.showInfoWindow = function(map, marker, content) {
-		map.g_infowindow.setContent(content);
-		map.g_infowindow.open(map, marker);
-		map.g_infowindow._marker = marker;
-	}
-	this.hideInfoWindow = function(map) {
-		map.g_infowindow.close();
-		if(map.g_infowindow._marker && fun(map.g_infowindow._marker.closed)) {
-			map.g_infowindow._marker.closed();
-			map.g_infowindow._marker = false;
-		}
-		map.g_infowindow._marker = false;
-	}
-	this.zoom = function() {
-	}
-	this.center = function() {
-	}
 }
 
 
@@ -7518,6 +6875,724 @@ Util.isStringHTML = function(string) {
 }
 
 
+/*beta-u-eventchain.js*/
+u.eventChain = function(node, _options) {
+	node._ec_events = [];
+	node.addEvent = function(node, action, duration) {
+		this._ec_events.push({"node":node, "action":action, "duration":duration});
+	}
+	node.play = function() {
+		u.t.resetTimer(this.t_eventchain);
+		if(this._ec_events.length) {
+			var _event = this._ec_events.shift();
+			_event.action.call(_event.node);
+			this.t_eventchain = u.t.setTimer(this, "play", _event.duration);
+		}
+		else {
+			if(fun(this.eventChainEnded)) {
+				this.eventChainEnded();
+			}
+		}
+	}
+	node.stop = function() {
+		u.t.resetTimer(this.t_eventchain);
+		if(fun(this.eventChainEnded)) {
+			this.eventChainEnded();
+		}
+	}
+}
+
+
+/*beta-u-animation-to.js*/
+	u.a.parseSVGPolygon = function(value) {
+		var pairs = value.trim().split(" ");
+		var sets = [];
+		var part;
+		for(x in pairs) {
+			parts = pairs[x].trim().split(",");
+			for(part in parts) {
+				parts[part] = Number(parts[part]);
+			}
+			sets[x] = parts;
+		}
+		return sets;
+	}
+	u.a.parseSVGPath = function(value) {
+		var pairs = {"m":2, "l":2, "a":7, "c":6, "s":4, "q":4, "z":0};
+		var x, sets;
+		value = value.replace(/-/g, " -");
+		value = value.replace(/,/g, " ");
+		value = value.replace(/(m|l|a|c|s|q|M|L|A|C|S|Q)/g, " $1 ");
+		value = value.replace(/  /g, " ");
+		sets = value.match(/(m|l|a|c|s|q|M|L|A|C|S|Q)([0-9 \-\.]+)/g);
+		for(x in sets) {
+			parts = sets[x].trim().split(" ");
+			sets[x] = parts;
+			if(parts && pairs[parts[0].toLowerCase()] == parts.length-1) {
+			}
+			else {
+			}
+		}
+		return sets;
+	}
+	u.a.getInitialValue = function(node, attribute) {
+		var value = (node.getAttribute(attribute) ? node.getAttribute(attribute) : u.gcs(node, attribute)).replace(node._unit[attribute], "")
+		if(attribute.match(/^(d|points)$/)) {
+			return value;
+		}
+		else {
+			return Number(value.replace(/auto/, 0));
+		}
+	}
+	u.a.to = function(node, transition, attributes) {
+		var transition_parts = transition.split(" ");
+		if(transition_parts.length >= 3) {
+			node._target = transition_parts[0];
+			node.duration = transition_parts[1].match("ms") ? parseFloat(transition_parts[1]) : (parseFloat(transition_parts[1]) * 1000);
+			node._ease = transition_parts[2];
+			if(transition_parts.length == 4) {
+				node.delay = transition_parts[3].match("ms") ? parseFloat(transition_parts[3]) : (parseFloat(transition_parts[3]) * 1000);
+			}
+		}
+		var value, d;
+		node._start = {};
+		node._end = {};
+		node._unit = {};
+		for(attribute in attributes) {
+			if(attribute.match(/^(d)$/)) {
+				node._start[attribute] = this.parseSVGPath(this.getInitialValue(node, attribute));
+				node._end[attribute] = this.parseSVGPath(attributes[attribute]);
+			}
+			else if(attribute.match(/^(points)$/)) {
+				node._start[attribute] = this.parseSVGPolygon(this.getInitialValue(node, attribute));
+				node._end[attribute] = this.parseSVGPolygon(attributes[attribute]);
+			}
+			else {
+				node._unit[attribute] = attributes[attribute].toString().match(/\%|px/);
+				node._start[attribute] = this.getInitialValue(node, attribute);
+				node._end[attribute] = attributes[attribute].toString().replace(node._unit[attribute], "");
+			}
+		}
+		node.easing = u.easings[node._ease];
+		node.transitionTo = function(progress) {
+			var easing = node.easing(progress);
+			for(attribute in attributes) {
+				if(attribute.match(/^(translate|rotate|scale)$/)) {
+					if(attribute == "translate") {
+						u.a.translate(this, Math.round((this._end_x - this._start_x) * easing), Math.round((this._end_y - this._start_y) * easing))
+					}
+					else if(attribute == "rotate") {
+					}
+				}
+				else if(attribute.match(/^(x1|y1|x2|y2|r|cx|cy|stroke-width)$/)) {
+					var new_value = (this._start[attribute] + ((this._end[attribute] - this._start[attribute]) * easing)) +  this._unit[attribute]
+					this.setAttribute(attribute, new_value);
+				}
+				else if(attribute.match(/^(d)$/)) {
+					var new_value = "";
+					for(x in this._start[attribute]) {
+						for(y in this._start[attribute][x]) {
+							if(parseFloat(this._start[attribute][x][y]) == this._start[attribute][x][y]) {
+								new_value += (Number(this._start[attribute][x][y]) + ((Number(this._end[attribute][x][y]) - Number(this._start[attribute][x][y])) * easing)) + " ";
+							}
+							else {
+								new_value += this._end[attribute][x][y] + " ";
+							}
+						}
+					}
+					this.setAttribute(attribute, new_value);
+				}
+				else if(attribute.match(/^(points)$/)) {
+					var new_value = "";
+					for(x in this._start[attribute]) {
+						new_value += (this._start[attribute][x][0] + ((this._end[attribute][x][0] - this._start[attribute][x][0]) * easing)) + ",";
+						new_value += (this._start[attribute][x][1] + ((this._end[attribute][x][1] - this._start[attribute][x][1]) * easing)) + " ";
+					}
+					this.setAttribute(attribute, new_value);
+				}
+				else {
+					var new_value = (this._start[attribute] + ((this._end[attribute] - this._start[attribute]) * easing)) +  this._unit[attribute]
+					u.as(node, attribute, new_value, false);
+				}
+			}
+		}
+		u.a.requestAnimationFrame(node, "transitionTo", node.duration);
+	}
+
+
+/*beta-u-fontsReady.js*/
+u.fontsReady = function(node, fonts, _options) {
+	var callback_loaded = "fontsLoaded";
+	var callback_timeout = "fontsNotLoaded";
+	var max_time = 3000;
+	if(obj(_options)) {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "callback"					: callback_loaded		= _options[_argument]; break;
+				case "timeout"					: callback_timeout		= _options[_argument]; break;
+				case "max"						: max_time				= _options[_argument]; break;
+			}
+		}
+	}
+	window["_man_fonts_"] = window["_man_fonts_"] || {};
+	window["_man_fonts_"].fontApi = document.fonts && fun(document.fonts.check) ? true : false;
+	window["_man_fonts_"].fonts = window["_man_fonts_"].fonts || {};
+	var font, node, i;
+	if(typeof(fonts.length) == "undefined") {
+		font = fonts;
+		fonts = new Array();
+		fonts.push(font);
+	}
+	var loadkey = u.randomString(8);
+	if(window["_man_fonts_"].fontApi) {
+		window["_man_fonts_"+loadkey] = {};
+		window["_man_fonts_"+loadkey].t_timeout = u.t.setTimer(window["_man_fonts_"+loadkey], "checkFontsStatus", max_time);
+	}
+	else {
+		window["_man_fonts_"+loadkey] = u.ae(document.body, "div");
+		window["_man_fonts_"+loadkey].basenodes = {};
+	}
+	window["_man_fonts_"+loadkey].nodes = [];
+	window["_man_fonts_"+loadkey].loadkey = loadkey;
+	window["_man_fonts_"+loadkey].callback_node = node;
+	window["_man_fonts_"+loadkey].callback_name = callback_loaded;
+	window["_man_fonts_"+loadkey].callback_timeout = callback_timeout;
+	window["_man_fonts_"+loadkey].max_time = max_time;
+	window["_man_fonts_"+loadkey].start_time = new Date().getTime();
+	for(i = 0; i < fonts.length; i++) {
+		font = fonts[i];
+		font.style = font.style || "normal";
+		font.weight = font.weight || "400";
+		font.size = font.size || "16px";
+		font.status = "waiting";
+		font.id = u.normalize(font.family+font.style+font.weight);
+		if(!window["_man_fonts_"].fonts[font.id]) {
+			window["_man_fonts_"].fonts[font.id] = font;
+		}
+		if(window["_man_fonts_"].fontApi) {
+			node = {};
+		}
+		else {
+			if(!window["_man_fonts_"+loadkey].basenodes[font.style+font.weight]) {
+				window["_man_fonts_"+loadkey].basenodes[font.style+font.weight] = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!","style":"font-family: Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: "+font.size+" !important; line-height: 1em !important; opacity: 0 !important;"});
+			}
+			node = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!","style":"font-family: '"+font.family+"', Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: "+font.size+" !important; line-height: 1em !important; opacity: 0 !important;"});
+		}
+		node.font_size = font.size;
+		node.font_family = font.family;
+		node.font_weight = font.weight;
+		node.font_style = font.style;
+		node.font_id = font.id;
+		node.loadkey = loadkey;
+		window["_man_fonts_"+loadkey].nodes.push(node);
+	}
+	window["_man_fonts_"+loadkey].checkFontsAPI = function() {
+		var i, node, font_string;
+		for(i = 0; i < this.nodes.length; i++) {
+			node = this.nodes[i];
+			if(window["_man_fonts_"].fonts[node.font_id] && window["_man_fonts_"].fonts[node.font_id].status == "waiting") {
+				font_string = node.font_style + " " + node.font_weight + " " + node.font_size + " " + node.font_family;
+				document.fonts.load(font_string).then(function(fontFaceSetEvent) {
+					if(fontFaceSetEvent && fontFaceSetEvent.length && fontFaceSetEvent[0].status == "loaded") {
+						window["_man_fonts_"].fonts[this.font_id].status = "loaded";
+					}
+					else {
+						window["_man_fonts_"].fonts[this.font_id].status = "failed";
+					}
+					if(window["_man_fonts_"+this.loadkey] && fun(window["_man_fonts_"+this.loadkey].checkFontsStatus)) {
+						window["_man_fonts_"+this.loadkey].checkFontsStatus();
+					}
+				}.bind(node));
+			}
+			else {
+			}
+		}
+		if(fun(this.checkFontsStatus)) {
+			this.checkFontsStatus();
+		}
+	}
+	window["_man_fonts_"+loadkey].checkFontsStatus = function(event) {
+		var i, node;
+		for(i = 0; i < this.nodes.length; i++) {
+			node = this.nodes[i];
+			if(window["_man_fonts_"].fonts[node.font_id].status == "waiting") {
+				if(this.start_time + this.max_time <= new Date().getTime()) {
+					if(fun(this.callback_node[this.callback_timeout])) {
+						this.callback_node[this.callback_timeout]();
+					}
+					else if(fun(this.callback_node[this.callback_name])) {
+						this.callback_node[this.callback_name]();
+					}
+					u.t.resetTimer(this.t_timeout);
+					delete window["_man_fonts_"+this.loadkey];
+				}
+				return;
+			}
+		}
+		if(fun(this.callback_node[this.callback_name])) {
+			this.callback_node[this.callback_name]();
+		}
+		u.t.resetTimer(this.t_timeout);
+		delete window["_man_fonts_"+this.loadkey];
+	}
+	window["_man_fonts_"+loadkey].checkFontsFallback = function() {
+		var basenode, i, node, loaded = 0;
+		for(i = 0; i < this.nodes.length; i++) {
+			node = this.nodes[i];
+			basenode = this.basenodes[node.font_style+node.font_weight];
+			if(node.offsetWidth != basenode.offsetWidth || node.offsetHeight != basenode.offsetHeight) {
+				loaded++;
+			}
+		}
+		if(loaded == this.nodes.length) {
+			if(fun(this.callback_node[this.callback_name])) {
+				this.callback_node[this.callback_name]();
+			}
+			this.parentNode.removeChild(this);
+		}
+		else {
+			if(this.start_time + this.max_time > new Date().getTime()) {
+				u.t.setTimer(this, "checkfonts", 30);
+			}
+			else {
+				if(fun(this.callback_node[this.callback_timeout])) {
+					this.callback_node[this.callback_timeout]();
+				}
+				else if(fun(this.callback_node[this.callback_name])) {
+					this.callback_node[this.callback_name]();
+				}
+			}
+		}
+	}
+	if(window["_man_fonts_"].fontApi) {
+		window["_man_fonts_"+loadkey].checkFontsAPI();
+	}
+	else {
+		window["_man_fonts_"+loadkey].checkFontsFallback();
+	}
+}
+
+/*beta-u-notifier.js*/
+u.notifier = function(node) {
+	u.bug_force = true;
+	u.bug("enable notifier");
+	var notifications = u.qs("div.notifications", node);
+	if(!notifications) {
+		node.notifications = u.ae(node, "div", {"id":"notifications"});
+	}
+	node.notifications.hide_delay = 4500;
+	node.notifications.hide = function(node) {
+		u.a.transition(this, "all 0.5s ease-in-out");
+		u.a.translate(this, 0, -this.offsetHeight);
+	}
+	node.notify = function(response, _options) {
+		var class_name = "message";
+		if(obj(_options)) {
+			var argument;
+			for(argument in _options) {
+				switch(argument) {
+					case "class"	: class_name	= _options[argument]; break;
+				}
+			}
+		}
+		var output = [];
+		if(obj(response) && response.isJSON) {
+			var message = response.cms_message;
+			var cms_status = typeof(response.cms_status) != "undefined" ? response.cms_status : "";
+			if(obj(message)) {
+				for(type in message) {
+					if(str(message[type])) {
+						output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":message[type]}));
+					}
+					else if(obj(message[type]) && message[type].length) {
+						var node, i;
+						for(i = 0; i < message[type].length; i++) {
+							_message = message[type][i];
+							output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":_message}));
+						}
+					}
+				}
+			}
+			else if(str(message)) {
+				output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message}));
+			}
+			if(fun(this.notifications.show)) {
+				this.notifications.show();
+			}
+		}
+		else if(obj(response) && response.isHTML) {
+			var login = u.qs(".scene.login form", response);
+			var messages = u.qsa(".scene div.messages p", response);
+			if(login && !u.qs("#login_overlay")) {
+				// 
+				// 
+				this.autosave_disabled = true;
+				if(page.t_autosave) {
+					u.t.resetTimer(page.t_autosave);
+				}
+				var overlay = u.ae(document.body, "div", {"id":"login_overlay"});
+				overlay.node = this;
+				u.ae(overlay, login);
+				u.as(document.body, "overflow", "hidden");
+				var relogin = u.ie(login, "h1", {"class":"relogin", "html":(u.txt["relogin"] ? u.txt["relogin"] : "Your session expired")});
+				login.overlay = overlay;
+				u.ae(login, "input", {"type":"hidden", "name":"ajaxlogin", "value":"true"})
+				u.f.init(login);
+				login.fields["username"].focus();
+				login.submitted = function() {
+					this.response = function(response) {
+						if(response.isJSON && response.cms_status == "success") {
+							var csrf_token = response.cms_object["csrf-token"];
+							var data_vars = u.qsa("[data-csrf-token]", page);
+							var input_vars = u.qsa("[name=csrf-token]", page);
+							var dom_vars = u.qsa("*", page);
+							var i, node;
+							for(i = 0; i < data_vars.length; i++) {
+								node = data_vars[i];
+								node.setAttribute("data-csrf-token", csrf_token);
+							}
+							for(i = 0; i < input_vars.length; i++) {
+								node = input_vars[i];
+								node.value = csrf_token;
+							}
+							for(i = 0; i < dom_vars.length; i++) {
+								node = dom_vars[i];
+								if(node.csrf_token) {
+									node.csrf_token = csrf_token;
+								}
+							}
+							this.overlay.parentNode.removeChild(this.overlay);
+							var multiple_overlays = u.qsa("#login_overlay");
+							if(multiple_overlays) {
+								for(i = 0; i < multiple_overlays.length; i++) {
+									overlay = multiple_overlays[i];
+									overlay.parentNode.removeChild(overlay);
+								}
+							}
+							u.as(document.body, "overflow", "auto");
+							this.overlay.node.autosave_disabled = false;
+							if(this.overlay.node._autosave_node && this.overlay.node._autosave_interval) {
+								u.t.setTimer(this.overlay.node._autosave_node, "autosave", this.overlay.node._autosave_interval);
+							}
+						}
+						else {
+							this.fields["username"].focus();
+							this.fields["password"].val("");
+							var error_message = u.qs(".errormessage", response);
+							if(error_message) {
+								this.overlay.node.notify({"isJSON":true, "cms_status":"error", "cms_message":error_message.innerHTML});
+							}
+							else {
+								this.overlay.node.notify({"isJSON":true, "cms_status":"error", "cms_message":"An error occured"});
+							}
+						}
+					}
+					u.request(this, this.action, {"method":this.method, "params":u.f.getParams(this)});
+				}
+			}
+			else if(messages) {
+				for(i = 0; i < messages.length; i++) {
+					message = messages[i];
+					output.push(u.ae(this.notifications, "div", {"class":message.className, "html":message.innerHTML}));
+				}
+			}
+		}
+		this.t_notifier = u.t.setTimer(this.notifications, this.notifications.hide, this.notifications.hide_delay, output);
+	}
+}
+
+
+/*beta-u-paymentcards.js*/
+u.paymentCards = new function() {
+	this.payment_cards = [
+		{
+			"type": 'maestro',
+			"patterns": [5018, 502, 503, 506, 56, 58, 639, 6220, 67],
+			"format": /(\d{1,4})/g,
+			"card_length": [12,13,14,15,16,17,18,19],
+			"cvc_length": [3],
+			"luhn": true
+		},
+		{
+			"type": 'forbrugsforeningen',
+			"patterns": [600],
+			"format": /(\d{1,4})/g,
+			"card_length": [16],
+			"cvc_length": [3],
+			"luhn": true,
+		},
+		{
+			"type": 'dankort',
+			"patterns": [5019],
+			"format": /(\d{1,4})/g,
+			"card_length": [16],
+			"cvc_length": [3],
+			"luhn": true
+		},
+		{
+			"type": 'visa',
+			"patterns": [4],
+			"format": /([\d]{1,4})([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?/,
+			"card_length": [13, 16],
+			"cvc_length": [3],
+			"luhn": true
+		},
+		{
+			"type": 'mastercard',
+			"patterns": [51, 52, 53, 54, 55, 22, 23, 24, 25, 26, 27],
+			"format": /(\d{1,4})/g,
+			"card_length": [16],
+			"cvc_length": [3],
+			"luhn": true
+		},
+		{
+			"type": 'amex',
+			"patterns": [34, 37],
+			"format": /(\d{1,4})([\d]{0,6})?(\d{1,5})?/,
+			"card_length": [15],
+			"cvc_length": [3,4],
+			"luhn": true
+		}
+	];
+	this.validateCardNumber = function(card_number) {
+		var card = this.getCardTypeFromNumber(card_number);
+		if(card && parseInt(card_number) == card_number) {
+			var i, allowed_length;
+			for(i = 0; i < card.card_length.length; i++) {
+				allowed_length = card.card_length[i];
+				if(card_number.length == allowed_length) {
+					if(card.luhn) {
+						return this.luhnCheck(card_number);
+					}
+					else {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	this.validateExpDate = function(month, year) {
+		if(
+			this.validateExpMonth(month) && 
+			this.validateExpYear(year) && 
+			new Date(year, month-1) >= new Date(new Date().getFullYear(), new Date().getMonth())
+		) {
+			return true;
+		}
+		return false;
+	}
+	this.validateExpMonth = function(month) {
+		if(month && parseInt(month) == month && month >= 1 && month <= 12) {
+			return true;
+		}
+		return false;
+	}
+	this.validateExpYear = function(year) {
+		if(year && parseInt(year) == year && new Date(year, 0) >= new Date(new Date().getFullYear(), 0)) {
+			return true;
+		}
+		return false;
+	}
+	this.validateCVC = function(cvc, card_number) {
+		var cvc_length = [3,4];
+		if(card_number && parseInt(card_number) == card_number) {
+			var card = this.getCardTypeFromNumber(card_number);
+			if(card) {
+				cvc_length = card.cvc_length;
+			}
+		}
+		if(cvc && parseInt(cvc) == cvc) {
+			var i, allowed_length;
+			for(i = 0; i < cvc_length.length; i++) {
+				allowed_length = cvc_length[i];
+				if(cvc.toString().length == allowed_length) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	this.getCardTypeFromNumber = function(card_number) {
+		var i, j, card, pattern, regex;
+		for(i = 0; card = this.payment_cards[i]; i++) {
+			for(j = 0; j < card.patterns.length; j++) {
+				pattern = card.patterns[j];
+				if(card_number.match('^' + pattern)) {
+					return card;
+				}
+			}
+		}
+		return false;
+	}
+	this.formatCardNumber = function(card_number) {
+		var card = this.getCardTypeFromNumber(card_number);
+		if(card) {
+			var matches = card_number.match(card.format);
+			if(matches) {
+				if(matches.length > 1 && matches[0] == card_number) {
+					matches.shift();
+					card_number = matches.join(" ").trim();
+				}
+				else {
+					card_number = matches.join(" ");
+				}
+			}
+		}
+		return card_number;
+	}
+	this.luhnCheck = function(card_number) {
+		var ca, sum = 0, mul = 1;
+		var len = card_number.length;
+		while (len--) {
+			ca = parseInt(card_number.charAt(len),10) * mul;
+			sum += ca - (ca>9)*9;
+			mul ^= 3;
+		};
+		return (sum%10 === 0) && (sum > 0);
+	};
+}
+
+
+/*beta-u-googlemaps.js*/
+u.googlemaps = new function() {
+	this.api_loaded = false;
+	this.map = function(map, center, _options) {
+		map._maps_streetview = false;
+		map._maps_zoom = 10;
+		map._maps_scrollwheel = true;
+		map._maps_zoom = 10;
+		map._center_latitude = center[0];
+		map._center_longitude = center[1];
+		if(obj(_options)) {
+			var _argument;
+			for(_argument in _options) {
+				switch(_argument) {
+					case "zoom"           : map._maps_zoom               = _options[_argument]; break;
+					case "scrollwheel"    : map._maps_scrollwheel        = _options[_argument]; break;
+					case "streetview"     : map._maps_streetview         = _options[_argument]; break;
+				}
+			}
+		}
+		var map_key = u.randomString(8);
+		(window[map_key] = function() {
+			var mapOptions = {center: new google.maps.LatLng(center[0], center[1]), zoom: map._maps_zoom, scrollwheel: map._maps_scrollwheel, streetViewControl: map._maps_streetview, zoomControlOptions: {position: google.maps.ControlPosition.LEFT_TOP}};
+			map.g_map = new google.maps.Map(map, mapOptions);
+			if(fun(map.APIloaded)) {
+				map.APIloaded();
+			}
+			google.maps.event.addListener(map.g_map, 'tilesloaded', function() {
+				if(fun(map.loaded)) {
+					map.loaded();
+				}
+			});
+		});
+		if(!this.api_loaded) {
+			u.ae(document.head, "script", {"src":"https://maps.googleapis.com/maps/api/js?callback="+map_key+(u.gapi_key ? "&key="+u.gapi_key : "")});
+			this.api_loaded = true;
+		}
+		else {
+			window[map_key]();
+		}
+	}
+	this.addMarker = function(map, coords, _options) {
+		var _info = false;
+		if(obj(_options)) {
+			var _argument;
+			for(_argument in _options) {
+				switch(_argument) {
+					case "info"           : _info               = _options[_argument]; break;
+				}
+			}
+		}
+		var marker = new google.maps.Marker({position: new google.maps.LatLng(coords[0], coords[1]), animation:google.maps.Animation.DROP, InfoWindow: {content:"hest"}});
+		marker.setMap(map);
+		marker.g_map = map;
+		google.maps.event.addListener(marker, 'click', function() {
+			if(fun(this.clicked)) {
+				this.clicked();
+			}
+		});
+		google.maps.event.addListener(marker, 'mouseover', function() {
+			if(fun(this.entered)) {
+				this.entered();
+			}
+		});
+		google.maps.event.addListener(marker, 'mouseout', function() {
+			if(fun(this.exited)) {
+				this.exited();
+			}
+		});
+		return marker;
+	}
+	this.removeMarker = function(map, marker, _options) {
+		marker._animation = true;
+		if(obj(_options)) {
+			var _argument;
+			for(_argument in _options) {
+				switch(_argument) {
+					case "animation"      : marker._animation            = _options[_argument]; break;
+				}
+			}
+		}
+		if(marker._animation) {
+			var key = u.randomString(8);
+			marker.pick_step = 0;
+			marker.c_zoom = (1 << map.getZoom());
+			marker.c_projection = map.getProjection();
+			marker.c_exit = map.getBounds().getNorthEast().lat();
+			marker._pickUp = function() {
+				var new_position = this.c_projection.fromLatLngToPoint(this.getPosition());
+				new_position.y -= (20*this.pick_step) / this.c_zoom; 
+				new_position = this.c_projection.fromPointToLatLng(new_position);
+				this.setPosition(new_position);
+				if(this.c_exit < new_position.lat()) {
+					this.setMap(null);
+					if(fun(this.removed)) {
+						this.removed();
+					}
+				}
+				else{
+					this.pick_step++;
+					u.t.setTimer(this, this._pickUp, 20);
+				}
+			}
+			marker._pickUp();
+		}
+		else {
+			marker.setMap(null);
+		}
+	}
+	this.infoWindow = function(map) {
+		map.g_infowindow = new google.maps.InfoWindow({"maxWidth":250});
+		google.maps.event.addListener(map.g_infowindow, 'closeclick', function() {
+			if(this._marker && fun(this._marker.closed)) {
+				this._marker.closed();
+				this._marker = false;
+			}
+		});
+	}
+	this.showInfoWindow = function(map, marker, content) {
+		map.g_infowindow.setContent(content);
+		map.g_infowindow.open(map, marker);
+		map.g_infowindow._marker = marker;
+	}
+	this.hideInfoWindow = function(map) {
+		map.g_infowindow.close();
+		if(map.g_infowindow._marker && fun(map.g_infowindow._marker.closed)) {
+			map.g_infowindow._marker.closed();
+			map.g_infowindow._marker = false;
+		}
+		map.g_infowindow._marker = false;
+	}
+	this.zoom = function() {
+	}
+	this.center = function() {
+	}
+}
+
+
 /*beta-u-form-onebuttonform.js*/
 Util.Objects["oneButtonForm"] = new function() {
 	this.init = function(node) {
@@ -7636,33 +7711,6 @@ Util.Objects["oneButtonForm"] = new function() {
 		}
 	}
 }
-
-/*u-settings.js*/
-u.txt = {};
-u.txt["share"] = "Share this page";
-u.txt["share-info-headline"] = "(How do I share?)";
-u.txt["share-info-txt"] = "We have not included social media plugins on this site, because they are frequently abused to collect data about you. Also we don't want to promote some channels over others. Instead, just copy the link and share it wherever you find relevant.";
-u.txt["share-info-ok"] = "OK";
-u.txt["readmore"] = "Read more.";
-u.txt["readstate-not_read"] = "Click to mark as read";
-u.txt["readstate-read"] = "Read";
-u.txt["add_comment"] = "Add comment";
-u.txt["comment"] = "Comment";
-u.txt["cancel"] = "Cancel";
-u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/signup">Sign up</a> to add comments.';
-u.txt["relogin"] = "Your session timed out - please login to continue.";
-u.txt["terms-headline"] = "We love <br />cookies and privacy";
-u.txt["terms-accept"] = "Accept";
-u.txt["terms-details"] = "Details";
-u.txt["smartphone-switch-headline"] = "Hello curious";
-u.txt["smartphone-switch-text"] = [
-	"If you are looking for a mobile version of this site, using an actual mobile phone is a better starting point.",
-	"We care about our endusers and <em>one-size fits one device</em>, the parentNode way, provides an optimized user experience with a smaller footprint, because it doesn't come with all sizes included.",
-	"But, since it is our mission to accommodate users, feel free to switch to the Smartphone segment and see if it serves your purpose better for the moment. We'll make sure to leave you with an option to return back to the Desktop segment.",
-];
-u.txt["smartphone-switch-bn-hide"] = "Hide";
-u.txt["smartphone-switch-bn-switch"] = "Go to Smartphone version";
-
 
 /*u-settings.js*/
 u.site_name = "think.dk";
