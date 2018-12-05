@@ -1,6 +1,6 @@
 /*
 Manipulator v0.9.2-full Copyright 2017 http://manipulator.parentnode.dk
-asset-builder @ 2018-11-30 16:04:48
+asset-builder @ 2018-12-04 15:53:51
 */
 
 /*seg_desktop_include.js*/
@@ -4470,6 +4470,33 @@ u._stepA2 = function() {
 }
 
 
+/*u-settings.js*/
+u.txt = {};
+u.txt["share"] = "Share this page";
+u.txt["share-info-headline"] = "(How do I share?)";
+u.txt["share-info-txt"] = "We have not included social media plugins on this site, because they are frequently abused to collect data about you. Also we don't want to promote some channels over others. Instead, just copy the link and share it wherever you find relevant.";
+u.txt["share-info-ok"] = "OK";
+u.txt["readmore"] = "Read more.";
+u.txt["readstate-not_read"] = "Click to mark as read";
+u.txt["readstate-read"] = "Read";
+u.txt["add_comment"] = "Add comment";
+u.txt["comment"] = "Comment";
+u.txt["cancel"] = "Cancel";
+u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/signup">Sign up</a> to add comments.';
+u.txt["relogin"] = "Your session timed out - please login to continue.";
+u.txt["terms-headline"] = "We love <br />cookies and privacy";
+u.txt["terms-accept"] = "Accept";
+u.txt["terms-details"] = "Details";
+u.txt["smartphone-switch-headline"] = "Hello curious";
+u.txt["smartphone-switch-text"] = [
+	"If you are looking for a mobile version of this site, using an actual mobile phone is a better starting point.",
+	"We care about our endusers and <em>one-size fits one device</em>, the parentNode way, provides an optimized user experience with a smaller footprint, because it doesn't come with all sizes included.",
+	"But, since it is our mission to accommodate users, feel free to switch to the Smartphone segment and see if it serves your purpose better for the moment. We'll make sure to leave you with an option to return back to the Desktop segment.",
+];
+u.txt["smartphone-switch-bn-hide"] = "Hide";
+u.txt["smartphone-switch-bn-switch"] = "Go to Smartphone version";
+
+
 /*beta-u-notifier.js*/
 u.notifier = function(node) {
 	u.bug_force = true;
@@ -4942,6 +4969,52 @@ Util.Objects["article"] = new function() {
 					u.request(this, this.node.article.add_readstate_url, {"method":"post", "params":"csrf-token="+this.node.article.csrf_token});
 				}
 			}
+		}
+	}
+}
+
+
+/*u-geolocation.js*/
+u.injectGeolocation = function(node) {
+	if(!u.browser("IE", "<=9")) {
+		node.geolocation.node = node;
+		var li_longitude = u.qs("li.longitude", node.geolocation);
+		var li_latitude = u.qs("li.latitude", node.geolocation);
+		if(li_longitude && li_latitude) {
+			node.geo_longitude = parseFloat(li_longitude.getAttribute("content"));
+			node.geo_latitude = parseFloat(li_latitude.getAttribute("content"));
+			node.showMap = function() {
+				if(!this.geomap) {
+					this.geomap = u.ae(this, "div", {"class":"geomap"});
+					this.insertBefore(this.geomap, u.qs("ul.info", this));
+					var maps_url = "https://maps.googleapis.com/maps/api/js" + (u.gapi_key ? "?key="+u.gapi_key : "");
+					var html = '<html><head>';
+					html += '<style type="text/css">body {margin: 0;}#map {height: 300px;}</style>';
+					html += '<script type="text/javascript" src="'+maps_url+'"></script>';
+					html += '<script type="text/javascript">';
+					html += 'var map, marker;';
+					html += 'var initialize = function() {';
+					html += '	window._map_loaded = true;';
+					html += '	var mapOptions = {center: new google.maps.LatLng('+this.geo_latitude+', '+this.geo_longitude+'),zoom: 12};';
+					html += '	map = new google.maps.Map(document.getElementById("map"),mapOptions);';
+					html += '	marker = new google.maps.Marker({position: new google.maps.LatLng('+this.geo_latitude+', '+this.geo_longitude+'), draggable:true});';
+					html += '	marker.setMap(map);';
+					html += '};';
+					html += 'google.maps.event.addDomListener(window, "load", initialize);';
+					html += '</script>';
+					html += '</head><body><div id="map"></div></body></html>';
+					this.mapsiframe = u.ae(this.geomap, "iframe");
+					this.mapsiframe.doc = this.mapsiframe.contentDocument? this.mapsiframe.contentDocument: this.mapsiframe.contentWindow.document;
+					this.mapsiframe.doc.open();
+					this.mapsiframe.doc.write(html);
+					this.mapsiframe.doc.close();
+				}
+			}
+			node.geolocation.clicked = function() {
+				this.node.showMap();
+			}
+			u.ce(node.geolocation);
+			u.ac(node.geolocation, "active");
 		}
 	}
 }
