@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2018-12-04 17:18:07
+asset-builder @ 2018-12-06 13:29:57
 */
 
 /*seg_tablet_include.js*/
@@ -7804,7 +7804,13 @@ Util.Objects["events"] = new function() {
 		scene.insertEvent = function(day, event, year, month) {
 			var h3 = u.ae(day, u.qs("h3", event).cloneNode(true));
 			h3.day = day;
-			h3.description = u.text(u.qs("div.description", event));
+			var div_description = u.qs("div.description", event);
+			if(div_description) {
+				h3.description = u.text(div_description);
+			}
+			else {
+				h3.description = "N/A";
+			}
 			u.ie(h3, "a", {"html":u.date("H:i", event.date.getTime())});
 			u.e.hover(h3);
 			h3.over = function() {
