@@ -352,7 +352,15 @@ Util.Objects["events"] = new function() {
 
 			var h3 = u.ae(day, u.qs("h3", event).cloneNode(true));
 			h3.day = day;
-			h3.description = u.text(u.qs("div.description", event));
+			var div_description = u.qs("div.description", event);
+
+			// Event might not have a description
+			if(div_description) {
+				h3.description = u.text(div_description);
+			}
+			else {
+				h3.description = "N/A";
+			}
 			u.ie(h3, "a", {"html":u.date("H:i", event.date.getTime())});
 
 			u.e.hover(h3);
