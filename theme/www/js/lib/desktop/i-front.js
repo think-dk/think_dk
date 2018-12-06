@@ -62,10 +62,12 @@ Util.Objects["front"] = new function() {
 //			u.bug("scene.build:, this);
 			var intro_cookie = u.getCookie("intro_v1");
 
-			this.intro = u.qs(".intro", this);
-			this.intro.scene = this;
-
-			this.showLoader();
+			if (u.qs(".intro", this)) {
+				this.intro = u.qs(".intro", this);
+				this.intro.scene = this;
+	
+				this.showLoader();
+			}
 
 
 			// TODO: maybe also check for tablet? It does not play audio and then the intro loop breaks
@@ -76,9 +78,13 @@ Util.Objects["front"] = new function() {
 				this.initIntro();
 			}
 			// just show end result of intro
-			else {
+			else if (intro_cookie && this.intro) {
 				this.show_full_intro = false;
 				this.initShortIntro();
+			}
+			// there is no intro page
+			else {
+				this.initNoIntro();
 			}
 
 		}
@@ -240,12 +246,8 @@ Util.Objects["front"] = new function() {
 			// });
 		}
 
-		scene.initShortIntro = function() {
-			u.bug("initShortIntro");
-
+		scene.showCarousel = function() {
 			this.intro.loaded = function() {
-
-				this.scene.removeLoader();
 
 				this.scene.injectHotspots();
 
@@ -275,7 +277,24 @@ Util.Objects["front"] = new function() {
 
 			}
 			this.createIntroBgs();
-			
+		}
+
+		scene.initNoIntro = function() {
+			u.bug("initNoIntro");
+
+			// Inject needed div for image carousel
+			this.intro = u.ie(scene, "div", {class:"intro"});
+			this.intro.scene = this;
+
+			this.showCarousel();
+		}
+
+		scene.initShortIntro = function() {
+			u.bug("initShortIntro");
+
+			this.removeLoader();
+
+			this.showCarousel();
 		}
 
 		// Prepare intro content for playback
@@ -581,8 +600,6 @@ Util.Objects["front"] = new function() {
 				
 			}
 		}
-
-
 
 		// ARTICLE
 

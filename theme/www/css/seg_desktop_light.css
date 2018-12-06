@@ -1,9 +1,54 @@
+/*
+asset-builder @ 2018-12-04 17:18:08
+*/
 
 /*seg_desktop_light_include.css*/
 
-/*seg_desktop_light_include.css*/
-
-/*s-page.css*/
+/*seg_desktop_light.css*/
+@font-face {
+	font-family: 'OpenSans';
+	src: url('fonts/open_sans/opensans-regular-webfont.eot');
+	src: url('fonts/open_sans/opensans-regular-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('fonts/open_sans/opensans-regular-webfont.woff2') format('woff2'),
+		 url('fonts/open_sans/opensans-regular-webfont.woff') format('woff'),
+		 url('fonts/open_sans/opensans-regular-webfont.ttf') format('truetype'),
+		 url('fonts/open_sans/opensans-regular-webfont.svg#OpenSansRegular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'OpenSans';
+	src: url('fonts/open_sans/opensans-bold-webfont.eot');
+	src: url('fonts/open_sans/opensans-bold-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('fonts/open_sans/opensans-bold-webfont.woff2') format('woff2'),
+		 url('fonts/open_sans/opensans-bold-webfont.woff') format('woff'),
+		 url('fonts/open_sans/opensans-bold-webfont.ttf') format('truetype'),
+		 url('fonts/open_sans/opensans-bold-webfont.svg#open_sansbold') format('svg');
+	font-weight: bold;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'OpenSans';
+	src: url('fonts/open_sans/opensans-italic-webfont.eot');
+	src: url('fonts/open_sans/opensans-italic-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('fonts/open_sans/opensans-italic-webfont.woff2') format('woff2'),
+		 url('fonts/open_sans/opensans-italic-webfont.woff') format('woff'),
+		 url('fonts/open_sans/opensans-italic-webfont.ttf') format('truetype'),
+		 url('fonts/open_sans/opensans-italic-webfont.svg#open_sansitalic') format('svg');
+	font-weight: normal;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'PT Serif';
+	src: url('fonts/pt_serif/pt_serif-regular-webfont.eot');
+	src: url('fonts/pt_serif/pt_serif-regular-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('fonts/pt_serif/pt_serif-regular-webfont.woff2') format('woff2'),
+		 url('fonts/pt_serif/pt_serif-regular-webfont.woff') format('woff'),
+		 url('fonts/pt_serif/pt_serif-regular-webfont.ttf') format('truetype'),
+		 url('fonts/pt_serif/pt_serif-regular-webfont.svg#pt_serifregular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
 * {font-family: "OpenSans", Verdana, Arial, sans-serif; color: #000000;}
 html {min-height: 100%;}
 body {background: #ffffff; margin: 0;}
@@ -48,9 +93,6 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 .terms_notification h3 {padding: 0 0 15px; font-size: 14px; color: #ffffff;}
 .terms_notification .accept,
 .terms_notification .details {text-decoration: underline; padding: 0; font-size: 13px; line-height: 18px; display: inline; vertical-align: bottom; padding: 0 15px 0 0; color: #ffffff;}
-
-
-/*s-header.css*/
 #header {position: relative; height: 100px;}
 #header .logo {font-size: 30px; padding: 20px 50px 20px; color: #888888; cursor: pointer; display: block; width: 200px;
 	font-family: "PT Serif", Times, serif;
@@ -70,13 +112,8 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 }
 #navigation ul li a:hover {text-decoration: underline;}
 #navigation ul li.front {display: none;}
-
-
-/*s-footer.css*/
 #footer {text-align: center; border-top: 1px solid #888888; margin: 0 50px;}
 #footer p {padding: 10px; cursor: pointer;}
-
-/*s-content.css*/
 #content {position: relative; width: 640px; margin: 0 auto;}
 #content .scene {position: relative; padding: 50px 0 70px;}
 #content .scene .link {cursor: pointer;}
@@ -118,7 +155,7 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 #content .scene ul.items {padding-bottom: 0;}
 #content .scene ul li.item {display: block; padding-top: 20px; padding-bottom: 20px; border-top: 1px solid #dedede;}
 #content .scene dl {padding: 0 70px 15px; overflow: hidden; width: 500px;}
-#content .scene dt {padding: 0 0 5px 0; color: #999999;} 
+#content .scene dt {padding: 0 0 5px 0; color: #999999;}
 #content .scene dd {padding: 0 0 12px;}
 #content .scene dt span {text-transform: none;}
 #content .scene dl dl {padding: 0 0 10px 30px; width: 470px;}
@@ -138,37 +175,18 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 #content .scene ul.info li.publisher,
 #content .scene ul.info li.image_info,
 #content .scene ul.info li.modified_at {display: none;}
-#content .scene ul.info ul.geo {padding: 0;}
 #content .scene div.image,
 #content .scene div.media {display: none;}
-#content .scene .pagination {margin: 0 70px 30px; padding: 20px 0;}
-#content .scene .pagination ul {padding: 0; overflow: hidden;}
-#content .scene .pagination .next,
-#content .scene .pagination .previous {background-color: #8c9399; text-decoration: none; height: 14px; padding: 6px 12px 10px; display: inline; float: right; color: #ffffff; border: none; cursor: pointer; font-size: 14px;}
-#content .scene .pagination .previous {float: left;}
-#content .scene .pagination .next a,
-#content .scene .pagination .previous a {color: #ffffff;}
-#content .scene .pagination .next:hover,
-#content .scene .pagination .previous:hover {background-color: #313942;}
 #content .scene div.categories {padding-bottom: 25px; display: block; vertical-align: top;}
 #content .scene div.categories ul {padding-right: 0;}
 #content .scene div.categories ul.tags li {font-size: 14px; padding-bottom: 5px; display: block;}
 #content .scene div.categories ul.tags li.selected a {color: #000000;}
 #content .scene div.categories ul.actions {padding-bottom: 0;}
 #content .scene div.categories ul.actions li {padding-bottom: 0; font-size: 15px; display: block;}
-#content .scene div.article {padding-bottom: 30px;}
-#content .scene div.article ul.tags {padding-bottom: 20px;}
-#content .scene ul.tags a:hover {color: #888888;}
-#content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #dedede; position: relative;}
-#content .scene ul.articles li.article ul.tags {padding-bottom: 15px;}
-#content .scene ul.articles li.article h3 {font-size: 22px; line-height: 1em; padding-bottom: 15px;
-	font-family: "PT Serif", Times, serif;
-}
 #content .scene div.related {padding-top: 10px; position: relative; z-index: 1;}
 #content .scene div.related h2 a {font-size: 13px; display: inline; vertical-align: baseline;
 	font-family: "OpenSans";
 }
-#content .scene div.comments {display: none;}
 #content .scene ul.offer,
 #content .scene .articlebody ul.offer {font-size: 0; margin: 0; list-style: none; width: auto;}
 #content .scene .articlebody ul.offer {padding: 0;}
@@ -209,25 +227,82 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 #content .scene div.vcard dl.info dd {padding-bottom: 10px; color: #cccccc;}
 #content .scene div.vcard dl.info dd ul {padding: 0;}
 #content .scene div.vcard dl.info dd li {font-size: 12px; color: #cccccc;}
-#content .scene .usedby {min-width: 600px; margin-top: 20px; margin-bottom: -50px; padding-top: 5px; border-top: 1px solid #cccccc;}
-#content .scene .usedby h2 {display: none; text-align: center; padding-bottom: 5px; font-size: 11px; width: auto; color: #bbbbbb; text-transform: uppercase;
-	font-family: "OpenSans", Verdana, Arial, sans-serif;
-}
-#content .scene .usedby ul {padding-bottom: 0;}
-#content .scene .usedby ul li {display: inline-block; width: 20%; background-position: center center; background-repeat: no-repeat; height: 150px; text-indent: -9999px;}
-#content .scene .usedby ul li.metro {background-image: url(/img/logos/metro.png); background-size: 70px auto;}
-#content .scene .usedby ul li.soulland {background-image: url(/img/logos/soulland.png); background-size: 70px auto;}
-#content .scene .usedby ul li.cphpix {background-image: url(/img/logos/cphpix.png);}
-#content .scene .usedby ul li.tuborg {background-image: url(/img/logos/tuborg.png);}
-#content .scene .usedby ul li.distortion {background-image: url(/img/logos/distortion.png);}
-#content .scene .usedby ul li.landskabsarkitekter {background-image: url(/img/logos/landskabsarkitekter.png);}
-#content .scene .usedby ul li.urbangreen {background-image: url(/img/logos/urbangreen.png);}
-#content .scene .usedby ul li.oeo {background-image: url(/img/logos/oeo.png);}
-#content .scene .usedby ul li.peoplegroup {background-image: url(/img/logos/peoplegroup.png);}
-#content .scene .usedby ul li.lsb {background-image: url(/img/logos/lsb.png);}
-#content .scene .usedby ul li.punkt1 {background-image: url(/img/logos/punkt1.png);}
 #content .scene.login form {padding-bottom: 20px;}
 #content .scene div.messages > p.error {color: #df0000;}
+#content .scene div.article {padding-bottom: 30px;}
+#content .scene div.article ul.tags {padding-bottom: 20px;}
+#content .scene ul.tags a:hover {color: #888888;}
+#content .scene .articlebody ul,
+#content .scene .articlebody ol {list-style-position: outside; margin-left: 15px; width: 485px;}
+#content .scene .articlebody ul {list-style-type: disc;}
+#content .scene .articlebody ol {list-style-type: decimal;}
+#content .scene .articlebody li {font-size: 14px; padding-bottom: 7px; padding-left: 3px; display: list-item;}
+#content .scene .articlebody ul.actions {list-style: none; margin: 0;}
+#content .scene .articlebody ul.actions li {padding-left: 0;}
+#content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #dedede; position: relative;}
+#content .scene ul.articles li.article ul.tags {padding-bottom: 15px;}
+#content .scene ul.articles li.article h3 {font-size: 22px; line-height: 1em; padding-bottom: 15px;
+	font-family: "PT Serif", Times, serif;
+}
+#content .scene .article ul.info ul.geo {padding: 0;}
+
+
+/*s-comments.css*/
+#content .scene div.comments {display: none;}
+
+/*s-documentation.css*/
+#content .scene.docsindex {}
+#content .scene.docsindex ul.actions {display: none;}
+#content .scene.docsindex .notes {display: none;}
+#content .scene.docsindex .tests {display: none;}
+#content .scene.docsindex .files {padding-top: 25px;}
+#content .scene.docsindex .files h2 {padding-bottom: 15px;}
+#content .scene.docsindex .files ul {max-width: 500px;}
+#content .scene.docsindex .files li {position: relative; padding: 5px; border-top: 1px solid #dedede;}
+#content .scene.docsindex .files li h3 {font-size: 16px; padding: 0;}
+#content .scene.docsindex .files li p {font-size: 13px; color: #999999; padding: 0;}
+#content .scene.docsindex .search {padding-top: 15px;}
+#content .scene.docsindex .search.loading {background: transparent url(../img/gx_loader.gif) no-repeat 438px 68px;}
+#content .scene.docsindex .search h2 {padding-bottom: 15px;}
+#content .scene.docsindex .search .results .function {padding: 15px 0 0; border-top: 1px solid #dedede; cursor: pointer;}
+#content .scene.docsindex .search .results .function:hover {background: #ededed;}
+#content .scene.docsindex .search .results .function .header h3 {padding-bottom: 5px;}
+#content .scene.docsindex .search .results .function .definition dl {width: auto;}
+#content .scene.docsindex .search .results .function .definition dd {padding-bottom: 0; width: auto; display: block;}
+#content .scene.docsindex .search .results .function .parameters,
+#content .scene.docsindex .search .results .function .examples,
+#content .scene.docsindex .search .results .function .return,
+#content .scene.docsindex .search .results .function .uses,
+#content .scene.docsindex .search .results .function .description,
+#content .scene.docsindex .search .results .function .callbacks,
+#content .scene.docsindex .search .results .function .definition h4,
+#content .scene.docsindex .search .results .function .definition .name,
+#content .scene.docsindex .search .results .function .definition dt {display: none;}
+#content .scene div.functions {padding-bottom: 25px;}
+#content .scene div.functions .function .body {}
+#content .scene div.functions .header {cursor: pointer;}
+#content .scene div.functions .body {border-bottom: 1px solid #bbbbbb;}
+#content .scene div.functions .function {padding: 10px 0 0; overflow: hidden; border-top: 1px solid #bbbbbb; background: #ffffff;}
+#content .scene div.functions .function .header {}
+#content .scene div.functions .function .body {padding: 20px 0 0; border: none;}
+#content .scene div.functions .function .body .definition dd {white-space: nowrap;}
+#content .scene div.functions .function .body .parameters dl.options {margin-left: -10px; width: 475px;}
+#content .scene div.functions .function .body .parameters dl.options dt {width: 130px;}
+#content .scene div.functions .function .body .callbacks dl {padding-left: 70px;}
+#content .scene div.functions .function .body .callbacks dt {width: auto; display: block; text-align: left;}
+#content .scene div.functions .function .body .callbacks dd {width: auto; display: block;}
+#content .scene div.functions .function .body .example {padding: 0 0 20px;}
+#content .scene div.functions .function .body .examples h4 {padding-bottom: 10px;}
+#content .scene div.functions .function .body .example h5 {padding-bottom: 10px; font-size: 13px;}
+#content .scene div.functions .function .body .example p {padding-bottom: 5px;}
+#content .scene div.functions .function .body .uses .javascript {padding: 5px 0 0 20px;}
+#content .scene div.functions .function .body .uses .manipulator {padding: 5px 0 0 20px;}
+#content .scene div.functions dd {padding-bottom: 5px;}
+#content .scene div.includefiles {}
+#content .scene div.includefiles .header {cursor: pointer;}
+#content .scene div.segmentsupport {padding-top: 15px;}
+#content .scene div.segmentsupport .header {cursor: pointer;}
+#content .scene div.segmentsupport dd {padding-bottom: 5px;}
 
 
 /*s-form.css*/
@@ -307,119 +382,47 @@ div.field div.hint {z-index: 9; border: 1px solid #007633; color: #007633; backg
 div.field.focus div.hint {display: block;}
 
 
-/*s-itemtypes.css*/
-#content .scene .articlebody ul,
-#content .scene .articlebody ol {list-style-position: outside; margin-left: 15px; width: 485px;}
-#content .scene .articlebody ul {list-style-type: disc;}
-#content .scene .articlebody ol {list-style-type: decimal;}
-#content .scene .articlebody li {font-size: 14px; padding-bottom: 7px; padding-left: 3px; display: list-item;}
-#content .scene .articlebody ul.actions {list-style: none; margin: 0;}
-#content .scene .articlebody ul.actions li {padding-left: 0;}
+/*s-pagination.css*/
+#content .scene .pagination {margin: 0 70px 30px; padding: 20px 0;}
+#content .scene .pagination ul {padding: 0; overflow: hidden;}
+#content .scene .pagination .next,
+#content .scene .pagination .previous {background-color: #8c9399; text-decoration: none; height: 14px; padding: 6px 12px 10px; display: inline; float: right; color: #ffffff; border: none; cursor: pointer; font-size: 14px;}
+#content .scene .pagination .previous {float: left;}
+#content .scene .pagination .next a,
+#content .scene .pagination .previous a {color: #ffffff;}
+#content .scene .pagination .next:hover,
+#content .scene .pagination .previous:hover {background-color: #313942;}
+
+/*s-todos.css*/
 #content .scene ul.todos dl.info {padding-bottom: 10px;}
 #content .scene ul.todos > li ul.actions {display: none;}
+
+
+/*s-wishlist.css*/
 #content .scene ul.wishlist {}
 #content .scene ul.wishes dl.info dt {display: none;}
 #content .scene ul.wishes dl.info dd {padding-left: 0;}
 #content .scene ul.wishes > li ul.actions {display: none;}
 
-
-/*s-documentation.css*/
-#content .scene.docsindex {}
-#content .scene.docsindex ul.actions {display: none;}
-#content .scene.docsindex .notes {display: none;}
-#content .scene.docsindex .tests {display: none;}
-#content .scene.docsindex .files {padding-top: 25px;}
-#content .scene.docsindex .files h2 {padding-bottom: 15px;}
-#content .scene.docsindex .files ul {max-width: 500px;}
-#content .scene.docsindex .files li {position: relative; padding: 5px; border-top: 1px solid #dedede;}
-#content .scene.docsindex .files li h3 {font-size: 16px; padding: 0;}
-#content .scene.docsindex .files li p {font-size: 13px; color: #999999; padding: 0;}
-#content .scene.docsindex .search {padding-top: 15px;}
-#content .scene.docsindex .search.loading {background: transparent url(/img/gx_loader.gif) no-repeat 438px 68px;}
-#content .scene.docsindex .search h2 {padding-bottom: 15px;}
-#content .scene.docsindex .search .results .function {padding: 15px 0 0; border-top: 1px solid #dedede; cursor: pointer;}
-#content .scene.docsindex .search .results .function:hover {background: #ededed;}
-#content .scene.docsindex .search .results .function .header h3 {padding-bottom: 5px;}
-#content .scene.docsindex .search .results .function .definition dl {width: auto;}
-#content .scene.docsindex .search .results .function .definition dd {padding-bottom: 0; width: auto; display: block;}
-#content .scene.docsindex .search .results .function .parameters,
-#content .scene.docsindex .search .results .function .examples,
-#content .scene.docsindex .search .results .function .return,
-#content .scene.docsindex .search .results .function .uses,
-#content .scene.docsindex .search .results .function .description,
-#content .scene.docsindex .search .results .function .callbacks,
-#content .scene.docsindex .search .results .function .definition h4,
-#content .scene.docsindex .search .results .function .definition .name,
-#content .scene.docsindex .search .results .function .definition dt {display: none;}
-#content .scene div.functions {padding-bottom: 25px;}
-#content .scene div.functions .function .body {}
-#content .scene div.functions .header {cursor: pointer;}
-#content .scene div.functions .body {border-bottom: 1px solid #bbbbbb;}
-#content .scene div.functions .function {padding: 10px 0 0; overflow: hidden; border-top: 1px solid #bbbbbb; background: #ffffff;}
-#content .scene div.functions .function .header {}
-#content .scene div.functions .function .body {padding: 20px 0 0; border: none;}
-#content .scene div.functions .function .body .definition dd {white-space: nowrap;}
-#content .scene div.functions .function .body .parameters dl.options {margin-left: -10px; width: 475px;}
-#content .scene div.functions .function .body .parameters dl.options dt {width: 130px;}
-#content .scene div.functions .function .body .callbacks dl {padding-left: 70px;}
-#content .scene div.functions .function .body .callbacks dt {width: auto; display: block; text-align: left;}
-#content .scene div.functions .function .body .callbacks dd {width: auto; display: block;}
-#content .scene div.functions .function .body .example {padding: 0 0 20px;}
-#content .scene div.functions .function .body .examples h4 {padding-bottom: 10px;}
-#content .scene div.functions .function .body .example h5 {padding-bottom: 10px; font-size: 13px;}
-#content .scene div.functions .function .body .example p {padding-bottom: 5px;}
-#content .scene div.functions .function .body .uses .javascript {padding: 5px 0 0 20px;}
-#content .scene div.functions .function .body .uses .manipulator {padding: 5px 0 0 20px;}
-#content .scene div.functions dd {padding-bottom: 5px;}
-#content .scene div.includefiles {}
-#content .scene div.includefiles .header {cursor: pointer;}
-#content .scene div.segmentsupport {padding-top: 15px;}
-#content .scene div.segmentsupport .header {cursor: pointer;}
-#content .scene div.segmentsupport dd {padding-bottom: 5px;}
-
-
-
-/*s-fonts-desktop_light.css*/
-@font-face {
-	font-family: 'OpenSans';
-	src: url('/css/fonts/opensans-regular-webfont.eot');
-	src: url('/css/fonts/opensans-regular-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('/css/fonts/opensans-regular-webfont.woff') format('woff'),
-		 url('/css/fonts/opensans-regular-webfont.ttf') format('truetype'),
-		 url('/css/fonts/opensans-regular-webfont.svg#OpenSansRegular') format('svg');
-	font-weight: normal;
-	font-style: normal;
+/*s-used_by.css*/
+#content .scene .usedby {min-width: 600px; margin-top: 20px; margin-bottom: -50px; padding-top: 5px; border-top: 1px solid #cccccc;}
+#content .scene .usedby h2 {display: none; text-align: center; padding-bottom: 5px; font-size: 11px; width: auto; color: #bbbbbb; text-transform: uppercase;
+	font-family: "OpenSans", Verdana, Arial, sans-serif;
 }
-@font-face {
-	font-family: 'OpenSans';
-	src: url('/css/fonts/opensans-bold-webfont.eot');
-	src: url('/css/fonts/opensans-bold-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('/css/fonts/opensans-bold-webfont.woff') format('woff'),
-		 url('/css/fonts/opensans-bold-webfont.ttf') format('truetype'),
-		 url('/css/fonts/opensans-bold-webfont.svg#open_sansbold') format('svg');
-	font-weight: bold;
-	font-style: normal;
-}
-@font-face {
-	font-family: 'OpenSans';
-	src: url('/css/fonts/opensans-italic-webfont.eot');
-	src: url('/css/fonts/opensans-italic-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('/css/fonts/opensans-italic-webfont.woff') format('woff'),
-		 url('/css/fonts/opensans-italic-webfont.ttf') format('truetype'),
-		 url('/css/fonts/opensans-italic-webfont.svg#open_sansitalic') format('svg');
-	font-weight: normal;
-	font-style: italic;
-}
-@font-face {
-	font-family: 'PT Serif';
-	src: url('/css/fonts/pt_serif-regular-webfont.eot');
-	src: url('/css/fonts/pt_serif-regular-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('/css/fonts/pt_serif-regular-webfont.woff') format('woff'),
-		 url('/css/fonts/pt_serif-regular-webfont.ttf') format('truetype'),
-		 url('/css/fonts/pt_serif-regular-webfont.svg#pt_serifregular') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
+#content .scene .usedby ul {padding-bottom: 0;}
+#content .scene .usedby ul li {display: inline-block; width: 20%; background-position: center center; background-repeat: no-repeat; height: 150px; text-indent: -9999px;}
+#content .scene .usedby ul li.metro {background-image: url(../img/logos/metro.png); background-size: 70px auto;}
+#content .scene .usedby ul li.soulland {background-image: url(../img/logos/soulland.png); background-size: 70px auto;}
+#content .scene .usedby ul li.cphpix {background-image: url(../img/logos/cphpix.png);}
+#content .scene .usedby ul li.tuborg {background-image: url(../img/logos/tuborg.png);}
+#content .scene .usedby ul li.distortion {background-image: url(../img/logos/distortion.png);}
+#content .scene .usedby ul li.landskabsarkitekter {background-image: url(../img/logos/landskabsarkitekter.png);}
+#content .scene .usedby ul li.urbangreen {background-image: url(../img/logos/urbangreen.png);}
+#content .scene .usedby ul li.oeo {background-image: url(../img/logos/oeo.png);}
+#content .scene .usedby ul li.torvehallerne {background-image: url(../img/logos/torvehallerne.png);}
+#content .scene .usedby ul li.peoplegroup {background-image: url(../img/logos/peoplegroup.png);}
+#content .scene .usedby ul li.lsb {background-image: url(../img/logos/lsb.png);}
+#content .scene .usedby ul li.punkt1 {background-image: url(../img/logos/punkt1.png);}
 
 
 /*s-pages.css*/
@@ -465,7 +468,7 @@ div.field.focus div.hint {display: block;}
 #content div.cart ul.items li h3 form ul.actions {display: inline; vertical-align: top;}
 #content div.cart ul.items li h3 form ul.actions li {padding: 18px 0 0; float: none; display: inline; vertical-align: top;}
 #content div.cart ul.items li h3 form ul.actions input.button {width: 24px; height: 24px; padding: 0; text-indent: -9999px;
-	background-image: url(/janitor/admin/img/gx_refresh.png);
+	background-image: url(../img/gx_refresh.png);
 	background-position: center center;
 	background-repeat: no-repeat;
 }

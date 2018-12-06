@@ -1,6 +1,13 @@
-@import url(http://parentnode.local/css/global/seg_tablet_include.css);
-@import url(/css/lib/s-fonts.css);
+@import url(../../assets/parentnode-skin-default/css/seg_tablet.css);
 
-@import url(/css/lib/desktop/s-pages.css);
-@import url(/css/lib/desktop/s-colorscheme.css);
-@import url(/css/lib/tablet/s-pages-active.css);
+@import url(../../assets/parentnode-skin-default/css/lib/desktop/s-form.css);
+@import url(../../assets/parentnode-skin-default/css/lib/desktop/s-documentation.css);
+@import url(../../assets/parentnode-skin-default/css/lib/desktop/s-sharing.css);
+@import url(../../assets/parentnode-skin-default/css/lib/desktop/s-todos.css);
+@import url(../../assets/parentnode-skin-default/css/lib/desktop/s-wishlist.css);
+@import url(../../assets/parentnode-skin-default/css/lib/desktop/s-used_by.css);
+
+/* Project css and overrides */
+@import url(desktop/s-pages.css);
+@import url(desktop/s-colorscheme.css);
+@import url(tablet/s-pages-active.css);

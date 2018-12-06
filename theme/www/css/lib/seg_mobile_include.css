@@ -1,5 +1,12 @@
-@import url(http://parentnode.local/css/global/seg_mobile_include.css);
-@import url(/css/lib/s-fonts-desktop_light.css);
+@import url(../../assets/parentnode-skin-default/css/seg_mobile.css);
 
-@import url(/css/lib/mobile/s-pages.css);
-@import url(/css/lib/mobile/s-colorscheme.css);
+@import url(../../assets/parentnode-skin-default/css/lib/mobile/s-form.css);
+@import url(../../assets/parentnode-skin-default/css/lib/mobile/s-documentation.css);
+@import url(../../assets/parentnode-skin-default/css/lib/mobile/s-todos.css);
+@import url(../../assets/parentnode-skin-default/css/lib/mobile/s-wishlist.css);
+@import url(../../assets/parentnode-skin-default/css/lib/mobile/s-used_by.css);
+
+
+/* Project css and overrides */
+@import url(mobile/s-pages.css);
+@import url(mobile/s-colorscheme.css);

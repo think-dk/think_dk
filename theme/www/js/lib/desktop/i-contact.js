@@ -17,18 +17,21 @@ Util.Objects["contact"] = new function() {
 
 			page.cN.scene = this;
 
-			var injection_point = u.ns(u.qs("div.article h1", this));
-			this.map = u.ae(this, "div", {"class":"map"});
-			this.map.loaded = function() {
+			if (u.qs("div.article", this)) {
 
-				u.googlemaps.addMarker(this.g_map, [55.711510,12.564495]);
-
-				delete this.loaded;
-
+				var injection_point = u.ns(u.qs("div.article h1", this));
+				this.map = u.ae(this, "div", {"class":"map"});
+				this.map.loaded = function() {
+	
+					u.googlemaps.addMarker(this.g_map, [55.711510,12.564495]);
+	
+					delete this.loaded;
+	
+				}
+				injection_point.parentNode.insertBefore(this.map, injection_point);
+				u.googlemaps.map(this.map, [55.711510,12.564495], {"zoom":14});
+	
 			}
-			injection_point.parentNode.insertBefore(this.map, injection_point);
-			u.googlemaps.map(this.map, [55.711510,12.564495], {"zoom":14});
-
 
 			u.showScene(this);
 

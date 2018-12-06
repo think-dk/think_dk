@@ -1,9 +1,46 @@
+/*
+asset-builder @ 2018-12-04 17:18:08
+*/
 
 /*seg_smartphone_include.css*/
 
-/*seg_smartphone_include.css*/
-
-/*s-page.css*/
+/*seg_smartphone.css*/
+@font-face {
+	font-family: 'OpenSans';
+	src: url('fonts/open_sans/opensans-regular-webfont.woff2') format('woff2'),
+		 url('fonts/open_sans/opensans-regular-webfont.woff') format('woff'),
+		 url('fonts/open_sans/opensans-regular-webfont.ttf') format('truetype'),
+		 url("fonts/open_sans/opensans-regular-webfont.svg#OpenSansRegular") format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'OpenSans';
+	src: url('fonts/open_sans/opensans-bold-webfont.woff2') format('woff2'),
+		 url('fonts/open_sans/opensans-bold-webfont.woff') format('woff'),
+		 url('fonts/open_sans/opensans-bold-webfont.ttf') format('truetype'),
+		 url('fonts/open_sans/opensans-bold-webfont.svg#open_sansbold') format('svg');
+	font-weight: bold;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'OpenSans';
+	src: url('fonts/open_sans/opensans-italic-webfont.woff2') format('woff2'),
+		 url('fonts/open_sans/opensans-italic-webfont.woff') format('woff'),
+		 url('fonts/open_sans/opensans-italic-webfont.ttf') format('truetype'),
+		 url('fonts/open_sans/opensans-italic-webfont.svg#open_sansitalic') format('svg');
+	font-weight: normal;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'PT Serif';
+	src: url('fonts/pt_serif/pt_serif-regular-webfont.woff2') format('woff2'),
+		 url('fonts/pt_serif/pt_serif-regular-webfont.woff') format('woff'),
+		 url('fonts/pt_serif/pt_serif-regular-webfont.ttf') format('truetype'),
+		 url('fonts/pt_serif/pt_serif-regular-webfont.svg#pt_serifregular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
 * {font-family: "OpenSans", Verdana, Arial, sans-serif; color: #000000;
 	-webkit-text-size-adjust: none;
 	-webkit-font-smoothing: antialiased;
@@ -72,9 +109,6 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 	box-sizing: border-box;
 	padding: 20px 20px; font-size: 20px;
 }
-
-
-/*s-header.css*/
 #header {z-index: 100; position: fixed; height: 60px; width: 100%; top: 0; left: 0; background: #ffffff; overflow: hidden;
 	-moz-user-select: none;
 	-webkit-user-select: none;
@@ -98,15 +132,11 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #navigation ul li.user {border-top: 1px solid #888888; margin-top: 10px;}
 #navigation ul li.admin+li.user {border: none; margin: 0;}
 #navigation ul li:active {text-decoration: none;}
-
-
-/*s-footer.css*/
 #footer {text-align: center; border-top: 1px solid #888888; margin: 0;}
 #footer p {padding: 10px; cursor: pointer;}
-
-/*s-content.css*/
 #content {position: relative; padding-top: 60px;}
-#content .scene {position: relative; padding: 50px 0 30px;}
+#content .scene {opacity: 0; position: relative; padding: 50px 0 30px;}
+#content .scene h1 span {display: inline-block;}
 #content .scene .link {cursor: pointer;}
 #content .scene a {color: #888888;}
 #content .scene a:active {text-decoration: underline;}
@@ -163,12 +193,6 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene ul.info li.modified_at,
 #content .scene ul.info li.latitude,
 #content .scene ul.info li.longitude {display: none;}
-#content .scene ul.info > li.place {font-size: 0;}
-#content .scene ul.geo.active li.location {cursor: pointer;}
-#content .scene ul.info ul.geo {padding: 0; display: inline-block; vertical-align: top; width: auto;}
-#content .scene div.geomap {height: 200px; margin: -15px 0 20px;}
-#content .scene div.geomap iframe {display: block; width: 100%; height: 100%; border: none; border-top: 1px solid #666666; border-bottom: 1px solid #666666; background-color: #ffffff;}
-#content .scene li div.geomap {padding-left: 0; padding-right: 0;}
 #content .scene div.image {padding: 0 0 20px;}
 #content .scene div.image img {width: 100%;}
 #content .scene div.image p {padding: 2px 20px 0; font-size: 0;}
@@ -177,21 +201,6 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene div.media img {width: 100%;}
 #content .scene div.media p {padding: 2px 20px 0; font-size: 0;}
 #content .scene div.media p a {font-style: italic; line-height: 1.25em; font-size: 12px; display: block; color: #cccccc;}
-#content .scene .pagination {display: none;}
-body > div.pagination {position: fixed; top: 60px; left: 0; width: 100%;}
-body > div.pagination li.next > svg.arrow {position: absolute; top: 14px; right: 2px;}
-body > div.pagination li.next > svg.arrow line {stroke: #26962d; stroke-width: 3px;}
-body > div.pagination li.previous > svg.arrow {position: absolute; top: 14px; left: 8px;}
-body > div.pagination li.previous > svg.arrow line {stroke: #26962d; stroke-width: 3px;}
-body > div.pagination li.previous,
-body > div.pagination li.next {z-index: 100; position: absolute; top: 0; cursor: pointer; background: rgba(255, 255, 255, 0.5);}
-body > div.pagination li.previous {left: 0; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-left: none; padding-left: 30px;}
-body > div.pagination li.next {right: 0; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-right: none; padding-right: 30px;}
-body > div.pagination li.previous a,
-body > div.pagination li.next a {font-size: 12px; line-height: 16px; display: inline-block; vertical-align: top; padding: 11px 12px 13px; white-space: nowrap;
- }
-body > div.pagination li.previous a {padding-left: 0;}
-body > div.pagination li.next a {padding-right: 0;}
 #content .scene div.categories {padding-bottom: 5px;}
 #content .scene div.categories ul {padding-right: 0;}
 #content .scene div.categories ul.tags li {font-size: 14px; padding-bottom: 5px; padding-top: 5px; display: block;}
@@ -202,28 +211,11 @@ body > div.pagination li.next a {padding-right: 0;}
 #content .scene div.categories ul.actions {padding-bottom: 0;}
 #content .scene div.categories ul.actions li {padding-bottom: 0; font-size: 15px; display: block;}
 #content .scene div.categories + div.categories{padding-top: 25px;}
-#content .scene ul.articles {padding: 0;}
-#content .scene.articles ul.articles {padding: 0 0 30px;}
-#content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #ccdbcd;}
-#content .scene ul.articles li.article ul.tags {padding-bottom: 10px;}
-#content .scene ul.articles li.article ul.tags li,
-#content .scene ul.articles li.article ul.tags li a {color: #cccccc;}
-#content .scene ul.articles li.article h3 {font-size: 20px; line-height: 1em; padding-bottom: 10px;
-	font-family: "PT Serif", Times, serif;
-}
-#content .scene div.article {padding-bottom: 30px;}
-#content .scene div.article h2 br {display: none;}
-#content .scene div.article ul.tags li,
-#content .scene div.article ul.tags li a {color: #cccccc;}
-#content .scene div.article ul.tags {padding-bottom: 20px;}
 #content .scene div.related {padding-top: 10px; position: relative; z-index: 1;}
 #content .scene div.related h2 {padding-bottom: 15px;}
 #content .scene div.related h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
 	font-family: "OpenSans";
 }
-#content .scene div.qnas {display: none;}
-#content .scene div.comments {display: none;}
-#content .scene div.readstate {display: none;}
 #content .scene ul.offer,
 #content .scene .articlebody ul.offer {font-size: 0; padding: 0; margin: 0; list-style: none;}
 #content .scene ul.offer li.name,
@@ -265,10 +257,36 @@ body > div.pagination li.next a {padding-right: 0;}
 #content .scene div.vcard dl.info dd ul {padding: 0;}
 #content .scene div.vcard dl.info dd li {font-size: 12px; color: #cccccc;}
 #content .scene div.vcard dl.info dd li a {padding-bottom: 10px; display: inline-block;}
-#content .scene .usedby {display: none;}
 #content .scene.login form {padding-bottom: 20px;}
 #content .scene form li.forgot {padding-top: 5px;}
 #content .scene div.messages > p.error {color: #df0000;}
+#content .scene div.article {padding-bottom: 30px;}
+#content .scene div.article h2 br {display: none;}
+#content .scene div.article ul.tags li,
+#content .scene div.article ul.tags li a {color: #cccccc;}
+#content .scene div.article ul.tags {padding-bottom: 20px;}
+#content .scene .articlebody ul,
+#content .scene .articlebody ol {list-style-position: outside; margin-left: 20px;}
+#content .scene .articlebody ul {list-style-type: disc;}
+#content .scene .articlebody ol {list-style-type: decimal;}
+#content .scene .articlebody li {font-size: 13px; padding-bottom: 8px; padding-left: 3px; line-height: 1.538em;}
+#content .scene .articlebody ul.actions {list-style: none; margin: 0;}
+#content .scene .articlebody ul.actions li {padding-left: 0;}
+#content .scene ul.articles {padding: 0;}
+#content .scene.articles ul.articles {padding: 0 0 30px;}
+#content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #ccdbcd;}
+#content .scene ul.articles li.article ul.tags {padding-bottom: 10px;}
+#content .scene ul.articles li.article ul.tags li,
+#content .scene ul.articles li.article ul.tags li a {color: #cccccc;}
+#content .scene ul.articles li.article h3 {font-size: 20px; line-height: 1em; padding-bottom: 10px;
+	font-family: "PT Serif", Times, serif;
+}
+#content .scene .article ul.info > li.place {font-size: 0;}
+#content .scene .article ul.geo.active li.location {cursor: pointer;}
+#content .scene .article ul.info ul.geo {padding: 0; display: inline-block; vertical-align: top; width: auto;}
+#content .scene .article div.geomap {height: 200px; margin: -15px 0 20px;}
+#content .scene.article div.geomap iframe {display: block; width: 100%; height: 100%; border: none; border-top: 1px solid #666666; border-bottom: 1px solid #666666; background-color: #ffffff;}
+#content .scene .article li div.geomap {padding-left: 0; padding-right: 0;}
 
 
 /*s-form.css*/
@@ -289,8 +307,8 @@ div.field input::-ms-clear, div.field textarea::-ms-clear {
 div.field select {width: calc(100% - 2px); height: 30px; color: #333333; padding: 2px 3px 2px 2px;}
 div.field select option {padding: 2px 3px 2px 6px;}
 @media all and (-webkit-min-device-pixel-ratio:0) {
-	div.field select {width: 100%; height: 31px; padding: 2px 3px 2px 7px; 
-		background: #ffffff url(/janitor/admin/img/bg_icons.png) no-repeat 360px -977px;
+	div.field select {width: 100%; height: 31px; padding: 2px 3px 2px 7px;
+		background: #ffffff url(../img/bg_icons.png) no-repeat 360px -977px;
 		-webkit-appearance: none;
 	}
 }
@@ -324,7 +342,7 @@ div.field.files {border: 3px dashed #dedede; display: block; width: 378px; borde
 div.field.files input[type=file] {opacity: 0; width: 360px; height: 49px; margin: 0; border: 0;}
 div.field.files label {color: #333333; font-size: 14px; display: block; position: absolute; width: 120px; left: 50%; padding: 1px 4px 3px; margin: 16px 0 0 -60px; text-align: center; border-radius: 6px; background: #dedede;}
 div.field.files.loading label {display: none;}
-div.field.files.loading {background: transparent url(/janitor/admin/img/gx_loader.gif) no-repeat center center;}
+div.field.files.loading {background: transparent url(../img/gx_loader.gif) no-repeat center center;}
 div.field.location {}
 div.field.location div.location {padding-bottom: 2px;}
 div.field.location div.latitude {padding-right: 2px;}
@@ -333,7 +351,7 @@ div.field.location div.longitude {display: inline-block; vertical-align: top;}
 div.field.location div.latitude input,
 div.field.location div.longitude input {width: 173px;}
 div.field.location.geolocation div.geolocation {width: 30px; height: 30px; display: inline-block; vertical-align: top; cursor: pointer;
-	background: transparent url(/janitor/admin/img/gx_geolocation.png) no-repeat 5px 8px;
+	background: transparent url(../img/gx_geolocation.png) no-repeat 5px 8px;
 }
 div.field.location.geolocation div.latitude input,
 div.field.location.geolocation div.longitude input {width: 158px;}
@@ -364,8 +382,8 @@ div.field select.default,
 div.field textarea.default,
 div.field .pseudolabel {color: #aaaaaa;}
 div.field .indicator {width: 20px; height: 15px; display: inline-block; margin-bottom: -2px; margin-top: -2px;}
-div.field.required .indicator { 
-	background: transparent url(/janitor/admin/img/bg_icons.png) no-repeat 3px -295px;
+div.field.required .indicator {
+	background: transparent url(../img/bg_icons.png) no-repeat 3px -295px;
 }
 div.field.correct .indicator {background-position: 3px -324px;}
 div.field.error {
@@ -409,7 +427,7 @@ ul.actions a.button:active,
 .submitting input.button,
 .submitting a.button,
 #content .submitting a.button {padding-left: 40px !important;
-	background-image: url(/img/gx_loader.gif);
+	background-image: url(../img/gx_loader.gif);
 	background-position: 11px 7px;
 	background-repeat: no-repeat;
 	background-size: 17px auto;
@@ -466,7 +484,7 @@ div.field.correct div.error {display: none;}
 #content .field.html .editor div.tag .drag {display: none; position: absolute; top: 0px; left: -20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background: #dedede; width: 30px; height: 30px; cursor: move;}
 #content .field.html .editor div.tag:active .drag {display: block;}
 #content .field.html .editor div.tag .remove {display: none; position: absolute; top: 0px; right: -10px; border-radius: 15px; background: #dedede; width: 30px; height: 30px; cursor: pointer;
-	background: #dedede url(/janitor/admin/img/bg_icons.png) no-repeat 8px -42px;
+	background: #dedede url(../img/bg_icons.png) no-repeat 8px -42px;
 }
 #content .field.html .editor div.tag:active .remove {display: block;}
 #content .field.html .editor div.tag ul.type {display: block; z-index: 5; position: absolute; width: 30px; top: 0px; left: 0px; padding: 0;}
@@ -541,47 +559,6 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 .delete_selection {position: absolute; z-index: 1150; top: 0; left: 0; border-radius: 8px; width: 14px; height: 14px; font-size: 10px; line-height: 14px; text-align: center; background: #ffffff; border: 1px solid #000000; cursor: pointer;}
 
 
-/*s-itemtypes.css*/
-#content .scene .articlebody ul,
-#content .scene .articlebody ol {list-style-position: outside; margin-left: 20px;}
-#content .scene .articlebody ul {list-style-type: disc;}
-#content .scene .articlebody ol {list-style-type: decimal;}
-#content .scene .articlebody li {font-size: 13px; padding-bottom: 8px; padding-left: 3px; line-height: 1.538em;}
-#content .scene .articlebody ul.actions {list-style: none; margin: 0;}
-#content .scene .articlebody ul.actions li {padding-left: 0;}
-#content .scene ul.todos dl.info {padding-bottom: 10px;}
-#content .scene ul.todos dl.info dd:after {content: ",\00a0";}
-#content .scene ul.todos dl.info dd:last-child:after {content: "";}
-#content .scene ul.todos > li ul.actions {}
-#content .scene ul.todos > li ul.actions li {padding: 0;}
-#content .scene ul.todos > li ul.actions.closed .close {display: none;}
-#content .scene ul.todos > li ul.actions .open {display: none;}
-#content .scene ul.todos > li ul.actions.closed .open {display: inline-block;}
-#content .scene ul.wishlists {padding-left: 20px; padding-right: 20px;}
-#content .scene ul.wishes > li .image { cursor: default;}
-#content .scene ul.wishes > li div.description p.available,
-#content .scene ul.wishes > li div.description p.reserved {}
-#content .scene ul.wishes > li div.description p.available span
-#content .scene ul.wishes > li div.description p.reserved span {font-style: italic;}
-#content .scene ul.wishes > li div.description p.available span {color: #bbbbbb;}
-#content .scene ul.wishes > li form {margin-left: -3px; margin-right: -3px;}
-#content .scene ul.wishes > li > ul.actions,
-#content .scene ul.wishes > li > .text > ul.actions {padding-bottom: 0;}
-#content .scene ul.wishes > li > ul.actions li,
-#content .scene ul.wishes > li > .text > ul.actions li {padding-right: 0; display: block;}
-#content .scene ul.wishes > li > ul.actions form div.field,
-#content .scene ul.wishes > li > .text > ul.actions form div.field {display: none; padding-left: 0; padding-right: 0;}
-#content .scene ul.wishes > li > ul.actions form div.field input,
-#content .scene ul.wishes > li > .text > ul.actions form div.field input {}
-#content .scene ul.wishes > li > ul.actions form input[type=submit],
-#content .scene ul.wishes > li > .text > ul.actions form input[type=submit] {}
-#content .scene ul.wishes dl.info dt.price {display: inline-block; vertical-align: top; width: auto;}
-#content .scene ul.wishes dl.info dt.price:after {content: ":";}
-#content .scene ul.wishes dl.info dd.price {display: inline-block; vertical-align: top; width: auto; padding-left: 5px;}
-#content .scene ul.wishes dl.info dt.link {display: none;}
-#content .scene ul.wishes dl.info dd.link {font-size: 13px; display: block; width: auto; padding-left: 0;}
-
-
 /*s-documentation.css*/
 #content .scene.docsindex {}
 #content .scene.docsindex h1+ul.actions {display: none;}
@@ -594,7 +571,7 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene.docsindex .files li h3 {font-size: 16px; padding: 0;}
 #content .scene.docsindex .files li p {font-size: 13px; color: #999999; padding: 0;}
 #content .scene.docsindex .search {padding-top: 15px;}
-#content .scene.docsindex .search.loading {background: transparent url(/img/gx_loader.gif) no-repeat 438px 68px;}
+#content .scene.docsindex .search.loading {background: transparent url(../img/gx_loader.gif) no-repeat 438px 68px;}
 #content .scene.docsindex .search h2 {padding-bottom: 15px;}
 #content .scene.docsindex .search .results .function {padding: 15px 0 0; border-top: 1px solid #dedede; cursor: pointer;}
 #content .scene.docsindex .search .results .function .header h3 {padding-bottom: 5px;}
@@ -644,41 +621,45 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene div.segmentsupport {padding-top: 15px;}
 
 
+/*s-todos.css*/
+#content .scene ul.todos dl.info {padding-bottom: 10px;}
+#content .scene ul.todos dl.info dd:after {content: ",\00a0";}
+#content .scene ul.todos dl.info dd:last-child:after {content: "";}
+#content .scene ul.todos > li ul.actions {}
+#content .scene ul.todos > li ul.actions li {padding: 0;}
+#content .scene ul.todos > li ul.actions.closed .close {display: none;}
+#content .scene ul.todos > li ul.actions .open {display: none;}
+#content .scene ul.todos > li ul.actions.closed .open {display: inline-block;}
 
-/*s-fonts.css*/
-@font-face {
-	font-family: 'OpenSans';
-	src: url('/css/fonts/opensans-regular-webfont.woff') format('woff'),
-		 url('/css/fonts/opensans-regular-webfont.ttf') format('truetype'),
-		 url('/css/fonts/opensans-regular-webfont.svg#OpenSansRegular') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-@font-face {
-	font-family: 'OpenSans';
-	src: url('/css/fonts/opensans-bold-webfont.woff') format('woff'),
-		 url('/css/fonts/opensans-bold-webfont.ttf') format('truetype'),
-		 url('/css/fonts/opensans-bold-webfont.svg#open_sansbold') format('svg');
-	font-weight: bold;
-	font-style: normal;
-}
-@font-face {
-	font-family: 'OpenSans';
-	src: url('/css/fonts/opensans-italic-webfont.woff') format('woff'),
-		 url('/css/fonts/opensans-italic-webfont.ttf') format('truetype'),
-		 url('/css/fonts/opensans-italic-webfont.svg#open_sansitalic') format('svg');
-	font-weight: normal;
-	font-style: italic;
-}
-@font-face {
-	font-family: 'PT Serif';
-	src: url('/css/fonts/pt_serif-regular-webfont.woff') format('woff'),
-		 url('/css/fonts/pt_serif-regular-webfont.ttf') format('truetype'),
-		 url('/css/fonts/pt_serif-regular-webfont.svg#pt_serifregular') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
 
+/*s-wishlist.css*/
+#content .scene ul.wishlists {padding-left: 20px; padding-right: 20px;}
+#content .scene ul.wishes > li .image { cursor: default;}
+#content .scene ul.wishes > li div.description p.available,
+#content .scene ul.wishes > li div.description p.reserved {}
+#content .scene ul.wishes > li div.description p.available span
+#content .scene ul.wishes > li div.description p.reserved span {font-style: italic;}
+#content .scene ul.wishes > li div.description p.available span {color: #bbbbbb;}
+#content .scene ul.wishes > li form {margin-left: -3px; margin-right: -3px;}
+#content .scene ul.wishes > li > ul.actions,
+#content .scene ul.wishes > li > .text > ul.actions {padding-bottom: 0;}
+#content .scene ul.wishes > li > ul.actions li,
+#content .scene ul.wishes > li > .text > ul.actions li {padding-right: 0; display: block;}
+#content .scene ul.wishes > li > ul.actions form div.field,
+#content .scene ul.wishes > li > .text > ul.actions form div.field {display: none; padding-left: 0; padding-right: 0;}
+#content .scene ul.wishes > li > ul.actions form div.field input,
+#content .scene ul.wishes > li > .text > ul.actions form div.field input {}
+#content .scene ul.wishes > li > ul.actions form input[type=submit],
+#content .scene ul.wishes > li > .text > ul.actions form input[type=submit] {}
+#content .scene ul.wishes dl.info dt.price {display: inline-block; vertical-align: top; width: auto;}
+#content .scene ul.wishes dl.info dt.price:after {content: ":";}
+#content .scene ul.wishes dl.info dd.price {display: inline-block; vertical-align: top; width: auto; padding-left: 5px;}
+#content .scene ul.wishes dl.info dt.link {display: none;}
+#content .scene ul.wishes dl.info dd.link {font-size: 13px; display: block; width: auto; padding-left: 0;}
+
+
+/*s-used_by.css*/
+#content .scene .usedby {display: none;}
 
 /*s-colorscheme.css*/
 * {color: #26962d;}
@@ -861,7 +842,7 @@ ul.actions a.button.primary:active,
 #content .scene.cart ul.items li h3 form > ul.actions {padding: 0; right: 48px; top: 0;}
 #content .scene.cart ul.items li h3 form > ul.actions li {padding: 8px 0 0;}
 #content .scene.cart ul.items li h3 form > ul.actions input.button {width: 16px; height: 16px; padding: 0; text-indent: -9999px; border-radius: 15px;
-	background-image: url(/janitor/admin/img/gx_refresh.png);
+	background-image: url(../img/gx_refresh.png);
 	background-position: center center;
 	background-repeat: no-repeat;
 }
@@ -874,7 +855,7 @@ ul.actions a.button.primary:active,
 #content .scene.cart ul.items li ul.actions {padding: 0; top: 20px; position: absolute; right: 15px;}
 #content .scene.cart ul.items li ul.actions li.delete {padding: 0;}
 #content .scene.cart ul.items li ul.actions li.delete input {width: 30px; overflow: hidden; text-indent: -9999px;
-	background-image: url(/janitor/admin/img/bg_icons.png);
+	background-image: url(../img/bg_icons.png);
 	background-position: 8px -42px;
 	background-repeat: no-repeat;
 }
@@ -926,7 +907,7 @@ ul.actions a.button.primary:active,
 #content .scene.shopPayment ul.payment_methods {padding: 0 0 40px;}
 #content .scene.shopPayment ul.payment_methods li.payment_method {padding-bottom: 10px;}
 #content .scene.shopPayment ul.payment_methods li.payment_method ul.actions {padding-bottom: 0px;}
-#content .scene.shopPayment ul.payment_methods li.payment_method.stripe {background: url(/img/gx_creditcards.png) no-repeat 20px 40px;}
+#content .scene.shopPayment ul.payment_methods li.payment_method.stripe {background: url(../img/gx_creditcards.png) no-repeat 20px 40px;}
 #content .scene.shopPayment ul.payment_methods li.payment_method.stripe ul.actions {padding-bottom: 40px;}
 #content .scene.shopPayment.stripe h1,
 #content .scene.shopPayment.stripe p {}
@@ -945,13 +926,13 @@ ul.actions a.button.primary:active,
 #content .scene.shopPayment.stripe form ul.actions li {padding: 0; display: block;}
 #content .scene.shopPayment.stripe form ul.actions li input {width: 100%;}
 #content .scene.shopPayment.stripe form div.field.card input.visa {
-	background: url(/img/gx_visa_small.png) no-repeat right 7px;
+	background: url(../img/gx_visa_small.png) no-repeat right 7px;
 }
 #content .scene.shopPayment.stripe form div.field.card input.amex {
-	background: url(/img/gx_amex_small.png) no-repeat right 7px;
+	background: url(../img/gx_amex_small.png) no-repeat right 7px;
 }
 #content .scene.shopPayment.stripe form div.field.card input.mastercard {
-	background: url(/img/gx_mastercard_small.png) no-repeat right 7px;
+	background: url(../img/gx_mastercard_small.png) no-repeat right 7px;
 }
 #content .scene.shopPayment.stripe form div.field div.help {display: none;}
 #content .scene.shopPayment.stripe form div.field.card div.indicator {display: none;}

@@ -1,5 +1,14 @@
-@import url(http://parentnode.local/css/global/seg_desktop_light_include.css);
-@import url(/css/lib/s-fonts-desktop_light.css);
+@import url(../../assets/parentnode-skin-default/css/seg_desktop_light.css);
 
-@import url(/css/lib/desktop_light/s-pages.css);
-@import url(/css/lib/desktop_light/s-colorscheme.css);
+@import url(../../assets/parentnode-skin-default/css/lib/desktop_light/s-comments.css);
+@import url(../../assets/parentnode-skin-default/css/lib/desktop_light/s-documentation.css);
+@import url(../../assets/parentnode-skin-default/css/lib/desktop_light/s-form.css);
+@import url(../../assets/parentnode-skin-default/css/lib/desktop_light/s-pagination.css);
+@import url(../../assets/parentnode-skin-default/css/lib/desktop_light/s-todos.css);
+@import url(../../assets/parentnode-skin-default/css/lib/desktop_light/s-wishlist.css);
+@import url(../../assets/parentnode-skin-default/css/lib/desktop_light/s-used_by.css);
+
+
+/* Project css and overrides */
+@import url(desktop_light/s-pages.css);
+@import url(desktop_light/s-colorscheme.css);

@@ -1,0 +1,41 @@
+/* WISHLIST */
+#content .scene ul.wishlists {padding-left: 70px; padding-right: 70px;}
+
+
+/* WISH */
+#content .scene ul.wishes {padding-left: 70px; padding-right: 70px;}
+
+#content .scene ul.wishes > li h3 {padding: 0 0 10px;}
+#content .scene ul.wishes > li div.description p {padding: 0px 0 10px;}
+
+#content .scene ul.wishes.images > li .image,
+#content .scene ul.wishes.images > li .text {display: inline-block; vertical-align: top;}
+#content .scene ul.wishes.images > li .image {width: 250px; height: 140px; background-position: center center; background-size: 100% auto; background-repeat: no-repeat; margin-bottom: 0px; cursor: default;}
+#content .scene ul.wishes.images > li h3 {padding: 0 25px 10px;}
+#content .scene ul.wishes.images > li div.description p {padding: 0 25px 10px;}
+
+#content .scene ul.wishes > li div.description p.available,
+#content .scene ul.wishes > li div.description p.reserved {padding-top: 5px;}
+
+#content .scene ul.wishes > li div.description p.available span
+#content .scene ul.wishes > li div.description p.reserved span {font-style: italic;}
+#content .scene ul.wishes > li div.description p.available span {color: #bbbbbb;}
+
+#content .scene ul.wishes > li > ul.actions,
+#content .scene ul.wishes > li > .text > ul.actions {position: absolute; top: 20px; right: 0px; padding: 0;}
+#content .scene ul.wishes > li > ul.actions li,
+#content .scene ul.wishes > li > .text > ul.actions li {padding-right: 0;}
+#content .scene ul.wishes > li > ul.actions form div.field,
+#content .scene ul.wishes > li > .text > ul.actions form div.field {display: inline-block; vertical-align: top; padding: 0 10px;}
+#content .scene ul.wishes > li > ul.actions form div.field input,
+#content .scene ul.wishes > li > .text > ul.actions form div.field input {width: 200px; display: none;}
+#content .scene ul.wishes > li > ul.actions form input[type=submit],
+#content .scene ul.wishes > li > .text > ul.actions form input[type=submit] {display: inline-block; vertical-align: top; margin-top: 3px;}
+
+
+/* WISH PRICE */
+#content .scene ul.wishes dl.info {padding: 0 25px 10px;}
+#content .scene ul.wishes dl.info dt.price {display: inline-block; vertical-align: top; width: auto;}
+#content .scene ul.wishes dl.info dd.price {display: inline-block; vertical-align: top; width: auto;}
+#content .scene ul.wishes dl.info dt.link {display: none;}
+#content .scene ul.wishes dl.info dd.link {font-size: 13px; display: block; width: auto;}
