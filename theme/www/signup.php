@@ -27,10 +27,10 @@ if(is_array($action) && count($action)) {
 	}
 
 	// /signup/confirm/email|mobile/#email|mobile#/#verification_code#
-	else if($action[0] == "confirm" && count($action) == 4) {
+	else if($action[0] == "confirm" && count($action) == 3) {
 
-		session()->value("signup_type", $action[1]);
-		session()->value("signup_username", $action[2]);
+		// session()->value("signup_type", $action[1]);
+		session()->value("signup_username", $action[1]);
 
 		if($model->confirmUser($action)) {
 
