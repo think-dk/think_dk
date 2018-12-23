@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2018-12-10 15:22:14
+asset-builder @ 2018-12-23 17:27:25
 */
 
 /*seg_smartphone_include.js*/
@@ -4977,7 +4977,7 @@ u.defaultSelectable = function(div) {
 	div.bn_all.updateState = function() {
 		this.div.checked_inputs = u.qsa("li.item input:checked", this.div.list);
 		this.div.visible_inputs = u.qsa("li.item:not(.hidden) input", this.div.list);
-		if(this.div.checked_inputs.length == this.div.visible_inputs.length) {
+		if(this.div.checked_inputs.length && this.div.checked_inputs.length == this.div.visible_inputs.length) {
 			this._text.innerHTML = "Deselect all";
 			u.rc(this, "deselect");
 			this._checkbox.checked = true;

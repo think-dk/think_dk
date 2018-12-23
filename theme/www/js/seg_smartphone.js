@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2018-12-10 15:21:55
+asset-builder @ 2018-12-23 17:27:19
 */
 
 /*seg_smartphone_include.js*/
@@ -6720,42 +6720,6 @@ u.f.addAction = function(node, _options) {
 }
 
 
-/*u-form-custom.js*/
-Util.Form.fixFieldHTML = function(field) {
-	var abbr = u.qs("abbr", field);
-	if(abbr) {
-		abbr.parentNode.removeChild(abbr);
-	}
-	var error_message = field.getAttribute("data-error");
-	var hint_message = field.getAttribute("data-hint");
-	if(error_message || hint_message) {
-		if(!field._help) {
-			field._help = u.ae(field, "div", {"class":"help"});
-		}
-	}
-	if(hint_message) {
-		if(!field._hint) {
-			field._hint = u.ae(field._help, "div", {"class":"hint", "html":hint_message})
-		}
-		else {
-			field._hint.innerHTML = hint_message
-		}
-	}
-	if(error_message) {
-		if(!field._error) {
-			field._error = u.ae(field._help, "div", {"class":"error", "html":error_message})
-		}
-		else {
-			field._error.innerHTML = error_message
-		}
-	}
-}
-Util.Form.customSend["jdata"] = function(params) {
-	object = u.f.convertNamesToJsonObject(params);
-	return "jdata=" + escape(JSON.stringify(object));
-}
-
-
 /*u-string.js*/
 Util.cutString = function(string, length) {
 	var matches, match, i;
@@ -7709,6 +7673,15 @@ Util.Objects["oneButtonForm"] = new function() {
 				}
 			}
 		}
+	}
+}
+
+/*u-form-custom.js*/
+u.f.fixFieldHTML = function(field) {
+	u.bug("fixFieldHTML");
+	var label = u.qs("label", field);
+	if(label) {
+		u.ae(label, field._indicator);
 	}
 }
 

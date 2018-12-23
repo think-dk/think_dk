@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2018-12-10 15:21:52
+asset-builder @ 2018-12-23 17:27:18
 */
 
 /*seg_desktop_include.js*/
@@ -7892,7 +7892,7 @@ Util.Objects["events"] = new function() {
 				this.div_calendar.removeChild(this.current_month);
 				this.current_month = u.ie(this.div_calendar, this.getMonth(this.current_month.year, this.current_month.month-1));
 			}
-			u.request(this, "/events/"+this.current_month.year+"/"+(this.current_month.month-2));
+			u.request(this, "/events/past/"+this.current_month.year+"/"+(this.current_month.month-2));
 		}
 		scene.createCalendar = function() {
 			if(!this.div_calendar) {
@@ -7925,7 +7925,14 @@ Util.Objects["events"] = new function() {
 				bn_prev_month.clicked = function() {
 					this.scene.prevMonth();
 				}
-				this.current_month = this.getMonth(this.now.year, this.now.month);
+				var year = this.getAttribute("data-year");
+				var month = this.getAttribute("data-month");
+				if(year && month) {
+					this.current_month = this.getMonth(year, month);
+				}
+				else {
+					this.current_month = this.getMonth(this.now.year, this.now.month);
+				}
 				u.ae(this.div_calendar, this.current_month);
 			}
 		}
