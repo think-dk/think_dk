@@ -4,8 +4,8 @@ global $action;
 global $itemtype;
 
 
-$year = $action[0];
-$month = $action[1];
+$year = $action[1];
+$month = $action[2];
 
 // get items from previous and running month until now (we need these events to show the initial calendar grid)
 $items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "event.starting_at < '".date("Y-m-d", mktime(0,0,0, $month+1, 1, $year))."' AND event.starting_at > '".date("Y-m-d", mktime(0,0,0, $month, 1, $year))."'", "order" => "event.starting_at ASC", "extend" => array("tags" => true, "mediae" => true, "user" => true)));

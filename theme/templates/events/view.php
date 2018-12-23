@@ -15,8 +15,11 @@ if($item) {
 	$this->sharingMetaData($item);
 
 
-	$next = $IC->getNext($item["item_id"], array("itemtype" => $itemtype, "status" => 1, "where" => "event.starting_at > NOW()", "order" => "event.starting_at ASC", "extend" => true));
-	$prev = $IC->getPrev($item["item_id"], array("itemtype" => $itemtype, "status" => 1, "where" => "event.starting_at > NOW()", "order" => "event.starting_at ASC", "extend" => true));
+	$next = $IC->getNext($item["item_id"], array("itemtype" => $itemtype, "status" => 1, "where" => "event.starting_at >= '".$item["starting_at"]."'", "order" => "event.starting_at ASC", "extend" => true));
+	$prev = $IC->getPrev($item["item_id"], array("itemtype" => $itemtype, "status" => 1, "where" => "event.starting_at <= '".$item["starting_at"]."'", "order" => "event.starting_at ASC", "extend" => true));
+
+	// $next = $IC->getNext($item["item_id"], array("itemtype" => $itemtype, "status" => 1, "where" => "event.starting_at > NOW()", "order" => "event.starting_at ASC", "extend" => true));
+	// $prev = $IC->getPrev($item["item_id"], array("itemtype" => $itemtype, "status" => 1, "where" => "event.starting_at > NOW()", "order" => "event.starting_at ASC", "extend" => true));
 
 	// get host info
 	$host = $model->getHosts(array("id" => $item["host"]));

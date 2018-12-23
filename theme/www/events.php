@@ -26,7 +26,9 @@ if(count($action) == 1) {
 	exit();
 
 }
-else if(count($action) == 2 && is_numeric($action[0]) && is_numeric($action[1])) {
+// Used by calendar to go back through months
+// /events/past/#year#/#month#
+else if(count($action) == 3 && $action[0] == "past" && is_numeric($action[1]) && is_numeric($action[2])) {
 
 	$page->page(array(
 		"templates" => "events/month.php"
@@ -36,6 +38,8 @@ else if(count($action) == 2 && is_numeric($action[0]) && is_numeric($action[1]))
 }
 
 
+// /events
+// /events/#year#/#month#
 $page->page(array(
 	"templates" => "events/index.php"
 ));

@@ -133,7 +133,7 @@ Util.Objects["events"] = new function() {
 				this.current_month = u.ie(this.div_calendar, this.getMonth(this.current_month.year, this.current_month.month-1));
 			}
 			// request previous month to fill out grid
-			u.request(this, "/events/"+this.current_month.year+"/"+(this.current_month.month-2));
+			u.request(this, "/events/past/"+this.current_month.year+"/"+(this.current_month.month-2));
 
 
 		}
@@ -157,11 +157,13 @@ Util.Objects["events"] = new function() {
 				});
 
 
+
 				this.now = {
 					"date":new Date().getDate(),
 					"month":new Date().getMonth()+1,
 					"year":new Date().getFullYear()
 				}
+
 
 	//			u.bug(this.now.date + ", " + this.now.month + ", " + this.now.year);
 
@@ -188,8 +190,15 @@ Util.Objects["events"] = new function() {
 				// var month = 2;
 				// var year = 2016;
 
+				var year = this.getAttribute("data-year");
+				var month = this.getAttribute("data-month");
+				if(year && month) {
+					this.current_month = this.getMonth(year, month);
+				}
+				else {
+					this.current_month = this.getMonth(this.now.year, this.now.month);
+				}
 
-				this.current_month = this.getMonth(this.now.year, this.now.month);
 				u.ae(this.div_calendar, this.current_month);
 			}
 		}

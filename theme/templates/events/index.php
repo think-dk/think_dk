@@ -9,15 +9,34 @@ if($page_item) {
 
 }
 
-// get new events
-$items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "event.starting_at > NOW()", "order" => "event.starting_at ASC", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+// year/month can be passed to define starting point
+if(count($action) == 2) {
+	$year = parseInt($action[0]);
+	$month = parseInt($action[1]);
+}
+else {
+	$year = date("Y");
+	$month = date("m");
+}
+
+$date = date("d");
+
+$items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "event.starting_at > '".date("Y-m-d", mktime(0,0,0, $month, $date, $year))."'", "order" => "event.starting_at ASC", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
 //print_r($items);
 // get items from previous and running month until now (we need these events to show the initial calendar grid)
-$past_items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "event.starting_at < NOW() AND event.starting_at > '".date("Y-m-d", mktime(0,0,0, date("m")-1, 1, date("Y")))."'", "order" => "event.starting_at ASC", "extend" => array("tags" => true, "mediae" => true, "user" => true)));
+$past_items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "event.starting_at < '".date("Y-m-d", mktime(0,0,0, $month, $date, $year))."' AND event.starting_at > '".date("Y-m-d", mktime(0,0,0, $month-1, 1, $year))."'", "order" => "event.starting_at ASC", "extend" => array("tags" => true, "mediae" => true, "user" => true)));
+
+
+// get new events
+// $items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "event.starting_at > NOW()", "order" => "event.starting_at ASC", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+// //print_r($items);
+// // get items from previous and running month until now (we need these events to show the initial calendar grid)
+// $past_items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "event.starting_at < NOW() AND event.starting_at > '".date("Y-m-d", mktime(0,0,0, date("m")-1, 1, date("Y")))."'", "order" => "event.starting_at ASC", "extend" => array("tags" => true, "mediae" => true, "user" => true)));
+
 
 ?>
 
-<div class="scene events i:events">
+<div class="scene events i:events" data-year="<?= $year ?>" data-month="<?= $month ?>">
 
 <? if($page_item && $page_item["status"]): 
 	$media = $IC->sliceMedia($page_item); ?>
