@@ -7,12 +7,9 @@ document.write('<script type="text/javascript" src="/assets/parentnode-skin-defa
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-form-builder.js"></script>');
 
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-textscaler.js"></script>');
-document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-svg.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-date.js"></script>');
-document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-form.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-form-builder.js"></script>');
 // document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-form-custom.js"></script>');
-document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-string.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/beta-u-eventchain.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/beta-u-animation-to.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/beta-u-fontsReady.js"></script>');
