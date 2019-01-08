@@ -152,7 +152,7 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 					<? if($price["price"]): ?>
 					This purchase includes a membership.
 					<? else: ?>
-					Confirm order to get your FREE membership.
+					Confirm order to sign up for our newsletter.
 					<? endif; ?>
 				</p>
 				<? endif; ?>
