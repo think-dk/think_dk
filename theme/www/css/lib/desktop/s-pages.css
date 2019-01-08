@@ -62,32 +62,32 @@ body.front #page.fixed {width: auto; margin: 0;}
 }
 #content .scene.front div.intro div.bg.bg1 {
 /*	background-color: red;*/
-	background-image: url(../../../assets/images/bg_front_1.jpg);
+	background-image: url(/img/intro/bg_front_1.jpg);
 }
 #content .scene.front div.intro div.bg.bg2 {
 /*	background-color: yellow;*/
-	background-image: url(../../../assets/images/bg_front_2.jpg);
+	background-image: url(/img/intro/bg_front_2.jpg);
 }
 #content .scene.front div.intro div.bg.bg3 {
 /*	background-color: green;*/
-	background-image: url(../../../assets/images/bg_front_3.jpg);
+	background-image: url(/img/intro/bg_front_3.jpg);
 }
 #content .scene.front div.intro div.bg.bg4 {
 /*	background-color: blue;*/
-	background-image: url(../../../assets/images/bg_front_4.jpg);
+	background-image: url(/img/intro/bg_front_4.jpg);
 }
 #content .scene.front div.intro div.bg.bg5 {
 /*	background-color: orange;*/
-	background-image: url(../../../assets/images/bg_front_5.jpg);
+	background-image: url(/img/intro/bg_front_5.jpg);
 }
 
 #content .scene.front div.intro div.bg.bg6 {
 /*	background-color: purple;*/
-	background-image: url(../../../assets/images/bg_front_6.jpg);
+	background-image: url(/img/intro/bg_front_6.jpg);
 }
 #content .scene.front div.intro div.bg.bg7 {
 /*	background-color: cyan;*/
-	background-image: url(../../../assets/images/bg_front_7.jpg);
+	background-image: url(/img/intro/bg_front_7.jpg);
 }
 
 #content .scene.front div.intro ul.hotspots {
@@ -706,3 +706,14 @@ body.black #header ul.servicenavigation {display: none;}
 	#content .scene.events ul.events p {padding-bottom: 10px; font-size: 12px;}
 
 }
+
+
+/* EVENT TEMP */
+
+
+/*@media all and (min-width: 1000px) {
+
+	#content div.main {width: 640px; display: inline-block; vertical-align: top;}
+	#content div.sidebar {width: 320px; display: inline-block; vertical-align: top;}
+
+}*/

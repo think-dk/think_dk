@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-01-07 10:40:02
+asset-builder @ 2019-01-08 21:11:35
 */
 
 /*seg_tablet_include.js*/
@@ -7180,13 +7180,13 @@ Util.Objects["front"] = new function() {
 		}
 		scene.createIntroBgs = function() {
 			u.preloader(this.intro, [
-				"/assets/images/bg_front_1.jpg",
-				"/assets/images/bg_front_2.jpg",
-				"/assets/images/bg_front_3.jpg",
-				"/assets/images/bg_front_4.jpg",
-				"/assets/images/bg_front_5.jpg",
-				"/assets/images/bg_front_6.jpg",
-				"/assets/images/bg_front_7.jpg",
+				"/img/intro/bg_front_1.jpg",
+				"/img/intro/bg_front_2.jpg",
+				"/img/intro/bg_front_3.jpg",
+				"/img/intro/bg_front_4.jpg",
+				"/img/intro/bg_front_5.jpg",
+				"/img/intro/bg_front_6.jpg",
+				"/img/intro/bg_front_7.jpg",
 			]);
 			this.intro.bgs = [""];
 			this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg1", "html":"<h2>do you</h2>"}));
