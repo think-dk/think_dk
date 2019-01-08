@@ -52,7 +52,12 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 <? if($membership): ?>
 
 	<div class="signup">
+		<? if($membership == "Curious Cat"): ?>
+		<h2>You are signing up for our Newsletter</h2>
+		<? else: ?>
 		<h2>You are signing up for a <br />&quot;<?= $membership ?>&quot; membership</h2>
+		<? endif; ?>
+
 		<p>Enter your details below and create your membership account now.</h2>
 		<?= $UC->formStart("signup", array("class" => "signup labelstyle:inject")) ?>
 			<?= $UC->input("maillist", array("type" => "hidden", "value" => "curious")); ?>
