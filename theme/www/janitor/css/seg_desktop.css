@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2018-12-23 17:27:25
+asset-builder @ 2019-01-08 20:51:46
 */
 
 /*seg_desktop_include.css*/
@@ -897,7 +897,7 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .scene div.togglable > h4,
 #content .scene li.togglable > h2,
 #content .scene li.togglable > h3,
-#content .scene li.togglable > h4 {position: relative;}
+#content .scene li.togglable > h4 {position: relative; cursor: ns-resize;}
 #content .scene div.togglable > h2 svg,
 #content .scene div.togglable > h3 svg,
 #content .scene div.togglable > h4 svg,
