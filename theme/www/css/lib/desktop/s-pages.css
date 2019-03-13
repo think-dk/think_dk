@@ -668,6 +668,15 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene div.qnas .field {padding-bottom: 10px;}
 
 
+#content .scene .articlebody p.quote {
+	font-size: 30px;
+	text-align: center;
+	font-family: "PT Serif";
+	padding-top: 20px;
+	padding-bottom: 40px;
+}
+
+
 
 body.black *,
 body.black #header .logo,
