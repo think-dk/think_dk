@@ -11,12 +11,12 @@ $action = $page->actions();
 $IC = new Items();
 
 
-$page->bodyClass("donate");
-$page->pageTitle("Invest or donate to think.dk");
+$page->bodyClass("invest");
+$page->pageTitle("Invest in think.dk");
 
 
 $page->page(array(
-	"templates" => "pages/invest-or-donate.php"
+	"templates" => "pages/invest-in-think.php"
 ));
 
 ?>
