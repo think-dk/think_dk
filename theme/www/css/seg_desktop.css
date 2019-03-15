@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-01-09 11:48:42
+asset-builder @ 2019-03-13 12:03:52
 */
 
 /*seg_desktop_include.css*/
@@ -1287,6 +1287,13 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene div.qnas ul.qnas > li ul.info li.user:after {content: ",\00a0";}
 #content .scene div.qnas ul.qnas > li p.question {padding-bottom: 15px; font-size: 13px;}
 #content .scene div.qnas .field {padding-bottom: 10px;}
+#content .scene .articlebody p.quote {
+	font-size: 30px;
+	text-align: center;
+	font-family: "PT Serif";
+	padding-top: 20px;
+	padding-bottom: 40px;
+}
 body.black *,
 body.black #header .logo,
 body.black #content .scene a,
