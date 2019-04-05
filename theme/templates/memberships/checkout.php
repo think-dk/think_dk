@@ -44,7 +44,7 @@ $delivery_address = $UC->getAddresses(array("address_id" => $cart["delivery_addr
 $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_address_id"]));
 
 ?>
-<div class="scene checkout i:checkout">
+<div class="scene checkout i:signup">
 	<h1>Sign up</h1>
 
 	<?= $HTML->serverMessages() ?>

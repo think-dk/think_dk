@@ -5,24 +5,20 @@ global $model;
 $IC = new Items();
 $SC = new Shop();
 
-$page_item = $IC->getItem(array("tags" => "page:signup-confirmed", "extend" => array("user" => true, "tags" => true, "mediae" => true)));
+$page_item = $IC->getItem(array("tags" => "page:verify-confirmed", "extend" => array("user" => true, "tags" => true, "mediae" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
 // values save while redirecting in controller
-$type = session()->value("signup_type");
-$username = session()->value("signup_username");
-
-session()->reset("signup_type");
-session()->reset("signup_username");
-
+$username = session()->value("signup_email");
+session()->reset("signup_email");
 
 $cart = $SC->getCart();
 
 
 ?>
-<div class="scene signup i:scene">
+<div class="scene verify confirmed i:scene">
 
 <? if($page_item && $page_item["status"]): 
 	$media = $IC->sliceMedia($page_item); ?>
@@ -53,14 +49,14 @@ $cart = $SC->getCart();
 
 		<? if($page_item["html"]): ?>
 		<div class="articlebody" itemprop="articleBody">
-			<?= preg_replace("/{type}/", $type, preg_replace("/{username}/", $username, $page_item["html"])) ?>
+			<?= preg_replace("/{username}/", $username, $page_item["html"]) ?>
 		</div>
 		<? endif; ?>
 	</div>
 <? else:?>
 
 	<h1>Thank you!</h1>
-	<p>Your <?= $type ?>: <?= $username ?>, has been confirmed.</p>
+	<p><?= $username ?> has been confirmed.</p>
 
 <? endif; ?>
 

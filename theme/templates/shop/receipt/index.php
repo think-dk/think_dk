@@ -64,7 +64,7 @@ if(isset($action[2])) {
 
 
 ?>
-<div class="scene shopReceipt i:scene">
+<div class="scene verify shopReceipt i:verify">
 
 <? if($order): ?>
 
@@ -161,6 +161,29 @@ if(isset($action[2])) {
 
 <? if(!$active_account): ?>
 	<p>Remember to activate your account, otherwise you won't get our newsletter. Check your inbox for the Activation email.</p>
+
+	<?= $model->formStart("/verify/confirm", ["class" => "verify_code"]) ?>
+
+	<?	if(message()->hasMessages(array("type" => "error"))): ?>
+			<p class="errormessage">
+	<?		$messages = message()->getMessages(array("type" => "error"));
+			message()->resetMessages();
+			foreach($messages as $message): ?>
+				<?= $message ?><br>
+	<?		endforeach;?>
+			</p>
+	<?	endif; ?>
+
+		<fieldset>
+			<?= $model->input("verification_code"); ?>
+		</fieldset>
+
+		<ul class="actions">
+			<?= $model->submit("Verify email", array("class" => "primary", "wrapper" => "li.verify")) ?>
+			<li class="skip"><a href="/verify/skip" class="button">Skip</a></li>
+		</ul>
+	<?= $model->formEnd() ?>
+
 <? endif; ?>
 
 

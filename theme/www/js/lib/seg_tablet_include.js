@@ -37,6 +37,8 @@ document.write('<script type="text/javascript" src="/js/lib/desktop/i-payments.j
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-stripe.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-black.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/i-login.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/i-signup.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/i-verify.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/i-wishes.js"></script>');
 
 
