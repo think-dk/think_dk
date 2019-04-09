@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-04-04 21:10:09
+asset-builder @ 2019-04-09 20:16:23
 */
 
 /*seg_desktop_include.js*/
@@ -6338,7 +6338,7 @@ Util.Objects["oneButtonForm"] = new function() {
 	}
 
 
-/*beta-u-fontsReady.js*/
+/*beta-u-fontsready.js*/
 u.fontsReady = function(node, fonts, _options) {
 	var callback_loaded = "fontsLoaded";
 	var callback_timeout = "fontsNotLoaded";
@@ -8231,6 +8231,8 @@ Util.Objects["stripe"] = new function() {
 			this.card_form.submitted = function() {
 				if(!this.is_submitting) {
 					this.is_submitting = true;
+					u.ac(this, "submitting");
+					u.ac(this.actions["pay"], "disabled");
 					this.DOMsubmit();
 				}
 			}

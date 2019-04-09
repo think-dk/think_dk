@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-04-04 21:10:09
+asset-builder @ 2019-04-09 20:16:24
 */
 
 /*seg_smartphone_include.js*/
@@ -5788,7 +5788,7 @@ u.eventChain = function(node, _options) {
 	}
 
 
-/*beta-u-fontsReady.js*/
+/*beta-u-fontsready.js*/
 u.fontsReady = function(node, fonts, _options) {
 	var callback_loaded = "fontsLoaded";
 	var callback_timeout = "fontsNotLoaded";
@@ -7184,6 +7184,14 @@ Util.Objects["stripe"] = new function() {
 				}
 			}
 			u.f.init(this.card_form);
+			this.card_form.submitted = function() {
+				if(!this.is_submitting) {
+					this.is_submitting = true;
+					u.ac(this, "submitting");
+					u.ac(this.actions["pay"], "disabled");
+					this.DOMsubmit();
+				}
+			}
 			this.card_form.fields["card_number"].updated = function(iN) {
 				var value = this.val();
 				this.value = u.paymentCards.formatCardNumber(value.replace(/ /g, ""));
