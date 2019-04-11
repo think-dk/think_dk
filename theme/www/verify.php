@@ -9,6 +9,7 @@ include_once($_SERVER["FRAMEWORK_PATH"]."/config/init.php");
 
 $action = $page->actions();
 $model = new User();
+$SC = new Shop();
 
 
 $page->bodyClass("verify");
@@ -31,15 +32,42 @@ if($action) {
 
 			// user has already been verified
 			if($result && isset($result["status"]) && $result["status"] == "USER_VERIFIED") {
-				message()->addMessage("You're already verified! Try logging in.", array("type" => "error"));
+				message()->addMessage("You're already verified! Try logging in.", array("type" => "message"));
 				header("Location: /login");
 				exit();
 			}
 
 			// code is valid
 			else if($result) {
-				header("Location: /verify/receipt");
-				exit();
+
+				// check if there is a cart
+				$cart = $SC->getCart();
+				// cart exists
+				if($cart) {
+					$total_price = $SC->getTotalCartPrice($cart["id"]);
+
+					// if order has price
+					if($total_price && $total_price["price"]) {
+						// redirect to leave POST state
+						// to checkout and confirm order
+						message()->addMessage("You're now verified", array("type" => "message"));
+						header("Location: /shop/checkout");
+						exit();
+					}
+					// order is zero priced
+					else {
+						// confirm free order directly (this will redirect to receipt)
+						header("Location: /shop/confirm/".$cart["cart_reference"]);
+						exit();
+					}
+				}
+				// no cart - go to cart
+				else {
+					message()->addMessage("You're now verified", array("type" => "message"));
+					header("Location: /shop/cart");
+					exit();
+				}
+
 			}
 
 			// code is not valid
@@ -70,8 +98,29 @@ if($action) {
 
 			// code is valid
 			else if($result) {
-				header("Location: /verify/receipt");
-				exit();
+				// check if there is a cart
+				$cart = $SC->getCart();
+				// cart exists
+				if($cart) {
+					$total_price = $SC->getTotalCartPrice($cart["id"]);
+
+					// if order has price
+					if($total_price && $total_price["price"]) {
+						header("Location: /verify/receipt");
+						exit();
+					}
+					// order is zero priced
+					else {
+						// confirm free order directly (this will redirect to receipt)
+						header("Location: /shop/confirm/".$cart["cart_reference"]);
+						exit();
+					}
+				}
+				// no cart
+				else {
+					header("Location: /verify/receipt");
+				}
+
 			}
 
 			// code is not valid
@@ -103,9 +152,7 @@ if($action) {
 	// verify/skip
 	else if($action[0] == "skip") {
 
-		$page->page([
-			"templates" => "verify/verify_skip.php"
-		]);
+		header("Location: /shop/checkout");
 		exit();
 	}
 
