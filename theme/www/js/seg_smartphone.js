@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-04-04 21:10:09
+asset-builder @ 2019-04-12 09:43:16
 */
 
 /*seg_smartphone_include.js*/
@@ -4506,15 +4506,17 @@ Util.Objects["page"] = new function() {
 				this.cN.scene.resized();
 			}
 			this.offsetHeight;
-			if(this.bn_nav.is_open) {
-				u.ass(page.hN, {
-					"height":window.innerHeight + "px"
-				});
-				u.ass(page.nN, {
-					"height":(window.innerHeight - page.hN.service.offsetHeight) + "px"
-				});
-				u.e.setDragPosition(page.nN.nav, 0, 0);
-				u.e.setDragBoundaries(page.nN.nav, page.nN);
+			if(this.bn_nav) {
+				if (this.bn_nav.is_open) {
+					u.ass(page.hN, {
+						"height":window.innerHeight + "px"
+					});
+					u.ass(page.nN, {
+						"height":(window.innerHeight - page.hN.service.offsetHeight) + "px"
+					});
+					u.e.setDragPosition(page.nN.nav, 0, 0);
+					u.e.setDragBoundaries(page.nN.nav, page.nN);
+				}
 			}
 		}
 		page.fixiOSScroll = function() {
@@ -4771,13 +4773,6 @@ Util.Objects["article"] = new function() {
 		if(article.geolocation && typeof(u.injectGeolocation) == "function") {
 			u.injectGeolocation(article);
 		}
-	}
-}
-u.f.fixFieldHTML = function(field) {
-	u.bug("fixFieldHTML");
-	var label = u.qs("label", field);
-	if(label) {
-		u.ae(label, field._indicator);
 	}
 }
 u.injectGeolocation = function(node) {
@@ -5788,7 +5783,7 @@ u.eventChain = function(node, _options) {
 	}
 
 
-/*beta-u-fontsReady.js*/
+/*beta-u-fontsready.js*/
 u.fontsReady = function(node, fonts, _options) {
 	var callback_loaded = "fontsLoaded";
 	var callback_timeout = "fontsNotLoaded";
@@ -7184,6 +7179,14 @@ Util.Objects["stripe"] = new function() {
 				}
 			}
 			u.f.init(this.card_form);
+			this.card_form.submitted = function() {
+				if(!this.is_submitting) {
+					this.is_submitting = true;
+					u.ac(this, "submitting");
+					u.ac(this.actions["pay"], "disabled");
+					this.DOMsubmit();
+				}
+			}
 			this.card_form.fields["card_number"].updated = function(iN) {
 				var value = this.val();
 				this.value = u.paymentCards.formatCardNumber(value.replace(/ /g, ""));
@@ -7238,6 +7241,86 @@ Util.Objects["black"] = new function() {
 		scene.ready();
 	}
 }
+
+/*i-verify.js*/
+Util.Objects["verify"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			var form_verify = u.qs("form.verify_code", this);
+			if(form_verify) {
+				u.f.init(form_verify);
+			}
+			form_verify.submitted = function() {
+				var data = u.f.getParams(this);
+				this.is_submitting = true; 
+				u.ac(this, "submitting");
+				u.ac(this.actions["verify"], "disabled");
+				u.ac(this.actions["skip"], "disabled");
+				this.response = function(response, request_id) {
+					if (u.qs(".scene.login", response)) {
+						scene.replaceScene(response);
+						u.h.navigate("/login", false, true);
+					}
+					else if (u.hc(u.qs(".scene", response), "confirmed|checkout|cart|shopReceipt")) {
+						scene.replaceScene(response);
+						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
+						u.h.navigate(url_actions, false, true);
+					}
+					else {
+						if (this.is_submitting) {
+							this.is_submitting = false; 
+							u.rc(this, "submitting");
+							u.rc(this.actions["verify"], "disabled");
+							u.rc(this.actions["skip"], "disabled");
+						}
+						if (this.error) {
+							this.error.parentNode.removeChild(this.error);
+						}
+						this.error = scene.showMessage(this, response);
+						u.ass(this.error, {
+							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
+							opacity:0
+						});
+						u.a.transition(this.error, "all .6s ease");
+						u.ass(this.error, {
+							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
+							opacity:1
+						});
+					}
+				}
+				u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
+			}
+			page.acceptCookies();
+			u.showScene(this);
+			page.resized();
+		}
+		scene.replaceScene = function(response) {
+			var current_scene = u.qs(".scene", page);
+			var new_scene = u.qs(".scene", response);
+			page.cN.replaceChild(new_scene, current_scene); 
+			u.init();
+			return new_scene;
+		}
+		scene.showMessage = function(form, response) {
+			var new_error = (u.qs("p.errormessage", response) || u.qs("p.error", response));
+			var current_error = (u.qs("p.errormessage", form) || u.qs("p.error", form));
+			if (!current_error) {
+				u.ie(form, new_error);
+			}
+			else {
+				form.replaceChild(new_error, current_error);
+			}
+			return new_error;
+		}
+		scene.ready();
+	}
+}
+
 
 /*i-login.js*/
 Util.Objects["login"] = new function() {
@@ -7309,86 +7392,6 @@ Util.Objects["signup"] = new function() {
 					}
 				}
 				u.request(this, this.action, {"data":data, "method":"POST"});
-			}
-			page.acceptCookies();
-			u.showScene(this);
-			page.resized();
-		}
-		scene.replaceScene = function(response) {
-			var current_scene = u.qs(".scene", page);
-			var new_scene = u.qs(".scene", response);
-			page.cN.replaceChild(new_scene, current_scene); 
-			u.init();
-			return new_scene;
-		}
-		scene.showMessage = function(form, response) {
-			var new_error = (u.qs("p.errormessage", response) || u.qs("p.error", response));
-			var current_error = (u.qs("p.errormessage", form) || u.qs("p.error", form));
-			if (!current_error) {
-				u.ie(form, new_error);
-			}
-			else {
-				form.replaceChild(new_error, current_error);
-			}
-			return new_error;
-		}
-		scene.ready();
-	}
-}
-
-
-/*i-verify.js*/
-Util.Objects["verify"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			page.cN.scene = this;
-			var form_verify = u.qs("form.verify_code", this);
-			if(form_verify) {
-				u.f.init(form_verify);
-			}
-			form_verify.submitted = function() {
-				var data = u.f.getParams(this);
-				this.is_submitting = true; 
-				u.ac(this, "submitting");
-				u.ac(this.actions["verify"], "disabled");
-				u.ac(this.actions["skip"], "disabled");
-				this.response = function(response, request_id) {
-					if (u.qs(".scene.login", response)) {
-						scene.replaceScene(response);
-						u.h.navigate("/login", false, true);
-					}
-					else if (u.qs(".scene.confirmed", response)) {
-						scene.replaceScene(response);
-						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
-						u.h.navigate(url_actions, false, true);
-					}
-					else {
-						if (this.is_submitting) {
-							this.is_submitting = false; 
-							u.rc(this, "submitting");
-							u.rc(this.actions["verify"], "disabled");
-							u.rc(this.actions["skip"], "disabled");
-						}
-						if (this.error) {
-							this.error.parentNode.removeChild(this.error);
-						}
-						this.error = scene.showMessage(this, response);
-						u.ass(this.error, {
-							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
-							opacity:0
-						});
-						u.a.transition(this.error, "all .6s ease");
-						u.ass(this.error, {
-							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
-							opacity:1
-						});
-					}
-				}
-				u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
 			}
 			page.acceptCookies();
 			u.showScene(this);

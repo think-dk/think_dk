@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-04-04 21:10:10
+asset-builder @ 2019-04-12 09:43:16
 */
 
 /*seg_tablet_include.js*/
@@ -4254,6 +4254,76 @@ u.notifier = function(node) {
 		this.t_notifier = u.t.setTimer(this.notifications, this.notifications.hide, this.notifications.hide_delay, output);
 	}
 }
+u.smartphoneSwitch = new function() {
+	this.state = 0;
+	this.init = function(node) {
+		this.callback_node = node;
+		this.event_id = u.e.addWindowEvent(this, "resize", this.resized);
+		this.resized();
+	}
+	this.resized = function() {
+		if(u.browserW() < 520 && !this.state) {
+			this.switchOn();
+		}
+		else if(u.browserW() > 520 && this.state) {
+			this.switchOff();
+		}
+	}
+	this.switchOn = function() {
+		if(!this.panel) {
+			this.state = true;
+			this.panel = u.ae(document.body, "div", {"id":"smartphone_switch"});
+			u.ass(this.panel, {
+				opacity: 0
+			});
+			u.ae(this.panel, "h1", {html:u.stringOr(u.txt("smartphone-switch-headline"), "Hello curious")});
+			if(u.txt("smartphone-switch-text").length) {
+				for(i = 0; i < u.txt("smartphone-switch-text").length; i++) {
+					u.ae(this.panel, "p", {html:u.txt("smartphone-switch-text")[i]});
+				}
+			}
+			var ul_actions = u.ae(this.panel, "ul", {class:"actions"});
+			var li; 
+			li = u.ae(ul_actions, "li", {class:"hide"});
+			var bn_hide = u.ae(li, "a", {class:"hide button", html:u.txt("smartphone-switch-bn-hide")});
+			li = u.ae(ul_actions, "li", {class:"switch"});
+			var bn_switch = u.ae(li, "a", {class:"switch button primary", html:u.txt("smartphone-switch-bn-switch")});
+			u.e.click(bn_switch);
+			bn_switch.clicked = function() {
+				u.saveCookie("smartphoneSwitch", "on");
+				location.href = location.href.replace(/[&]segment\=desktop|segment\=desktop[&]?/, "") + (location.href.match(/\?/) ? "&" : "?") + "segment=smartphone";
+			}
+			u.e.click(bn_hide);
+			bn_hide.clicked = function() {
+				u.e.removeWindowEvent(u.smartphoneSwitch, "resize", u.smartphoneSwitch.event_id);
+				u.smartphoneSwitch.switchOff();
+			}
+			u.a.transition(this.panel, "all 0.5s ease-in-out");
+			u.ass(this.panel, {
+				opacity: 1
+			});
+			if(this.callback_node && typeof(this.callback_node.smartphoneSwitchedOn) == "function") {
+				this.callback_node.smartphoneSwitchedOn();
+			}
+		}
+	}
+	this.switchOff = function() {
+		if(this.panel) {
+			this.state = false;
+			this.panel.transitioned = function() {
+				this.parentNode.removeChild(this);
+				delete u.smartphoneSwitch.panel;
+			}
+			u.a.transition(this.panel, "all 0.5s ease-in-out");
+			u.ass(this.panel, {
+				opacity: 0
+			});
+			if(this.callback_node && typeof(this.callback_node.smartphoneSwitchedOff) == "function") {
+				this.callback_node.smartphoneSwitchedOff();
+			}
+		}
+	}
+}
 u.bug_console_only = true;
 Util.Objects["page"] = new function() {
 	this.init = function(page) {
@@ -6006,6 +6076,125 @@ u.googlemaps = new function() {
 }
 
 
+/*beta-u-form-onebuttonform.js*/
+Util.Objects["oneButtonForm"] = new function() {
+	this.init = function(node) {
+		if(!node.childNodes.length) {
+			var csrf_token = node.getAttribute("data-csrf-token");
+			var form_action = node.getAttribute("data-form-action");
+			var form_target = node.getAttribute("data-form-target");
+			var button_value = node.getAttribute("data-button-value");
+			var button_name = node.getAttribute("data-button-name");
+			var button_class = node.getAttribute("data-button-class");
+			var inputs = node.getAttribute("data-inputs");
+			if(csrf_token && form_action && button_value) {
+				var form_options = {"action":form_action, "class":"confirm_action_form"};
+				if(form_target) {
+					form_options["target"] = form_target;
+				}
+				node.form = u.f.addForm(node, form_options);
+				node.form.node = node;
+				u.ae(node.form, "input", {"type":"hidden","name":"csrf-token", "value":csrf_token});
+				if(inputs) {
+					for(input_name in inputs) {
+						u.ae(node.form, "input", {"type":"hidden","name":input_name, "value":inputs[input_name]});
+					}
+				}
+				u.f.addAction(node.form, {"value":button_value, "class":"button" + (button_class ? " "+button_class : ""), "name":u.stringOr(button_name, "save")});
+			}
+		}
+		else {
+			node.form = u.qs("form", node);
+		}
+		if(node.form) {
+			u.f.init(node.form);
+			node.form.node = node;
+			node.form.confirm_submit_button = u.qs("input[type=submit]", node.form);
+			node.form.confirm_submit_button.org_value = node.form.confirm_submit_button.value;
+			node.form.confirm_submit_button.confirm_value = node.getAttribute("data-confirm-value");
+			node.form.confirm_submit_button.wait_value = node.getAttribute("data-wait-value");
+			node.form.success_function = node.getAttribute("data-success-function");
+			node.form.success_location = node.getAttribute("data-success-location");
+			node.form.dom_submit = node.getAttribute("data-dom-submit");
+			node.form._download = node.getAttribute("data-download");
+			node.form.restore = function(event) {
+				u.t.resetTimer(this.t_confirm);
+				this.confirm_submit_button.value = this.confirm_submit_button.org_value;
+				u.rc(this.confirm_submit_button, "confirm");
+			}
+			node.form.submitted = function() {
+				u.bug("submitted");
+				if(!u.hc(this.confirm_submit_button, "confirm") && this.confirm_submit_button.confirm_value) {
+					u.ac(this.confirm_submit_button, "confirm");
+					this.confirm_submit_button.value = this.confirm_submit_button.confirm_value;
+					this.t_confirm = u.t.setTimer(this, this.restore, 3000);
+				}
+				else {
+					u.t.resetTimer(this.t_confirm);
+					if(fun(this.node.submitted)) {
+						u.bug("oneButtonForm");
+						this.node.submitted();
+					}
+					this.response = function(response) {
+						u.rc(this, "submitting");
+						u.rc(this.confirm_submit_button, "disabled");
+						page.notify(response);
+						this.restore();
+						if(response.cms_status == "success") {
+							if(response.cms_object && response.cms_object.constraint_error) {
+								this.confirm_submit_button.value = this.confirm_submit_button.org_value;
+								u.ac(this, "disabled");
+							}
+							else {
+								if(this.success_location) {
+									u.bug("location:" + this.success_location);
+									u.ass(this.confirm_submit_button, {
+										"display": "none"
+									});
+									location.href = this.success_location;
+								}
+								else if(this.success_function) {
+									u.bug("function:" + this.success_function);
+									if(fun(this.node[this.success_function])) {
+										this.node[this.success_function](response);
+									}
+								}
+								else if(fun(this.node.confirmed)) {
+									u.bug("confirmed");
+									this.node.confirmed(response);
+								}
+								else {
+									u.bug("default return handling" + this.success_location)
+								}
+							}
+						}
+						else {
+							if(fun(this.node.confirmedError)) {
+								u.bug("confirmedError");
+								this.node.confirmedError(response);
+							}
+						}
+					}
+					u.ac(this.confirm_submit_button, "disabled");
+					u.ac(this, "submitting");
+					this.confirm_submit_button.value = u.stringOr(this.confirm_submit_button.wait_value, "Wait");
+					if(this.dom_submit) {
+						u.bug("should submit:" + this._download);
+						if(this._download) {
+							this.response({"cms_status":"success"});
+							u.bug("wait for download");
+						}
+						this.DOMsubmit();
+					}
+					else {
+						u.request(this, this.action, {"method":"post", "data":u.f.getParams(this)});
+					}
+				}
+			}
+		}
+	}
+}
+
 /*beta-u-animation-to.js*/
 	u.a.parseSVGPolygon = function(value) {
 		var pairs = value.trim().split(" ");
@@ -6123,7 +6312,7 @@ u.googlemaps = new function() {
 	}
 
 
-/*beta-u-fontsReady.js*/
+/*beta-u-fontsready.js*/
 u.fontsReady = function(node, fonts, _options) {
 	var callback_loaded = "fontsLoaded";
 	var callback_timeout = "fontsNotLoaded";
@@ -6772,7 +6961,7 @@ Util.Objects["pagination"] = new function() {
 	this.init = function(pagination) {
 		if(pagination) {
 			u.ae(document.body, pagination);
-			u.a.removeTransform(pagination);
+			u.as(pagination, "transform", "none");
 			var next = u.qs(".next", pagination);
 			if(next) {
 				u.addNextArrow(next);
@@ -8016,6 +8205,8 @@ Util.Objects["stripe"] = new function() {
 			this.card_form.submitted = function() {
 				if(!this.is_submitting) {
 					this.is_submitting = true;
+					u.ac(this, "submitting");
+					u.ac(this.actions["pay"], "disabled");
 					this.DOMsubmit();
 				}
 			}
@@ -8073,6 +8264,86 @@ Util.Objects["black"] = new function() {
 		scene.ready();
 	}
 }
+
+/*i-verify.js*/
+Util.Objects["verify"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			var form_verify = u.qs("form.verify_code", this);
+			if(form_verify) {
+				u.f.init(form_verify);
+			}
+			form_verify.submitted = function() {
+				var data = u.f.getParams(this);
+				this.is_submitting = true; 
+				u.ac(this, "submitting");
+				u.ac(this.actions["verify"], "disabled");
+				u.ac(this.actions["skip"], "disabled");
+				this.response = function(response, request_id) {
+					if (u.qs(".scene.login", response)) {
+						scene.replaceScene(response);
+						u.h.navigate("/login", false, true);
+					}
+					else if (u.hc(u.qs(".scene", response), "confirmed|checkout|cart|shopReceipt")) {
+						scene.replaceScene(response);
+						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
+						u.h.navigate(url_actions, false, true);
+					}
+					else {
+						if (this.is_submitting) {
+							this.is_submitting = false; 
+							u.rc(this, "submitting");
+							u.rc(this.actions["verify"], "disabled");
+							u.rc(this.actions["skip"], "disabled");
+						}
+						if (this.error) {
+							this.error.parentNode.removeChild(this.error);
+						}
+						this.error = scene.showMessage(this, response);
+						u.ass(this.error, {
+							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
+							opacity:0
+						});
+						u.a.transition(this.error, "all .6s ease");
+						u.ass(this.error, {
+							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
+							opacity:1
+						});
+					}
+				}
+				u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
+			}
+			page.acceptCookies();
+			u.showScene(this);
+			page.resized();
+		}
+		scene.replaceScene = function(response) {
+			var current_scene = u.qs(".scene", page);
+			var new_scene = u.qs(".scene", response);
+			page.cN.replaceChild(new_scene, current_scene); 
+			u.init();
+			return new_scene;
+		}
+		scene.showMessage = function(form, response) {
+			var new_error = (u.qs("p.errormessage", response) || u.qs("p.error", response));
+			var current_error = (u.qs("p.errormessage", form) || u.qs("p.error", form));
+			if (!current_error) {
+				u.ie(form, new_error);
+			}
+			else {
+				form.replaceChild(new_error, current_error);
+			}
+			return new_error;
+		}
+		scene.ready();
+	}
+}
+
 
 /*i-login.js*/
 Util.Objects["login"] = new function() {
@@ -8146,86 +8417,6 @@ Util.Objects["signup"] = new function() {
 					}
 				}
 				u.request(this, this.action, {"data":data, "method":"POST"});
-			}
-			page.acceptCookies();
-			u.showScene(this);
-			page.resized();
-		}
-		scene.replaceScene = function(response) {
-			var current_scene = u.qs(".scene", page);
-			var new_scene = u.qs(".scene", response);
-			page.cN.replaceChild(new_scene, current_scene); 
-			u.init();
-			return new_scene;
-		}
-		scene.showMessage = function(form, response) {
-			var new_error = (u.qs("p.errormessage", response) || u.qs("p.error", response));
-			var current_error = (u.qs("p.errormessage", form) || u.qs("p.error", form));
-			if (!current_error) {
-				u.ie(form, new_error);
-			}
-			else {
-				form.replaceChild(new_error, current_error);
-			}
-			return new_error;
-		}
-		scene.ready();
-	}
-}
-
-
-/*i-verify.js*/
-Util.Objects["verify"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			page.cN.scene = this;
-			var form_verify = u.qs("form.verify_code", this);
-			if(form_verify) {
-				u.f.init(form_verify);
-			}
-			form_verify.submitted = function() {
-				var data = u.f.getParams(this);
-				this.is_submitting = true; 
-				u.ac(this, "submitting");
-				u.ac(this.actions["verify"], "disabled");
-				u.ac(this.actions["skip"], "disabled");
-				this.response = function(response, request_id) {
-					if (u.qs(".scene.login", response)) {
-						scene.replaceScene(response);
-						u.h.navigate("/login", false, true);
-					}
-					else if (u.qs(".scene.confirmed", response)) {
-						scene.replaceScene(response);
-						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
-						u.h.navigate(url_actions, false, true);
-					}
-					else {
-						if (this.is_submitting) {
-							this.is_submitting = false; 
-							u.rc(this, "submitting");
-							u.rc(this.actions["verify"], "disabled");
-							u.rc(this.actions["skip"], "disabled");
-						}
-						if (this.error) {
-							this.error.parentNode.removeChild(this.error);
-						}
-						this.error = scene.showMessage(this, response);
-						u.ass(this.error, {
-							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
-							opacity:0
-						});
-						u.a.transition(this.error, "all .6s ease");
-						u.ass(this.error, {
-							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
-							opacity:1
-						});
-					}
-				}
-				u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
 			}
 			page.acceptCookies();
 			u.showScene(this);

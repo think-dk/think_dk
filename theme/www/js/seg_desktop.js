@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-04-04 21:10:09
+asset-builder @ 2019-04-12 09:43:15
 */
 
 /*seg_desktop_include.js*/
@@ -4350,6 +4350,76 @@ u.notifier = function(node) {
 		this.t_notifier = u.t.setTimer(this.notifications, this.notifications.hide, this.notifications.hide_delay, output);
 	}
 }
+u.smartphoneSwitch = new function() {
+	this.state = 0;
+	this.init = function(node) {
+		this.callback_node = node;
+		this.event_id = u.e.addWindowEvent(this, "resize", this.resized);
+		this.resized();
+	}
+	this.resized = function() {
+		if(u.browserW() < 520 && !this.state) {
+			this.switchOn();
+		}
+		else if(u.browserW() > 520 && this.state) {
+			this.switchOff();
+		}
+	}
+	this.switchOn = function() {
+		if(!this.panel) {
+			this.state = true;
+			this.panel = u.ae(document.body, "div", {"id":"smartphone_switch"});
+			u.ass(this.panel, {
+				opacity: 0
+			});
+			u.ae(this.panel, "h1", {html:u.stringOr(u.txt("smartphone-switch-headline"), "Hello curious")});
+			if(u.txt("smartphone-switch-text").length) {
+				for(i = 0; i < u.txt("smartphone-switch-text").length; i++) {
+					u.ae(this.panel, "p", {html:u.txt("smartphone-switch-text")[i]});
+				}
+			}
+			var ul_actions = u.ae(this.panel, "ul", {class:"actions"});
+			var li; 
+			li = u.ae(ul_actions, "li", {class:"hide"});
+			var bn_hide = u.ae(li, "a", {class:"hide button", html:u.txt("smartphone-switch-bn-hide")});
+			li = u.ae(ul_actions, "li", {class:"switch"});
+			var bn_switch = u.ae(li, "a", {class:"switch button primary", html:u.txt("smartphone-switch-bn-switch")});
+			u.e.click(bn_switch);
+			bn_switch.clicked = function() {
+				u.saveCookie("smartphoneSwitch", "on");
+				location.href = location.href.replace(/[&]segment\=desktop|segment\=desktop[&]?/, "") + (location.href.match(/\?/) ? "&" : "?") + "segment=smartphone";
+			}
+			u.e.click(bn_hide);
+			bn_hide.clicked = function() {
+				u.e.removeWindowEvent(u.smartphoneSwitch, "resize", u.smartphoneSwitch.event_id);
+				u.smartphoneSwitch.switchOff();
+			}
+			u.a.transition(this.panel, "all 0.5s ease-in-out");
+			u.ass(this.panel, {
+				opacity: 1
+			});
+			if(this.callback_node && typeof(this.callback_node.smartphoneSwitchedOn) == "function") {
+				this.callback_node.smartphoneSwitchedOn();
+			}
+		}
+	}
+	this.switchOff = function() {
+		if(this.panel) {
+			this.state = false;
+			this.panel.transitioned = function() {
+				this.parentNode.removeChild(this);
+				delete u.smartphoneSwitch.panel;
+			}
+			u.a.transition(this.panel, "all 0.5s ease-in-out");
+			u.ass(this.panel, {
+				opacity: 0
+			});
+			if(this.callback_node && typeof(this.callback_node.smartphoneSwitchedOff) == "function") {
+				this.callback_node.smartphoneSwitchedOff();
+			}
+		}
+	}
+}
 u.bug_console_only = true;
 Util.Objects["page"] = new function() {
 	this.init = function(page) {
@@ -6338,7 +6408,7 @@ Util.Objects["oneButtonForm"] = new function() {
 	}
 
 
-/*beta-u-fontsReady.js*/
+/*beta-u-fontsready.js*/
 u.fontsReady = function(node, fonts, _options) {
 	var callback_loaded = "fontsLoaded";
 	var callback_timeout = "fontsNotLoaded";
@@ -6987,7 +7057,7 @@ Util.Objects["pagination"] = new function() {
 	this.init = function(pagination) {
 		if(pagination) {
 			u.ae(document.body, pagination);
-			u.a.removeTransform(pagination);
+			u.as(pagination, "transform", "none");
 			var next = u.qs(".next", pagination);
 			if(next) {
 				u.addNextArrow(next);
@@ -8231,6 +8301,8 @@ Util.Objects["stripe"] = new function() {
 			this.card_form.submitted = function() {
 				if(!this.is_submitting) {
 					this.is_submitting = true;
+					u.ac(this, "submitting");
+					u.ac(this.actions["pay"], "disabled");
 					this.DOMsubmit();
 				}
 			}
@@ -8288,6 +8360,86 @@ Util.Objects["black"] = new function() {
 		scene.ready();
 	}
 }
+
+/*i-verify.js*/
+Util.Objects["verify"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			var form_verify = u.qs("form.verify_code", this);
+			if(form_verify) {
+				u.f.init(form_verify);
+			}
+			form_verify.submitted = function() {
+				var data = u.f.getParams(this);
+				this.is_submitting = true; 
+				u.ac(this, "submitting");
+				u.ac(this.actions["verify"], "disabled");
+				u.ac(this.actions["skip"], "disabled");
+				this.response = function(response, request_id) {
+					if (u.qs(".scene.login", response)) {
+						scene.replaceScene(response);
+						u.h.navigate("/login", false, true);
+					}
+					else if (u.hc(u.qs(".scene", response), "confirmed|checkout|cart|shopReceipt")) {
+						scene.replaceScene(response);
+						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
+						u.h.navigate(url_actions, false, true);
+					}
+					else {
+						if (this.is_submitting) {
+							this.is_submitting = false; 
+							u.rc(this, "submitting");
+							u.rc(this.actions["verify"], "disabled");
+							u.rc(this.actions["skip"], "disabled");
+						}
+						if (this.error) {
+							this.error.parentNode.removeChild(this.error);
+						}
+						this.error = scene.showMessage(this, response);
+						u.ass(this.error, {
+							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
+							opacity:0
+						});
+						u.a.transition(this.error, "all .6s ease");
+						u.ass(this.error, {
+							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
+							opacity:1
+						});
+					}
+				}
+				u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
+			}
+			page.acceptCookies();
+			u.showScene(this);
+			page.resized();
+		}
+		scene.replaceScene = function(response) {
+			var current_scene = u.qs(".scene", page);
+			var new_scene = u.qs(".scene", response);
+			page.cN.replaceChild(new_scene, current_scene); 
+			u.init();
+			return new_scene;
+		}
+		scene.showMessage = function(form, response) {
+			var new_error = (u.qs("p.errormessage", response) || u.qs("p.error", response));
+			var current_error = (u.qs("p.errormessage", form) || u.qs("p.error", form));
+			if (!current_error) {
+				u.ie(form, new_error);
+			}
+			else {
+				form.replaceChild(new_error, current_error);
+			}
+			return new_error;
+		}
+		scene.ready();
+	}
+}
+
 
 /*i-login.js*/
 Util.Objects["login"] = new function() {
@@ -8361,86 +8513,6 @@ Util.Objects["signup"] = new function() {
 					}
 				}
 				u.request(this, this.action, {"data":data, "method":"POST"});
-			}
-			page.acceptCookies();
-			u.showScene(this);
-			page.resized();
-		}
-		scene.replaceScene = function(response) {
-			var current_scene = u.qs(".scene", page);
-			var new_scene = u.qs(".scene", response);
-			page.cN.replaceChild(new_scene, current_scene); 
-			u.init();
-			return new_scene;
-		}
-		scene.showMessage = function(form, response) {
-			var new_error = (u.qs("p.errormessage", response) || u.qs("p.error", response));
-			var current_error = (u.qs("p.errormessage", form) || u.qs("p.error", form));
-			if (!current_error) {
-				u.ie(form, new_error);
-			}
-			else {
-				form.replaceChild(new_error, current_error);
-			}
-			return new_error;
-		}
-		scene.ready();
-	}
-}
-
-
-/*i-verify.js*/
-Util.Objects["verify"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			page.cN.scene = this;
-			var form_verify = u.qs("form.verify_code", this);
-			if(form_verify) {
-				u.f.init(form_verify);
-			}
-			form_verify.submitted = function() {
-				var data = u.f.getParams(this);
-				this.is_submitting = true; 
-				u.ac(this, "submitting");
-				u.ac(this.actions["verify"], "disabled");
-				u.ac(this.actions["skip"], "disabled");
-				this.response = function(response, request_id) {
-					if (u.qs(".scene.login", response)) {
-						scene.replaceScene(response);
-						u.h.navigate("/login", false, true);
-					}
-					else if (u.qs(".scene.confirmed", response)) {
-						scene.replaceScene(response);
-						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
-						u.h.navigate(url_actions, false, true);
-					}
-					else {
-						if (this.is_submitting) {
-							this.is_submitting = false; 
-							u.rc(this, "submitting");
-							u.rc(this.actions["verify"], "disabled");
-							u.rc(this.actions["skip"], "disabled");
-						}
-						if (this.error) {
-							this.error.parentNode.removeChild(this.error);
-						}
-						this.error = scene.showMessage(this, response);
-						u.ass(this.error, {
-							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
-							opacity:0
-						});
-						u.a.transition(this.error, "all .6s ease");
-						u.ass(this.error, {
-							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
-							opacity:1
-						});
-					}
-				}
-				u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
 			}
 			page.acceptCookies();
 			u.showScene(this);
