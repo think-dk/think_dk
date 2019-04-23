@@ -59,56 +59,6 @@ if($item) {
 			"schema" => false
 		]) ?>
 
-
-		<h1 itemprop="name"><?= $item["name"] ?></h1>
-
-		<dl class="occurs_at">
-			<dt class="starting_at">Starts</dt>
-			<dd class="starting_at" itemprop="startDate" content="<?= date("Y-m-d H:i", strtotime($item["starting_at"])) ?>"><?= date("F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
-			<? if($item["ending_at"]): ?>
-			<dt class="ending_at">Ends</dt>
-			<dd class="ending_at" itemprop="endDate" content="<?= date("Y-m-d H:i", strtotime($item["ending_at"])) ?>"><?= date("F j, Y - H:i", strtotime($item["ending_at"])) ?></dd>
-			<? endif; ?>
-		</dl>
-
-		<h2>Description</h2>
-		<div class="articlebody" itemprop="description">
-			<?= $item["html"] ?>
-		</div>
-
-		<?
-		/*
-		<? if($item["prices"]): ?>
-			<?= $HTML->frontendOffer($item, SITE_URL."/events/".$item["sindex"]) ?>
-
-			<?= $model->formStart("/shop/addToCart", array("class" => "signup labelstyle:inject")) ?>
-				<?= $model->input("quantity", array("value" => 1, "type" => "hidden")); ?>
-				<?= $model->input("item_id", array("value" => $item["item_id"], "type" => "hidden")); ?>
-
-				<ul class="actions">
-					<?= $model->submit("Get your ticket", array("class" => "primary", "wrapper" => "li.ticket")) ?>
-				</ul>
-			<?= $model->formEnd() ?>
-
-		<? endif; ?>
-		*/
-		?>
-
-		<h2>Location</h2>
-		<ul class="location" itemprop="location" itemscope itemtype="https://schema.org/Place">
-			<li class="name" itemprop="name"><?= $host["host"] ?></li>
-			<li class="address" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-				<ul>
-					<li class="streetaddress" itemprop="streetAddress"><?= $host["host_address1"] ?><?= $host["host_address2"] ? ", ".$host["host_address2"] : "" ?></li>
-					<li class="city"><span class="postal" itemprop="postalCode"><?= $host["host_postal"] ?></span> <span class="locality" itemprop="addressLocality"><?= $host["host_city"] ?></span></li>
-					<li class="country" itemprop="addressCountry"><?= $countries[arrayKeyValue($countries, "id", $host["host_country"])]["name"] ?></li>
-				</ul>
-			</li>
-			<? if($host["host_googlemaps"]): ?>
-			<li class="googlemaps" itemprop="hasMap" content="<?= $host["host_googlemaps"] ?>"><a href="<?= $host["host_googlemaps"] ?>" target="_blank">Map</a></li>
-			<? endif; ?>
-		</ul>
-
 		<ul class="info">
 			<li class="main_entity share" itemprop="mainEntityOfPage" content="<?= SITE_URL."/events/".$item["sindex"] ?>"></li>
 			<li class="url" itemprop="url"><?= SITE_URL."/events/".$item["sindex"] ?></li>
@@ -124,6 +74,77 @@ if($item) {
 			<? endif; ?>
 			</li>
 		</ul>
+
+
+		<h1 itemprop="name"><?= $item["name"] ?></h1>
+
+
+		<dl class="occurs_at">
+			<dt class="starting_at">Starts</dt>
+			<dd class="starting_at" itemprop="startDate" content="<?= date("Y-m-d H:i", strtotime($item["starting_at"])) ?>"><?= date("F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
+			<? if($item["ending_at"]): ?>
+			<dt class="ending_at">Ends</dt>
+			<dd class="ending_at" itemprop="endDate" content="<?= date("Y-m-d H:i", strtotime($item["ending_at"])) ?>"><?= date("F j, Y - H:i", strtotime($item["ending_at"])) ?></dd>
+			<? endif; ?>
+		</dl>
+
+		<h2>Description</h2>
+		<div class="articlebody" itemprop="description">
+			<?= $item["html"] ?>
+		</div>
+
+
+<? 
+	// Allow signups 30 minutes after event start
+	if((strtotime($item["starting_at"]) + 1800) > time()):
+?>
+		<div class="signup">
+
+		<? if($item["prices"]): ?>
+			<?= $HTML->frontendOffer($item, SITE_URL."/events/".$item["sindex"]) ?>
+
+			<?= $model->formStart("/shop/addToCart", array("class" => "signup labelstyle:inject")) ?>
+				<?= $model->input("quantity", array("value" => 1, "type" => "hidden")); ?>
+				<?= $model->input("item_id", array("value" => $item["item_id"], "type" => "hidden")); ?>
+
+				<ul class="actions">
+					<?= $model->submit("Get your ticket", array("class" => "primary", "wrapper" => "li.ticket")) ?>
+				</ul>
+			<?= $model->formEnd() ?>
+
+		<? else: ?>
+
+			<?= $model->formStart("/events/signup", array("class" => "signup labelstyle:inject")) ?>
+				<?= $model->input("item_id", array("value" => $item["item_id"], "type" => "hidden")); ?>
+
+				<ul class="actions">
+					<?= $model->submit("Sign up for ". $item["name"], array("class" => "primary", "wrapper" => "li.ticket")) ?>
+				</ul>
+			<?= $model->formEnd() ?>
+
+
+		<? endif; ?>
+
+		</div>
+
+<? endif; ?>
+
+		<div class="location">
+			<h2>Location</h2>
+			<ul class="location" itemprop="location" itemscope itemtype="https://schema.org/Place">
+				<li class="name" itemprop="name"><?= $host["host"] ?></li>
+				<li class="address" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+					<ul>
+						<li class="streetaddress" itemprop="streetAddress"><?= $host["host_address1"] ?><?= $host["host_address2"] ? ", ".$host["host_address2"] : "" ?></li>
+						<li class="city"><span class="postal" itemprop="postalCode"><?= $host["host_postal"] ?></span> <span class="locality" itemprop="addressLocality"><?= $host["host_city"] ?></span></li>
+						<li class="country" itemprop="addressCountry"><?= $countries[arrayKeyValue($countries, "id", $host["host_country"])]["name"] ?></li>
+					</ul>
+				</li>
+				<? if($host["host_googlemaps"]): ?>
+				<li class="googlemaps" itemprop="hasMap" content="<?= $host["host_googlemaps"] ?>"><a href="<?= $host["host_googlemaps"] ?>" target="_blank">Map</a></li>
+				<? endif; ?>
+			</ul>
+		</div>
 
 
 		<? if($item["mediae"]): ?>
