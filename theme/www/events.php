@@ -18,6 +18,8 @@ $page->pageTitle("Events");
 
 // news list for tags
 // /posts/#sindex#
+// Used by calendar to go back through months
+// /events/past/#year#/#month#
 if(count($action) == 1) {
 
 	$page->page(array(
@@ -32,6 +34,14 @@ else if(count($action) == 3 && $action[0] == "past" && is_numeric($action[1]) &&
 
 	$page->page(array(
 		"templates" => "events/month.php"
+	));
+	exit();
+
+}
+else if(count($action) == 3 && $action[0] == "print" && is_numeric($action[1]) && is_numeric($action[2])) {
+
+	$page->page(array(
+		"templates" => "events/month-print.php"
 	));
 	exit();
 
