@@ -5,7 +5,7 @@
 @import url(../../assets/parentnode-skin-default/css/lib/smartphone/s-todos.css);
 @import url(../../assets/parentnode-skin-default/css/lib/smartphone/s-wishlist.css);
 @import url(../../assets/parentnode-skin-default/css/lib/smartphone/s-used_by.css);
-
+@import url(../../assets/parentnode-skin-default/css/lib/smartphone/s-pagination.css);
 
 /* Project css and overrides */
 @import url(smartphone/s-colorscheme.css);
