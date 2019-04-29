@@ -96,7 +96,7 @@ if($item) {
 
 <? 
 	// Allow signups 30 minutes after event start
-	if((strtotime($item["starting_at"]) + 1800) > time()):
+	/* if((strtotime($item["starting_at"]) + 1800) > time()):
 ?>
 		<div class="signup">
 
@@ -127,7 +127,7 @@ if($item) {
 
 		</div>
 
-<? endif; ?>
+<? endif; */ ?>
 
 		<div class="location">
 			<h2>Location</h2>
