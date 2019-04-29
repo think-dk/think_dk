@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-04-23 23:53:32
+asset-builder @ 2019-04-29 18:14:24
 */
 
 /*seg_smartphone_include.css*/
@@ -7,7 +7,7 @@ asset-builder @ 2019-04-23 23:53:32
 /*seg_smartphone.css*/
 /*
 MIT license, 2019 parentNode.dk
-asset-builder @ 2019-04-18 08:54:59
+asset-builder @ 2019-04-29 17:31:55
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -123,7 +123,7 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 }
 #header .logo:active {text-decoration: none;}
 #header .servicenavigation {position: absolute; top: 0; left: 0; z-index: 9; width: 100%; height: 60px; background: #ffffff; opacity: 0;}
-#header .servicenavigation li.navigation {position: absolute; right: 0; top: 0; width: 30px; height: 39px; padding: 21px 15px 0; background: #ffffff;}
+#header .servicenavigation li.navigation {position: absolute; right: 0; top: 0; width: 30px; height: 39px; padding: 21px 15px 0; margin-right: 10px; background: #ffffff;}
 #header .servicenavigation li.navigation div {border-radius: 1px; height: 3px; margin: 0 0 5px; background: #888888;}
 #header .servicenavigation li.navigation.open div {background: #cccccc;}
 #header .servicenavigation li.navigation a {display: none; background: #ffffff;}
@@ -665,6 +665,25 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 /*s-used_by.css*/
 #content .scene .usedby {display: none;}
 
+/*s-pagination.css*/
+#page.paginated #content {padding-top: 110px;}
+#content .scene .pagination {display: none;}
+body > div.pagination {position: fixed; top: 60px; left: 0; width: 100%;}
+body > div.pagination li.next > svg.arrow {position: absolute; top: 18px; right: 20px;}
+body > div.pagination li.next > svg.arrow line {stroke: #888888; stroke-width: 3px;}
+body > div.pagination li.previous > svg.arrow {position: absolute; top: 18px; left: 20px;}
+body > div.pagination li.previous > svg.arrow line {stroke: #888888; stroke-width: 3px;}
+body > div.pagination li.previous,
+body > div.pagination li.next {z-index: 100; position: absolute; top: 0; height: 50px; overflow: hidden; border: 1px solid #888888; cursor: pointer; background: #ffffff; width: 50%; box-sizing: border-box;}
+body > div.pagination li.previous {left: 0; text-align: left; border-left: none; padding-left: 50px;}
+body > div.pagination li.next {right: 0; text-align: right; border-right: none; border-left: none; padding-right: 57px;}
+body > div.pagination li.previous a,
+body > div.pagination li.next a {font-size: 13px; line-height: 16px; display: inline-block; vertical-align: top; padding: 16px 0 16px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; max-width: 100%; box-sizing: border-box;
+ }
+body > div.pagination li.previous a {padding-left: 0; padding-right: 16px;}
+body > div.pagination li.next a {padding-right: 0; padding-left: 16px;}
+
+
 /*s-colorscheme.css*/
 * {color: #26962d;}
 body {}
@@ -696,6 +715,11 @@ ul.actions a.button.primary:active,
 #content .scene dd {color: #777777;}
 #footer {border-color: #ccdbcd;}
 #footer a {color: #34cc3d;}
+body > div.pagination li.next > svg.arrow line,
+body > div.pagination li.previous > svg.arrow line {stroke: #34cc3d;}
+body > div.pagination li.previous,
+body > div.pagination li.next {border-color: #34cc3d;}
+body > div.pagination li a {color: #34cc3d;}
 .terms_notification {background: #26962d;}
 .front #header .logo,
 .about #navigation ul li.about,

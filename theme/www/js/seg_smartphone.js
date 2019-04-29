@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-04-23 23:53:32
+asset-builder @ 2019-04-29 18:14:24
 */
 
 /*seg_smartphone_include.js*/
@@ -840,15 +840,15 @@ Util.removeClass = u.rc = function(node, classname, dom_update) {
 }
 Util.toggleClass = u.tc = function(node, classname, _classname, dom_update) {
 	if(u.hc(node, classname)) {
-		u.rc(node, classname);
+		u.rc(node, classname, dom_update);
 		if(_classname) {
-			u.ac(node, _classname);
+			u.ac(node, _classname, dom_update);
 		}
 	}
 	else {
 		u.ac(node, classname);
 		if(_classname) {
-			u.rc(node, _classname);
+			u.rc(node, _classname, dom_update);
 		}
 	}
 	dom_update = (dom_update === false) || (node.offsetTop);
@@ -6169,6 +6169,139 @@ Util.Objects["oneButtonForm"] = new function() {
 						u.request(this, this.action, {"method":"post", "data":u.f.getParams(this)});
 					}
 				}
+			}
+		}
+	}
+}
+
+/*u-expandarrow.js*/
+u.addExpandArrow = function(node) {
+	if(node.collapsearrow) {
+		node.collapsearrow.parentNode.removeChild(node.collapsearrow);
+		node.collapsearrow = false;
+	}
+	node.expandarrow = u.svg({
+		"name":"expandarrow",
+		"node":node,
+		"class":"arrow",
+		"width":17,
+		"height":17,
+		"shapes":[
+			{
+				"type": "line",
+				"x1": 2,
+				"y1": 2,
+				"x2": 7,
+				"y2": 9
+			},
+			{
+				"type": "line",
+				"x1": 6,
+				"y1": 9,
+				"x2": 11,
+				"y2": 2
+			}
+		]
+	});
+}
+u.addCollapseArrow = function(node) {
+	if(node.expandarrow) {
+		node.expandarrow.parentNode.removeChild(node.expandarrow);
+		node.expandarrow = false;
+	}
+	node.collapsearrow = u.svg({
+		"name":"collapsearrow",
+		"node":node,
+		"class":"arrow",
+		"width":17,
+		"height":17,
+		"shapes":[
+			{
+				"type": "line",
+				"x1": 2,
+				"y1": 9,
+				"x2": 7,
+				"y2": 2
+			},
+			{
+				"type": "line",
+				"x1": 6,
+				"y1": 2,
+				"x2": 11,
+				"y2": 9
+			}
+		]
+	});
+}
+u.addPreviousArrow = function(node) {
+	node.arrow = u.svg({
+		"name":"prevearrow",
+		"node":node,
+		"class":"arrow",
+		"width":17,
+		"height":17,
+		"shapes":[
+			{
+				"type": "line",
+				"x1": 9,
+				"y1": 2,
+				"x2": 2,
+				"y2": 7
+			},
+			{
+				"type": "line",
+				"x1": 2,
+				"y1": 6,
+				"x2": 9,
+				"y2": 11
+			}
+		]
+	});
+}
+u.addNextArrow = function(node) {
+	node.arrow = u.svg({
+		"name":"nextearrow",
+		"node":node,
+		"class":"arrow",
+		"width":17,
+		"height":17,
+		"shapes":[
+			{
+				"type": "line",
+				"x1": 2,
+				"y1": 2,
+				"x2": 9,
+				"y2": 7
+			},
+			{
+				"type": "line",
+				"x1": 9,
+				"y1": 6,
+				"x2": 2,
+				"y2": 11
+			}
+		]
+	});
+}
+
+
+/*i-pagination.js*/
+Util.Objects["pagination"] = new function() {
+	this.init = function(pagination) {
+		if(pagination) {
+			u.ae(document.body, pagination);
+			u.ac(page, "paginated");
+			var next = u.qs(".next", pagination);
+			if(next) {
+				u.addNextArrow(next);
+				next.a = u.qs("a", next);
+				u.ce(next, {"type":"link"});
+			}
+			var prev = u.qs(".previous", pagination);
+			if(prev) {
+				u.addPreviousArrow(prev);
+				prev.a = u.qs("a", prev);
+				u.ce(prev, {"type":"link"});
 			}
 		}
 	}
