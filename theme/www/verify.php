@@ -50,7 +50,7 @@ if($action) {
 					if($total_price && $total_price["price"]) {
 						// redirect to leave POST state
 						// to checkout and confirm order
-						message()->addMessage("You're now verified", array("type" => "message"));
+						message()->addMessage("You're now verified – please go ahead and confirm your order.", array("type" => "message"));
 						header("Location: /shop/checkout");
 						exit();
 					}
