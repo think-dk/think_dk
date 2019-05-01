@@ -50,7 +50,7 @@ Util.Objects["print"] = new function() {
 
 				column_height += li.offsetHeight;
 
-				if(column_height > 850) {
+				if(column_height > 800) {
 
 					if(!(current_ul_index%2)) {
 						u.ae(this.div_columns, "hr");
