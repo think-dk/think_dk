@@ -151,9 +151,18 @@ if($action) {
 	}
 	// verify/skip
 	else if($action[0] == "skip") {
+		$cart = $SC->getCart();
 
-		header("Location: /shop/checkout");
-		exit();
+		if($cart) {
+			// confirm free order directly (this will redirect to receipt)
+			header("Location: /shop/confirm/".$cart["cart_reference"]);
+			exit();
+		}
+		else {
+			header("Location: /shop/checkout");
+			exit();
+		}
+
 	}
 
 }
