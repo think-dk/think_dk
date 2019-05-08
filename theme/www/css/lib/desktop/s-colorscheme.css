@@ -10,6 +10,7 @@ body {}
 
 #header .logo {color: #34cc3d;}
 #navigation ul li {color: #34cc3d;}
+.front #header .logo,
 #navigation ul li.selected {color: #26962d;}
 
 #content .scene a,
