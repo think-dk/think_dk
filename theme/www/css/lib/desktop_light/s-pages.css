@@ -3,7 +3,7 @@
 
 
 /* LOGIN */
-#content div.login form {display: none;}
+/*#content div.login form {display: none;}*/
 
 
 /* FRONT */
@@ -22,10 +22,10 @@
 /* POST ARTICLE */
 #content div.post div.article ul.info {display: block;}
 
-#content div.scene div.pagination {display: none;}
+/*#content div.scene div.pagination {display: none;}*/
 
 /* CONTACT */
-#content div.about div.teams {display: none;}
+/*#content div.about div.teams {display: none;}*/
 
 
 /* EVENT */
@@ -83,6 +83,22 @@
 #content div.cart div.checkout ul.actions {text-align: right;}
 #content div.cart div.checkout ul.actions li {float: none; padding-right: 0;}
 
+#content div.stripe form fieldset {overflow: hidden;}
+#content div.stripe form div.field.exp_month,
+#content div.stripe form div.field.exp_year,
+#content div.stripe form div.field.cvc {display: inline; vertical-align: top;}
+#content div.stripe form div.field.exp_month input {width: 24px;}
+#content div.stripe form div.field.exp_year input {width: 24px;}
+#content div.stripe form span.slash,
+#content div.stripe form div.field.exp_month,
+#content div.stripe form div.field.exp_year {float: left;}
+#content div.stripe form div.field.exp_month {padding-right: 5px;}
+#content div.stripe form div.field.exp_year {padding-left: 5px; padding-right: 5px;}
+#content div.stripe form div.field.cvc {float: right; padding-right: 190px;}
+#content div.stripe form div.field.cvc input {width: 44px;}
+
+
 /* FEEDBACK ELEMENTS */
 #content .scene div.todos {display: none;}
 #content .scene div.qnas {display: none;}
+

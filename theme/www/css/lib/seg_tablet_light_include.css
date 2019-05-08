@@ -12,4 +12,4 @@
 /* Project css and overrides */
 @import url(desktop_light/s-pages.css);
 @import url(desktop_light/s-colorscheme.css);
-@import url(desktop_light/s-pages-hovers.css);
+@import url(tablet_light/s-pages-active.css);

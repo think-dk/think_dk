@@ -18,12 +18,7 @@ body {}
 #content ul.actions a.button.primary,
 #content .scene .pagination .next,
 #content .scene .pagination .previous {background-color: #34cc3d;}
-#content ul.actions input.button.primary:hover,
-#content ul.actions a.button.primary:hover,
-#content .scene .pagination .next:hover,
-#content .scene .pagination .previous:hover {background-color: #26962d;}
 #content .scene div.categories ul.tags li.selected a {color: #26962d;}
-#content .scene ul.tags a:hover {color: #00c90d;}
 
 #content .scene h3,
 #content .scene h4,
@@ -31,7 +26,8 @@ body {}
 #content .scene h6,
 #content .scene p,
 #content .scene li,
-#content .scene dd {color: #777777;}
+#content .scene dd,
+#content .scene label {color: #777777;}
 
 #footer {border-color: #ccdbcd;}
 #footer a {color: #34cc3d;}
