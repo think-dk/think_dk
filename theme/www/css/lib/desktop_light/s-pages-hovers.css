@@ -1,0 +1,6 @@
+#content ul.actions input.button.primary:hover,
+#content ul.actions a.button.primary:hover,
+#content .scene .pagination .next:hover,
+#content .scene .pagination .previous:hover {background-color: #26962d;}
+
+#content .scene ul.tags a:hover {color: #00c90d;}

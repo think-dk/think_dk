@@ -1,21 +1,21 @@
 Util.Objects["events"] = new function() {
 	this.init = function(scene) {
-//		u.bug("scene init:", this);;
+		// u.bug("scene init:", this);
 		
 
 		scene.resized = function() {
-//			u.bug("scene.resized:", this);
+			// u.bug("scene.resized:", this);
 
 			// refresh dom
 			this.offsetHeight;
 		}
 
 		scene.scrolled = function() {
-//			u.bug("scrolled:", this);;
+			// u.bug("scrolled:", this);
 		}
 
 		scene.ready = function() {
-//			u.bug("scene.ready:", this);
+			// u.bug("scene.ready:", this);
 
 
 			page.cN.scene = this;

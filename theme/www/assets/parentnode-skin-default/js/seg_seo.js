@@ -1,4 +1,4 @@
 /*
-Manipulator v0.9.2-full Copyright 2017 http://manipulator.parentnode.dk
-asset-builder @ 2019-01-09 10:50:26
+MIT license, 2019 parentNode.dk
+asset-builder @ 2019-04-29 17:31:55
 */

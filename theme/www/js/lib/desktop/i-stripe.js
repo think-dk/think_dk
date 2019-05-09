@@ -120,6 +120,9 @@ Util.Objects["stripe"] = new function() {
 				if(!this.is_submitting) {
 					this.is_submitting = true;
 
+					u.ac(this, "submitting");
+					u.ac(this.actions["pay"], "disabled");
+
 					this.DOMsubmit();
 				}
 

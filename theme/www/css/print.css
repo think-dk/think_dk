@@ -1,0 +1,38 @@
+
+#header,
+#footer {display: none;}
+
+#content .scene {padding: 0;}
+#content .scene div.all_events {display: none;}
+
+#content .scene div.events {display: block; font-size: 0;}
+#content .scene div.events div.header {margin-bottom: 15px; border-bottom: 1px solid #333333;}
+
+#content .scene div.events .logo {display: inline-block; vertical-align: bottom; width: 200px;}
+#content .scene div.events .logo h2 {width: auto; font-size: 40px; padding: 0 0 15px; line-height: 1.25em;}
+#content .scene div.events .tagline {display: inline-block; vertical-align: top; width: calc(100% - 400px);}
+#content .scene div.events .tagline p {padding: 0; width: auto; color: #333333; text-align: center; line-height: 1.25em;}
+
+#content .scene div.events .month {display: inline-block; vertical-align: bottom; width: 200px;}
+#content .scene div.events .month h2 {padding: 0 0 15px; font-size: 40px; width: auto; text-align: right; line-height: 1.25em;}
+
+#content .scene div.events ul {width: 50%; display: inline-block; vertical-align: top; padding: 0;}
+#content .scene div.events hr {background: none; border: none; margin: 30px 0 0; padding: 0;
+	page-break-before: always;
+	
+}
+body div.terms_notification {display: none;}
+#content .scene div.events li.item {border-top: none; padding-bottom: 15px; padding-top: 0;}
+
+#content .scene div.events li.item h3 {color: #26962d; font-size: 15px; margin-top: -2px;}
+
+#content .scene div.events li.item p {color: #333333; font-size: 11px;}
+
+#content .scene div.events li.item h3,
+#content .scene div.events li.item p,
+#content .scene div.events li.item dl {width: auto; padding: 0 0 0 30px;}
+#content .scene div.events li.item dd {line-height: 1em; color: #333333;}
+
+#content .scene div.events ul.i0 li.item h3,
+#content .scene div.events ul.i0 li.item p,
+#content .scene div.events ul.i0 li.item dl {width: auto; padding: 0 30px 0px 0;}

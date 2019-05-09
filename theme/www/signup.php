@@ -15,81 +15,35 @@ $page->bodyClass("signup");
 $page->pageTitle("Signup");
 
 
-if(is_array($action) && count($action)) {
+// Account creation flow
+if($action) {
 
-	// /signup/receipt
-	if($action[0] == "receipt") {
+	// /signup/save
+	if($action[0] == "save" && $page->validateCsrfToken()) {
 
-		$page->page(array(
-			"templates" => "signup/receipt.php"
-		));
-		exit();
-	}
+		// create new user
+		$user = $model->newUser(array("newUser"));
 
-	// /signup/confirm/email|mobile/#email|mobile#/#verification_code#
-	else if($action[0] == "confirm" && count($action) == 3) {
-
-		$username = $action[1];
-		$verification_code = $action[2];
-
-		if($model->confirmUsername($username, $verification_code)) {
-
+		// successful creation
+		if(isset($user["user_id"])) {
 			// redirect to leave POST state
-			header("Location: /signup/confirm/receipt");
+			header("Location: /verify");
 			exit();
-
 		}
+
+		// user exists
+		else if(isset($user["status"]) && $user["status"] == "USER_EXISTS") {
+			message()->addMessage("Sorry, the computer says you either have a bad memory or a bad conscience!", array("type" => "error"));
+		}
+		// something went wrong
 		else {
-
-			// redirect to leave POST state
-			header("Location: /signup/confirm/error");
-			exit();
-
+			message()->addMessage("Sorry, computer says no!", array("type" => "error"));
 		}
-		exit();
-	}
-	else if($action[0] == "confirm" && $action[1] == "receipt") {
 
-		$page->page(array(
-			"templates" => "signup/confirmed.php"
-		));
-		exit();
 	}
-	else if($action[0] == "confirm" && $action[1] == "error") {
-
-		$page->page(array(
-			"templates" => "signup/confirmation_failed.php"
-		));
-		exit();
-	}
-
-	// // /signup/save
-	// else if($action[0] == "save" && $page->validateCsrfToken()) {
-	//
-	// 	// create new user
-	// 	$user = $model->newUser(array("newUser"));
-	//
-	// 	// successful creation
-	// 	if(isset($user["user_id"])) {
-	//
-	// 		// redirect to leave POST state
-	// 		header("Location: receipt");
-	// 		exit();
-	//
-	// 	}
-	//
-	// 	// user exists
-	// 	else if(isset($user["status"]) && $user["status"] == "USER_EXISTS") {
-	// 		message()->addMessage("Sorry, the computer says you either have a bad memory or a bad conscience!", array("type" => "error"));
-	// 	}
-	// 	// something went wrong
-	// 	else {
-	// 		message()->addMessage("Sorry, computer says no!", array("type" => "error"));
-	// 	}
-	//
-	// }
 
 	// post username, maillist_id and verification_token
+	// signup/unsubscribe
 	else if($action[0] == "unsubscribe" && $page->validateCsrfToken()) {
 
 		// successful creation
@@ -128,6 +82,8 @@ if(is_array($action) && count($action)) {
 
 }
 
+
+
 // plain signup directly
 // /signup
 $page->page(array(
@@ -135,3 +91,4 @@ $page->page(array(
 ));
 
 ?>
+

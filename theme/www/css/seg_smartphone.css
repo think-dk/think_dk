@@ -1,43 +1,47 @@
 /*
-asset-builder @ 2019-03-13 12:03:52
+asset-builder @ 2019-04-29 18:14:24
 */
 
 /*seg_smartphone_include.css*/
 
 /*seg_smartphone.css*/
+/*
+MIT license, 2019 parentNode.dk
+asset-builder @ 2019-04-29 17:31:55
+*/
 @font-face {
 	font-family: 'OpenSans';
-	src: url('fonts/open_sans/opensans-regular-webfont.woff2') format('woff2'),
-		 url('fonts/open_sans/opensans-regular-webfont.woff') format('woff'),
-		 url('fonts/open_sans/opensans-regular-webfont.ttf') format('truetype'),
-		 url("fonts/open_sans/opensans-regular-webfont.svg#OpenSansRegular") format('svg');
+	src: url('../assets/parentnode-skin-default/css/fonts/open_sans/opensans-regular-webfont.woff2') format('woff2'),
+		 url('../assets/parentnode-skin-default/css/fonts/open_sans/opensans-regular-webfont.woff') format('woff'),
+		 url('../assets/parentnode-skin-default/css/fonts/open_sans/opensans-regular-webfont.ttf') format('truetype'),
+		 url("../assets/parentnode-skin-default/css/fonts/open_sans/opensans-regular-webfont.svg#OpenSansRegular") format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
 @font-face {
 	font-family: 'OpenSans';
-	src: url('fonts/open_sans/opensans-bold-webfont.woff2') format('woff2'),
-		 url('fonts/open_sans/opensans-bold-webfont.woff') format('woff'),
-		 url('fonts/open_sans/opensans-bold-webfont.ttf') format('truetype'),
-		 url('fonts/open_sans/opensans-bold-webfont.svg#open_sansbold') format('svg');
+	src: url('../assets/parentnode-skin-default/css/fonts/open_sans/opensans-bold-webfont.woff2') format('woff2'),
+		 url('../assets/parentnode-skin-default/css/fonts/open_sans/opensans-bold-webfont.woff') format('woff'),
+		 url('../assets/parentnode-skin-default/css/fonts/open_sans/opensans-bold-webfont.ttf') format('truetype'),
+		 url('../assets/parentnode-skin-default/css/fonts/open_sans/opensans-bold-webfont.svg#open_sansbold') format('svg');
 	font-weight: bold;
 	font-style: normal;
 }
 @font-face {
 	font-family: 'OpenSans';
-	src: url('fonts/open_sans/opensans-italic-webfont.woff2') format('woff2'),
-		 url('fonts/open_sans/opensans-italic-webfont.woff') format('woff'),
-		 url('fonts/open_sans/opensans-italic-webfont.ttf') format('truetype'),
-		 url('fonts/open_sans/opensans-italic-webfont.svg#open_sansitalic') format('svg');
+	src: url('../assets/parentnode-skin-default/css/fonts/open_sans/opensans-italic-webfont.woff2') format('woff2'),
+		 url('../assets/parentnode-skin-default/css/fonts/open_sans/opensans-italic-webfont.woff') format('woff'),
+		 url('../assets/parentnode-skin-default/css/fonts/open_sans/opensans-italic-webfont.ttf') format('truetype'),
+		 url('../assets/parentnode-skin-default/css/fonts/open_sans/opensans-italic-webfont.svg#open_sansitalic') format('svg');
 	font-weight: normal;
 	font-style: italic;
 }
 @font-face {
 	font-family: 'PT Serif';
-	src: url('fonts/pt_serif/pt_serif-regular-webfont.woff2') format('woff2'),
-		 url('fonts/pt_serif/pt_serif-regular-webfont.woff') format('woff'),
-		 url('fonts/pt_serif/pt_serif-regular-webfont.ttf') format('truetype'),
-		 url('fonts/pt_serif/pt_serif-regular-webfont.svg#pt_serifregular') format('svg');
+	src: url('../assets/parentnode-skin-default/css/fonts/pt_serif/pt_serif-regular-webfont.woff2') format('woff2'),
+		 url('../assets/parentnode-skin-default/css/fonts/pt_serif/pt_serif-regular-webfont.woff') format('woff'),
+		 url('../assets/parentnode-skin-default/css/fonts/pt_serif/pt_serif-regular-webfont.ttf') format('truetype'),
+		 url('../assets/parentnode-skin-default/css/fonts/pt_serif/pt_serif-regular-webfont.svg#pt_serifregular') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -119,10 +123,10 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 }
 #header .logo:active {text-decoration: none;}
 #header .servicenavigation {position: absolute; top: 0; left: 0; z-index: 9; width: 100%; height: 60px; background: #ffffff; opacity: 0;}
-#header .servicenavigation li.navigation {position: absolute; right: 0; top: 0; width: 30px; height: 39px; padding: 21px 15px 0;}
+#header .servicenavigation li.navigation {position: absolute; right: 0; top: 0; width: 30px; height: 39px; padding: 21px 15px 0; margin-right: 10px; background: #ffffff;}
 #header .servicenavigation li.navigation div {border-radius: 1px; height: 3px; margin: 0 0 5px; background: #888888;}
 #header .servicenavigation li.navigation.open div {background: #cccccc;}
-#header .servicenavigation li.navigation a {display: none;}
+#header .servicenavigation li.navigation a {display: none; background: #ffffff;}
 #navigation {position: absolute; width: 100%; top: 75px; display: none;}
 #navigation ul {}
 #navigation ul li {padding: 10px 20px 10px 20px; font-size: 20px; color: #888888; display: block; text-align: center;
@@ -259,7 +263,8 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene div.vcard dl.info dd li a {padding-bottom: 10px; display: inline-block;}
 #content .scene.login form {padding-bottom: 20px;}
 #content .scene form li.forgot {padding-top: 5px;}
-#content .scene div.messages > p.error {color: #df0000;}
+#content .scene p.error,
+#content .scene p.errormessage {color: #df0000;}
 #content .scene div.article {padding-bottom: 30px;}
 #content .scene div.article h2 br {display: none;}
 #content .scene div.article ul.tags li,
@@ -308,7 +313,7 @@ div.field select {width: calc(100% - 2px); height: 30px; color: #333333; padding
 div.field select option {padding: 2px 3px 2px 6px;}
 @media all and (-webkit-min-device-pixel-ratio:0) {
 	div.field select {width: 100%; height: 31px; padding: 2px 3px 2px 7px;
-		background: #ffffff url(../img/bg_icons.png) no-repeat 360px -977px;
+		background: #ffffff url(../assets/parentnode-skin-default/img/bg_icons.png) no-repeat 360px -977px;
 		-webkit-appearance: none;
 	}
 }
@@ -342,7 +347,7 @@ div.field.files {border: 3px dashed #dedede; display: block; width: 378px; borde
 div.field.files input[type=file] {opacity: 0; width: 360px; height: 49px; margin: 0; border: 0;}
 div.field.files label {color: #333333; font-size: 14px; display: block; position: absolute; width: 120px; left: 50%; padding: 1px 4px 3px; margin: 16px 0 0 -60px; text-align: center; border-radius: 6px; background: #dedede;}
 div.field.files.loading label {display: none;}
-div.field.files.loading {background: transparent url(../img/gx_loader.gif) no-repeat center center;}
+div.field.files.loading {background: transparent url(../assets/parentnode-skin-default/img/gx_loader.gif) no-repeat center center;}
 div.field.location {}
 div.field.location div.location {padding-bottom: 2px;}
 div.field.location div.latitude {padding-right: 2px;}
@@ -351,7 +356,7 @@ div.field.location div.longitude {display: inline-block; vertical-align: top;}
 div.field.location div.latitude input,
 div.field.location div.longitude input {width: 173px;}
 div.field.location.geolocation div.geolocation {width: 30px; height: 30px; display: inline-block; vertical-align: top; cursor: pointer;
-	background: transparent url(../img/gx_geolocation.png) no-repeat 5px 8px;
+	background: transparent url(../assets/parentnode-skin-default/img/gx_geolocation.png) no-repeat 5px 8px;
 }
 div.field.location.geolocation div.latitude input,
 div.field.location.geolocation div.longitude input {width: 158px;}
@@ -383,7 +388,7 @@ div.field textarea.default,
 div.field .pseudolabel {color: #aaaaaa;}
 div.field .indicator {width: 20px; height: 15px; display: inline-block; margin-bottom: -2px; margin-top: -2px;}
 div.field.required .indicator {
-	background: transparent url(../img/bg_icons.png) no-repeat 3px -295px;
+	background: transparent url(../assets/parentnode-skin-default/img/bg_icons.png) no-repeat 3px -295px;
 }
 div.field.correct .indicator {background-position: 3px -324px;}
 div.field.error {
@@ -424,10 +429,9 @@ ul.actions a.button,
 ul.actions input.button:active,
 ul.actions a.button:active,
 #content ul.actions a.button:active {background-color: #bebebe;}
-.submitting input.button,
-.submitting a.button,
-#content .submitting a.button {padding-left: 40px !important;
-	background-image: url(../img/gx_loader.gif);
+.submitting input[type="submit"].button {
+	padding-left: 40px !important;
+	background-image: url(../assets/parentnode-skin-default/img/gx_loader.gif);
 	background-position: 11px 7px;
 	background-repeat: no-repeat;
 	background-size: 17px auto;
@@ -484,7 +488,7 @@ div.field.correct div.error {display: none;}
 #content .field.html .editor div.tag .drag {display: none; position: absolute; top: 0px; left: -20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background: #dedede; width: 30px; height: 30px; cursor: move;}
 #content .field.html .editor div.tag:active .drag {display: block;}
 #content .field.html .editor div.tag .remove {display: none; position: absolute; top: 0px; right: -10px; border-radius: 15px; background: #dedede; width: 30px; height: 30px; cursor: pointer;
-	background: #dedede url(../img/bg_icons.png) no-repeat 8px -42px;
+	background: #dedede url(../assets/parentnode-skin-default/img/bg_icons.png) no-repeat 8px -42px;
 }
 #content .field.html .editor div.tag:active .remove {display: block;}
 #content .field.html .editor div.tag ul.type {display: block; z-index: 5; position: absolute; width: 30px; top: 0px; left: 0px; padding: 0;}
@@ -571,7 +575,7 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene.docsindex .files li h3 {font-size: 16px; padding: 0;}
 #content .scene.docsindex .files li p {font-size: 13px; color: #999999; padding: 0;}
 #content .scene.docsindex .search {padding-top: 15px;}
-#content .scene.docsindex .search.loading {background: transparent url(../img/gx_loader.gif) no-repeat 438px 68px;}
+#content .scene.docsindex .search.loading {background: transparent url(../assets/parentnode-skin-default/img/gx_loader.gif) no-repeat 438px 68px;}
 #content .scene.docsindex .search h2 {padding-bottom: 15px;}
 #content .scene.docsindex .search .results .function {padding: 15px 0 0; border-top: 1px solid #dedede; cursor: pointer;}
 #content .scene.docsindex .search .results .function .header h3 {padding-bottom: 5px;}
@@ -604,10 +608,10 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene div.functions .function .body .examples h4 {padding-bottom: 5px;}
 #content .scene div.functions .function .body .example h5 {padding-bottom: 5px; font-size: 13px;}
 #content .scene div.functions .function .body .example p {padding-bottom: 5px;}
-#content .scene div.functions .function .body .uses {overflow: hidden; margin-bottom: 20px; position: relative;}
-#content .scene div.functions .function .body .uses svg {position: absolute; top: 3px; left: 60px; stroke: #999999; stroke-width: 2px;}
-#content .scene div.functions .function .body .uses .javascript {padding: 5px 0 0 20px;}
-#content .scene div.functions .function .body .uses .manipulator {padding: 5px 0 0 20px;}
+#content .scene div.functions .function .body .dependencies {overflow: hidden; margin-bottom: 20px; position: relative;}
+#content .scene div.functions .function .body .dependencies svg {position: absolute; top: 1px; left: 115px; stroke: #999999; stroke-width: 2px;}
+#content .scene div.functions .function .body .dependencies .javascript {padding: 5px 0 0 20px;}
+#content .scene div.functions .function .body .dependencies .manipulator {padding: 5px 0 0 20px;}
 #content .scene div.functions dd {padding-bottom: 5px;}
 #content .scene div.includefiles {padding-bottom: 5px; border-bottom: 1px solid #bbbbbb;}
 #content .scene div.includefiles .header {position: relative; cursor: pointer;}
@@ -661,6 +665,25 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 /*s-used_by.css*/
 #content .scene .usedby {display: none;}
 
+/*s-pagination.css*/
+#page.paginated #content {padding-top: 110px;}
+#content .scene .pagination {display: none;}
+body > div.pagination {position: fixed; top: 60px; left: 0; width: 100%;}
+body > div.pagination li.next > svg.arrow {position: absolute; top: 18px; right: 20px;}
+body > div.pagination li.next > svg.arrow line {stroke: #888888; stroke-width: 3px;}
+body > div.pagination li.previous > svg.arrow {position: absolute; top: 18px; left: 20px;}
+body > div.pagination li.previous > svg.arrow line {stroke: #888888; stroke-width: 3px;}
+body > div.pagination li.previous,
+body > div.pagination li.next {z-index: 100; position: absolute; top: 0; height: 50px; overflow: hidden; border: 1px solid #888888; cursor: pointer; background: #ffffff; width: 50%; box-sizing: border-box;}
+body > div.pagination li.previous {left: 0; text-align: left; border-left: none; padding-left: 50px;}
+body > div.pagination li.next {right: 0; text-align: right; border-right: none; border-left: none; padding-right: 57px;}
+body > div.pagination li.previous a,
+body > div.pagination li.next a {font-size: 13px; line-height: 16px; display: inline-block; vertical-align: top; padding: 16px 0 16px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; max-width: 100%; box-sizing: border-box;
+ }
+body > div.pagination li.previous a {padding-left: 0; padding-right: 16px;}
+body > div.pagination li.next a {padding-right: 0; padding-left: 16px;}
+
+
 /*s-colorscheme.css*/
 * {color: #26962d;}
 body {}
@@ -692,6 +715,11 @@ ul.actions a.button.primary:active,
 #content .scene dd {color: #777777;}
 #footer {border-color: #ccdbcd;}
 #footer a {color: #34cc3d;}
+body > div.pagination li.next > svg.arrow line,
+body > div.pagination li.previous > svg.arrow line {stroke: #34cc3d;}
+body > div.pagination li.previous,
+body > div.pagination li.next {border-color: #34cc3d;}
+body > div.pagination li a {color: #34cc3d;}
 .terms_notification {background: #26962d;}
 .front #header .logo,
 .about #navigation ul li.about,
@@ -842,7 +870,7 @@ ul.actions a.button.primary:active,
 #content .scene.cart ul.items li h3 form > ul.actions {padding: 0; right: 48px; top: 0;}
 #content .scene.cart ul.items li h3 form > ul.actions li {padding: 8px 0 0;}
 #content .scene.cart ul.items li h3 form > ul.actions input.button {width: 16px; height: 16px; padding: 0; text-indent: -9999px; border-radius: 15px;
-	background-image: url(../img/gx_refresh.png);
+	background-image: url(../assets/janitor/admin/img/gx_refresh.png);
 	background-position: center center;
 	background-repeat: no-repeat;
 }
@@ -855,7 +883,7 @@ ul.actions a.button.primary:active,
 #content .scene.cart ul.items li ul.actions {padding: 0; top: 20px; position: absolute; right: 15px;}
 #content .scene.cart ul.items li ul.actions li.delete {padding: 0;}
 #content .scene.cart ul.items li ul.actions li.delete input {width: 30px; overflow: hidden; text-indent: -9999px;
-	background-image: url(../img/bg_icons.png);
+	background-image: url(../assets/janitor/admin/img/bg_icons.png);
 	background-position: 8px -42px;
 	background-repeat: no-repeat;
 }
