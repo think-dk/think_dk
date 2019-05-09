@@ -67,7 +67,7 @@ if($page_item) {
 				</ul>
 			</dd>
 			<dt class="cvr">CVR</dt>
-			<dd class="cvr" itemprop="taxID">25 21 04 33</dd>
+			<dd class="cvr" itemprop="taxID">40 20 18 90</dd>
 		</dl>
 
 		<dl class="info contact">
