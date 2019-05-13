@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-05-13 17:22:07
+asset-builder @ 2019-05-13 17:53:01
 */
 
 /*seg_tablet_light_include.css*/
@@ -396,7 +396,7 @@ div.field.focus div.hint {display: block;}
 #content .scene .pagination .next h2,
 #content .scene .pagination .previous h2 {padding: 3px 1px;	font-size: 13px; font-family: "OpenSans", Verdana, Arial, sans-serif;}
 #content .scene .pagination .next a,
-#content .scene .pagination .previous a {background-color: #8c9399; text-decoration: none; padding: 10px 12px 10px; display: inline; float: right; color: #ffffff; border: none; cursor: pointer; font-size: 14px;}
+#content .scene .pagination .previous a {background-color: #8c9399; text-decoration: none; padding: 6px 12px; display: inline; float: right; color: #ffffff; border: none; cursor: pointer; font-size: 14px;}
 #content .scene .pagination .previous a {float: left;}
 #content .scene .pagination .next a,
 #content .scene .pagination .previous a {color: #ffffff;}
