@@ -2,9 +2,9 @@
 asset-builder @ 2019-05-13 17:05:36
 */
 
-/*seg_mobile_include.js*/
+/*seg_tablet_light_include.js*/
 
-/*seg_mobile.js*/
+/*seg_tablet_light.js*/
 if(!u || !Util) {
 	var u, Util = u = new function() {};
 	u.version = "0.9.2";
@@ -1719,102 +1719,6 @@ if(!Object.keys) {
 		}
 		return keys;
 	};
-}
-if(document.documentMode && document.documentMode <= 10 && document.documentMode >= 8) {
-	Util.appendElement = u.ae = function(_parent, node_type, attributes) {
-		try {
-			var node = (obj(node_type)) ? node_type : (node_type == "svg" ? document.createElementNS("http://www.w3.org/2000/svg", node_type) : document.createElement(node_type));
-			if(attributes) {
-				var attribute;
-				for(attribute in attributes) {
-					if(!attribute.match(/^(value|html)$/)) {
-						node.setAttribute(attribute, attributes[attribute]);
-					}
-				}
-			}
-			node = _parent.appendChild(node);
-			if(attributes) {
-				if(attributes["value"]) {
-					node.value = attributes["value"];
-				}
-				if(attributes["html"]) {
-					node.innerHTML = attributes["html"];
-				}
-			}
-			return node;
-		}
-		catch(exception) {
-			u.exception("u.ae (desktop_ie10)", arguments, exception);
-		}
-	}
-	Util.insertElement = u.ie = function(_parent, node_type, attributes) {
-		try {
-			var node = (obj(node_type)) ? node_type : (node_type == "svg" ? document.createElementNS("http://www.w3.org/2000/svg", node_type) : document.createElement(node_type));
-			if(attributes) {
-				var attribute;
-				for(attribute in attributes) {
-					if(!attribute.match(/^(value|html)$/)) {
-						node.setAttribute(attribute, attributes[attribute]);
-					}
-				}
-			}
-			node = _parent.insertBefore(node, _parent.firstChild);
-			if(attributes) {
-				if(attributes["value"]) {
-					node.value = attributes["value"];
-				}
-				if(attributes["html"]) {
-					node.innerHTML = attributes["html"];
-				}
-			}
-			return node;
-		}
-		catch(exception) {
-			u.exception("u.ie (desktop_ie10)", arguments, exception);
-		}
-	}
-}
-if(document.documentMode && document.documentMode <= 11 && document.documentMode >= 8) {
-	Util.hasClass = u.hc = function(node, classname) {
-		var regexp = new RegExp("(^|\\s)(" + classname + ")(\\s|$)");
-		if(node instanceof SVGElement) {
-			if(regexp.test(node.className.baseVal)) {
-				return true;
-			}
-		}
-		else {
-			if(regexp.test(node.className)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	Util.addClass = u.ac = function(node, classname, dom_update) {
-		var regexp = new RegExp("(^|\\s)" + classname + "(\\s|$)");
-		if(node instanceof SVGElement) {
-			if(!regexp.test(node.className.baseVal)) {
-				node.className.baseVal += node.className.baseVal ? " " + classname : classname;
-			}
-		}
-		else {
-			if(!regexp.test(node.className)) {
-				node.className += node.className ? " " + classname : classname;
-			}
-		}
-		dom_update = (!dom_update) || (node.offsetTop);
-		return node.className;
-	}
-	Util.removeClass = u.rc = function(node, classname, dom_update) {
-		var regexp = new RegExp("(^|\\s)(" + classname + ")(?=[\\s]|$)", "g");
-		if(node instanceof SVGElement) {
-			node.className.baseVal = node.className.baseVal.replace(regexp, " ").trim().replace(/[\s]{2}/g, " ");
-		}
-		else {
-			node.className = node.className.replace(regexp, " ").trim().replace(/[\s]{2}/g, " ");
-		}
-		dom_update = (!dom_update) || (node.offsetTop);
-		return node.className;
-	}
 }
 Util.setClass = u.sc = function(node, classname, dom_update) {
 	var old_class;
@@ -4546,6 +4450,19 @@ if (typeof JSON !== 'object') {
         };
     }
 }());
+if(String.prototype.trim == undefined) {
+	String.prototype.trim = function() {
+		return this.replace(/^\s+|\s+$/g, "");
+	};
+}
+if(String.prototype.substr == undefined || "ABC".substr(-1,1) == "A") {
+	String.prototype.substr = function(start_index, length) {
+		start_index = start_index < 0 ? this.length + start_index : start_index;
+		start_index = start_index < 0 ? 0 : start_index;
+		length = length ? start_index + length : this.length;
+		return this.substring(start_index, length);
+	};
+}
 u.smartphoneSwitch = new function() {
 	this.state = 0;
 	this.init = function(node) {
@@ -4729,6 +4646,84 @@ u.txt["smartphone-switch-text"] = [
 ];
 u.txt["smartphone-switch-bn-hide"] = "Hide";
 u.txt["smartphone-switch-bn-switch"] = "Go to Smartphone version";
+u.bug_console_only = true;
+Util.Objects["page"] = new function() {
+	this.init = function(page) {
+		window.page = page;
+		u.bug_force = true;
+		u.bug("This site is built using the combined powers of body, mind and spirit. Well, and also Manipulator, Janitor and Detector");
+		u.bug("Visit https://parentnode.dk for more information");
+		u.bug_force = false;
+		page.hN = u.qs("#header");
+		page.hN.service = u.qs(".servicenavigation", page.hN);
+		page.cN = u.qs("#content", page);
+		page.nN = u.qs("#navigation", page);
+		page.nN = u.ie(page.hN, page.nN);
+		page.fN = u.qs("#footer");
+		page.fN.service = u.qs(".servicenavigation", page.fN);
+		page.logo = u.ie(page.hN, "a", {"class":"logo", "html":u.eitherOr(u.site_name, "Frontpage")});
+		u.ce(page.logo);
+		page.logo.clicked = function(event) {
+			location.href = '/';
+		}
+		page.resized = function() {
+			page.browser_h = u.browserH();
+			page.browser_w = u.browserW();
+			if(page.cN && page.cN.scene && typeof(page.cN.scene.resized) == "function") {
+				page.cN.scene.resized();
+			}
+		}
+		page.scrolled = function() {
+			page.scrolled_y = u.scrollY();
+			if(page.cN && page.cN.scene && typeof(page.cN.scene.scrolled) == "function") {
+				page.cN.scene.scrolled();
+			}
+		}
+		page.ready = function() {
+			if(!u.hc(this, "ready")) {
+				u.ac(this, "ready");
+				this.initNavigation();
+				this.resized();
+				this.acceptCookies();
+			}
+		}
+		page.acceptCookies = function() {
+			if(u.terms_version && !u.getCookie(u.terms_version)) {
+				var terms = u.ie(document.body, "div", {"class":"terms_notification"});
+				u.ae(terms, "h3", {"html":"We love <br />cookies and privacy"});
+				var bn_accept = u.ae(terms, "a", {"class":"accept", "html":"Accept"});
+				bn_accept.terms = terms;
+				u.ce(bn_accept);
+				bn_accept.clicked = function() {
+					this.terms.parentNode.removeChild(this.terms);
+					u.saveCookie(u.terms_version, true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
+				}
+				if(!location.href.match(/\/terms\//)) {
+					var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details", "href":"/terms"});
+					u.ce(bn_details, {"type":"link"});
+				}
+			}
+		}
+		page.initNavigation = function() {
+			var i, node, nodes;
+			if(page.hN.service) {
+				var nav_anchor = u.qs("li.navigation", page.hN.service);
+				if(nav_anchor) {
+					page.hN.service.removeChild(nav_anchor);
+				}
+			}
+			if(page.fN.service) {
+				nodes = u.qsa("li", page.fN.service);
+				for(i = 0; node = nodes[i]; i++) {
+					u.ie(page.hN.service, node);
+				}
+				page.fN.removeChild(page.fN.service);
+			}
+		}
+		page.ready();
+	}
+}
+window.onload = u.init;
 
 
 /*u-settings.js*/
@@ -4764,4 +4759,99 @@ u.txt["month-9"] = "September";
 u.txt["month-10"] = "October";
 u.txt["month-11"] = "November";
 u.txt["month-12"] = "December";
+
+
+/*i-cart.js*/
+Util.Objects["checkout"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			var form_login = u.qs("form.login", this);
+			if(form_login) {
+				u.f.init(form_login);
+			}
+			var form_signup = u.qs("form.signup", this);
+			if(form_signup) {
+				u.f.init(form_signup);
+			}
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+Util.Objects["shopProfile"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			var form = u.qs("form.details", this);
+			if(form) {
+				u.f.init(form);
+			}
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+Util.Objects["shopAddress"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			var form = u.qs("form.address", this);
+			if(form) {
+				u.f.init(form);
+			}
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
+/*i-memberships.js*/
+Util.Objects["memberships"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			this._memberships = u.qs("div.memberships", this);
+			var place_holder = u.qs("div.articlebody .placeholder.memberships", this);
+			if(this._memberships && place_holder) {
+				place_holder.parentNode.replaceChild(this._memberships, place_holder);
+			}
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
+
+/*i-signup.js*/
+Util.Objects["signup"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			this._form = u.qs("form", this);
+			u.f.init(this._form);
+			page.cN.scene = this;
+		}
+		scene.ready();
+	}
+}
 
