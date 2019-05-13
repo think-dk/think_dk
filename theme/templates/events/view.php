@@ -163,10 +163,16 @@ if($item) {
 	<div class="pagination i:pagination">
 		<ul>
 		<? if($prev): ?>
-			<li class="previous"><a href="/events/<?= $prev[0]["sindex"] ?>"><?= strip_tags($prev[0]["name"]) ?></a></li>
+			<li class="previous">
+				<h2>Previous</h2>
+				<a href="/events/<?= $prev[0]["sindex"] ?>"><?= strip_tags($prev[0]["name"]) ?></a>
+			</li>
 		<? endif; ?>
 		<? if($next): ?>
-			<li class="next"><a href="/events/<?= $next[0]["sindex"] ?>"><?= strip_tags($next[0]["name"]) ?></a></li>
+			<li class="next">
+				<h2>Next</h2>
+				<a href="/events/<?= $next[0]["sindex"] ?>"><?= strip_tags($next[0]["name"]) ?></a>
+			</li>
 		<? endif; ?>
 		</ul>
 	</div>

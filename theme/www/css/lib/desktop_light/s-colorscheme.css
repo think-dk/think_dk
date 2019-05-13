@@ -16,8 +16,8 @@ body {}
 
 #content ul.actions input.button.primary,
 #content ul.actions a.button.primary,
-#content .scene .pagination .next,
-#content .scene .pagination .previous {background-color: #34cc3d;}
+#content .scene .pagination .next a,
+#content .scene .pagination .previous a {background-color: #34cc3d;}
 #content .scene div.categories ul.tags li.selected a {color: #26962d;}
 
 #content .scene h3,
