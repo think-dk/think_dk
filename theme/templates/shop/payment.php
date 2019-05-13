@@ -49,7 +49,7 @@ $payment_methods = $this->paymentMethods();
 		<li class="payment_method<?= $payment_method["classname"] ? " ".$payment_method["classname"] : "" ?>">
 
 			<ul class="actions">
-				<?= $JML->oneButtonForm($payment_method["name"], "/shop/selectPaymentMethod", array(
+				<?= $JML->oneButtonForm("Pay with " . $payment_method["name"], "/shop/selectPaymentMethod", array(
 					"inputs" => array("order_id" => $order["id"], "payment_method" => $payment_method["id"]),
 					"confirm-value" => false,
 					"static" => true,
@@ -66,7 +66,7 @@ $payment_methods = $this->paymentMethods();
 
 	</ul>
 
-	<p class="note">* We pay the transaction fee – so feel free to choose a suited option with the smallest fee for us.</p>
+	<!--p class="note">* We pay the transaction fee – so feel free to choose a suited option with the smallest fee for us.</p-->
 
 <? // No payments
 elseif(session()->value("user_group_id") > 1): ?>
