@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-05-13 17:05:36
+asset-builder @ 2019-05-13 17:22:07
 */
 
 /*seg_desktop_light_include.css*/
@@ -509,8 +509,8 @@ body {}
 #content .scene hr {border-color: #ccdbcd;}
 #content ul.actions input.button.primary,
 #content ul.actions a.button.primary,
-#content .scene .pagination .next,
-#content .scene .pagination .previous {background-color: #34cc3d;}
+#content .scene .pagination .next a,
+#content .scene .pagination .previous a {background-color: #34cc3d;}
 #content .scene div.categories ul.tags li.selected a {color: #26962d;}
 #content .scene h3,
 #content .scene h4,
@@ -530,7 +530,7 @@ body {}
 /*s-pages-hovers.css*/
 #content ul.actions input.button.primary:hover,
 #content ul.actions a.button.primary:hover,
-#content .scene .pagination .next:hover,
-#content .scene .pagination .previous:hover {background-color: #26962d;}
+#content .scene .pagination .next a:hover,
+#content .scene .pagination .previous a:hover {background-color: #26962d;}
 #content .scene ul.tags a:hover {color: #00c90d;}
 
