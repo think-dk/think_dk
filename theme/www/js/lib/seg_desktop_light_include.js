@@ -11,4 +11,3 @@ document.write('<script type="text/javascript" src="/js/lib/desktop_light/i-cart
 document.write('<script type="text/javascript" src="/js/lib/desktop_light/i-memberships.js"></script>');
 
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop_light/i-signup.js"></script>'); 
-document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop_light/i-pagination.js"></script>');
