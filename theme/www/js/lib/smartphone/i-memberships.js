@@ -134,6 +134,24 @@ Util.Objects["memberships"] = new function() {
 			}
 
 
+			this.div_maillist = u.qs("div.maillist", this);
+			var maillist_place_holder = u.qs("div.articlebody .placeholder.maillist", this);
+
+			if(this.div_maillist && maillist_place_holder) {
+				maillist_place_holder.parentNode.replaceChild(this.div_maillist, maillist_place_holder);
+			}
+
+			// build maillist form
+			if(this.div_maillist) {
+
+				u.bug("maillist");
+
+				this.div_maillist.form = u.qs("form.maillist", this.div_maillist);
+				u.f.init(this.div_maillist.form);
+
+			}
+
+
 			u.showScene(this);
 
 
