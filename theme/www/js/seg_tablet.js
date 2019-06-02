@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-06-02 22:09:25
+asset-builder @ 2019-06-02 23:01:02
 */
 
 /*seg_tablet_include.js*/
@@ -8041,7 +8041,6 @@ Util.Objects["memberships"] = new function() {
 				maillist_place_holder.parentNode.replaceChild(this.div_maillist, maillist_place_holder);
 			}
 			if(this.div_maillist) {
-				u.bug("maillist");
 				this.div_maillist.form = u.qs("form.maillist", this.div_maillist);
 				u.f.init(this.div_maillist.form);
 			}

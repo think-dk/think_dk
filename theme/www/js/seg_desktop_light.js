@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-06-02 22:09:25
+asset-builder @ 2019-06-02 23:01:02
 */
 
 /*seg_desktop_light_include.js*/
@@ -4923,10 +4923,19 @@ Util.Objects["memberships"] = new function() {
 		}
 		scene.ready = function() {
 			page.cN.scene = this;
-			this._memberships = u.qs("div.memberships", this);
+			this.div_memberships = u.qs("div.memberships", this);
 			var place_holder = u.qs("div.articlebody .placeholder.memberships", this);
-			if(this._memberships && place_holder) {
-				place_holder.parentNode.replaceChild(this._memberships, place_holder);
+			if(this.div_memberships && place_holder) {
+				place_holder.parentNode.replaceChild(this.div_memberships, place_holder);
+			}
+			this.div_maillist = u.qs("div.maillist", this);
+			var maillist_place_holder = u.qs("div.articlebody .placeholder.maillist", this);
+			if(this.div_maillist && maillist_place_holder) {
+				maillist_place_holder.parentNode.replaceChild(this.div_maillist, maillist_place_holder);
+			}
+			if(this.div_maillist) {
+				this.div_maillist.form = u.qs("form.maillist", this.div_maillist);
+				u.f.init(this.div_maillist.form);
 			}
 			page.resized();
 		}
