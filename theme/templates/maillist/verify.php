@@ -1,6 +1,9 @@
 <?php
 global $action;
-global $model;
+// global $model;
+
+$UC = new User();
+$username = session()->value("signup_email");
 
 $IC = new Items();
 $page_item = $IC->getItem(array("tags" => "page:verify", "extend" => array("user" => true, "tags" => true, "mediae" => true)));
@@ -9,10 +12,12 @@ if($page_item) {
 }
 
 ?>
-<div class="scene verify i:verify">
+<div class="scene verify i:verify_maillist">
 
-<? if($page_item && $page_item["status"]): 
-	$media = $IC->sliceMedia($page_item); ?>
+<? if($username): ?>
+
+	<? if($page_item && $page_item["status"]): 
+		$media = $IC->sliceMedia($page_item); ?>
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
@@ -32,7 +37,7 @@ if($page_item) {
 		<? endif; ?>
 
 
-		<?= $HTML->articleInfo($page_item, "/verify/confirm/receipt", [
+		<?= $HTML->articleInfo($page_item, "/maillist/verify", [
 			"media" => $media, 
 		]) ?>
 
@@ -44,19 +49,15 @@ if($page_item) {
 		<? endif; ?>
 	</div>
 
-<? else:?>
+	<? else:?>
 
-	<h1>Thank you</h1>
-	<h2>We've sent you a verification email</h2>
-	<p>Please verify to get our newsletter.</p>
-	<p>The email contains a verification code which you can use in the input field below.</p>
-	<p>Alternatively the email also has a link you can use to verify.</p>
+	<h1>Almost there ...</h1>
+	<h2>We have sent you a verification email</h2>
+	<p>The email contains a verification code which you need to type in the input field below. If you don't see our mail in your inbox, maybe try to look in your spam folder.</p>
+	<h3>Please enter the verification code:</h3>
+	<? endif ?>
 
-	<p>You can also skip verifying for now and go to checkout.</p>
-
-<? endif ?>
-
-	<?= $model->formStart("/verify/confirm", ["class" => "verify_code labelstyle:inject"]) ?>
+	<?= $UC->formStart("/maillist/confirm", ["class" => "verify_code labelstyle:inject"]) ?>
 
 <?	if(message()->hasMessages(array("type" => "error"))): ?>
 		<p class="errormessage">
@@ -69,13 +70,21 @@ if($page_item) {
 <?	endif; ?>
 
 		<fieldset>
-			<?= $model->input("verification_code"); ?>
+			<?= $UC->input("verification_code"); ?>
 		</fieldset>
 
 		<ul class="actions">
-			<?= $model->submit("Verify email", array("class" => "primary", "wrapper" => "li.verify")) ?>
-			<li class="skip"><a href="/verify/skip" class="button">Skip</a></li>
+			<?= $UC->submit("Verify email", array("class" => "primary", "wrapper" => "li.verify")) ?>
 		</ul>
-	<?= $model->formEnd() ?>
+	<?= $UC->formEnd() ?>
 
+	<p class="note">This step is required to receive our newsletter.</p>
+
+<? else: ?>
+
+	<h1>Apologies</h1>
+	<h2>It took too long</h2>
+	<p>We lost track of your credentials. Please validate your emailadress by using the link in the verification email we sent.</p>
+
+<? endif; ?>
 </div>

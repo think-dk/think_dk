@@ -32,11 +32,15 @@ document.write('<script type="text/javascript" src="/js/lib/smartphone/i-payment
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-payments.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-stripe.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-black.js"></script>');
-document.write('<script type="text/javascript" src="/js/lib/smartphone/i-verify.js"></script>'); // Changed to also accept endpoints from thinks flow
+
+
+document.write('<script type="text/javascript" src="/js/lib/smartphone/i-verify-maillist.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/smartphone/i-verify-shop.js"></script>');
+
 
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/smartphone/i-login.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/smartphone/i-signup.js"></script>');
-// document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/smartphone/i-verify.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/smartphone/i-verify.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/smartphone/i-wishes.js"></script>');
 
 

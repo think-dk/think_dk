@@ -368,10 +368,12 @@ body.front #page.fixed {width: auto; margin: 0;}
 
 
 /* MEMBERSHIP LIST / JOIN */
-#content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-top: 20px; padding-bottom: 50px; font-size: 0; position: relative; width: auto;}
+#content .scene.signup .articlebody p.fullwidth {width: auto;}
+
+#content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-top: 20px; padding-bottom: 30px; font-size: 0; position: relative; width: auto;}
 #content .scene div.memberships ul.memberships > li {display: inline-block; vertical-align: top; 
-	height: 510px;
-	width: calc(20% - 27px); 
+	height: 520px;
+	width: calc(25% - 27px); 
 	padding: 10px; 
 	margin: 0 5px 5px 0;
 	border: 1px solid #26962d; position: relative;
@@ -435,7 +437,7 @@ body.front #page.fixed {width: auto; margin: 0;}
 }
 
 
-#content .scene div.memberships ul.memberships > li.allin {z-index: 2; border-width: 2px; background-color: #ffffff; width: calc(20% - 7px); padding-top: 15px; margin: -12px -6px 0 -11px; height: 531px;}
+#content .scene div.memberships ul.memberships > li.allin {z-index: 2; border-width: 2px; background-color: #ffffff; width: calc(25% - 7px); padding-top: 15px; margin: -12px -6px 0 -11px; height: 541px;}
 #content .scene div.memberships ul.memberships > li.allin h3 {
 	font-size: 24px;
 	height: 30px;
@@ -446,6 +448,22 @@ body.front #page.fixed {width: auto; margin: 0;}
 	font-weight: 600; font-size: 18px;
 }
 
+#content .scene.signup .articlebody h2.maillist {padding-bottom: 10px;}
+#content .scene.signup div.maillist {border: 1px solid #26962d; position: relative; margin: 0 70px 50px;
+	border-radius: 5px; padding: 22px 20px 15px; width: 456px;
+}
+
+#content .scene.signup div.maillist form.maillist {font-size: 0;}
+#content .scene.signup div.maillist fieldset {/*width: 400px;*/ margin: 0 0 20px; /*display: inline-block; vertical-align: top; width: 70%;*/}
+#content .scene.signup div.maillist ul.actions {/*text-align: center; width: 400px; margin: 0 auto; */padding: 0;/*display: inline-block; vertical-align: top; width: 30%; padding: 2px 0 0;*/}
+#content .scene.signup div.maillist div.field {padding: 0;}
+#content .scene.signup div.maillist div.field.email > input {width: calc(100% - 40px);}
+#content .scene.signup div.maillist div.field.checkbox {margin-top: 10px;}
+#content .scene.signup div.maillist div.field .indicator {left: auto; right: -10px;}
+#content .scene.signup div.maillist div.field .help {left: 460px; /*top: 40px !important; width: calc(100% - 52px);*/}
+
+#content .scene.signup div.maillist ul.actions li {/*display: block; padding: 0;*/}
+#content .scene.signup div.maillist ul.actions input {width: 150px;}
 
 /* MEMBERSHIP VIEW */
 #content .scene.membership div.article ul.offer {padding: 20px 70px 15px;}

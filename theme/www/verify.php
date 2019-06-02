@@ -19,118 +19,32 @@ $page->pageTitle("Verify");
 // Verification flow
 if($action) {
 
-	// verify/confirm
-	if($action[0] == "confirm") {
+	// verify/confirm/#email|mobile#/#verification_code#
+	if($action[0] == "confirm" && count($action) == 3) {
 
-		if (count($action) == 1 && $page->validateCsrfToken()) {
-			
-			$username = session()->value("signup_email");
-			$verification_code = getPost("verification_code");
-			
-			// Verify and enable user
-			$result = $model->confirmUsername($username, $verification_code);
+		
+		$username = $action[1];
+		$verification_code = $action[2];
+		session()->value("signup_email", $username);
 
-			// user has already been verified
-			if($result && isset($result["status"]) && $result["status"] == "USER_VERIFIED") {
-				message()->addMessage("You're already verified! Try logging in.", array("type" => "message"));
-				header("Location: /login");
-				exit();
-			}
+		// debug([$username, $verification_code]);
+		// Confirm username returns either true, false or an object
+		$result = $model->confirmUsername($username, $verification_code);
 
-			// code is valid
-			else if($result) {
+		// code is valid
+		if($result) {
 
-				// check if there is a cart
-				$cart = $SC->getCart();
-				// cart exists
-				if($cart) {
-					$total_price = $SC->getTotalCartPrice($cart["id"]);
+			header("Location: /verify/receipt");
+			exit();
 
-					// if order has price
-					if($total_price && $total_price["price"]) {
-						// redirect to leave POST state
-						// to checkout and confirm order
-						message()->addMessage("You're now verified – please go ahead and confirm your order.", array("type" => "message"));
-						header("Location: /shop/checkout");
-						exit();
-					}
-					// order is zero priced
-					else {
-						// confirm free order directly (this will redirect to receipt)
-						header("Location: /shop/confirm/".$cart["cart_reference"]);
-						exit();
-					}
-				}
-				// no cart - go to cart
-				else {
-					message()->addMessage("You're now verified", array("type" => "message"));
-					header("Location: /shop/cart");
-					exit();
-				}
-
-			}
-
-			// code is not valid
-			else {
-				message()->addMessage("Incorrect verification code, try again!", array("type" => "error"));
-				header("Location: /verify");
-				exit();
-			}
 		}
 
-
-		// verify/confirm/#email|mobile#/#verification_code#
-		else if(count($action) == 3) {
-			
-			$username = $action[1];
-			$verification_code = $action[2];
-			session()->value("signup_email", $username);
-
-			// Confirm username returns either true, false or an object
-			$result = $model->confirmUsername($username, $verification_code);
-
-			// user has already been verified
-			if($result && isset($result["status"]) && $result["status"] == "USER_VERIFIED") {
-				message()->addMessage("You're already verified! Try logging in.", array("type" => "error"));
-				header("Location: /login");
-				exit();
-			}
-
-			// code is valid
-			else if($result) {
-				// check if there is a cart
-				$cart = $SC->getCart();
-				// cart exists
-				if($cart) {
-					$total_price = $SC->getTotalCartPrice($cart["id"]);
-
-					// if order has price
-					if($total_price && $total_price["price"]) {
-						header("Location: /verify/receipt");
-						exit();
-					}
-					// order is zero priced
-					else {
-						// confirm free order directly (this will redirect to receipt)
-						header("Location: /shop/confirm/".$cart["cart_reference"]);
-						exit();
-					}
-				}
-				// no cart
-				else {
-					header("Location: /verify/receipt");
-				}
-
-			}
-
-			// code is not valid
-			else {
-				// redirect to leave POST state
-				header("Location: /verify/error");
-				exit();
-			}
+		// code is not valid
+		else {
+			// redirect to leave POST state
+			header("Location: /verify/error");
+			exit();
 		}
-
 	}
 
 	// verify/receipt
@@ -151,17 +65,11 @@ if($action) {
 	}
 	// verify/skip
 	else if($action[0] == "skip") {
-		$cart = $SC->getCart();
 
-		if($cart) {
-			// confirm free order directly (this will redirect to receipt)
-			header("Location: /shop/confirm/".$cart["cart_reference"]);
-			exit();
-		}
-		else {
-			header("Location: /shop/checkout");
-			exit();
-		}
+		$page->page(array(
+			"templates" => "verify/skipped.php"
+		));
+		exit();
 
 	}
 

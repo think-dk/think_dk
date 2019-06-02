@@ -108,13 +108,14 @@ if($action) {
 
 		// user exists
 		if(isset($user["status"]) && $user["status"] == "USER_EXISTS") {
-			message()->addMessage("A user already exists with that email. Try <a href=\"/memberships/login\">logging in</a>.", array("type" => "error"));
+			message()->addMessage("A user already exists with that email. Try <a href=\"/login\">logging in</a>.", array("type" => "error"));
 		}
 		// something went wrong
 		else if(!isset($user["user_id"])) {
 			message()->addMessage("Blib, Blob, Bliiiiip", array("type" => "error"));
 		}
 
+		debug([$user, message()->hasMessages(array("type" => "error"))]);
 		if(message()->hasMessages(array("type" => "error"))) {
 			// return to checkout page with posted variables to pre-populate form
 			$page->page(array(
@@ -123,10 +124,59 @@ if($action) {
 		}
 		// signup was completed
 		else {
-			header("Location: /verify");
+			header("Location: /shop/verify");
 			exit();
 		}
 		exit();
+	}
+
+
+	# /memberships/signup
+	else if($action[0] == "addToMaillist" && $page->validateCsrfToken()) {
+
+		// create new user
+		$UC = new User();
+		$user = $UC->newUser(array("newUser"));
+
+		print_r($user);
+		// user exists
+		if(isset($user["status"]) && $user["status"] == "USER_EXISTS") {
+			
+			header("Location: /memberships/maillist/user-exists");
+			exit();
+		}
+		// something went wrong
+		else if(!isset($user["user_id"])) {
+			header("Location: /memberships/maillist/error");
+			exit();
+		}
+
+		// if(message()->hasMessages(array("type" => "error"))) {
+		// 	// return to checkout page with posted variables to pre-populate form
+		// 	$page->page(array(
+		// 		"templates" => "memberships/checkout.php"
+		// 	));
+		// }
+		// signup was completed
+		else {
+			header("Location: /memberships/maillist/verify");
+			exit();
+		}
+		exit();
+	}
+
+	# /memberships/signup
+	else if($action[0] == "maillist") {
+
+		// view specific membership
+		if(count($action) == 2 && preg_match("/user-exists|error/", $action[1])) {
+
+			$page->page(array(
+				"templates" => "maillist/".$action[1].".php"
+			));
+			exit();
+		}
+
 	}
 
 	// view specific membership

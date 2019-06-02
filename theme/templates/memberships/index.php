@@ -3,6 +3,7 @@ global $action;
 global $model;
 
 $IC = new Items();
+$UC = new User();
 
 $page_item = $IC->getItem(array("tags" => "page:memberships", "extend" => array("user" => true, "mediae" => true, "tags" => true)));
 if($page_item) {
@@ -13,6 +14,8 @@ $email = $model->getProperty("email", "value");
 
 $memberships = $IC->getItems(array("itemtype" => "membership", "tags" => "membership:v2", "order" => "position ASC", "status" => 1, "extend" => array("prices" => true, "subscription_method" => true)));
 
+
+// $maillist = session()->value("user_id") === 1 ? true : false;
 
 ?>
 <div class="scene signup i:memberships">
@@ -72,6 +75,15 @@ $memberships = $IC->getItems(array("itemtype" => "membership", "tags" => "member
 
 				<?= $HTML->frontendOffer($membership, SITE_URL."/memberships", $membership["introduction"]) ?>
 
+				<? if($membership["classname"] == "cowork"): ?>
+
+				<ul class="actions">
+					<?= $model->link("Read more", "/bulletin/co-work", array("wrapper" => "li.readmore")) ?>
+					<?= $model->link("Join", "/bulletin/co-work", array("class" => "button primary", "wrapper" => "li.signup")) ?>
+				</ul>
+
+				<? else: ?>
+
 				<?= $model->formStart("/memberships/addToCart", array("class" => "signup labelstyle:inject")) ?>
 					<?= $model->input("quantity", array("value" => 1, "type" => "hidden")); ?>
 					<?= $model->input("item_id", array("value" => $membership["item_id"], "type" => "hidden")); ?>
@@ -82,6 +94,8 @@ $memberships = $IC->getItems(array("itemtype" => "membership", "tags" => "member
 					</ul>
 				<?= $model->formEnd() ?>
 
+				<? endif; ?>
+
 			</li>
 			<? endforeach; ?>
 		</ul>
@@ -89,5 +103,19 @@ $memberships = $IC->getItems(array("itemtype" => "membership", "tags" => "member
 
 <? endif; ?>
 
+
+	<div class="maillist">
+		<?= $UC->formStart("/maillist/addToMaillist", array("class" => "maillist labelstyle:inject")) ?>
+			<?= $UC->input("maillist", array("value" => "curious", "type" => "hidden")); ?>
+			<fieldset>
+				<?= $UC->input("email", array("value" => $email, "required" => true, "hint_message" => "Enter your email")); ?>
+				<?= $UC->input("terms"); ?>
+			</fieldset>
+
+			<ul class="actions">
+				<?= $UC->submit("Sign up", array("class" => "primary", "wrapper" => "li.signup")) ?>
+			</ul>
+		<?= $UC->formEnd() ?>
+	</div>
 
 </div>

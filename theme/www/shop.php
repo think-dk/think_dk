@@ -389,7 +389,7 @@ if($action) {
 		}
 		// signup was completed
 		else {
-			header("Location: /verify");
+			header("Location: /shop/verify");
 			exit();
 		}
 		exit();
@@ -454,6 +454,83 @@ if($action) {
 		));
 		exit();
 	}
+
+
+	# /shop/verify
+	else if($action[0] == "verify") {
+
+		// /shop/verify/confirm
+		if(count($action) == 2 && $action[1] == "confirm" && $page->validateCsrfToken()) {
+
+			$username = session()->value("signup_email");
+			$verification_code = getPost("verification_code");
+	
+			$UC = new User();
+	
+			// Verify and enable user
+			$result = $UC->confirmUsername($username, $verification_code);
+
+			// code is valid
+			if($result) {
+
+				// check if there is a cart
+				$cart = $model->getCart();
+				// cart exists
+				if($cart) {
+					$total_price = $model->getTotalCartPrice($cart["id"]);
+
+					// if order has price
+					if($total_price && $total_price["price"]) {
+						// redirect to leave POST state
+						// to checkout and confirm order
+						message()->addMessage("You're now verified – please go ahead and confirm your order.", array("type" => "message"));
+						header("Location: /shop/checkout");
+						exit();
+					}
+					// order is zero priced
+					else {
+						// confirm free order directly (this will redirect to receipt)
+						header("Location: /shop/confirm/".$cart["cart_reference"]);
+						exit();
+					}
+				}
+				// no cart - go to cart
+				else {
+					message()->addMessage("You're now verified", array("type" => "message"));
+					header("Location: /shop/cart");
+					exit();
+				}
+
+			}
+
+			// code is not valid
+			else {
+				message()->addMessage("Incorrect verification code, try again!", array("type" => "error"));
+				header("Location: /shop/verify");
+				exit();
+			}
+
+		}
+		// /shop/verify/skip
+		else if(count($action) == 2 && $action[1] == "skip") {
+
+			header("Location: /shop/checkout");
+			exit();
+
+		}
+		
+		else {
+
+			// /verify
+			$page->page(array(
+				"templates" => "shop/verify.php"
+			));
+			exit();
+
+		}
+
+	}
+
 
 }
 

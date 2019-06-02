@@ -38,11 +38,13 @@ document.write('<script type="text/javascript" src="/js/lib/desktop/i-payment.js
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-payments.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-stripe.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-black.js"></script>');
-document.write('<script type="text/javascript" src="/js/lib/desktop/i-verify.js"></script>'); // Changed to also accept endpoints from thinks flow
+
+document.write('<script type="text/javascript" src="/js/lib/desktop/i-verify-maillist.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/desktop/i-verify-shop.js"></script>');
 
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/i-login.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/i-signup.js"></script>');
-// document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/i-verify.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/i-verify.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/i-wishes.js"></script>');
 
 
