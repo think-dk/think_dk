@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-05-16 12:10:48
+asset-builder @ 2019-06-02 22:09:25
 */
 
 /*seg_tablet_include.css*/
@@ -987,10 +987,11 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.event div.event ul.location ul {padding-left: 0; padding-right: 0;}
 #content .scene.messages ul.info,
 #content .scene.messages ul.info li.modified_at {display: block;}
-#content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-top: 20px; padding-bottom: 50px; font-size: 0; position: relative; width: auto;}
+#content .scene.signup .articlebody p.fullwidth {width: auto;}
+#content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-top: 20px; padding-bottom: 30px; font-size: 0; position: relative; width: auto;}
 #content .scene div.memberships ul.memberships > li {display: inline-block; vertical-align: top; 
-	height: 510px;
-	width: calc(20% - 27px); 
+	height: 520px;
+	width: calc(25% - 27px); 
 	padding: 10px; 
 	margin: 0 5px 5px 0;
 	border: 1px solid #26962d; position: relative;
@@ -1044,7 +1045,7 @@ body.front #page.fixed {width: auto; margin: 0;}
 	border-radius: 5px;
 	box-shadow: 0 1px 1px #777777;
 }
-#content .scene div.memberships ul.memberships > li.allin {z-index: 2; border-width: 2px; background-color: #ffffff; width: calc(20% - 7px); padding-top: 15px; margin: -12px -6px 0 -11px; height: 531px;}
+#content .scene div.memberships ul.memberships > li.allin {z-index: 2; border-width: 2px; background-color: #ffffff; width: calc(25% - 7px); padding-top: 15px; margin: -12px -6px 0 -11px; height: 541px;}
 #content .scene div.memberships ul.memberships > li.allin h3 {
 	font-size: 24px;
 	height: 30px;
@@ -1054,6 +1055,20 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene div.memberships ul.memberships > li.allin ul.actions li input {height: 52px; padding-top: 2px; 
 	font-weight: 600; font-size: 18px;
 }
+#content .scene.signup .articlebody h2.maillist {padding-bottom: 10px;}
+#content .scene.signup div.maillist {border: 1px solid #26962d; position: relative; margin: 0 70px 50px;
+	border-radius: 5px; padding: 22px 20px 15px; width: 456px;
+}
+#content .scene.signup div.maillist form.maillist {font-size: 0;}
+#content .scene.signup div.maillist fieldset { margin: 0 0 20px; }
+#content .scene.signup div.maillist ul.actions {padding: 0;}
+#content .scene.signup div.maillist div.field {padding: 0;}
+#content .scene.signup div.maillist div.field.email > input {width: calc(100% - 40px);}
+#content .scene.signup div.maillist div.field.checkbox {margin-top: 10px;}
+#content .scene.signup div.maillist div.field .indicator {left: auto; right: -10px;}
+#content .scene.signup div.maillist div.field .help {left: 460px; }
+#content .scene.signup div.maillist ul.actions li {}
+#content .scene.signup div.maillist ul.actions input {width: 150px;}
 #content .scene.membership div.article ul.offer {padding: 20px 70px 15px;}
 #content .scene.membership div.article ul.offer li.default {font-size: 14px;}
 #content .scene.membership div.article ul.offer li {font-size: 30px; display: block;}

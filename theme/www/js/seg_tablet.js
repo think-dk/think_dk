@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-05-16 12:10:48
+asset-builder @ 2019-06-02 22:09:25
 */
 
 /*seg_tablet_include.js*/
@@ -8035,6 +8035,16 @@ Util.Objects["memberships"] = new function() {
 					}
 				}
 			}
+			this.div_maillist = u.qs("div.maillist", this);
+			var maillist_place_holder = u.qs("div.articlebody .placeholder.maillist", this);
+			if(this.div_maillist && maillist_place_holder) {
+				maillist_place_holder.parentNode.replaceChild(this.div_maillist, maillist_place_holder);
+			}
+			if(this.div_maillist) {
+				u.bug("maillist");
+				this.div_maillist.form = u.qs("form.maillist", this.div_maillist);
+				u.f.init(this.div_maillist.form);
+			}
 			this.fontsLoaded = function() {
 				page.resized();
 				u.textscaler(this.div_memberships, {
@@ -8255,8 +8265,32 @@ Util.Objects["black"] = new function() {
 	}
 }
 
-/*i-verify.js*/
-Util.Objects["verify"] = new function() {
+/*i-verify-maillist.js*/
+Util.Objects["verify_maillist"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			u.bug("scene.ready:", this);
+			page.cN.scene = this;
+			var form_verify = u.qs("form.verify_code", this);
+			if(form_verify) {
+				u.bug("init form")
+				u.f.init(form_verify);
+			}
+			page.acceptCookies();
+			u.showScene(this);
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
+
+/*i-verify-shop.js*/
+Util.Objects["verify_shop"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -8408,6 +8442,86 @@ Util.Objects["signup"] = new function() {
 					}
 				}
 				u.request(this, this.action, {"data":data, "method":"POST"});
+			}
+			page.acceptCookies();
+			u.showScene(this);
+			page.resized();
+		}
+		scene.replaceScene = function(response) {
+			var current_scene = u.qs(".scene", page);
+			var new_scene = u.qs(".scene", response);
+			page.cN.replaceChild(new_scene, current_scene); 
+			u.init();
+			return new_scene;
+		}
+		scene.showMessage = function(form, response) {
+			var new_error = (u.qs("p.errormessage", response) || u.qs("p.error", response));
+			var current_error = (u.qs("p.errormessage", form) || u.qs("p.error", form));
+			if (!current_error) {
+				u.ie(form, new_error);
+			}
+			else {
+				form.replaceChild(new_error, current_error);
+			}
+			return new_error;
+		}
+		scene.ready();
+	}
+}
+
+
+/*i-verify.js*/
+Util.Objects["verify"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			var form_verify = u.qs("form.verify_code", this);
+			if(form_verify) {
+				u.f.init(form_verify);
+			}
+			form_verify.submitted = function() {
+				var data = u.f.getParams(this);
+				this.is_submitting = true; 
+				u.ac(this, "submitting");
+				u.ac(this.actions["verify"], "disabled");
+				u.ac(this.actions["skip"], "disabled");
+				this.response = function(response, request_id) {
+					if (u.qs(".scene.login", response)) {
+						scene.replaceScene(response);
+						u.h.navigate("/login", false, true);
+					}
+					else if (u.qs(".scene.confirmed", response)) {
+						scene.replaceScene(response);
+						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
+						u.h.navigate(url_actions, false, true);
+					}
+					else {
+						if (this.is_submitting) {
+							this.is_submitting = false; 
+							u.rc(this, "submitting");
+							u.rc(this.actions["verify"], "disabled");
+							u.rc(this.actions["skip"], "disabled");
+						}
+						if (this.error) {
+							this.error.parentNode.removeChild(this.error);
+						}
+						this.error = scene.showMessage(this, response);
+						u.ass(this.error, {
+							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
+							opacity:0
+						});
+						u.a.transition(this.error, "all .6s ease");
+						u.ass(this.error, {
+							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
+							opacity:1
+						});
+					}
+				}
+				u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
 			}
 			page.acceptCookies();
 			u.showScene(this);
