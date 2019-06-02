@@ -61,6 +61,8 @@
 
 #content div.membership div.related ul.memberships li {padding-bottom: 0;}
 
+#content div.signup div.maillist {position: relative; padding: 0 0 50px;}
+
 
 #content div.cart ul.items li h3 form {display: inline; vertical-align: top;}
 #content div.cart ul.items li h3 fieldset {display: inline; vertical-align: top;}

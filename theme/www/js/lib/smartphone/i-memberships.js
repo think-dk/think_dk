@@ -144,8 +144,6 @@ Util.Objects["memberships"] = new function() {
 			// build maillist form
 			if(this.div_maillist) {
 
-				u.bug("maillist");
-
 				this.div_maillist.form = u.qs("form.maillist", this.div_maillist);
 				u.f.init(this.div_maillist.form);
 
