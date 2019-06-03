@@ -115,7 +115,6 @@ if($action) {
 			message()->addMessage("Blib, Blob, Bliiiiip", array("type" => "error"));
 		}
 
-		debug([$user, message()->hasMessages(array("type" => "error"))]);
 		if(message()->hasMessages(array("type" => "error"))) {
 			// return to checkout page with posted variables to pre-populate form
 			$page->page(array(
