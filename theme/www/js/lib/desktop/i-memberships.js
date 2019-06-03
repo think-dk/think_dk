@@ -49,25 +49,43 @@ Util.Objects["memberships"] = new function() {
 				this.membership_nodes = u.qsa("li.membership", this.div_memberships);
 
 				// index benefits, to find total stack
-				var total_benefits = 0;
-				var total_benefits_node;
-				var i, node, benefit, j, li, table;
+				// var total_benefits = 0;
+				var total_benefits = [];
+
+				var i, node, benefit, j, li, table, txt;
 				for(i = 0; node = this.membership_nodes[i]; i++) {
+
+					// Get benefints for this membership
 					node.benefits = u.qsa(".description li", node);
-					if(node.benefits.length > total_benefits) {
-						total_benefits = node.benefits.length;
-						total_benefits_node = node;
+
+					for(j = 0; j < node.benefits.length; j++) {
+
+						txt = node.benefits[j].innerHTML;
+
+						// u.bug("found benefit:", txt)
+
+						if(total_benefits.indexOf(txt) === -1) {
+							// total_benefits++;
+							total_benefits.push(txt);
+							// u.bug("add benefit:", txt)
+						}
+						
 					}
+					// if(node.benefits.length > total_benefits) {
+					// 	total_benefits = node.benefits.length;
+					// 	total_benefits_node = node;
+					// }
 
 
 				}
-
-//				u.bug("total_benefits:" + total_benefits);
+				
+				// u.bug("total_benefits:" + total_benefits.length, total_benefits);
 
 				// create benefits sidebar
-				if(total_benefits_node) {
+				if(total_benefits.length) {
 
 					this.ul_memberships = u.qs("ul.memberships", this.div_memberships);
+
 					// insert new li in the beginning of membershiplist
 					var benefits_node = u.ie(this.ul_memberships, "li", {"class":"benefits"})
 
@@ -78,13 +96,15 @@ Util.Objects["memberships"] = new function() {
 					var ul = u.ae(benefits_node, "ul");
 
 					// insert the total set of benefits into a table like structure, for vertical alignment
-					for(j = 0; benefit = total_benefits_node.benefits[j]; j++) {
+					// for(j = 0; benefit = total_benefits_node.benefits[j]; j++) {
+					for(i = 0; benefit = total_benefits[i]; i++) {
+
 						li = u.ae(ul, "li");
 						table = u.ae(li, "span", {"class":"table"});
-						u.ae(table, "span", {"class":"cell", "html":benefit.innerHTML});
+						u.ae(table, "span", {"class":"cell", "html":benefit});
 
 						// look for benefit explation to be shown on mouseover
-						li.explanation = u.qs("p.hint_"+ u.normalize(benefit.innerHTML).replace(/-/g, "_"), this);
+						li.explanation = u.qs("p.hint_"+ u.normalize(benefit).replace(/-/g, "_"), this);
 
 						// add explanation mouseover if explanation was found
 						if(li.explanation) {
