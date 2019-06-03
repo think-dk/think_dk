@@ -78,8 +78,8 @@ $memberships = $IC->getItems(array("itemtype" => "membership", "tags" => "member
 				<? if($membership["classname"] == "cowork"): ?>
 
 				<ul class="actions">
-					<?= $model->link("Read more", "/bulletin/think-dk-co-working-space", array("wrapper" => "li.readmore")) ?>
-					<?= $model->link("Join", "/bulletin/think-dk-co-working-space", array("class" => "button primary", "wrapper" => "li.signup")) ?>
+					<?= $model->link("Read more", "/bulletin/co-working-at-think-dk", array("wrapper" => "li.readmore")) ?>
+					<?= $model->link("Join", "/bulletin/co-working-at-think-dk", array("class" => "button primary", "wrapper" => "li.signup")) ?>
 				</ul>
 
 				<? else: ?>
