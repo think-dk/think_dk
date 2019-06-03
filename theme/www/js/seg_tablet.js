@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-06-02 23:01:02
+asset-builder @ 2019-06-03 11:42:38
 */
 
 /*seg_tablet_include.js*/
@@ -7957,25 +7957,26 @@ Util.Objects["memberships"] = new function() {
 			}
 			if(this.div_memberships) {
 				this.membership_nodes = u.qsa("li.membership", this.div_memberships);
-				var total_benefits = 0;
-				var total_benefits_node;
-				var i, node, benefit, j, li, table;
+				var total_benefits = [];
+				var i, node, benefit, j, li, table, txt;
 				for(i = 0; node = this.membership_nodes[i]; i++) {
 					node.benefits = u.qsa(".description li", node);
-					if(node.benefits.length > total_benefits) {
-						total_benefits = node.benefits.length;
-						total_benefits_node = node;
+					for(j = 0; j < node.benefits.length; j++) {
+						txt = node.benefits[j].innerHTML;
+						if(total_benefits.indexOf(txt) === -1) {
+							total_benefits.push(txt);
+						}
 					}
 				}
-				if(total_benefits_node) {
+				if(total_benefits.length) {
 					this.ul_memberships = u.qs("ul.memberships", this.div_memberships);
 					var benefits_node = u.ie(this.ul_memberships, "li", {"class":"benefits"})
 					var ul = u.ae(benefits_node, "ul");
-					for(j = 0; benefit = total_benefits_node.benefits[j]; j++) {
+					for(i = 0; benefit = total_benefits[i]; i++) {
 						li = u.ae(ul, "li");
 						table = u.ae(li, "span", {"class":"table"});
-						u.ae(table, "span", {"class":"cell", "html":benefit.innerHTML});
-						li.explanation = u.qs("p.hint_"+ u.normalize(benefit.innerHTML).replace(/-/g, "_"), this);
+						u.ae(table, "span", {"class":"cell", "html":benefit});
+						li.explanation = u.qs("p.hint_"+ u.normalize(benefit).replace(/-/g, "_"), this);
 						if(li.explanation) {
 							u.e.hover(li);
 							li.over = function() {
