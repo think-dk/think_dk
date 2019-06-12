@@ -101,7 +101,14 @@ Util.Objects["memberships"] = new function() {
 
 						// this membership does not have more benefits, inject "not included" empty benefit node
 						if(!benefit) {
-							u.ae(node.benefits[0].parentNode, "li", {"class":"no"});
+							// Add membership benefits list if it does not exist
+							if(!node.benefits.length) {
+								u.ae(u.ae(u.qs("li.description", node), "ul"), "li", {"class":"no"});
+								node.benefits = u.qsa(".description li", node);
+							}
+							else {
+								u.ae(node.benefits[0].parentNode, "li", {"class":"no"});
+							}
 						}
 						// if membership doesn't match total stack, inject "not included" empty benefit node 
 						// this is to support unordered benefits 

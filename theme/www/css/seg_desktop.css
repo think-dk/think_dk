@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-06-04 14:29:12
+asset-builder @ 2019-06-12 19:50:14
 */
 
 /*seg_desktop_include.css*/
@@ -1074,12 +1074,17 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-top: 20px; padding-bottom: 30px; font-size: 0; position: relative; width: auto;}
 #content .scene div.memberships ul.memberships > li {display: inline-block; vertical-align: top; 
 	height: 520px;
-	width: calc(25% - 27px); 
+	width: calc(20% - 27px); 
 	padding: 10px; 
-	margin: 0 5px 5px 0;
-	border: 1px solid #26962d; position: relative;
-	border-radius: 5px;
+	margin: 0 0 5px;
+	border-left: 1px solid #26962d; 
+	border-top: 1px solid #26962d; 
+	border-bottom: 1px solid #26962d; 
+	position: relative;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
 }
+#content .scene div.memberships ul.memberships > li:nth-child(3) {border-radius: 0;}
 #content .scene div.memberships ul.memberships > li h3 {color: #26962d; padding-bottom: 3px;
 	font-family: "PT Serif", Times, serif;
 }
@@ -1104,9 +1109,10 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene div.memberships ul.memberships > li ul.offer .description li:last-child {border: none;}
 #content .scene div.memberships ul.memberships > li ul.offer .description li > svg.checkmark {top: calc(50% - 8px); left: calc(50% - 8px);}
 #content .scene div.memberships ul.memberships > li ul.offer .description li > svg.checkmark line {stroke: #26962d;}
-#content .scene div.memberships ul.memberships > li.benefits ul {padding: 91px 0 0;}
+#content .scene div.memberships ul.memberships > li.benefits ul {padding: 91px 0 0; margin: 0;}
 #content .scene div.memberships ul.memberships > li.benefits {border: none;
-	padding: 10px 5px 10px 15px;
+	padding: 10px 5px 10px 0px;
+	width: calc(20% - 5px);
 }
 #content .scene div.memberships ul.memberships > li.benefits li {list-style: none; font-size: 13px; border-bottom: 1px solid #26962d;
 	text-align: right; height: 40px; padding: 0 10px;
@@ -1128,7 +1134,14 @@ body.front #page.fixed {width: auto; margin: 0;}
 	border-radius: 5px;
 	box-shadow: 0 1px 1px #777777;
 }
-#content .scene div.memberships ul.memberships > li.allin {z-index: 2; border-width: 2px; background-color: #ffffff; width: calc(25% - 7px); padding-top: 15px; margin: -12px -6px 0 -11px; height: 541px;}
+#content .scene div.memberships ul.memberships > li.cowork {
+	border-radius: 5px;
+	border-right: 1px solid #26962d;
+}
+#content .scene div.memberships ul.memberships > li.allin {z-index: 2;  background-color: #ffffff; 
+	width: calc(20% - 7px); padding-top: 15px; margin: -12px -6px 0 -5px; height: 541px;
+	border: 2px solid #26962d; border-radius: 5px;
+}
 #content .scene div.memberships ul.memberships > li.allin h3 {
 	font-size: 24px;
 	height: 30px;

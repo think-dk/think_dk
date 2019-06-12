@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-06-04 14:29:12
+asset-builder @ 2019-06-12 19:50:14
 */
 
 /*seg_smartphone_include.js*/
@@ -6847,7 +6847,13 @@ Util.Objects["memberships"] = new function() {
 					for(j = 0; j < total_benefits.length; j++) {
 						benefit = node.benefits[j];
 						if(!benefit) {
-							u.ae(node.benefits[0].parentNode, "li", {"class":"no"});
+							if(!node.benefits.length) {
+								u.ae(u.ae(u.qs("li.description", node), "ul"), "li", {"class":"no"});
+								node.benefits = u.qsa(".description li", node);
+							}
+							else {
+								u.ae(node.benefits[0].parentNode, "li", {"class":"no"});
+							}
 						}
 						else if(u.text(benefit) != total_benefits[j]) {
 							not_included = u.ae(benefit.parentNode, "li", {"class":"no"});
