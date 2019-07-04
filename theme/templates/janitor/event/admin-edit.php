@@ -11,8 +11,13 @@ $item_id = $action[1];
 $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "mediae" => true)));
 
 
-$host_options = $model->toOptions($model->getHosts(), "id", "host");
-$user_options = $model->toOptions($UC->getUsers(["order" => "nickname ASC"]), "id", "nickname", ["add" => ["" => "Select backer 1"]]);
+// $host_options = $model->toOptions($model->getHosts(), "id", "host");
+$hosts = $model->getHosts();
+$users = $UC->getUsers(["order" => "nickname ASC"]);
+
+$user_options_owner = $model->toOptions($users, "id", "nickname", ["add" => ["" => "Select event owner"]]);
+$user_options_1 = $model->toOptions($users, "id", "nickname", ["add" => ["" => "Select backer 1"]]);
+$user_options_2 = $model->toOptions($users, "id", "nickname", ["add" => ["" => "Select backer 2"]]);
 
 $eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype");
 
@@ -49,14 +54,15 @@ $eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype");
 			</fieldset>
 
 			<fieldset>
-				<h2>Host</h2>
-				<?= $model->input("host", array("type" => "select", "options" => $host_options, "value" => $item["host"])) ?>
+				<h2>Event owner</h2>
+				<?= $model->input("host", array("type" => "hidden", "value" => $hosts[0]["id"])) ?>
+				<?= $model->input("event_owner", array("type" => "select", "options" => $user_options_owner, "value" => $item["event_owner"])) ?>
 			</fieldset>
 
 			<fieldset class="backers">
 				<h2>Backers</h2>
-				<?= $model->input("backer_1", array("type" => "select", "options" => $user_options, "value" => $item["backer_1"])) ?>
-				<?= $model->input("backer_2", array("type" => "select", "options" => $user_options, "value" => $item["backer_2"])) ?>
+				<?= $model->input("backer_1", array("type" => "select", "options" => $user_options_1, "value" => $item["backer_1"])) ?>
+				<?= $model->input("backer_2", array("type" => "select", "options" => $user_options_2, "value" => $item["backer_2"])) ?>
 			</fieldset>
 
 			<?= $JML->editActions($item) ?>

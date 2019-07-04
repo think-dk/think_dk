@@ -69,6 +69,14 @@ class TypeEvent extends Itemtype {
 			"error_message" => "You need to enter a valid date/time."
 		));
 
+		// event_owner
+		$this->addToModel("event_owner", array(
+			"type" => "user_id",
+			"label" => "Event owner",
+			"required" => true,
+			"hint_message" => "Select the event owner.",
+			"error_message" => "You need to select am event owner."
+		));
 
 		// backer_1
 		$this->addToModel("backer_1", array(
