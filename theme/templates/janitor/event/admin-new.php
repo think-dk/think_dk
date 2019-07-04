@@ -7,9 +7,10 @@ global $itemtype;
 ?>
 <div class="scene i:scene defaultNew">
 	<h1>New event</h1>
+	<h2>Event Admin</h2>
 
 	<ul class="actions">
-		<?= $HTML->link("List", "/janitor/event/admin-list", array("wrapper" => "li.list", "class" => "button primary")) ?>
+		<?= $HTML->link("List", "/janitor/event/admin-list", array("wrapper" => "li.list", "class" => "button")) ?>
 	</ul>
 
 	<?= $model->formStart("save/".$itemtype, array("class" => "i:defaultNew labelstyle:inject")) ?>
@@ -20,7 +21,11 @@ global $itemtype;
 			<?= $model->input("name") ?>
 		</fieldset>
 
-		<?= $JML->newActions() ?>
+		<?= $JML->newActions(["modify" => [
+			"cancel" => [
+				"url" => "/janitor/event/admin-list"
+			]
+		]]) ?>
 	<?= $model->formEnd() ?>
 
 </div>

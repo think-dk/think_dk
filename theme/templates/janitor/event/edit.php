@@ -10,7 +10,7 @@ $UC = new SuperUser();
 $item_id = $action[1];
 $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "mediae" => true)));
 
-$host_options = $model->toOptions($model->getHosts(), "id", "host");
+$location_options = $model->toOptions($model->getLocations(), "id", "location", ["add" => ["" => "Select event owner"]]);
 $users = $UC->getUsers(["order" => "nickname ASC"]);
 
 $user_options_owner = $model->toOptions($users, "id", "nickname", ["add" => ["" => "Select event owner"]]);
@@ -34,17 +34,17 @@ $user_options_2 = $model->toOptions($users, "id", "nickname", ["add" => ["" => "
 				<?= $model->input("name", array("value" => $item["name"])) ?>
 				<?= $model->input("classname", array("value" => $item["classname"])) ?>
 				<?= $model->input("description", array("class" => "autoexpand short", "value" => $item["description"])) ?>
-				<?= $model->inputHTML("html", array("value" => $item["html"])) ?>
 			</fieldset>
 
 			<fieldset>
+				<h2>Time</h2>
 				<?= $model->input("starting_at", array("value" => $item["starting_at"])) ?>
 				<?= $model->input("ending_at", array("value" => $item["ending_at"])) ?>
 			</fieldset>
 
 			<fieldset>
-				<h2>Host</h2>
-				<?= $model->input("host", array("type" => "select", "options" => $host_options, "value" => $item["host"])) ?>
+				<h2>Location</h2>
+				<?= $model->input("location", array("type" => "select", "options" => $location_options, "value" => $item["location"])) ?>
 			</fieldset>
 
 			<fieldset>
@@ -56,6 +56,10 @@ $user_options_2 = $model->toOptions($users, "id", "nickname", ["add" => ["" => "
 				<h2>Backers</h2>
 				<?= $model->input("backer_1", array("type" => "select", "options" => $user_options_1, "value" => $item["backer_1"])) ?>
 				<?= $model->input("backer_2", array("type" => "select", "options" => $user_options_2, "value" => $item["backer_2"])) ?>
+			</fieldset>
+
+			<fieldset>
+				<?= $model->inputHTML("html", array("value" => $item["html"])) ?>
 			</fieldset>
 
 			<?= $JML->editActions($item) ?>

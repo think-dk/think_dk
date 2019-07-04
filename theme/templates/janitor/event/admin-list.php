@@ -11,6 +11,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "where" => $itemtype.".sta
 ?>
 <div class="scene i:scene defaultList <?= $itemtype ?>List">
 	<h1>Events</h1>
+	<h2>Event Admin list</h2>
 
 	<ul class="actions">
 		<?= $HTML->link("New event", "/janitor/event/admin-new", array("wrapper" => "li.new", "class" => "button primary")) ?>
