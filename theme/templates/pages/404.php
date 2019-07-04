@@ -6,7 +6,7 @@
 
 	<p>
 		We're eager to solve problems.
-		Please let us know at 
+		Please let us know about this one at 
 		<a href="mailto:support@think.dk?subject=Missing%20page:<?= $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"] ?>">support@think.dk</a>.
 	</p>
 </div>
