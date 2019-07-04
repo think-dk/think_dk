@@ -55,16 +55,17 @@ $item = $IC->getItem(array("tags" => "page:about"));
 		<changefreq>weekly</changefreq>
 		<priority>1</priority>
 	</url>
-<?
+<? /*
 // INVEST OR DONATE
 $item = $IC->getItem(array("tags" => "page:Donate"));
 ?>
 	<url>
-		<loc><?= SITE_URL ?>/invest-or-donate</loc>
+		<loc><?= SITE_URL ?>/invest-in-think</loc>
 		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>1</priority>
 	</url>
+ */ ?>
 <?
 // CONTACT PAGE
 $item = $IC->getItem(array("tags" => "page:contact"));
