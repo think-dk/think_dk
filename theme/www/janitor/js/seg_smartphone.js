@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-06-02 22:09:35
+asset-builder @ 2019-07-04 15:58:21
 */
 
 /*seg_smartphone_include.js*/
@@ -8289,9 +8289,6 @@ Util.Objects["page"] = new function() {
 						if(section.nodes.length) {
 							for(j = 0; node = section.nodes[j]; j++) {
 								u.ce(node, {"type":"link"});
-								if(u.hc(node, document.body.className)) {
-									u.ac(node, "selected");
-								}
 							}
 							if(section.header) {
 								section.header.section = section;
@@ -8325,9 +8322,6 @@ Util.Objects["page"] = new function() {
 					}
 					else {
 						u.ce(section, {"type":"link"});
-						if(u.hc(section, document.body.className)) {
-							u.ac(section, "selected");
-						}
 					}
 				}
 			}

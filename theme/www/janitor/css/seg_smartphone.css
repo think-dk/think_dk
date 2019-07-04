@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-06-02 22:09:35
+asset-builder @ 2019-07-04 15:58:21
 */
 
 /*seg_smartphone_include.css*/
@@ -447,7 +447,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 
 
 /*s-notifications.css*/
-#notifications {z-index: 1001; position: fixed; right: 0; top: 0; border-left: 1px solid #888888; border-bottom: 1px solid #888888; background-color: #b0b0b0; max-width: 300px;}
+#notifications {z-index: 1001; position: fixed; left: 50%; margin-left: -100px; top: 0; border-left: 1px solid #888888; border-right: 1px solid #888888; border-bottom: 1px solid #888888; background-color: #b0b0b0; width: 200px;}
 #notifications div {padding: 10px 65px 10px 15px;}
 #notifications .notice {color: #333333;}
 #notifications .error {background-color: #df0000; color: #ffffff;}
@@ -1015,6 +1015,7 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .scene.wishList ul.items > li dl dt.reserved {display: none;}
 #content .scene.wishList ul.items > li dl dd.reserved {font-size: 14px;}
 #content .scene.eventList ul.items > li.past {background: #dddddd;}
+#content .scene.eventEdit fieldset h2 {font-size: 0.8em; text-transform: uppercase; padding-top: 7px; padding-bottom: 10px; margin: 20px 0 0px;}
 #content .scene.messageList > ul.actions li.maillists {float: right; padding: 0 0 10px 10px;}
 #content .scene.messageList > div.system {border-bottom: 1px solid #aaaaaa;}
 #content .scene.messageList > div.dynamic {padding-bottom: 30px; border-bottom: 1px solid #aaaaaa;}
