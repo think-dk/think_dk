@@ -22,7 +22,7 @@ if($item) {
 	// $prev = $IC->getPrev($item["item_id"], array("itemtype" => $itemtype, "status" => 1, "where" => "event.starting_at > NOW()", "order" => "event.starting_at ASC", "extend" => true));
 
 	// get host info
-	$host = $model->getHosts(array("id" => $item["host"]));
+	$location = $model->getLocations(array("id" => $item["location"]));
 
 
 	// set related pattern
@@ -132,16 +132,16 @@ if($item) {
 		<div class="location">
 			<h2>Location</h2>
 			<ul class="location" itemprop="location" itemscope itemtype="https://schema.org/Place">
-				<li class="name" itemprop="name"><?= $host["host"] ?></li>
+				<li class="name" itemprop="name"><?= $location["location"] ?></li>
 				<li class="address" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
 					<ul>
-						<li class="streetaddress" itemprop="streetAddress"><?= $host["host_address1"] ?><?= $host["host_address2"] ? ", ".$host["host_address2"] : "" ?></li>
-						<li class="city"><span class="postal" itemprop="postalCode"><?= $host["host_postal"] ?></span> <span class="locality" itemprop="addressLocality"><?= $host["host_city"] ?></span></li>
-						<li class="country" itemprop="addressCountry"><?= $countries[arrayKeyValue($countries, "id", $host["host_country"])]["name"] ?></li>
+						<li class="streetaddress" itemprop="streetAddress"><?= $location["location_address1"] ?><?= $location["location_address2"] ? ", ".$location["location_address2"] : "" ?></li>
+						<li class="city"><span class="postal" itemprop="postalCode"><?= $location["location_postal"] ?></span> <span class="locality" itemprop="addressLocality"><?= $location["location_city"] ?></span></li>
+						<li class="country" itemprop="addressCountry"><?= $countries[arrayKeyValue($countries, "id", $location["location_country"])]["name"] ?></li>
 					</ul>
 				</li>
-				<? if($host["host_googlemaps"]): ?>
-				<li class="googlemaps" itemprop="hasMap" content="<?= $host["host_googlemaps"] ?>"><a href="<?= $host["host_googlemaps"] ?>" target="_blank">Map</a></li>
+				<? if($location["location_googlemaps"]): ?>
+				<li class="googlemaps" itemprop="hasMap" content="<?= $location["location_googlemaps"] ?>"><a href="<?= $location["location_googlemaps"] ?>" target="_blank">Map</a></li>
 				<? endif; ?>
 			</ul>
 		</div>
