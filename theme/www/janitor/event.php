@@ -1,5 +1,8 @@
 <?php
 $access_item["/"] = true;
+$access_item["/new"] = true;
+$access_item["/edit"] = "new";
+$access_item["/list"] = "new";
 $access_item["/admin"] = true;
 $access_item["/admin-list"] = "/admin";
 $access_item["/admin-new"] = "/admin";
