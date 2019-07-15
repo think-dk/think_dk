@@ -40,7 +40,7 @@ $eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype");
 
 	<div class="item i:defaultEdit">
 		<h2>Event</h2>
-		<?= $model->formStart("update/".$item["id"], array("class" => "labelstyle:inject")) ?>
+		<?= $model->formStart("updateAdmin/".$item["id"], array("class" => "labelstyle:inject")) ?>
 
 			<fieldset>
 				<?= $model->input("name", array("value" => $item["name"])) ?>

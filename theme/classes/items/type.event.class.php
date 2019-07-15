@@ -158,6 +158,17 @@ class TypeEvent extends Itemtype {
 
 	}
 
+	function saveAdmin($action) {
+		return $this->save($action);
+	}
+
+	function updateAdmin($action) {
+		return $this->update($action);
+	}
+
+	function updateHost($action) {
+		return $this->update($action);
+	}
 
 	function saved($item_id) {
 

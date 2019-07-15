@@ -13,7 +13,7 @@ global $itemtype;
 		<?= $HTML->link("List", "/janitor/event/admin-list", array("wrapper" => "li.list", "class" => "button")) ?>
 	</ul>
 
-	<?= $model->formStart("save/".$itemtype, array("class" => "i:defaultNew labelstyle:inject")) ?>
+	<?= $model->formStart("saveAdmin", array("class" => "i:defaultNew labelstyle:inject")) ?>
 		<?= $model->input("return_to", ["type" => "hidden", "value" => "/janitor/event/admin-edit/"]) ?>
 		<?= $model->input("memberevent", ["type" => "hidden", "value" => "true"]) ?>
 		
