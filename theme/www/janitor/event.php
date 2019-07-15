@@ -9,7 +9,7 @@ $access_item["/updateAdmin"] = "/admin";
 $access_item["/host"] = true;
 $access_item["/host-list"] = "/host";
 $access_item["/host-edit"] = "/host";
-$access_item["/hostUpdate"] = "/host";
+$access_item["/updateHost"] = "/host";
 $access_item["/comments"] = true;
 $access_item["/addComment"] = "/comments";
 if(isset($read_access) && $read_access) {
