@@ -79,7 +79,7 @@ $memberships = $IC->getItems(array("itemtype" => "membership", "tags" => "member
 
 				<ul class="actions">
 					<?= $model->link("Read more", "/bulletin/co-working-at-think-dk", array("wrapper" => "li.readmore")) ?>
-					<?= $model->link("Join", "/bulletin/co-working-at-think-dk", array("class" => "button primary", "wrapper" => "li.signup")) ?>
+					<?= $model->link("See options", "/bulletin/co-working-at-think-dk", array("class" => "button primary", "wrapper" => "li.signup")) ?>
 				</ul>
 
 				<? else: ?>
