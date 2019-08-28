@@ -60,7 +60,10 @@ class HTML extends HTMLCore {
 
 					// TEMP: Custom adjustment for co-work option
 					if($item["classname"] == "cowork") {
-						$_ .= '<li class="price" itemprop="price" content="'.$item["prices"][$default_key]["price"].'">From '.formatPrice($item["prices"][$default_key]).(isset($item["subscription_method"]) && $item["subscription_method"] && $item["prices"][$default_key]["price"] ? ' / '.$item["subscription_method"]["name"] : '').'</li>';
+						
+						$custom_price = $item["prices"][$default_key];
+						$custom_price["price"] = $custom_price["price_without_vat"];
+						$_ .= '<li class="price" itemprop="price" content="'.$item["prices"][$default_key]["price"].'">From '.formatPrice($custom_price).(isset($item["subscription_method"]) && $item["subscription_method"] && $item["prices"][$default_key]["price"] ? ' / '.$item["subscription_method"]["name"] : '').'</li>';
 					}
 					else {
 						$_ .= '<li class="price" itemprop="price" content="'.$item["prices"][$default_key]["price"].'">'.formatPrice($item["prices"][$default_key]).(isset($item["subscription_method"]) && $item["subscription_method"] && $item["prices"][$default_key]["price"] ? ' / '.$item["subscription_method"]["name"] : '').'</li>';
