@@ -258,7 +258,7 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.events div.calendar div.month h3 {text-align: center; width: auto; font-size: 18px; line-height: 20px; 
 	font-weight: 600;
 }
-#content .scene.events div.calendar div.month h3 span {display: inline-block; vertical-align: top; padding: 0 2px;}
+#content .scene.events div.calendar div.month h3 span {display: inline-block; vertical-align: top; padding: 0 2px 0 0;}
 #content .scene.events div.calendar div.month h4 {text-align: center; margin: 0; font-size: 11px;
 	font-weight: 100;
 }
@@ -299,7 +299,7 @@ body.front #page.fixed {width: auto; margin: 0;}
 /*	border-bottom: 1px solid #666666;*/
 	margin: -1px -1px 0 0;
 }
-#content .scene.events div.calendar ul.month li span {
+#content .scene.events div.calendar ul.month li > span {
 /*	position: absolute;
 	top: 0;
 	left: 0;
@@ -320,7 +320,7 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.events div.calendar ul.month li h3 a:first-child {padding-right: 3px;}
 
 #content .scene.events div.calendar ul.month li.day {}
-#content .scene.events div.calendar ul.month li.today span {background-color: #26962d; color: #ffffff;
+#content .scene.events div.calendar ul.month li.today > span {background-color: #26962d; color: #ffffff;
 	font-weight: 700; border-bottom-right-radius: 5px;
 }
 #content .scene.events div.calendar ul.month li.weekend {background: #ededed;
@@ -352,11 +352,23 @@ body.front #page.fixed {width: auto; margin: 0;}
 	display: none;
 }
 
+#content .scene.event div.event.member {
+	background: transparent url("/img/gx_member_event.png") no-repeat 13px 49px;
+/*	background-size: 50px auto;*/
+}
 
 #content .scene.event div.event div.description {padding-bottom: 10px;}
 #content .scene.event div.event dl.occurs_at {padding-bottom: 0;}
 #content .scene.event div.event dl.occurs_at dt {display: block; width: auto; font-size: 10px; text-align: left;}
 #content .scene.event div.event dl.occurs_at dd {display: block; width: auto; font-size: 16px; padding-bottom: 15px;}
+
+#content .scene.event div.event div.sponsor.lokaludvalg {padding-top: 20px;
+	background: transparent url("/img/sponsors/logo_obro_lokaludvalg.png") no-repeat 290px 20px;
+/*	background-size: auto 70px;*/
+}
+#content .scene.event div.event div.sponsor.lokaludvalg p {width: 210px; color: #cccccc;}
+
+#content .scene.event div.event div.location {padding-top: 30px;}
 #content .scene.event div.event ul.location {display: block;}
 #content .scene.event div.event ul.location li.name {padding-bottom: 10px; font-size: 15px;}
 #content .scene.event div.event ul.location ul {padding-left: 0; padding-right: 0;}

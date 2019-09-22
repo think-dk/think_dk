@@ -360,6 +360,7 @@ Util.Objects["events"] = new function() {
 		scene.insertEvent = function(day, event, year, month) {
 
 			var h3 = u.ae(day, u.qs("h3", event).cloneNode(true));
+			var h3_a = u.qs("a", h3);
 			h3.day = day;
 			var div_description = u.qs("div.description", event);
 
@@ -370,7 +371,7 @@ Util.Objects["events"] = new function() {
 			else {
 				h3.description = "N/A";
 			}
-			u.ie(h3, "a", {"html":u.date("H:i", event.date.getTime())});
+			u.ie(h3_a, "span", {"html":u.date("H:i", event.date.getTime())});
 
 			u.e.hover(h3);
 			h3.over = function() {

@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-06-12 19:50:14
+asset-builder @ 2019-09-22 23:42:13
 */
 
 /*seg_smartphone_include.css*/
@@ -792,13 +792,22 @@ body > div.pagination li a {color: #34cc3d;}
 #content .scene ul.events li.event dl.occurs_at {padding-bottom: 0;}
 #content .scene ul.events li.event dd {width: auto; font-size: 12px; padding-bottom: 0; padding-left: 0;}
 #content .scene ul.events li.event dt {display: none;}
+#content .scene.event div.event.member h1 {
+	padding-right: 70px;
+	background: transparent url("../img/gx_member_event_smartphone.png") no-repeat right 20px top 0px;
+}
 #content .scene.event div.event div.description {padding-bottom: 10px;}
 #content .scene.event div.event dl.occurs_at {padding-bottom: 0;}
 #content .scene.event div.event dl.occurs_at dt {font-size: 12px; text-align: left;}
 #content .scene.event div.event dl.occurs_at dd {font-size: 16px; padding-bottom: 15px; padding-left: 0;}
+#content .scene.event div.event div.location {padding-top: 20px;}
 #content .scene.event div.event ul.location {display: block;}
 #content .scene.event div.event ul.location li.name {padding-bottom: 10px; font-size: 15px;}
 #content .scene.event div.event ul.location ul {padding-left: 0; padding-right: 0;}
+#content .scene.event div.event div.sponsor.lokaludvalg {padding-top: 20px;
+	background: transparent url("../img/sponsors/logo_obro_lokaludvalg.png") no-repeat 220px 20px;
+}
+#content .scene.event div.event div.sponsor.lokaludvalg p {width: 210px; color: #cccccc;}
 #content .scene div.all_events.past_events {padding-top: 50px;}
 #content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-bottom: 30px; font-size: 0; position: relative; width: auto;}
 #content .scene div.memberships ul.memberships > li {display: inline-block; vertical-align: top; padding: 10px 10px 70px; margin: 0 0 10px; 
