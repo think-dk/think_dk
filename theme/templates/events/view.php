@@ -42,9 +42,10 @@ if($item) {
 
 
 <? if($item):
-	$media = $IC->sliceMedia($item); ?>
+	$media = $IC->sliceMedia($item);
+	$eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype"); ?>
 
-	<div class="article i:article id:<?= $item["item_id"] ?> event" itemscope itemtype="http://schema.org/Event"
+	<div class="article i:article id:<?= $item["item_id"] ?> event<?= $eventtype_tag !== false ? " ".$item["tags"][$eventtype_tag]["value"] : "" ?>" itemscope itemtype="http://schema.org/Event"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		>
 
@@ -129,6 +130,18 @@ if($item) {
 
 <? endif; */ ?>
 
+<? 
+		$sponsor_tag = arrayKeyValue($item["tags"], "context", "sponsor");
+		
+		if($sponsor_tag !== false && isset($item["tags"][$sponsor_tag])):
+			if($item["tags"][$sponsor_tag]["value"] === "Østerbro Lokaludvalg"): ?>
+		<div class="sponsor lokaludvalg">
+			<p>This events is kindly supported <br />by Østerbro Lokaludvalg.</p>
+		</div>
+<? 			endif; 
+		endif; ?>
+
+		<? if($item["location"]): ?>
 		<div class="location">
 			<h2>Location</h2>
 			<ul class="location" itemprop="location" itemscope itemtype="https://schema.org/Place">
@@ -145,6 +158,7 @@ if($item) {
 				<? endif; ?>
 			</ul>
 		</div>
+		<? endif; ?>
 
 
 		<? if($item["mediae"]): ?>
