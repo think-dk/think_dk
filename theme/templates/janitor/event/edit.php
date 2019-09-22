@@ -10,7 +10,7 @@ $UC = new SuperUser();
 $item_id = $action[1];
 $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "mediae" => true)));
 
-$location_options = $model->toOptions($model->getLocations(), "id", "location", ["add" => ["" => "Select event owner"]]);
+$location_options = $model->toOptions($model->getLocations(), "id", "location", ["add" => ["" => "Select event location"]]);
 $users = $UC->getUsers(["order" => "nickname ASC"]);
 
 $user_options_owner = $model->toOptions($users, "id", "nickname", ["add" => ["" => "Select event owner"]]);
