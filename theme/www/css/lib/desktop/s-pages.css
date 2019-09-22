@@ -352,8 +352,8 @@ body.front #page.fixed {width: auto; margin: 0;}
 	display: none;
 }
 
-#content .scene.event div.event.member {
-	background: transparent url("/img/gx_member_event.png") no-repeat 13px 49px;
+#content .scene.event div.event.member h1 {
+	background: transparent url("/img/gx_member_event.png") no-repeat 13px 2px;
 /*	background-size: 50px auto;*/
 }
 
