@@ -2,6 +2,7 @@
 global $action;
 global $model;
 $UC = new User();
+$MC = new Member();
 
 // get current user id
 $user_id = session()->value("user_id");
@@ -10,7 +11,7 @@ $remaining_order_price = false;
 
 // Will only return orders from current user, so no need to check order ownership
 $order = $model->getOrders(array("order_no" => $order_no));
-$membership = $UC->getMembership();
+$membership = $MC->getMembership();
 
 if($order && $order["payment_status"] != 2) {
 
