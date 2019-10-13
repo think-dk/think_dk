@@ -59,7 +59,7 @@ Util.Objects["cart"] = new function() {
 					u.f.init(quantity_form);
 
 
-					quantity_form.fields["quantity"].updated = function() {
+					quantity_form.inputs["quantity"].updated = function() {
 						u.ac(this._form.actions["update"], "primary");
 
 						this._form.submit();
@@ -90,7 +90,7 @@ Util.Objects["cart"] = new function() {
 							}
 						}
 
-						u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
+						u.request(this, this.action, {"method":"post", "data":this.getData()});
 					}
 				}
 
