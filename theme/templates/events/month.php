@@ -22,7 +22,7 @@ $items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "e
 
 		<ul class="items events">
 		<? foreach($items as $item): 
-			$media = $IC->sliceMedia($item); ?>
+			$media = $IC->sliceMediae($item); ?>
 			<li class="item event item_id:<?= $item["item_id"] ?>">
 
 				<dl class="occurs_at">

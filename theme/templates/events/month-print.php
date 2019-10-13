@@ -25,7 +25,7 @@ $total = 0;
 
 		<ul class="items events i0">
 		<? foreach($items as $i => $item): 
-			$media = $IC->sliceMedia($item); ?>
+			$media = $IC->sliceMediae($item); ?>
 			<li class="item event item_id:<?= $item["item_id"] ?>">
 
 				<dl class="occurs_at">
