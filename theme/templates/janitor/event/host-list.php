@@ -23,7 +23,7 @@ foreach($items as $item) {
 	<h1>Events</h1>
 
 	
-	<div class="all_items i:defaultList taggable filters"<?= $JML->jsData() ?>>
+	<div class="all_items i:defaultList taggable filters"<?= $JML->jsData(["tags", "search"]) ?>>
 <?		if($filtered_events): ?>
 		<ul class="items">
 
