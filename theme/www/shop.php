@@ -328,13 +328,18 @@ if($action) {
 	# /shop/updateCartItemQuantity
 	else if($action[0] == "updateCartItemQuantity" && $page->validateCsrfToken()) {
 
+		message()->resetMessages();
+
+
 		// create new user
 		$cart = $model->updateCartItemQuantity($action);
 
 		// successful creation
 		if($cart) {
 
-			message()->addMessage("Quantity updated");
+			if(!message()->hasMessages()) {
+				message()->addMessage("Quantity updated");
+			}
 			header("Location: /shop/cart");
 			exit();
 		}
