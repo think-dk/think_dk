@@ -17,7 +17,7 @@ $items_culture = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "or
 <div class="scene services i:scene">
 
 <? if($page_item && $page_item["status"]): 
-	$media = $IC->sliceMedia($page_item); ?>
+	$media = $IC->sliceMediae($page_item); ?>
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>

@@ -42,7 +42,7 @@ if($item) {
 
 
 <? if($item):
-	$media = $IC->sliceMedia($item);
+	$media = $IC->sliceMediae($item);
 	$eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype"); ?>
 
 	<div class="article i:article id:<?= $item["item_id"] ?> event<?= $eventtype_tag !== false ? " ".$item["tags"][$eventtype_tag]["value"] : "" ?>" itemscope itemtype="http://schema.org/Event"
@@ -200,7 +200,7 @@ if($item) {
 
 		<ul class="items events">
 		<? foreach($related_items as $item): 
-			$media = $IC->sliceMedia($item); ?>
+			$media = $IC->sliceMediae($item); ?>
 			<li class="item event item_id:<?= $item["item_id"] ?>">
 
 				<dl class="occurs_at">

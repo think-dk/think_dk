@@ -40,7 +40,7 @@ if($item) {
 
 
 <? if($item):
-	$media = $IC->sliceMedia($item); ?>
+	$media = $IC->sliceMediae($item); ?>
 
 	<div class="article i:article id:<?= $item["item_id"] ?> service" itemscope itemtype="http://schema.org/Article"
 		data-csrf-token="<?= session()->value("csrf") ?>"
@@ -114,7 +114,7 @@ if($item) {
 
 		<ul class="items events">
 		<? foreach($event_items as $item): 
-			$media = $IC->sliceMedia($item); ?>
+			$media = $IC->sliceMediae($item); ?>
 			<li class="item event item_id:<?= $item["item_id"] ?>">
 
 				<dl class="occurs_at">
@@ -148,7 +148,7 @@ if($item) {
 
 			<ul class="items services">
 	<?		foreach($related_items as $item): 
-				$media = $IC->sliceMedia($item); ?>
+				$media = $IC->sliceMediae($item); ?>
 				<li class="item service item_id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 					data-readstate="<?= $item["readstate"] ?>"
 					>

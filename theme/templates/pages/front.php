@@ -32,7 +32,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 
 
 <? if($page_item && $page_item["status"]): 
-	$media = $IC->sliceMedia($page_item); ?>
+	$media = $IC->sliceMediae($page_item); ?>
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
@@ -73,7 +73,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 
 		<ul class="items events">
 		<? foreach($event_items as $item): 
-			$media = $IC->sliceMedia($item); ?>
+			$media = $IC->sliceMediae($item); ?>
 			<li class="item event item_id:<?= $item["item_id"] ?>">
 
 				<dl class="occurs_at">
@@ -97,7 +97,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 		<h2>Latest bulletins <a href="/bulletin">(see all)</a></h2>
 		<ul class="items articles">
 		<? foreach($post_items as $item): 
-			$media = $IC->sliceMedia($item); ?>
+			$media = $IC->sliceMediae($item); ?>
 			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 				data-readstate="<?= $item["readstate"] ?>"
 				>

@@ -17,7 +17,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 <div class="scene posts tag i:scene">
 
 <? if($page_item && $page_item["status"]): 
-	$media = $IC->sliceMedia($page_item); ?>
+	$media = $IC->sliceMediae($page_item); ?>
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
@@ -70,7 +70,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 <? if($items): ?>
 	<ul class="items articles i:articleMiniList">
 		<? foreach($items as $item):
-			$media = $IC->sliceMedia($item); ?>
+			$media = $IC->sliceMediae($item); ?>
 		<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 			data-readstate="<?= $item["readstate"] ?>"
 			>

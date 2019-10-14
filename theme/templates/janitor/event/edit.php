@@ -59,7 +59,7 @@ $user_options_2 = $model->toOptions($users, "id", "nickname", ["add" => ["" => "
 			</fieldset>
 
 			<fieldset>
-				<?= $model->inputHTML("html", array("value" => $item["html"])) ?>
+				<?= $model->input("html", array("value" => $item["html"])) ?>
 			</fieldset>
 
 			<?= $JML->editActions($item) ?>

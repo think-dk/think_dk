@@ -29,7 +29,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" =>
 <?	if($items): ?>
 	<ul class="items articles i:articleMiniList">
 		<? foreach($items as $item): 
-			$media = $IC->sliceMedia($item); ?>
+			$media = $IC->sliceMediae($item); ?>
 		<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 			data-readstate="<?= $item["readstate"] ?>"
 			>

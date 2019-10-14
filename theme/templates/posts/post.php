@@ -30,7 +30,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 
 
 <? if($item):
-	$media = $IC->sliceMedia($item); ?>
+	$media = $IC->sliceMediae($item); ?>
 
 	<div class="article i:article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 		data-csrf-token="<?= session()->value("csrf") ?>"
@@ -96,7 +96,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 
 		<ul class="items articles i:articleMiniList">
 <?		foreach($related_items as $item): 
-			$media = $IC->sliceMedia($item); ?>
+			$media = $IC->sliceMediae($item); ?>
 			<li class="item article item_id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 				data-readstate="<?= $item["readstate"] ?>"
 				>

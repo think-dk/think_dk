@@ -14,7 +14,6 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 // $host_options = $model->toOptions($model->getHosts(), "id", "host");
 $locations = $model->getLocations();
 $users = $UC->getUsers(["order" => "nickname ASC"]);
-// $users = $UC->getMembers(["order" => "nickname ASC"]);
 
 $user_options_owner = $model->toOptions($users, "id", "nickname", ["add" => ["" => "Select event owner"]]);
 $user_options_1 = $model->toOptions($users, "id", "nickname", ["add" => ["" => "Select backer 1"]]);
@@ -67,7 +66,7 @@ $eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype");
 			</fieldset>
 
 			<fieldset>
-				<?= $model->inputHTML("html", array("value" => $item["html"])) ?>
+				<?= $model->input("html", array("value" => $item["html"])) ?>
 			</fieldset>
 
 			<?= $JML->editActions($item) ?>
