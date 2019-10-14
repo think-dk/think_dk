@@ -66,7 +66,7 @@ $eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype");
 			</fieldset>
 
 			<fieldset>
-				<?= $model->inputHTML("html", array("value" => $item["html"])) ?>
+				<?= $model->input("html", array("value" => $item["html"])) ?>
 			</fieldset>
 
 			<?= $JML->editActions($item) ?>

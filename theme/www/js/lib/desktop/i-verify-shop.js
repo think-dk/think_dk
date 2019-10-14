@@ -24,7 +24,7 @@ Util.Objects["verify_shop"] = new function() {
 
 			// Using the new verify form
 			form_verify.submitted = function() {
-				var data = u.f.getParams(this);
+				var data = this.getData();
 
 				// submit state
 				this.is_submitting = true; 

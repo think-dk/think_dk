@@ -35,7 +35,7 @@ if($item) {
 
 
 <? if($item):
-	$media = $IC->sliceMedia($item); ?>
+	$media = $IC->sliceMediae($item); ?>
 
 	<div class="article i:article id:<?= $item["item_id"] ?> service" itemscope itemtype="http://schema.org/Article"
 		data-csrf-token="<?= session()->value("csrf") ?>"
@@ -116,7 +116,7 @@ if($item) {
 
 			<ul class="items memberships">
 	<?		foreach($related_items as $item): 
-				$media = $IC->sliceMedia($item); ?>
+				$media = $IC->sliceMediae($item); ?>
 				<li class="item membership item_id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 					data-readstate="<?= $item["readstate"] ?>"
 					>
