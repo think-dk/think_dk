@@ -3,7 +3,7 @@ global $action;
 global $IC;
 global $itemtype;
 
-$page_item = $IC->getItem(array("tags" => "page:services", "extend" => array("user" => true, "mediae" => true, "tags" => true)));
+$page_item = $IC->getItem(array("tags" => "page:services", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
@@ -16,7 +16,7 @@ $items_culture = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "or
 
 <div class="scene services i:scene">
 
-<? if($page_item && $page_item["status"]): 
+<? if($page_item): 
 	$media = $IC->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 

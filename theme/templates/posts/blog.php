@@ -5,7 +5,7 @@ global $itemtype;
 
 //$selected_tag = "post-page:Front";
 
-$page_item = $IC->getItem(array("tags" => "page:blog", "extend" => array("user" => true, "mediae" => true, "tags" => true)));
+$page_item = $IC->getItem(array("tags" => "page:blog", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
@@ -18,7 +18,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 <div class="scene news i:scene">
 
-<? if($page_item && $page_item["status"]): 
+<? if($page_item): 
 	$media = $IC->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 

@@ -6,7 +6,7 @@ if($intros) {
 	$intro = $intros[rand(0, count($intros)-1)];
 }
 
-$page_item = $IC->getItem(array("tags" => "page:front", "extend" => array("user" => true, "tags" => true, "mediae" => true)));
+$page_item = $IC->getItem(array("tags" => "page:front", "status" => 1, "extend" => array("user" => true, "tags" => true, "mediae" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
@@ -31,7 +31,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 <? endif; ?>
 
 
-<? if($page_item && $page_item["status"]): 
+<? if($page_item): 
 	$media = $IC->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 
