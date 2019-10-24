@@ -4,17 +4,20 @@ global $action;
 global $itemtype;
 
 $sindex = $action[0];
-$item = $IC->getItem(array("sindex" => $sindex, "extend" => array("tags" => true, "user" => true, "mediae" => true, "comments" => true, "readstate" => true)));
+$item = $IC->getItem(array("sindex" => $sindex, "status" => 1, "extend" => array("tags" => true, "user" => true, "mediae" => true, "comments" => true, "readstate" => true)));
 if($item) {
 	$this->sharingMetaData($item);
 
 	// set related pattern
 	$related_pattern = array("itemtype" => $item["itemtype"], "tags" => $item["tags"], "exclude" => $item["id"]);
+	$related_title = "Related posts";
 
 }
 else {
 	// itemtype pattern for missing item
 	$related_pattern = array("itemtype" => $itemtype);
+	$related_title = "Other posts";
+
 }
 
 // add base pattern properties
@@ -94,7 +97,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 
 <? if($related_items): ?>
 	<div class="related">
-		<h2>Related posts <a href="/bulletin">(see all)</a></h2>
+		<h2><?= $related_title ?> <a href="/bulletin">(see all)</a></h2>
 
 		<ul class="items articles i:articleMiniList">
 <?		foreach($related_items as $item): 

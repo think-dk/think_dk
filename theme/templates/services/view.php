@@ -8,7 +8,7 @@ $sindex = $action[0];
 $next = false;
 $prev = false;
 
-$item = f(array("sindex" => $sindex, "extend" => array("tags" => true, "user" => true, "mediae" => true, "comments" => true, "readstate" => true)));
+$item = $IC->getItem(array("sindex" => $sindex, "status" => 1, "extend" => array("tags" => true, "user" => true, "mediae" => true, "comments" => true, "readstate" => true)));
 if($item) {
 	$this->sharingMetaData($item);
 
@@ -25,14 +25,22 @@ if($item) {
 
 	// set related pattern
 	$related_pattern = array("itemtype" => $item["itemtype"], "tags" => $item["tags"], "exclude" => $item["id"]);
-	// add base pattern properties
-	$related_pattern["limit"] = 5;
-	$related_pattern["extend"] = array("tags" => true, "readstate" => true, "user" => true, "mediae" => true);
-
-	// get related items
-	$related_items = $IC->getRelatedItems($related_pattern);
+	$related_title = "Related services";
 
 }
+else {
+	// itemtype pattern for missing item
+	$related_pattern = array("itemtype" => $itemtype);
+	$related_title = "Other services";
+
+}
+
+// add base pattern properties
+$related_pattern["limit"] = 5;
+$related_pattern["extend"] = array("tags" => true, "readstate" => true, "user" => true, "mediae" => true);
+
+// get related items
+$related_items = $IC->getRelatedItems($related_pattern);
 
 ?>
 
@@ -133,39 +141,6 @@ if($item) {
 	</div>
 
 
-	<? if($related_items): ?>
-		<div class="related">
-			<h2>Related services <a href="/services">(see all)</a></h2>
-
-			<ul class="items services">
-	<?		foreach($related_items as $item): 
-				$media = $IC->sliceMediae($item, "single_media"); ?>
-				<li class="item service item_id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
-					data-readstate="<?= $item["readstate"] ?>"
-					>
-
-					<h3 itemprop="headline"><a href="/services/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
-
-
-					<?= $HTML->articleInfo($item, "/services/".$item["sindex"], [
-						"media" => $media
-					]) ?>
-
-
-					<? if($item["description"]): ?>
-					<div class="description" itemprop="description">
-						<p><?= nl2br($item["description"]) ?></p>
-					</div>
-					<? endif; ?>
-
-				</li>
-		<?	endforeach; ?>
-			</ul>
-		</div>
-	<? endif; ?>
-
-
-
 <? else: ?>
 
 
@@ -174,6 +149,39 @@ if($item) {
 	<p>We could not find the specified service.</p>
 
 
+<? endif; ?>
+
+
+
+<? if($related_items): ?>
+	<div class="related">
+		<h2><?= $related_title ?> <a href="/services">(see all)</a></h2>
+
+		<ul class="items services">
+<?		foreach($related_items as $item): 
+			$media = $IC->sliceMediae($item, "single_media"); ?>
+			<li class="item service item_id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
+				data-readstate="<?= $item["readstate"] ?>"
+				>
+
+				<h3 itemprop="headline"><a href="/services/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
+
+
+				<?= $HTML->articleInfo($item, "/services/".$item["sindex"], [
+					"media" => $media
+				]) ?>
+
+
+				<? if($item["description"]): ?>
+				<div class="description" itemprop="description">
+					<p><?= nl2br($item["description"]) ?></p>
+				</div>
+				<? endif; ?>
+
+			</li>
+	<?	endforeach; ?>
+		</ul>
+	</div>
 <? endif; ?>
 
 

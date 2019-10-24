@@ -10,7 +10,7 @@ $next = false;
 $prev = false;
 
 $sindex = $action[0];
-$item = $IC->getItem(array("sindex" => $sindex, "extend" => array("tags" => true, "user" => true, "mediae" => true, "comments" => true, "readstate" => true, "prices" => true)));
+$item = $IC->getItem(array("sindex" => $sindex, "status" => 1, "extend" => array("tags" => true, "user" => true, "mediae" => true, "comments" => true, "readstate" => true, "prices" => true)));
 if($item) {
 	$this->sharingMetaData($item);
 
@@ -26,15 +26,24 @@ if($item) {
 
 
 	// set related pattern
-	$related_pattern = array("itemtype" => $item["itemtype"], "status" => 1, "where" => "event.starting_at > NOW()", "tags" => $item["tags"], "exclude" => $item["id"]);
-	// add base pattern properties
-	$related_pattern["limit"] = 5;
-	$related_pattern["extend"] = true;
-
-	// get related items
-	$related_items = $IC->getRelatedItems($related_pattern);
-
+	$related_pattern = array("itemtype" => $item["itemtype"], "status" => 1, "tags" => $item["tags"], "exclude" => $item["id"]);
+	$related_title = "Related events";
 }
+else {
+	// itemtype pattern for missing item
+	$related_pattern = array("itemtype" => $itemtype);
+	$related_title = "Other events";
+}
+
+$related_pattern["where"] = "event.starting_at > NOW()";
+
+// add base pattern properties
+$related_pattern["limit"] = 5;
+$related_pattern["extend"] = true;
+
+// get related items
+$related_items = $IC->getRelatedItems($related_pattern);
+
 
 ?>
 
@@ -182,35 +191,6 @@ if($item) {
 	<? endif; ?>
 
 
-	<? if($related_items): ?>
-
-	<div class="related">
-		<h2>Related events <a href="/events">(see all)</a></h2>
-
-		<ul class="items events">
-		<? foreach($related_items as $item): ?>
-			<li class="item event item_id:<?= $item["item_id"] ?>">
-
-				<dl class="occurs_at">
-					<dt class="starting_at">Starts</dt>
-					<dd class="starting_at"><?= date("F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
-				</dl>
-
-				<h3><a href="/events/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
-
-				<? if($item["description"]): ?>
-				<div class="description">
-					<p><?= nl2br($item["description"]) ?></p>
-				</div>
-				<? endif; ?>
-
-			</li>
-		<?	endforeach; ?>
-		</ul>
-	</div>
-
-	<? endif; ?>
-
 
 <? else: ?>
 
@@ -222,5 +202,34 @@ if($item) {
 
 <? endif; ?>
 
+
+<? if($related_items): ?>
+
+<div class="related">
+	<h2><?= $related_title ?> <a href="/events">(see all)</a></h2>
+
+	<ul class="items events">
+	<? foreach($related_items as $item): ?>
+		<li class="item event item_id:<?= $item["item_id"] ?>">
+
+			<dl class="occurs_at">
+				<dt class="starting_at">Starts</dt>
+				<dd class="starting_at"><?= date("F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
+			</dl>
+
+			<h3><a href="/events/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
+
+			<? if($item["description"]): ?>
+			<div class="description">
+				<p><?= nl2br($item["description"]) ?></p>
+			</div>
+			<? endif; ?>
+
+		</li>
+	<?	endforeach; ?>
+	</ul>
+</div>
+
+<? endif; ?>
 
 </div>

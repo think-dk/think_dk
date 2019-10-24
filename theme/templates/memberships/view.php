@@ -11,7 +11,7 @@ $sindex = $action[0];
 $related_items = false;
 
 
-$item = $IC->getItem(array("sindex" => $sindex, "extend" => array("tags" => true, "user" => true, "mediae" => true, "comments" => true, "readstate" => true, "prices" => true, "subscription_method" => true)));
+$item = $IC->getItem(array("sindex" => $sindex, "status" => 1, "extend" => array("tags" => true, "user" => true, "mediae" => true, "comments" => true, "readstate" => true, "prices" => true, "subscription_method" => true)));
 if($item) {
 	$this->sharingMetaData($item);
 
@@ -21,13 +21,21 @@ if($item) {
 
 	// set related pattern
 	$related_pattern = array("itemtype" => $item["itemtype"], "tags" => $item["tags"], "exclude" => $item["id"]);
-	// add base pattern properties
-	$related_pattern["limit"] = 3;
-	$related_pattern["extend"] = array("tags" => true, "user" => true, "mediae" => true, "prices" => true, "subscription_method" => true, "readstate" => true);
 
-	// get related items
-	$related_items = $IC->getRelatedItems($related_pattern);
 }
+else {
+
+	// itemtype pattern for missing item
+	$related_pattern = array("itemtype" => "membership");
+
+}
+
+// add base pattern properties
+$related_pattern["limit"] = 3;
+$related_pattern["extend"] = array("tags" => true, "user" => true, "mediae" => true, "prices" => true, "subscription_method" => true, "readstate" => true);
+
+// get related items
+$related_items = $IC->getRelatedItems($related_pattern);
 
 ?>
 
@@ -103,40 +111,6 @@ if($item) {
 	<? endif; ?>
 
 
-	<? if($related_items): ?>
-		<div class="related">
-			<h2>Other memberships <a href="/memberships">(overview)</a></h2>
-
-			<ul class="items memberships">
-	<?		foreach($related_items as $item): 
-				$media = $IC->sliceMediae($item, "single_media"); ?>
-				<li class="item membership item_id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
-					data-readstate="<?= $item["readstate"] ?>"
-					>
-
-					<h3 itemprop="headline"><a href="/memberships/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
-
-
-					<?= $HTML->frontendOffer($item, SITE_URL."/memberships") ?>
-
-
-					<?= $HTML->articleInfo($item, "/memberships/".$item["sindex"], [
-						"media" => $media
-					]) ?>
-
-
-					<? if($item["description"]): ?>
-					<div class="description" itemprop="description">
-						<p><?= nl2br($item["description"]) ?></p>
-					</div>
-					<? endif; ?>
-
-				</li>
-		<?	endforeach; ?>
-			</ul>
-		</div>
-	<? endif; ?>
-
 <? else: ?>
 
 
@@ -147,5 +121,39 @@ if($item) {
 
 <? endif; ?>
 
+
+<? if($related_items): ?>
+	<div class="related">
+		<h2>Other memberships <a href="/memberships">(overview)</a></h2>
+
+		<ul class="items memberships">
+<?		foreach($related_items as $item): 
+			$media = $IC->sliceMediae($item, "single_media"); ?>
+			<li class="item membership item_id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
+				data-readstate="<?= $item["readstate"] ?>"
+				>
+
+				<h3 itemprop="headline"><a href="/memberships/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
+
+
+				<?= $HTML->frontendOffer($item, SITE_URL."/memberships") ?>
+
+
+				<?= $HTML->articleInfo($item, "/memberships/".$item["sindex"], [
+					"media" => $media
+				]) ?>
+
+
+				<? if($item["description"]): ?>
+				<div class="description" itemprop="description">
+					<p><?= nl2br($item["description"]) ?></p>
+				</div>
+				<? endif; ?>
+
+			</li>
+	<?	endforeach; ?>
+		</ul>
+	</div>
+<? endif; ?>
 
 </div>
