@@ -24,7 +24,7 @@ if($think_location_index !== false) {
 		<?= $model->input("return_to", ["type" => "hidden", "value" => "/janitor/event/admin-edit/"]) ?>
 		<?= $model->input("memberevent", ["type" => "hidden", "value" => "true"]) ?>
 		<?= $think_location_id ? $model->input("location", ["type" => "hidden", "value" => $think_location_id]) : "" ?>
-		<?= $model->input("html", ["type" => "hidden", "value" => "<p>[Add your specific event description here]</p><h3>About the event</h3><p>[Add the general/standard event series description here – only for recurring events with changing topics here]</p><h3>About the Host</h3><p>[Add description of the host of the event – who are you? What motivates or qualifies you to host this event?]</p><h3>Registration and Details</h3><p>[Add registration info, price and other details here]</p>"]) ?>
+		<?= $model->input("html", ["type" => "hidden", "value" => "<p>[Add your specific event description here]</p><h3>About the event</h3><p>[Add the general/standard event series description here – only for recurring events with changing topics.]</p><h3>About the Host</h3><p>[Add description of the host of the event – who are you? What motivates or qualifies you to host this event?]</p><h3>Registration and Details</h3><p>[Add registration info, price and other details here]</p>"]) ?>
 		
 		<fieldset>
 			<?= $model->input("name") ?>
