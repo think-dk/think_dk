@@ -35,7 +35,7 @@ if($item) {
 
 
 <? if($item):
-	$media = $IC->sliceMediae($item); ?>
+	$media = $IC->sliceMediae($item, "single_media"); ?>
 
 	<div class="article i:article id:<?= $item["item_id"] ?> service" itemscope itemtype="http://schema.org/Article"
 		data-csrf-token="<?= session()->value("csrf") ?>"
@@ -65,13 +65,6 @@ if($item) {
 			<?= $item["html"] ?>
 		</div>
 
-		<? if($item["mediae"]): ?>
-			<? foreach($item["mediae"] as $media): ?>
-		<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
-			<p>Image: <a href="/images/<?= $item["item_id"] ?>/<?= $media["variant"] ?>/500x.<?= $media["format"] ?>"><?= $media["name"] ?></a></p>
-		</div>
-			<? endforeach; ?>
-		<? endif; ?>
 
 		<?= $HTML->frontendOffer($item, SITE_URL."/memberships", $item["introduction"]) ?>
 
@@ -116,7 +109,7 @@ if($item) {
 
 			<ul class="items memberships">
 	<?		foreach($related_items as $item): 
-				$media = $IC->sliceMediae($item); ?>
+				$media = $IC->sliceMediae($item, "single_media"); ?>
 				<li class="item membership item_id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 					data-readstate="<?= $item["readstate"] ?>"
 					>

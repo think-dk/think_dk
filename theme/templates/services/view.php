@@ -8,7 +8,7 @@ $sindex = $action[0];
 $next = false;
 $prev = false;
 
-$item = $IC->getItem(array("sindex" => $sindex, "extend" => array("tags" => true, "user" => true, "mediae" => true, "comments" => true, "readstate" => true)));
+$item = f(array("sindex" => $sindex, "extend" => array("tags" => true, "user" => true, "mediae" => true, "comments" => true, "readstate" => true)));
 if($item) {
 	$this->sharingMetaData($item);
 
@@ -40,7 +40,7 @@ if($item) {
 
 
 <? if($item):
-	$media = $IC->sliceMediae($item); ?>
+	$media = $IC->sliceMediae($item, "single_media"); ?>
 
 	<div class="article i:article id:<?= $item["item_id"] ?> service" itemscope itemtype="http://schema.org/Article"
 		data-csrf-token="<?= session()->value("csrf") ?>"
@@ -72,14 +72,6 @@ if($item) {
 		<div class="articlebody" itemprop="articleBody">
 			<?= $item["html"] ?>
 		</div>
-
-		<? if($item["mediae"]): ?>
-			<? foreach($item["mediae"] as $media): ?>
-		<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
-			<p>Image: <a href="/images/<?= $item["item_id"] ?>/<?= $media["variant"] ?>/500x.<?= $media["format"] ?>"><?= $media["name"] ?></a></p>
-		</div>
-			<? endforeach; ?>
-		<? endif; ?>
 
 
 		<?= $HTML->frontendComments($item, "/janitor/service/addComment") ?>
@@ -113,8 +105,7 @@ if($item) {
 	<? if($event_items): ?>
 
 		<ul class="items events">
-		<? foreach($event_items as $item): 
-			$media = $IC->sliceMediae($item); ?>
+		<? foreach($event_items as $item): ?>
 			<li class="item event item_id:<?= $item["item_id"] ?>">
 
 				<dl class="occurs_at">
@@ -148,7 +139,7 @@ if($item) {
 
 			<ul class="items services">
 	<?		foreach($related_items as $item): 
-				$media = $IC->sliceMediae($item); ?>
+				$media = $IC->sliceMediae($item, "single_media"); ?>
 				<li class="item service item_id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 					data-readstate="<?= $item["readstate"] ?>"
 					>

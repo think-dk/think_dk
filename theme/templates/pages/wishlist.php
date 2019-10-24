@@ -27,7 +27,7 @@ if($wishlist) {
 <div class="scene wishes i:wishes">
 
 <? if($page_item && $page_item["status"]): 
-	$media = $IC->sliceMediae($page_item); ?>
+	$media = $IC->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
@@ -67,7 +67,7 @@ if($wishlist) {
 <?	if($items): ?>
 	<ul class="items wishes images">
 	<? foreach($items as $item):
-		$media = $IC->sliceMediae($item); ?>
+		$media = $IC->sliceMediae($item, "mediae"); ?>
 		<li class="item wish id:<?= $item["id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
 			<h3><?= $item["name"] ?></h3>
 

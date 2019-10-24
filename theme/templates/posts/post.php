@@ -30,7 +30,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 
 
 <? if($item):
-	$media = $IC->sliceMediae($item); ?>
+	$media = $IC->sliceMediae($item, "mediae"); ?>
 
 	<div class="article i:article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 		data-csrf-token="<?= session()->value("csrf") ?>"
@@ -64,8 +64,10 @@ $related_items = $IC->getRelatedItems($related_pattern);
 			<?= $item["html"] ?>
 		</div>
 
-		<? if($item["mediae"]): ?>
-			<? foreach($item["mediae"] as $media): ?>
+		<? 
+		$mediae = $IC->filterMediae($item, "mediae");
+		if($mediae): ?>
+			<? foreach($mediae as $media): ?>
 		<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
 			<p>Image: <a href="/images/<?= $item["item_id"] ?>/<?= $media["variant"] ?>/500x.<?= $media["format"] ?>"><?= $media["name"] ?></a></p>
 		</div>
@@ -96,7 +98,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 
 		<ul class="items articles i:articleMiniList">
 <?		foreach($related_items as $item): 
-			$media = $IC->sliceMediae($item); ?>
+			$media = $IC->sliceMediae($item, "mediae"); ?>
 			<li class="item article item_id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 				data-readstate="<?= $item["readstate"] ?>"
 				>

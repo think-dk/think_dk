@@ -29,7 +29,7 @@ if($item) {
 	$related_pattern = array("itemtype" => $item["itemtype"], "status" => 1, "where" => "event.starting_at > NOW()", "tags" => $item["tags"], "exclude" => $item["id"]);
 	// add base pattern properties
 	$related_pattern["limit"] = 5;
-	$related_pattern["extend"] = array("tags" => true, "readstate" => true, "user" => true, "mediae" => true);
+	$related_pattern["extend"] = true;
 
 	// get related items
 	$related_items = $IC->getRelatedItems($related_pattern);
@@ -40,9 +40,8 @@ if($item) {
 
 <div class="scene event i:scene">
 
-
 <? if($item):
-	$media = $IC->sliceMediae($item);
+	$media = $IC->sliceMediae($item, "single_media");
 	$eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype"); ?>
 
 	<div class="article i:article id:<?= $item["item_id"] ?> event<?= $eventtype_tag !== false ? " ".$item["tags"][$eventtype_tag]["value"] : "" ?>" itemscope itemtype="http://schema.org/Event"
@@ -160,16 +159,6 @@ if($item) {
 		</div>
 		<? endif; ?>
 
-
-		<? if($item["mediae"]): ?>
-			<? foreach($item["mediae"] as $media): ?>
-		<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
-			<p>Image: <a href="/images/<?= $item["item_id"] ?>/<?= $media["variant"] ?>/500x.<?= $media["format"] ?>"><?= $media["name"] ?></a></p>
-		</div>
-			<? endforeach; ?>
-		<? endif; ?>
-
-
 	</div>
 
 
@@ -199,8 +188,7 @@ if($item) {
 		<h2>Related events <a href="/events">(see all)</a></h2>
 
 		<ul class="items events">
-		<? foreach($related_items as $item): 
-			$media = $IC->sliceMediae($item); ?>
+		<? foreach($related_items as $item): ?>
 			<li class="item event item_id:<?= $item["item_id"] ?>">
 
 				<dl class="occurs_at">

@@ -8,7 +8,7 @@ $year = $action[1];
 $month = $action[2];
 
 // get items from  year/month
-$items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "event.starting_at < '".date("Y-m-d", mktime(0,0,0, $month+1, 1, $year))."' AND event.starting_at > '".date("Y-m-d", mktime(0,0,0, $month, 1, $year))."'", "order" => "event.starting_at ASC", "extend" => array("tags" => true, "mediae" => true, "user" => true)));
+$items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "event.starting_at < '".date("Y-m-d", mktime(0,0,0, $month+1, 1, $year))."' AND event.starting_at > '".date("Y-m-d", mktime(0,0,0, $month, 1, $year))."'", "order" => "event.starting_at ASC", "extend" => true));
 
 ?>
 
@@ -21,8 +21,7 @@ $items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "e
 	<? if($items): ?>
 
 		<ul class="items events">
-		<? foreach($items as $item): 
-			$media = $IC->sliceMediae($item); ?>
+		<? foreach($items as $item): ?>
 			<li class="item event item_id:<?= $item["item_id"] ?>">
 
 				<dl class="occurs_at">
