@@ -38,6 +38,7 @@ Util.Objects["cart"] = new function() {
 
 				node.unit_price = u.qs("span.unit_price", node);
 				node.total_price = u.qs("span.total_price", node);
+				node.quantity = u.qs("#input_quantity", node);
 
 				// look for quantity update form
 				var quantity_form = u.qs("form.updateCartItemQuantity", node)
@@ -68,12 +69,16 @@ Util.Objects["cart"] = new function() {
 								var item_row = u.ge("id:"+this.node.item_id, response);
 								var item_total_price = u.qs("span.total_price", item_row);
 								var item_unit_price = u.qs("span.unit_price", item_row);
+								var item_quantity = u.qs("#input_quantity", response);
+								
 
-								// update prices
+								// update prices and quantity
 								this.node.scene.total_cart_price.innerHTML = total_price.innerHTML;
 								this.node.scene.header_cart.innerHTML = header_cart.innerHTML;
 								this.node.total_price.innerHTML = item_total_price.innerHTML;
 								this.node.unit_price.innerHTML = item_unit_price.innerHTML;
+								this.node.quantity.value = item_quantity.value;
+
 
 					 			u.rc(this.actions["update"], "primary");
 

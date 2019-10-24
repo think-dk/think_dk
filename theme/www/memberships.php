@@ -38,8 +38,8 @@ if($action) {
 		if($user_id > 1) {
 
 			// check if user is already a member
-			$UC = new User();
-			$membership = $UC->getMembership();
+			$MC = new Member();
+			$membership = $MC->getMembership();
 			if($membership && $membership["subscription_id"]) {
 
 				header("Location: already-member");
@@ -70,7 +70,8 @@ if($action) {
 		if($user_id > 1) {
 
 			$UC = new User();
-			$membership = $UC->getMembership();
+			$MC = new Member();
+			$membership = $MC->getMembership();
 			if($membership && $membership["subscription_id"]) {
 
 				header("Location: already-member");

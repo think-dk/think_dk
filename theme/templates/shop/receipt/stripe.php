@@ -2,7 +2,7 @@
 global $action;
 global $model;
 $UC = new User();
-
+$MC = new Member();
 
 $order = false;
 
@@ -33,7 +33,7 @@ if(count($action) == 4) {
 
 
 		// get potential user membership
-		$membership = $UC->getMembership();
+		$membership = $MC->getMembership();
 
 
 		if($order) {

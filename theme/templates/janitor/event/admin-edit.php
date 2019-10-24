@@ -14,7 +14,6 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 // $host_options = $model->toOptions($model->getHosts(), "id", "host");
 $locations = $model->getLocations();
 $users = $UC->getUsers(["order" => "nickname ASC"]);
-// $users = $UC->getMembers(["order" => "nickname ASC"]);
 
 $user_options_owner = $model->toOptions($users, "id", "nickname", ["add" => ["" => "Select event owner"]]);
 $user_options_1 = $model->toOptions($users, "id", "nickname", ["add" => ["" => "Select backer 1"]]);
