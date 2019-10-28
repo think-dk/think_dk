@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-10-25 00:51:12
+asset-builder @ 2019-10-28 15:02:27
 */
 
 /*seg_smartphone_include.js*/
@@ -7036,11 +7036,11 @@ Util.Objects["stripe"] = new function() {
 			u.f.customValidate["card"] = function(iN) {
 				var card_number = iN.val().replace(/ /g, "");
 				if(u.paymentCards.validateCardNumber(card_number)) {
-					u.f.fieldCorrect(iN);
+					u.f.inputIsCorrect(iN);
 					u.f.validate(iN._form.inputs["card_cvc"]);
 				}
 				else {
-					u.f.fieldError(iN);
+					u.f.inputHasError(iN);
 				}
 			}
 			u.f.customValidate["exp_month"] = function(iN) {
@@ -7050,10 +7050,10 @@ Util.Objects["stripe"] = new function() {
 					year = parseInt("20"+year);
 				}
 				if(u.paymentCards.validateExpMonth(month)) {
-					u.f.fieldCorrect(iN);
+					u.f.inputIsCorrect(iN);
 				}
 				else {
-					u.f.fieldError(iN);
+					u.f.inputHasError(iN);
 				}
 				if(!iN.validating_year) {
 					iN._form.inputs["card_exp_year"].validating_month = true;
@@ -7073,25 +7073,25 @@ Util.Objects["stripe"] = new function() {
 					iN._form.inputs["card_exp_month"].validating_year = false;
 				}
 				if(u.paymentCards.validateExpDate(month, year)) {
-					u.f.fieldCorrect(iN);
+					u.f.inputIsCorrect(iN);
 				}
 				else if(!month && u.paymentCards.validateExpYear(year)) {
 					u.rc(iN, "correct");
 					u.rc(iN.field, "correct");
 				}
 				else {
-					u.f.fieldError(iN);
-					u.f.fieldError(iN._form.inputs["card_exp_month"]);
+					u.f.inputHasError(iN);
+					u.f.inputHasError(iN._form.inputs["card_exp_month"]);
 				}
 			}
 			u.f.customValidate["cvc"] = function(iN) {
 				var cvc = iN.val();
 				var card_number = iN._form.inputs["card_number"].val().replace(/ /g, "");
 				if(u.paymentCards.validateCVC(cvc, card_number)) {
-					u.f.fieldCorrect(iN);
+					u.f.inputIsCorrect(iN);
 				}
 				else {
-					u.f.fieldError(iN);
+					u.f.inputHasError(iN);
 				}
 			}
 			u.f.init(this.card_form);
