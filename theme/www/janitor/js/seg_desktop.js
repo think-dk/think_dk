@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-10-28 15:22:42
+asset-builder @ 2019-10-28 18:57:28
 */
 
 /*seg_desktop_include.js*/
@@ -10782,7 +10782,7 @@ Util.Objects["cancellationProfile"] = new function() {
 			div.form.div = div;
 			u.f.init(div.form);
 			div.form.actions["cancelaccount"].org_value = div.form.actions["cancelaccount"].value;
-			div.form.actions["cancelaccount"].confirm_value = "Cancelling you account cannot be undone. OK?";
+			div.form.actions["cancelaccount"].confirm_value = "Cancelling your account cannot be undone. OK?";
 			div.form.actions["cancelaccount"].submit_value = "Confirm";
 			div.form.inputs["password"].updated = function() {
 				u.bug("typing password")
