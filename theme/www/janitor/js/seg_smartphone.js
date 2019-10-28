@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-10-25 00:51:21
+asset-builder @ 2019-10-28 15:22:42
 */
 
 /*seg_smartphone_include.js*/
@@ -8968,8 +8968,8 @@ Util.Objects["sendMessage"] = new function() {
 				u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this, {"send_as":"formdata"})});
 			}
 			else {
-				u.f.fieldError(this.inputs["recipients"]);
-				u.f.fieldError(this.inputs["maillist_id"]);
+				u.f.inputHasError(this.inputs["recipients"]);
+				u.f.inputHasError(this.inputs["maillist_id"]);
 			}
 		}
 	}
@@ -9904,7 +9904,7 @@ Util.Objects["usernames"] = new function() {
 			}
 			this.response = function(response) {
 				if(response.cms_status == "error") {
-					u.f.fieldError(this.inputs["email"]);
+					u.f.inputHasError(this.inputs["email"]);
 				}
 				else {
 					this.inputs.email.saved_email = this.inputs.email.val();
@@ -9959,7 +9959,7 @@ Util.Objects["usernames"] = new function() {
 			this.response = function(response) {
 				page.notify(response);
 				if(response.cms_status == "error") {
-					u.f.fieldError(this.inputs["mobile"]);
+					u.f.inputHasError(this.inputs["mobile"]);
 				}
 				else {
 					u.rc(this.actions["save"], "primary");
@@ -10517,11 +10517,11 @@ Util.Objects["usernamesProfile"] = new function() {
 			this.response = function(response) {
 				if(response.cms_object && response.cms_object.status == "USER_EXISTS") {
 					page.notify({"isJSON":true, "cms_status":"error", "cms_message":["Email already exists"]});
-					u.f.fieldError(this.inputs["email"]);
+					u.f.inputHasError(this.inputs["email"]);
 				}
 				else if(response.cms_status == "error") {
 					page.notify({"isJSON":true, "cms_status":"error", "cms_message":["Email could not be updated"]});
-					u.f.fieldError(this.inputs["email"]);
+					u.f.inputHasError(this.inputs["email"]);
 				}
 				else {
 					u.rc(this.actions["save"], "primary");
@@ -10539,11 +10539,11 @@ Util.Objects["usernamesProfile"] = new function() {
 			this.response = function(response) {
 				if(response.cms_object && response.cms_object.status == "USER_EXISTS") {
 					page.notify({"isJSON":true, "cms_status":"error", "cms_message":["Mobile already exists"]});
-					u.f.fieldError(this.inputs["mobile"]);
+					u.f.inputHasError(this.inputs["mobile"]);
 				}
 				else if(response.cms_status == "error") {
 					page.notify({"isJSON":true, "cms_status":"error", "cms_message":["Mobile could not be updated"]});
-					u.f.fieldError(this.inputs["mobile"]);
+					u.f.inputHasError(this.inputs["mobile"]);
 				}
 				else {
 					u.rc(this.actions["save"], "primary");
