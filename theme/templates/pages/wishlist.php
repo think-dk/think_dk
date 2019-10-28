@@ -6,7 +6,7 @@ global $model;
 global $itemtype;
 
 
-$page_item = $IC->getItem(array("tags" => "page:wishlist", "extend" => array("user" => true, "mediae" => true, "tags" => true)));
+$page_item = $IC->getItem(array("tags" => "page:wishlist", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
@@ -26,8 +26,8 @@ if($wishlist) {
 ?>
 <div class="scene wishes i:wishes">
 
-<? if($page_item && $page_item["status"]): 
-	$media = $IC->sliceMediae($page_item); ?>
+<? if($page_item): 
+	$media = $IC->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
@@ -67,7 +67,7 @@ if($wishlist) {
 <?	if($items): ?>
 	<ul class="items wishes images">
 	<? foreach($items as $item):
-		$media = $IC->sliceMediae($item); ?>
+		$media = $IC->sliceMediae($item, "mediae"); ?>
 		<li class="item wish id:<?= $item["id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
 			<h3><?= $item["name"] ?></h3>
 

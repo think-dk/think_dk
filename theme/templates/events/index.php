@@ -3,7 +3,7 @@ global $IC;
 global $action;
 global $itemtype;
 
-$page_item = $IC->getItem(array("tags" => "page:events", "extend" => array("user" => true, "mediae" => true, "tags" => true)));
+$page_item = $IC->getItem(array("tags" => "page:events", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 
@@ -21,10 +21,10 @@ else {
 
 $date = date("d");
 
-$items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "event.starting_at > '".date("Y-m-d", mktime(0,0,0, $month, $date, $year))."'", "order" => "event.starting_at ASC", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+$items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "event.starting_at > '".date("Y-m-d", mktime(0,0,0, $month, $date, $year))."'", "order" => "event.starting_at ASC", "extend" => true));
 //print_r($items);
 // get items from previous and running month until now (we need these events to show the initial calendar grid)
-$past_items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "event.starting_at < '".date("Y-m-d", mktime(0,0,0, $month, $date, $year))."' AND event.starting_at > '".date("Y-m-d", mktime(0,0,0, $month-1, 1, $year))."'", "order" => "event.starting_at ASC", "extend" => array("tags" => true, "mediae" => true, "user" => true)));
+$past_items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" => "event.starting_at < '".date("Y-m-d", mktime(0,0,0, $month, $date, $year))."' AND event.starting_at > '".date("Y-m-d", mktime(0,0,0, $month-1, 1, $year))."'", "order" => "event.starting_at ASC", "extend" => true));
 
 
 // get new events
@@ -38,8 +38,8 @@ $past_items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" 
 
 <div class="scene events i:events" data-year="<?= $year ?>" data-month="<?= $month ?>">
 
-<? if($page_item && $page_item["status"]): 
-	$media = $IC->sliceMediae($page_item); ?>
+<? if($page_item): 
+	$media = $IC->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
@@ -82,8 +82,7 @@ $past_items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" 
 	<? if($items): ?>
 
 		<ul class="items events">
-<?		foreach($items as $item): 
-			$media = $IC->sliceMediae($item); ?>
+<?		foreach($items as $item): ?>
 			<li class="item event item_id:<?= $item["item_id"] ?>">
 
 				<dl class="occurs_at">
@@ -119,8 +118,7 @@ $past_items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" 
 	<? if($past_items): ?>
 
 		<ul class="items events">
-<?		foreach($past_items as $item): 
-			$media = $IC->sliceMediae($item); ?>
+<?		foreach($past_items as $item): ?>
 			<li class="item event item_id:<?= $item["item_id"] ?>">
 
 				<dl class="occurs_at">

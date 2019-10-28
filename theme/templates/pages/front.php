@@ -6,7 +6,7 @@ if($intros) {
 	$intro = $intros[rand(0, count($intros)-1)];
 }
 
-$page_item = $IC->getItem(array("tags" => "page:front", "extend" => array("user" => true, "tags" => true, "mediae" => true)));
+$page_item = $IC->getItem(array("tags" => "page:front", "status" => 1, "extend" => array("user" => true, "tags" => true, "mediae" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
@@ -31,8 +31,8 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 <? endif; ?>
 
 
-<? if($page_item && $page_item["status"]): 
-	$media = $IC->sliceMediae($page_item); ?>
+<? if($page_item): 
+	$media = $IC->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
@@ -72,8 +72,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 		<h2>Upcoming events <a href="/events">(see all)</a></h2>
 
 		<ul class="items events">
-		<? foreach($event_items as $item): 
-			$media = $IC->sliceMediae($item); ?>
+		<? foreach($event_items as $item): ?>
 			<li class="item event item_id:<?= $item["item_id"] ?>">
 
 				<dl class="occurs_at">
@@ -97,7 +96,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 		<h2>Latest bulletins <a href="/bulletin">(see all)</a></h2>
 		<ul class="items articles">
 		<? foreach($post_items as $item): 
-			$media = $IC->sliceMediae($item); ?>
+			$media = $IC->sliceMediae($item, "mediae"); ?>
 			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 				data-readstate="<?= $item["readstate"] ?>"
 				>

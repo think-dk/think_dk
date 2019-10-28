@@ -2,7 +2,7 @@
 global $action;
 global $IC;
 
-$page_item = $IC->getItem(array("tags" => "page:terms", "extend" => array("mediae" => true, "tags" => true)));
+$page_item = $IC->getItem(array("tags" => "page:terms", "status" => 1, "extend" => array("mediae" => true, "tags" => true)));
 
 if($page_item) {
 	$this->sharingMetaData($page_item);
@@ -10,8 +10,8 @@ if($page_item) {
 ?>
 <div class="scene terms i:scene">
 
-<? if($page_item && $page_item["status"]): 
-	$media = $IC->sliceMediae($page_item); ?>
+<? if($page_item): 
+	$media = $IC->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>

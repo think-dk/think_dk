@@ -3,7 +3,7 @@ global $action;
 global $IC;
 global $itemtype;
 
-$page_item = $IC->getItem(array("tags" => "page:services", "extend" => array("user" => true, "mediae" => true, "tags" => true)));
+$page_item = $IC->getItem(array("tags" => "page:services", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
@@ -16,8 +16,8 @@ $items_culture = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "or
 
 <div class="scene services i:scene">
 
-<? if($page_item && $page_item["status"]): 
-	$media = $IC->sliceMediae($page_item); ?>
+<? if($page_item): 
+	$media = $IC->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
@@ -61,7 +61,8 @@ $items_culture = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "or
 			<h2>Convenience</h2>
 			<p>We all need stuff. think.dk helps you to find new sustainable alternatives and ways of getting it.</p>
 			<ul class="items services">
-				<? foreach($items_convenience as $item): ?>
+				<? foreach($items_convenience as $item):
+					$media = $IC->sliceMediae($item, "single_media"); ?>
 				<li class="item service id:<?= $item["item_id"] ?><?= $item["classname"] ? " ".$item["classname"] : "" ?>" itemscope itemtype="http://schema.org/Article">
 
 					<h3 itemprop="headline"><a href="/services/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h3>
@@ -90,7 +91,8 @@ $items_culture = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "or
 			<h2>Balance</h2>
 			<p>Whether it is body-mind, work-life or duty-passion balance, with us it's easy to get everything in line.</p>
 			<ul class="items services i:articleMiniList">
-				<? foreach($items_balance as $item): ?>
+				<? foreach($items_balance as $item):
+					$media = $IC->sliceMediae($item, "single_media"); ?>
 				<li class="item service id:<?= $item["item_id"] ?><?= $item["classname"] ? " ".$item["classname"] : "" ?>" itemscope itemtype="http://schema.org/Article">
 
 					<h3 itemprop="headline"><a href="/services/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h3>
@@ -120,7 +122,8 @@ $items_culture = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "or
 			<p>We have a natural need to learn, experience and play, to challenge our senses and grow in new ways.</p>
 
 			<ul class="items services i:articleMiniList">
-				<? foreach($items_culture as $item): ?>
+				<? foreach($items_culture as $item):
+					$media = $IC->sliceMediae($item, "single_media"); ?>
 				<li class="item service id:<?= $item["item_id"] ?><?= $item["classname"] ? " ".$item["classname"] : "" ?>" itemscope itemtype="http://schema.org/Article">
 
 					<h3 itemprop="headline"><a href="/services/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h3>
