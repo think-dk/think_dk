@@ -49,6 +49,28 @@ $mediae_redirects = [
 	],
 	"1211" => [
 		"dqnqam8k" => "mediae-ne6ofpjh"
+	],
+	"1186" => [
+		"HTML-wnjep0jj" => "HTMLEDITOR-html-cqw6nggf",
+		"HTML-ag9z566c" => "HTMLEDITOR-html-vzh6c7sy",
+		"HTML-txgna2ie" => "HTMLEDITOR-html-smnjrf94",
+		"HTML-gmrs6fxc" => "HTMLEDITOR-html-zt9eua9v",
+		"HTML-peoy0i0v" => "HTMLEDITOR-html-ew1kzbdw",
+		"HTML-08hphlja" => "HTMLEDITOR-html-43xv63jx",
+		"HTML-focdbzkc" => "HTMLEDITOR-html-xs6ovrh0",
+		"HTML-33me127g" => "HTMLEDITOR-html-zlu4ls6p",
+		"HTML-u68omhmz" => "HTMLEDITOR-html-0b0njoh8"
+	],
+	"1100" => [
+		"HTML-62ouvxpt" => "HTMLEDITOR-html-p6udmph9",
+		"HTML-14gn5pr7" => "HTMLEDITOR-html-8skk3h83",
+		"HTML-h505bgff" => "HTMLEDITOR-html-lwnjq3mo"
+	],
+	"1052" => [
+		"HTML-15wui87g" => "HTMLEDITOR-html-lm4om3pt"
+	],
+	"1034" => [
+		"HTML-3g7a3t6u" => "HTMLEDITOR-html-dp5k0unh"
 	]
 ];
 
