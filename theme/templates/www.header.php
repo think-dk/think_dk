@@ -7,7 +7,7 @@ if(defined("SITE_SHOP") && SITE_SHOP) {
 <!DOCTYPE html>
 <html lang="<?= $this->language() ?>">
 <head>
-	<!-- (c) & (p) think.dk 2002-2018 -->
+	<!-- (c) & (p) think.dk 2002-2019 -->
 	<!-- For detailed copyright license, see /terms -->
 	<!-- If you want join a open source project with a social agenda, visit https://parentnode.dk -->
 	<title><?= $this->pageTitle() ?></title>
@@ -20,8 +20,9 @@ if(defined("SITE_SHOP") && SITE_SHOP) {
 
 	<?= $this->sharingMetaData() ?>
 
-	<link rel="apple-touch-icon" href="/touchicon.png">
-	<link rel="icon" href="/favicon.png">
+	<link rel="canonical" href="<?= SITE_URL . $this->url ?>" />
+	<link rel="apple-touch-icon" href="/touchicon.png" />
+	<link rel="icon" href="/favicon.png" />
 
 <? if(session()->value("dev")) { ?>
 	<link type="text/css" rel="stylesheet" media="all" href="/css/lib/seg_<?= $this->segment() ?>_include.css" />
