@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-11-05 11:50:48
+asset-builder @ 2019-11-12 17:58:02
 */
 
 /*seg_desktop_include.js*/
@@ -3700,11 +3700,12 @@ u.f.textEditor = function(field) {
 			input_classname.tag = tag;
 			u.ac(tag.bn_classname, "open");
 			u.f.init(form);
-			input_classname._input.focus();
-			input_classname._input.blurred = function() {
+			input_classname.input.focus();
+			input_classname.input.blurred = function() {
 				this.field.tag._classname = this.val();
 				this.field.tag.bn_classname.removeChild(this._form);
 				u.rc(this.field.tag.bn_classname, "open");
+				this.field.tag.field.update();
 			}
 		}
 	}

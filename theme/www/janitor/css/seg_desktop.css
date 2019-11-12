@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-11-05 11:50:48
+asset-builder @ 2019-11-12 17:58:02
 */
 
 /*seg_desktop_include.css*/
@@ -1066,6 +1066,7 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 body.invoice #content div.scene .basics h1 {color: #26962d; text-transform: lowercase; font-size: 30px;
 	font-family: "PT Serif", Times, serif;
 }
-#content .topicEdit fieldset h3 {border-top: 1px solid #aaaaaa; font-size: 0.8em; margin: 20px 0 20px; padding-bottom: 10px; padding-top: 7px; text-transform: uppercase;}
-#content .topicEdit fieldset .field.html {border-top: none; border-bottom: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0;}
+#content .scene.ticketList ul.items > li {min-height: 85px;}
+#content .scene.ticketList ul.items > li dl.info dt.price {display: none;}
+#content .scene.ticketList ul.items > li dl.info dd.price {position: absolute; top: 45px; right: 30px; font-size: 26px;}
 

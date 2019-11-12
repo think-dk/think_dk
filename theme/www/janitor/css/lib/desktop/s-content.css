@@ -7,8 +7,12 @@ body.invoice #content div.scene .basics h1 {color: #26962d; text-transform: lowe
 	font-family: "PT Serif", Times, serif;
 }
 
+#content .scene.ticketList ul.items > li {min-height: 85px;}
+#content .scene.ticketList ul.items > li dl.info dt.price {display: none;}
+#content .scene.ticketList ul.items > li dl.info dd.price {position: absolute; top: 45px; right: 30px; font-size: 26px;}
 
+/*
 #content .topicEdit fieldset h3 {border-top: 1px solid #aaaaaa; font-size: 0.8em; margin: 20px 0 20px; padding-bottom: 10px; padding-top: 7px; text-transform: uppercase;}
 #content .topicEdit fieldset .field.html {border-top: none; border-bottom: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0;}
-
+*/
 
