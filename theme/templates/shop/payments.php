@@ -24,7 +24,7 @@ if($orders) {
 
 		$remaining_order_price = $model->getRemainingOrderPrice($order["id"]);
 
-		$order_comment_list[] = $order["order_no"] . " - " . $order["comment"];
+		// $order_comment_list[] = $order["order_no"] . " - " . $order["comment"];
 		$order_list[] = $order["id"];
 
 		$total_payment += $remaining_order_price["price"];
@@ -50,8 +50,16 @@ if($orders && $total_payment): ?>
 
 	<h2>For the payment of:</h2>
 	<ul class="orders">
-	<? foreach($order_comment_list as $order_comment): ?>
-		<li><h3><?= $order_comment ?></h3></li>
+	<? foreach($orders as $order): 
+		$full_order = $model->getOrders(["order_id" => $order["id"]]); ?>
+		<li>
+			<h3><?= $full_order["order_no"] . ($full_order["comment"] ? (" – " . $full_order["comment"]) : "") ?></h3>
+			<ul class="orderitems">
+			<? foreach($full_order["items"] as $order_item): ?>
+				<li><?= $order_item["quantity"] ?> x <?= $order_item["name"] ?></li>
+			<? endforeach; ?>
+			</ul>
+		</li>
 	<? endforeach; ?>
 	</ul>
 

@@ -37,7 +37,14 @@ $payment_methods = $this->paymentMethods();
 	<h2>For the payment of:</h2>
 
 	<ul class="orders">
-		<li><h3><?= $order["order_no"] ?> - <?= $order["comment"] ?></h3></li>
+		<li>
+			<h3>Order no: <?= $order["order_no"] . ($order["comment"] ? (" – " . $order["comment"]) : "") ?></h3>
+			<ul class="orderitems">
+			<? foreach($order["items"] as $order_item): ?>
+				<li><?= $order_item["quantity"] ?> x <?= $order_item["name"] ?></li>
+			<? endforeach; ?>
+			</ul>
+		</li>
 	</ul>
 
 
