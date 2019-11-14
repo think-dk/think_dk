@@ -14,7 +14,7 @@ body {}
 #navigation ul li.selected {color: #26962d;}
 
 #content .scene a,
-#content .scene ul.geo.active li.location {color: #34cc3d;}
+#content .scene ul.geo.active li.name {color: #34cc3d;}
 
 #content .scene hr {border-color: #ccdbcd;}
 
