@@ -270,7 +270,7 @@ class TypeTicket extends Itemtype {
 		include_once("classes/helpers/pdf.class.php");
 
 		$pdf = new PDF();
-		$pdf->create($url, $ticket_file, ["format" => "A5", "delay" => 4000]);
+		$pdf->create($url, $ticket_file, ["format" => "A5", "delay" => 5000]);
 
 
 

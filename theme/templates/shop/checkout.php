@@ -58,10 +58,9 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 	</div>
 
 	<div class="signup">
-		<h2>Or sign up</h2>
-		<p>Enter your details below and create your account now.</h2>
+		<h2>Or enter your details</h2>
+		<p>This will create an account so you can continue checkout.</h2>
 		<?= $UC->formStart("/shop/signup", array("class" => "signup labelstyle:inject")) ?>
-			<?= $UC->input("maillist", array("type" => "hidden", "value" => "curious")); ?>
 			<fieldset>
 				<?= $UC->input("firstname", array("value" => $firstname)); ?>
 				<?= $UC->input("lastname", array("value" => $lastname)); ?>
@@ -69,12 +68,30 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 				<?= $UC->input("mobile", array("value" => $mobile)); ?>
 				<?= $UC->input("password", array("hint_message" => "Type your new password - or leave it blank and we'll generate one for you.", "error_message" => "Your password must be between 8 and 20 characters.")); ?>
 				<?= $UC->input("terms"); ?>
+				<?= $UC->input("maillist", array("type" => "checkbox", "label" => "Yes, I want to recieve the general think.dk newsletter.")); ?>
 			</fieldset>
 
 			<ul class="actions">
 				<?= $UC->submit("Continue", array("class" => "primary", "wrapper" => "li.signup")) ?>
 			</ul>
 		<?= $model->formEnd() ?>
+
+		<h3>Why do I need an account?</h3>
+		<p>
+			As a think.dk member, an account is a natural extension of your membership. The account
+			will also give you access to certain features on this site, that is only available to
+			our members.
+		</p>
+		<p>
+			For all other purchases we are legally required to store a minimum of information 
+			when we receive payments to prevent whitewashing. For your convenience
+			we officially associate this information with an account – to enable full transparency
+			about what data is stored on our side.
+		</p>
+		<p>
+			You can cancel your account anytime you like,
+			but we are required to keep basic information about your payments for a minimum of 5 years.
+		</p>
 	</div>
 
 	<? 

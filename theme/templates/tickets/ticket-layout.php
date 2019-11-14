@@ -14,6 +14,7 @@ $this->headerIncludes(["/css/print-ticket.css"]);
 
 	<div class="ticket">
 	<? if($ticket_info): ?>
+
 		<h4>AVOID PRINTING THIS TICKET</h4>
 		<p>(just bring it on your phone)</p>
 
@@ -24,6 +25,7 @@ $this->headerIncludes(["/css/print-ticket.css"]);
 		<p><?= $ticket_info["user"]["nickname"] ?></p>
 		<p><?= nl2br($ticket_info["item"]["ticket_information"]) ?></p>
 
+		<p class="note">This ticket is only valid when full payment has been registered.</p>
 	<? else: ?>
 		<h1>Sorry – ticket could not be issued</h1>
 	<? endif; ?>
