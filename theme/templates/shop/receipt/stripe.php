@@ -63,7 +63,7 @@ if(count($action) == 4) {
 
 <? if($order): ?>
 
-	<h1>Thank you for supporting change.</h1>
+	<h1>Thank you</h1>
 
 	<h2>Your payment of <?= formatPrice(["price" => $payment["payment_amount"], "currency" => $payment["currency"]]) ?> has been processed successfully.</h2>
 
