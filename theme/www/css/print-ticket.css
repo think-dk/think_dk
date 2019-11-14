@@ -1,0 +1,15 @@
+#page {min-width: auto;}
+#header,
+#footer {display: none;}
+
+#content .scene {text-align: center; opacity: 1; padding: 20px 0;}
+#content .scene h1,
+#content .scene h2,
+#content .scene h3,
+#content .scene h4,
+#content .scene p {width: auto;}
+
+#content .scene .ticket h1 {padding-top: 130px;}
+#content .scene .ticket h3 {padding-bottom: 50px;}
+
+#content .scene .ticket {height: 800px;}

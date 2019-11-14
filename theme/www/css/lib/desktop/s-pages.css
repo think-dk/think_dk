@@ -716,6 +716,17 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene div.qnas .field {padding-bottom: 10px;}
 
 
+#content .scene.tickets div.tickets li.ticket h3 {font-size: 34px;}
+#content .scene.tickets div.tickets li.ticket ul.ticket_info {position: absolute; right: 0px; top: 16px; text-align: right;}
+#content .scene.tickets div.tickets li.ticket ul.ticket_info li.price {font-size: 34px;}
+
+#content .scene.ticket {padding-top: 70px;}
+#content .scene.ticket div.ticket ul.ticket_info {position: absolute; right: 0px; top: 80px; text-align: right; z-index: 10;}
+#content .scene.ticket div.ticket ul.ticket_info li.price {font-size: 34px;}
+
+#content .scene.ticket div.ticket ul.ticket_info li.buy ul.actions {padding: 40px 0 0;}
+#content .scene.ticket div.ticket ul.ticket_info li.buy ul.actions li {padding: 0;}
+
 #content .scene .articlebody p.quote {
 	font-size: 30px;
 	text-align: center;
