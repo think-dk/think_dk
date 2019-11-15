@@ -91,8 +91,6 @@ if($orders && $total_payment): ?>
 
 	</ul>
 
-	<p class="note">* We pay the transaction fee – so feel free to choose a suited option with the smallest fee for us.</p>
-
 <? 
 // No payments
 elseif(session()->value("user_group_id") > 1): ?>
