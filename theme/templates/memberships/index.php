@@ -106,7 +106,8 @@ $memberships = $IC->getItems(array("itemtype" => "membership", "tags" => "member
 
 	<div class="maillist">
 		<?= $UC->formStart("/maillist/addToMaillist", array("class" => "maillist labelstyle:inject")) ?>
-			<?= $UC->input("maillist", array("value" => "curious", "type" => "hidden")); ?>
+			<?= $UC->input("maillist_name", array("value" => "curious", "type" => "hidden")); ?>
+			<?= $UC->input("maillist", array("value" => 1, "type" => "hidden")); ?>
 			<fieldset>
 				<?= $UC->input("email", array("value" => $email, "required" => true, "hint_message" => "Enter your email")); ?>
 				<?= $UC->input("terms"); ?>

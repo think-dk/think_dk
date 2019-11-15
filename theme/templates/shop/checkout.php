@@ -61,6 +61,7 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 		<h2>Or enter your details</h2>
 		<p>This will create an account so you can continue checkout.</h2>
 		<?= $UC->formStart("/shop/signup", array("class" => "signup labelstyle:inject")) ?>
+			<?= $UC->input("maillist_name", array("type" => "hidden", "value" => "curious")); ?>
 			<fieldset>
 				<?= $UC->input("firstname", array("value" => $firstname)); ?>
 				<?= $UC->input("lastname", array("value" => $lastname)); ?>
@@ -68,7 +69,7 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 				<?= $UC->input("mobile", array("value" => $mobile)); ?>
 				<?= $UC->input("password", array("hint_message" => "Type your new password - or leave it blank and we'll generate one for you.", "error_message" => "Your password must be between 8 and 20 characters.")); ?>
 				<?= $UC->input("terms"); ?>
-				<?= $UC->input("maillist", array("type" => "checkbox", "label" => "Yes, I want to recieve the general think.dk newsletter.")); ?>
+				<?= $UC->input("maillist", array("type" => "checkbox", "label" => "Yes, I want to receive the General newsletter.")); ?>
 			</fieldset>
 
 			<ul class="actions">

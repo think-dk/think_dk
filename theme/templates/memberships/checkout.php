@@ -60,7 +60,14 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 
 		<p>Enter your details below and create your membership account now.</p>
 		<?= $UC->formStart("signup", array("class" => "signup labelstyle:inject")) ?>
-			<?= $UC->input("maillist", array("type" => "hidden", "value" => "curious")); ?>
+
+		<? if($membership == "Curious Cat"): ?>
+			<?= $UC->input("maillist_name", array("type" => "hidden", "value" => "curious")); ?>
+		<? else: ?>
+			<?= $UC->input("maillist_name", array("type" => "hidden", "value" => "paying members")); ?>
+		<? endif; ?>
+			<?= $UC->input("maillist", array("type" => "hidden", "value" => 1)); ?>
+
 			<fieldset>
 				<?= $UC->input("firstname", array("value" => $firstname)); ?>
 				<?= $UC->input("lastname", array("value" => $lastname)); ?>
