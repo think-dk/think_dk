@@ -57,6 +57,7 @@ if(count($action) == 4) {
 
 }
 
+message()->resetMessages();
 
 ?>
 <div class="scene shopReceipt i:scene">
@@ -66,6 +67,34 @@ if(count($action) == 4) {
 	<h1>Thank you</h1>
 
 	<h2>Your payment of <?= formatPrice(["price" => $payment["payment_amount"], "currency" => $payment["currency"]]) ?> has been processed successfully.</h2>
+
+	<?
+	$has_ticket = false;
+	foreach($order["items"] as $order_item):
+
+		$query = new Query();
+		$sql = "SELECT * FROM ".SITE_DB.".user_item_tickets WHERE order_item_id = ".$order_item["id"];
+
+		if($query->sql($sql)) {
+
+			if(!$has_ticket): ?>
+			<h3>Download your ticket(s)</h3>
+
+			<ul class="ticketdownload">
+
+			<? endif;
+			$has_ticket = true;
+			$tickets = $query->results();
+
+			foreach($tickets as $key => $ticket): ?>
+				<li class="ticket"><a href="/download/<?= $ticket["item_id"] ?>/<?= $ticket["ticket_no"] ?>/<?= $ticket["ticket_no"] ?>.pdf"><?= $ticket["ticket_no"] ?><?= (count($tickets) > 1 ? " (".($key+1)."/".count($tickets).")" : "") ?></li>
+			<? endforeach; ?>
+
+			</ul>
+		<? }
+	
+	endforeach; ?>
+
 
 <? endif; ?>
 
@@ -78,6 +107,7 @@ if(count($action) == 4) {
 <? if(!$active_account): ?>
 	<p>Remember to activate your account, otherwise you won't get our newsletter. Check your inbox for the Activation email.</p>
 <? endif; ?>
+
 
 
 </div>
