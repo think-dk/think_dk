@@ -5,32 +5,50 @@ global $itemtype;
 global $model;
 
 $ticket_no = $action[1];
+$batch = getVar("batch");
 
 $ticket_info = $model->getTicketInfo($ticket_no);
 	
-$this->headerIncludes(["/css/print-ticket.css"]);
 ?>
 <div class="scene printticket">
+
+	<div class="ticketheader">
+		<h4>AVOID PRINTING THIS TICKET</h4>
+		<p>(save paper and bring it on your phone)</p>
+	</div>
 
 	<div class="ticket">
 	<? if($ticket_info): ?>
 
-		<h4>AVOID PRINTING THIS TICKET</h4>
-		<p>(just bring it on your phone)</p>
-
-		<h1><?= strip_tags($ticket_info["item"]["name"]) ?></h1>
 		<h2>Ticket</h2>
+		<h1><?= strip_tags($ticket_info["item"]["name"]) ?></h1>
+		<? if($ticket_info["price"]): ?>
+			<p class="price"><?= $ticket_info["price"] ?></p>
+		<? endif; ?>
 		<h3><?= $ticket_no ?></h3>
 
-		<p><?= $ticket_info["user"]["nickname"] ?></p>
+		<p class="name"><?= $ticket_info["user"]["nickname"] ?></p>
+
+		<? if($batch): ?>
+		<p class="batch"><?= $batch ?></p>
+		<? endif; ?>
+
 		<p><?= nl2br($ticket_info["item"]["ticket_information"]) ?></p>
 
-		<p class="note">This ticket is only valid when full payment has been registered.</p>
+		<p class="note">This ticket is only valid when full payment is registered.</p>
+
 	<? else: ?>
-		<h1>Sorry – ticket could not be issued</h1>
+
+		<h1>Sorry</h1>
+		<h2>Your ticket could not be issued</h2>
+		<p>Please contact <a href="mailto:tickets@think.dk">tickets@think.dk</a> to issue this ticket.</p>
+
 	<? endif; ?>
 	</div>
 
-	<h1>think.dk</h1>
-	<p>Tickets for good things</p>
+	<div class="ticketfooter">
+		<h1>think.dk</h1>
+		<p>Tickets for good things</p>
+	</div>
+
 </div>

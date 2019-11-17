@@ -30,6 +30,7 @@ if(count($action) == 1) {
 else if(count($action) == 2 && $action[0] == "print") {
 
 	$page->page(array(
+		"type" => "ticket",
 		"templates" => "tickets/ticket-layout.php"
 	));
 	exit();

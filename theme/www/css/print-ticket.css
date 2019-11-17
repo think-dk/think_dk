@@ -1,15 +1,88 @@
-#page {min-width: auto;}
-#header,
-#footer {display: none;}
+@font-face {
+	font-family: 'OpenSans';
+	src: url('/assets/parentnode-skin-default/css/fonts/open_sans/opensans-regular-webfont.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'OpenSans';
+	src: url('/assets/parentnode-skin-default/css/fonts/open_sans/opensans-bold-webfont.woff2') format('woff2');
+	font-weight: bold;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'OpenSans';
+	src: url('/assets/parentnode-skin-default/css/fonts/open_sans/opensans-italic-webfont.woff2') format('woff2');
+	font-weight: normal;
+	font-style: italic;
+}
 
-#content .scene {text-align: center; opacity: 1; padding: 20px 0;}
-#content .scene h1,
-#content .scene h2,
+@font-face {
+	font-family: 'PT Serif';
+	src: url('/assets/parentnode-skin-default/css/fonts/pt_serif/pt_serif-regular-webfont.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+* {font-family: "OpenSans", Verdana, Arial, sans-serif; color: #26962d;
+	-webkit-text-size-adjust: none;
+	-webkit-font-smoothing: antialiased;
+}
+
+html {min-height: 100%;}
+body {background: #ffffff; margin: 0; overflow-y: scroll; overflow-x: hidden;}
+
+
+/* BASE */
+h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dd, dt {padding: 0; margin: 0;}
+h1, h2, h3, h4, h5, h6, p, li, dd, dt, span, a {line-height: 1em; font-weight: normal;}
+
+a {text-decoration: none; cursor: pointer;}
+
+img {border: 0; display: block;}
+
+a, span {font-size: inherit; font-family: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
+em, strong {font-size: inherit; font-family: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
+sup {line-height: 1em; font-family: inherit; color: inherit;}
+
+h1 {padding: 0 30px 30px; font-size: 36px; line-height: 1.05em;
+	font-family: "PT Serif", Times, serif;
+}
+h2 {padding: 0 30px 5px; font-size: 20px; line-height: 1.1em;
+	font-family: "PT Serif", Times, serif;
+}
+h3 {padding: 0 30px 10px; font-size: 22px; line-height: 1.25em;}
+h4 {padding: 0 30px 5px; font-size: 17px; line-height: 1.2em; font-weight: bold;}
+h5 {padding: 0 30px 2px; font-size: 14px; line-height: 1.2em; font-weight: bold;}
+h6 {padding: 0 30px 2px; font-size: 14px; line-height: 1em; font-weight: normal; font-style: italic;}
+p {padding: 0 30px 20px; font-size: 14px; line-height: 1.38em;}
+
+#content .scene a {color: #34cc3d;}
+
 #content .scene h3,
 #content .scene h4,
-#content .scene p {width: auto;}
+#content .scene h5,
+#content .scene h6,
+#content .scene p {color: #777777;}
 
-#content .scene .ticket h1 {padding-top: 130px;}
-#content .scene .ticket h3 {padding-bottom: 50px;}
 
-#content .scene .ticket {height: 750px;}
+#content .scene {text-align: center; opacity: 1; padding: 0;}
+
+
+#content .scene .ticket {height: 530px;}
+#content .scene .ticket h1 {}
+#content .scene .ticket h2 {padding-bottom: 5px;}
+#content .scene .ticket h4 {}
+#content .scene .ticket p.name {padding-bottom: 30px;}
+#content .scene .ticket p.price {margin-top: -28px;}
+#content .scene .ticket p.batch {margin-top: -28px;}
+#content .scene .ticket p.note {padding-top: 20px; font-style: italic;}
+
+
+#content .scene .ticketheader {padding-bottom: 30px;}
+#content .scene .ticketheader h4 {font-size: 20px;}
+#content .scene .ticketheader p {}
+	
+#content .scene .ticketfooter {}
+#content .scene .ticketfooter h1 {padding-bottom: 0; font-size: 40px;}
+#content .scene .ticketfooter p {font-size: 12px; padding-bottom: 0;}
