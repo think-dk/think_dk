@@ -346,7 +346,7 @@ class TypeTicket extends Itemtype {
 			include_once("classes/helpers/pdf.class.php");
 
 			$pdf = new PDF();
-			$pdf->create($url, $ticket_file, ["format" => "A5", "delay" => 1500, "cookie" => ["name" => "PHPSESSID", "value" => $_COOKIE["PHPSESSID"]]]);
+			$pdf->create($url, $ticket_file, ["format" => "A5", "delay" => 3000, "cookie" => ["name" => "PHPSESSID", "value" => $_COOKIE["PHPSESSID"]]]);
 
 			$fs = new FileSystem();
 			$fs->copy($ticket_file, $public_ticket_file);
