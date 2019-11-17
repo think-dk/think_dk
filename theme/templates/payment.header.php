@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="<?= $this->language() ?>">
 <head>
-	<!-- (c) & (p) think.dk 2002-2016 -->
+	<!-- (c) & (p) think.dk 2002-2019 -->
 	<!-- For detailed copyright license, see /terms -->
 	<!-- If you want to use or contribute to this code, visit http://parentnode.dk -->
 	<title><?= $this->pageTitle() ?></title>
