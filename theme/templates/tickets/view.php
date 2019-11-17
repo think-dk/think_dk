@@ -45,6 +45,8 @@ $SC = new Shop();
 			<li class="remaining_tickets">Closed</li>
 			<? elseif(strtotime($item["sale_opens"]) > time()): ?>
 			<li class="remaining_tickets">Sale opens on <?= $item["sale_opens"] ?></li>
+			<? elseif($remaining_tickets <= 0):?>
+			<li class="remaining_tickets">Sold out</li>
 			<? else:?>
 			<li class="remaining_tickets"><?= $remaining_tickets ?> tickets left</li>
 			<li class="buy">
