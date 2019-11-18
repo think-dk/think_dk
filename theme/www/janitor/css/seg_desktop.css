@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-11-12 17:58:02
+asset-builder @ 2019-11-19 00:07:19
 */
 
 /*seg_desktop_include.css*/
@@ -1069,4 +1069,10 @@ body.invoice #content div.scene .basics h1 {color: #26962d; text-transform: lowe
 #content .scene.ticketList ul.items > li {min-height: 85px;}
 #content .scene.ticketList ul.items > li dl.info dt.price {display: none;}
 #content .scene.ticketList ul.items > li dl.info dd.price {position: absolute; top: 45px; right: 30px; font-size: 26px;}
+#content .scene.ticketEdit div.participants {border-bottom: 1px solid #bbbbbb;}
+#content .scene.ticketEdit div.all_items {padding-bottom: 30px;}
+#content .scene.ticketEdit ul.items.participants {}
+#content .scene.ticketEdit ul.items.participants li {padding: 5px 30px;}
+#content .scene.ticketEdit ul.items.participants li span {padding-right: 7px; display: inline-block; width: 250px;}
+#content .scene.ticketEdit ul.items.participants li span.ticket_no {width: 150px;}
 

@@ -18,6 +18,7 @@ body.invoice #content div.scene .basics h1 {color: #26962d; text-transform: lowe
 #content .scene.ticketEdit ul.items.participants li {padding: 5px 30px;}
 #content .scene.ticketEdit ul.items.participants li span {padding-right: 7px; display: inline-block; width: 250px;}
 #content .scene.ticketEdit ul.items.participants li span.ticket_no {width: 150px;}
+
 /*
 #content .topicEdit fieldset h3 {border-top: 1px solid #aaaaaa; font-size: 0.8em; margin: 20px 0 20px; padding-bottom: 10px; padding-top: 7px; text-transform: uppercase;}
 #content .topicEdit fieldset .field.html {border-top: none; border-bottom: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0;}
