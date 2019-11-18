@@ -8,6 +8,8 @@ $item_id = $action[1];
 $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "mediae" => true, "prices" => true, "comments" => true)));
 
 $messages = $IC->getItems(array("itemtype" => "message", "tags" => "message:Ticket", "extend" => true));
+
+$participants = $model->getParticipants($item_id);
 ?>
 <div class="scene i:scene defaultEdit <?= $itemtype ?>Edit">
 	<h1>Edit ticket</h1>
@@ -53,8 +55,41 @@ $messages = $IC->getItems(array("itemtype" => "message", "tags" => "message:Tick
 
 
 	<div class="participants i:defaultParticipants i:collapseHeader item_id:<?= $item["id"] ?>">
-		<h2>Participants ()</h2>
+		<h2>Participants (<?= $participants && $participants["paid"] ? count($participants["paid"]) : "0" ?>)</h2>
 
+		<div class="all_items paid">
+			<h3>Paid tickets</h3>
+		<? if($participants && $participants["paid"]): ?>
+			<ul class="participants paid items">
+				<? foreach($participants["paid"] as $participant): ?>
+					<li class="item participant">
+						<span class="ticket_no"><?= $participant["ticket_no"] ?></span>
+						<span class="name"><?= $participant["nickname"] ?></span>
+						<span class="username"><?= $participant["username"] ?></span>
+					</li>
+				<? endforeach; ?>
+			</ul>
+		<? else: ?>
+			<p>No tickets have been paid.</p>
+		<? endif; ?>
+		</div>
+
+		<div class="all_items unpaid">
+			<h3>Yet unpaid tickets</h3>
+		<? if($participants && $participants["unpaid"]): ?>
+			<ul class="participants unpaid items">
+				<? foreach($participants["unpaid"] as $participant): ?>
+					<li class="item participant">
+						<span class="ticket_no"><?= $participant["ticket_no"] ?></span>
+						<span class="name"><?= $participant["nickname"] ?></span>
+						<span class="username"><?= $participant["username"] ?></span>
+					</li>
+				<? endforeach; ?>
+			</ul>
+		<? else: ?>
+			<p>No tickets have been paid.</p>
+		<? endif; ?>
+		</div>
 
 	</div>
 

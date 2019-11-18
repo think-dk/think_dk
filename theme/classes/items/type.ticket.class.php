@@ -102,10 +102,22 @@ class TypeTicket extends Itemtype {
 	// Find specific tickets in orders
 	function getParticipants($item_id) {
 
-		// $query = new Query();
-		// $sql = "SELECT nickname as sum FROM ".SITE_DB.".shop_orders as orders, ".SITE_DB.".shop_order_items as items WHERE items.item_id = $item_id AND items.order_id = orders.id AND orders.status != 3";
-		// // debug([$sql]);
-		// $query->sql($sql);
+		$participants = [];
+
+		$query = new Query();
+		$sql = "SELECT users.nickname, usernames.username, tickets.ticket_no FROM ".SITE_DB.".shop_orders as orders, ".SITE_DB.".shop_order_items as order_items, ".SITE_DB.".user_item_tickets as tickets, ".SITE_DB.".users as users, ".SITE_DB.".user_usernames as usernames WHERE tickets.item_id = $item_id AND tickets.order_item_id = order_items.id AND order_items.order_id = orders.id AND orders.payment_status = 2 AND orders.status != 3 AND users.id = tickets.user_id AND tickets.user_id = usernames.user_id AND usernames.type = 'email'";
+		// debug([$sql]);
+		if($query->sql($sql)) {
+			$participants["paid"] = $query->results();
+		}
+
+		$sql = "SELECT users.nickname, usernames.username, tickets.ticket_no FROM ".SITE_DB.".shop_orders as orders, ".SITE_DB.".shop_order_items as order_items, ".SITE_DB.".user_item_tickets as tickets, ".SITE_DB.".users as users, ".SITE_DB.".user_usernames as usernames WHERE tickets.item_id = $item_id AND tickets.order_item_id = order_items.id AND order_items.order_id = orders.id AND orders.payment_status != 2 AND orders.status != 3 AND users.id = tickets.user_id AND tickets.user_id = usernames.user_id AND usernames.type = 'email'";
+		// debug([$sql]);
+		if($query->sql($sql)) {
+			$participants["unpaid"] = $query->results();
+		}
+
+		return $participants;
 		// $count = $query->result(0, "sum");
 
 	}
@@ -286,6 +298,7 @@ class TypeTicket extends Itemtype {
 
 	}
 
+	// Requested from ticket-layout (printed with wkhtmlto)
 	function getTicketInfo($ticket_no) {
 
 		$query = new Query();
