@@ -70,7 +70,7 @@ $participants = $model->getParticipants($item_id);
 				<? endforeach; ?>
 			</ul>
 		<? else: ?>
-			<p>No tickets have been paid.</p>
+			<p>No tickets have been ordered and paid.</p>
 		<? endif; ?>
 		</div>
 
@@ -87,7 +87,7 @@ $participants = $model->getParticipants($item_id);
 				<? endforeach; ?>
 			</ul>
 		<? else: ?>
-			<p>No tickets have been paid.</p>
+			<p>No tickets have been ordered, but not paid yet.</p>
 		<? endif; ?>
 		</div>
 
