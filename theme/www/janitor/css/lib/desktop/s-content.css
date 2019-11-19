@@ -15,8 +15,9 @@ body.invoice #content div.scene .basics h1 {color: #26962d; text-transform: lowe
 #content .scene.ticketEdit div.all_items {padding-bottom: 30px;}
 
 #content .scene.ticketEdit ul.items.participants {}
-#content .scene.ticketEdit ul.items.participants li {padding: 5px 30px;}
-#content .scene.ticketEdit ul.items.participants li span {padding-right: 7px; display: inline-block; width: 250px;}
+#content .scene.ticketEdit ul.items.participants li {padding: 0 30px;}
+#content .scene.ticketEdit ul.items.participants li ul.actions {top: 4px;}
+#content .scene.ticketEdit ul.items.participants li span {padding: 10px 7px 10px 0; display: inline-block; width: 250px;}
 #content .scene.ticketEdit ul.items.participants li span.ticket_no {width: 150px;}
 
 /*
