@@ -319,11 +319,16 @@ class TypeTicket extends Itemtype {
 			$ticket_info["user"] = $UC->getUserInfo(["user_id" => $user_id]);
 
 			if($order_item_id) {
-				$SC = new Shop();
+				// $SC = new Shop();
+
+				// TODO: Not pretty – but problems with re-issuing tickets
+				include_once("classes/shop/supershop.class.php");
+				$SC = new SuperShop();
 
 				$sql = "SELECT * FROM ".$SC->db_order_items." WHERE id = '$order_item_id'";
 				if($query->sql($sql)) {
 					$order_item = $query->result(0);
+
 					$order = $SC->getOrders(["order_id" => $order_item["order_id"]]);
 					if($order) {
 						$ticket_info["price"] = formatPrice(["price" => $order_item["unit_price"], "vat" => $order_item["unit_vat"], "country" => $order["country"], "currency" => $order["currency"]]);
@@ -430,13 +435,8 @@ class TypeTicket extends Itemtype {
 
 					}
 
-					$current_user_id = session()->value("user_id");
-					session()->value("user_id", $ticket["user_id"]);
-
 					// Collect ticket files
 					$ticket_files[] = $this->generateTicket($ticket["item_id"], $ticket_no, $batch);
-
-					session()->value("user_id", $current_user_id);
 
 
 					global $page;
