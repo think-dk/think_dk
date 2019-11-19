@@ -435,6 +435,12 @@ class TypeTicket extends Itemtype {
 
 					}
 
+					// Delete old tickets
+					$fs = new FileSystem();
+					$fs->removeDirRecursively(PRIVATE_FILE_PATH."/".$ticket["item_id"]."/ticket/$ticket_no");
+					$fs->removeDirRecursively(PUBLIC_FILE_PATH."/".$ticket["item_id"]."/$ticket_no");
+					
+
 					// Collect ticket files
 					$ticket_files[] = $this->generateTicket($ticket["item_id"], $ticket_no, $batch);
 
