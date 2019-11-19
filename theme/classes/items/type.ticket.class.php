@@ -453,8 +453,8 @@ class TypeTicket extends Itemtype {
 					$model = $IC->typeObject("message");
 					$model->sendMessage([
 						"item_id" => $message_id, 
-						// "user_id" => $user_id,
-						"user_id" => 2, 
+						"user_id" => $ticket["user_id"],
+						// "user_id" => 2,
 						"values" => [
 							"QUANTITY" => count($total_order_items),
 							"PRICE" => $total_price,
