@@ -105,7 +105,7 @@ message()->resetMessages();
 
 
 <? if(!$active_account): ?>
-	<p>Remember to activate your account, otherwise you won't get our newsletter. Check your inbox for the Activation email.</p>
+	<p>Remember to activate your account – you need to verify your account to receive any news from us or to log in to your account.</p>
 <? endif; ?>
 
 

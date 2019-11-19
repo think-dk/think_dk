@@ -76,7 +76,7 @@ if($page_item) {
 		</ul>
 	<?= $model->formEnd() ?>
 
-	<p class="note">You can also skip verification for now and go straight to checkout – but you need to verify your account to receive any news from us or log in to your account.</p>
+	<p class="note">You can also skip verification for now and go straight to checkout – but you need to verify your account to receive any news from us or to log in to your account.</p>
 
 	<h3>Why do I need to verify my email?</h3>
 	<p>
