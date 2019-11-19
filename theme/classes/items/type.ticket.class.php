@@ -347,7 +347,7 @@ class TypeTicket extends Itemtype {
 
 			// prepare print request url
 			$url = SITE_URL."/tickets/print/$ticket_no".($batch ? "?batch=".urlencode($batch) : "");
-			debug([$url]);
+			// debug([$url]);
 
 			// prepare save path
 			$ticket_file = PRIVATE_FILE_PATH."/$item_id/ticket/$ticket_no/pdf";
@@ -366,6 +366,108 @@ class TypeTicket extends Itemtype {
 
 			return $public_ticket_file;
 		}
+
+	}
+
+	function reIssueTicket($action) {
+
+		// debug([$action]);
+		if(count($action) == 2) {
+
+			$ticket_no = $action[1];
+
+			$query = new Query();
+
+			// Look for ticket
+			$sql = "SELECT user_id, item_id, order_item_id FROM ".$this->db_user_tickets." WHERE ticket_no = '$ticket_no' LIMIT 1";
+			// debug([$sql]);
+			if($query->sql($sql)) {
+
+				$ticket = $query->result(0);
+
+
+				$sql = "SELECT * FROM ".SITE_DB.".shop_order_items WHERE id = ".$ticket["order_item_id"]." LIMIT 1";
+				if($query->sql($sql)) {
+
+					$order_item = $query->result(0);
+
+					include_once("classes/shop/supershop.class.php");
+					$SC = new SuperShop();
+
+					$order = $SC->getOrders(["order_id" => $order_item["order_id"]]);
+
+					// variables for email
+					$total_price = formatPrice(["price" => $order_item["total_price"], "vat" => $order_item["total_vat"], "country" => $order["country"], "currency" => $order["currency"]]);
+
+
+					// Get item information
+					$IC = new Items();
+					$item = $IC->getItem(["id" => $ticket["item_id"], "extend" => true]);
+					$message_id = $item["ordered_message_id"];
+
+					$ticket_files = [];
+
+					$sql = "SELECT id FROM ".SITE_DB.".shop_order_items WHERE order_id = ".$order_item["order_id"];
+					if($query->sql($sql)) {
+						$total_order_items = $query->results();
+
+						// Batch information
+						if(count($total_order_items) > 1) {
+
+							foreach($total_order_items as $key => $total_order_item) {
+								if($total_order_item["id"] === $ticket["order_item_id"]) {
+									$batch = "(".($key+1)."/".count($total_order_items).")";
+									break;
+								}
+							}
+
+						}
+						else {
+
+							$batch = "";
+
+						}
+
+					}
+
+					// Collect ticket files
+					$ticket_files[] = $this->generateTicket($ticket["item_id"], $ticket_no, $batch);
+
+
+					global $page;
+					$page->addLog("ticket->reIssueTicket: item_id:".$ticket["item_id"].", user_id:".$ticket["user_id"].", order_item_id:".$order_item["id"].", quantity:".count($total_order_items).", ticket_no:".$ticket_no.($batch ? ", batch:".$batch : ""));
+
+
+					// Send ticket email
+					$model = $IC->typeObject("message");
+					$model->sendMessage([
+						"item_id" => $message_id, 
+						// "user_id" => $user_id,
+						"user_id" => 2, 
+						"values" => [
+							"QUANTITY" => count($total_order_items),
+							"PRICE" => $total_price,
+							"EVENT_NAME" => $item["name"],
+							// "TICKET_NO" => $ticket_no,
+							"TICKET_INFORMATION" => nl2br($item["ticket_information"])
+						],
+						"attachments" => $ticket_files
+					]);
+
+
+					message()->addMessage("Ticket has been re-sent to Customer");
+
+					return true;
+
+				}
+
+			}
+
+		}
+
+		message()->addMessage("Ticket could not be re-issued", ["type" => "error"]);
+
+		return false;
 
 	}
 

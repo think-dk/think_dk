@@ -66,6 +66,11 @@ $participants = $model->getParticipants($item_id);
 						<span class="ticket_no"><?= $participant["ticket_no"] ?></span>
 						<span class="name"><?= $participant["nickname"] ?></span>
 						<span class="username"><?= $participant["username"] ?></span>
+						<ul class="actions">
+							<li class="reissue"><?= $JML->oneButtonForm("Re-send ticket", "/janitor/ticket/reIssueTicket/".$participant["ticket_no"], [
+								
+							]) ?></li>
+						</ul>
 					</li>
 				<? endforeach; ?>
 			</ul>

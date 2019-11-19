@@ -1,5 +1,8 @@
 <?php
 $access_item["/"] = true;
+$access_item["/reissue"] = true;
+$access_item["/reIssueTicket"] = "/reissue";
+
 $access_item["/comments"] = true;
 $access_item["/addComment"] = "/comments";
 if(isset($read_access) && $read_access) {
