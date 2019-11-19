@@ -430,8 +430,13 @@ class TypeTicket extends Itemtype {
 
 					}
 
+					$current_user_id = session()->value("user_id");
+					session()->value("user_id", $ticket["user_id"]);
+
 					// Collect ticket files
 					$ticket_files[] = $this->generateTicket($ticket["item_id"], $ticket_no, $batch);
+
+					session()->value("user_id", $current_user_id);
 
 
 					global $page;
