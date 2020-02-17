@@ -39,7 +39,7 @@ $SC = new Shop();
 		<?= $HTML->link("Expired tickets", "/janitor/ticket/list/expired", array("wrapper" => "li.".($expired ? "selected" : ""))) ?>
 	</ul>
 
-	<div class="all_items i:defaultList filters"<?= $JML->jsData(["tags", "search"]) ?>>
+	<div class="all_items i:defaultList filters"<?= $HTML->jsData(["tags", "search"]) ?>>
 <?		if($items): ?>
 		<ul class="items">
 <?			foreach($items as $item): ?>

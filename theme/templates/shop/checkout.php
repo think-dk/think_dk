@@ -108,7 +108,7 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 	<? if($cart["items"]): ?>
 	<div class="confirm">
 		<ul class="actions">
-			<?= $JML->oneButtonForm("Confirm order", "/shop/confirm/".$cart["cart_reference"], array(
+			<?= $HTML->oneButtonForm("Confirm order", "/shop/confirm/".$cart["cart_reference"], array(
 				"confirm-value" => false,
 				"wait-value" => "Confirming",
 				"dom-submit" => true,
@@ -195,7 +195,7 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 	<? if($cart["items"]): ?>
 	<div class="confirm">
 		<ul class="actions">
-			<?= $JML->oneButtonForm("Confirm order", "/shop/confirm/".$cart["cart_reference"], array(
+			<?= $HTML->oneButtonForm("Confirm order", "/shop/confirm/".$cart["cart_reference"], array(
 				"confirm-value" => false,
 				"wait-value" => "Confirming",
 				"dom-submit" => true,
@@ -268,7 +268,7 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 	<? if($cart["items"]): ?>
 	<div class="confirm">
 		<ul class="actions">
-			<?= $JML->oneButtonForm("Confirm order", "/shop/confirm/".$cart["cart_reference"], array(
+			<?= $HTML->oneButtonForm("Confirm order", "/shop/confirm/".$cart["cart_reference"], array(
 				"confirm-value" => false,
 				"wait-value" => "Confirming",
 				"dom-submit" => true,

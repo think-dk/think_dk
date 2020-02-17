@@ -17,7 +17,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "where" => $itemtype.".sta
 		<?= $HTML->link("New event", "/janitor/event/admin-new", array("wrapper" => "li.new", "class" => "button primary")) ?>
 	</ul>
 
-	<div class="all_items i:defaultList taggable filters"<?= $JML->jsData(["tags", "search"]) ?>>
+	<div class="all_items i:defaultList taggable filters"<?= $HTML->jsData(["tags", "search"]) ?>>
 <?		if($items): ?>
 		<ul class="items">
 

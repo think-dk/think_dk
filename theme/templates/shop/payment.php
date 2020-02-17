@@ -57,7 +57,7 @@ $payment_methods = $this->paymentMethods();
 		<li class="payment_method<?= $payment_method["classname"] ? " ".$payment_method["classname"] : "" ?>">
 
 			<ul class="actions">
-				<?= $JML->oneButtonForm("Pay with " . $payment_method["name"], "/shop/selectPaymentMethod", array(
+				<?= $HTML->oneButtonForm("Pay with " . $payment_method["name"], "/shop/selectPaymentMethod", array(
 					"inputs" => array("order_id" => $order["id"], "payment_method" => $payment_method["id"]),
 					"confirm-value" => false,
 					"static" => true,

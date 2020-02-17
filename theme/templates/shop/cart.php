@@ -28,7 +28,7 @@ $IC = new Items();
 <? if($cart["items"]) :?>
 	<div class="checkout">
 		<ul class="actions">
-			<?= $JML->oneButtonForm("Checkout", "/shop/checkout", array(
+			<?= $HTML->oneButtonForm("Checkout", "/shop/checkout", array(
 				"confirm-value" => false,
 				"dom-submit" => true,
 				"success-location" => "/shop/checkout",
@@ -90,7 +90,7 @@ $IC = new Items();
 				<? endif; ?>
 
 				<ul class="actions">
-					<?= $JML->oneButtonForm("Delete", "/shop/deleteFromCart/".$cart["cart_reference"]."/".$cart_item["id"], array(
+					<?= $HTML->oneButtonForm("Delete", "/shop/deleteFromCart/".$cart["cart_reference"]."/".$cart_item["id"], array(
 						"wrapper" => "li.delete",
 						"static" => true
 					)) ?>
@@ -125,7 +125,7 @@ $IC = new Items();
 <? if($cart["items"]) :?>
 	<div class="checkout">
 		<ul class="actions">
-			<?= $JML->oneButtonForm("Checkout", "/shop/checkout", array(
+			<?= $HTML->oneButtonForm("Checkout", "/shop/checkout", array(
 				"confirm-value" => false,
 				"dom-submit" => true,
 				"class" => "primary",

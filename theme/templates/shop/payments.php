@@ -74,7 +74,7 @@ if($orders && $total_payment): ?>
 		<li class="payment_method<?= $payment_method["classname"] ? " ".$payment_method["classname"] : "" ?>">
 
 			<ul class="actions">
-				<?= $JML->oneButtonForm($payment_method["name"], "/shop/selectBulkPaymentMethod", array(
+				<?= $HTML->oneButtonForm($payment_method["name"], "/shop/selectBulkPaymentMethod", array(
 					"inputs" => array("order_ids" => implode($order_list, ","), "payment_method" => $payment_method["id"]),
 					"confirm-value" => false,
 					"static" => true,

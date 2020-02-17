@@ -67,7 +67,7 @@ $participants = $model->getParticipants($item_id);
 						<span class="name"><?= $participant["nickname"] ?></span>
 						<span class="username"><?= $participant["username"] ?></span>
 						<ul class="actions">
-							<?= $JML->oneButtonForm("Re-send ticket", "/janitor/ticket/reIssueTicket/".$participant["ticket_no"]) ?>
+							<?= $HTML->oneButtonForm("Re-send ticket", "/janitor/ticket/reIssueTicket/".$participant["ticket_no"]) ?>
 						</ul>
 					</li>
 				<? endforeach; ?>
