@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-02-26 00:29:09
+asset-builder @ 2020-02-26 00:31:43
 */
 
 /*seg_smartphone_include.css*/
@@ -711,8 +711,7 @@ ul.actions a.button.primary:active,
 #content ul.actions a.button.primary:active {background-color: #26962d;}
 #content .scene div.article ul.tags li a:active,
 #content .scene ul.articles li.article ul.tags li a:active {color: #34cc3d;}
-#content .scene div.categories ul.tags li.selected a,
-#content .scene div.categories ul.tags li.selected:before {color: #26962d;}
+#content .scene div.categories ul.tags li.selected a {background-color: #26962d;}
 #content .scene h3,
 #content .scene h4,
 #content .scene h5,
