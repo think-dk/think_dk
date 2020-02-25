@@ -104,7 +104,7 @@ Util.Objects["memberships"] = new function() {
 						u.ae(table, "span", {"class":"cell", "html":benefit});
 
 						// look for benefit explation to be shown on mouseover
-						li.explanation = u.qs("p.hint_"+ u.normalize(benefit).replace(/-/g, "_"), this);
+						li.explanation = u.qs("p.hint_"+ u.superNormalize(benefit).replace(/-/g, "_"), this);
 
 						// add explanation mouseover if explanation was found
 						if(li.explanation) {
