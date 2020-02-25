@@ -12,10 +12,8 @@ Util.Objects["payments"] = new function() {
 		}
 
 		scene.ready = function() {
-			u.bug("scene.ready:", this);
+			// u.bug("scene.ready:", this);
 
-
-			page.cN.scene = this;
 
 			var form = u.qs("form", this);
 			if(form) {
@@ -24,15 +22,10 @@ Util.Objects["payments"] = new function() {
 
 			u.showScene(this);
 
-
-			// accept cookies?
-//			page.acceptCookies();
-
-
-			page.resized();
 		}
 
-		// scene is ready
-		scene.ready();
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
+
 	}
 }

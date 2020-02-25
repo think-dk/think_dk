@@ -14,7 +14,7 @@ if($page_item) {
 $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 ?>
 
-<div class="scene posts tag i:scene">
+<div class="scene posts tag i:columns">
 
 <? if($page_item): 
 	$media = $IC->sliceMediae($page_item, "single_media"); ?>
@@ -50,62 +50,72 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 		<? endif; ?>
 	</div>
 <? elseif($items): ?>
-	<h1><?= $selected_tag ?> posts</h1>
+
+	<div class="article">
+		<h1><?= $selected_tag ?> posts</h1>
+	</div>
+
 <? else: ?>
-	<h1>Posts</h1>
+
+	<div class="article">
+		<h1>Posts</h1>
+	</div>
+
 <? endif; ?>
 
 <? if($categories): ?>
 	<div class="categories">
 		<ul class="tags">
-			<li><a href="/bulletin">All posts</a></li>
 			<? foreach($categories as $tag): ?>
 			<li<?= ($selected_tag == $tag["value"] ? ' class="selected"' : '') ?>><a href="/bulletin/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
 			<? endforeach; ?>
+			<li><a href="/bulletin">All posts</a></li>
 		</ul>
 	</div>
 <? endif; ?>
 
 
+	<div class="articles">
 <? if($items): ?>
-	<ul class="items articles i:articleMiniList">
-		<? foreach($items as $item):
-			$media = $IC->sliceMediae($item, "mediae"); ?>
-		<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
-			data-readstate="<?= $item["readstate"] ?>"
-			>
+		<ul class="items articles articlePreviewList i:articlePreviewList">
+			<? foreach($items as $item):
+				$media = $IC->sliceMediae($item, "mediae"); ?>
+			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
+				data-readstate="<?= $item["readstate"] ?>"
+				>
 
 
-			<?= $HTML->articleTags($item, [
-				"context" => [$itemtype],
-				"url" => "/bulletin/tag",
-				"default" => ["/bulletin", "Posts"]
-			]) ?>
+				<?= $HTML->articleTags($item, [
+					"context" => [$itemtype],
+					"url" => "/bulletin/tag",
+					"default" => ["/bulletin", "Posts"]
+				]) ?>
 
 
-			<h3 itemprop="headline"><a href="/bulletin/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
+				<h3 itemprop="headline"><a href="/bulletin/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
 
 
-			<?= $HTML->articleInfo($item, "/bulletin/".$item["sindex"],[
-				"media" => $media
-			]) ?>
+				<?= $HTML->articleInfo($item, "/bulletin/".$item["sindex"],[
+					"media" => $media
+				]) ?>
 
 
-			<? if($item["description"]): ?>
-			<div class="description" itemprop="description">
-				<p><?= nl2br($item["description"]) ?></p>
-			</div>
-			<? endif; ?>
+				<? if($item["description"]): ?>
+				<div class="description" itemprop="description">
+					<p><?= nl2br($item["description"]) ?></p>
+				</div>
+				<? endif; ?>
 
-		</li>
-		<? endforeach; ?>
-	</ul>
+			</li>
+			<? endforeach; ?>
+		</ul>
 
 <? else: ?>
 
-	<h2>Technology needs humanity.</h2>
-	<p>We could not find any posts with the selected tag.</p>
+		<h2>Technology needs humanity.</h2>
+		<p>We could not find any posts with the selected tag.</p>
 
 <? endif; ?>
+	</div>
 
 </div>

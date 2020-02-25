@@ -7,6 +7,9 @@
 @import url(../../assets/parentnode-skin-default/css/lib/desktop/s-readstate.css);
 @import url(../../assets/parentnode-skin-default/css/optionals/lib/desktop/s-sharing.css);
 @import url(../../assets/parentnode-skin-default/css/optionals/lib/desktop/s-wishlist.css);
+@import url(../../assets/parentnode-skin-default/css/optionals/lib/desktop/s-columns.css);
+@import url(../../assets/parentnode-skin-default/css/optionals/lib/desktop/s-articles.css);
+
 
 /* Project css and overrides */
 @import url(desktop/s-pages.css);

@@ -12,9 +12,8 @@ Util.Objects["verify_maillist"] = new function() {
 		}
 
 		scene.ready = function() {
-			u.bug("scene.ready:", this);
+			// u.bug("scene.ready:", this);
 
-			page.cN.scene = this;
 
 			var form_verify = u.qs("form.verify_code", this);
 
@@ -28,12 +27,10 @@ Util.Objects["verify_maillist"] = new function() {
 
 			u.showScene(this);
 
-			page.resized();
 		}
 
-		// scene is ready
-		scene.ready();
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
 
 	}
-
 }

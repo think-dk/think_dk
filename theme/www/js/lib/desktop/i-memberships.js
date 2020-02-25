@@ -33,7 +33,7 @@ Util.Objects["memberships"] = new function() {
 		scene.ready = function() {
 //			u.bug("scene.ready:", this);
 
-			page.cN.scene = this;
+			// page.cN.scene = this;
 
 
 			this.div_memberships = u.qs("div.memberships", this);
@@ -265,13 +265,12 @@ Util.Objects["memberships"] = new function() {
 			u.showScene(this);
 
 
-			page.resized();
+			// page.resized();
 		}
 
 
-		// scene is ready
-		scene.ready();
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
 
 	}
-
 }

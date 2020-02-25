@@ -18,14 +18,8 @@ Util.Objects["events"] = new function() {
 			// u.bug("scene.ready:", this);
 
 
-			page.cN.scene = this;
-
 
 			u.showScene(this);
-
-
-			// accept cookies?
-			page.acceptCookies();
 
 
 			// Object for storing all event data
@@ -43,7 +37,6 @@ Util.Objects["events"] = new function() {
 
 			this.createCalendar();
 
-			page.resized();
 		}
 
 
@@ -421,7 +414,8 @@ Util.Objects["events"] = new function() {
 		}
 
 
-		// scene is ready
-		scene.ready();
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
+
 	}
 }

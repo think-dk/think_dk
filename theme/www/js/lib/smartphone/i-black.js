@@ -15,16 +15,12 @@ Util.Objects["black"] = new function() {
 //			u.bug("scene.ready:", this);
 
 
-			page.cN.scene = this;
-
-
 			u.showScene(this);
 
-
-			page.resized();
 		}
 
-		// scene is ready
-		scene.ready();
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
+
 	}
 }

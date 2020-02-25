@@ -14,7 +14,6 @@ Util.Objects["verify_shop"] = new function() {
 		scene.ready = function() {
 //			u.bug("scene.ready:", this);
 
-			page.cN.scene = this;
 
 			var form_verify = u.qs("form.verify_code", this);
 
@@ -86,12 +85,9 @@ Util.Objects["verify_shop"] = new function() {
 				u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
 			}
 
-			// accept cookies?
-			page.acceptCookies();
 
 			u.showScene(this);
 
-			page.resized();
 		}
 
 		scene.replaceScene = function(response) {
@@ -123,9 +119,8 @@ Util.Objects["verify_shop"] = new function() {
 		}
 
 
-		// scene is ready
-		scene.ready();
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
 
 	}
-
 }

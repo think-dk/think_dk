@@ -27,9 +27,11 @@ $related_pattern["extend"] = array("tags" => true, "readstate" => true, "user" =
 // get related items
 $related_items = $IC->getRelatedItems($related_pattern);
 
+$categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
+
 ?>
 
-<div class="scene post i:scene">
+<div class="scene post i:columns">
 
 
 <? if($item):
@@ -86,11 +88,11 @@ $related_items = $IC->getRelatedItems($related_pattern);
 
 <? else: ?>
 
-
+<div class="article">
 	<h1>Technology clearly doesn't solve everything on it's own.</h1>
 	<h2>Technology needs humanity.</h2>
 	<p>We could not find the specified post.</p>
-
+</div>
 
 <? endif; ?>
 
@@ -99,7 +101,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 	<div class="related">
 		<h2><?= $related_title ?> <a href="/bulletin">(see all)</a></h2>
 
-		<ul class="items articles i:articleMiniList">
+		<ul class="items articles articlePreviewList i:articlePreviewList">
 <?		foreach($related_items as $item): 
 			$media = $IC->sliceMediae($item, "mediae"); ?>
 			<li class="item article item_id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
@@ -130,6 +132,19 @@ $related_items = $IC->getRelatedItems($related_pattern);
 
 			</li>
 	<?	endforeach; ?>
+		</ul>
+	</div>
+<? endif; ?>
+
+
+<? if($categories): ?>
+	<div class="categories">
+		<h2>Categories</h2>
+		<ul class="tags">
+			<? foreach($categories as $tag): ?>
+			<li <?= ($item["tags"] && array_search($tag, $item["tags"]) !== false) ? ' class="selected"' : "" ?>><a href="/bulletin/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
+			<? endforeach; ?>
+			<li class="all"><a href="/posts">All posts</a></li>
 		</ul>
 	</div>
 <? endif; ?>

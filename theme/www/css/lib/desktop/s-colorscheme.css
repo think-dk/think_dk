@@ -22,8 +22,11 @@ ul.actions input.button.primary,
 ul.actions a.button.primary,
 #content ul.actions a.button.primary {background-color: #34cc3d; color: #ffffff;}
 
+/*
 #content .scene div.categories ul.tags li.selected a,
 #content .scene div.categories ul.tags li.selected:before {color: #26962d;}
+*/
+#content .scene div.categories ul.tags li.selected a {background-color: #26962d;}
 #content .scene div.comments.open h2 {color: #34cc3d;}
 
 #content .scene h3,

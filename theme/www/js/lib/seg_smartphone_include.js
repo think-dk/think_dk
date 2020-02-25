@@ -40,6 +40,8 @@ document.write('<script type="text/javascript" src="/js/lib/smartphone/i-verify-
 
 
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/smartphone/i-login.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/i-scene.js"></script>'); 
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/i-columns.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/i-signup.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/i-verify.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/i-wishes.js"></script>');

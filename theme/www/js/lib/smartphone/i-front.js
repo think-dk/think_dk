@@ -34,8 +34,6 @@ Util.Objects["front"] = new function() {
 		scene.ready = function() {
 //			u.bug("scene.ready:", this);
 
-			// map reference
-			page.cN.scene = this;
 
 			// required fonts loaded
 			scene.fontsLoaded = function() {
@@ -229,7 +227,7 @@ Util.Objects["front"] = new function() {
 			}
 
 			// accept cookies?
-			page.acceptCookies();
+			// page.acceptCookies();
 
 			// start showing article
 			this.showArticle();
@@ -394,9 +392,8 @@ Util.Objects["front"] = new function() {
 		}
 
 
-		// scene is ready
-		scene.ready();
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
 
 	}
-
 }

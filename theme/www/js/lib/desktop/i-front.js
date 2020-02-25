@@ -43,7 +43,26 @@ Util.Objects["front"] = new function() {
 			// required fonts loaded
 			this.fontsLoaded = function() {
 
+				u.columns(this, [
+					{"c200": [
+						"div.intro", 
+						"div.article", 
+						"div.news"
+						// ".pagination"
+					]},
+					{"c100": [
+						".all_events",
+					]},
+					{"c300": [
+						"div.company"
+					]}
+				]);
+
+
+
 				page.resized();
+
+
 				this.build();
 			}
 
@@ -757,9 +776,8 @@ Util.Objects["front"] = new function() {
 		}
 
 
-		// scene is ready
-		scene.ready();
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
 
 	}
-
 }

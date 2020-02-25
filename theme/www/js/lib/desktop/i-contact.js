@@ -1,21 +1,18 @@
 Util.Objects["contact"] = new function() {
 	this.init = function(scene) {
-//		u.bug("scene init:", this);
-		
+		// u.bug("scene init:", this);
 
 		scene.resized = function() {
-//			u.bug("scene.resized:", this);
+			// u.bug("scene.resized:", this);
 		}
 
 		scene.scrolled = function() {
-//			u.bug("scrolled:", this);;
+			// u.bug("scene.scrolled:", this);
 		}
 
 		scene.ready = function() {
-//			u.bug("scene.ready:", this);
+			// u.bug("scene.ready:", this);
 
-
-			page.cN.scene = this;
 
 			if (u.qs("div.article", this)) {
 
@@ -36,14 +33,18 @@ Util.Objects["contact"] = new function() {
 			u.showScene(this);
 
 
-			// accept cookies?
-			page.acceptCookies();
+			// // accept cookies?
+			// page.acceptCookies();
 
 
-			page.resized();
+			// page.resized();
 		}
 
 		// scene is ready
-		scene.ready();
+		// scene.ready();
+
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
+
 	}
 }

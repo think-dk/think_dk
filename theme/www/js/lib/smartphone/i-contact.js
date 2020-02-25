@@ -15,8 +15,6 @@ Util.Objects["contact"] = new function() {
 //			u.bug("scene.ready:", this);
 
 
-			page.cN.scene = this;
-
 
 			var injection_point = u.ns(u.qs("div.article h1", this));
 			this.map = u.ae(this, "div", {"class":"map"});
@@ -34,14 +32,10 @@ Util.Objects["contact"] = new function() {
 			u.showScene(this);
 
 
-			// accept cookies?
-			page.acceptCookies();
-
-
-			page.resized();
 		}
 
-		// scene is ready
-		scene.ready();
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
+
 	}
 }

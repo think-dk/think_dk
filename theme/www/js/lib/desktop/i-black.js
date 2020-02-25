@@ -1,22 +1,18 @@
 Util.Objects["black"] = new function() {
 	this.init = function(scene) {
-//		u.bug("scene init:", this);
+		// u.bug("scene init:", this);
 		
 
 		scene.resized = function() {
-//			u.bug("scene.resized:", this);
+			// u.bug("scene.resized:", this);
 		}
 
 		scene.scrolled = function() {
-//			u.bug("scrolled:", this);;
+			// u.bug("scene.scrolled:", this);
 		}
 
 		scene.ready = function() {
-//			u.bug("scene.ready:", this);
-
-
-			page.cN.scene = this;
-
+			// u.bug("scene.ready:", this);
 
 			u.showScene(this);
 
@@ -24,7 +20,8 @@ Util.Objects["black"] = new function() {
 			page.resized();
 		}
 
-		// scene is ready
-		scene.ready();
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
+
 	}
 }

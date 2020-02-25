@@ -19,7 +19,7 @@ Util.Objects["cart"] = new function() {
 //			u.bug("scene.ready:", this);
 
 
-			page.cN.scene = this;
+			// page.cN.scene = this;
 
 			this.isHTML = true;
 			page.notify(this);
@@ -119,15 +119,14 @@ Util.Objects["cart"] = new function() {
 			u.showScene(this);
 
 
-			page.resized();
+			// page.resized();
 		}
 
 
-		// scene is ready
-		scene.ready();
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
 
 	}
-
 }
 
 
@@ -148,8 +147,6 @@ Util.Objects["checkout"] = new function() {
 		scene.ready = function() {
 //			u.bug("scene.ready:", this);
 
-
-			page.cN.scene = this;
 
 
 			var form_login = u.qs("form.login", this);
@@ -173,16 +170,13 @@ Util.Objects["checkout"] = new function() {
 
 			u.showScene(this);
 
-
-			page.resized();
 		}
 
 
-		// scene is ready
-		scene.ready();
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
 
 	}
-
 }
 
 
@@ -204,7 +198,6 @@ Util.Objects["shopProfile"] = new function() {
 //			u.bug("scene.ready:", this);
 
 
-			page.cN.scene = this;
 
 			this.isHTML = true;
 //			page.notify(this);
@@ -220,17 +213,13 @@ Util.Objects["shopProfile"] = new function() {
 
 
 			u.showScene(this);
-
-
-			page.resized();
 		}
 
 
-		// scene is ready
-		scene.ready();
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
 
 	}
-
 }
 
 
@@ -252,8 +241,6 @@ Util.Objects["shopAddress"] = new function() {
 //			u.bug("scene.ready:", this);
 
 
-			page.cN.scene = this;
-
 
 			var form = u.qs("form.address", this);
 			if(form) {
@@ -263,16 +250,13 @@ Util.Objects["shopAddress"] = new function() {
 
 			u.showScene(this);
 
-
-			page.resized();
 		}
 
 
-		// scene is ready
-		scene.ready();
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
 
 	}
-
 }
 
 

@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-02-25 18:37:59
+asset-builder @ 2020-02-26 00:29:09
 */
 
 /*seg_desktop_include.css*/
@@ -746,6 +746,72 @@ body > div.pagination li.next a {padding-right: 0;}
 #content .scene ul.wishes dl.info dt.link {display: none;}
 #content .scene ul.wishes dl.info dd.link {font-size: 13px; display: block; width: auto;}
 
+/*s-columns.css*/
+.c {clear: both; font-size: 0;}
+.c300, .c225, .c200, .c150, .c100, .c75, .c50 {display: inline-block; min-height: 10px; vertical-align: top;}
+.c300 {width: 1080px;}
+.c225 {width: 810px;}
+.c200 {width: 720px;}
+.c150 {width: 540px;}
+.c100 {width: 360px;}
+.c75 {width: 270px;}
+.c50 {width: 180px;}
+@media screen and (max-width: 1080px) {
+	.c300 {width: 100%;}
+	.c225 {width: 75%;}
+	.c200 {width: 66.666%;}
+	.c150 {width: 50%;}
+	.c100 {width: 33.333%;}
+	.c75 {width: 25%;}
+	.c50 {width: 16.666%;}
+	#content .scene .c div.image img,
+	#content .scene .c div.media img {width: calc(100% - 100px);}
+}
+#content .scene .c h1,
+#content .scene .c h2,
+#content .scene .c h3,
+#content .scene .c h4,
+#content .scene .c h5,
+#content .scene .c h6,
+#content .scene .c p {width: auto; max-width: 500px;}
+#content .scene .c div.image.fullsize img,
+#content .scene .c div.media.fullsize img {width: 100%;}
+#content .scene .c ul.articles {max-width: 640px;}
+#content .scene .c300 div.company h2,
+#content .scene .c300 div.person h2 {max-width: none;}
+#content .scene .c100 div.categories ul.tags li,
+#content .scene .c150 div.categories ul.tags li {display: block; margin: 0;}
+#content .scene .c100 div.categories ul.tags li.selected,
+#content .scene .c150 div.categories ul.tags li.selected {margin: 5px -10px;}
+#content .c div.field input {width: calc(100% - 18px);}
+
+
+/*s-articles.css*/
+#content .scene ul.articles {padding: 0;}
+#content .scene ul.articles li.article {padding: 30px 0 15px; border-top: 1px solid #dedede; position: relative;}
+#content .scene ul.articles li.article ul.tags {padding-bottom: 20px;}
+#content .scene ul.articles li.article div.image p {padding-bottom: 20px;}
+#content .scene ul.articles li.article h2 {padding-bottom: 20px;}
+#content .scene ul.articles li.article ul.info {padding-bottom: 20px;}
+#content .scene ul.articles li.article ul.actions {margin-top: -10px;}
+#content .scene ul.articles li.article ul.actions li {padding-bottom: 0;}
+#content .scene ul.articles li.article > svg.checkmark {position: absolute; top: 14px; left: 45px;}
+#content .scene ul.articles li.article > svg.checkmark line {stroke: #666666; stroke-width: 3px;}
+#content .scene ul.articles.articlePreviewList li.article {padding: 20px 0 15px;}
+#content .scene ul.articles.articlePreviewList li.article ul.tags {padding-bottom: 30px;}
+#content .scene ul.articles.articlePreviewList li.article h3 {padding-bottom: 14px;
+	font-family: "PT Serif", Times, serif;
+}
+#content .scene ul.articles.articlePreviewList li.article ul.info {padding-bottom: 10px;}
+#content .scene ul.articles.articlePreviewList div.description p a.readmore {padding-top: 15px; display: inline-block;}
+#content .scene ul.articles.articlePreviewList div.image img,
+#content .scene ul.articles.articlePreviewList div.media img {margin: 0 50px 16px;}
+#content .scene ul.articles.articlePreviewList div.image.fullsize img,
+#content .scene ul.articles.articlePreviewList div.media.fullsize img {margin-left: 0; margin-right: 0;}
+#content .scene ul.articles.articlePreviewList div.image p,
+#content .scene ul.articles.articlePreviewList div.media p {margin-top: -13px; padding: 0 70px 19px;}
+
+
 /*s-pages.css*/
 #content .scene {opacity: 0;}
 #content .scene h1 span {display: inline-block;}
@@ -851,10 +917,7 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.front div.all_events h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
 	font-family: "OpenSans";
 }
-#content .scene.front div.all_events ul.events {border-top: 1px solid #dedede; padding: 0 20px 0 70px;}
-#content .scene.front div.all_events ul.events h3,
-#content .scene.front div.all_events ul.events dl {padding-left: 0; padding-right: 0; width: auto;}
-#content .scene.front div.all_events ul.events li.event {border-top: none; padding-top: 15px; padding-bottom: 5px; display: inline-block; vertical-align: top; width: 230px; padding-right: 20px;}
+#content .scene.front div.all_events ul.events li.event {border-top: none; padding-top: 15px; padding-bottom: 5px;}
 #content .scene.front div.news {display: none;}
 #content .scene.front div.news h2 {padding-bottom: 15px;}
 #content .scene.front div.news h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
@@ -1313,8 +1376,7 @@ body {}
 ul.actions input.button.primary,
 ul.actions a.button.primary,
 #content ul.actions a.button.primary {background-color: #34cc3d; color: #ffffff;}
-#content .scene div.categories ul.tags li.selected a,
-#content .scene div.categories ul.tags li.selected:before {color: #26962d;}
+#content .scene div.categories ul.tags li.selected a {background-color: #26962d;}
 #content .scene div.comments.open h2 {color: #34cc3d;}
 #content .scene h3,
 #content .scene h4,

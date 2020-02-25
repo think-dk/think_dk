@@ -19,7 +19,6 @@ Util.Objects["memberships"] = new function() {
 		scene.ready = function() {
 //			u.bug("scene.ready:", this);
 
-			page.cN.scene = this;
 
 			this.div_memberships = u.qs("div.memberships", this);
 			var place_holder = u.qs("div.articlebody .placeholder.memberships", this);
@@ -173,14 +172,11 @@ Util.Objects["memberships"] = new function() {
 
 			u.showScene(this);
 
-
-			page.resized();
 		}
 
 
-		// scene is ready
-		scene.ready();
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
 
 	}
-
 }

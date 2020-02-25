@@ -15,8 +15,6 @@ Util.Objects["stripe"] = new function() {
 //			u.bug("scene.ready:", this);
 
 
-			page.cN.scene = this;
-
 			this.card_form = u.qs("form.card", this);
 			u.f.customValidate["card"] = function(iN) {
 //				u.bug("local validation");
@@ -188,11 +186,10 @@ Util.Objects["stripe"] = new function() {
 
 			u.showScene(this);
 
-
-			page.resized();
 		}
 
-		// scene is ready
-		scene.ready();
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
+
 	}
 }

@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-02-25 18:37:59
+asset-builder @ 2020-02-26 00:29:09
 */
 
 /*seg_tablet_include.js*/
@@ -7828,6 +7828,19 @@ Util.Objects["front"] = new function() {
 		scene.ready = function() {
 			page.cN.scene = this;
 			this.fontsLoaded = function() {
+				u.columns(this, [
+					{"c200": [
+						"div.intro", 
+						"div.article", 
+						"div.news"
+					]},
+					{"c100": [
+						".all_events",
+					]},
+					{"c300": [
+						"div.company"
+					]}
+				]);
 				page.resized();
 				this.build();
 			}
@@ -8259,7 +8272,7 @@ Util.Objects["front"] = new function() {
 				} 
 			}
 		}
-		scene.ready();
+		page.cN.scene = scene;
 	}
 }
 
@@ -8272,12 +8285,9 @@ Util.Objects["unsubscribe"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			page.cN.scene = this;
 			u.showScene(this);
-			page.acceptCookies();
-			page.resized();
 		}
-		scene.ready();
+		page.cN.scene = scene;
 	}
 }
 
@@ -8289,7 +8299,6 @@ Util.Objects["contact"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			page.cN.scene = this;
 			if (u.qs("div.article", this)) {
 				var injection_point = u.ns(u.qs("div.article h1", this));
 				this.map = u.ae(this, "div", {"class":"map"});
@@ -8301,10 +8310,9 @@ Util.Objects["contact"] = new function() {
 				u.googlemaps.map(this.map, [55.711510,12.564495], {"zoom":14});
 			}
 			u.showScene(this);
-			page.acceptCookies();
-			page.resized();
+			// 
 		}
-		scene.ready();
+		page.cN.scene = scene;
 	}
 }
 
@@ -8317,9 +8325,7 @@ Util.Objects["events"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			page.cN.scene = this;
 			u.showScene(this);
-			page.acceptCookies();
 			this.events = {};
 			var events = u.qsa("li.event", this);
 			if(events.length) {
@@ -8329,7 +8335,6 @@ Util.Objects["events"] = new function() {
 				}
 			}
 			this.createCalendar();
-			page.resized();
 		}
 		scene.indexEvent = function(event) {
 			var event_date, timestamp_fragments, dd_starting_at, starting_at, year, month, date, hour, minute;
@@ -8558,7 +8563,7 @@ Util.Objects["events"] = new function() {
 			}
 			return date-1;
 		}
-		scene.ready();
+		page.cN.scene = scene;
 	}
 }
 
@@ -8570,7 +8575,6 @@ Util.Objects["cart"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			page.cN.scene = this;
 			this.isHTML = true;
 			page.notify(this);
 			this.header_cart = u.qs("li.cart span.total", page.hN);
@@ -8628,9 +8632,8 @@ Util.Objects["cart"] = new function() {
 				}
 			}
 			u.showScene(this);
-			page.resized();
 		}
-		scene.ready();
+		page.cN.scene = scene;
 	}
 }
 Util.Objects["checkout"] = new function() {
@@ -8640,7 +8643,6 @@ Util.Objects["checkout"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			page.cN.scene = this;
 			var form_login = u.qs("form.login", this);
 			if(form_login) {
 				u.f.init(form_login);
@@ -8655,9 +8657,8 @@ Util.Objects["checkout"] = new function() {
 				}
 			}
 			u.showScene(this);
-			page.resized();
 		}
-		scene.ready();
+		page.cN.scene = scene;
 	}
 }
 Util.Objects["shopProfile"] = new function() {
@@ -8667,16 +8668,14 @@ Util.Objects["shopProfile"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			page.cN.scene = this;
 			this.isHTML = true;
 			var form = u.qs("form.details", this);
 			if(form) {
 				u.f.init(form);
 			}
 			u.showScene(this);
-			page.resized();
 		}
-		scene.ready();
+		page.cN.scene = scene;
 	}
 }
 Util.Objects["shopAddress"] = new function() {
@@ -8686,15 +8685,13 @@ Util.Objects["shopAddress"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			page.cN.scene = this;
 			var form = u.qs("form.address", this);
 			if(form) {
 				u.f.init(form);
 			}
 			u.showScene(this);
-			page.resized();
 		}
-		scene.ready();
+		page.cN.scene = scene;
 	}
 }
 
@@ -8709,7 +8706,6 @@ Util.Objects["memberships"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			page.cN.scene = this;
 			this.div_memberships = u.qs("div.memberships", this);
 			var place_holder = u.qs("div.articlebody .placeholder.memberships", this);
 			if(this.div_memberships && place_holder) {
@@ -8848,9 +8844,8 @@ Util.Objects["memberships"] = new function() {
 				{"family":"PT Serif", "weight":"normal", "style":"normal"}
 			]);
 			u.showScene(this);
-			page.resized();
 		}
-		scene.ready();
+		page.cN.scene = scene;
 	}
 }
 
@@ -8863,15 +8858,13 @@ Util.Objects["payment"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			page.cN.scene = this;
 			var form = u.qs("form", this);
 			if(form) {
 				u.f.init(form);
 			}
 			u.showScene(this);
-			page.resized();
 		}
-		scene.ready();
+		page.cN.scene = scene;
 	}
 }
 
@@ -8883,16 +8876,13 @@ Util.Objects["payments"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			u.bug("scene.ready:", this);
-			page.cN.scene = this;
 			var form = u.qs("form", this);
 			if(form) {
 				u.f.init(form);
 			}
 			u.showScene(this);
-			page.resized();
 		}
-		scene.ready();
+		page.cN.scene = scene;
 	}
 }
 
@@ -8904,7 +8894,6 @@ Util.Objects["stripe"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			page.cN.scene = this;
 			this.card_form = u.qs("form.card", this);
 			u.f.customValidate["card"] = function(iN) {
 				var card_number = iN.val().replace(/ /g, "");
@@ -9009,9 +8998,8 @@ Util.Objects["stripe"] = new function() {
 			}
 			// 
 			u.showScene(this);
-			page.resized();
 		}
-		scene.ready();
+		page.cN.scene = scene;
 	}
 }
 
@@ -9023,11 +9011,10 @@ Util.Objects["black"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			page.cN.scene = this;
 			u.showScene(this);
 			page.resized();
 		}
-		scene.ready();
+		page.cN.scene = scene;
 	}
 }
 
@@ -9039,8 +9026,6 @@ Util.Objects["verify_maillist"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			u.bug("scene.ready:", this);
-			page.cN.scene = this;
 			var form_verify = u.qs("form.verify_code", this);
 			if(form_verify) {
 				u.bug("init form")
@@ -9048,9 +9033,8 @@ Util.Objects["verify_maillist"] = new function() {
 			}
 			page.acceptCookies();
 			u.showScene(this);
-			page.resized();
 		}
-		scene.ready();
+		page.cN.scene = scene;
 	}
 }
 
@@ -9063,7 +9047,6 @@ Util.Objects["verify_shop"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			page.cN.scene = this;
 			var form_verify = u.qs("form.verify_code", this);
 			if(form_verify) {
 				u.f.init(form_verify);
@@ -9108,9 +9091,7 @@ Util.Objects["verify_shop"] = new function() {
 				}
 				u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
 			}
-			page.acceptCookies();
 			u.showScene(this);
-			page.resized();
 		}
 		scene.replaceScene = function(response) {
 			var current_scene = u.qs(".scene", page);
@@ -9130,7 +9111,7 @@ Util.Objects["verify_shop"] = new function() {
 			}
 			return new_error;
 		}
-		scene.ready();
+		page.cN.scene = scene;
 	}
 }
 
@@ -9146,6 +9127,52 @@ Util.Objects["login"] = new function() {
 			this._form = u.qs("form", this);
 			u.f.init(this._form);
 			this._form.inputs["username"].focus();
+			u.showScene(this);
+		}
+		page.cN.scene = scene;
+	}
+}
+
+
+/*i-scene.js*/
+Util.Objects["scene"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+			this.offsetHeight;
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			u.showScene(this);
+		}
+		page.cN.scene = scene;
+	}
+}
+
+
+/*i-columns.js*/
+Util.Objects["columns"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+			this.offsetHeight;
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			u.columns(this, [
+				{"c200": [
+					"div.article", 
+					"div.articles",
+					"div.related"
+				]},
+				{"c100": [
+					".search",
+					".categories"
+				]},
+				{"c300": [
+					"div.company"
+				]}
+			]);
 			u.showScene(this);
 		}
 		page.cN.scene = scene;

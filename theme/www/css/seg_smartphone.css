@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-02-25 18:37:59
+asset-builder @ 2020-02-26 00:29:09
 */
 
 /*seg_smartphone_include.css*/
@@ -680,6 +680,15 @@ body > div.pagination li.previous a,
 body > div.pagination li.next a {font-size: 13px; line-height: 16px; display: inline-block; vertical-align: top; padding: 16px 0 16px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; max-width: 100%; box-sizing: border-box;}
 body > div.pagination li.previous a {padding-left: 0; padding-right: 16px;}
 body > div.pagination li.next a {padding-right: 0; padding-left: 16px;}
+
+
+/*s-articles.css*/
+#content .scene ul.articles {padding: 0;}
+#content .scene ul.articles li.article {padding: 20px 0 15px; border-top: 1px solid #dedede;}
+#content .scene ul.articles li.article ul.tags {padding-bottom: 10px;}
+#content .scene ul.articles li.article h3 {line-height: 1.1em; font-size: 20px; padding-bottom: 10px;
+	font-family: "PT Serif", Times, serif;
+}
 
 
 /*s-colorscheme.css*/
