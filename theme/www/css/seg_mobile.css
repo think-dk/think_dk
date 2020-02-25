@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-11-14 15:45:26
+asset-builder @ 2020-02-25 18:37:59
 */
 
 /*seg_mobile_include.css*/
@@ -7,7 +7,7 @@ asset-builder @ 2019-11-14 15:45:26
 /*seg_mobile.css*/
 /*
 MIT license, 2002-2019 parentNode.dk
-asset-builder @ 2019-10-13 18:58:25
+asset-builder @ 2020-02-25 17:59:22
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -74,15 +74,7 @@ ul {font-size: 0;}
 li {font-size: 13px; line-height: 1.25em;}
 dl {font-size: 0;} 
 dt, 
-dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
-.c {clear: both; font-size: 0;}
-.c400, .c300, .c266, .c200, .c150, .c133, .c100, .c75, .c50 {display: inline-block; min-height: 10px; vertical-align: top;}
-.c400 {width: 100%;}
-.c300 {width: 75%;}
-.c266 {width: 66%;}
-.c200 {width: 50%;}
-.c133 {width: 34%;}
-.c100 {width: 25%;}
+dd {display: block; vertical-align: top; font-size: 14px; line-height: 1.25em;}
 #page {position: relative;}
 #header {padding: 10px;}
 #header .logo {font-size: 30px; padding: 10px 20px; color: #888888; cursor: pointer; display: inline-block;
@@ -131,8 +123,8 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene ul.items {padding: 0;}
 #content .scene ul.items li.item {display: block; padding-top: 20px; padding-bottom: 10px; border-top: 1px solid #dedede;}
 #content .scene dl {padding: 0 10px 15px; overflow: hidden;}
-#content .scene dt {padding: 0 0 2px 0; color: #999999;} 
-#content .scene dd {padding: 0 0 12px 10px;}
+#content .scene dt {padding: 0 0 2px 0; color: #bbbbbb;} 
+#content .scene dd {padding: 0 0 12px;}
 #content .scene dt span {text-transform: none;}
 #content .scene dl dl {padding: 0 0 10px;}
 #content .scene dl dl dt {}
@@ -142,9 +134,9 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene dl h5,
 #content .scene dl h6 {padding-left: 0; padding-right: 0; padding-top: 10px;}
 #content .scene ul.tags li {font-size: 12px;}
-#content .scene ul.tags li.editing {background: #666666; border-radius: 5px; color: #ffffff; margin: -2px 10px 5px -4px; padding: 2px 10px 3px; display: inline-block; vertical-align: top;}
+#content .scene ul.tags li.editing {background: #666666; color: #ffffff; margin: -2px 10px 5px -4px; padding: 2px 10px 3px; display: inline-block; vertical-align: top;}
 #content .scene ul.info {padding-bottom: 10px; padding-right: 0;}
-#content .scene ul.info li {font-size: 12px; color: #cccccc; display: block;}
+#content .scene ul.info li {font-size: 12px; color: #bbbbbb; display: block;}
 #content .scene ul.info li.main_entity,
 #content .scene ul.info li.publisher,
 #content .scene ul.info li.image_info,
@@ -153,6 +145,11 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene div.media {display: none;}
 #content .scene .pagination {}
 #content .scene div.categories {padding-bottom: 10px;}
+#content .scene div.categories ul.tags li {font-size: 13px; padding: 4px 0;}
+#content .scene div.categories ul.tags li.selected {background-color: #000000; padding: 4px 10px; margin: 5px -10px;}
+#content .scene div.categories ul.tags li.selected a {color: #ffffff;}
+#content .scene div.categories ul.actions {padding-bottom: 0;}
+#content .scene div.categories ul.actions li {font-size: 14px;}
 #content .scene div.related {}
 #content .scene dl.offer {font-size: 0; padding: 0;}
 #content .scene dl.offer dt {display: none;}
@@ -180,19 +177,32 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene span.file {color: #a62300;}
 #content .scene span.htmltag {text-transform: uppercase;}
 #content .scene span.command {color: #4b5cd7;}
-#content .scene div.vcard {padding: 0 0 15px; margin-top: 45px; border-top: 1px solid #dedede;}
-#content .scene div.vcard h2 {margin-top: -45px; padding-bottom: 50px;}
-#content .scene div.vcard dl.info {}
-#content .contact div.vcard dl.financial {display: none;}
-#content .scene div.vcard dl.info dt,
-#content .scene div.vcard dl.info dd {display: block; width: auto; text-align: left;}
-#content .scene div.vcard dl.info dd {padding-bottom: 10px; color: #cccccc;}
-#content .scene div.vcard dl.info dd ul {padding: 0;}
-#content .scene div.vcard dl.info dd li {font-size: 12px; color: #cccccc;}
+#content .scene div.company,
+#content .scene div.person {padding: 0 0 15px;}
+#content .scene div.company h2,
+#content .scene div.person h2 {border-bottom: 1px solid #dedede; margin-bottom: 15px;}
+#content .scene div.company dl.info,
+#content .scene div.person dl.info {padding-bottom: 0;}
+#content .scene div.company dl.financial,
+#content .scene div.person ul.geo,
+#content .scene div.company ul.geo,
+#content .scene div.person dl.financial {display: none;}
+#content .scene div.company dl.info dt,
+#content .scene div.person dl.info dd,
+#content .scene div.company dl.info dt,
+#content .scene div.person dl.info dd {display: block; width: auto; text-align: left;}
+#content .scene div.company dl.info dd,
+#content .scene div.person dl.info dd {padding-bottom: 10px;}
+#content .scene div.company dl.info dd ul,
+#content .scene div.person dl.info dd ul {padding: 0;}
+#content .scene div.company dl.info dd li,
+#content .scene div.person dl.info dd li {font-size: 14px;}
+#content .scene.login form {padding-bottom: 10px;}
+#content .scene.login form li.forgot {padding: 6px 0 0;}
+#content .scene.login form li.forgot a {padding: 0; display: inline; vertical-align: top;}
 #content .scene p.error,
 #content .scene p.errormessage {color: #df0000;}
 #content .scene div.article {padding-bottom: 20px;}
-#content .scene div.article ul.tags a {color: #cccccc;}
 #content .scene div.article div.articlebody .placeholder {display: none;}
 #content .scene .articlebody ul,
 #content .scene .articlebody ol {list-style-position: outside; margin-left: 15px;}
@@ -201,155 +211,200 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene .articlebody li {padding-bottom: 7px; padding-left: 3px; display: list-item;}
 #content .scene .articlebody ul.actions {list-style: none; margin: 0;}
 #content .scene .articlebody ul.actions li {padding-left: 0;}
-#content .scene ul.articles {padding: 0;}
-#content .scene ul.articles li.article {padding: 10px 0 0; border-top: 1px solid #dedede;}
-#content .scene ul.articles li.article ul.tags {padding-bottom: 10px;}
-#content .scene ul.articles li.article ul.tags li a {color: #cccccc;}
 #content .scene .article ul.info ul.geo {padding: 0;}
-
-
-/*s-form.css*/
-#content form {}
-#content fieldset {border: none; display: block;}
-#content .field {padding: 0 8px 10px; position: relative; font-size: 0;}
-#content label {display: block; font-size: 13px;}
+form {}
+fieldset {border: none; display: block;}
+div.field {padding: 0 8px 10px; position: relative; font-size: 0;}
+div.field label {display: block; font-size: 13px;}
 input,
 textarea {-webkit-appearance: none; border-radius: 0;}
 .boolean input,
 .checkbox input {-webkit-appearance: checkbox;}
 .radiobuttons input {-webkit-appearance: radio;}
-#content .field input,
-#content .field select,
-#content .field textarea {color: #333333; background: #ffffff; border: 1px solid #dcdcdc; margin: 0; outline: none; position: relative; z-index: 10;}
-#content .field input {width: 100%; height: 24px;}
-#content .field select {width: 100%; height: 33px; color: #333333;}
-#content .field textarea {width: 100%; height: 100px; overflow: auto;}
-#content .field.checkbox,
-#content .field.boolean {}
-#content .field.checkbox input,
-#content .field.boolean input {display: inline; vertical-align: top; width: auto; height: auto; padding: 0; margin: 0 5px 0 3px; border: 0;}
-#content .field.checkbox label,
-#content .field.boolean label {width: auto; display: inline; vertical-align: top; display: inline-block; vertical-align: top; font-size: 13px; line-height: 1em;}
-#content .field.radiobuttons {}
-#content .field.radiobuttons label {display: block; font-size: 13px; line-height: 1em; padding: 0 0 8px 3px;}
-#content .field.radiobuttons div.item {padding: 0 0 5px;}
-#content .field.radiobuttons div.item input {width: auto; height: auto; padding: 0; margin: 0px 5px 0 3px; border: 0;}
-#content .field.radiobuttons div.item label {font-size: 13px; line-height: 1em; display: inline; vertical-align: top; }
-#content .field.location div.location,
-#content .field.location div.latitude {padding-bottom: 2px;}
-#content .field.focus input,
-#content .field.focus select,
-#content .field.focus textarea {border: 1px solid #5c5c5c;}
-#content .field.radiobuttons.focus input,
-#content .field.checkbox.focus input,
-#content .field.boolean.focus input {border: none;}
-#content .field input.default,
-#content .field select.default,
-#content .field textarea.default {color: #aaaaaa;}
-#content .field.required .indicator {position: absolute; top: 4px; left: 435px; width: 25px; height: 25px; 
+div.field input,
+div.field select,
+div.field textarea {color: #333333; background: #ffffff; border: 1px solid #dcdcdc; margin: 0; outline: none; position: relative; z-index: 10;}
+div.field input {width: 100%; height: 24px;}
+div.field select {width: 100%; height: 33px; color: #333333;}
+div.field textarea {width: 100%; height: 100px; overflow: auto;}
+div.field.checkbox,
+div.field.boolean {}
+div.field.checkbox input,
+div.field.boolean input {display: inline; vertical-align: top; width: auto; height: auto; padding: 0; margin: 0 5px 0 3px; border: 0;}
+div.field.checkbox label,
+div.field.boolean label {width: auto; display: inline; vertical-align: top; display: inline-block; vertical-align: top; font-size: 13px; line-height: 1em;}
+div.field.radiobuttons {}
+div.field.radiobuttons label {display: block; font-size: 13px; line-height: 1em; padding: 0 0 8px 3px;}
+div.field.radiobuttons div.item {padding: 0 0 5px;}
+div.field.radiobuttons div.item input {width: auto; height: auto; padding: 0; margin: 0px 5px 0 3px; border: 0;}
+div.field.radiobuttons div.item label {font-size: 13px; line-height: 1em; display: inline; vertical-align: top; }
+div.field.focus input,
+div.field.focus select,
+div.field.focus textarea {border: 1px solid #5c5c5c;}
+div.field.radiobuttons.focus input,
+div.field.checkbox.focus input,
+div.field.boolean.focus input {border: none;}
+div.field input.default,
+div.field select.default,
+div.field textarea.default {color: #aaaaaa;}
+div.field.required .indicator {position: absolute; top: 4px; left: 435px; width: 25px; height: 25px; 
 	background: transparent url(../assets/parentnode-skin-default/img/bg_icons.png) no-repeat 0 -292px;
 }
-#content .field.text.required .indicator {background-position: 0 -296px;}
-#content .field.correct .indicator {background-position: 2px -320px;}
-#content .field.text.correct .indicator {background-position: 2px -321px;}
-#content .field.error input,
-#content .field.error textarea {}
-#content .field.error select {}
-#content .field.error input,
-#content .field.error select,
-#content .field.error textarea {border: 3px solid #a62300;}
-#content .field.radiobuttons.error input,
-#content .field.checkbox.error input,
-#content .field.boolean.error input {border: none;}
-#content ul.actions {overflow: hidden;}
+div.field.text.required .indicator {background-position: 0 -296px;}
+div.field.correct .indicator {background-position: 2px -320px;}
+div.field.text.correct .indicator {background-position: 2px -321px;}
+div.field.error input,
+div.field.error textarea {}
+div.field.error select {}
+div.field.error input,
+div.field.error select,
+div.field.error textarea {border: 3px solid #a62300;}
+div.field.radiobuttons.error input,
+div.field.checkbox.error input,
+div.field.boolean.error input {border: none;}
+ul.actions {overflow: hidden;}
+ul.actions li,
 #content ul.actions li {width: auto; height: auto; float: left;	padding: 0 10px 10px 0;}
+ul.actions a {display: block; height: 14px; padding: 6px 0 8px;}
 #content ul.actions input.button {width: auto; height: 28px; padding: 3px 12px;}
+ul.actions a.button,
 #content ul.actions a.button {display: block; text-decoration: none; height: 14px; padding: 6px 12px 8px;}
-#content ul.actions input.button,
+ul.actions input.button,
+ul.actions a.button,
 #content ul.actions a.button {background-color: #dedede; color: #333333; border: none; cursor: pointer; font-size: 14px;}
-#content ul.actions input.button:active,
+ul.actions input.button:active,
+ul.actions a.button:active,
 #content ul.actions a.button:active {background-color: #bebebe;}
-#content ul.actions input.button.primary,
+ul.actions input.button.primary,
+ul.actions a.button.primary,
 #content ul.actions a.button.primary {background-color: #8c9399; color: #ffffff;;}
-#content ul.actions input.button.primary:active,
+ul.actions input.button.primary:active,
+ul.actions a.button.primary:active,
 #content ul.actions a.button.primary:active {background-color: #313942;}
-#content ul.actions input.button.secondary,
+ul.actions input.button.secondary,
+ul.actions a.button.secondary,
 #content ul.actions a.button.secondary {background-color: #8c9399; color: #ffffff;}
-#content ul.actions input.button.secondary:active,
+ul.actions input.button.secondary:active,
+ul.actions a.button.secondary:active,
 #content ul.actions a.button.secondary:active {background-color: #313942;}
-#content form input.button.disabled,
-#content form input.button.disabled:active {cursor: default !important; color: #aaaaaa !important; background-color: #eeeeee !important;}
-#content .field div.help {position: absolute; left: 455px; top: 6px; width: 200px;}
-#content .field div.error,
-#content .field div.hint {display: none; padding: 5px; font-size: 12px; margin-top: -3px;}
-#content .field div.error {border: 1px solid #a62300; color: #a62300; background: #ffddd5;}
-#content .field.error div.error {display: block;}
-#content .field div.hint {z-index: 9; border: 1px solid #007633; color: #007633; background: #d0f4e0;}
-#content .field.focus div.hint {display: block;}
+ul.actions input.button.disabled,
+ul.actions input.button.disabled:active,
+ul.actions a.button.disabled,
+ul.actions a.button.disabled:active,
+#content ul.actions a.button.disabled,
+#content ul.actions a.button.disabled:active {cursor: default !important; color: #aaaaaa !important; background-color: #eeeeee !important;}
+div.field div.help {position: absolute; left: 455px; top: 6px; width: 200px;}
+div.field div.error,
+div.field div.hint {display: none; padding: 5px; font-size: 12px; margin-top: -3px;}
+div.field div.error {border: 1px solid #a62300; color: #a62300; background: #ffddd5;}
+div.field.error div.error {display: block;}
+div.field div.hint {z-index: 9; border: 1px solid #007633; color: #007633; background: #d0f4e0;}
+div.field.focus div.hint {display: block;}
 
 
-/*s-documentation.css*/
-#content .scene.docsindex {}
-#content .scene.docsindex .notes {display: none;}
-#content .scene.docsindex .tests {display: none;}
-#content .scene.docsindex .files {padding-top: 25px;}
-#content .scene.docsindex .files h2 {padding-bottom: 15px;}
-#content .scene.docsindex .files ul {max-width: 500px;}
-#content .scene.docsindex .files li {position: relative;}
-#content .scene.docsindex .files li h3 {font-size: 16px; padding: 0;}
-#content .scene.docsindex .files li p {display: none;}
-#content .scene.docsindex .search {padding-top: 15px;}
-#content .scene.docsindex .search.loading {background: transparent url(../assets/parentnode-skin-default/img/gx_loader.gif) no-repeat 438px 68px;}
-#content .scene.docsindex .search h2 {padding-bottom: 15px;}
-#content .scene.docsindex .search .results .function {padding: 15px 0 0; border-top: 1px solid #dedede; cursor: pointer;}
-#content .scene.docsindex .search .results .function .header h3 {padding-bottom: 5px;}
-#content .scene.docsindex .search .results .function .definition dl {width: auto;}
-#content .scene.docsindex .search .results .function .definition dd {padding-bottom: 0; width: auto; display: block;}
-#content .scene.docsindex .search .results .function .parameters,
-#content .scene.docsindex .search .results .function .examples,
-#content .scene.docsindex .search .results .function .return,
-#content .scene.docsindex .search .results .function .dependencies,
-#content .scene.docsindex .search .results .function .description,
-#content .scene.docsindex .search .results .function .callbacks,
-#content .scene.docsindex .search .results .function .definition h4,
-#content .scene.docsindex .search .results .function .definition .name,
-#content .scene.docsindex .search .results .function .definition dt {display: none;}
-#content .scene div.functions {padding-bottom: 15px;}
-#content .scene div.functions .body {border-bottom: 1px solid #bbbbbb;}
-#content .scene div.functions .function {padding: 10px 0 0; overflow: hidden; border-top: 1px solid #bbbbbb; background: #ffffff;}
-#content .scene div.functions .function .header {}
-#content .scene div.functions .function .body {padding: 20px 0 0; border: none;}
-#content .scene div.functions .function .body .definition dd {white-space: nowrap;}
-#content .scene div.functions .function .body .parameters dl.options {}
-#content .scene div.functions .function .body .parameters dl.options dt {}
-#content .scene div.functions .function .body .callbacks dl {}
-#content .scene div.functions .function .body .callbacks dt {width: auto; display: block; text-align: left;}
-#content .scene div.functions .function .body .callbacks dd {width: auto; display: block;}
-#content .scene div.functions .function .body .methods dl {}
-#content .scene div.functions .function .body .methods dt {width: auto; display: block; text-align: left;}
-#content .scene div.functions .function .body .methods dd {width: auto; display: block;}
-#content .scene div.functions .function .body .properties dl {}
-#content .scene div.functions .function .body .properties dt {width: auto; display: block; text-align: left;}
-#content .scene div.functions .function .body .properties dd {width: auto; display: block;}
-#content .scene div.functions .function .body .inputtypes dl {}
-#content .scene div.functions .function .body .inputtypes dt {width: auto; display: block; text-align: left;}
-#content .scene div.functions .function .body .inputtypes dd {width: auto; display: block;}
-#content .scene div.functions .function .body .example {padding: 0 0 20px;}
-#content .scene div.functions .function .body .examples h4 {padding-bottom: 5px;}
-#content .scene div.functions .function .body .example h5 {padding-bottom: 5px; font-size: 13px;}
-#content .scene div.functions .function .body .example p {padding-bottom: 5px;}
-#content .scene div.functions .function .body .dependencies .javascript {padding: 5px 0 0;}
-#content .scene div.functions .function .body .dependencies .manipulator {padding: 5px 0 0;}
-#content .scene div.functions dd {padding-bottom: 5px;}
-#content .scene div.includefiles {}
-#content .scene div.segmentsupport {padding-top: 15px;}
-#content .scene div.segmentsupport dd {padding-bottom: 5px;}
+/*s-form.css*/
+form {}
+fieldset {border: none; display: block;}
+div.field {padding: 0 8px 10px; position: relative; font-size: 0;}
+div.field label {display: block; font-size: 13px;}
+input,
+textarea {-webkit-appearance: none; border-radius: 0;}
+.boolean input,
+.checkbox input {-webkit-appearance: checkbox;}
+.radiobuttons input {-webkit-appearance: radio;}
+div.field input,
+div.field select,
+div.field textarea {color: #333333; background: #ffffff; border: 1px solid #dcdcdc; margin: 0; outline: none; position: relative; z-index: 10;}
+div.field input {width: 100%; height: 24px;}
+div.field select {width: 100%; height: 33px; color: #333333;}
+div.field textarea {width: 100%; height: 100px; overflow: auto;}
+div.field.checkbox,
+div.field.boolean {}
+div.field.checkbox input,
+div.field.boolean input {display: inline; vertical-align: top; width: auto; height: auto; padding: 0; margin: 0 5px 0 3px; border: 0;}
+div.field.checkbox label,
+div.field.boolean label {width: auto; display: inline; vertical-align: top; display: inline-block; vertical-align: top; font-size: 13px; line-height: 1em;}
+div.field.radiobuttons {}
+div.field.radiobuttons label {display: block; font-size: 13px; line-height: 1em; padding: 0 0 8px 3px;}
+div.field.radiobuttons div.item {padding: 0 0 5px;}
+div.field.radiobuttons div.item input {width: auto; height: auto; padding: 0; margin: 0px 5px 0 3px; border: 0;}
+div.field.radiobuttons div.item label {font-size: 13px; line-height: 1em; display: inline; vertical-align: top; }
+div.field.focus input,
+div.field.focus select,
+div.field.focus textarea {border: 1px solid #5c5c5c;}
+div.field.radiobuttons.focus input,
+div.field.checkbox.focus input,
+div.field.boolean.focus input {border: none;}
+div.field input.default,
+div.field select.default,
+div.field textarea.default {color: #aaaaaa;}
+div.field.required .indicator {position: absolute; top: 4px; left: 435px; width: 25px; height: 25px; 
+	background: transparent url(../assets/parentnode-skin-default/img/bg_icons.png) no-repeat 0 -292px;
+}
+div.field.text.required .indicator {background-position: 0 -296px;}
+div.field.correct .indicator {background-position: 2px -320px;}
+div.field.text.correct .indicator {background-position: 2px -321px;}
+div.field.error input,
+div.field.error textarea {}
+div.field.error select {}
+div.field.error input,
+div.field.error select,
+div.field.error textarea {border: 3px solid #a62300;}
+div.field.radiobuttons.error input,
+div.field.checkbox.error input,
+div.field.boolean.error input {border: none;}
+ul.actions {overflow: hidden;}
+ul.actions li,
+#content ul.actions li {width: auto; height: auto; float: left;	padding: 0 10px 10px 0;}
+ul.actions a {display: block; height: 14px; padding: 6px 0 8px;}
+#content ul.actions input.button {width: auto; height: 28px; padding: 3px 12px;}
+ul.actions a.button,
+#content ul.actions a.button {display: block; text-decoration: none; height: 14px; padding: 6px 12px 8px;}
+ul.actions input.button,
+ul.actions a.button,
+#content ul.actions a.button {background-color: #dedede; color: #333333; border: none; cursor: pointer; font-size: 14px;}
+ul.actions input.button:active,
+ul.actions a.button:active,
+#content ul.actions a.button:active {background-color: #bebebe;}
+ul.actions input.button.primary,
+ul.actions a.button.primary,
+#content ul.actions a.button.primary {background-color: #8c9399; color: #ffffff;;}
+ul.actions input.button.primary:active,
+ul.actions a.button.primary:active,
+#content ul.actions a.button.primary:active {background-color: #313942;}
+ul.actions input.button.secondary,
+ul.actions a.button.secondary,
+#content ul.actions a.button.secondary {background-color: #8c9399; color: #ffffff;}
+ul.actions input.button.secondary:active,
+ul.actions a.button.secondary:active,
+#content ul.actions a.button.secondary:active {background-color: #313942;}
+ul.actions input.button.disabled,
+ul.actions input.button.disabled:active,
+ul.actions a.button.disabled,
+ul.actions a.button.disabled:active,
+#content ul.actions a.button.disabled,
+#content ul.actions a.button.disabled:active {cursor: default !important; color: #aaaaaa !important; background-color: #eeeeee !important;}
+div.field div.help {position: absolute; left: 455px; top: 6px; width: 200px;}
+div.field div.error,
+div.field div.hint {display: none; padding: 5px; font-size: 12px; margin-top: -3px;}
+div.field div.error {border: 1px solid #a62300; color: #a62300; background: #ffddd5;}
+div.field.error div.error {display: block;}
+div.field div.hint {z-index: 9; border: 1px solid #007633; color: #007633; background: #d0f4e0;}
+div.field.focus div.hint {display: block;}
 
 
 /*s-pagination.css*/
-#content div.pagination ul li {padding-bottom: 20px;}
-#content div.pagination ul li h2 {font-size: 12px; padding: 0;}
-
+#content .scene .pagination ul {overflow: hidden;}
+#content .scene .pagination li {padding-bottom: 8px; display: inline;}
+#content .scene .pagination li.next,
+#content .scene .pagination li.previous {padding-bottom: 10px;}
+#content .scene .pagination li.previous {float: left; text-align: left;}
+#content .scene .pagination li.next {float: right; text-align: right;}
+#content .scene .pagination .next a,
+#content .scene .pagination .previous a {background-color: #dedede; color: #333333; text-decoration: none; padding: 6px 12px; display: block;}
+#content .scene .pagination .next a:active,
+#content .scene .pagination .previous a:active {background-color: #313942; color: #ffffff;}
+#content .scene .pagination li.pages {display: none;}
 
 /*s-todos.css*/
 #content .scene ul.todos dl.info {padding-bottom: 10px;}
@@ -361,9 +416,6 @@ textarea {-webkit-appearance: none; border-radius: 0;}
 #content .scene ul.wishes dl.info dd {padding-left: 0;}
 #content .scene ul.wishes > li ul.actions {display: none;}
 
-
-/*s-used_by.css*/
-#content .scene .usedby {display: none;}
 
 /*s-pages.css*/
 #content .scene ul.info {display: none;}

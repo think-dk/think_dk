@@ -19,8 +19,8 @@ document.write('<script type="text/javascript" src="/assets/parentnode-skin-defa
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/beta-u-paymentcards.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/beta-u-form-onebuttonform.js"></script>');
 
-document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/smartphone/u-expandarrow.js"></script>');
-document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/smartphone/i-pagination.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/u-expandarrow.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/i-pagination.js"></script>');
 // Project
 
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-front.js"></script>');
@@ -40,9 +40,9 @@ document.write('<script type="text/javascript" src="/js/lib/smartphone/i-verify-
 
 
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/smartphone/i-login.js"></script>');
-document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/smartphone/i-signup.js"></script>');
-document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/smartphone/i-verify.js"></script>');
-document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/smartphone/i-wishes.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/i-signup.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/i-verify.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/i-wishes.js"></script>');
 
 
 
