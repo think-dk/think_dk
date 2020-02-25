@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-11-19 15:07:17
+asset-builder @ 2020-02-25 18:15:48
 */
 
 /*seg_smartphone_include.js*/
@@ -2128,6 +2128,7 @@ Util.Form = u.f = new function() {
 				field.filelist.field = field;
 				field.uploaded_files = u.qsa("li.uploaded", field.filelist);
 				this._update_filelist.bind(field.input)();
+				u.e.addEvent(field.input, "change", this._update_filelist);
 				u.e.addEvent(field.input, "change", this._updated);
 				u.e.addEvent(field.input, "change", this._changed);
 				if(u.e.event_support != "touch") {
@@ -2135,7 +2136,6 @@ Util.Form = u.f = new function() {
 					u.e.addEvent(field.input, "dragleave", this._blur);
 					u.e.addEvent(field.input, "drop", this._blur);
 				}
-				u.e.addEvent(field.input, "change", this._update_filelist);
 				this.activateInput(field.input);
 			}
 			else {
@@ -2339,6 +2339,9 @@ Util.Form = u.f = new function() {
 					u.ae(this.field.filelist, this.field.uploaded_files[i]);
 				}
 			}
+			else {
+				this.field.uploaded_files = [];
+			}
 		}
 		else if(this.field.uploaded_files && this.field.uploaded_files.length) {
 			u.rc(this.field, "has_new_files");
@@ -2505,7 +2508,7 @@ Util.Form = u.f = new function() {
 				}
 			}
 		}
-		var action_name = action.name ? action.name : (action.parentNode.className ? u.normalize(action.parentNode.className) : (action.value ? u.normalize(action.value) : u.normalize(u.text(action))));
+		var action_name = action.name ? action.name : (action.parentNode.className ? u.superNormalize(action.parentNode.className) : (action.value ? u.superNormalize(action.value) : u.superNormalize(u.text(action))));
 		if(action_name && !action._form.actions[action_name]) {
 			action._form.actions[action_name] = action;
 		}
@@ -6195,9 +6198,10 @@ Util.request = function(node, url, _options) {
 						node[request_id].HTTPRequest.setRequestHeader(header, node[request_id].request_headers[header]);
 					}
 				}
+				node[request_id].HTTPRequest.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 				node[request_id].HTTPRequest.send("");
 			}
-			else if(node[request_id].request_method.match(/POST|PUT|PATCH/i)) {
+			else if(node[request_id].request_method.match(/POST|PUT|PATCH|DELETE/i)) {
 				var params;
 				if(obj(node[request_id].request_data) && node[request_id].request_data.constructor.toString().match(/function Object/i)) {
 					params = JSON.stringify(node[request_id].request_data);
@@ -6224,6 +6228,7 @@ Util.request = function(node, url, _options) {
 						node[request_id].HTTPRequest.setRequestHeader(header, node[request_id].request_headers[header]);
 					}
 				}
+				node[request_id].HTTPRequest.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 				node[request_id].HTTPRequest.send(params);
 			}
 		}
@@ -7069,11 +7074,89 @@ Util.lowerCaseFirst = u.lcfirst = function(string) {
 	return string.replace(/^(.){1}/, function($1) {return $1.toLowerCase()});
 }
 Util.normalize = function(string) {
+	var table = {
+		'À':'A',  'à':'a',
+		'Á':'A',  'á':'a',
+		'Â':'A',  'â':'a',
+		'Ã':'A',  'ã':'a',
+		'Ä':'A',  'ä':'a',
+		'Å':'Aa', 'å':'aa',
+		'Æ':'Ae', 'æ':'ae',
+		'Ç':'C',  'ç':'c',
+		'Č':'C',  'ć':'c',
+		'Ć':'C',  'č':'c',
+		'Đ':'D',  'đ':'d',  'ð':'d',
+		'È':'E',  'è':'e',
+		'É':'E',  'é':'e',
+		'Ê':'E',  'ê':'e',
+		'Ë':'E',  'ë':'e',
+		'Ģ':'G',  'ģ':'g',
+		'Ğ':'G',  'ğ':'g',
+		'Ì':'I',  'ì':'i',
+		'Í':'I',  'í':'i',
+		'Î':'I',  'î':'i',
+		'Ï':'I',  'ï':'i',
+		'Ī':'I',  'ī':'i',
+		'Ķ':'K',  'ķ':'k',
+		'Ļ':'L',  'ļ':'l',
+		'Ñ':'N',  'ñ':'n',
+		'Ņ':'N',  'ņ':'n',
+		'Ò':'O',  'ò':'o',
+		'Ó':'O',  'ó':'o',
+		'Ô':'O',  'ô':'o',
+		'Õ':'O',  'õ':'o',
+		'Ö':'O',  'ö':'o',
+		'Ō':'O',  'ō':'o',
+		'Ø':'Oe', 'ø':'oe',
+		'Ŕ':'R',  'ŕ':'r',
+		'Š':'S',  'š':'s',
+		'Ş':'S',  'ş':'s',
+		'Ṩ':'S',  'ṩ':'s',
+		'Ù':'U',  'ù':'u',
+		'Ú':'U',  'ú':'u',
+		'Û':'U',  'û':'u',
+		'Ü':'U',  'ü':'u',
+		'Ū':'U',  'ū':'u',
+		'Ų':'U',  'ų':'u',
+		'Ŭ':'U',  'ŭ':'u',
+		'Ý':'Y',  'ý':'y',
+		'Ÿ':'Y',  'ÿ':'y',
+		'Ž':'Z',  'ž':'z',
+		'Þ':'B',  'þ':'b',
+		'ß':'Ss',
+		'@':' at ',
+		'&':'and',
+		'%':' percent',
+		'\\$':'USD',
+		'¥':'JPY',
+		'€':'EUR',
+		'£':'GBP',
+		'™':'trademark',
+		'©':'copyright',
+		'§':'s',
+		'\\*':'x',
+		'×':'x'
+	}
+	var char, regex;
+	for(char in table) {
+		regex = new RegExp(char, "g");
+		string = string.replace(regex, table[char]);
+	}
+	return string;
+}
+Util.superNormalize = function(string) {
+	string = u.normalize(string);
 	string = string.toLowerCase();
+	string = u.stripTags(string);
 	string = string.replace(/[^a-z0-9\_]/g, '-');
 	string = string.replace(/-+/g, '-');
 	string = string.replace(/^-|-$/g, '');
 	return string;
+}
+Util.stripTags = function(string) {
+	var node = document.createElement("div");
+	node.innerHTML = string;
+	return u.text(node);
 }
 Util.pluralize = function(count, singular, plural) {
 	if(count != 1) {
@@ -8325,8 +8408,6 @@ Util.Objects["oneButtonForm"] = new function() {
 
 /*beta-u-notifier.js*/
 u.notifier = function(node) {
-	u.bug_force = true;
-	u.bug("enable notifier");
 	var notifications = u.qs("div.notifications", node);
 	if(!notifications) {
 		node.notifications = u.ae(node, "div", {"id":"notifications"});
@@ -9012,10 +9093,20 @@ Util.Objects["defaultNew"] = new function() {
 						}
 					}
 					else if(this.action.match(/\/save$/)) {
-						location.href = this.action.replace(/\/save/, "/edit/")+response.cms_object.item_id;
+						if(response.cms_object.item_id) {
+							location.href = this.action.replace(/\/save/, "/edit/")+response.cms_object.item_id;
+						}
+						else if (response.cms_object.id) {
+							location.href = this.action.replace(/\/save/, "/edit/")+response.cms_object.id;
+						}
 					}
 					else if(location.href.match(/\/new$/)) {
-						location.href = location.href.replace(/\/new$/, "/edit/")+response.cms_object.item_id;
+						if(response.cms_object.item_id) {
+							location.href = location.href.replace(/\/new$/, "/edit/")+response.cms_object.item_id;
+						}
+						else if (response.cms_object.id) {
+							location.href = location.href.replace(/\/new$/, "/edit/")+response.cms_object.id;
+						}
 					}
 					else if(this.actions["cancel"]) {
 						this.actions["cancel"].clicked();
@@ -9588,7 +9679,7 @@ Util.Objects["defaultPrices"] = new function() {
 			div.add_price_url = div._prices_form.action;
 			u.f.init(div._prices_form);
 			div._prices_form.inputs["item_price_type"].changed = function() {
-				if(this.val() == "bulk") {
+				if(this.val() == 3) {
 					u.ac(this._form.inputs["item_price_quantity"].field, "required");
 					u.ass(this._form.inputs["item_price_quantity"].field, {
 						"display":"inline-block"
@@ -9601,7 +9692,7 @@ Util.Objects["defaultPrices"] = new function() {
 					})
 				}
 			}
-			if(div._prices_form.inputs["item_price_type"].val() == "bulk") {
+			if(div._prices_form.inputs["item_price_type"].val() == 3) {
 				u.ass(div._prices_form.inputs["item_price_quantity"].field, {
 					"display":"inline-block"
 				})
@@ -9619,6 +9710,9 @@ Util.Objects["defaultPrices"] = new function() {
 						}
 						else if(response.cms_object["type"] == "bulk") {
 							u.ae(info, "li", {"class":"bulk", "html":"Bulk price for "+response.cms_object["quantity"] + " items"});
+						}
+						else if(response.cms_object["type"] != "default") {
+							u.ae(info, "li", {"class":"custom_price", "html":response.cms_object["description"]});
 						}
 						this.div.initPrice(price_li);
 						this.reset();
