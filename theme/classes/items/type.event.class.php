@@ -33,7 +33,7 @@ class TypeEvent extends Itemtype {
 		$this->addToModel("classname", array(
 			"type" => "string",
 			"label" => "CSS Class",
-			"hint_message" => "CSS class for custom styling. If you don't know what this is, just leave it empty"
+			"hint_message" => "CSS class for custom styling. If you don't know what this is, just leave it empty."
 		));
 
 		// Description
@@ -48,8 +48,19 @@ class TypeEvent extends Itemtype {
 		$this->addToModel("html", array(
 			"type" => "html",
 			"label" => "Full description",
+			"allowed_tags" => "p,h2,h3,h4,ul,ol,code,download,jpg,png", //,mp4,vimeo,youtube",
 			"hint_message" => "Write a full description of the event.",
 			"error_message" => "A full description without any words? How weird."
+		));
+
+		// Single media
+		$this->addToModel("single_media", array(
+			"type" => "files",
+			"label" => "Add media here",
+			"max" => 1,
+			"allowed_formats" => "png,jpg",
+			"hint_message" => "Add single image by dragging it here. PNG or JPG allowed.",
+			"error_message" => "Media does not fit requirements."
 		));
 
 

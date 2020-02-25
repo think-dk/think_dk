@@ -24,7 +24,7 @@ class TypeService extends Itemtype {
 			"type" => "string",
 			"label" => "Service name",
 			"required" => true,
-			"hint_message" => "Name of the service", 
+			"hint_message" => "Name of the service.", 
 			"error_message" => "Name must be filled out."
 		));
 
@@ -32,21 +32,34 @@ class TypeService extends Itemtype {
 		$this->addToModel("classname", array(
 			"type" => "string",
 			"label" => "CSS Class for list",
-			"hint_message" => "CSS class for custom styling. If you don't know what this is, just leave it empty"
+			"hint_message" => "CSS class for custom styling. If you don't know what this is, just leave it empty."
 		));
 
 		// description
 		$this->addToModel("description", array(
 			"type" => "text",
 			"label" => "Short description",
-			"hint_message" => "Write a short description of the article",
+			"hint_message" => "Write a short description of the article.",
 			"error_message" => "A short description without any words? How weird."
 		));
 
 		// HTML
 		$this->addToModel("html", array(
-			"hint_message" => "Write your article",
-			"allowed_tags" => "p,h2,h3,h4,ul,ol,download,jpg,png,code"
+			"type" => "html",
+			"label" => "Full description",
+			"allowed_tags" => "p,h2,h3,h4,ul,ol,download,jpg,png,code",
+			"hint_message" => "Describe the service.",
+			"error_message" => "A service description without any words? How weird."
+		));
+
+		// Single media
+		$this->addToModel("single_media", array(
+			"type" => "files",
+			"label" => "Add media here",
+			"max" => 1,
+			"allowed_formats" => "png,jpg",
+			"hint_message" => "Add single image by dragging it here. PNG or JPG allowed.",
+			"error_message" => "Media does not fit requirements."
 		));
 
 	}

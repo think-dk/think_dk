@@ -25,15 +25,15 @@ class TypeTicket extends Itemtype {
 			"type" => "string",
 			"label" => "Ticket name",
 			"required" => true,
-			"hint_message" => "Name of the ticket", 
+			"hint_message" => "Name of the ticket.", 
 			"error_message" => "Name must be filled out."
 		));
 
 		// Class
 		$this->addToModel("classname", array(
 			"type" => "string",
-			"label" => "CSS Class for list",
-			"hint_message" => "CSS class for custom styling. If you don't know what this is, just leave it empty"
+			"label" => "CSS Class for list.",
+			"hint_message" => "CSS class for custom styling. If you don't know what this is, just leave it empty."
 		));
 
 		// description
@@ -41,17 +41,29 @@ class TypeTicket extends Itemtype {
 			"type" => "text",
 			"label" => "Short description",
 			"required" => true,
-			"hint_message" => "Write a short SEO description of what the ticket is for",
+			"hint_message" => "Write a short SEO description of what the ticket is for.",
 			"error_message" => "A short description without any words? How weird."
 		));
 
 		// HTML
 		$this->addToModel("html", array(
-			"hint_message" => "Write the full description of what the ticket is for",
+			"type" => "html",
+			"label" => "Full description",
 			"required" => true,
-			"allowed_tags" => "p,h2,h3,h4,ul,ol,download,jpg,png"
+			"allowed_tags" => "p,h2,h3,h4,ul,ol,download,jpg,png",
+			"hint_message" => "Write the full description of what the ticket is for.",
+			"error_message" => "A ticket description without any words? How weird."
 		));
 
+		// Single media
+		$this->addToModel("single_media", array(
+			"type" => "files",
+			"label" => "Add media here",
+			"max" => 1,
+			"allowed_formats" => "png,jpg",
+			"hint_message" => "Add single image by dragging it here. PNG or JPG allowed.",
+			"error_message" => "Media does not fit requirements."
+		));
 
 		// ordered_message_id
 		$this->addToModel("ordered_message_id", [
