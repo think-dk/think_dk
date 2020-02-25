@@ -1,6 +1,6 @@
 /*
 MIT license, 2019 parentNode.dk
-asset-builder @ 2019-10-13 18:58:25
+asset-builder @ 2020-02-25 17:59:22
 */
 
 /*seg_tablet_light_include.js*/
@@ -553,7 +553,7 @@ Util.clickableElement = u.ce = function(node, _options) {
 				if(fun(node.preClicked)) {
 					node.preClicked();
 				}
-				if(event && (event.metaKey || event.ctrlKey)) {
+				if(event && (event.metaKey || event.ctrlKey || (this._a && this._a.target))) {
 					window.open(this.url);
 				}
 				else {
@@ -1357,11 +1357,89 @@ Util.lowerCaseFirst = u.lcfirst = function(string) {
 	return string.replace(/^(.){1}/, function($1) {return $1.toLowerCase()});
 }
 Util.normalize = function(string) {
+	var table = {
+		'À':'A',  'à':'a',
+		'Á':'A',  'á':'a',
+		'Â':'A',  'â':'a',
+		'Ã':'A',  'ã':'a',
+		'Ä':'A',  'ä':'a',
+		'Å':'Aa', 'å':'aa',
+		'Æ':'Ae', 'æ':'ae',
+		'Ç':'C',  'ç':'c',
+		'Č':'C',  'ć':'c',
+		'Ć':'C',  'č':'c',
+		'Đ':'D',  'đ':'d',  'ð':'d',
+		'È':'E',  'è':'e',
+		'É':'E',  'é':'e',
+		'Ê':'E',  'ê':'e',
+		'Ë':'E',  'ë':'e',
+		'Ģ':'G',  'ģ':'g',
+		'Ğ':'G',  'ğ':'g',
+		'Ì':'I',  'ì':'i',
+		'Í':'I',  'í':'i',
+		'Î':'I',  'î':'i',
+		'Ï':'I',  'ï':'i',
+		'Ī':'I',  'ī':'i',
+		'Ķ':'K',  'ķ':'k',
+		'Ļ':'L',  'ļ':'l',
+		'Ñ':'N',  'ñ':'n',
+		'Ņ':'N',  'ņ':'n',
+		'Ò':'O',  'ò':'o',
+		'Ó':'O',  'ó':'o',
+		'Ô':'O',  'ô':'o',
+		'Õ':'O',  'õ':'o',
+		'Ö':'O',  'ö':'o',
+		'Ō':'O',  'ō':'o',
+		'Ø':'Oe', 'ø':'oe',
+		'Ŕ':'R',  'ŕ':'r',
+		'Š':'S',  'š':'s',
+		'Ş':'S',  'ş':'s',
+		'Ṩ':'S',  'ṩ':'s',
+		'Ù':'U',  'ù':'u',
+		'Ú':'U',  'ú':'u',
+		'Û':'U',  'û':'u',
+		'Ü':'U',  'ü':'u',
+		'Ū':'U',  'ū':'u',
+		'Ų':'U',  'ų':'u',
+		'Ŭ':'U',  'ŭ':'u',
+		'Ý':'Y',  'ý':'y',
+		'Ÿ':'Y',  'ÿ':'y',
+		'Ž':'Z',  'ž':'z',
+		'Þ':'B',  'þ':'b',
+		'ß':'Ss',
+		'@':' at ',
+		'&':'and',
+		'%':' percent',
+		'\\$':'USD',
+		'¥':'JPY',
+		'€':'EUR',
+		'£':'GBP',
+		'™':'trademark',
+		'©':'copyright',
+		'§':'s',
+		'\\*':'x',
+		'×':'x'
+	}
+	var char, regex;
+	for(char in table) {
+		regex = new RegExp(char, "g");
+		string = string.replace(regex, table[char]);
+	}
+	return string;
+}
+Util.superNormalize = function(string) {
+	string = u.normalize(string);
 	string = string.toLowerCase();
+	string = u.stripTags(string);
 	string = string.replace(/[^a-z0-9\_]/g, '-');
 	string = string.replace(/-+/g, '-');
 	string = string.replace(/^-|-$/g, '');
 	return string;
+}
+Util.stripTags = function(string) {
+	var node = document.createElement("div");
+	node.innerHTML = string;
+	return u.text(node);
 }
 Util.pluralize = function(count, singular, plural) {
 	if(count != 1) {
@@ -3682,7 +3760,7 @@ Util.Form = u.f = new function() {
 				}
 			}
 		}
-		var action_name = action.name ? action.name : (action.parentNode.className ? u.normalize(action.parentNode.className) : (action.value ? u.normalize(action.value) : u.normalize(u.text(action))));
+		var action_name = action.name ? action.name : (action.parentNode.className ? u.superNormalize(action.parentNode.className) : (action.value ? u.superNormalize(action.value) : u.superNormalize(u.text(action))));
 		if(action_name && !action._form.actions[action_name]) {
 			action._form.actions[action_name] = action;
 		}
@@ -4571,76 +4649,6 @@ if(String.prototype.substr == undefined || "ABC".substr(-1,1) == "A") {
 
 
 /*u-basics.js*/
-u.smartphoneSwitch = new function() {
-	this.state = 0;
-	this.init = function(node) {
-		this.callback_node = node;
-		this.event_id = u.e.addWindowEvent(this, "resize", this.resized);
-		this.resized();
-	}
-	this.resized = function() {
-		if(u.browserW() < 500 && !this.state) {
-			this.switchOn();
-		}
-		else if(u.browserW() > 500 && this.state) {
-			this.switchOff();
-		}
-	}
-	this.switchOn = function() {
-		if(!this.panel) {
-			this.state = true;
-			this.panel = u.ae(document.body, "div", {"id":"smartphone_switch"});
-			u.ass(this.panel, {
-				opacity: 0
-			});
-			u.ae(this.panel, "h1", {html:u.stringOr(u.txt["smartphone-switch-headline"], "Hello curious")});
-			if(u.txt["smartphone-switch-text"].length) {
-				for(i = 0; i < u.txt["smartphone-switch-text"].length; i++) {
-					u.ae(this.panel, "p", {html:u.txt["smartphone-switch-text"][i]});
-				}
-			}
-			var ul_actions = u.ae(this.panel, "ul", {class:"actions"});
-			var li; 
-			li = u.ae(ul_actions, "li", {class:"hide"});
-			var bn_hide = u.ae(li, "a", {class:"hide button", html:u.txt["smartphone-switch-bn-hide"]});
-			li = u.ae(ul_actions, "li", {class:"switch"});
-			var bn_switch = u.ae(li, "a", {class:"switch button primary", html:u.txt["smartphone-switch-bn-switch"]});
-			u.e.click(bn_switch);
-			bn_switch.clicked = function() {
-				u.saveCookie("smartphoneSwitch", "on");
-				location.href = location.href.replace(/[&]segment\=desktop|segment\=desktop[&]?/, "") + (location.href.match(/\?/) ? "&" : "?") + "segment=smartphone";
-			}
-			u.e.click(bn_hide);
-			bn_hide.clicked = function() {
-				u.e.removeWindowEvent(u.smartphoneSwitch, "resize", u.smartphoneSwitch.event_id);
-				u.smartphoneSwitch.switchOff();
-			}
-			u.a.transition(this.panel, "all 0.5s ease-in-out");
-			u.ass(this.panel, {
-				opacity: 1
-			});
-			if(this.callback_node && typeof(this.callback_node.smartphoneSwitchedOn) == "function") {
-				this.callback_node.smartphoneSwitchedOn();
-			}
-		}
-	}
-	this.switchOff = function() {
-		if(this.panel) {
-			this.state = false;
-			this.panel.transitioned = function() {
-				this.parentNode.removeChild(this);
-				delete u.smartphoneSwitch.panel;
-			}
-			u.a.transition(this.panel, "all 0.5s ease-in-out");
-			u.ass(this.panel, {
-				opacity: 0
-			});
-			if(this.callback_node && typeof(this.callback_node.smartphoneSwitchedOff) == "function") {
-				this.callback_node.smartphoneSwitchedOff();
-			}
-		}
-	}
-}
 u.showScene = function(scene) {
 	var i, node;
 	var nodes = u.cn(scene);
@@ -4679,16 +4687,39 @@ u.showScene = function(scene) {
 	}
 }
 u._stepA1 = function() {
+	var svg_icon = u.qs("svg", this);
+	if(svg_icon) {
+		this.removeChild(svg_icon);
+	}
 	this.innerHTML = this.innerHTML.replace(/[ ]?<br[ \/]?>[ ]?/, " <br /> ");
 	this.innerHTML = '<span class="word">'+this.innerHTML.split(" ").join('</span> <span class="word">')+'</span>'; 
 	var word_spans = u.qsa("span.word", this);
-	var i, span;
+	var i, span, letters, spanned_word;
 	for(i = 0; span = word_spans[i]; i++) {
 		if(span.innerHTML.match(/<br[ \/]?>/)) {
 			span.parentNode.replaceChild(document.createElement("br"), span);
 		}
 		else {
-			span.innerHTML = "<span>"+span.innerHTML.split("").join("</span><span>")+"</span>";
+			if(span.innerHTML.match(/&[a-zA-Z0-9#]+;/)) {
+				letters = span.innerHTML.split("");
+				span.innerHTML = "";
+				for(j = 0; j < letters.length; j++) {
+					if(letters[j] === "&") {
+						spanned_word = letters[j];
+						while(letters[++j] !== ";") {
+							spanned_word += letters[j];
+						}
+						spanned_word += letters[j];
+						span.innerHTML += "<span>" + spanned_word + "</span>";
+					}
+					else {
+						span.innerHTML += "<span>" + letters[j] + "</span>";
+					}
+				}
+			}
+			else {
+				span.innerHTML = "<span>"+span.innerHTML.split("").join("</span><span>")+"</span>";
+			}
 		}
 	}
 	this.spans = u.qsa("span:not(.word)", this);
@@ -4718,6 +4749,9 @@ u._stepA1 = function() {
 			}
 		}
 	}
+	if(svg_icon) {
+		this.appendChild(svg_icon);
+	}
 }
 u._stepA2 = function() {
 	if(this.spans) {
@@ -4738,11 +4772,13 @@ u.txt["share"] = "Share this page";
 u.txt["share-info-headline"] = "(How do I share?)";
 u.txt["share-info-txt"] = "We have not included social media plugins on this site, because they are frequently abused to collect data about you. Also we don't want to promote some channels over others. Instead, just copy the link and share it wherever you find relevant.";
 u.txt["share-info-ok"] = "OK";
-u.txt["readmore"] = "Read more.";
+u.txt["readmore"] = "Read more ...";
 u.txt["readstate-not_read"] = "Click to mark as read";
 u.txt["readstate-read"] = "Read";
 u.txt["add_comment"] = "Add comment";
 u.txt["comment"] = "Comment";
+u.txt["add_question"] = "Send question";
+u.txt["question"] = "Ask a question. Try to be precise :-)";
 u.txt["cancel"] = "Cancel";
 u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/signup">Sign up</a> to add comments.';
 u.txt["relogin"] = "Your session timed out - please login to continue.";
