@@ -31,7 +31,7 @@ if($page_item) {
 		<? endif; ?>
 
 
-		<?= $HTML->articleInfo($page_item, "/the-real-black-friday", [
+		<?= $HTML->articleInfo($page_item, "/friosfradevoksnes", [
 			"media" => $media,
 			"sharing" => true
 		]) ?>

@@ -22,8 +22,6 @@ Util.Objects["verify_maillist"] = new function() {
 				u.f.init(form_verify);
 			}
 
-			// accept cookies?
-			page.acceptCookies();
 
 			u.showScene(this);
 

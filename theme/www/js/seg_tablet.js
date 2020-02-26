@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-02-26 00:31:43
+asset-builder @ 2020-02-26 09:41:26
 */
 
 /*seg_tablet_include.js*/
@@ -9031,7 +9031,6 @@ Util.Objects["verify_maillist"] = new function() {
 				u.bug("init form")
 				u.f.init(form_verify);
 			}
-			page.acceptCookies();
 			u.showScene(this);
 		}
 		page.cN.scene = scene;
@@ -9098,6 +9097,7 @@ Util.Objects["verify_shop"] = new function() {
 			var new_scene = u.qs(".scene", response);
 			page.cN.replaceChild(new_scene, current_scene); 
 			u.init();
+			new_scene.ready();
 			return new_scene;
 		}
 		scene.showMessage = function(form, response) {

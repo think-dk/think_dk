@@ -98,6 +98,7 @@ Util.Objects["verify_shop"] = new function() {
 			// Initialize new scene
 			u.init();
 
+			new_scene.ready();
 			return new_scene;
 		}
 
