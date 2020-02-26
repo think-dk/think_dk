@@ -757,6 +757,27 @@ body.black #header ul.servicenavigation {display: none;}
 /*body.black #footer {display: none;}*/
 
 
+#content .scene.frios div.signup {padding-top: 20px;}
+#content .scene.frios div.signup form {padding-bottom: 20px;}
+
+#content .scene.frios ul.people li.person {border: 0; padding-top: 0;}
+#content .scene.frios ul.people li.person img {margin: 0 50px 20px;}
+
+
+#content .scene.frios .slideshow {position: relative; overflow: hidden;}
+#content .scene.frios .slideshow .next {position: absolute; top: 40%; right: 20px; width: 30px; height: 50px;
+	background: #26962d;
+}
+#content .scene.frios .slideshow .prev {position: absolute; top: 40%; left: 20px; width: 30px; height: 50px;
+	background: #26962d;
+}
+#content .scene.frios ul.images {padding: 0; }
+#content .scene.frios ul.images li {position: absolute; top: 0; left: 0;
+	/* opacity: 0;*/
+}
+
+
+
 /* ABOUT */
 /*#content .scene.about div.comments {margin-top: 20px;}*/
 

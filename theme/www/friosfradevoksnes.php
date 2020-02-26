@@ -15,6 +15,30 @@ $page->bodyClass("frios");
 $page->pageTitle("Fri os fra de voksnes");
 
 
+# /friosfradevoksnes/tilmelding
+if(count($action) && $action[0] == "tilmelding") {
+
+
+	$name = getPost("name");
+	$parentname = getPost("parentname");
+	$email = getPost("email");
+	$phone = getPost("phone");
+	$comment = getPost("comment");
+
+	mailer()->send([
+		"recipient" => "martin@think.dk",
+		"message" => "Navn: $name\nForælders navn: $parentname\nEmail: $email\nTelefon: $phone\n\nAnsøgning:\n$comment"
+	]);
+
+	$page->page(array(
+		"templates" => "pages/friosfradevoksnes-receipt.php"
+	));
+
+	exit();
+
+}
+
+
 $page->page(array(
 	"templates" => "pages/friosfradevoksnes.php"
 ));
