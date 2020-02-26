@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-02-26 13:52:36
+asset-builder @ 2020-02-27 00:46:30
 */
 
 /*seg_desktop_include.js*/
@@ -7035,6 +7035,908 @@ u.fontsReady = function(node, fonts, _options) {
 	}
 }
 
+/*beta-u-slideshow.js*/
+u.slideshow = function(list, _options) {
+	var i, node;
+	var slideshow = u.wrapElement(list, "div", {"class":"slideshow"});
+	slideshow._selector = "";
+	slideshow._layout = "horizontal";
+	slideshow._navigation = true;
+	slideshow._index = false;
+	slideshow._transition = "ease-out";
+	slideshow._duration = 0.6; 
+	slideshow._loading = "incremental";
+	slideshow._callback_picked = "picked";
+	slideshow._callback_moved = "moved";
+	slideshow._callback_dropped = "dropped";
+	if(obj(_options)) {
+		var argument;
+		for(argument in _options) {
+			switch(argument) {
+				case "selector"			: slideshow._selector			= _options[argument]; break;
+				case "layout"			: slideshow._layout				= _options[argument]; break;
+				case "navigation"		: slideshow._navigation			= _options[argument]; break;
+				case "index"			: slideshow._index				= _options[argument]; break;
+				case "transition"		: slideshow._transition			= _options[argument]; break;
+				case "duration"			: slideshow._duration			= _options[argument]; break;
+				case "callback_picked"	: slideshow._callback_picked	= settings[argument]; break;
+				case "callback_moved"	: slideshow._callback_moved		= settings[argument]; break;
+				case "callback_dropped"	: slideshow._callback_dropped	= settings[argument]; break;
+			}
+		}
+	}
+	slideshow.list = list;
+	slideshow._width = slideshow.offsetWidth;
+	slideshow._height = slideshow.offsetHeight;
+	slideshow.nodes = u.qsa("li"+slideshow._selector, slideshow.list);
+	if(slideshow._navigation) {
+		slideshow.bn_next = u.ae(slideshow, "div", {"class":"next"});
+		slideshow.bn_next.slideshow = slideshow;
+		u.e.click(slideshow.bn_next);
+		slideshow.bn_next.clicked = function(event) {
+			this.slideshow.selectNode(this.slideshow.selected_node._i+1);
+		}
+		slideshow.bn_prev = u.ae(slideshow, "div", {"class":"prev"});
+		slideshow.bn_prev.slideshow = slideshow;
+		u.e.click(slideshow.bn_prev);
+		slideshow.bn_prev.clicked = function(event) {
+			this.slideshow.selectNode(this.slideshow.selected_node._i-1);
+		}
+	}
+	if(slideshow._index) {
+		slideshow.index = u.ae(slideshow, "ul", {class:"index"});
+		for(i = 0; i < slideshow.nodes.length; i++) {
+			node = u.ae(slideshow.index, "li", {class: slideshow.nodes[i].className});
+			node.slide = slideshow.nodes[i];
+			node.slideshow = slideshow;
+			slideshow.nodes[i].index = node;
+			u.ce(node);
+			node.clicked = function() {
+				this.slideshow.selectNode(this.slide._i);
+			}
+		}
+	}
+	slideshow.showLoading = function() {
+		u.ac(this, "loading");
+	}
+	slideshow.loading = function() {
+		if(!u.t.valid(this.t_loading)) {
+			this.t_loading = u.t.setTimer(this, this.showLoading, 1000);
+		}
+	}
+	slideshow._loaded = function() {
+		u.t.resetTimer(this.t_loading);
+		u.rc(this, "loading");
+		if(fun(this.loaded)) {
+			this.loaded();
+		}
+	}
+	slideshow.resized = function() {
+		u.bug("slideshow resized");
+		this._width = this.offsetWidth;
+		this._height = this.offsetHeight;
+	}
+	slideshow.prepare = function() {
+		if(this.nodes.length > 1) {
+			if(this._layout == "vertical") {
+				u.e.swipe(this, this, {"vertical_lock":true, "callback_picked":"slideshow_picked", "callback_moved":"slideshow_moved", "callback_dropped":"slideshow_dropped"});
+				this.swipedLeft = this.swipedRight = function(event) {
+					this.swiped = false;
+				}
+				this.swipedUp = function(event) {
+					if(this.selected_node._y < 0) {
+						this.selectNode(this.selected_node._i+1);
+					}
+					else {
+						this.swiped = false;
+					}
+				}
+				this.swipedDown = function(event) {
+					if(this.selected_node._y > 0) {
+						this.selectNode(this.selected_node._i-1);
+					}
+					else {
+						this.swiped = false;
+					}
+				}
+			}
+			else {
+				u.e.swipe(this, this, {"horizontal_lock":true, "callback_picked":"slideshow_picked", "callback_moved":"slideshow_moved", "callback_dropped":"slideshow_dropped"});
+				this.swipedDown = this.swipedUp = function(event) {
+					this.swiped = false;
+				}
+				this.swipedLeft = function(event) {
+					if(this.selected_node._x < 0) {
+						this.selectNode(this.selected_node._i+1);
+					}
+					else {
+						this.swiped = false;
+					}
+				}
+				this.swipedRight = function(event) {
+					if(this.selected_node._x > 0) {
+						this.selectNode(this.selected_node._i-1);
+					}
+					else {
+						this.swiped = false;
+					}
+				}
+			}
+			this.slideshow_picked = function(event) {
+				this.prev_node = this.selected_node._i-1 < 0 ? this.nodes[this.nodes.length-1] : this.nodes[this.selected_node._i-1];
+				this.next_node = this.selected_node._i+1 >= this.nodes.length ? this.nodes[0] : this.nodes[this.selected_node._i+1];
+				this._unclearNode(this.prev_node, "picked prev");
+				this._unclearNode(this.next_node, "picked next");
+				u.a.transition(this.prev_node, "none");
+				u.a.transition(this.selected_node, "none");
+				u.a.transition(this.next_node, "none");
+				if(this._layout == "vertical") {
+					u.a.translate(this.prev_node, 0, -(this._height));
+					u.a.translate(this.next_node, 0, (this._height));
+				}
+				else {
+					u.a.translate(this.prev_node, -(this._width), 0);
+					u.a.translate(this.next_node, (this._width), 0);
+				}
+				if(fun(this[this._callback_picked])) {
+					this[this._callback_picked](event);
+				}
+			}
+			this.slideshow_moved = function(event) {
+				if(this._layout == "vertical") {
+					if(this.current_y > 0) {
+						u.a.translate(this.prev_node, 0, (this.current_y-this._height));
+					}
+					else if(this.prev_node._y > -(this._height) && this._prev_node != this._next_node) {
+						u.a.translate(this.prev_node, 0, -(this._height));
+						this.slideshow._clearNode(this.prev_node, "moved out prev vertical");
+					}
+					u.a.translate(this.selected_node, 0, this.current_y);
+					if(this.current_y < 0) {
+						u.a.translate(this.next_node, 0, (this.current_y+this._height));
+					}
+					else if(this.next_node._y < (this._height) && this._prev_node != this._next_node) {
+						u.a.translate(this.next_node, 0, (this._height));
+						this.slideshow._clearNode(this.next_node, "moved out next vertical");
+					}
+				}
+				else {
+					if(this.current_x > 0) {
+						u.a.translate(this.prev_node, (this.current_x-this._width), 0);
+					}
+					else if(this.prev_node._x > -(this._width) && this._prev_node != this._next_node) {
+						u.a.translate(this.prev_node, -(this._width), 0);
+						this.slideshow._clearNode(this.next_node, "moved out prev horizontal");
+					}
+					u.a.translate(this.selected_node, this.current_x, 0);
+					if(this.current_x < 0) {
+						u.a.translate(this.next_node, (this.current_x+this._width), 0);
+					}
+					else if(this.next_node._x < (this._width) && this._prev_node != this._next_node) {
+						u.a.translate(this.next_node, (this._width), 0);
+						this.slideshow._clearNode(this.next_node, "moved out next horizontal");
+					}
+				}
+				if(fun(this[this._callback_moved])) {
+					this[this._callback_moved](event);
+				}
+			}
+			this.slideshow_dropped = function(event) {
+				if(this._layout == "vertical") {
+					if(!this.swiped && this.selected_node._y != 0) {
+						var duration = this._duration / (this._height / this.current_y);
+						this.selected_node.transitioned = function() {
+							u.bug("no swipe cleared (vertical)")
+							u.a.transition(this, "none");
+							this.slideshow._clearNode(this.slideshow.prev_node, "dropped vert retured prev");
+							this.slideshow._clearNode(this.slideshow.next_node, "dropped vert retured next");
+						}
+						u.a.transition(this.prev_node, "all " + duration + "s " + this._transition);
+						u.a.transition(this.selected_node, "all " + duration + "s " + this._transition);
+						u.a.transition(this.next_node, "all " + duration + "s " + this._transition);
+						u.a.translate(this.prev_node, 0, -(this._height));
+						u.a.translate(this.selected_node, 0, 0);
+						u.a.translate(this.next_node, 0, (this._height));
+					}
+				}
+				else {
+					if(!this.swiped && this.selected_node._x != 0) {
+						this.selected_node.transitioned = function() {
+							u.bug("no swipe cleared (horizontal)")
+							u.a.transition(this, "none");
+							this.slideshow._clearNode(this.slideshow.prev_node, "dropped hor retured prev");
+							this.slideshow._clearNode(this.slideshow.next_node, "dropped hor retured next");
+						}
+						var duration = this._duration / (this._width / this.current_x);
+						u.a.transition(this.prev_node, "all " + duration + "s " + this._transition);
+						u.a.transition(this.selected_node, "all " + duration + "s " + this._transition);
+						u.a.transition(this.next_node, "all " + duration + "s " + this._transition);
+						u.a.translate(this.prev_node, -(this._width), 0);
+						u.a.translate(this.selected_node, 0, 0);
+						u.a.translate(this.next_node, (this._width), 0);
+					}
+				}
+				if(fun(this[this._callback_dropped])) {
+					this[this._callback_dropped](event);
+				}
+			}
+		}
+		if(fun(this.prepared)) {
+			this.prepared();
+		}
+		else {
+			this.build();
+		}
+	}
+	slideshow.preload = function(start_with) {
+		this.loading();
+		if(!this.selected_node) {
+			if(start_with) {
+				start_with = start_with ? start_with : 0;
+				if(this.nodes.length > start_with) {
+					this._load_base = this.nodes[start_with];
+				}
+				else {
+					this._load_base = this.nodes[0];
+				}
+			}
+			else if(!this._load_base) {
+				this._load_base = this.nodes[0];
+			}
+		}
+		else {
+			this._load_base = this.selected_node;
+		}
+		if(!this._load_base.is_ready) {
+			if(fun(this.loadNode)) {
+				this.loadNode(this._load_base);
+			}
+			else {
+				this._loadNode(this._load_base);
+			}
+			return;
+		}
+		var next_1 = this.nodes.length > this._load_base._i+1 ? this.nodes[this._load_base._i+1] : this.nodes[0];
+		if(next_1 && !next_1.is_ready) {
+			if(fun(this.loadNode)) {
+				this.loadNode(next_1);
+			}
+			else {
+				this._loadNode(next_1);
+			}
+			return;
+		}
+		var prev_1 = this._load_base._i > 0 ? this.nodes[this._load_base._i-1] : this.nodes[this.nodes.length-1];
+		if(prev_1 && !prev_1.is_ready) {
+			if(fun(this.loadNode)) {
+				this.loadNode(prev_1);
+			}
+			else {
+				this._loadNode(prev_1);
+			}
+			return;
+		}
+		if(next_1) {
+			var next_2 = this.nodes.length > next_1._i+1 ? this.nodes[next_1._i+1] : this.nodes[0];
+			if(next_2 && !next_2.is_ready) {
+				if(fun(this.loadNode)) {
+					this.loadNode(next_2);
+				}
+				else {
+					this._loadNode(next_2);
+				}
+				return;
+			}
+		}
+		if(prev_1) {
+			var prev_2 = prev_1._i > 0 ? this.nodes[prev_1._i-1] : this.nodes[this.nodes.length-1];
+			if(prev_2 && !prev_2.is_ready) {
+				if(fun(this.loadNode)) {
+					this.loadNode(prev_2);
+				}
+				else {
+					this._loadNode(prev_2);
+				}
+				return;
+			}
+		}
+		this._loaded();
+		if(fun(this.preloaded)) {
+			this.preloaded();
+		}
+	}
+	slideshow.build = function() {
+		var i, node;
+		for(i = 0; i < this.nodes.length; i++) {
+			node = this.nodes[i];
+			node.slideshow = this;
+			node._i = i;
+			u.a.transition(node, "none");
+			u.ass(node, {
+				transform: "translate3d(0, "+(-this._height)+"px, 0)"
+			});
+			if(fun(this.buildNode)) {
+				this.buildNode(node);
+			}
+			else {
+				this._buildNode(node);
+			}
+			this._clearNode(node, "initial");
+		}
+		if(fun(this.built)) {
+			this.built();
+		}
+		else {
+			this.preload();
+		}
+	}
+	slideshow._buildNode = function(node) {
+	}
+	slideshow._loadNode = function(node) {
+		if(!node.is_ready) {
+			node.is_ready = true;
+			var item_id = u.cv(node, "item_id");
+			var image_src = false;
+			if(item_id) {
+				var variant = u.cv(node, "variant");
+				var format = u.cv(node, "format");
+				image_src = "/images/"+item_id+"/"+variant+"/"+this._width+"x."+format;
+			}
+			else {
+				image_src = node.getAttribute("data-image-src");
+			}
+			if(image_src) {
+				node.loaded = function(queue) {
+					u.as(this, "backgroundImage", "url("+queue[0]._image.src+")");
+					// 	
+					u.ac(this, "ready");
+					this.slideshow.preload();
+				}
+				u.preloader(node, [image_src]);
+			}
+			else {
+				// 	
+				u.ac(node, "ready");
+				this.preload();
+			}
+		}
+		else {
+			this.preload();
+		}
+	}
+	slideshow._clearNode = function(node, comment) {
+		node._hidden = true;
+		u.ass(node, {
+			display: "none"
+		});
+		u.a.transition(node, "none");
+	}
+	slideshow._unclearNode = function(node, comment) {
+		node._hidden = false;
+		u.ass(node, {
+			display: "block"
+		});
+	}
+	slideshow.selectNode = function(index, static_update) {
+		if(!this.selected_node) {
+			this.selected_node = this.nodes[index];
+			this._unclearNode(this.selected_node, "hard start show");
+			u.a.transition(this.selected_node, "none");
+			u.ass(this.selected_node, {
+				opacity: 0,
+				transform: "translate3d(0, 0, 0)"
+			});
+			this.selected_node.transitioned = function() {
+				if(fun(this.slideshow.nodeEntered)) {
+					this.slideshow.nodeEntered(this);
+				}
+			}
+			u.a.transition(this.selected_node, "opacity 0.5s ease-in-out");
+			u.ass(this.selected_node, {
+				opacity: 1
+			})
+		}
+		else if(this.nodes[index] != this.selected_node) {
+			var org_node = this.selected_node;
+			this.direction = (index - org_node._i) > 0 ? 1 : -1;
+			if(index < 0) {
+				index = this.nodes.length-1;
+			}
+			else if(index >= this.nodes.length) {
+				index = 0;
+			}
+			this.selected_node = this.nodes[index];
+			this._unclearNode(this.selected_node, "new selected node");
+			if(static_update) {
+				u.a.transition(org_node, "none");
+				u.a.transition(this.selected_node, "none");
+			}
+			else if(this.swiped) {
+				var duration;
+				if(this._layout == "vertical") {
+					if(this.current_yps) {
+						duration = ((this._height / Math.abs(this.current_yps)) * this._duration);
+						duration = duration > this._duration ? this._duration : duration;
+					}
+					else {
+						duration = this._duration / (1 - Math.abs(this.current_y / this._height));
+					}
+				}
+				else {
+					if(this.current_xps) {
+						duration = ((this._width / Math.abs(this.current_xps)) * this._duration);
+						duration = duration > this._duration ? this._duration : duration;
+					}
+					else {
+						duration = this._duration / (1 - Math.abs(this.current_x / this._width));
+					}
+				}
+				duration = (duration > 1.5) ? 1.5 : ((duration < 0.2) ? 0.2 : duration);
+				u.a.transition(org_node, "all " + duration + "s " + this._transition);
+				u.a.transition(this.selected_node, "all " + duration + "s " + this._transition);
+			}
+			else {
+				if(this._layout == "vertical") {
+					u.a.transition(this.selected_node, "none");
+					u.a.translate(this.selected_node, 0, this._height*this.direction);
+				}
+				else {
+					u.a.transition(this.selected_node, "none");
+					u.a.translate(this.selected_node, this._width*this.direction, 0);
+				}
+				u.a.transition(org_node, "all " + this._duration + "s " + this._transition);
+				u.a.transition(this.selected_node, "all " + this._duration + "s " + this._transition);
+			}
+			if(!static_update) {
+				this.selected_node.transitioned = function() {
+					u.a.transition(this, "none");
+					if(fun(this.slideshow.nodeEntered)) {
+						this.slideshow.nodeEntered(this);
+					}
+				}
+			}
+			if(org_node != this.selected_node) {
+				org_node.transitioned = function() {
+					if(this.slideshow.prev_node && this.slideshow.prev_node != this.slideshow.selected_node) {
+						this.slideshow._clearNode(slideshow.prev_node, "prev node cleared on regular transistion");
+					}
+					if(this.slideshow.next_node && this.slideshow.next_node != this.slideshow.selected_node) {
+						this.slideshow._clearNode(slideshow.next_node, "prev node cleared on regular transistion");
+					}
+					this.slideshow._clearNode(this, "org node cleared");
+					if(fun(this.slideshow.nodeCleared)) {
+						this.slideshow.nodeCleared(this);
+					}
+				}
+			}
+			if(this._layout == "vertical") {
+				u.a.translate(org_node, 0, -(this._height*this.direction));
+				u.a.translate(this.selected_node, 0, 0);
+			}
+			else {
+				u.a.translate(org_node, -(this._width*this.direction), 0);
+				u.a.translate(this.selected_node, 0, 0);
+			}
+			if(static_update && org_node != this.selected_node) {
+				org_node.transitioned();
+			}
+		}
+		if(this.selected_node.index) {
+			u.ac(this.selected_node.index, "selected");
+		}
+		if(org_node && org_node.index) {
+			u.rc(org_node.index, "selected");
+		}
+		this.preload();
+		if(fun(this.nodeSelected)) {
+			this.nodeSelected(this.selected_node);
+		}
+	}
+	return slideshow;
+}
+
+
+/*u-events-movements.js*/
+u.e.resetDragEvents = function(node) {
+	node._moves_pick = 0;
+	this.removeEvent(node, "mousemove", this._pick);
+	this.removeEvent(node, "touchmove", this._pick);
+	this.removeEvent(node, "mousemove", this._drag);
+	this.removeEvent(node, "touchmove", this._drag);
+	this.removeEvent(node, "mouseup", this._drop);
+	this.removeEvent(node, "touchend", this._drop);
+	this.removeEvent(node, "mouseup", this._cancelPick);
+	this.removeEvent(node, "touchend", this._cancelPick);
+	this.removeEvent(node, "mouseout", this._dropOut);
+	this.removeEvent(node, "mousemove", this._scrollStart);
+	this.removeEvent(node, "touchmove", this._scrollStart);
+	this.removeEvent(node, "mousemove", this._scrolling);
+	this.removeEvent(node, "touchmove", this._scrolling);
+	this.removeEvent(node, "mouseup", this._scrollEnd);
+	this.removeEvent(node, "touchend", this._scrollEnd);
+}
+u.e.overlap = function(node, boundaries, strict) {
+	if(boundaries.constructor.toString().match("Array")) {
+		var boundaries_start_x = Number(boundaries[0]);
+		var boundaries_start_y = Number(boundaries[1]);
+		var boundaries_end_x = Number(boundaries[2]);
+		var boundaries_end_y = Number(boundaries[3]);
+	}
+	else if(boundaries.constructor.toString().match("HTML")) {
+		var boundaries_start_x = u.absX(boundaries) - u.absX(node);
+		var boundaries_start_y =  u.absY(boundaries) - u.absY(node);
+		var boundaries_end_x = Number(boundaries_start_x + boundaries.offsetWidth);
+		var boundaries_end_y = Number(boundaries_start_y + boundaries.offsetHeight);
+	}
+	var node_start_x = Number(node._x);
+	var node_start_y = Number(node._y);
+	var node_end_x = Number(node_start_x + node.offsetWidth);
+	var node_end_y = Number(node_start_y + node.offsetHeight);
+	if(strict) {
+		if(node_start_x >= boundaries_start_x && node_start_y >= boundaries_start_y && node_end_x <= boundaries_end_x && node_end_y <= boundaries_end_y) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	} 
+	else if(node_end_x < boundaries_start_x || node_start_x > boundaries_end_x || node_end_y < boundaries_start_y || node_start_y > boundaries_end_y) {
+		return false;
+	}
+	return true;
+}
+u.e.drag = function(node, boundaries, _options) {
+	node.e_drag_options = _options ? _options : {};
+	node.e_drag = true;
+	if(node.childNodes.length < 2 && node.innerHTML.trim() == "") {
+		node.innerHTML = "&nbsp;";
+	}
+	node.distance_to_pick = 2;
+	node.drag_strict = true;
+	node.drag_overflow = false;
+	node.drag_elastica = 0;
+	node.drag_dropout = true;
+	node.show_bounds = false;
+	node.callback_ready = "ready";
+	node.callback_picked = "picked";
+	node.callback_moved = "moved";
+	node.callback_dropped = "dropped";
+	if(obj(_options)) {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "strict"			: node.drag_strict			= _options[_argument]; break;
+				case "overflow"			: node.drag_overflow		= _options[_argument]; break;
+				case "elastica"			: node.drag_elastica		= Number(_options[_argument]); break;
+				case "dropout"			: node.drag_dropout			= _options[_argument]; break;
+				case "show_bounds"		: node.show_bounds			= _options[_argument]; break; 
+				case "vertical_lock"	: node.vertical_lock		= _options[_argument]; break;
+				case "horizontal_lock"	: node.horizontal_lock		= _options[_argument]; break;
+				case "callback_picked"	: node.callback_picked		= _options[_argument]; break;
+				case "callback_moved"	: node.callback_moved		= _options[_argument]; break;
+				case "callback_dropped"	: node.callback_dropped		= _options[_argument]; break;
+			}
+		}
+	}
+	u.e.setDragBoundaries(node, boundaries);
+	u.e.addStartEvent(node, this._inputStart);
+	if(fun(node[node.callback_ready])) {
+		node[node.callback_ready]();
+	}
+}
+u.e._pick = function(event) {
+	var init_speed_x = Math.abs(this.start_event_x - u.eventX(event));
+	var init_speed_y = Math.abs(this.start_event_y - u.eventY(event));
+	if(
+		(init_speed_x > init_speed_y && this.only_horizontal) || 
+		(init_speed_x < init_speed_y && this.only_vertical) ||
+		(!this.only_vertical && !this.only_horizontal)) {
+		if((init_speed_x > this.distance_to_pick || init_speed_y > this.distance_to_pick)) {
+			u.e.resetNestedEvents(this);
+			u.e.kill(event);
+			if(u.hasFixedParent(this)) {
+				this.has_fixed_parent = true;
+			}
+			else {
+				this.has_fixed_parent = false;
+			}
+			this.move_timestamp = event.timeStamp;
+			this.move_last_x = this._x;
+			this.move_last_y = this._y;
+			if(u.hasFixedParent(this)) {
+				this.start_input_x = u.eventX(event) - this._x - u.scrollX(); 
+				this.start_input_y = u.eventY(event) - this._y - u.scrollY();
+			}
+			else {
+				this.start_input_x = u.eventX(event) - this._x; 
+				this.start_input_y = u.eventY(event) - this._y;
+			}
+			this.current_xps = 0;
+			this.current_yps = 0;
+			u.a.transition(this, "none");
+			u.e.addMoveEvent(this, u.e._drag);
+			u.e.addEndEvent(this, u.e._drop);
+			if(fun(this[this.callback_picked])) {
+				this[this.callback_picked](event);
+			}
+			if(this.drag_dropout && event.type.match(/mouse/)) {
+				// 	
+				// 	
+				// 	
+				// 	
+				// 	
+				// 
+				// 
+				// 	
+				this._dropOutDrag = u.e._drag;
+				this._dropOutDrop = u.e._drop;
+				u.e.addOutEvent(this, u.e._dropOut);
+			}
+		}
+	}
+}
+u.e._drag = function(event) {
+	if(this.has_fixed_parent) {
+		this.current_x = u.eventX(event) - this.start_input_x - u.scrollX();
+		this.current_y = u.eventY(event) - this.start_input_y - u.scrollY();
+	}
+	else {
+		this.current_x = u.eventX(event) - this.start_input_x;
+		this.current_y = u.eventY(event) - this.start_input_y;
+	}
+	this.current_xps = Math.round(((this.current_x - this.move_last_x) / (event.timeStamp - this.move_timestamp)) * 1000);
+	this.current_yps = Math.round(((this.current_y - this.move_last_y) / (event.timeStamp - this.move_timestamp)) * 1000);
+	this.last_x_distance_travelled = (this.current_xps) ? this.current_x - this.move_last_x : this.last_x_distance_travelled;
+	this.last_y_distance_travelled = (this.current_yps) ? this.current_y - this.move_last_y : this.last_y_distance_travelled;
+	this.move_timestamp = event.timeStamp;
+	this.move_last_x = this.current_x;
+	this.move_last_y = this.current_y;
+	if(!this.locked && this.only_vertical) {
+		this._y = this.current_y;
+	}
+	else if(!this.locked && this.only_horizontal) {
+		this._x = this.current_x;
+	}
+	else if(!this.locked) {
+		this._x = this.current_x;
+		this._y = this.current_y;
+	}
+	if(this.e_swipe) {
+		if(this.only_horizontal) {
+			if(this.current_xps < 0 || this.current_xps === 0 && this.last_x_distance_travelled < 0) {
+				this.swiped = "left";
+			}
+			else {
+				this.swiped = "right";
+			}
+		}
+		else if(this.only_vertical) {
+			if(this.current_yps < 0 || this.current_yps === 0 && this.last_y_distance_travelled < 0) {
+				this.swiped = "up";
+			}
+			else {
+				this.swiped = "down";
+			}
+		}
+		else {
+			if(Math.abs(this.current_xps) > Math.abs(this.current_yps)) {
+				if(this.current_xps < 0) {
+					this.swiped = "left";
+				}
+				else {
+					this.swiped = "right";
+				}
+			}
+			else if(Math.abs(this.current_xps) < Math.abs(this.current_yps)) {
+				if(this.current_yps < 0) {
+					this.swiped = "up";
+				}
+				else {
+					this.swiped = "down";
+				}
+			}
+		}
+	}
+	if(!this.locked) {
+		if(u.e.overlap(this, [this.start_drag_x, this.start_drag_y, this.end_drag_x, this.end_drag_y], true)) {
+			u.a.translate(this, this._x, this._y);
+		}
+		else if(this.drag_elastica) {
+			this.swiped = false;
+			this.current_xps = 0;
+			this.current_yps = 0;
+			var offset = false;
+			if(!this.only_vertical && this._x < this.start_drag_x) {
+				offset = this._x < this.start_drag_x - this.drag_elastica ? - this.drag_elastica : this._x - this.start_drag_x;
+				this._x = this.start_drag_x;
+				this.current_x = this._x + offset + (Math.round(Math.pow(offset, 2)/this.drag_elastica));
+			}
+			else if(!this.only_vertical && this._x + this.offsetWidth > this.end_drag_x) {
+				offset = this._x + this.offsetWidth > this.end_drag_x + this.drag_elastica ? this.drag_elastica : this._x + this.offsetWidth - this.end_drag_x;
+				this._x = this.end_drag_x - this.offsetWidth;
+				this.current_x = this._x + offset - (Math.round(Math.pow(offset, 2)/this.drag_elastica));
+			}
+			else {
+				this.current_x = this._x;
+			}
+			if(!this.only_horizontal && this._y < this.start_drag_y) {
+				offset = this._y < this.start_drag_y - this.drag_elastica ? - this.drag_elastica : this._y - this.start_drag_y;
+				this._y = this.start_drag_y;
+				this.current_y = this._y + offset + (Math.round(Math.pow(offset, 2)/this.drag_elastica));
+			}
+			else if(!this.horizontal && this._y + this.offsetHeight > this.end_drag_y) {
+				offset = (this._y + this.offsetHeight > this.end_drag_y + this.drag_elastica) ? this.drag_elastica : (this._y + this.offsetHeight - this.end_drag_y);
+				this._y = this.end_drag_y - this.offsetHeight;
+				this.current_y = this._y + offset - (Math.round(Math.pow(offset, 2)/this.drag_elastica));
+			}
+			else {
+				this.current_y = this._y;
+			}
+			if(offset) {
+				u.a.translate(this, this.current_x, this.current_y);
+			}
+		}
+		else {
+			this.swiped = false;
+			this.current_xps = 0;
+			this.current_yps = 0;
+			if(this._x < this.start_drag_x) {
+				this._x = this.start_drag_x;
+			}
+			else if(this._x + this.offsetWidth > this.end_drag_x) {
+				this._x = this.end_drag_x - this.offsetWidth;
+			}
+			if(this._y < this.start_drag_y) {
+				this._y = this.start_drag_y;
+			}
+			else if(this._y + this.offsetHeight > this.end_drag_y) { 
+				this._y = this.end_drag_y - this.offsetHeight;
+			}
+			u.a.translate(this, this._x, this._y);
+		}
+	}
+	if(fun(this[this.callback_moved])) {
+		this[this.callback_moved](event);
+	}
+}
+u.e._drop = function(event) {
+	u.e.resetEvents(this);
+	if(this.e_swipe && this.swiped) {
+		this.e_swipe_options.eventAction = "Swiped "+ this.swiped;
+		u.stats.event(this, this.e_swipe_options);
+		if(this.swiped == "left" && fun(this.swipedLeft)) {
+			this.swipedLeft(event);
+		}
+		else if(this.swiped == "right" && fun(this.swipedRight)) {
+			this.swipedRight(event);
+		}
+		else if(this.swiped == "down" && fun(this.swipedDown)) {
+			this.swipedDown(event);
+		}
+		else if(this.swiped == "up" && fun(this.swipedUp)) {
+			this.swipedUp(event);
+		}
+	}
+	else if(!this.drag_strict && !this.locked) {
+		this.current_x = Math.round(this._x + (this.current_xps/2));
+		this.current_y = Math.round(this._y + (this.current_yps/2));
+		if(this.only_vertical || this.current_x < this.start_drag_x) {
+			this.current_x = this.start_drag_x;
+		}
+		else if(this.current_x + this.offsetWidth > this.end_drag_x) {
+			this.current_x = this.end_drag_x - this.offsetWidth;
+		}
+		if(this.only_horizontal || this.current_y < this.start_drag_y) {
+			this.current_y = this.start_drag_y;
+		}
+		else if(this.current_y + this.offsetHeight > this.end_drag_y) {
+			this.current_y = this.end_drag_y - this.offsetHeight;
+		}
+		this.transitioned = function() {
+			if(fun(this.projected)) {
+				this.projected(event);
+			}
+		}
+		if(this.current_xps || this.current_yps) {
+			u.a.transition(this, "all 1s cubic-bezier(0,0,0.25,1)");
+		}
+		else {
+			u.a.transition(this, "none");
+		}
+		u.a.translate(this, this.current_x, this.current_y);
+	}
+	if(this.e_drag && !this.e_swipe) {
+		this.e_drag_options.eventAction = u.stringOr(this.e_drag_options.eventAction, "Dropped");
+		u.stats.event(this, this.e_drag_options);
+	}
+	if(fun(this[this.callback_dropped])) {
+		this[this.callback_dropped](event);
+	}
+}
+u.e._dropOut = function(event) {
+	this._drop_out_id = u.randomString();
+	document["_DroppedOutNode" + this._drop_out_id] = this;
+	eval('document["_DroppedOutMove' + this._drop_out_id + '"] = function(event) {document["_DroppedOutNode' + this._drop_out_id + '"]._dropOutDrag(event);}');
+	eval('document["_DroppedOutOver' + this._drop_out_id + '"] = function(event) {u.e.removeEvent(document, "mousemove", document["_DroppedOutMove' + this._drop_out_id + '"]);u.e.removeEvent(document, "mouseup", document["_DroppedOutEnd' + this._drop_out_id + '"]);u.e.removeEvent(document["_DroppedOutNode' + this._drop_out_id + '"], "mouseover", document["_DroppedOutOver' + this._drop_out_id + '"]);}');
+	eval('document["_DroppedOutEnd' + this._drop_out_id + '"] = function(event) {u.e.removeEvent(document, "mousemove", document["_DroppedOutMove' + this._drop_out_id + '"]);u.e.removeEvent(document, "mouseup", document["_DroppedOutEnd' + this._drop_out_id + '"]);u.e.removeEvent(document["_DroppedOutNode' + this._drop_out_id + '"], "mouseover", document["_DroppedOutOver' + this._drop_out_id + '"]);document["_DroppedOutNode' + this._drop_out_id + '"]._dropOutDrop(event);}');
+	u.e.addEvent(document, "mousemove", document["_DroppedOutMove" + this._drop_out_id]);
+	u.e.addEvent(this, "mouseover", document["_DroppedOutOver" + this._drop_out_id]);
+	u.e.addEvent(document, "mouseup", document["_DroppedOutEnd" + this._drop_out_id]);
+}
+u.e._cancelPick = function(event) {
+	u.e.resetDragEvents(this);
+	if(fun(this.pickCancelled)) {
+		this.pickCancelled(event);
+	}
+}
+u.e.setDragBoundaries = function(node, boundaries) {
+	if((boundaries.constructor && boundaries.constructor.toString().match("Array")) || (boundaries.scopeName && boundaries.scopeName != "HTML")) {
+		node.start_drag_x = Number(boundaries[0]);
+		node.start_drag_y = Number(boundaries[1]);
+		node.end_drag_x = Number(boundaries[2]);
+		node.end_drag_y = Number(boundaries[3]);
+	}
+	else if((boundaries.constructor && boundaries.constructor.toString().match("HTML")) || (boundaries.scopeName && boundaries.scopeName == "HTML")) {
+		if(node.drag_overflow == "scroll") {
+			node.start_drag_x = node.offsetWidth > boundaries.offsetWidth ? boundaries.offsetWidth - node.offsetWidth : 0;
+			node.start_drag_y = node.offsetHeight > boundaries.offsetHeight ? boundaries.offsetHeight - node.offsetHeight : 0;
+			node.end_drag_x = node.offsetWidth > boundaries.offsetWidth ? node.offsetWidth : boundaries.offsetWidth;
+			node.end_drag_y = node.offsetHeight > boundaries.offsetHeight ? node.offsetHeight : boundaries.offsetHeight;
+		}
+		else {
+			node.start_drag_x = u.absX(boundaries) - u.absX(node);
+			node.start_drag_y = u.absY(boundaries) - u.absY(node);
+			node.end_drag_x = node.start_drag_x + boundaries.offsetWidth;
+			node.end_drag_y = node.start_drag_y + boundaries.offsetHeight;
+		}
+	}
+	if(node.show_bounds) {
+		var debug_bounds = u.ae(document.body, "div", {"class":"debug_bounds"})
+		debug_bounds.style.position = "absolute";
+		debug_bounds.style.background = "red"
+		debug_bounds.style.left = (u.absX(node) + node.start_drag_x - 1) + "px";
+		debug_bounds.style.top = (u.absY(node) + node.start_drag_y - 1) + "px";
+		debug_bounds.style.width = (node.end_drag_x - node.start_drag_x) + "px";
+		debug_bounds.style.height = (node.end_drag_y - node.start_drag_y) + "px";
+		debug_bounds.style.border = "1px solid white";
+		debug_bounds.style.zIndex = 9999;
+		debug_bounds.style.opacity = .5;
+		if(document.readyState && document.readyState == "interactive") {
+			debug_bounds.innerHTML = "WARNING - injected on DOMLoaded"; 
+		}
+		u.bug("node: ", node, " in (" + u.absX(node) + "," + u.absY(node) + "), (" + (u.absX(node)+node.offsetWidth) + "," + (u.absY(node)+node.offsetHeight) +")");
+		u.bug("boundaries: (" + node.start_drag_x + "," + node.start_drag_y + "), (" + node.end_drag_x + ", " + node.end_drag_y + ")");
+	}
+	node._x = node._x ? node._x : 0;
+	node._y = node._y ? node._y : 0;
+	if(node.drag_overflow == "scroll" && (boundaries.constructor && boundaries.constructor.toString().match("HTML")) || (boundaries.scopeName && boundaries.scopeName == "HTML")) {
+		node.locked = ((node.end_drag_x - node.start_drag_x <= boundaries.offsetWidth) && (node.end_drag_y - node.start_drag_y <= boundaries.offsetHeight));
+		node.only_vertical = (node.vertical_lock || (!node.locked && node.end_drag_x - node.start_drag_x <= boundaries.offsetWidth));
+		node.only_horizontal = (node.horizontal_lock || (!node.locked && node.end_drag_y - node.start_drag_y <= boundaries.offsetHeight));
+	}
+	else {
+		node.locked = ((node.end_drag_x - node.start_drag_x == node.offsetWidth) && (node.end_drag_y - node.start_drag_y == node.offsetHeight));
+		node.only_vertical = (node.vertical_lock || (!node.locked && node.end_drag_x - node.start_drag_x == node.offsetWidth));
+		node.only_horizontal = (node.horizontal_lock || (!node.locked && node.end_drag_y - node.start_drag_y == node.offsetHeight));
+	}
+}
+u.e.setDragPosition = function(node, x, y) {
+	node.current_xps = 0;
+	node.current_yps = 0;
+	node._x = x;
+	node._y = y;
+	u.a.translate(node, node._x, node._y);
+	if(fun(node[node.callback_moved])) {
+		node[node.callback_moved](event);
+	}
+}
+u.e.swipe = function(node, boundaries, _options) {
+	node.e_swipe_options = _options ? _options : {};
+	node.e_swipe = true;
+	u.e.drag(node, boundaries, _options);
+}
+
+
 /*u-sharing.js*/
 u.injectSharing = function(node) {
 	node.sharing = u.ae(node, "div", {"class":"sharing"});
@@ -9113,6 +10015,89 @@ Util.Objects["black"] = new function() {
 		page.cN.scene = scene;
 	}
 }
+
+/*i-frios.js*/
+Util.Objects["frios"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+			console.log(this.ul_images, this.images);
+			if(this.ul_images) {
+				u.ass(this.ul_images, {
+					"height":(this.ul_images.offsetWidth / 1.32) +"px"
+				});
+			}
+			this.offsetHeight;
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			u.columns(this, [
+				{"c200": [
+					"div.article", 
+				]},
+				{"c100": [
+					"div.people",
+				]},
+			]);
+			var load_queue = [];
+			var i, image, person;
+			this.ul_images = u.qs("ul.images", this);
+			if(this.ul_images) {
+				this.images = u.qsa("li div.image", this.ul_images);
+				console.log(this.images)
+				for(i = 0; i < this.images.length; i++) {
+					image = this.images[i];
+					image.item_id = u.cv(image, "item_id");
+					image.variant = u.cv(image, "variant");
+					image.format = u.cv(image, "format");
+					load_queue.push("/images/" + image.item_id + "/" + image.variant + "/540x." + image.format);
+				}
+				this.resized();
+			}
+			console.log(load_queue);
+			this.ul_people = u.qs("ul.people", this);
+			if(this.ul_people) {
+				this.people = u.qsa("li.person", this.ul_people);
+				for(i = 0; i < this.people.length; i++) {
+					person = this.people[i];
+					person.image_src = person.getAttribute("data-image-src");
+					load_queue.push(person.image_src);
+				}
+			}
+			this.form_signup = u.qs("form.signup", this);
+			if(this.form_signup) {
+				u.f.init(this.form_signup);
+			}
+			this.loaded = function(queue) {
+				var i, person;
+				if(this.ul_people) {
+					this.people = u.qsa("li.person", this.ul_people);
+					for(i = 0; i < this.people.length; i++) {
+						person = this.people[i];
+						u.ie(person, "img", {src: person.image_src});
+					}
+				}
+				console.log(this.ul_images, this.images);
+				if(this.ul_images) {
+					this.slideshow = u.slideshow(this.ul_images);
+					this.slideshow.scene = this;
+					this.slideshow.preloaded = function() {
+						if(!this.selected_node) {
+							this.selectNode(0);
+						}
+					}
+					this.slideshow.prepare();
+					u.addNextArrow(this.slideshow.bn_next);
+					u.addPreviousArrow(this.slideshow.bn_prev);
+				}
+				u.showScene(this);
+			}
+			u.preloader(this, load_queue);
+		}
+		page.cN.scene = scene;
+	}
+}
+
 
 /*i-verify-maillist.js*/
 Util.Objects["verify_maillist"] = new function() {

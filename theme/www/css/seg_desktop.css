@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-02-26 13:52:36
+asset-builder @ 2020-02-27 00:46:30
 */
 
 /*seg_desktop_include.css*/
@@ -783,7 +783,10 @@ body > div.pagination li.next a {padding-right: 0;}
 #content .scene .c150 div.categories ul.tags li {display: block; margin: 0;}
 #content .scene .c100 div.categories ul.tags li.selected,
 #content .scene .c150 div.categories ul.tags li.selected {margin: 5px -10px;}
-#content .c div.field input {width: calc(100% - 18px);}
+#content .scene .c150 div.field input,
+#content .scene .c100 div.field input,
+#content .scene .c75 div.field input,
+#content .scene .c50 div.field input {width: calc(100% - 18px);}
 
 
 /*s-articles.css*/
@@ -1350,6 +1353,20 @@ body.black #header ul.servicenavigation {display: none;}
 #content .scene ul.articles li[class='item article id:255'] h3 {color: #000000 !important;}
 #content .scene ul.articles li[class='item article id:255'] p {color: #000000;}
 #content .scene ul.articles li[class='item article id:255'] a {color: #000000; text-decoration: underline;}
+#content .scene.frios div.signup {padding-top: 20px;}
+#content .scene.frios div.signup form {padding-bottom: 20px;}
+#content .scene.frios ul.people li.person {border: 0; padding-top: 0;}
+#content .scene.frios ul.people li.person img {margin: 0 50px 20px;}
+#content .scene.frios .slideshow {position: relative; overflow: hidden;}
+#content .scene.frios .slideshow .next {position: absolute; top: 40%; right: 20px; width: 30px; height: 50px;
+	background: #26962d;
+}
+#content .scene.frios .slideshow .prev {position: absolute; top: 40%; left: 20px; width: 30px; height: 50px;
+	background: #26962d;
+}
+#content .scene.frios ul.images {padding: 0; }
+#content .scene.frios ul.images li {position: absolute; top: 0; left: 0;
+}
 @media print {
 	#header .logo {position: absolute; left: 80px;}
 	#header .servicenavigation {display: none;}
