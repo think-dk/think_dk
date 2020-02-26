@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-02-25 23:37:02
+asset-builder @ 2020-02-26 13:52:45
 */
 
 /*seg_desktop_include.css*/
@@ -612,11 +612,15 @@ body #selection_options ul.actions li {padding: 0 5px 0 0;}
 #content .scene.newPayment > div.charge ul.actions li {float: left; clear: both;}
 #content .scene.newPayment div.reminder ul.info {padding: 0 30px 25px;}
 #content .scene.newPayment div.reminder ul.info li {padding: 0 0 3px; display: block;}
-body.invoice {background: #ffffff;}
+body.invoice {background: #ffffff; height: 1000px;}
+body.invoice #page {height: 1000px; overflow: hidden;}
+body.invoice #page #content,
+body.invoice #page #content .scene {height: 900px;}
 body.invoice #navigation,
 body.invoice #header,
 body.invoice #footer,
-body.invoice #page > ul.servicenavigation {display: none;}
+body.invoice #page > ul.servicenavigation,
+body.invoice #notifications {display: none;}
 body.invoice #page {margin: 0;}
 body.invoice #content {margin: 50px 0;}
 body.invoice #content div.scene ul.info {padding: 0 30px;}
@@ -629,15 +633,17 @@ body.invoice #content div.scene .basics dl.info {padding: 10px 30px;}
 body.invoice #content div.scene .basics dl.info dt {font-weight: 700;}
 body.invoice #content div.scene .basics dl.info dd,
 body.invoice #content div.scene .basics dl.info dt {display: block; float: none; padding: 0 0 5px;}
+body.invoice #content div.scene .buyer {position: absolute; top: 50px; left: 0px;}
 body.invoice #content div.scene .buyer ul.info {padding-bottom: 20px;}
 body.invoice #content div.scene .all_items {padding-top: 20px;}
+body.invoice #content div.scene .all_items ul.items li:hover {background: transparent;}
 body.invoice #content div.scene .all_items ul.items li h3 {padding-right: 30px;}
 body.invoice #content div.scene .all_items ul.items li h3 span {font-size: 14px; line-height: 1em; padding: 9px 5px 5px 0; display: inline-block; vertical-align: top;}
 body.invoice #content div.scene .all_items ul.items li h3 span.total_price {float: right; padding: 8px 0; display: inline-block; font-size: 16px;}
 body.invoice #content div.scene .all_items ul.items li.order_total {font-size: 20px; padding: 20px 30px 5px; border-bottom: none;}
 body.invoice #content div.scene .all_items ul.items li.order_vat {font-size: 14px; padding: 0 30px 20px;}
 body.invoice #content div.scene .all_items ul.items li span.amount {float: right;}
-
+body.invoice #content div.scene .payment_info {position: absolute; bottom: 50px; left: 0px;}
 
 /*s-user.css*/
 #content .defaultList.userList > ul.actions li.online {float: right; padding: 0 0 10px 10px;}
