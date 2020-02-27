@@ -757,14 +757,16 @@ body.black #header ul.servicenavigation {display: none;}
 /*body.black #footer {display: none;}*/
 
 
-#content .scene.frios div.signup {padding-top: 20px;}
+#content .scene.frios div.signup {padding-bottom: 20px;}
 #content .scene.frios div.signup form {padding-bottom: 20px;}
+#content .scene.frios div.practicalities {padding-bottom: 40px;}
 
 #content .scene.frios div.info_meeting {padding-bottom: 40px;}
+#content .scene.frios div.help_us {padding-bottom: 40px;}
 #content .scene.frios div.more_info {padding-bottom: 40px;}
 
-
-#content .scene.frios ul.people li.person {border: 0; padding-top: 0;}
+#content .scene.frios ul.people {font-size: 0;}
+#content .scene.frios ul.people li.person {border: 0; padding-top: 0; width: 50%; display: inline-block; vertical-align: top;}
 #content .scene.frios ul.people li.person img {margin: 0 50px 20px; width: calc(100% - 100px);}
 
 
@@ -783,13 +785,14 @@ body.black #header ul.servicenavigation {display: none;}
 #content .scene.frios ul.images li {position: absolute; top: 0; left: 0;
 	/* opacity: 0;*/
 }
-#content .scene.frios ul.images li img {margin: 0; width: 100%;}
+#content .scene.frios ul.images li img {margin: 0; width: 100%; cursor: default;}
 
 #content .scene.frios .slideshow .next > svg.arrow {position: absolute; top: 14px; right: 2px;}
 #content .scene.frios .slideshow .next > svg.arrow line {stroke: #26962d; stroke-width: 3px;}
 #content .scene.frios .slideshow .prev > svg.arrow {position: absolute; top: 14px; left: 8px;}
 #content .scene.frios .slideshow .prev > svg.arrow line {stroke: #26962d; stroke-width: 3px;}
 
+#content .scene.frios .highlight {color: #26962d;}
 
 /* ABOUT */
 /*#content .scene.about div.comments {margin-top: 20px;}*/

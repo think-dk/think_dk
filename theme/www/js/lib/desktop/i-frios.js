@@ -2,6 +2,20 @@ Util.Objects["frios"] = new function() {
 	this.init = function(scene) {
 		// u.bug("scene init:", scene);
 
+		u.txt["login_to_comment"] = '<a href="/login">Log ind</a> eller <a href="/memberships">opret en konto</a> for at tilføje kommentarer.';
+
+		u.txt["share"] = "Del denne side";
+		u.txt["share-info-headline"] = "(Hvordan deler jer?)";
+		u.txt["share-info-txt"] = "Vi har med vilje ikke inkluderet social media plugins, fordi disse ofte misbruges til at indsamle data om dig. Vi ønsker heller ikke at promovere nogle kanaler over andre. I stedet kan du blot kopiere det viste link og selv dele det, dér hvor du finder det relevant.";
+		u.txt["share-info-ok"] = "OK";
+
+		u.txt["add_comment"] = "Tilføj kommentar";
+		u.txt["comment"] = "Kommentar";
+
+		u.txt["cancel"] = "Fortryd";
+
+
+
 		scene.resized = function() {
 			// u.bug("scene.resized:", this);
 			// console.log(this.ul_images, this.images);
@@ -9,6 +23,12 @@ Util.Objects["frios"] = new function() {
 			if(this.ul_images) {
 				// console.log("height:", this.ul_images.offsetWidth);
 				u.ass(this.ul_images, {
+					"height":Math.floor(this.ul_images.offsetWidth / 1.32) +"px"
+				});
+			}
+
+			if(this.help_us && this.ul_images) {
+				u.ass(this.help_us, {
 					"height":Math.floor(this.ul_images.offsetWidth / 1.32) +"px"
 				});
 			}
@@ -24,17 +44,25 @@ Util.Objects["frios"] = new function() {
 		scene.ready = function() {
 			// u.bug("scene.ready:", this);
 
+			u.txt["login_to_comment"] = '<a href="/login">Log ind</a> eller <a href="/memberships">Opret en konto</a> for at tilføje kommentarer.';
+
+
 			u.columns(this, [
-				{"c200": [
-					"div.article", 
+				{"c300":[
+					{"c200": [
+						"div.article", 
+					]},
+					{"c100": [
+						"div.help_us",
+						"div.info_meeting",
+						"div.practicalities",
+						"div.more_info",
+						"div.signup",
+					]},
+				]},
+				{"c300": [
 					"div.people",
-				]},
-				{"c100": [
-					"div.help",
-					"div.info_meeting",
-					"div.more_info",
-					"div.signup",
-				]},
+				]}
 			]);
 
 
@@ -74,6 +102,8 @@ Util.Objects["frios"] = new function() {
 			if(this.form_signup) {
 				u.f.init(this.form_signup);
 			}
+
+			this.help_us = u.qs("div.help_us", this);
 
 
 			this.loaded = function(queue) {

@@ -49,7 +49,10 @@ if($page_item) {
 		<? endif; ?>
 
 
-		<?= $HTML->frontendComments($page_item, "/janitor/admin/page/addComment") ?>
+		<?= $HTML->frontendComments($page_item, "/janitor/admin/page/addComment", [
+			"headline" => "Kommentarer",
+			"no_comments" => "Ingen kommentarer ... endnu."
+		]) ?>
 
 	</div>
 
@@ -64,13 +67,12 @@ if($page_item) {
 
 <? endif; ?>
 
-
-	<div class="help">
+	<div class="help_us">
 		<h2>Er du ekspert på teenagere?</h2>
-		<p>Klik her</p>
+		<p>Hjælp os med at blive klogere.</p>
+		<p><a href="">Temp text</a></p>
 	</div>
 
-	
 	<div class="signup">
 		<h2>Tilmelding</h2>
 
@@ -79,7 +81,7 @@ if($page_item) {
 			<a href="mailto:start@think.dk?subject=Fri%20os%20fra%20de%20voksnes">start@think.dk</a>, hvis du har spørgsmål :)
 		</p>
 		<p>
-			Forløbet koster 3000 kr/person. Der er dog mulighed for at søge om friplads. Se nedenfor.
+			Forløbet koster 3.500 kr./person. Der er dog mulighed for at søge om friplads. Se nedenfor.
 		</p>
 		<p>
 			Tilmelding senest 8. maj 2020.
@@ -87,7 +89,7 @@ if($page_item) {
 
 		<?= $HTML->formStart("tilmelding", ["class" => "signup labelstyle:inject"]); ?>
 			<fieldset>
-				<?= $HTML->input("name", ["type" => "string", "label" => "Deltagers navn", "required" => true]); ?>
+				<?= $HTML->input("name", ["type" => "string", "label" => "Deltagers navn", "required" => true, "value" => ""]); ?>
 				<?= $HTML->input("parentname", ["type" => "string", "label" => "Forælder navn"]); ?>
 				<?= $HTML->input("email", ["type" => "email", "label" => "Email", "required" => true]); ?>
 				<?= $HTML->input("phone", ["type" => "tel", "label" => "Telefon"]); ?>
@@ -95,7 +97,7 @@ if($page_item) {
 			</fieldset>
 
 			<ul class="actions">
-				<?= $HTML->submit("Send", ["class" => "primary"]) ?>
+				<?= $HTML->submit("Send", ["class" => "primary", "wrapper" => "li.send"]) ?>
 			</ul>
 		<?= $HTML->formEnd(); ?>
 
@@ -103,7 +105,7 @@ if($page_item) {
 		<h3>Søg om en friplads</h3>
 		<p>
 			Engagement og interesse vejer tungest for os, og derfor har vi budgetteret med et antal fripladser til vores alternative
-			konfirmationsfoberedelsesforløb. 
+			konfirmationsforberedelsesforløb. 
 		</p>
 		<p>
 			Det vigtigste for os er, at vi får samlet en gruppe unge, der ønsker at indgå i et givende og åbent 
@@ -118,10 +120,10 @@ if($page_item) {
 	<div class="info_meeting">
 		<h2>Mød os og hør mere på et intromøde</h2>
 		<p>
-			Onsdag d. 4 marts <br />kl. 19.30 - 20.30
+			Onsdag d. 4. marts <br />kl. 19.30 - 20.30
 		</p>
 		<p>
-			Søndag d. 8 marts <br />kl. 13.30 - 14.30
+			Søndag d. 8. marts <br />kl. 13.30 - 14.30
 		</p>
 		<p>
 			Møderne foregår i think.dk’s lokaler på Østerbro. Alle interesserede er velkomne til at møde op.
@@ -131,6 +133,11 @@ if($page_item) {
 			Æbeløgade 4<br />
 			2100 København Ø
 		</p>
+	</div>
+
+	<div class="practicalities">
+		<h2>Praktisk information</h2>
+		<p>Kommer her</p>
 	</div>
 
 	<div class="more_info">

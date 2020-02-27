@@ -4,8 +4,21 @@
 */
 class HTML extends HTMLCore {
 
-	function frontendComments($item, $add_path) {
+	function frontendComments($item, $add_path, $_options = false) {
 		global $page;
+
+
+		$headline = "Comments";
+		$no_comments = "No comments yet.";
+
+		if($_options !== false) {
+			foreach($_options as $_option => $_value) {
+				switch($_option) {
+					case "headline"            : $headline              = $_value; break;
+					case "no_comments"         : $no_comments           = $_value; break;
+				}
+			}
+		}
 
 		$_ = '';
 
@@ -13,7 +26,7 @@ class HTML extends HTMLCore {
 		$_ .= '	data-comment-add="'.$page->validPath($add_path).'"';
 		$_ .= '	data-csrf-token="'.session()->value("csrf").'"';
 		$_ .= '	>';
-		$_ .= '	<h2 class="comments">Comments</h2>';
+		$_ .= '	<h2 class="comments">'.$headline.'</h2>';
 		if($item["comments"]):
 			$_ .= '<ul class="comments">';
 			foreach($item["comments"] as $comment):
@@ -27,7 +40,7 @@ class HTML extends HTMLCore {
 			endforeach;
 		$_ .= '</ul>';
 		else:
-		$_ .= '<p>No comments yet</p>';
+		$_ .= '<p>'.$no_comments.'</p>';
 		endif;
 		$_ .= '</div>';
 		
