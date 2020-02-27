@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-02-28 00:22:06
+asset-builder @ 2020-02-28 00:25:38
 */
 
 /*seg_tablet_include.css*/
@@ -1367,6 +1367,7 @@ body.black #header ul.servicenavigation {display: none;}
 #content .scene.frios ul.people {font-size: 0;}
 #content .scene.frios ul.people li.person {border: 0; padding-top: 0; width: 50%; display: inline-block; vertical-align: top;}
 #content .scene.frios ul.people li.person img {margin: 0 50px 20px; width: calc(100% - 100px);}
+#content .scene.frios h2.parents {padding-top: 80px;}
 #content .scene.frios .slideshow {position: relative; padding: 0 50px 30px; max-width: 540px;}
 #content .scene.frios .slideshow .next {position: absolute; top: calc(50% - 15px); margin-top: -20px; right: 24px; width: 25px; height: 40px;
 	background: #ffffff;
