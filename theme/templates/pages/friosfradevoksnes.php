@@ -56,6 +56,10 @@ if($page_item) {
 				Du kan tilmelde dig ved at udfylde formularen herunder. Du er også meget velkommen til at skrive til os på 
 				<a href="mailto:start@think.dk?subject=Fri%20os%20fra%20de%20voksnes">start@think.dk</a>, hvis du har spørgsmål :)
 			</p>
+			<p>
+				Forløbet koster 3000 kr/person. Der er dog mulighed for at søge om friplads. Se nedenfor.<br />
+				Tilmelding senest 8. maj 2020.
+			</p>
 
 			<?= $HTML->formStart("tilmelding", ["class" => "signup labelstyle:inject"]); ?>
 				<fieldset>
@@ -98,6 +102,23 @@ if($page_item) {
 
 <? endif; ?>
 
+	<div class="info_meeting">
+		<h2>Mød os og hør mere på et intromøde</h2>
+		<p>
+
+			Onsdag d. 4 marts kl. 19.30 - 20.30<br />
+			Søndag d. 8 marts kl. 13.30 - 14.30
+		</p>
+		<p>
+			Møderne foregår i think.dk’s lokaler på Østerbro. Alle interesserede er velkomne til at møde op.
+		</p>
+		<p>
+			Adresse:<br />
+			Æbeløgade 4<br />
+			2100 København Ø
+		</p>
+	</div>
+
 	<div class="more_info">
 		<h2>Vil du vide mere?</h2>
 		<p>
@@ -110,14 +131,21 @@ if($page_item) {
 		<h2>Undervisere</h2>
 		<ul class="items people">
 			<li class="item person" data-image-src="/img/friosfradevoksnes/johannes.jpg">
-				<h3>Den fortabte præstesøn vender hjem</h3>
+				<h3>Johannes T. Jensen</h3>
 				<p>
-					Johannes T. Jensen har tidligere trænet og lavet uddannelser for tusindvis af mennesker. 
-					Dels som organisationsansvarlig ansat på Christiansborg, dels i uddannelsesenheden i en 
-					tænketank uddannede han ledere, meningsdannere, aktivister i at tage ansvar for deres 
-					fællesskaber. Siden har han som selvstændig afviklet uddannelser, workshops og foredrag om 
-					indre fred, frihed og lyksalighed. Samtidig har han fungeret som gæsteunderviser og 
-					workshopholder i konfirmationsforberedelsesforløb rundt i landets kirker.
+					Johannes har tidligere trænet og lavet uddannelser for tusindvis af mennesker. I uddannelsesenheden
+					i en tænketank uddannede han ledere, meningsdannere og aktivister i at tage ansvar for deres 
+					fællesskaber. Siden har han som selvstændig afviklet uddannelser, workshops og foredrag om indre 
+					fred og frihed. Samtidig har han fungeret som gæsteunderviser og workshopholder rundt i landets 
+					kirkers konfirmationsforberedelsesforløb.
+				</p>
+				<p>
+					Johannes’ undervisning er først og fremmest erfaringsbaseret. Hans kald er: At mennesker erfarer 
+					en kærlig indre ro (Lyksalighed) og begynder at leve ud fra den. Undervisningen tager begrebsmæssigt 
+					udgangspunkt i Biblen, som han studerer dagligt. Men undervisningen drager også erfaring både fra 5 
+					års dedikerede studier af Advaita (Hinduisme), 10 års intens buddhistisk meditationstræning (Dzogchen) 
+					og ikke mindst sin Grundtvig-Tidehvervske børnelærdom som søn af to folkekirkepræster og en 
+					højskoleforstander på Grundtvigs Højskole. 
 				</p>
 			</li>
 			<li class="item person" data-image-src="/img/friosfradevoksnes/tine.jpg">
