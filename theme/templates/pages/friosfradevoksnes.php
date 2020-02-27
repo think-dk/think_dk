@@ -98,6 +98,14 @@ if($page_item) {
 
 <? endif; ?>
 
+	<div class="more_info">
+		<h2>Vil du vide mere?</h2>
+		<p>
+			Du kan tilmelde dig ved at udfylde formularen nederst på siden. Du er også meget velkommen til at skrive til os på 
+			<a href="mailto:start@think.dk?subject=Fri%20os%20fra%20de%20voksnes">start@think.dk</a>, hvis du har spørgsmål til forløbet.
+		</p>
+	</div>
+
 	<div class="people">
 		<h2>Undervisere</h2>
 		<ul class="items people">

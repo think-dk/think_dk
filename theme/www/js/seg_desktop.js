@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-02-27 10:47:39
+asset-builder @ 2020-02-27 11:04:59
 */
 
 /*seg_desktop_include.js*/
@@ -10035,6 +10035,7 @@ Util.Objects["frios"] = new function() {
 					"div.article", 
 				]},
 				{"c100": [
+					"div.more_info",
 					"div.people",
 				]},
 			]);

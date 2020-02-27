@@ -29,6 +29,7 @@ Util.Objects["frios"] = new function() {
 					"div.article", 
 				]},
 				{"c100": [
+					"div.more_info",
 					"div.people",
 				]},
 			]);
