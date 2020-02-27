@@ -75,7 +75,7 @@ if($page_item) {
 		<h2>Tilmelding</h2>
 
 		<p>
-			Som alternativ til konfirmation kan du tilmelde dig ved at udfylde formularen herunder. Du er også meget velkommen til at skrive til os på 
+			Som alternativ til konfirmation kan du tilmelde dig forløbet 'Fri os fra de voksnes rækker' ved at udfylde formularen herunder. Du er også meget velkommen til at skrive til os på 
 			<a href="mailto:start@think.dk?subject=Fri%20os%20fra%20de%20voksnes">start@think.dk</a>, hvis du har spørgsmål :)
 		</p>
 		<p>
