@@ -57,7 +57,9 @@ if($page_item) {
 				<a href="mailto:start@think.dk?subject=Fri%20os%20fra%20de%20voksnes">start@think.dk</a>, hvis du har spørgsmål :)
 			</p>
 			<p>
-				Forløbet koster 3000 kr/person. Der er dog mulighed for at søge om friplads. Se nedenfor.<br />
+				Forløbet koster 3000 kr/person. Der er dog mulighed for at søge om friplads. Se nedenfor.
+			</p>
+			<p>
 				Tilmelding senest 8. maj 2020.
 			</p>
 
@@ -105,9 +107,10 @@ if($page_item) {
 	<div class="info_meeting">
 		<h2>Mød os og hør mere på et intromøde</h2>
 		<p>
-
-			Onsdag d. 4 marts kl. 19.30 - 20.30<br />
-			Søndag d. 8 marts kl. 13.30 - 14.30
+			Onsdag d. 4 marts <br />kl. 19.30 - 20.30
+		</p>
+		<p>
+			Søndag d. 8 marts <br />kl. 13.30 - 14.30
 		</p>
 		<p>
 			Møderne foregår i think.dk’s lokaler på Østerbro. Alle interesserede er velkomne til at møde op.
