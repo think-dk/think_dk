@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-02-27 20:37:36
+asset-builder @ 2020-02-27 21:34:27
 */
 
 /*seg_desktop_include.js*/
@@ -10033,11 +10033,13 @@ Util.Objects["frios"] = new function() {
 			u.columns(this, [
 				{"c200": [
 					"div.article", 
+					"div.people",
 				]},
 				{"c100": [
+					"div.help",
 					"div.info_meeting",
 					"div.more_info",
-					"div.people",
+					"div.signup",
 				]},
 			]);
 			var load_queue = [];

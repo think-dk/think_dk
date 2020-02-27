@@ -49,46 +49,6 @@ if($page_item) {
 		<? endif; ?>
 
 
-		<div class="signup">
-			<h2>Tilmelding</h2>
-
-			<p>
-				Du kan tilmelde dig ved at udfylde formularen herunder. Du er også meget velkommen til at skrive til os på 
-				<a href="mailto:start@think.dk?subject=Fri%20os%20fra%20de%20voksnes">start@think.dk</a>, hvis du har spørgsmål :)
-			</p>
-			<p>
-				Forløbet koster 3000 kr/person. Der er dog mulighed for at søge om friplads. Se nedenfor.
-			</p>
-			<p>
-				Tilmelding senest 8. maj 2020.
-			</p>
-
-			<?= $HTML->formStart("tilmelding", ["class" => "signup labelstyle:inject"]); ?>
-				<fieldset>
-					<?= $HTML->input("name", ["type" => "string", "label" => "Deltagers navn", "required" => true]); ?>
-					<?= $HTML->input("parentname", ["type" => "string", "label" => "Forælder navn"]); ?>
-					<?= $HTML->input("email", ["type" => "email", "label" => "Email", "required" => true]); ?>
-					<?= $HTML->input("phone", ["type" => "tel", "label" => "Telefon"]); ?>
-					<?= $HTML->input("comment", ["type" => "text", "label" => "Hvorfor vil du gerne deltage?", "required" => true, "class" => "autoexpand"]); ?>
-				</fieldset>
-
-				<ul class="actions">
-					<?= $HTML->submit("Send", ["class" => "primary"]) ?>
-				</ul>
-			<?= $HTML->formEnd(); ?>
-
-
-			<h3>Søg om en friplads</h3>
-			<p>
-				Engagement og interesse vejer tungest for os, og derfor har vi budgetteret med et antal fripladser. 
-				Det vigtigste for os er, at vi får samlet en gruppe unge, der ønsker at indgå i et givende og åbent 
-				fællesskab, og som er nysgerrige og kan se værdien i at være med.
-			</p>
-			<p>
-				Hvis du ønsker at søge om en friplads, så angiv dette i din ansøgning og fortæl os om din situation.
-			</p>
-		</div>
-
 		<?= $HTML->frontendComments($page_item, "/janitor/admin/page/addComment") ?>
 
 	</div>
@@ -103,6 +63,54 @@ if($page_item) {
 	</div>
 
 <? endif; ?>
+
+
+	<div class="help">
+		<h2>Er du ekspert på teenagere?</h2>
+		<p>Klik her</p>
+	</div>
+
+	
+	<div class="signup">
+		<h2>Tilmelding</h2>
+
+		<p>
+			Du kan tilmelde dig ved at udfylde formularen herunder. Du er også meget velkommen til at skrive til os på 
+			<a href="mailto:start@think.dk?subject=Fri%20os%20fra%20de%20voksnes">start@think.dk</a>, hvis du har spørgsmål :)
+		</p>
+		<p>
+			Forløbet koster 3000 kr/person. Der er dog mulighed for at søge om friplads. Se nedenfor.
+		</p>
+		<p>
+			Tilmelding senest 8. maj 2020.
+		</p>
+
+		<?= $HTML->formStart("tilmelding", ["class" => "signup labelstyle:inject"]); ?>
+			<fieldset>
+				<?= $HTML->input("name", ["type" => "string", "label" => "Deltagers navn", "required" => true]); ?>
+				<?= $HTML->input("parentname", ["type" => "string", "label" => "Forælder navn"]); ?>
+				<?= $HTML->input("email", ["type" => "email", "label" => "Email", "required" => true]); ?>
+				<?= $HTML->input("phone", ["type" => "tel", "label" => "Telefon"]); ?>
+				<?= $HTML->input("comment", ["type" => "text", "label" => "Hvorfor vil du gerne deltage?", "required" => true, "class" => "autoexpand"]); ?>
+			</fieldset>
+
+			<ul class="actions">
+				<?= $HTML->submit("Send", ["class" => "primary"]) ?>
+			</ul>
+		<?= $HTML->formEnd(); ?>
+
+
+		<h3>Søg om en friplads</h3>
+		<p>
+			Engagement og interesse vejer tungest for os, og derfor har vi budgetteret med et antal fripladser. 
+			Det vigtigste for os er, at vi får samlet en gruppe unge, der ønsker at indgå i et givende og åbent 
+			fællesskab, og som er nysgerrige og kan se værdien i at være med.
+		</p>
+		<p>
+			Hvis du ønsker at søge om en friplads, så angiv dette i din ansøgning og fortæl os om din situation.
+		</p>
+	</div>
+	
 
 	<div class="info_meeting">
 		<h2>Mød os og hør mere på et intromøde</h2>
