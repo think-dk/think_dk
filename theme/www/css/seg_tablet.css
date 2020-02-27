@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-02-27 00:46:30
+asset-builder @ 2020-02-27 09:46:03
 */
 
 /*seg_tablet_include.css*/
@@ -1354,16 +1354,25 @@ body.black #header ul.servicenavigation {display: none;}
 #content .scene.frios div.signup form {padding-bottom: 20px;}
 #content .scene.frios ul.people li.person {border: 0; padding-top: 0;}
 #content .scene.frios ul.people li.person img {margin: 0 50px 20px;}
-#content .scene.frios .slideshow {position: relative; overflow: hidden;}
-#content .scene.frios .slideshow .next {position: absolute; top: 40%; right: 20px; width: 30px; height: 50px;
-	background: #26962d;
+#content .scene.frios .slideshow {position: relative; padding: 0 50px 30px; max-width: 540px;}
+#content .scene.frios .slideshow .next {position: absolute; top: calc(50% - 15px); margin-top: -20px; right: 24px; width: 25px; height: 40px;
+	background: #ffffff;
+	border-top-right-radius: 5px; border-bottom-right-radius: 5px;
+	border: 1px solid #26962d; cursor: pointer; 
 }
-#content .scene.frios .slideshow .prev {position: absolute; top: 40%; left: 20px; width: 30px; height: 50px;
-	background: #26962d;
+#content .scene.frios .slideshow .prev {position: absolute; top: calc(50% - 15px); margin-top: -20px; left: 24px; width: 25px; height: 40px;
+	background: #ffffff;
+	border-top-left-radius: 5px; border-bottom-left-radius: 5px;
+	border: 1px solid #26962d; cursor: pointer; 
 }
-#content .scene.frios ul.images {padding: 0; }
+#content .scene.frios ul.images {padding: 0; overflow: hidden; width: 100%; height: 100%; position: relative;}
 #content .scene.frios ul.images li {position: absolute; top: 0; left: 0;
 }
+#content .scene.frios ul.images li img {margin: 0; width: 100%;}
+#content .scene.frios .slideshow .next > svg.arrow {position: absolute; top: 14px; right: 2px;}
+#content .scene.frios .slideshow .next > svg.arrow line {stroke: #26962d; stroke-width: 3px;}
+#content .scene.frios .slideshow .prev > svg.arrow {position: absolute; top: 14px; left: 8px;}
+#content .scene.frios .slideshow .prev > svg.arrow line {stroke: #26962d; stroke-width: 3px;}
 @media print {
 	#header .logo {position: absolute; left: 80px;}
 	#header .servicenavigation {display: none;}

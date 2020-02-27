@@ -7,8 +7,9 @@ Util.Objects["frios"] = new function() {
 			console.log(this.ul_images, this.images);
 
 			if(this.ul_images) {
+				console.log("height:", this.ul_images.offsetWidth);
 				u.ass(this.ul_images, {
-					"height":(this.ul_images.offsetWidth / 1.32) +"px"
+					"height":Math.floor(this.ul_images.offsetWidth / 1.32) +"px"
 				});
 			}
 
@@ -49,7 +50,6 @@ Util.Objects["frios"] = new function() {
 					load_queue.push("/images/" + image.item_id + "/" + image.variant + "/540x." + image.format);
 				}
 
-				this.resized();
 			}
 
 			console.log(load_queue);
@@ -91,6 +91,7 @@ Util.Objects["frios"] = new function() {
 				if(this.ul_images) {
 					this.slideshow = u.slideshow(this.ul_images);
 					this.slideshow.scene = this;
+					this.resized();
 
 					// Slides are preloaded
 					this.slideshow.preloaded = function() {

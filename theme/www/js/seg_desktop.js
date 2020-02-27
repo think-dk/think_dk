@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-02-27 00:46:30
+asset-builder @ 2020-02-27 09:46:03
 */
 
 /*seg_desktop_include.js*/
@@ -10022,8 +10022,9 @@ Util.Objects["frios"] = new function() {
 		scene.resized = function() {
 			console.log(this.ul_images, this.images);
 			if(this.ul_images) {
+				console.log("height:", this.ul_images.offsetWidth);
 				u.ass(this.ul_images, {
-					"height":(this.ul_images.offsetWidth / 1.32) +"px"
+					"height":Math.floor(this.ul_images.offsetWidth / 1.32) +"px"
 				});
 			}
 			this.offsetHeight;
@@ -10052,7 +10053,6 @@ Util.Objects["frios"] = new function() {
 					image.format = u.cv(image, "format");
 					load_queue.push("/images/" + image.item_id + "/" + image.variant + "/540x." + image.format);
 				}
-				this.resized();
 			}
 			console.log(load_queue);
 			this.ul_people = u.qs("ul.people", this);
@@ -10081,6 +10081,7 @@ Util.Objects["frios"] = new function() {
 				if(this.ul_images) {
 					this.slideshow = u.slideshow(this.ul_images);
 					this.slideshow.scene = this;
+					this.resized();
 					this.slideshow.preloaded = function() {
 						if(!this.selected_node) {
 							this.selectNode(0);
