@@ -101,7 +101,7 @@ if($page_item) {
 	<div class="people">
 		<h2>Undervisere</h2>
 		<ul class="items people">
-			<li class="item person" data-image-src="/images/0/missing/260x.png">
+			<li class="item person" data-image-src="/img/friosfradevoksnes/johannes.jpg">
 				<h3>Den fortabte præstesøn vender hjem</h3>
 				<p>
 					Johannes T. Jensen har tidligere trænet og lavet uddannelser for tusindvis af mennesker. 
@@ -112,7 +112,7 @@ if($page_item) {
 					workshopholder i konfirmationsforberedelsesforløb rundt i landets kirker.
 				</p>
 			</li>
-			<li class="item person" data-image-src="/images/0/missing/260x.png">
+			<li class="item person" data-image-src="/img/friosfradevoksnes/tine.jpg">
 				<h3>Tine Gia Rosenkilde Fjeldsted</h3>
 				<p>
 					Med udgangspunkt i sin interesse for åben, aktiv og engagerende undervisning, kreativitet, 

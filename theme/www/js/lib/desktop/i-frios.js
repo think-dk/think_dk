@@ -4,10 +4,10 @@ Util.Objects["frios"] = new function() {
 
 		scene.resized = function() {
 			// u.bug("scene.resized:", this);
-			console.log(this.ul_images, this.images);
+			// console.log(this.ul_images, this.images);
 
 			if(this.ul_images) {
-				console.log("height:", this.ul_images.offsetWidth);
+				// console.log("height:", this.ul_images.offsetWidth);
 				u.ass(this.ul_images, {
 					"height":Math.floor(this.ul_images.offsetWidth / 1.32) +"px"
 				});
@@ -40,7 +40,7 @@ Util.Objects["frios"] = new function() {
 			this.ul_images = u.qs("ul.images", this);
 			if(this.ul_images) {
 				this.images = u.qsa("li div.image", this.ul_images);
-				console.log(this.images)
+				// console.log(this.images)
 				for(i = 0; i < this.images.length; i++) {
 					image = this.images[i];
 					image.item_id = u.cv(image, "item_id");
@@ -52,7 +52,7 @@ Util.Objects["frios"] = new function() {
 
 			}
 
-			console.log(load_queue);
+			// console.log(load_queue);
 
 			this.ul_people = u.qs("ul.people", this);
 			if(this.ul_people) {
@@ -86,7 +86,7 @@ Util.Objects["frios"] = new function() {
 
 				}
 
-				console.log(this.ul_images, this.images);
+				// console.log(this.ul_images, this.images);
 
 				if(this.ul_images) {
 					this.slideshow = u.slideshow(this.ul_images);

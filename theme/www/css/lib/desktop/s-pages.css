@@ -761,7 +761,7 @@ body.black #header ul.servicenavigation {display: none;}
 #content .scene.frios div.signup form {padding-bottom: 20px;}
 
 #content .scene.frios ul.people li.person {border: 0; padding-top: 0;}
-#content .scene.frios ul.people li.person img {margin: 0 50px 20px;}
+#content .scene.frios ul.people li.person img {margin: 0 50px 20px; width: calc(100% - 100px);}
 
 
 #content .scene.frios .slideshow {position: relative; padding: 0 50px 30px; max-width: 540px;}
