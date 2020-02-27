@@ -26,18 +26,23 @@ if(count($action) && $action[0] == "tilmelding") {
 	$comment = getPost("comment");
 
 	mailer()->send([
-		"recipient" => "martin@think.dk",
+		"recipient" => "martin@think.dk,rosenkildetine@gmail.com",
 		"message" => "Navn: $name\nForælders navn: $parentname\nEmail: $email\nTelefon: $phone\n\nAnsøgning:\n$comment"
 	]);
+
+
+	header("Location: /friosfradevoksnes/kvittering");
+	exit();
+
+}
+else if(count($action) && $action[0] == "kvittering") {
 
 	$page->page(array(
 		"templates" => "pages/friosfradevoksnes-receipt.php"
 	));
-
 	exit();
 
 }
-
 
 $page->page(array(
 	"templates" => "pages/friosfradevoksnes.php"
