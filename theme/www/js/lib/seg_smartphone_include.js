@@ -18,6 +18,8 @@ document.write('<script type="text/javascript" src="/assets/parentnode-skin-defa
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/beta-u-notifier.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/beta-u-paymentcards.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/beta-u-form-onebuttonform.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/beta-u-slideshow.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-events-movements.js"></script>');
 
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/u-expandarrow.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/i-pagination.js"></script>');
@@ -33,6 +35,7 @@ document.write('<script type="text/javascript" src="/js/lib/smartphone/i-payment
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-payments.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-stripe.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-black.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/smartphone/i-frios.js"></script>');
 
 
 document.write('<script type="text/javascript" src="/js/lib/smartphone/i-verify-maillist.js"></script>');
