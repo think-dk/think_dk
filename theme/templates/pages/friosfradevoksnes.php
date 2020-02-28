@@ -69,8 +69,8 @@ if($page_item) {
 
 	<div class="help_us">
 		<h2>Er du ekspert på teenagere?</h2>
-		<p>Hjælp os med at blive klogere.</p>
-		<p><a href="">Temp text</a></p>
+		<p>Ved du noget om teenagere, vi ikke ved? Så vil vi gerne tale med dig.</p>
+		<p><a href="https://think.dk/bulletin/er-du-ekspert-paa-teenagere">Læs mere.</a></p>
 	</div>
 
 	<div class="signup">
@@ -81,7 +81,7 @@ if($page_item) {
 			<a href="mailto:start@think.dk?subject=Fri%20os%20fra%20de%20voksnes">start@think.dk</a>, hvis du har spørgsmål :)
 		</p>
 		<p>
-			Forløbet koster 3.500 kr./person. Der er dog mulighed for at søge om friplads. Se nedenfor.
+			Kun 1/3 af kostprisen skal egenfinancieres – og forløbet koster derfor kun 3.500 kr./person. Der er også mulighed for at søge om friplads. Se nedenfor.
 		</p>
 		<p>
 			Tilmelding senest 8. maj 2020.
@@ -137,7 +137,12 @@ if($page_item) {
 
 	<div class="practicalities">
 		<h2>Praktisk information</h2>
-		<p>Kommer her</p>
+		<p>Forløbet løber over 25 lørdage fra slut september 2020 til april 2021 og indebærer desuden:</p>
+		<ul>
+			<li>7 søndage med frivillige udflugter til Guds fri natur eller besøg hos forskellige trossamfund.</li>
+			<li>Afslutningsweekend d. 7.-8. maj 2021 med overgangsritual efterfulgt af ceremoni for familien inden jeres fest.</li>
+		</ul>
+		<p>Undervisningen foregår i thin.dk’s hyggelige lokaler på Østerbro og varetages af Johannes og Tine, som I kan læse mere om længere nede på siden.</p>
 	</div>
 
 	<div class="more_info">

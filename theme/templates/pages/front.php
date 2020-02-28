@@ -105,7 +105,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 				<?= $HTML->articleTags($item, [
 					"context" => ["post"],
 					"url" => "/bulletin/tag",
-					"default" => ["/posts", "Posts"]
+					"default" => ["/bulletin", "Posts"]
 				]) ?>
 
 

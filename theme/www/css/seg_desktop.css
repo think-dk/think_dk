@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-02-28 00:25:38
+asset-builder @ 2020-02-28 10:06:02
 */
 
 /*seg_desktop_include.css*/
@@ -1364,6 +1364,8 @@ body.black #header ul.servicenavigation {display: none;}
 #content .scene.frios div.signup {padding-bottom: 20px;}
 #content .scene.frios div.signup form {padding-bottom: 20px;}
 #content .scene.frios div.practicalities {padding-bottom: 40px;}
+#content .scene.frios div.practicalities ul {list-style: disc; margin-left: 15px;}
+#content .scene.frios div.practicalities ul li {padding-bottom: 10px;}
 #content .scene.frios div.info_meeting {padding-bottom: 40px;}
 #content .scene.frios div.help_us {padding-bottom: 40px;}
 #content .scene.frios div.more_info {padding-bottom: 40px;}
