@@ -140,4 +140,14 @@ $item = $IC->getItem(array("tags" => "page:Memberships"));
 		<changefreq>weekly</changefreq>
 		<priority>1</priority>
 	</url>
+<?
+// FRIOSFRA DE VOKSNES PAGE
+$item = $IC->getItem(array("tags" => "page:Fri os fra de voksnes"));
+?>
+	<url>
+		<loc><?= SITE_URL ?>/friosfradevoksnes</loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>1</priority>
+	</url>
 </urlset>
