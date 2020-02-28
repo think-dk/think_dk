@@ -757,12 +757,19 @@ body.black #header ul.servicenavigation {display: none;}
 /*body.black #footer {display: none;}*/
 
 
+#content .scene.frios .c .c100 {width: 40%;}
+#content .scene.frios .c .c200 {width: 60%;}
+
 #content .scene.frios div.signup {padding-bottom: 20px;}
 #content .scene.frios div.signup form {padding-bottom: 20px;}
 #content .scene.frios div.practicalities {padding-bottom: 40px;}
 
 #content .scene.frios div.practicalities ul {list-style: disc; margin-left: 15px;}
 #content .scene.frios div.practicalities ul li {padding-bottom: 10px;}
+#content .scene.frios div.help_us ul {list-style: disc; margin-left: 15px;}
+#content .scene.frios div.help_us ul li {padding-bottom: 10px;}
+
+#content .scene.frios div.dictionary {padding-bottom: 40px;}
 
 #content .scene.frios div.info_meeting {padding-bottom: 40px;}
 #content .scene.frios div.help_us {padding-bottom: 40px;}

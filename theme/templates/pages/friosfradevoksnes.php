@@ -67,10 +67,20 @@ if($page_item) {
 
 <? endif; ?>
 
-	<div class="help_us">
-		<h2>Er du ekspert på teenagere?</h2>
-		<p>Ved du noget om teenagere, vi ikke ved? Så vil vi gerne tale med dig.</p>
-		<p><a href="https://think.dk/bulletin/er-du-ekspert-paa-teenagere">Læs mere.</a></p>
+	<div class="dictionary">
+		<h2>Ord fra vores konfirmations ordbog:</h2>
+		<p>
+			<strong>Gud</strong> = Vi kan kalde det livet eller universet - ingen ord slår rigtig til: Den tilsyneladende uendelige og ufatteligt intelligente helhed, som står bag den evolution vi bor indeni og som virker gennem os alle. I østen kalder de den samme kraft Bevidstheden.
+		</p>
+		<p>
+			<strong>Konfirmation</strong> = Gud bekræfter, at du er god nok som du er: Der er ikke noget du skal leve op til. Livet har gjort sig utroligt umage med at skabe præcis dig, som du er. Du er Guds gave til helheden. Tak for dig. Vores mål med denne alternative konfirmation er, at du med hver en celle i din krop, mærker at dette er sandt.
+		</p>
+		<p>
+			<strong>Lykke og held</strong> = I dagens Danmark hersker der stor forvirring om, hvad der er lykke og hvad der er held: Vi ønsker hinanden Held og lykke med på vejen, og når der sker noget godt siger vi Tillykke. At disse ord gemmer på dyb visdom tænker vi ikke så meget over. Under dette forløb vil du lære at kende forskel på livets velsignelser (Held) og den lykke som vi alle har adgang til uanset vores situation (Lyksalighed).
+		</p>
+		<p>
+			<strong>Lyksalighed</strong> =  en næsten glemt hemmelighed, der gemmer sig i alle verdensreligioner: Indre fred og frihed i dagligdagen uanset omstændigheder. Den form for lykke, der er ubetinget og aldrig forsvinder.
+		</p>
 	</div>
 
 	<div class="info_meeting">
@@ -92,21 +102,17 @@ if($page_item) {
 	</div>
 
 	<div class="practicalities">
-		<h2>Praktisk information</h2>
-		<p>Forløbet løber over 25 lørdage fra slut september 2020 til april 2021 og indebærer desuden:</p>
+		<h2>Praktisk info</h2>
+		<p>Forløbet foregår i København, på Østerbro, hos think.dk i vores hyggelige lokaler med masser af bløde sofaer :)</p>
+		<p>Undervisningen varetages af Johannes og Tine, som I kan læse mere om længere nede på siden. Link</p>
+		<p>Forløbet løber fra d. 26. september 2020 til april 2021 og indebærer:</p>
 		<ul>
-			<li>7 søndage med frivillige udflugter til Guds fri natur eller besøg hos forskellige trossamfund.</li>
-			<li>Afslutningsweekend d. 7.-8. maj 2021 med overgangsritual efterfulgt af ceremoni for familien inden jeres fest.</li>
+			<li>25 lørdage fra 11.00-13.00</li>
+			<li>7 søndage med ekskursioner til forskellige trossamfund, ud i den vilde natur m.m.</li>
+			<li>Afslutningsweekend d. 7.-8. maj 2021</li>
+			<li>Overgangsritual fredag, afslutningsceremoni med familien lørdag.</li>
+			<li>Derefter fest i de respektive familiers regi.</li>
 		</ul>
-		<p>Undervisningen foregår i thin.dk’s hyggelige lokaler på Østerbro og varetages af Johannes og Tine, som I kan læse mere om længere nede på siden.</p>
-	</div>
-
-	<div class="more_info">
-		<h2>Vil du vide mere?</h2>
-		<p>
-			Du kan tilmelde dig ved at udfylde formularen nederst på siden. Du er også meget velkommen til at skrive til os på 
-			<a href="mailto:start@think.dk?subject=Fri%20os%20fra%20de%20voksnes">start@think.dk</a>, hvis du har spørgsmål til forløbet.
-		</p>
 	</div>
 
 	<div class="signup">
@@ -189,6 +195,43 @@ if($page_item) {
 		</ul>
 	</div>
 
+	<div class="more_info">
+		<h2>Vil du vide mere?</h2>
+		<p>
+			Du kan tilmelde dig ved at udfylde formularen nederst på siden. Du er også meget velkommen til at skrive til os på 
+			<a href="mailto:start@think.dk?subject=Fri%20os%20fra%20de%20voksnes">start@think.dk</a>, hvis du har spørgsmål til forløbet.
+		</p>
+	</div>
+
+	<div class="help_us">
+		<h2>Er du ekspert på teenagere?</h2>
+		<p>Vi ved rigtig meget. Men måske ved du noget vi ikke ved?</p>
+		<p>
+			Vi ønsker at lave det bedst tænkelig forløb, fordi vi mener vi har fat i noget ekstremt vigtigt og 
+			har muligheden for at gøre en fundamental forskel i de unges liv.
+		</p>
+		<p>
+			Vi har rig erfaring med at lave engagerende uddannelsesforløb. Vi har stor indsigt i de emner vi gerne 
+			vil formidle. Og vi ved også at indgående kendskab til målgruppen er helt afgørende, når man har så høje 
+			ambitioner som vi har.
+		</p>
+		<p>
+			Vi kender vores målgruppe ret godt. Men vi vil gerne kende målgruppen endnu bedre.
+		</p>
+		<ul>
+			<li>er du opdateret på den nyeste forskning om unges adfærd?</li>
+			<li>har du skrevet om læringsforløb målrettet teenagere?</li>
+			<li>sidder du på en anonym rådgivning for unge?</li>
+			<li>arbejder du terapeutisk med aldersgruppen 12-17?</li>
+			<li>er du lærer i udskolingen med erfaringer, der er vigtige at dele?</li>
+			<li>eller har du på anden måde essentiel erfaring med, eller viden om målgruppen?</li>
+		</ul>
+		<p>
+			Hvis du kan hjælpe os med at gøre dette forløb endnu bedre, er du meget velkommen til at henvende dig til 
+			Tine. Du kan ringe på tlf 6018 0410 i tidsrummet 17-18 Hvis du ikke kan i det tidsrum kan du sende en sms 
+			eller mail på <a href="mailto:tine@think.dk">tine@think.dk</a>.
+		</p>
+	</div>
 
 
 

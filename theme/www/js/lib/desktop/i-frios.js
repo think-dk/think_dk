@@ -27,10 +27,19 @@ Util.Objects["frios"] = new function() {
 				});
 			}
 
-			if(this.help_us && this.ul_images) {
+			if(this.c_1) {
+
 				u.ass(this.help_us, {
-					"height":Math.floor(this.ul_images.offsetWidth / 1.32) +"px"
+					"padding-top": "0px"
 				});
+
+
+				if(this.c_1.offsetHeight < this.c_2.offsetHeight) {
+					u.ass(this.help_us, {
+						"padding-top": (this.c_2.offsetHeight - this.c_1.offsetHeight) + "px"
+					});
+				}
+
 			}
 
 			// refresh dom
@@ -53,11 +62,13 @@ Util.Objects["frios"] = new function() {
 						"div.article", 
 					]},
 					{"c100": [
-						"div.help_us",
+						"div.dictionary",
 						"div.info_meeting",
 						"div.practicalities",
-						"div.more_info",
 						"div.signup",
+						"div.more_info",
+
+						"div.help_us",
 					]},
 				]},
 				{"c300": [
@@ -65,6 +76,10 @@ Util.Objects["frios"] = new function() {
 				]}
 			]);
 
+			this.c_1 = u.qs(".c .c100", this);
+			this.c_2 = u.qs(".c .c200", this);
+			
+			console.log(this.c_2);
 
 			var load_queue = [];
 			var i, image, person;
