@@ -73,6 +73,42 @@ if($page_item) {
 		<p><a href="https://think.dk/bulletin/er-du-ekspert-paa-teenagere">Læs mere.</a></p>
 	</div>
 
+	<div class="info_meeting">
+		<h2>Mød os og hør mere på et intromøde</h2>
+		<p>
+			Onsdag d. 4. marts <br />kl. 19.30 - 20.30
+		</p>
+		<p>
+			Søndag d. 8. marts <br />kl. 13.30 - 14.30
+		</p>
+		<p>
+			Møderne foregår i think.dk’s lokaler på Østerbro. Alle interesserede er velkomne til at møde op.
+		</p>
+		<p>
+			Adresse:<br />
+			Æbeløgade 4<br />
+			2100 København Ø
+		</p>
+	</div>
+
+	<div class="practicalities">
+		<h2>Praktisk information</h2>
+		<p>Forløbet løber over 25 lørdage fra slut september 2020 til april 2021 og indebærer desuden:</p>
+		<ul>
+			<li>7 søndage med frivillige udflugter til Guds fri natur eller besøg hos forskellige trossamfund.</li>
+			<li>Afslutningsweekend d. 7.-8. maj 2021 med overgangsritual efterfulgt af ceremoni for familien inden jeres fest.</li>
+		</ul>
+		<p>Undervisningen foregår i thin.dk’s hyggelige lokaler på Østerbro og varetages af Johannes og Tine, som I kan læse mere om længere nede på siden.</p>
+	</div>
+
+	<div class="more_info">
+		<h2>Vil du vide mere?</h2>
+		<p>
+			Du kan tilmelde dig ved at udfylde formularen nederst på siden. Du er også meget velkommen til at skrive til os på 
+			<a href="mailto:start@think.dk?subject=Fri%20os%20fra%20de%20voksnes">start@think.dk</a>, hvis du har spørgsmål til forløbet.
+		</p>
+	</div>
+
 	<div class="signup">
 		<h2>Tilmelding</h2>
 
@@ -113,43 +149,6 @@ if($page_item) {
 		</p>
 		<p>
 			Hvis du ønsker at søge om en friplads, så angiv dette i din ansøgning og fortæl os om din situation.
-		</p>
-	</div>
-	
-
-	<div class="info_meeting">
-		<h2>Mød os og hør mere på et intromøde</h2>
-		<p>
-			Onsdag d. 4. marts <br />kl. 19.30 - 20.30
-		</p>
-		<p>
-			Søndag d. 8. marts <br />kl. 13.30 - 14.30
-		</p>
-		<p>
-			Møderne foregår i think.dk’s lokaler på Østerbro. Alle interesserede er velkomne til at møde op.
-		</p>
-		<p>
-			Adresse:<br />
-			Æbeløgade 4<br />
-			2100 København Ø
-		</p>
-	</div>
-
-	<div class="practicalities">
-		<h2>Praktisk information</h2>
-		<p>Forløbet løber over 25 lørdage fra slut september 2020 til april 2021 og indebærer desuden:</p>
-		<ul>
-			<li>7 søndage med frivillige udflugter til Guds fri natur eller besøg hos forskellige trossamfund.</li>
-			<li>Afslutningsweekend d. 7.-8. maj 2021 med overgangsritual efterfulgt af ceremoni for familien inden jeres fest.</li>
-		</ul>
-		<p>Undervisningen foregår i thin.dk’s hyggelige lokaler på Østerbro og varetages af Johannes og Tine, som I kan læse mere om længere nede på siden.</p>
-	</div>
-
-	<div class="more_info">
-		<h2>Vil du vide mere?</h2>
-		<p>
-			Du kan tilmelde dig ved at udfylde formularen nederst på siden. Du er også meget velkommen til at skrive til os på 
-			<a href="mailto:start@think.dk?subject=Fri%20os%20fra%20de%20voksnes">start@think.dk</a>, hvis du har spørgsmål til forløbet.
 		</p>
 	</div>
 

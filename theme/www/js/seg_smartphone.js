@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-02-28 10:06:02
+asset-builder @ 2020-02-28 10:23:56
 */
 
 /*seg_smartphone_include.js*/
@@ -8309,6 +8309,14 @@ Util.Objects["black"] = new function() {
 /*i-frios.js*/
 Util.Objects["frios"] = new function() {
 	this.init = function(scene) {
+		u.txt["login_to_comment"] = '<a href="/login">Log ind</a> eller <a href="/memberships">opret en konto</a> for at tilføje kommentarer.';
+		u.txt["share"] = "Del denne side";
+		u.txt["share-info-headline"] = "(Hvordan deler jer?)";
+		u.txt["share-info-txt"] = "Vi har med vilje ikke inkluderet social media plugins, fordi disse ofte misbruges til at indsamle data om dig. Vi ønsker heller ikke at promovere nogle kanaler over andre. I stedet kan du blot kopiere det viste link og selv dele det, dér hvor du finder det relevant.";
+		u.txt["share-info-ok"] = "OK";
+		u.txt["add_comment"] = "Tilføj kommentar";
+		u.txt["comment"] = "Kommentar";
+		u.txt["cancel"] = "Fortryd";
 		scene.resized = function() {
 			if(this.ul_images) {
 				u.ass(this.ul_images, {
@@ -8495,7 +8503,6 @@ Util.Objects["login"] = new function() {
 Util.Objects["scene"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
-			this.offsetHeight;
 		}
 		scene.scrolled = function() {
 		}
