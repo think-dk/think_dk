@@ -86,13 +86,13 @@ if($page_item) {
 	<div class="info_meeting">
 		<h2>Mød os og hør mere på et intromøde</h2>
 		<p>
-			Onsdag d. 4. marts <br />kl. 19.30 - 20.30
-		</p>
-		<p>
 			Søndag d. 8. marts <br />kl. 13.30 - 14.30
 		</p>
 		<p>
-			Møderne foregår i think.dk’s lokaler på Østerbro. Alle interesserede er velkomne til at møde op.
+			Alle interesserede er velkomne –
+			Skriv til <a href="mailto:tine@think.dk">tine@think.dk</a> for tilmelding til intromødet.
+		<p>
+			Møderne foregår i think.dk’s lokaler på Østerbro.
 		</p>
 		<p>
 			Adresse:<br />

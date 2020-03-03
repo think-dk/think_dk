@@ -11,8 +11,8 @@ $action = $page->actions();
 $IC = new Items();
 
 
-$page->bodyClass("frios");
-$page->pageTitle("Fri os fra de voksnes");
+$page->bodyClass("konfirmation");
+$page->pageTitle("think konfirmerer");
 
 
 # /friosfradevoksnes/tilmelding
@@ -45,7 +45,7 @@ else if(count($action) && $action[0] == "kvittering") {
 }
 
 $page->page(array(
-	"templates" => "coolfirmation/friosfradevoksnes.php"
+	"templates" => "coolfirmation/konfirmation.php"
 ));
 
 ?>
