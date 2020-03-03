@@ -25,7 +25,7 @@ $page->pageTitle("Tickets");
 if(is_array($action) && count($action)) {
 
 	// LIST/EDIT/NEW ITEM
-	if(preg_match("/^(list|edit|new)$/", $action[0])) {
+	if(preg_match("/^(list|edit|new|view)$/", $action[0])) {
 
 		$page->page(array(
 			"type" => "janitor",
