@@ -17,7 +17,7 @@ $participants = $model->getParticipants($item_id);
 
 	<?= $JML->editGlobalActions($item) ?>
 
-	<?= $JML->editSingleMedia($item, array("label" => "Ticket image")) ?>
+	<?= $JML->editSingleMedia($item, array("label" => "Main ticket image")) ?>
 
 	<div class="item i:defaultEdit i:collapseHeader">
 		<h2>Ticket content</h2>
@@ -25,7 +25,6 @@ $participants = $model->getParticipants($item_id);
 
 			<fieldset>
 				<?= $model->input("name", array("value" => $item["name"])) ?>
-				<?= $model->input("classname", array("value" => $item["classname"])) ?>
 				<?= $model->input("description", array("class" => "autoexpand short", "value" => $item["description"])) ?>
 				<?= $model->input("html", array("value" => $item["html"])) ?>
 			</fieldset>
@@ -52,6 +51,11 @@ $participants = $model->getParticipants($item_id);
 
 	<?= $JML->editComments($item) ?>
 
+	<?= $JML->editSindex($item) ?>
+
+	<?= $JML->editDeveloperSettings($item) ?>
+
+	<?= $JML->editOwner($item) ?>
 
 
 	<div class="participants i:defaultParticipants i:collapseHeader item_id:<?= $item["id"] ?>">

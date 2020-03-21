@@ -39,10 +39,10 @@ class TypeTicket extends Itemtype {
 		// description
 		$this->addToModel("description", array(
 			"type" => "text",
-			"label" => "Short description",
-			"required" => true,
-			"hint_message" => "Write a short SEO description of what the ticket is for.",
-			"error_message" => "A short description without any words? How weird."
+			"label" => "Short SEO description",
+			"max" => 155,
+			"hint_message" => "Write a short description of the ticket for SEO and listings.",
+			"error_message" => "Your ticket needs a description – max 155 characters."
 		));
 
 		// HTML

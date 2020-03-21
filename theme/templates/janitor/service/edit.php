@@ -13,7 +13,7 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 
 	<?= $JML->editGlobalActions($item) ?>
 
-	<?= $JML->editSingleMedia($item, array("label" => "Service image")) ?>
+	<?= $JML->editSingleMedia($item, array("label" => "Main service image")) ?>
 
 	<div class="item i:defaultEdit">
 		<h2>Service content</h2>
@@ -21,7 +21,6 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 
 			<fieldset>
 				<?= $model->input("name", array("value" => $item["name"])) ?>
-				<?= $model->input("classname", array("value" => $item["classname"])) ?>
 				<?= $model->input("description", array("class" => "autoexpand short", "value" => $item["description"])) ?>
 				<?= $model->input("html", array("value" => $item["html"])) ?>
 			</fieldset>
@@ -35,5 +34,11 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 	<?= $JML->editTags($item) ?>
 
 	<?= $JML->editComments($item) ?>
+
+	<?= $JML->editSindex($item) ?>
+
+	<?= $JML->editDeveloperSettings($item) ?>
+
+	<?= $JML->editOwner($item) ?>
 
 </div>

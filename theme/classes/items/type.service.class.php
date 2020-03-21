@@ -38,9 +38,10 @@ class TypeService extends Itemtype {
 		// description
 		$this->addToModel("description", array(
 			"type" => "text",
-			"label" => "Short description",
-			"hint_message" => "Write a short description of the article.",
-			"error_message" => "A short description without any words? How weird."
+			"label" => "Short SEO description",
+			"max" => 155,
+			"hint_message" => "Write a short description of the service for SEO and listings.",
+			"error_message" => "Your service needs a description – max 155 characters."
 		));
 
 		// HTML

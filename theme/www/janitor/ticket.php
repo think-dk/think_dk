@@ -1,5 +1,7 @@
 <?php
 $access_item["/"] = true;
+$access_item["/owner"] = true;
+$access_item["/updateOwner"] = "/owner";
 $access_item["/reissue"] = true;
 $access_item["/reIssueTicket"] = "/reissue";
 
