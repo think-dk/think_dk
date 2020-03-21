@@ -3,10 +3,9 @@ document.write('<script type="text/javascript" src="/assets/parentnode-skin-defa
 
 // Project
 document.write('<script type="text/javascript" src="/js/lib/u-settings.js"></script>');
-
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-googleanalytics.js"></script>');
 
-document.write('<script type="text/javascript" src="/js/lib/desktop_light/i-cart.js"></script>');
-document.write('<script type="text/javascript" src="/js/lib/desktop_light/i-memberships.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/desktop_light/m-cart.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/desktop_light/m-memberships.js"></script>');
 
-document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/desktop_light/i-signup.js"></script>'); 
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/desktop_light/m-signup.js"></script>'); 
