@@ -20,6 +20,39 @@ class TypeEvent extends Itemtype {
 		$this->db_performers = SITE_DB.".item_event_performers";
 
 
+		// Event details
+		$this->event_status_options = [
+			0 => "Cancelled",
+			1 => "Scheduled", 
+			2 => "Moved online", 
+			3 => "Postponed", 
+			4 => "Rescheduled"
+		];
+		$this->event_status_schema_values = [
+			0 => "EventCancelled",
+			1 => "EventScheduled",
+			2 => "EventMovedOnline",
+			3 => "EventPostponed",
+			4 => "EventRescheduled"
+		];
+		$this->event_attendance_mode_options = [
+			1 => "Physical",
+			2 => "Physical and Online",
+			3 => "Online"
+		];
+		$this->event_attendance_mode_schema_values = [
+			1 => "OfflineEventAttendanceMode",
+			2 => "MixedEventAttendanceMode",
+			3 => "OnlineEventAttendanceMode"
+		];
+
+
+		$this->event_location_type_options = [
+			1 => "Physical",
+			2 => "Online"
+		];
+
+
 		// Name
 		$this->addToModel("name", array(
 			"type" => "string",
@@ -81,6 +114,40 @@ class TypeEvent extends Itemtype {
 			"error_message" => "You need to enter a valid date/time."
 		));
 
+		// Event status
+		$this->addToModel("event_status", array(
+			"type" => "select",
+			"label" => "Event status",
+			"options" => $this->event_status_options,
+			"hint_message" => "Status of the event.",
+			"error_message" => "Indicated the status of the event."
+		));
+
+		// Event attendance
+		$this->addToModel("event_attendance_mode", array(
+			"type" => "select",
+			"label" => "Event attendance",
+			"options" => $this->event_attendance_mode_options,
+			"hint_message" => "Attendance option of the event.",
+			"error_message" => "Indicate the attendance option of the event."
+		));
+
+		// Event attendance limit
+		$this->addToModel("event_attendance_limit", array(
+			"type" => "integer",
+			"label" => "Event attendance limit",
+			"hint_message" => "Is there a limit for how many people can join the event. Leave empty for no limit.",
+			"error_message" => "Indicate the attendance limit of the event."
+		));
+
+		// Event accepts signups
+		$this->addToModel("accept_signups", array(
+			"type" => "checkbox",
+			"label" => "People can sign up for this event.",
+			"hint_message" => "Select whether people can sign up for this event.",
+			"error_message" => "Indicate whether people can sign up for this event."
+		));
+
 		// event_owner
 		$this->addToModel("event_owner", array(
 			"type" => "user_id",
@@ -105,7 +172,7 @@ class TypeEvent extends Itemtype {
 		));
 
 
-		// Host
+		// Location
 		$this->addToModel("location", array(
 			"type" => "string",
 			"label" => "Location",
@@ -113,11 +180,31 @@ class TypeEvent extends Itemtype {
 			"hint_message" => "Name of the location.",
 			"error_message" => "You need to enter a valid location name."
 		));
+
+		// Location type
+		$this->addToModel("location_type", array(
+			"type" => "select",
+			"label" => "Location type",
+			"options" => $this->event_location_type_options,
+			"hint_message" => "Type of location.",
+			"error_message" => "Indicated the type of the location."
+		));
+
+
+		// Location url
+		$this->addToModel("location_url", array(
+			"type" => "string",
+			"label" => "Location url",
+			"pattern" => "http[s]?:\/\/[^$]+",
+			"hint_message" => "Url of location.",
+			"error_message" => "State the url of the location if available (including http:// or https://)."
+		));
+
+
 		// Location address 1
 		$this->addToModel("location_address1", array(
 			"type" => "string",
 			"label" => "Streetname and number",
-			"required" => true,
 			"hint_message" => "Streetname and number.",
 			"error_message" => "You need to enter a valid streetname and number."
 		));
@@ -132,7 +219,6 @@ class TypeEvent extends Itemtype {
 		$this->addToModel("location_city", array(
 			"type" => "string",
 			"label" => "City",
-			"required" => true,
 			"hint_message" => "Write your city",
 			"error_message" => "Invalid city"
 		));
@@ -140,7 +226,6 @@ class TypeEvent extends Itemtype {
 		$this->addToModel("location_postal", array(
 			"type" => "string",
 			"label" => "Postal code",
-			"required" => true,
 			"hint_message" => "Postalcode of your city",
 			"error_message" => "Invalid postal code"
 		));
@@ -148,7 +233,6 @@ class TypeEvent extends Itemtype {
 		$this->addToModel("location_country", array(
 			"type" => "string",
 			"label" => "Country",
-			"required" => true,
 			"hint_message" => "Country",
 			"error_message" => "Invalid country"
 		));
@@ -182,6 +266,7 @@ class TypeEvent extends Itemtype {
 		return $this->update($action);
 	}
 
+	// Update starting time on save
 	function saved($item_id) {
 
 		$query = new Query();

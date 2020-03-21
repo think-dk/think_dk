@@ -23,28 +23,39 @@ $eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype");
 
 ?>
 <div class="scene i:scene defaultEdit <?= $itemtype ?>Edit">
-	<h1>Edit event</h1>
+	<h1>Edit event as event host or backer</h1>
 	<h2><?= strip_tags($item["name"]) ?></h2>
 
 <? if($eventtype_tag !== false && $item["tags"][$eventtype_tag]["value"] === "member" && ($item["event_owner"] == $user_id || $item["backer_1"] == $user_id || $item["backer_2"] == $user_id)): ?>
 
 	<?= $JML->editGlobalActions($item, ["modify" => [
 		"list" => [
-			"url" => "/janitor/event/host-list"
+			"url" => "host-list"
 		],
 		"delete" => false,
 		"duplicate" => false
 	]]) ?>
 
-	<?= $JML->editSingleMedia($item) ?>
+	<?= $JML->editSingleMedia($item, ["label" => "Main event image"]) ?>
 
 	<div class="item i:defaultEdit">
 		<h2>Event</h2>
 		<?= $model->formStart("updateHost/".$item["id"], array("class" => "labelstyle:inject")) ?>
 
 			<fieldset>
+				<h3>Event name and status</h3>
 				<?= $model->input("name", array("value" => $item["name"])) ?>
-				<?= $model->input("classname", array("value" => $item["classname"])) ?>
+				<?= $model->input("event_status", array("value" => $item["event_status"])) ?>
+			</fieldset>
+
+			<fieldset>
+				<h3>Event attendance</h3>
+				<?= $model->input("event_attendance_mode", array("value" => $item["event_attendance_mode"])) ?>
+				<?= $model->input("event_attendance_limit", array("value" => $item["event_attendance_limit"])) ?>
+				<?= $model->input("accept_signups", array("value" => $item["accept_signups"])) ?>
+			</fieldset>
+
+			<fieldset>
 				<?= $model->input("description", array("class" => "autoexpand short", "value" => $item["description"])) ?>
 				<?= $model->input("html", array("value" => $item["html"])) ?>
 			</fieldset>
@@ -56,7 +67,7 @@ $eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype");
 
 	<? //= $JML->editPrices($item) ?>
 
-	<?= $JML->editTags($item) ?>
+	<?= $JML->editSindex($item) ?>
 
 <? else: ?>
 
