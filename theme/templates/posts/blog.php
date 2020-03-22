@@ -52,8 +52,12 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 		<? endif; ?>
 	</div>
 <? else:?>
-	<h1>Bulletin</h1>
-	<h2>Posts, News, Updates and Notes.</h2>
+
+	<div class="article">
+		<h1>Bulletin</h1>
+		<h2>Posts, News, Updates and Notes.</h2>
+	</div>
+
 <? endif; ?>
 
 <? if($categories): ?>
@@ -68,7 +72,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 <? endif; ?>
 
 <? if($items): ?>
-	<ul class="items articles i:articleMiniList readmore">
+	<ul class="items articles articlePreviewList i:articlePreviewList">
 		<? foreach($items as $item): 
 			$media = $IC->sliceMediae($item, "mediae"); ?>
 		<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"

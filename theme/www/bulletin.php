@@ -16,24 +16,57 @@ $page->bodyClass("bulletin");
 $page->pageTitle("Bulletin");
 
 
-// news list for tags
-// /posts/#sindex#
-if(count($action) == 1) {
+if(is_array($action) && count($action)) {
 
-	$page->page(array(
-		"templates" => "posts/post.php"
-	));
-	exit();
 
-}
-// /posts/tag/#tag#
-// /posts/tag/#tag#/#sindex#/prev|next
-else if(count($action) >= 2 && $action[0] == "tag") {
+	# Search
+	# /posts/search
+	if(count($action) >= 1 && $action[0] === "search") {
 
-	$page->page(array(
-		"templates" => "posts/posts_tag.php"
-	));
-	exit();
+		$page->page([
+			"templates" => "posts/search.php"
+		]);
+		exit();
+
+	}
+
+	# View specific post
+	# /posts/#sindex#
+	else if(count($action) === 1) {
+
+		$page->page([
+			"templates" => "posts/post.php"
+		]);
+		exit();
+
+	}
+
+	# Tags
+	else if(count($action) >= 1 && $action[0] === "tag") {
+
+		# View specific post (tag listed)
+		# /posts/tag/#tag#/#sindex#
+		if(count($action) === 3) {
+
+			$page->page([
+				"templates" => "posts/post_tag.php"
+			]);
+			exit();
+		}
+
+		# List by tag
+		# /posts/tag/#tag#
+		# /posts/tag/#tag#/page/#sindex#
+		else if((count($action) === 2) || (count($action) === 4 && $action[2] === "page")) {
+
+			$page->page([
+				"templates" => "posts/posts_tag.php"
+			]);
+			exit();
+
+		}
+
+	}
 
 }
 
@@ -42,11 +75,7 @@ $page->page(array(
 	"templates" => "posts/bulletin.php"
 ));
 exit();
- 
-//
-// $page->page(array(
-// 	"templates" => "posts/bulletin.php"
-// ));
-// exit();
+
 
 ?>
+ 

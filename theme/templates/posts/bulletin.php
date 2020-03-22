@@ -3,17 +3,65 @@ global $action;
 global $IC;
 global $itemtype;
 
-//$selected_tag = "post-page:Front";
 
-$page_item = $IC->getItem(array("tags" => "post-page:Front", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
+
+$itemtype = "post";
+
+// List extension (page > 1)
+if(count($action) === 2) {
+	$page = $action[1];
+	$page_item = false;
+}
+// Default list
+else {
+	$page = false;
+	$page_item = $IC->getItem([
+		"tags" => "page:Bulletin", 
+		"status" => 1, 
+		"extend" => [
+			"user" => true, 
+			"mediae" => true, 
+			"tags" => true
+		]
+	]);
+}
+
+
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
-//$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => "post:".$selected_tag, "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
-$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" => array("tags" => true, "user" => true, "readstate" => true, "mediae" => true)));
-
+// Get post tags for listing
 $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
+
+$pagination_pattern = [
+	"pattern" => [
+		"itemtype" => $itemtype, 
+		"status" => 1, 
+		"extend" => [
+			"tags" => true, 
+			"user" => true, 
+			"mediae" => true,
+			"readstate" => true
+		]
+	],
+	"page" => $page,
+	"limit" => 5
+];
+
+
+// Get posts
+$items = $IC->paginate($pagination_pattern);
+
+
+
+
+
+
+//$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => "post:".$selected_tag, "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+// $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" => array("tags" => true, "user" => true, "readstate" => true, "mediae" => true)));
+//
+// $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 ?>
 
 <div class="scene news i:columns">
@@ -75,14 +123,34 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 <? endif; ?>
 
 
+	<?= $HTML->search("/bulletin/search", [
+		"headline" => "Search posts",
+		"pattern" => $pagination_pattern["pattern"]
+	]) ?>
+
+
 	<div class="articles">
 <? if($items): ?>
+
+		<h2>All posts</h2>
+
+		<?= $HTML->pagination($items, [
+			"base_url" => "/bulletin", 
+			"direction" => "prev",
+			"show_total" => false,
+			"labels" => ["prev" => "Previous posts"]
+		]) ?>
+
 		<ul class="items articles articlePreviewList i:articlePreviewList">
-			<? foreach($items as $item): 
+			<? foreach($items["range_items"] as $item): 
 				$media = $IC->sliceMediae($item, "mediae"); ?>
 			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 				data-readstate="<?= $item["readstate"] ?>"
 				>
+
+				<? if($media): ?>
+				<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
+				<? endif; ?>
 
 
 				<?= $HTML->articleTags($item, [
@@ -109,6 +177,17 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 			</li>
 			<? endforeach; ?>
 		</ul>
+
+		<?= $HTML->pagination($items, [
+			"base_url" => "/bulletin",
+			"direction" => "next",
+			"show_total" => false,
+			"labels" => ["next" => "Next posts"]
+		]) ?>
+
+<? else: ?>
+		<p>No posts</p>
+
 <? endif; ?>
 	</div>
 

@@ -1,16 +1,17 @@
 <?php
 global $IC;
 global $action;
-global $itemtype;
 
+$itemtype = "post";
 
-$sindex = $action[0];
-
+$sindex = $action[2];
+$selected_tag = urldecode($action[1]);
 
 $pagination_pattern = [
 	"pattern" => [
 		"itemtype" => $itemtype, 
 		"status" => 1, 
+		"tags" => $itemtype.":".addslashes($selected_tag), 
 		"extend" => [
 			"tags" => true, 
 			"user" => true, 
@@ -23,15 +24,16 @@ $pagination_pattern = [
 	"limit" => 1
 ];
 
-
 // Get posts
 $pagination_items = $IC->paginate($pagination_pattern);
 
 
+// $item = $IC->getItem(array("sindex" => $sindex, "extend" => array("tags" => true, "user" => true, "mediae" => true, "comments" => true, "readstate" => true)));
 if($pagination_items && $pagination_items["range_items"]) {
-
 	$item = $pagination_items["range_items"][0];
 	$this->sharingMetaData($item);
+
+
 
 	// set related pattern
 	$related_pattern = array("itemtype" => $item["itemtype"], "tags" => $item["tags"], "exclude" => $item["id"]);
@@ -58,13 +60,13 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 ?>
 
-<div class="scene post i:columns">
+<div class="scene post tag i:columns">
 
 
 <? if($item):
 	$media = $IC->sliceMediae($item, "mediae"); ?>
 
-	<div class="article i:article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
+	<div class="article i:article id:<?= $item["item_id"] ?><?= $item["classname"] ? " ".$item["classname"] : "" ?>" itemscope itemtype="http://schema.org/NewsArticle"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-readstate="<?= $item["readstate"] ?>"
 		data-readstate-add="<?= $this->validPath("/janitor/admin/profile/addReadstate/".$item["item_id"]) ?>" 
@@ -72,22 +74,24 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 		>
 
 		<? if($media): ?>
-		<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
+		<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
+			<p>Image: <a href="/images/<?= $item["item_id"] ?>/<?= $media["variant"] ?>/500x.<?= $media["format"] ?>"><?= $media["name"] ?></a></p>
+		</div>
 		<? endif; ?>
 
 
 		<?= $HTML->articleTags($item, [
 			"context" => [$itemtype],
 			"url" => "/bulletin/tag",
-			"default" => ["/bulletin", "All posts"]
+			"default" => ["/bulletin", "Posts"]
 		]) ?>
 
 
 		<h1 itemprop="headline"><?= $item["name"] ?></h1>
 
 
-		<?= $HTML->articleInfo($item, "/bulletin/".$item["sindex"],[
-			"media" => $media,
+		<?= $HTML->articleInfo($item, "/bulletin/".$item["sindex"], [
+			"media" => $media, 
 			"sharing" => true
 		]) ?>
 
@@ -96,7 +100,8 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 			<?= $item["html"] ?>
 		</div>
 
-		<? 
+
+		<?
 		$mediae = $IC->filterMediae($item, "mediae");
 		if($mediae): ?>
 			<? foreach($mediae as $media): ?>
@@ -110,6 +115,14 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 		<?= $HTML->frontendComments($item, "/janitor/admin/post/addComment") ?>
 
 	</div>
+
+	<?= $HTML->pagination($pagination_items, [
+		"class" => "pagination i:pagination",
+		"type" => "sindex",
+		"base_url" => "/bulletin/tag/".urlencode($selected_tag), 
+		"show_total" => false,
+		"labels" => ["prev" => "{name}", "next" => "{name}"]
+	]) ?>
 
 
 
@@ -126,7 +139,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 <? if($related_items): ?>
 	<div class="related">
-		<h2><?= $related_title ?> <a href="/bulletin">(see all)</a></h2>
+		<h2><?= $related_title ?> <a href="/bulletin">(see all posts)</a></h2>
 
 		<ul class="items articles articlePreviewList i:articlePreviewList">
 <?		foreach($related_items as $related_item): 
@@ -136,7 +149,9 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 				>
 
 <?				if($media): ?>
-				<div class="image item_id:<?= $related_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
+				<div class="image item_id:<?= $related_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
+					<p>Image: <a href="/images/<?= $related_item["item_id"] ?>/<?= $media["variant"] ?>/500x.<?= $media["format"] ?>"><?= $media["name"] ?></a></p>
+				</div>
 <?				endif; ?>
 
 
@@ -150,7 +165,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 				<h3 itemprop="headline"><a href="/bulletin/<?= $related_item["sindex"] ?>"><?= strip_tags($related_item["name"]) ?></a></h3>
 
 
-				<?= $HTML->articleInfo($related_item, "/bulletin/".$related_item["sindex"],[
+				<?= $HTML->articleInfo($related_item, "/bulletin/".$related_item["sindex"], [
 					"media" => $media
 				]) ?>
 
@@ -178,10 +193,10 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 	<div class="categories">
 		<h2>Categories</h2>
 		<ul class="tags">
-			<? foreach($categories as $tag): ?>
+		<? foreach($categories as $tag):?>
 			<li <?= ($item["tags"] && array_search($tag, $item["tags"]) !== false) ? ' class="selected"' : "" ?>><a href="/bulletin/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
-			<? endforeach; ?>
-			<li class="all"><a href="/bulletin">All posts</a></li>
+		<? endforeach; ?>
+			<li class="all"><a href="/bulletin">All postings</a></li>
 		</ul>
 	</div>
 <? endif; ?>
