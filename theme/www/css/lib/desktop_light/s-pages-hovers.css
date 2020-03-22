@@ -1,6 +1,9 @@
-#content ul.actions input.button.primary:hover,
+ul.actions input.button.primary:hover,
+ul.actions a.button.primary:hover,
 #content ul.actions a.button.primary:hover,
-#content .scene .pagination .next a:hover,
-#content .scene .pagination .previous a:hover {background-color: #26962d;}
+#content .scene .pagination .next:hover a,
+#content .scene .pagination .previous:hover a {background-color: #26962d;}
 
-#content .scene ul.tags a:hover {color: #00c90d;}
+#content .scene div.categories ul.tags li.selected:hover {background-color: #34cc3d;}
+
+#content .scene ul.tags a:hover {color: #26962d;}

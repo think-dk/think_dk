@@ -299,7 +299,7 @@ Util.Modules["front"] = new function() {
 
 		// start news animation playback
 		scene.showEvents = function() {
-			u.bug("showEvents")
+			// u.bug("showEvents")
 
 			this._events = u.qs("div.all_events", this);
 
@@ -348,7 +348,7 @@ Util.Modules["front"] = new function() {
 
 		// start news animation playback
 		scene.showNews = function() {
-			u.bug("showNews")
+			// u.bug("showNews")
 
 			this._news = u.qs("div.news", this);
 

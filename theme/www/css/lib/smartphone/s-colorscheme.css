@@ -25,7 +25,9 @@ ul.actions a.button.primary,
 
 ul.actions input.button.primary:active,
 ul.actions a.button.primary:active,
-#content ul.actions a.button.primary:active {background-color: #26962d;}
+#content ul.actions a.button.primary:active,
+#content .scene .pagination li.next a:active,
+#content .scene .pagination li.previous a:active {background-color: #26962d; color: #ffffff;}
 
 #content .scene div.article ul.tags li a:active,
 #content .scene ul.articles li.article ul.tags li a:active {color: #34cc3d;}
@@ -54,6 +56,13 @@ body > div.pagination li.previous > svg.arrow line {stroke: #34cc3d;}
 body > div.pagination li.previous,
 body > div.pagination li.next {border-color: #34cc3d;}
 body > div.pagination li a {color: #34cc3d;}
+
+body > div.pagination li.previous:active,
+body > div.pagination li.next:active {background-color: #34cc3d; color: #ffffff;}
+body > div.pagination li:active a {color: #ffffff;}
+body > div.pagination li.previous:active > svg.arrow line,
+body > div.pagination li.next:active > svg.arrow line {stroke: #ffffff;}
+
 
 .terms_notification {background: #26962d;}
 

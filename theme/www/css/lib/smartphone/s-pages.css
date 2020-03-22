@@ -85,6 +85,8 @@
 #content .scene ul.events li.event h3 {
 	font-family: "PT Serif",Times,serif;	
 }
+#content .scene ul.events li.event span.event_status.eventcancelled {color: #df0000;}
+
 #content .scene ul.events li.event dl.occurs_at {padding-bottom: 0;}
 #content .scene ul.events li.event dd {width: auto; font-size: 12px; padding-bottom: 0; padding-left: 0;}
 #content .scene ul.events li.event dt {display: none;}
@@ -96,9 +98,20 @@
 }
 
 #content .scene.event div.event div.description {padding-bottom: 10px;}
+
 #content .scene.event div.event dl.occurs_at {padding-bottom: 0;}
 #content .scene.event div.event dl.occurs_at dt {font-size: 12px; text-align: left;}
 #content .scene.event div.event dl.occurs_at dd {font-size: 16px; padding-bottom: 15px; padding-left: 0;}
+
+#content .scene.event div.event dl.event_status {padding-bottom: 0;}
+#content .scene.event div.event dl.event_status dt {font-size: 12px; text-align: left;}
+#content .scene.event div.event dl.event_status dd {font-size: 16px; padding-bottom: 15px; padding-left: 0;}
+#content .scene.event div.event dl.event_status dd.eventcancelled {font-size: 20px; color: #df0000;}
+
+#content .scene.event div.event dl.event_attendance {padding-bottom: 0;}
+#content .scene.event div.event dl.event_attendance dt {font-size: 12px; text-align: left;}
+#content .scene.event div.event dl.event_attendance dd {font-size: 16px; padding-bottom: 15px; padding-left: 0;}
+
 #content .scene.event div.event div.location {padding-top: 20px;}
 #content .scene.event div.event ul.location {display: block;}
 #content .scene.event div.event ul.location li.name {padding-bottom: 10px; font-size: 15px;}

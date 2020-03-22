@@ -1,11 +1,12 @@
-@import url(../../assets/parentnode-skin-default/css/seg_mobile.css);
+@import url(/assets/parentnode-skin-default/css/seg_mobile.css);
 
-@import url(../../assets/parentnode-skin-default/css/lib/mobile/s-form.css);
-@import url(../../assets/parentnode-skin-default/css/optionals/lib/mobile/s-pagination.css);
-@import url(../../assets/parentnode-skin-default/css/optionals/lib/mobile/s-todos.css);
-@import url(../../assets/parentnode-skin-default/css/optionals/lib/mobile/s-wishlist.css);
+@import url(/assets/parentnode-skin-default/css/optionals/lib/mobile/s-articles.css);
+@import url(/assets/parentnode-skin-default/css/optionals/lib/mobile/s-comments.css);
+@import url(/assets/parentnode-skin-default/css/optionals/lib/mobile/s-pagination.css);
+@import url(/assets/parentnode-skin-default/css/optionals/lib/mobile/s-wishlist.css);
+@import url(/assets/parentnode-skin-default/css/optionals/lib/mobile/s-search.css);
 
 
 /* Project css and overrides */
-@import url(mobile/s-pages.css);
-@import url(mobile/s-colorscheme.css);
+@import url(/css/lib/mobile/s-pages.css);
+@import url(/css/lib/mobile/s-colorscheme.css);

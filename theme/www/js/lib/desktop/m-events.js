@@ -355,11 +355,12 @@ Util.Modules["events"] = new function() {
 			var h3 = u.ae(day, u.qs("h3", event).cloneNode(true));
 			var h3_a = u.qs("a", h3);
 			h3.day = day;
-			var div_description = u.qs("div.description", event);
+			var div_description = u.qs("div.description p", event);
 
 			// Event might not have a description
 			if(div_description) {
-				h3.description = u.text(div_description);
+				// h3.description = u.text(div_description);
+				h3.description = div_description.innerHTML;
 			}
 			else {
 				h3.description = "N/A";

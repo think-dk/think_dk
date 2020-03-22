@@ -5,12 +5,23 @@ Util.Modules["front"] = new function() {
 		scene.resized = function() {
 //			u.bug("scene.resized:", this);
 
-			if(this.intro && !this.intro.is_small) {
-				u.ass(this.intro, {
-					"height": page.browser_h + "px",
-					"width": page.browser_w + "px"
-				});
+			if(this.intro) {
+				if(!this.intro.is_small) {
+					u.ass(this.intro, {
+						"height": page.browser_h + "px",
+						"width": page.browser_w + "px"
+					});
+				}
+				else {
+					var width = (this.intro.parentNode.offsetWidth - 100);
+					u.ass(this.intro, {
+						"height": (width / (540 / 350)) + "px",
+						"width": width + "px"
+					});
+				}
+
 			}
+			
 			// re-position text nodes
 			// if(this.intro && this.intro._textnodes) {
 			// 	var i, node;
@@ -44,13 +55,13 @@ Util.Modules["front"] = new function() {
 			this.fontsLoaded = function() {
 
 				u.columns(this, [
-					{"c175": [
+					{"c-main": [
 						"div.intro", 
 						"div.article", 
 						"div.news"
 						// ".pagination"
 					]},
-					{"c125": [
+					{"c-sidebar": [
 						".all_events",
 					]},
 					{"c300": [
@@ -571,10 +582,14 @@ Util.Modules["front"] = new function() {
 				if(this.show_full_intro) {
 					u.a.transition(this.intro, "all .5s ease-in-out");
 				}
+
+				var width = (this.intro.parentNode.offsetWidth - 100);
+
 				u.ass(this.intro, {
-					"width": "540px",
+					// "width": "540px",
+					"width": width + "px",
 					"top": 0,
-					"height": "350px",
+					"height": (width / (540 / 350))+"px",
 					"left": "50px",
 					"border-radius":"5px",
 					"cursor":"zoom-in",
@@ -683,7 +698,7 @@ Util.Modules["front"] = new function() {
 
 		// start news animation playback
 		scene.showEvents = function() {
-			u.bug("showEvents")
+			// u.bug("showEvents")
 
 			this._events = u.qs("div.all_events", this);
 
@@ -732,7 +747,7 @@ Util.Modules["front"] = new function() {
 
 		// start news animation playback
 		scene.showNews = function() {
-			u.bug("showNews")
+			// u.bug("showNews")
 
 			this._news = u.qs("div.news", this);
 

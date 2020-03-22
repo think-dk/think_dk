@@ -11,15 +11,27 @@ body {}
 #header .logo {color: #34cc3d;}
 #navigation ul {border-color: #ccdbcd;}
 #navigation ul li {color: #34cc3d;}
+.front #header .logo,
+#navigation ul li.selected,
+#navigation ul li.path {color: #26962d;}
 
 #content .scene a {color: #34cc3d;}
 #content .scene hr {border-color: #ccdbcd;}
 
-#content ul.actions input.button.primary,
-#content ul.actions a.button.primary {background-color: #34cc3d;}
-#content ul.actions input.button.primary:active,
-#content ul.actions a.button.primary:active {background-color: #26962d;}
-#content .scene div.categories ul.tags li.selected a {color: #26962d;}
+ul.actions input.button.primary,
+ul.actions a.button.primary,
+#content ul.actions a.button.primary,
+#content .scene .pagination .next a,
+#content .scene .pagination .previous a {background-color: #34cc3d; color: #ffffff;}
+
+ul.actions input.button.primary:active,
+ul.actions a.button.primary:active,
+#content ul.actions a.button.primary:active,
+#content .scene .pagination .next a:active,
+#content .scene .pagination .previous a:active {background-color: #26962d;}
+
+#content .scene div.categories ul.tags li.selected {background-color: #26962d;}
+
 
 #content .scene h3,
 #content .scene h4,
@@ -31,17 +43,4 @@ body {}
 
 #footer {border-color: #ccdbcd;}
 #footer p {color: #26962d;}
-
-
-
-/* LOCAL */
-.front #header .logo,
-.about #navigation ul li.about,
-.contact #navigation ul li.contact,
-.bulletin #navigation ul li.bulletin,
-.posts #navigation ul li.latest,
-.membership #navigation ul li.membership,
-.events #navigation ul li.events,
-.services #navigation ul li.services {color: #26962d;}
-
 

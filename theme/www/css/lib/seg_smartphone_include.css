@@ -1,11 +1,11 @@
-@import url(../../assets/parentnode-skin-default/css/seg_smartphone.css);
+@import url(/assets/parentnode-skin-default/css/seg_smartphone.css);
 
-@import url(../../assets/parentnode-skin-default/css/lib/smartphone/s-form.css);
-@import url(../../assets/parentnode-skin-default/css/optionals/lib/smartphone/s-todos.css);
-@import url(../../assets/parentnode-skin-default/css/optionals/lib/smartphone/s-wishlist.css);
-@import url(../../assets/parentnode-skin-default/css/optionals/lib/smartphone/s-pagination.css);
-@import url(../../assets/parentnode-skin-default/css/optionals/lib/smartphone/s-articles.css);
+@import url(/assets/parentnode-skin-default/css/optionals/lib/smartphone/s-articles.css);
+@import url(/assets/parentnode-skin-default/css/optionals/lib/smartphone/s-todos.css);
+@import url(/assets/parentnode-skin-default/css/optionals/lib/smartphone/s-wishlist.css);
+@import url(/assets/parentnode-skin-default/css/optionals/lib/smartphone/s-pagination.css);
+@import url(/assets/parentnode-skin-default/css/optionals/lib/smartphone/s-search.css);
 
 /* Project css and overrides */
-@import url(smartphone/s-colorscheme.css);
-@import url(smartphone/s-pages.css);
+@import url(/css/lib/smartphone/s-colorscheme.css);
+@import url(/css/lib/smartphone/s-pages.css);
