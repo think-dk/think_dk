@@ -12,7 +12,7 @@ if($page_item) {
 }
 
 $post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage", "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
-$event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.starting_at > NOW()" , "order" => "event.starting_at", "limit" => 4, "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
+$event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.starting_at > NOW() AND event.event_status != 0" , "order" => "event.starting_at", "limit" => 4, "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
 
 
 ?>
@@ -70,6 +70,8 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 <? if($event_items): ?>
 	<div class="all_events">
 		<h2>Upcoming events <a href="/events">(see all)</a></h2>
+		<h3>NOTE: Due to the Corona situation, all in-house events have been cancelled until the 31st of March.</h3>
+		<h3>We are very sorry <br />– stay safe out there!</h3>
 
 		<ul class="items events">
 		<? foreach($event_items as $item): ?>
@@ -94,12 +96,16 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 <? if($post_items): ?>
 	<div class="news">
 		<h2>Latest bulletins <a href="/bulletin">(see all)</a></h2>
-		<ul class="items articles">
+		<ul class="items articles i:articlePreviewList articlePreviewList">
 		<? foreach($post_items as $item): 
 			$media = $IC->sliceMediae($item, "mediae"); ?>
 			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 				data-readstate="<?= $item["readstate"] ?>"
 				>
+
+				<? if($media): ?>
+				<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
+				<? endif; ?>
 
 
 				<?= $HTML->articleTags($item, [
