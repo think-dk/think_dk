@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-03-03 11:16:19
+asset-builder @ 2020-03-22 20:08:26
 */
 
 /*seg_desktop_include.js*/
@@ -2775,17 +2775,17 @@ Util.pageScrollX = u.scrollX = function() {
 Util.pageScrollY = u.scrollY = function() {
 	return window.pageYOffset;
 }
-Util.Objects = u.o = new Object();
+Util.Modules = u.m = new Object();
 Util.init = function(scope) {
-	var i, node, nodes, object;
+	var i, node, nodes, module;
 	scope = scope && scope.nodeName ? scope : document;
 	nodes = u.ges("i\:([_a-zA-Z0-9])+", scope);
 	for(i = 0; i < nodes.length; i++) {
 		node = nodes[i];
-		while((object = u.cv(node, "i"))) {
-			u.rc(node, "i:"+object);
-			if(object && obj(u.o[object])) {
-				u.o[object].init(node);
+		while((module = u.cv(node, "i"))) {
+			u.rc(node, "i:"+module);
+			if(module && obj(u.m[module])) {
+				u.m[module].init(node);
 			}
 		}
 	}
@@ -4663,7 +4663,7 @@ u.smartphoneSwitch = new function() {
 		}
 	}
 }
-Util.Objects["page"] = new function() {
+Util.Modules["page"] = new function() {
 	this.init = function(page) {
 		u.bug_force = true;
 		u.bug("This site is built using the combined powers of body, mind and spirit. Well, and also Manipulator, Janitor and Detector");
@@ -4913,7 +4913,7 @@ Util.Objects["page"] = new function() {
 	}
 }
 u.e.addDOMReadyEvent(u.init);
-Util.Objects["login"] = new function() {
+Util.Modules["login"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -4928,7 +4928,7 @@ Util.Objects["login"] = new function() {
 		page.cN.scene = scene;
 	}
 }
-Util.Objects["scene"] = new function() {
+Util.Modules["scene"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 			this.offsetHeight;
@@ -4941,7 +4941,7 @@ Util.Objects["scene"] = new function() {
 		page.cN.scene = scene;
 	}
 }
-Util.Objects["article"] = new function() {
+Util.Modules["article"] = new function() {
 	this.init = function(article) {
 		article.csrf_token = article.getAttribute("data-csrf-token");
 		article.header = u.qs("h1,h2,h3", article);
@@ -6408,6 +6408,407 @@ u.googlemaps = new function() {
 }
 
 
+/*u-events-movements.js*/
+u.e.resetDragEvents = function(node) {
+	node._moves_pick = 0;
+	this.removeEvent(node, "mousemove", this._pick);
+	this.removeEvent(node, "touchmove", this._pick);
+	this.removeEvent(node, "mousemove", this._drag);
+	this.removeEvent(node, "touchmove", this._drag);
+	this.removeEvent(node, "mouseup", this._drop);
+	this.removeEvent(node, "touchend", this._drop);
+	this.removeEvent(node, "mouseup", this._cancelPick);
+	this.removeEvent(node, "touchend", this._cancelPick);
+	this.removeEvent(node, "mouseout", this._dropOut);
+	this.removeEvent(node, "mousemove", this._scrollStart);
+	this.removeEvent(node, "touchmove", this._scrollStart);
+	this.removeEvent(node, "mousemove", this._scrolling);
+	this.removeEvent(node, "touchmove", this._scrolling);
+	this.removeEvent(node, "mouseup", this._scrollEnd);
+	this.removeEvent(node, "touchend", this._scrollEnd);
+}
+u.e.overlap = function(node, boundaries, strict) {
+	if(boundaries.constructor.toString().match("Array")) {
+		var boundaries_start_x = Number(boundaries[0]);
+		var boundaries_start_y = Number(boundaries[1]);
+		var boundaries_end_x = Number(boundaries[2]);
+		var boundaries_end_y = Number(boundaries[3]);
+	}
+	else if(boundaries.constructor.toString().match("HTML")) {
+		var boundaries_start_x = u.absX(boundaries) - u.absX(node);
+		var boundaries_start_y =  u.absY(boundaries) - u.absY(node);
+		var boundaries_end_x = Number(boundaries_start_x + boundaries.offsetWidth);
+		var boundaries_end_y = Number(boundaries_start_y + boundaries.offsetHeight);
+	}
+	var node_start_x = Number(node._x);
+	var node_start_y = Number(node._y);
+	var node_end_x = Number(node_start_x + node.offsetWidth);
+	var node_end_y = Number(node_start_y + node.offsetHeight);
+	if(strict) {
+		if(node_start_x >= boundaries_start_x && node_start_y >= boundaries_start_y && node_end_x <= boundaries_end_x && node_end_y <= boundaries_end_y) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	} 
+	else if(node_end_x < boundaries_start_x || node_start_x > boundaries_end_x || node_end_y < boundaries_start_y || node_start_y > boundaries_end_y) {
+		return false;
+	}
+	return true;
+}
+u.e.drag = function(node, boundaries, _options) {
+	node.e_drag_options = _options ? _options : {};
+	node.e_drag = true;
+	if(node.childNodes.length < 2 && node.innerHTML.trim() == "") {
+		node.innerHTML = "&nbsp;";
+	}
+	node.distance_to_pick = 2;
+	node.drag_strict = true;
+	node.drag_overflow = false;
+	node.drag_elastica = 0;
+	node.drag_dropout = true;
+	node.show_bounds = false;
+	node.callback_ready = "ready";
+	node.callback_picked = "picked";
+	node.callback_moved = "moved";
+	node.callback_dropped = "dropped";
+	if(obj(_options)) {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "strict"			: node.drag_strict			= _options[_argument]; break;
+				case "overflow"			: node.drag_overflow		= _options[_argument]; break;
+				case "elastica"			: node.drag_elastica		= Number(_options[_argument]); break;
+				case "dropout"			: node.drag_dropout			= _options[_argument]; break;
+				case "show_bounds"		: node.show_bounds			= _options[_argument]; break; 
+				case "vertical_lock"	: node.vertical_lock		= _options[_argument]; break;
+				case "horizontal_lock"	: node.horizontal_lock		= _options[_argument]; break;
+				case "callback_picked"	: node.callback_picked		= _options[_argument]; break;
+				case "callback_moved"	: node.callback_moved		= _options[_argument]; break;
+				case "callback_dropped"	: node.callback_dropped		= _options[_argument]; break;
+			}
+		}
+	}
+	u.e.setDragBoundaries(node, boundaries);
+	u.e.addStartEvent(node, this._inputStart);
+	if(fun(node[node.callback_ready])) {
+		node[node.callback_ready]();
+	}
+}
+u.e._pick = function(event) {
+	var init_speed_x = Math.abs(this.start_event_x - u.eventX(event));
+	var init_speed_y = Math.abs(this.start_event_y - u.eventY(event));
+	if(
+		(init_speed_x > init_speed_y && this.only_horizontal) || 
+		(init_speed_x < init_speed_y && this.only_vertical) ||
+		(!this.only_vertical && !this.only_horizontal)) {
+		if((init_speed_x > this.distance_to_pick || init_speed_y > this.distance_to_pick)) {
+			u.e.resetNestedEvents(this);
+			u.e.kill(event);
+			if(u.hasFixedParent(this)) {
+				this.has_fixed_parent = true;
+			}
+			else {
+				this.has_fixed_parent = false;
+			}
+			this.move_timestamp = event.timeStamp;
+			this.move_last_x = this._x;
+			this.move_last_y = this._y;
+			if(u.hasFixedParent(this)) {
+				this.start_input_x = u.eventX(event) - this._x - u.scrollX(); 
+				this.start_input_y = u.eventY(event) - this._y - u.scrollY();
+			}
+			else {
+				this.start_input_x = u.eventX(event) - this._x; 
+				this.start_input_y = u.eventY(event) - this._y;
+			}
+			this.current_xps = 0;
+			this.current_yps = 0;
+			u.a.transition(this, "none");
+			u.e.addMoveEvent(this, u.e._drag);
+			u.e.addEndEvent(this, u.e._drop);
+			if(fun(this[this.callback_picked])) {
+				this[this.callback_picked](event);
+			}
+			if(this.drag_dropout && event.type.match(/mouse/)) {
+				// 	
+				// 	
+				// 	
+				// 	
+				// 	
+				// 
+				// 
+				// 	
+				this._dropOutDrag = u.e._drag;
+				this._dropOutDrop = u.e._drop;
+				u.e.addOutEvent(this, u.e._dropOut);
+			}
+		}
+	}
+}
+u.e._drag = function(event) {
+	if(this.has_fixed_parent) {
+		this.current_x = u.eventX(event) - this.start_input_x - u.scrollX();
+		this.current_y = u.eventY(event) - this.start_input_y - u.scrollY();
+	}
+	else {
+		this.current_x = u.eventX(event) - this.start_input_x;
+		this.current_y = u.eventY(event) - this.start_input_y;
+	}
+	this.current_xps = Math.round(((this.current_x - this.move_last_x) / (event.timeStamp - this.move_timestamp)) * 1000);
+	this.current_yps = Math.round(((this.current_y - this.move_last_y) / (event.timeStamp - this.move_timestamp)) * 1000);
+	this.last_x_distance_travelled = (this.current_xps) ? this.current_x - this.move_last_x : this.last_x_distance_travelled;
+	this.last_y_distance_travelled = (this.current_yps) ? this.current_y - this.move_last_y : this.last_y_distance_travelled;
+	this.move_timestamp = event.timeStamp;
+	this.move_last_x = this.current_x;
+	this.move_last_y = this.current_y;
+	if(!this.locked && this.only_vertical) {
+		this._y = this.current_y;
+	}
+	else if(!this.locked && this.only_horizontal) {
+		this._x = this.current_x;
+	}
+	else if(!this.locked) {
+		this._x = this.current_x;
+		this._y = this.current_y;
+	}
+	if(this.e_swipe) {
+		if(this.only_horizontal) {
+			if(this.current_xps < 0 || this.current_xps === 0 && this.last_x_distance_travelled < 0) {
+				this.swiped = "left";
+			}
+			else {
+				this.swiped = "right";
+			}
+		}
+		else if(this.only_vertical) {
+			if(this.current_yps < 0 || this.current_yps === 0 && this.last_y_distance_travelled < 0) {
+				this.swiped = "up";
+			}
+			else {
+				this.swiped = "down";
+			}
+		}
+		else {
+			if(Math.abs(this.current_xps) > Math.abs(this.current_yps)) {
+				if(this.current_xps < 0) {
+					this.swiped = "left";
+				}
+				else {
+					this.swiped = "right";
+				}
+			}
+			else if(Math.abs(this.current_xps) < Math.abs(this.current_yps)) {
+				if(this.current_yps < 0) {
+					this.swiped = "up";
+				}
+				else {
+					this.swiped = "down";
+				}
+			}
+		}
+	}
+	if(!this.locked) {
+		if(u.e.overlap(this, [this.start_drag_x, this.start_drag_y, this.end_drag_x, this.end_drag_y], true)) {
+			u.a.translate(this, this._x, this._y);
+		}
+		else if(this.drag_elastica) {
+			this.swiped = false;
+			this.current_xps = 0;
+			this.current_yps = 0;
+			var offset = false;
+			if(!this.only_vertical && this._x < this.start_drag_x) {
+				offset = this._x < this.start_drag_x - this.drag_elastica ? - this.drag_elastica : this._x - this.start_drag_x;
+				this._x = this.start_drag_x;
+				this.current_x = this._x + offset + (Math.round(Math.pow(offset, 2)/this.drag_elastica));
+			}
+			else if(!this.only_vertical && this._x + this.offsetWidth > this.end_drag_x) {
+				offset = this._x + this.offsetWidth > this.end_drag_x + this.drag_elastica ? this.drag_elastica : this._x + this.offsetWidth - this.end_drag_x;
+				this._x = this.end_drag_x - this.offsetWidth;
+				this.current_x = this._x + offset - (Math.round(Math.pow(offset, 2)/this.drag_elastica));
+			}
+			else {
+				this.current_x = this._x;
+			}
+			if(!this.only_horizontal && this._y < this.start_drag_y) {
+				offset = this._y < this.start_drag_y - this.drag_elastica ? - this.drag_elastica : this._y - this.start_drag_y;
+				this._y = this.start_drag_y;
+				this.current_y = this._y + offset + (Math.round(Math.pow(offset, 2)/this.drag_elastica));
+			}
+			else if(!this.horizontal && this._y + this.offsetHeight > this.end_drag_y) {
+				offset = (this._y + this.offsetHeight > this.end_drag_y + this.drag_elastica) ? this.drag_elastica : (this._y + this.offsetHeight - this.end_drag_y);
+				this._y = this.end_drag_y - this.offsetHeight;
+				this.current_y = this._y + offset - (Math.round(Math.pow(offset, 2)/this.drag_elastica));
+			}
+			else {
+				this.current_y = this._y;
+			}
+			if(offset) {
+				u.a.translate(this, this.current_x, this.current_y);
+			}
+		}
+		else {
+			this.swiped = false;
+			this.current_xps = 0;
+			this.current_yps = 0;
+			if(this._x < this.start_drag_x) {
+				this._x = this.start_drag_x;
+			}
+			else if(this._x + this.offsetWidth > this.end_drag_x) {
+				this._x = this.end_drag_x - this.offsetWidth;
+			}
+			if(this._y < this.start_drag_y) {
+				this._y = this.start_drag_y;
+			}
+			else if(this._y + this.offsetHeight > this.end_drag_y) { 
+				this._y = this.end_drag_y - this.offsetHeight;
+			}
+			u.a.translate(this, this._x, this._y);
+		}
+	}
+	if(fun(this[this.callback_moved])) {
+		this[this.callback_moved](event);
+	}
+}
+u.e._drop = function(event) {
+	u.e.resetEvents(this);
+	if(this.e_swipe && this.swiped) {
+		this.e_swipe_options.eventAction = "Swiped "+ this.swiped;
+		u.stats.event(this, this.e_swipe_options);
+		if(this.swiped == "left" && fun(this.swipedLeft)) {
+			this.swipedLeft(event);
+		}
+		else if(this.swiped == "right" && fun(this.swipedRight)) {
+			this.swipedRight(event);
+		}
+		else if(this.swiped == "down" && fun(this.swipedDown)) {
+			this.swipedDown(event);
+		}
+		else if(this.swiped == "up" && fun(this.swipedUp)) {
+			this.swipedUp(event);
+		}
+	}
+	else if(!this.drag_strict && !this.locked) {
+		this.current_x = Math.round(this._x + (this.current_xps/2));
+		this.current_y = Math.round(this._y + (this.current_yps/2));
+		if(this.only_vertical || this.current_x < this.start_drag_x) {
+			this.current_x = this.start_drag_x;
+		}
+		else if(this.current_x + this.offsetWidth > this.end_drag_x) {
+			this.current_x = this.end_drag_x - this.offsetWidth;
+		}
+		if(this.only_horizontal || this.current_y < this.start_drag_y) {
+			this.current_y = this.start_drag_y;
+		}
+		else if(this.current_y + this.offsetHeight > this.end_drag_y) {
+			this.current_y = this.end_drag_y - this.offsetHeight;
+		}
+		this.transitioned = function() {
+			if(fun(this.projected)) {
+				this.projected(event);
+			}
+		}
+		if(this.current_xps || this.current_yps) {
+			u.a.transition(this, "all 1s cubic-bezier(0,0,0.25,1)");
+		}
+		else {
+			u.a.transition(this, "none");
+		}
+		u.a.translate(this, this.current_x, this.current_y);
+	}
+	if(this.e_drag && !this.e_swipe) {
+		this.e_drag_options.eventAction = u.stringOr(this.e_drag_options.eventAction, "Dropped");
+		u.stats.event(this, this.e_drag_options);
+	}
+	if(fun(this[this.callback_dropped])) {
+		this[this.callback_dropped](event);
+	}
+}
+u.e._dropOut = function(event) {
+	this._drop_out_id = u.randomString();
+	document["_DroppedOutNode" + this._drop_out_id] = this;
+	eval('document["_DroppedOutMove' + this._drop_out_id + '"] = function(event) {document["_DroppedOutNode' + this._drop_out_id + '"]._dropOutDrag(event);}');
+	eval('document["_DroppedOutOver' + this._drop_out_id + '"] = function(event) {u.e.removeEvent(document, "mousemove", document["_DroppedOutMove' + this._drop_out_id + '"]);u.e.removeEvent(document, "mouseup", document["_DroppedOutEnd' + this._drop_out_id + '"]);u.e.removeEvent(document["_DroppedOutNode' + this._drop_out_id + '"], "mouseover", document["_DroppedOutOver' + this._drop_out_id + '"]);}');
+	eval('document["_DroppedOutEnd' + this._drop_out_id + '"] = function(event) {u.e.removeEvent(document, "mousemove", document["_DroppedOutMove' + this._drop_out_id + '"]);u.e.removeEvent(document, "mouseup", document["_DroppedOutEnd' + this._drop_out_id + '"]);u.e.removeEvent(document["_DroppedOutNode' + this._drop_out_id + '"], "mouseover", document["_DroppedOutOver' + this._drop_out_id + '"]);document["_DroppedOutNode' + this._drop_out_id + '"]._dropOutDrop(event);}');
+	u.e.addEvent(document, "mousemove", document["_DroppedOutMove" + this._drop_out_id]);
+	u.e.addEvent(this, "mouseover", document["_DroppedOutOver" + this._drop_out_id]);
+	u.e.addEvent(document, "mouseup", document["_DroppedOutEnd" + this._drop_out_id]);
+}
+u.e._cancelPick = function(event) {
+	u.e.resetDragEvents(this);
+	if(fun(this.pickCancelled)) {
+		this.pickCancelled(event);
+	}
+}
+u.e.setDragBoundaries = function(node, boundaries) {
+	if((boundaries.constructor && boundaries.constructor.toString().match("Array")) || (boundaries.scopeName && boundaries.scopeName != "HTML")) {
+		node.start_drag_x = Number(boundaries[0]);
+		node.start_drag_y = Number(boundaries[1]);
+		node.end_drag_x = Number(boundaries[2]);
+		node.end_drag_y = Number(boundaries[3]);
+	}
+	else if((boundaries.constructor && boundaries.constructor.toString().match("HTML")) || (boundaries.scopeName && boundaries.scopeName == "HTML")) {
+		if(node.drag_overflow == "scroll") {
+			node.start_drag_x = node.offsetWidth > boundaries.offsetWidth ? boundaries.offsetWidth - node.offsetWidth : 0;
+			node.start_drag_y = node.offsetHeight > boundaries.offsetHeight ? boundaries.offsetHeight - node.offsetHeight : 0;
+			node.end_drag_x = node.offsetWidth > boundaries.offsetWidth ? node.offsetWidth : boundaries.offsetWidth;
+			node.end_drag_y = node.offsetHeight > boundaries.offsetHeight ? node.offsetHeight : boundaries.offsetHeight;
+		}
+		else {
+			node.start_drag_x = u.absX(boundaries) - u.absX(node);
+			node.start_drag_y = u.absY(boundaries) - u.absY(node);
+			node.end_drag_x = node.start_drag_x + boundaries.offsetWidth;
+			node.end_drag_y = node.start_drag_y + boundaries.offsetHeight;
+		}
+	}
+	if(node.show_bounds) {
+		var debug_bounds = u.ae(document.body, "div", {"class":"debug_bounds"})
+		debug_bounds.style.position = "absolute";
+		debug_bounds.style.background = "red"
+		debug_bounds.style.left = (u.absX(node) + node.start_drag_x - 1) + "px";
+		debug_bounds.style.top = (u.absY(node) + node.start_drag_y - 1) + "px";
+		debug_bounds.style.width = (node.end_drag_x - node.start_drag_x) + "px";
+		debug_bounds.style.height = (node.end_drag_y - node.start_drag_y) + "px";
+		debug_bounds.style.border = "1px solid white";
+		debug_bounds.style.zIndex = 9999;
+		debug_bounds.style.opacity = .5;
+		if(document.readyState && document.readyState == "interactive") {
+			debug_bounds.innerHTML = "WARNING - injected on DOMLoaded"; 
+		}
+		u.bug("node: ", node, " in (" + u.absX(node) + "," + u.absY(node) + "), (" + (u.absX(node)+node.offsetWidth) + "," + (u.absY(node)+node.offsetHeight) +")");
+		u.bug("boundaries: (" + node.start_drag_x + "," + node.start_drag_y + "), (" + node.end_drag_x + ", " + node.end_drag_y + ")");
+	}
+	node._x = node._x ? node._x : 0;
+	node._y = node._y ? node._y : 0;
+	if(node.drag_overflow == "scroll" && (boundaries.constructor && boundaries.constructor.toString().match("HTML")) || (boundaries.scopeName && boundaries.scopeName == "HTML")) {
+		node.locked = ((node.end_drag_x - node.start_drag_x <= boundaries.offsetWidth) && (node.end_drag_y - node.start_drag_y <= boundaries.offsetHeight));
+		node.only_vertical = (node.vertical_lock || (!node.locked && node.end_drag_x - node.start_drag_x <= boundaries.offsetWidth));
+		node.only_horizontal = (node.horizontal_lock || (!node.locked && node.end_drag_y - node.start_drag_y <= boundaries.offsetHeight));
+	}
+	else {
+		node.locked = ((node.end_drag_x - node.start_drag_x == node.offsetWidth) && (node.end_drag_y - node.start_drag_y == node.offsetHeight));
+		node.only_vertical = (node.vertical_lock || (!node.locked && node.end_drag_x - node.start_drag_x == node.offsetWidth));
+		node.only_horizontal = (node.horizontal_lock || (!node.locked && node.end_drag_y - node.start_drag_y == node.offsetHeight));
+	}
+}
+u.e.setDragPosition = function(node, x, y) {
+	node.current_xps = 0;
+	node.current_yps = 0;
+	node._x = x;
+	node._y = y;
+	u.a.translate(node, node._x, node._y);
+	if(fun(node[node.callback_moved])) {
+		node[node.callback_moved](event);
+	}
+}
+u.e.swipe = function(node, boundaries, _options) {
+	node.e_swipe_options = _options ? _options : {};
+	node.e_swipe = true;
+	u.e.drag(node, boundaries, _options);
+}
+
+
 /*beta-u-columns.js*/
 u.columns = function(node, _columns, insert) {
 	var current_node = node;
@@ -6444,34 +6845,6 @@ u.columns = function(node, _columns, insert) {
 				div_column = u.ae(current_node, target);
 				div_column._tree = node._tree;
 			}
-		}
-	}
-}
-
-
-/*beta-u-eventchain.js*/
-u.eventChain = function(node, _options) {
-	node._ec_events = [];
-	node.addEvent = function(node, action, duration) {
-		this._ec_events.push({"node":node, "action":action, "duration":duration});
-	}
-	node.play = function() {
-		u.t.resetTimer(this.t_eventchain);
-		if(this._ec_events.length) {
-			var _event = this._ec_events.shift();
-			_event.action.call(_event.node);
-			this.t_eventchain = u.t.setTimer(this, "play", _event.duration);
-		}
-		else {
-			if(fun(this.eventChainEnded)) {
-				this.eventChainEnded();
-			}
-		}
-	}
-	node.stop = function() {
-		u.t.resetTimer(this.t_eventchain);
-		if(fun(this.eventChainEnded)) {
-			this.eventChainEnded();
 		}
 	}
 }
@@ -6630,7 +7003,7 @@ u.paymentCards = new function() {
 
 
 /*beta-u-form-onebuttonform.js*/
-Util.Objects["oneButtonForm"] = new function() {
+Util.Modules["oneButtonForm"] = new function() {
 	this.init = function(node) {
 		if(!node.childNodes.length) {
 			var csrf_token = node.getAttribute("data-csrf-token");
@@ -7536,407 +7909,6 @@ u.slideshow = function(list, _options) {
 }
 
 
-/*u-events-movements.js*/
-u.e.resetDragEvents = function(node) {
-	node._moves_pick = 0;
-	this.removeEvent(node, "mousemove", this._pick);
-	this.removeEvent(node, "touchmove", this._pick);
-	this.removeEvent(node, "mousemove", this._drag);
-	this.removeEvent(node, "touchmove", this._drag);
-	this.removeEvent(node, "mouseup", this._drop);
-	this.removeEvent(node, "touchend", this._drop);
-	this.removeEvent(node, "mouseup", this._cancelPick);
-	this.removeEvent(node, "touchend", this._cancelPick);
-	this.removeEvent(node, "mouseout", this._dropOut);
-	this.removeEvent(node, "mousemove", this._scrollStart);
-	this.removeEvent(node, "touchmove", this._scrollStart);
-	this.removeEvent(node, "mousemove", this._scrolling);
-	this.removeEvent(node, "touchmove", this._scrolling);
-	this.removeEvent(node, "mouseup", this._scrollEnd);
-	this.removeEvent(node, "touchend", this._scrollEnd);
-}
-u.e.overlap = function(node, boundaries, strict) {
-	if(boundaries.constructor.toString().match("Array")) {
-		var boundaries_start_x = Number(boundaries[0]);
-		var boundaries_start_y = Number(boundaries[1]);
-		var boundaries_end_x = Number(boundaries[2]);
-		var boundaries_end_y = Number(boundaries[3]);
-	}
-	else if(boundaries.constructor.toString().match("HTML")) {
-		var boundaries_start_x = u.absX(boundaries) - u.absX(node);
-		var boundaries_start_y =  u.absY(boundaries) - u.absY(node);
-		var boundaries_end_x = Number(boundaries_start_x + boundaries.offsetWidth);
-		var boundaries_end_y = Number(boundaries_start_y + boundaries.offsetHeight);
-	}
-	var node_start_x = Number(node._x);
-	var node_start_y = Number(node._y);
-	var node_end_x = Number(node_start_x + node.offsetWidth);
-	var node_end_y = Number(node_start_y + node.offsetHeight);
-	if(strict) {
-		if(node_start_x >= boundaries_start_x && node_start_y >= boundaries_start_y && node_end_x <= boundaries_end_x && node_end_y <= boundaries_end_y) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	} 
-	else if(node_end_x < boundaries_start_x || node_start_x > boundaries_end_x || node_end_y < boundaries_start_y || node_start_y > boundaries_end_y) {
-		return false;
-	}
-	return true;
-}
-u.e.drag = function(node, boundaries, _options) {
-	node.e_drag_options = _options ? _options : {};
-	node.e_drag = true;
-	if(node.childNodes.length < 2 && node.innerHTML.trim() == "") {
-		node.innerHTML = "&nbsp;";
-	}
-	node.distance_to_pick = 2;
-	node.drag_strict = true;
-	node.drag_overflow = false;
-	node.drag_elastica = 0;
-	node.drag_dropout = true;
-	node.show_bounds = false;
-	node.callback_ready = "ready";
-	node.callback_picked = "picked";
-	node.callback_moved = "moved";
-	node.callback_dropped = "dropped";
-	if(obj(_options)) {
-		var _argument;
-		for(_argument in _options) {
-			switch(_argument) {
-				case "strict"			: node.drag_strict			= _options[_argument]; break;
-				case "overflow"			: node.drag_overflow		= _options[_argument]; break;
-				case "elastica"			: node.drag_elastica		= Number(_options[_argument]); break;
-				case "dropout"			: node.drag_dropout			= _options[_argument]; break;
-				case "show_bounds"		: node.show_bounds			= _options[_argument]; break; 
-				case "vertical_lock"	: node.vertical_lock		= _options[_argument]; break;
-				case "horizontal_lock"	: node.horizontal_lock		= _options[_argument]; break;
-				case "callback_picked"	: node.callback_picked		= _options[_argument]; break;
-				case "callback_moved"	: node.callback_moved		= _options[_argument]; break;
-				case "callback_dropped"	: node.callback_dropped		= _options[_argument]; break;
-			}
-		}
-	}
-	u.e.setDragBoundaries(node, boundaries);
-	u.e.addStartEvent(node, this._inputStart);
-	if(fun(node[node.callback_ready])) {
-		node[node.callback_ready]();
-	}
-}
-u.e._pick = function(event) {
-	var init_speed_x = Math.abs(this.start_event_x - u.eventX(event));
-	var init_speed_y = Math.abs(this.start_event_y - u.eventY(event));
-	if(
-		(init_speed_x > init_speed_y && this.only_horizontal) || 
-		(init_speed_x < init_speed_y && this.only_vertical) ||
-		(!this.only_vertical && !this.only_horizontal)) {
-		if((init_speed_x > this.distance_to_pick || init_speed_y > this.distance_to_pick)) {
-			u.e.resetNestedEvents(this);
-			u.e.kill(event);
-			if(u.hasFixedParent(this)) {
-				this.has_fixed_parent = true;
-			}
-			else {
-				this.has_fixed_parent = false;
-			}
-			this.move_timestamp = event.timeStamp;
-			this.move_last_x = this._x;
-			this.move_last_y = this._y;
-			if(u.hasFixedParent(this)) {
-				this.start_input_x = u.eventX(event) - this._x - u.scrollX(); 
-				this.start_input_y = u.eventY(event) - this._y - u.scrollY();
-			}
-			else {
-				this.start_input_x = u.eventX(event) - this._x; 
-				this.start_input_y = u.eventY(event) - this._y;
-			}
-			this.current_xps = 0;
-			this.current_yps = 0;
-			u.a.transition(this, "none");
-			u.e.addMoveEvent(this, u.e._drag);
-			u.e.addEndEvent(this, u.e._drop);
-			if(fun(this[this.callback_picked])) {
-				this[this.callback_picked](event);
-			}
-			if(this.drag_dropout && event.type.match(/mouse/)) {
-				// 	
-				// 	
-				// 	
-				// 	
-				// 	
-				// 
-				// 
-				// 	
-				this._dropOutDrag = u.e._drag;
-				this._dropOutDrop = u.e._drop;
-				u.e.addOutEvent(this, u.e._dropOut);
-			}
-		}
-	}
-}
-u.e._drag = function(event) {
-	if(this.has_fixed_parent) {
-		this.current_x = u.eventX(event) - this.start_input_x - u.scrollX();
-		this.current_y = u.eventY(event) - this.start_input_y - u.scrollY();
-	}
-	else {
-		this.current_x = u.eventX(event) - this.start_input_x;
-		this.current_y = u.eventY(event) - this.start_input_y;
-	}
-	this.current_xps = Math.round(((this.current_x - this.move_last_x) / (event.timeStamp - this.move_timestamp)) * 1000);
-	this.current_yps = Math.round(((this.current_y - this.move_last_y) / (event.timeStamp - this.move_timestamp)) * 1000);
-	this.last_x_distance_travelled = (this.current_xps) ? this.current_x - this.move_last_x : this.last_x_distance_travelled;
-	this.last_y_distance_travelled = (this.current_yps) ? this.current_y - this.move_last_y : this.last_y_distance_travelled;
-	this.move_timestamp = event.timeStamp;
-	this.move_last_x = this.current_x;
-	this.move_last_y = this.current_y;
-	if(!this.locked && this.only_vertical) {
-		this._y = this.current_y;
-	}
-	else if(!this.locked && this.only_horizontal) {
-		this._x = this.current_x;
-	}
-	else if(!this.locked) {
-		this._x = this.current_x;
-		this._y = this.current_y;
-	}
-	if(this.e_swipe) {
-		if(this.only_horizontal) {
-			if(this.current_xps < 0 || this.current_xps === 0 && this.last_x_distance_travelled < 0) {
-				this.swiped = "left";
-			}
-			else {
-				this.swiped = "right";
-			}
-		}
-		else if(this.only_vertical) {
-			if(this.current_yps < 0 || this.current_yps === 0 && this.last_y_distance_travelled < 0) {
-				this.swiped = "up";
-			}
-			else {
-				this.swiped = "down";
-			}
-		}
-		else {
-			if(Math.abs(this.current_xps) > Math.abs(this.current_yps)) {
-				if(this.current_xps < 0) {
-					this.swiped = "left";
-				}
-				else {
-					this.swiped = "right";
-				}
-			}
-			else if(Math.abs(this.current_xps) < Math.abs(this.current_yps)) {
-				if(this.current_yps < 0) {
-					this.swiped = "up";
-				}
-				else {
-					this.swiped = "down";
-				}
-			}
-		}
-	}
-	if(!this.locked) {
-		if(u.e.overlap(this, [this.start_drag_x, this.start_drag_y, this.end_drag_x, this.end_drag_y], true)) {
-			u.a.translate(this, this._x, this._y);
-		}
-		else if(this.drag_elastica) {
-			this.swiped = false;
-			this.current_xps = 0;
-			this.current_yps = 0;
-			var offset = false;
-			if(!this.only_vertical && this._x < this.start_drag_x) {
-				offset = this._x < this.start_drag_x - this.drag_elastica ? - this.drag_elastica : this._x - this.start_drag_x;
-				this._x = this.start_drag_x;
-				this.current_x = this._x + offset + (Math.round(Math.pow(offset, 2)/this.drag_elastica));
-			}
-			else if(!this.only_vertical && this._x + this.offsetWidth > this.end_drag_x) {
-				offset = this._x + this.offsetWidth > this.end_drag_x + this.drag_elastica ? this.drag_elastica : this._x + this.offsetWidth - this.end_drag_x;
-				this._x = this.end_drag_x - this.offsetWidth;
-				this.current_x = this._x + offset - (Math.round(Math.pow(offset, 2)/this.drag_elastica));
-			}
-			else {
-				this.current_x = this._x;
-			}
-			if(!this.only_horizontal && this._y < this.start_drag_y) {
-				offset = this._y < this.start_drag_y - this.drag_elastica ? - this.drag_elastica : this._y - this.start_drag_y;
-				this._y = this.start_drag_y;
-				this.current_y = this._y + offset + (Math.round(Math.pow(offset, 2)/this.drag_elastica));
-			}
-			else if(!this.horizontal && this._y + this.offsetHeight > this.end_drag_y) {
-				offset = (this._y + this.offsetHeight > this.end_drag_y + this.drag_elastica) ? this.drag_elastica : (this._y + this.offsetHeight - this.end_drag_y);
-				this._y = this.end_drag_y - this.offsetHeight;
-				this.current_y = this._y + offset - (Math.round(Math.pow(offset, 2)/this.drag_elastica));
-			}
-			else {
-				this.current_y = this._y;
-			}
-			if(offset) {
-				u.a.translate(this, this.current_x, this.current_y);
-			}
-		}
-		else {
-			this.swiped = false;
-			this.current_xps = 0;
-			this.current_yps = 0;
-			if(this._x < this.start_drag_x) {
-				this._x = this.start_drag_x;
-			}
-			else if(this._x + this.offsetWidth > this.end_drag_x) {
-				this._x = this.end_drag_x - this.offsetWidth;
-			}
-			if(this._y < this.start_drag_y) {
-				this._y = this.start_drag_y;
-			}
-			else if(this._y + this.offsetHeight > this.end_drag_y) { 
-				this._y = this.end_drag_y - this.offsetHeight;
-			}
-			u.a.translate(this, this._x, this._y);
-		}
-	}
-	if(fun(this[this.callback_moved])) {
-		this[this.callback_moved](event);
-	}
-}
-u.e._drop = function(event) {
-	u.e.resetEvents(this);
-	if(this.e_swipe && this.swiped) {
-		this.e_swipe_options.eventAction = "Swiped "+ this.swiped;
-		u.stats.event(this, this.e_swipe_options);
-		if(this.swiped == "left" && fun(this.swipedLeft)) {
-			this.swipedLeft(event);
-		}
-		else if(this.swiped == "right" && fun(this.swipedRight)) {
-			this.swipedRight(event);
-		}
-		else if(this.swiped == "down" && fun(this.swipedDown)) {
-			this.swipedDown(event);
-		}
-		else if(this.swiped == "up" && fun(this.swipedUp)) {
-			this.swipedUp(event);
-		}
-	}
-	else if(!this.drag_strict && !this.locked) {
-		this.current_x = Math.round(this._x + (this.current_xps/2));
-		this.current_y = Math.round(this._y + (this.current_yps/2));
-		if(this.only_vertical || this.current_x < this.start_drag_x) {
-			this.current_x = this.start_drag_x;
-		}
-		else if(this.current_x + this.offsetWidth > this.end_drag_x) {
-			this.current_x = this.end_drag_x - this.offsetWidth;
-		}
-		if(this.only_horizontal || this.current_y < this.start_drag_y) {
-			this.current_y = this.start_drag_y;
-		}
-		else if(this.current_y + this.offsetHeight > this.end_drag_y) {
-			this.current_y = this.end_drag_y - this.offsetHeight;
-		}
-		this.transitioned = function() {
-			if(fun(this.projected)) {
-				this.projected(event);
-			}
-		}
-		if(this.current_xps || this.current_yps) {
-			u.a.transition(this, "all 1s cubic-bezier(0,0,0.25,1)");
-		}
-		else {
-			u.a.transition(this, "none");
-		}
-		u.a.translate(this, this.current_x, this.current_y);
-	}
-	if(this.e_drag && !this.e_swipe) {
-		this.e_drag_options.eventAction = u.stringOr(this.e_drag_options.eventAction, "Dropped");
-		u.stats.event(this, this.e_drag_options);
-	}
-	if(fun(this[this.callback_dropped])) {
-		this[this.callback_dropped](event);
-	}
-}
-u.e._dropOut = function(event) {
-	this._drop_out_id = u.randomString();
-	document["_DroppedOutNode" + this._drop_out_id] = this;
-	eval('document["_DroppedOutMove' + this._drop_out_id + '"] = function(event) {document["_DroppedOutNode' + this._drop_out_id + '"]._dropOutDrag(event);}');
-	eval('document["_DroppedOutOver' + this._drop_out_id + '"] = function(event) {u.e.removeEvent(document, "mousemove", document["_DroppedOutMove' + this._drop_out_id + '"]);u.e.removeEvent(document, "mouseup", document["_DroppedOutEnd' + this._drop_out_id + '"]);u.e.removeEvent(document["_DroppedOutNode' + this._drop_out_id + '"], "mouseover", document["_DroppedOutOver' + this._drop_out_id + '"]);}');
-	eval('document["_DroppedOutEnd' + this._drop_out_id + '"] = function(event) {u.e.removeEvent(document, "mousemove", document["_DroppedOutMove' + this._drop_out_id + '"]);u.e.removeEvent(document, "mouseup", document["_DroppedOutEnd' + this._drop_out_id + '"]);u.e.removeEvent(document["_DroppedOutNode' + this._drop_out_id + '"], "mouseover", document["_DroppedOutOver' + this._drop_out_id + '"]);document["_DroppedOutNode' + this._drop_out_id + '"]._dropOutDrop(event);}');
-	u.e.addEvent(document, "mousemove", document["_DroppedOutMove" + this._drop_out_id]);
-	u.e.addEvent(this, "mouseover", document["_DroppedOutOver" + this._drop_out_id]);
-	u.e.addEvent(document, "mouseup", document["_DroppedOutEnd" + this._drop_out_id]);
-}
-u.e._cancelPick = function(event) {
-	u.e.resetDragEvents(this);
-	if(fun(this.pickCancelled)) {
-		this.pickCancelled(event);
-	}
-}
-u.e.setDragBoundaries = function(node, boundaries) {
-	if((boundaries.constructor && boundaries.constructor.toString().match("Array")) || (boundaries.scopeName && boundaries.scopeName != "HTML")) {
-		node.start_drag_x = Number(boundaries[0]);
-		node.start_drag_y = Number(boundaries[1]);
-		node.end_drag_x = Number(boundaries[2]);
-		node.end_drag_y = Number(boundaries[3]);
-	}
-	else if((boundaries.constructor && boundaries.constructor.toString().match("HTML")) || (boundaries.scopeName && boundaries.scopeName == "HTML")) {
-		if(node.drag_overflow == "scroll") {
-			node.start_drag_x = node.offsetWidth > boundaries.offsetWidth ? boundaries.offsetWidth - node.offsetWidth : 0;
-			node.start_drag_y = node.offsetHeight > boundaries.offsetHeight ? boundaries.offsetHeight - node.offsetHeight : 0;
-			node.end_drag_x = node.offsetWidth > boundaries.offsetWidth ? node.offsetWidth : boundaries.offsetWidth;
-			node.end_drag_y = node.offsetHeight > boundaries.offsetHeight ? node.offsetHeight : boundaries.offsetHeight;
-		}
-		else {
-			node.start_drag_x = u.absX(boundaries) - u.absX(node);
-			node.start_drag_y = u.absY(boundaries) - u.absY(node);
-			node.end_drag_x = node.start_drag_x + boundaries.offsetWidth;
-			node.end_drag_y = node.start_drag_y + boundaries.offsetHeight;
-		}
-	}
-	if(node.show_bounds) {
-		var debug_bounds = u.ae(document.body, "div", {"class":"debug_bounds"})
-		debug_bounds.style.position = "absolute";
-		debug_bounds.style.background = "red"
-		debug_bounds.style.left = (u.absX(node) + node.start_drag_x - 1) + "px";
-		debug_bounds.style.top = (u.absY(node) + node.start_drag_y - 1) + "px";
-		debug_bounds.style.width = (node.end_drag_x - node.start_drag_x) + "px";
-		debug_bounds.style.height = (node.end_drag_y - node.start_drag_y) + "px";
-		debug_bounds.style.border = "1px solid white";
-		debug_bounds.style.zIndex = 9999;
-		debug_bounds.style.opacity = .5;
-		if(document.readyState && document.readyState == "interactive") {
-			debug_bounds.innerHTML = "WARNING - injected on DOMLoaded"; 
-		}
-		u.bug("node: ", node, " in (" + u.absX(node) + "," + u.absY(node) + "), (" + (u.absX(node)+node.offsetWidth) + "," + (u.absY(node)+node.offsetHeight) +")");
-		u.bug("boundaries: (" + node.start_drag_x + "," + node.start_drag_y + "), (" + node.end_drag_x + ", " + node.end_drag_y + ")");
-	}
-	node._x = node._x ? node._x : 0;
-	node._y = node._y ? node._y : 0;
-	if(node.drag_overflow == "scroll" && (boundaries.constructor && boundaries.constructor.toString().match("HTML")) || (boundaries.scopeName && boundaries.scopeName == "HTML")) {
-		node.locked = ((node.end_drag_x - node.start_drag_x <= boundaries.offsetWidth) && (node.end_drag_y - node.start_drag_y <= boundaries.offsetHeight));
-		node.only_vertical = (node.vertical_lock || (!node.locked && node.end_drag_x - node.start_drag_x <= boundaries.offsetWidth));
-		node.only_horizontal = (node.horizontal_lock || (!node.locked && node.end_drag_y - node.start_drag_y <= boundaries.offsetHeight));
-	}
-	else {
-		node.locked = ((node.end_drag_x - node.start_drag_x == node.offsetWidth) && (node.end_drag_y - node.start_drag_y == node.offsetHeight));
-		node.only_vertical = (node.vertical_lock || (!node.locked && node.end_drag_x - node.start_drag_x == node.offsetWidth));
-		node.only_horizontal = (node.horizontal_lock || (!node.locked && node.end_drag_y - node.start_drag_y == node.offsetHeight));
-	}
-}
-u.e.setDragPosition = function(node, x, y) {
-	node.current_xps = 0;
-	node.current_yps = 0;
-	node._x = x;
-	node._y = y;
-	u.a.translate(node, node._x, node._y);
-	if(fun(node[node.callback_moved])) {
-		node[node.callback_moved](event);
-	}
-}
-u.e.swipe = function(node, boundaries, _options) {
-	node.e_swipe_options = _options ? _options : {};
-	node.e_swipe = true;
-	u.e.drag(node, boundaries, _options);
-}
-
-
 /*u-sharing.js*/
 u.injectSharing = function(node) {
 	node.sharing = u.ae(node, "div", {"class":"sharing"});
@@ -8186,59 +8158,6 @@ u.injectSharing = function(node) {
 }
 
 
-/*u-checkmark.js*/
-u.addCheckmark = function(node) {
-	node.checkmark = u.svg({
-		"name":"checkmark",
-		"node":node,
-		"class":"checkmark "+(node.current_readstate ? "read" : "not_read"),
-		"width":17,
-		"height":17,
-		"shapes":[
-			{
-				"type": "line",
-				"x1": 2,
-				"y1": 8,
-				"x2": 7,
-				"y2": 15
-			},
-			{
-				"type": "line",
-				"x1": 6,
-				"y1": 15,
-				"x2": 12,
-				"y2": 2
-			}
-		]
-	});
-	node.checkmark.hint_txt = (node.current_readstate ? (u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", node.current_readstate)) : u.txt["readstate-not_read"]),
-	node.checkmark.node = node;
-	u.e.hover(node.checkmark);
-	node.checkmark.over = function(event) {
-		this.hint = u.ae(document.body, "div", {"class":"hint", "html":this.hint_txt});
-		u.ass(this.hint, {
-			"top":(u.absY(this.parentNode)+parseInt(u.gcs(this, "top"))+(Number(this.getAttribute("height")))) + "px",
-			"left":(u.absX(this.parentNode)+parseInt(u.gcs(this, "left"))+Number(this.getAttribute("width"))) + "px"
-		});
-	}
-	node.checkmark.out = function(event) {
-		if(this.hint) {
-			this.hint.parentNode.removeChild(this.hint);
-			delete this.hint;
-		}
-	}
-}
-u.removeCheckmark = function(node) {
-	if(node.checkmark.hint) {
-		node.checkmark.hint.parentNode.removeChild(node.checkmark.hint);
-	}
-	if(node.checkmark) {
-		node.checkmark.parentNode.removeChild(node.checkmark);
-		node.checkmark = false;
-	}
-}
-
-
 /*u-expandarrow.js*/
 u.addExpandArrow = function(node) {
 	if(node.collapsearrow) {
@@ -8350,8 +8269,8 @@ u.addNextArrow = function(node) {
 }
 
 
-/*i-comments.js*/
-Util.Objects["comments"] = new function() {
+/*m-comments.js*/
+Util.Modules["comments"] = new function() {
 	this.init = function(div) {
 		div.item_id = u.cv(div, "item_id");
 		div.list = u.qs("ul.comments", div);
@@ -8441,8 +8360,8 @@ Util.Objects["comments"] = new function() {
 }
 
 
-/*i-pagination.js*/
-Util.Objects["pagination"] = new function() {
+/*m-pagination.js*/
+Util.Modules["pagination"] = new function() {
 	this.init = function(pagination) {
 		if(pagination) {
 			u.ae(document.body, pagination);
@@ -8498,8 +8417,8 @@ Util.Objects["pagination"] = new function() {
 }
 
 
-/*i-article_list.js*/
-Util.Objects["articleList"] = new function() {
+/*m-article_list.js*/
+Util.Modules["articleList"] = new function() {
 	this.init = function(list) {
 		list.articles = u.qsa("li.article", list);
 		list.resized = function() {
@@ -8542,7 +8461,7 @@ Util.Objects["articleList"] = new function() {
 							node_y + node.offsetHeight > this.scroll_y + this.browser_h
 						)
 					) {
-						u.o.article.init(node);
+						u.m.article.init(node);
 						node.is_ready = true;
 					}
 				}
@@ -8592,12 +8511,11 @@ Util.Objects["articleList"] = new function() {
 }
 
 
-/*i-article_preview_list.js*/
-Util.Objects["articlePreviewList"] = new function() {
+/*m-article_preview_list.js*/
+Util.Modules["articlePreviewList"] = new function() {
 	this.init = function(list) {
 		list.articles = u.qsa("li.article", list);
 		list.initArticle = function(article) {
-			u.bug("initArticle", article);
 			article._a = u.qs("h3 a", article);
 			if(article._a) {
 				article._link = article._a.href ? article._a.href : article._a.url;
@@ -8809,15 +8727,322 @@ Util.Objects["articlePreviewList"] = new function() {
 }
 
 
-/*i-front.js*/
-Util.Objects["front"] = new function() {
+/*m-signup.js*/
+Util.Modules["signup"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
-			if(this.intro && !this.intro.is_small) {
-				u.ass(this.intro, {
-					"height": page.browser_h + "px",
-					"width": page.browser_w + "px"
-				});
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			var form_signup = u.qs("form.signup", this);
+			var place_holder = u.qs("div.articlebody .placeholder.signup", this);
+			if(form_signup && place_holder) {
+				place_holder.parentNode.replaceChild(form_signup, place_holder);
+			}
+			if(form_signup) {
+				u.f.init(form_signup);
+			}
+			form_signup.submitted = function() {
+				var data = this.getData();
+				this.is_submitting = true; 
+				u.ac(this, "submitting");
+				u.ac(this.actions["signup"], "disabled");
+				this.response = function(response, request_id) {
+					if (u.qs(".scene.verify", response)) {
+						u.bug(response);
+						scene.replaceScene(response);
+						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
+						u.h.navigate(url_actions, false, true);
+					}
+					else {
+						if (this.is_submitting) {
+							this.is_submitting = false; 
+							u.rc(this, "submitting");
+							u.rc(this.actions["signup"], "disabled");
+						}
+						if (this.error) {
+							this.error.parentNode.removeChild(this.error);
+						}
+						this.error = scene.showMessage(this, response);
+						u.ass(this.error, {
+							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
+							opacity:0
+						});
+						u.a.transition(this.error, "all .6s ease");
+						u.ass(this.error, {
+							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
+							opacity:1
+						});
+					}
+				}
+				u.request(this, this.action, {"data":data, "method":"POST"});
+			}
+			u.showScene(this);
+		}
+		scene.replaceScene = function(response) {
+			var current_scene = u.qs(".scene", page);
+			var new_scene = u.qs(".scene", response);
+			page.cN.replaceChild(new_scene, current_scene); 
+			u.init();
+			new_scene.ready();
+			return new_scene;
+		}
+		scene.showMessage = function(form, response) {
+			var new_error = (u.qs("p.errormessage", response) || u.qs("p.error", response));
+			var current_error = (u.qs("p.errormessage", form) || u.qs("p.error", form));
+			if (!current_error) {
+				u.ie(form, new_error);
+			}
+			else {
+				form.replaceChild(new_error, current_error);
+			}
+			return new_error;
+		}
+		page.cN.scene = scene;
+	}
+}
+
+
+/*m-verify.js*/
+Util.Modules["verify"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			var form_verify = u.qs("form.verify_code", this);
+			if(form_verify) {
+				u.f.init(form_verify);
+			}
+			form_verify.submitted = function() {
+				var data = this.getData();
+				this.is_submitting = true; 
+				u.ac(this, "submitting");
+				u.ac(this.actions["verify"], "disabled");
+				u.ac(this.actions["skip"], "disabled");
+				this.response = function(response, request_id) {
+					if (u.qs(".scene.login", response)) {
+						scene.replaceScene(response);
+						u.h.navigate("/login", false, true);
+					}
+					else if (u.qs(".scene.confirmed", response)) {
+						scene.replaceScene(response);
+						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
+						u.h.navigate(url_actions, false, true);
+					}
+					else {
+						if (this.is_submitting) {
+							this.is_submitting = false; 
+							u.rc(this, "submitting");
+							u.rc(this.actions["verify"], "disabled");
+							u.rc(this.actions["skip"], "disabled");
+						}
+						if (this.error) {
+							this.error.parentNode.removeChild(this.error);
+						}
+						this.error = scene.showMessage(this, response);
+						u.ass(this.error, {
+							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
+							opacity:0
+						});
+						u.a.transition(this.error, "all .6s ease");
+						u.ass(this.error, {
+							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
+							opacity:1
+						});
+					}
+				}
+				u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
+			}
+			u.showScene(this);
+		}
+		scene.replaceScene = function(response) {
+			var current_scene = u.qs(".scene", page);
+			var new_scene = u.qs(".scene", response);
+			page.cN.replaceChild(new_scene, current_scene); 
+			u.init();
+			new_scene.ready();
+			return new_scene;
+		}
+		scene.showMessage = function(form, response) {
+			var new_error = (u.qs("p.errormessage", response) || u.qs("p.error", response));
+			var current_error = (u.qs("p.errormessage", form) || u.qs("p.error", form));
+			if (!current_error) {
+				u.ie(form, new_error);
+			}
+			else {
+				form.replaceChild(new_error, current_error);
+			}
+			return new_error;
+		}
+		page.cN.scene = scene;
+	}
+}
+
+
+/*m-wishes.js*/
+Util.Modules["wishes"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+			u.bug("scene.resized:", this);
+			if(this.nodes && this.nodes.length && this.has_images) {
+				var text_width = this.nodes[0].offsetWidth - this.image_width;
+				for(i = 0; node = this.nodes[i]; i++) {
+					u.as(node.text_mask, "width", text_width+"px", false);
+				}
+			}
+			this.offsetHeight;
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			this.image_width = 250;
+			this.ul_wishes = u.qs("ul.wishes", this);
+			this.has_images = u.hc(this.ul_wishes, "images");
+			this.confirm_reserve_text = this.ul_wishes.getAttribute("data-confirm-reserve") || "Save";
+			this.nodes = u.qsa("li.item", this);
+			u.bug("this.nodes", this.nodes);
+			if(this.nodes.length) {
+				var text_width = this.nodes[0].offsetWidth - this.image_width;
+				var i, node;
+				for(i = 0; node = this.nodes[i]; i++) {
+					node.scene = this;
+					if(this.has_images) {
+						node.item_id = u.cv(node, "id");
+						node.image_format = u.cv(node, "format");
+						node.image_variant = u.cv(node, "variant");
+						node.image_mask = u.ae(node, "div", {"class":"image"});
+						node.text_mask = u.ae(node, "div", {"class":"text"});
+						u.as(node.text_mask, "width", text_width+"px", false);
+						if(node.image_format) {
+							u.as(node.image_mask, "backgroundImage", "url(/images/"+node.item_id+"/"+node.image_variant+"/"+this.image_width+"x."+node.image_format+")");
+						}
+						else {
+							u.as(node.image_mask, "backgroundImage", "url(/images/0/missing/"+this.image_width+"x.png)");
+						}
+						node._header = u.qs("h3", node);
+						if(node._header) {
+							u.ae(node.text_mask, node._header);
+						}
+						node._info = u.qs("dl.info", node);
+						if(node._info) {
+							u.ae(node.text_mask, node._info);
+						}
+						node._actions = u.qs("ul.actions", node);
+						if(node._actions) {
+							u.ae(node.text_mask, node._actions);
+						}
+						node._description = u.qs("div.description", node);
+						if(node._description) {
+							u.ae(node.text_mask, node._description);
+						}
+					}
+					node.reserve_form = u.qs("li.reserve form", node);
+					if(node.reserve_form) {
+						node.reserve_form.node = node;
+						u.f.init(node.reserve_form);
+						node.reserve_form.submitted = function() {
+							if(this.is_active) {
+								this.response = function(response) {
+									page.notify(response);
+									if(response.cms_status == "success") {
+										location.reload(true);
+									}
+								}
+								u.request(this, this.action, {"method":this.method, "data":this.getData()});
+							}
+							else {
+								this.actions["reserve"].value = this.node.scene.confirm_reserve_text;
+								u.ass(this.inputs["reserved"], {
+									"display":"block"
+								});
+								this.is_active = true;
+							}
+						}
+					}
+					node.li_unreserve = u.qs("li.unreserve", node);
+					node.form_unreserve = u.qs("li.unreserve form", node);
+					if(node.li_unreserve && node.form_unreserve) {
+						node.li_unreserve.confirmed = function() {
+							this.response = function(response) {
+								page.notify(response);
+								if(response.cms_status == "success") {
+									location.reload(true);
+								}
+							}
+							u.request(this, this.form.action, {"method":this.form.method, "data":this.form.getData()});
+						}
+					}
+				}
+			}
+			u.showScene(this);
+		}
+		page.cN.scene = scene;
+	}
+}
+
+
+/*m-columns.js*/
+Util.Modules["columns"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+			this.offsetHeight;
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			u.columns(this, [
+				{"c200": [
+					"div.article", 
+					"div.articles",
+					"div.related"
+				]},
+				{"c100": [
+					".search",
+					".categories"
+				]},
+				{"c300": [
+					"div.company"
+				]}
+			]);
+			u.showScene(this);
+		}
+		page.cN.scene = scene;
+	}
+}
+
+
+/*m-search.js*/
+Util.Modules["search"] = new function() {
+	this.init = function(div) {
+		div.form = u.qs("form", div);
+		if(div.form) {
+			u.f.init(div.form);
+		}
+	}
+}
+
+
+/*m-front.js*/
+Util.Modules["front"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+			if(this.intro) {
+				if(!this.intro.is_small) {
+					u.ass(this.intro, {
+						"height": page.browser_h + "px",
+						"width": page.browser_w + "px"
+					});
+				}
+				else {
+					var width = (this.intro.parentNode.offsetWidth - 100);
+					u.ass(this.intro, {
+						"height": (width / (540 / 350)) + "px",
+						"width": width + "px"
+					});
+				}
 			}
 			this.offsetHeight;
 		}
@@ -8827,12 +9052,12 @@ Util.Objects["front"] = new function() {
 			page.cN.scene = this;
 			this.fontsLoaded = function() {
 				u.columns(this, [
-					{"c200": [
+					{"c-main": [
 						"div.intro", 
 						"div.article", 
 						"div.news"
 					]},
-					{"c100": [
+					{"c-sidebar": [
 						".all_events",
 					]},
 					{"c300": [
@@ -9137,10 +9362,11 @@ Util.Objects["front"] = new function() {
 				if(this.show_full_intro) {
 					u.a.transition(this.intro, "all .5s ease-in-out");
 				}
+				var width = (this.intro.parentNode.offsetWidth - 100);
 				u.ass(this.intro, {
-					"width": "540px",
+					"width": width + "px",
 					"top": 0,
-					"height": "350px",
+					"height": (width / (540 / 350))+"px",
 					"left": "50px",
 					"border-radius":"5px",
 					"cursor":"zoom-in",
@@ -9208,7 +9434,6 @@ Util.Objects["front"] = new function() {
 			}
 		}
 		scene.showEvents = function() {
-			u.bug("showEvents")
 			this._events = u.qs("div.all_events", this);
 			if(this._events) {
 				this._events.scene = this;
@@ -9239,7 +9464,6 @@ Util.Objects["front"] = new function() {
 			}
 		}
 		scene.showNews = function() {
-			u.bug("showNews")
 			this._news = u.qs("div.news", this);
 			if(this._news) {
 				this._news.scene = this;
@@ -9275,8 +9499,8 @@ Util.Objects["front"] = new function() {
 }
 
 
-/*i-unsubscribe.js*/
-Util.Objects["unsubscribe"] = new function() {
+/*m-unsubscribe.js*/
+Util.Modules["unsubscribe"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -9289,8 +9513,8 @@ Util.Objects["unsubscribe"] = new function() {
 	}
 }
 
-/*i-contact.js*/
-Util.Objects["contact"] = new function() {
+/*m-contact.js*/
+Util.Modules["contact"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -9314,8 +9538,8 @@ Util.Objects["contact"] = new function() {
 	}
 }
 
-/*i-events.js*/
-Util.Objects["events"] = new function() {
+/*m-events.js*/
+Util.Modules["events"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 			this.offsetHeight;
@@ -9517,9 +9741,9 @@ Util.Objects["events"] = new function() {
 			var h3 = u.ae(day, u.qs("h3", event).cloneNode(true));
 			var h3_a = u.qs("a", h3);
 			h3.day = day;
-			var div_description = u.qs("div.description", event);
+			var div_description = u.qs("div.description p", event);
 			if(div_description) {
-				h3.description = u.text(div_description);
+				h3.description = div_description.innerHTML;
 			}
 			else {
 				h3.description = "N/A";
@@ -9565,8 +9789,8 @@ Util.Objects["events"] = new function() {
 	}
 }
 
-/*i-cart.js*/
-Util.Objects["cart"] = new function() {
+/*m-cart.js*/
+Util.Modules["cart"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -9616,7 +9840,7 @@ Util.Objects["cart"] = new function() {
 				}
 				var bn_delete = u.qs("ul.actions li.delete", node);
 				if(bn_delete) {
-					u.o.oneButtonForm.init(bn_delete);
+					u.m.oneButtonForm.init(bn_delete);
 					bn_delete.node = node;	
 					bn_delete.confirmed = function(response) {
 						if(response) {
@@ -9634,7 +9858,7 @@ Util.Objects["cart"] = new function() {
 		page.cN.scene = scene;
 	}
 }
-Util.Objects["checkout"] = new function() {
+Util.Modules["checkout"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -9659,7 +9883,7 @@ Util.Objects["checkout"] = new function() {
 		page.cN.scene = scene;
 	}
 }
-Util.Objects["shopProfile"] = new function() {
+Util.Modules["shopProfile"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -9676,7 +9900,7 @@ Util.Objects["shopProfile"] = new function() {
 		page.cN.scene = scene;
 	}
 }
-Util.Objects["shopAddress"] = new function() {
+Util.Modules["shopAddress"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -9694,8 +9918,8 @@ Util.Objects["shopAddress"] = new function() {
 }
 
 
-/*i-memberships.js*/
-Util.Objects["memberships"] = new function() {
+/*m-memberships.js*/
+Util.Modules["memberships"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 			if(this.membership_nodes) {
@@ -9848,8 +10072,8 @@ Util.Objects["memberships"] = new function() {
 }
 
 
-/*i-payment.js*/
-Util.Objects["payment"] = new function() {
+/*m-payment.js*/
+Util.Modules["payment"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -9866,8 +10090,8 @@ Util.Objects["payment"] = new function() {
 	}
 }
 
-/*i-payments.js*/
-Util.Objects["payments"] = new function() {
+/*m-payments.js*/
+Util.Modules["payments"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -9884,8 +10108,8 @@ Util.Objects["payments"] = new function() {
 	}
 }
 
-/*i-stripe.js*/
-Util.Objects["stripe"] = new function() {
+/*m-stripe.js*/
+Util.Modules["stripe"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -10001,8 +10225,106 @@ Util.Objects["stripe"] = new function() {
 	}
 }
 
-/*i-black.js*/
-Util.Objects["black"] = new function() {
+/*m-verify-maillist.js*/
+Util.Modules["verify_maillist"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			var form_verify = u.qs("form.verify_code", this);
+			if(form_verify) {
+				u.bug("init form")
+				u.f.init(form_verify);
+			}
+			u.showScene(this);
+		}
+		page.cN.scene = scene;
+	}
+}
+
+
+/*m-verify-shop.js*/
+Util.Modules["verify_shop"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			var form_verify = u.qs("form.verify_code", this);
+			if(form_verify) {
+				u.f.init(form_verify);
+			}
+			form_verify.submitted = function() {
+				var data = this.getData();
+				this.is_submitting = true; 
+				u.ac(this, "submitting");
+				u.ac(this.actions["verify"], "disabled");
+				u.ac(this.actions["skip"], "disabled");
+				this.response = function(response, request_id) {
+					if (u.qs(".scene.login", response)) {
+						scene.replaceScene(response);
+						u.h.navigate("/login", false, true);
+					}
+					else if (u.hc(u.qs(".scene", response), "confirmed|checkout|cart|shopReceipt")) {
+						scene.replaceScene(response);
+						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
+						u.h.navigate(url_actions, false, true);
+					}
+					else {
+						if (this.is_submitting) {
+							this.is_submitting = false; 
+							u.rc(this, "submitting");
+							u.rc(this.actions["verify"], "disabled");
+							u.rc(this.actions["skip"], "disabled");
+						}
+						if (this.error) {
+							this.error.parentNode.removeChild(this.error);
+						}
+						this.error = scene.showMessage(this, response);
+						u.ass(this.error, {
+							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
+							opacity:0
+						});
+						u.a.transition(this.error, "all .6s ease");
+						u.ass(this.error, {
+							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
+							opacity:1
+						});
+					}
+				}
+				u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
+			}
+			u.showScene(this);
+		}
+		scene.replaceScene = function(response) {
+			var current_scene = u.qs(".scene", page);
+			var new_scene = u.qs(".scene", response);
+			page.cN.replaceChild(new_scene, current_scene); 
+			u.init();
+			new_scene.ready();
+			return new_scene;
+		}
+		scene.showMessage = function(form, response) {
+			var new_error = (u.qs("p.errormessage", response) || u.qs("p.error", response));
+			var current_error = (u.qs("p.errormessage", form) || u.qs("p.error", form));
+			if (!current_error) {
+				u.ie(form, new_error);
+			}
+			else {
+				form.replaceChild(new_error, current_error);
+			}
+			return new_error;
+		}
+		page.cN.scene = scene;
+	}
+}
+
+
+/*m-black.js*/
+Util.Modules["black"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -10016,8 +10338,8 @@ Util.Objects["black"] = new function() {
 	}
 }
 
-/*i-frios.js*/
-Util.Objects["frios"] = new function() {
+/*m-frios.js*/
+Util.Modules["frios"] = new function() {
 	this.init = function(scene) {
 		u.txt["login_to_comment"] = '<a href="/login">Log ind</a> eller <a href="/memberships">opret en konto</a> for at tilføje kommentarer.';
 		u.txt["share"] = "Del denne side";
@@ -10128,421 +10450,17 @@ Util.Objects["frios"] = new function() {
 }
 
 
-/*i-verify-maillist.js*/
-Util.Objects["verify_maillist"] = new function() {
+/*m-corona.js*/
+Util.Modules["corona"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			var form_verify = u.qs("form.verify_code", this);
-			if(form_verify) {
-				u.bug("init form")
-				u.f.init(form_verify);
-			}
 			u.showScene(this);
+			page.resized();
 		}
 		page.cN.scene = scene;
 	}
 }
-
-
-/*i-verify-shop.js*/
-Util.Objects["verify_shop"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			var form_verify = u.qs("form.verify_code", this);
-			if(form_verify) {
-				u.f.init(form_verify);
-			}
-			form_verify.submitted = function() {
-				var data = this.getData();
-				this.is_submitting = true; 
-				u.ac(this, "submitting");
-				u.ac(this.actions["verify"], "disabled");
-				u.ac(this.actions["skip"], "disabled");
-				this.response = function(response, request_id) {
-					if (u.qs(".scene.login", response)) {
-						scene.replaceScene(response);
-						u.h.navigate("/login", false, true);
-					}
-					else if (u.hc(u.qs(".scene", response), "confirmed|checkout|cart|shopReceipt")) {
-						scene.replaceScene(response);
-						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
-						u.h.navigate(url_actions, false, true);
-					}
-					else {
-						if (this.is_submitting) {
-							this.is_submitting = false; 
-							u.rc(this, "submitting");
-							u.rc(this.actions["verify"], "disabled");
-							u.rc(this.actions["skip"], "disabled");
-						}
-						if (this.error) {
-							this.error.parentNode.removeChild(this.error);
-						}
-						this.error = scene.showMessage(this, response);
-						u.ass(this.error, {
-							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
-							opacity:0
-						});
-						u.a.transition(this.error, "all .6s ease");
-						u.ass(this.error, {
-							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
-							opacity:1
-						});
-					}
-				}
-				u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
-			}
-			u.showScene(this);
-		}
-		scene.replaceScene = function(response) {
-			var current_scene = u.qs(".scene", page);
-			var new_scene = u.qs(".scene", response);
-			page.cN.replaceChild(new_scene, current_scene); 
-			u.init();
-			new_scene.ready();
-			return new_scene;
-		}
-		scene.showMessage = function(form, response) {
-			var new_error = (u.qs("p.errormessage", response) || u.qs("p.error", response));
-			var current_error = (u.qs("p.errormessage", form) || u.qs("p.error", form));
-			if (!current_error) {
-				u.ie(form, new_error);
-			}
-			else {
-				form.replaceChild(new_error, current_error);
-			}
-			return new_error;
-		}
-		page.cN.scene = scene;
-	}
-}
-
-
-/*i-login.js*/
-Util.Objects["login"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			this._form = u.qs("form", this);
-			u.f.init(this._form);
-			this._form.inputs["username"].focus();
-			u.showScene(this);
-		}
-		page.cN.scene = scene;
-	}
-}
-
-
-/*i-scene.js*/
-Util.Objects["scene"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-			this.offsetHeight;
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			u.showScene(this);
-		}
-		page.cN.scene = scene;
-	}
-}
-
-
-/*i-columns.js*/
-Util.Objects["columns"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-			this.offsetHeight;
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			u.columns(this, [
-				{"c200": [
-					"div.article", 
-					"div.articles",
-					"div.related"
-				]},
-				{"c100": [
-					".search",
-					".categories"
-				]},
-				{"c300": [
-					"div.company"
-				]}
-			]);
-			u.showScene(this);
-		}
-		page.cN.scene = scene;
-	}
-}
-
-
-/*i-signup.js*/
-Util.Objects["signup"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			var form_signup = u.qs("form.signup", this);
-			var place_holder = u.qs("div.articlebody .placeholder.signup", this);
-			if(form_signup && place_holder) {
-				place_holder.parentNode.replaceChild(form_signup, place_holder);
-			}
-			if(form_signup) {
-				u.f.init(form_signup);
-			}
-			form_signup.submitted = function() {
-				var data = this.getData();
-				this.is_submitting = true; 
-				u.ac(this, "submitting");
-				u.ac(this.actions["signup"], "disabled");
-				this.response = function(response, request_id) {
-					if (u.qs(".scene.verify", response)) {
-						u.bug(response);
-						scene.replaceScene(response);
-						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
-						u.h.navigate(url_actions, false, true);
-					}
-					else {
-						if (this.is_submitting) {
-							this.is_submitting = false; 
-							u.rc(this, "submitting");
-							u.rc(this.actions["signup"], "disabled");
-						}
-						if (this.error) {
-							this.error.parentNode.removeChild(this.error);
-						}
-						this.error = scene.showMessage(this, response);
-						u.ass(this.error, {
-							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
-							opacity:0
-						});
-						u.a.transition(this.error, "all .6s ease");
-						u.ass(this.error, {
-							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
-							opacity:1
-						});
-					}
-				}
-				u.request(this, this.action, {"data":data, "method":"POST"});
-			}
-			u.showScene(this);
-		}
-		scene.replaceScene = function(response) {
-			var current_scene = u.qs(".scene", page);
-			var new_scene = u.qs(".scene", response);
-			page.cN.replaceChild(new_scene, current_scene); 
-			u.init();
-			new_scene.ready();
-			return new_scene;
-		}
-		scene.showMessage = function(form, response) {
-			var new_error = (u.qs("p.errormessage", response) || u.qs("p.error", response));
-			var current_error = (u.qs("p.errormessage", form) || u.qs("p.error", form));
-			if (!current_error) {
-				u.ie(form, new_error);
-			}
-			else {
-				form.replaceChild(new_error, current_error);
-			}
-			return new_error;
-		}
-		page.cN.scene = scene;
-	}
-}
-
-
-/*i-verify.js*/
-Util.Objects["verify"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			var form_verify = u.qs("form.verify_code", this);
-			if(form_verify) {
-				u.f.init(form_verify);
-			}
-			form_verify.submitted = function() {
-				var data = this.getData();
-				this.is_submitting = true; 
-				u.ac(this, "submitting");
-				u.ac(this.actions["verify"], "disabled");
-				u.ac(this.actions["skip"], "disabled");
-				this.response = function(response, request_id) {
-					if (u.qs(".scene.login", response)) {
-						scene.replaceScene(response);
-						u.h.navigate("/login", false, true);
-					}
-					else if (u.qs(".scene.confirmed", response)) {
-						scene.replaceScene(response);
-						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
-						u.h.navigate(url_actions, false, true);
-					}
-					else {
-						if (this.is_submitting) {
-							this.is_submitting = false; 
-							u.rc(this, "submitting");
-							u.rc(this.actions["verify"], "disabled");
-							u.rc(this.actions["skip"], "disabled");
-						}
-						if (this.error) {
-							this.error.parentNode.removeChild(this.error);
-						}
-						this.error = scene.showMessage(this, response);
-						u.ass(this.error, {
-							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
-							opacity:0
-						});
-						u.a.transition(this.error, "all .6s ease");
-						u.ass(this.error, {
-							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
-							opacity:1
-						});
-					}
-				}
-				u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
-			}
-			u.showScene(this);
-		}
-		scene.replaceScene = function(response) {
-			var current_scene = u.qs(".scene", page);
-			var new_scene = u.qs(".scene", response);
-			page.cN.replaceChild(new_scene, current_scene); 
-			u.init();
-			new_scene.ready();
-			return new_scene;
-		}
-		scene.showMessage = function(form, response) {
-			var new_error = (u.qs("p.errormessage", response) || u.qs("p.error", response));
-			var current_error = (u.qs("p.errormessage", form) || u.qs("p.error", form));
-			if (!current_error) {
-				u.ie(form, new_error);
-			}
-			else {
-				form.replaceChild(new_error, current_error);
-			}
-			return new_error;
-		}
-		page.cN.scene = scene;
-	}
-}
-
-
-/*i-wishes.js*/
-Util.Objects["wishes"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-			u.bug("scene.resized:", this);
-			if(this.nodes && this.nodes.length && this.has_images) {
-				var text_width = this.nodes[0].offsetWidth - this.image_width;
-				for(i = 0; node = this.nodes[i]; i++) {
-					u.as(node.text_mask, "width", text_width+"px", false);
-				}
-			}
-			this.offsetHeight;
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			this.image_width = 250;
-			this.ul_wishes = u.qs("ul.wishes", this);
-			this.has_images = u.hc(this.ul_wishes, "images");
-			this.confirm_reserve_text = this.ul_wishes.getAttribute("data-confirm-reserve") || "Save";
-			this.nodes = u.qsa("li.item", this);
-			u.bug("this.nodes", this.nodes);
-			if(this.nodes.length) {
-				var text_width = this.nodes[0].offsetWidth - this.image_width;
-				var i, node;
-				for(i = 0; node = this.nodes[i]; i++) {
-					node.scene = this;
-					if(this.has_images) {
-						node.item_id = u.cv(node, "id");
-						node.image_format = u.cv(node, "format");
-						node.image_variant = u.cv(node, "variant");
-						node.image_mask = u.ae(node, "div", {"class":"image"});
-						node.text_mask = u.ae(node, "div", {"class":"text"});
-						u.as(node.text_mask, "width", text_width+"px", false);
-						if(node.image_format) {
-							u.as(node.image_mask, "backgroundImage", "url(/images/"+node.item_id+"/"+node.image_variant+"/"+this.image_width+"x."+node.image_format+")");
-						}
-						else {
-							u.as(node.image_mask, "backgroundImage", "url(/images/0/missing/"+this.image_width+"x.png)");
-						}
-						node._header = u.qs("h3", node);
-						if(node._header) {
-							u.ae(node.text_mask, node._header);
-						}
-						node._info = u.qs("dl.info", node);
-						if(node._info) {
-							u.ae(node.text_mask, node._info);
-						}
-						node._actions = u.qs("ul.actions", node);
-						if(node._actions) {
-							u.ae(node.text_mask, node._actions);
-						}
-						node._description = u.qs("div.description", node);
-						if(node._description) {
-							u.ae(node.text_mask, node._description);
-						}
-					}
-					node.reserve_form = u.qs("li.reserve form", node);
-					if(node.reserve_form) {
-						node.reserve_form.node = node;
-						u.f.init(node.reserve_form);
-						node.reserve_form.submitted = function() {
-							if(this.is_active) {
-								this.response = function(response) {
-									page.notify(response);
-									if(response.cms_status == "success") {
-										location.reload(true);
-									}
-								}
-								u.request(this, this.action, {"method":this.method, "data":this.getData()});
-							}
-							else {
-								this.actions["reserve"].value = this.node.scene.confirm_reserve_text;
-								u.ass(this.inputs["reserved"], {
-									"display":"block"
-								});
-								this.is_active = true;
-							}
-						}
-					}
-					node.li_unreserve = u.qs("li.unreserve", node);
-					node.form_unreserve = u.qs("li.unreserve form", node);
-					if(node.li_unreserve && node.form_unreserve) {
-						node.li_unreserve.confirmed = function() {
-							this.response = function(response) {
-								page.notify(response);
-								if(response.cms_status == "success") {
-									location.reload(true);
-								}
-							}
-							u.request(this, this.form.action, {"method":this.form.method, "data":this.form.getData()});
-						}
-					}
-				}
-			}
-			u.showScene(this);
-		}
-		page.cN.scene = scene;
-	}
-}
-

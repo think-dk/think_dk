@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-03-03 11:16:19
+asset-builder @ 2020-03-22 20:08:26
 */
 
 /*seg_mobile_include.css*/
@@ -7,7 +7,7 @@ asset-builder @ 2020-03-03 11:16:19
 /*seg_mobile.css*/
 /*
 MIT license, 2002-2019 parentNode.dk
-asset-builder @ 2020-02-25 17:59:22
+asset-builder @ 2020-03-19 20:44:16
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -302,95 +302,22 @@ div.field div.hint {z-index: 9; border: 1px solid #007633; color: #007633; backg
 div.field.focus div.hint {display: block;}
 
 
-/*s-form.css*/
-form {}
-fieldset {border: none; display: block;}
-div.field {padding: 0 8px 10px; position: relative; font-size: 0;}
-div.field label {display: block; font-size: 13px;}
-input,
-textarea {-webkit-appearance: none; border-radius: 0;}
-.boolean input,
-.checkbox input {-webkit-appearance: checkbox;}
-.radiobuttons input {-webkit-appearance: radio;}
-div.field input,
-div.field select,
-div.field textarea {color: #333333; background: #ffffff; border: 1px solid #dcdcdc; margin: 0; outline: none; position: relative; z-index: 10;}
-div.field input {width: 100%; height: 24px;}
-div.field select {width: 100%; height: 33px; color: #333333;}
-div.field textarea {width: 100%; height: 100px; overflow: auto;}
-div.field.checkbox,
-div.field.boolean {}
-div.field.checkbox input,
-div.field.boolean input {display: inline; vertical-align: top; width: auto; height: auto; padding: 0; margin: 0 5px 0 3px; border: 0;}
-div.field.checkbox label,
-div.field.boolean label {width: auto; display: inline; vertical-align: top; display: inline-block; vertical-align: top; font-size: 13px; line-height: 1em;}
-div.field.radiobuttons {}
-div.field.radiobuttons label {display: block; font-size: 13px; line-height: 1em; padding: 0 0 8px 3px;}
-div.field.radiobuttons div.item {padding: 0 0 5px;}
-div.field.radiobuttons div.item input {width: auto; height: auto; padding: 0; margin: 0px 5px 0 3px; border: 0;}
-div.field.radiobuttons div.item label {font-size: 13px; line-height: 1em; display: inline; vertical-align: top; }
-div.field.focus input,
-div.field.focus select,
-div.field.focus textarea {border: 1px solid #5c5c5c;}
-div.field.radiobuttons.focus input,
-div.field.checkbox.focus input,
-div.field.boolean.focus input {border: none;}
-div.field input.default,
-div.field select.default,
-div.field textarea.default {color: #aaaaaa;}
-div.field.required .indicator {position: absolute; top: 4px; left: 435px; width: 25px; height: 25px; 
-	background: transparent url(../assets/parentnode-skin-default/img/bg_icons.png) no-repeat 0 -292px;
-}
-div.field.text.required .indicator {background-position: 0 -296px;}
-div.field.correct .indicator {background-position: 2px -320px;}
-div.field.text.correct .indicator {background-position: 2px -321px;}
-div.field.error input,
-div.field.error textarea {}
-div.field.error select {}
-div.field.error input,
-div.field.error select,
-div.field.error textarea {border: 3px solid #a62300;}
-div.field.radiobuttons.error input,
-div.field.checkbox.error input,
-div.field.boolean.error input {border: none;}
-ul.actions {overflow: hidden;}
-ul.actions li,
-#content ul.actions li {width: auto; height: auto; float: left;	padding: 0 10px 10px 0;}
-ul.actions a {display: block; height: 14px; padding: 6px 0 8px;}
-#content ul.actions input.button {width: auto; height: 28px; padding: 3px 12px;}
-ul.actions a.button,
-#content ul.actions a.button {display: block; text-decoration: none; height: 14px; padding: 6px 12px 8px;}
-ul.actions input.button,
-ul.actions a.button,
-#content ul.actions a.button {background-color: #dedede; color: #333333; border: none; cursor: pointer; font-size: 14px;}
-ul.actions input.button:active,
-ul.actions a.button:active,
-#content ul.actions a.button:active {background-color: #bebebe;}
-ul.actions input.button.primary,
-ul.actions a.button.primary,
-#content ul.actions a.button.primary {background-color: #8c9399; color: #ffffff;;}
-ul.actions input.button.primary:active,
-ul.actions a.button.primary:active,
-#content ul.actions a.button.primary:active {background-color: #313942;}
-ul.actions input.button.secondary,
-ul.actions a.button.secondary,
-#content ul.actions a.button.secondary {background-color: #8c9399; color: #ffffff;}
-ul.actions input.button.secondary:active,
-ul.actions a.button.secondary:active,
-#content ul.actions a.button.secondary:active {background-color: #313942;}
-ul.actions input.button.disabled,
-ul.actions input.button.disabled:active,
-ul.actions a.button.disabled,
-ul.actions a.button.disabled:active,
-#content ul.actions a.button.disabled,
-#content ul.actions a.button.disabled:active {cursor: default !important; color: #aaaaaa !important; background-color: #eeeeee !important;}
-div.field div.help {position: absolute; left: 455px; top: 6px; width: 200px;}
-div.field div.error,
-div.field div.hint {display: none; padding: 5px; font-size: 12px; margin-top: -3px;}
-div.field div.error {border: 1px solid #a62300; color: #a62300; background: #ffddd5;}
-div.field.error div.error {display: block;}
-div.field div.hint {z-index: 9; border: 1px solid #007633; color: #007633; background: #d0f4e0;}
-div.field.focus div.hint {display: block;}
+/*s-articles.css*/
+#content .scene ul.articles {padding: 0;}
+#content .scene ul.articles li.article {padding: 10px 0 0; border-top: 1px solid #dedede;}
+#content .scene ul.articles li.article ul.tags {padding-bottom: 10px;}
+
+
+/*s-comments.css*/
+#content .scene div.comments {padding-bottom: 15px; padding-top: 20px;}
+#content .scene div.comments h2 {font-size: 16px; padding-bottom: 15px;}
+#content .scene div.comments p {color: #bbbbbb; font-size: 13px; padding-bottom: 15px;}
+#content .scene div.comments ul.comments {padding: 0; margin: 0;}
+#content .scene div.comments ul.comments li.comment {padding-bottom: 10px; padding-left: 0;}
+#content .scene div.comments ul.comments li.comment ul.info {padding-bottom: 0; margin: 0; list-style: none; display: block;}
+#content .scene div.comments ul.comments li.comment ul.info li {display: inline-block; vertical-align: top; font-size: 12px; padding-bottom: 0; padding-left: 0;}
+#content .scene div.comments ul.comments li.comment p.comment {padding-bottom: 15px; font-size: 13px;}
+#content .scene div.comments .field {padding-bottom: 10px;}
 
 
 /*s-pagination.css*/
@@ -406,16 +333,15 @@ div.field.focus div.hint {display: block;}
 #content .scene .pagination .previous a:active {background-color: #313942; color: #ffffff;}
 #content .scene .pagination li.pages {display: none;}
 
-/*s-todos.css*/
-#content .scene ul.todos dl.info {padding-bottom: 10px;}
-#content .scene ul.todos > li ul.actions {display: none;}
-
 /*s-wishlist.css*/
 #content .scene ul.wishlists {padding-left: 10px; padding-right: 10px;}
 #content .scene ul.wishes dl.info dt {display: none;}
 #content .scene ul.wishes dl.info dd {padding-left: 0;}
 #content .scene ul.wishes > li ul.actions {display: none;}
 
+
+/*s-search.css*/
+#content div.search {display: none;}
 
 /*s-pages.css*/
 #content .scene ul.info {display: none;}
@@ -440,13 +366,22 @@ body {}
 #header .logo {color: #34cc3d;}
 #navigation ul {border-color: #ccdbcd;}
 #navigation ul li {color: #34cc3d;}
+.front #header .logo,
+#navigation ul li.selected,
+#navigation ul li.path {color: #26962d;}
 #content .scene a {color: #34cc3d;}
 #content .scene hr {border-color: #ccdbcd;}
-#content ul.actions input.button.primary,
-#content ul.actions a.button.primary {background-color: #34cc3d;}
-#content ul.actions input.button.primary:active,
-#content ul.actions a.button.primary:active {background-color: #26962d;}
-#content .scene div.categories ul.tags li.selected a {color: #26962d;}
+ul.actions input.button.primary,
+ul.actions a.button.primary,
+#content ul.actions a.button.primary,
+#content .scene .pagination .next a,
+#content .scene .pagination .previous a {background-color: #34cc3d; color: #ffffff;}
+ul.actions input.button.primary:active,
+ul.actions a.button.primary:active,
+#content ul.actions a.button.primary:active,
+#content .scene .pagination .next a:active,
+#content .scene .pagination .previous a:active {background-color: #26962d;}
+#content .scene div.categories ul.tags li.selected {background-color: #26962d;}
 #content .scene h3,
 #content .scene h4,
 #content .scene h5,
@@ -456,12 +391,4 @@ body {}
 #content .scene dd {color: #777777;}
 #footer {border-color: #ccdbcd;}
 #footer p {color: #26962d;}
-.front #header .logo,
-.about #navigation ul li.about,
-.contact #navigation ul li.contact,
-.bulletin #navigation ul li.bulletin,
-.posts #navigation ul li.latest,
-.membership #navigation ul li.membership,
-.events #navigation ul li.events,
-.services #navigation ul li.services {color: #26962d;}
 

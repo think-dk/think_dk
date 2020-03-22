@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-03-03 11:16:19
+asset-builder @ 2020-03-22 20:08:26
 */
 
 /*seg_desktop_light_include.css*/
@@ -7,7 +7,7 @@ asset-builder @ 2020-03-03 11:16:19
 /*seg_desktop_light.css*/
 /*
 MIT license, 2002-2019 parentNode.dk
-asset-builder @ 2020-02-25 17:59:22
+asset-builder @ 2020-03-19 20:44:16
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -337,6 +337,14 @@ ul.actions a.button.disabled:hover,
 #content .scene .pagination .previous a:hover {background-color: #313942; color: #ffffff;}
 
 
+/*s-articles.css*/
+#content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #dedede; position: relative;}
+#content .scene ul.articles li.article ul.tags {padding-bottom: 15px;}
+#content .scene ul.articles li.article h3 {font-size: 22px; line-height: 1em; padding-bottom: 15px;
+	font-family: "PT Serif", Times, serif;
+}
+
+
 /*s-comments.css*/
 #content .scene div.comments {padding-bottom: 15px; padding-top: 20px;}
 #content .scene div.comments h2 {font-size: 20px; padding-bottom: 15px;}
@@ -346,83 +354,6 @@ ul.actions a.button.disabled:hover,
 #content .scene div.comments ul.comments li.comment ul.info li {display: inline-block; vertical-align: top; font-size: 12px; padding-bottom: 0; padding-left: 0;}
 #content .scene div.comments ul.comments li.comment p.comment {padding-bottom: 15px; font-size: 13px;}
 #content .scene div.comments .field {padding-bottom: 10px;}
-
-
-/*s-form.css*/
-form {}
-fieldset {border: none; display: block;}
-div.field {padding: 0 70px 15px; position: relative; font-size: 0;}
-div.field label {font-size: 14px; display: block;}
-input,
-textarea {-webkit-appearance: none; border-radius: 0;}
-.boolean input,
-.checkbox input {-webkit-appearance: checkbox;}
-.radiobuttons input {-webkit-appearance: radio;}
-div.field input,
-div.field select,
-div.field textarea {color: #333333; background: #ffffff; border: 1px solid #dcdcdc; outline: none; position: relative; z-index: 1;}
-div.field input {width: 366px; height: 24px; padding: 2px 6px;}
-div.field select {width: 381px; height: 33px; color: #333333; padding: 5px 3px 2px 2px;}
-div.field select option {padding: 5px 3px 2px 6px;}
-div.field textarea {width: 372px; height: 100px; overflow: auto; padding: 6px 0 2px 6px; }
-div.field textarea.autoexpand {width: 366px; padding: 6px 6px 2px; overflow: hidden;}
-div.field.checkbox,
-div.field.boolean {}
-div.field.checkbox input,
-div.field.boolean input {display: inline; vertical-align: top; width: auto; height: auto; padding: 0; margin: 0 10px 0 3px; border: 0;}
-div.field.checkbox label,
-div.field.boolean label {width: auto; display: inline; vertical-align: top; font-size: 14px; line-height: 1em;}
-div.field.radiobuttons {}
-div.field.radiobuttons label {display: block; font-size: 14px; line-height: 1em; padding: 0 0 8px 3px;}
-div.field.radiobuttons div.item {padding: 0 0 5px;}
-div.field.radiobuttons div.item input {width: auto; height: auto; padding: 0; margin: 0px 10px 0 3px; border: 0;}
-div.field.radiobuttons div.item label {font-size: 14px; line-height: 1em; display: inline; vertical-align: top; }
-div.field.focus input,
-div.field.focus textarea {}
-div.field.focus select {padding: 3px 3px 2px 0px;}
-div.field.focus input,
-div.field.focus select,
-div.field.focus textarea {border-color: #5c5c5c;}
-div.field.radiobuttons.focus input,
-div.field.checkbox.focus input,
-div.field.boolean.focus input {margin: 0px 10px 0 3px; border: none;}
-div.field .indicator {display: none;}
-div.field.required .indicator {color: #df0000; display: inline;}
-div.field.error input,
-div.field.error textarea {}
-div.field.error select {padding: 3px 3px 2px 0px;}
-div.field.error input,
-div.field.error select,
-div.field.error textarea {border-color: #a62300;}
-div.field.radio_buttons.error input,
-div.field.checkbox.error input,
-div.field.boolean.error input {margin: 0px 10px 0 3px; border: none;}
-ul.actions {overflow: hidden;}
-ul.actions li,
-#content ul.actions li {width: auto; height: auto; float: left;	padding: 0 10px 10px 0;}
-ul.actions input.button {width: auto; height: 30px; line-height: 1em; padding: 3px 12px;}
-ul.actions a {display: block; line-height: 18px; padding: 6px 0; height: 18px;}
-ul.actions a.button,
-#content ul.actions a.button {text-decoration: none; display: block; line-height: 18px; padding: 6px 12px; height: 18px;}
-ul.actions input.button,
-ul.actions a.button,
-#content ul.actions a.button {background-color: #dedede; color: #333333; border: none; cursor: pointer; font-size: 14px;}
-ul.actions input.button.primary,
-ul.actions a.button.primary,
-#content ul.actions a.button.primary {background-color: #8c9399; color: #ffffff;}
-ul.actions input.button.secondary,
-ul.actions a.button.secondary,
-#content ul.actions a.button.secondary {background-color: #8c9399; color: #ffffff;}
-ul.actions input.button.disabled
-ul.actions a.button.disabled,
-#content ul.actions a.button.disabled {cursor: default !important; color: #aaaaaa !important; background-color: #eeeeee !important;}
-div.field div.help {position: absolute; left: 455px; top: 6px; width: 200px;}
-div.field div.error,
-div.field div.hint {display: none; padding: 5px; font-size: 12px; margin-top: -3px;}
-div.field div.error {border: 1px solid #a62300; color: #a62300; background: #ffddd5;}
-div.field.error div.error {display: block;}
-div.field div.hint {z-index: 9; border: 1px solid #007633; color: #007633; background: #d0f4e0;}
-div.field.focus div.hint {display: block;}
 
 
 /*s-pagination.css*/
@@ -443,28 +374,8 @@ div.field.focus div.hint {display: block;}
 #content .scene ul.wishes dl.info dd {padding-left: 0;}
 #content .scene ul.wishes > li ul.actions {display: none;}
 
-/*s-used_by.css*/
-#content .scene .usedby {min-width: 600px; margin-top: 20px; margin-bottom: -50px; padding-top: 5px; border-top: 1px solid #bbbbbb;}
-#content .scene .usedby h2 {display: none; text-align: center; padding-bottom: 5px; font-size: 11px; width: auto; color: #bbbbbb; text-transform: uppercase;
-	font-family: "OpenSans", Verdana, Arial, sans-serif;
-}
-#content .scene .usedby ul {padding-bottom: 0;}
-#content .scene .usedby ul li {display: inline-block; width: 20%; background-position: center center; background-repeat: no-repeat; height: 150px; text-indent: -9999px;}
-#content .scene .usedby ul li.metro {background-image: url(../assets/parentnode-skin-default/img/logos/metro.png); background-size: 70px auto;}
-#content .scene .usedby ul li.soulland {background-image: url(../assets/parentnode-skin-default/img/logos/soulland.png); background-size: 70px auto;}
-#content .scene .usedby ul li.cphpix {background-image: url(../assets/parentnode-skin-default/img/logos/cphpix.png);}
-#content .scene .usedby ul li.tuborg {background-image: url(../assets/parentnode-skin-default/img/logos/tuborg.png);}
-#content .scene .usedby ul li.distortion {background-image: url(../assets/parentnode-skin-default/img/logos/distortion.png);}
-#content .scene .usedby ul li.landskabsarkitekter {background-image: url(../assets/parentnode-skin-default/img/logos/landskabsarkitekter.png);}
-#content .scene .usedby ul li.urbangreen {background-image: url(../assets/parentnode-skin-default/img/logos/urbangreen.png);}
-#content .scene .usedby ul li.oeo {background-image: url(../assets/parentnode-skin-default/img/logos/oeo.png);}
-#content .scene .usedby ul li.torvehallerne {background-image: url(../assets/parentnode-skin-default/img/logos/torvehallerne.png);}
-#content .scene .usedby ul li.peoplegroup {background-image: url(../assets/parentnode-skin-default/img/logos/peoplegroup.png);}
-#content .scene .usedby ul li.lsb {background-image: url(../assets/parentnode-skin-default/img/logos/lsb.png);}
-#content .scene .usedby ul li.punkt1 {background-image: url(../assets/parentnode-skin-default/img/logos/punkt1.png);}
-#content .scene .usedby ul li.greenspeak {background-image: url(../assets/parentnode-skin-default/img/logos/greenspeak.png);}
-#content .scene .usedby ul li.kbhff {background-image: url(../assets/parentnode-skin-default/img/logos/kbhff.png);}
-
+/*s-search.css*/
+#content div.search {display: none;}
 
 /*s-pages.css*/
 #content .scene {}
@@ -538,13 +449,16 @@ div.field.focus div.hint {display: block;}
 body {}
 #header .logo {color: #34cc3d;}
 #navigation ul li a {color: #34cc3d;}
+.front #header .logo,
+#navigation ul li.selected,
+#navigation ul li.path {color: #26962d;}
 #content .scene a {color: #34cc3d;}
 #content .scene hr {border-color: #ccdbcd;}
 #content ul.actions input.button.primary,
 #content ul.actions a.button.primary,
 #content .scene .pagination .next a,
-#content .scene .pagination .previous a {background-color: #34cc3d;}
-#content .scene div.categories ul.tags li.selected a {color: #26962d;}
+#content .scene .pagination .previous a {background-color: #34cc3d; color: #ffffff;}
+#content .scene div.categories ul.tags li.selected {background-color: #26962d;}
 #content .scene h3,
 #content .scene h4,
 #content .scene h5,
@@ -556,14 +470,14 @@ body {}
 #footer {border-color: #ccdbcd;}
 #footer a {color: #34cc3d;}
 .terms_notification {background-color: #26962d;}
-.front #header .logo,
-#navigation ul li.selected a {color: #26962d;}
 
 
 /*s-pages-hovers.css*/
-#content ul.actions input.button.primary:hover,
+ul.actions input.button.primary:hover,
+ul.actions a.button.primary:hover,
 #content ul.actions a.button.primary:hover,
-#content .scene .pagination .next a:hover,
-#content .scene .pagination .previous a:hover {background-color: #26962d;}
-#content .scene ul.tags a:hover {color: #00c90d;}
+#content .scene .pagination .next:hover a,
+#content .scene .pagination .previous:hover a {background-color: #26962d;}
+#content .scene div.categories ul.tags li.selected:hover {background-color: #34cc3d;}
+#content .scene ul.tags a:hover {color: #26962d;}
 

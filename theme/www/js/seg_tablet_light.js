@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-03-03 11:16:19
+asset-builder @ 2020-03-22 20:08:26
 */
 
 /*seg_tablet_light_include.js*/
@@ -1257,17 +1257,17 @@ Util.pageScrollX = u.scrollX = function() {
 Util.pageScrollY = u.scrollY = function() {
 	return window.pageYOffset;
 }
-Util.Objects = u.o = new Object();
+Util.Modules = u.m = new Object();
 Util.init = function(scope) {
-	var i, node, nodes, object;
+	var i, node, nodes, module;
 	scope = scope && scope.nodeName ? scope : document;
 	nodes = u.ges("i\:([_a-zA-Z0-9])+", scope);
 	for(i = 0; i < nodes.length; i++) {
 		node = nodes[i];
-		while((object = u.cv(node, "i"))) {
-			u.rc(node, "i:"+object);
-			if(object && obj(u.o[object])) {
-				u.o[object].init(node);
+		while((module = u.cv(node, "i"))) {
+			u.rc(node, "i:"+module);
+			if(module && obj(u.m[module])) {
+				u.m[module].init(node);
 			}
 		}
 	}
@@ -4787,7 +4787,7 @@ u.txt["smartphone-switch-text"] = [
 u.txt["smartphone-switch-bn-hide"] = "Hide";
 u.txt["smartphone-switch-bn-switch"] = "Go to Smartphone version";
 u.bug_console_only = true;
-Util.Objects["page"] = new function() {
+Util.Modules["page"] = new function() {
 	this.init = function(page) {
 		window.page = page;
 		u.bug_force = true;
@@ -4864,7 +4864,7 @@ Util.Objects["page"] = new function() {
 	}
 }
 window.onload = u.init;
-Util.Objects["login"] = new function() {
+Util.Modules["login"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -4985,8 +4985,8 @@ if(u.ga_account) {
 }
 
 
-/*i-cart.js*/
-Util.Objects["checkout"] = new function() {
+/*m-cart.js*/
+Util.Modules["checkout"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -5007,7 +5007,7 @@ Util.Objects["checkout"] = new function() {
 		scene.ready();
 	}
 }
-Util.Objects["shopProfile"] = new function() {
+Util.Modules["shopProfile"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -5024,7 +5024,7 @@ Util.Objects["shopProfile"] = new function() {
 		scene.ready();
 	}
 }
-Util.Objects["shopAddress"] = new function() {
+Util.Modules["shopAddress"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -5042,8 +5042,8 @@ Util.Objects["shopAddress"] = new function() {
 	}
 }
 
-/*i-memberships.js*/
-Util.Objects["memberships"] = new function() {
+/*m-memberships.js*/
+Util.Modules["memberships"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -5072,8 +5072,8 @@ Util.Objects["memberships"] = new function() {
 }
 
 
-/*i-signup.js*/
-Util.Objects["signup"] = new function() {
+/*m-signup.js*/
+Util.Modules["signup"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}

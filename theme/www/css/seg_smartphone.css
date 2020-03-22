@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-03-03 11:16:19
+asset-builder @ 2020-03-22 20:08:26
 */
 
 /*seg_smartphone_include.css*/
@@ -7,7 +7,7 @@ asset-builder @ 2020-03-03 11:16:19
 /*seg_smartphone.css*/
 /*
 MIT license, 2002-2019 parentNode.dk
-asset-builder @ 2020-02-25 17:59:22
+asset-builder @ 2020-03-19 20:44:16
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -203,11 +203,12 @@ dd {display: block; vertical-align: top; font-size: 16px; line-height: 1.25em;}
 #content .scene div.vimeo iframe,
 #content .scene div.youtube iframe {margin: 0 0 20px; width: 100%; border-radius: 5px; overflow: hidden;}
 #content .scene div.categories {padding-bottom: 20px;}
+#content .scene div.categories ul.tags {padding: 0;}
 #content .scene div.categories ul.tags li {font-size: 14px; padding: 0; display: block;}
-#content .scene div.categories ul.tags li a {padding: 6px 0; display: block;}
+#content .scene div.categories ul.tags li.all {padding-top: 15px;}
+#content .scene div.categories ul.tags li a {padding: 6px 20px; display: block; text-decoration: none;}
 #content .scene div.categories ul.tags li:after {content: none;}
-#content .scene div.categories ul.tags li.selected {margin: 5px -20px;}
-#content .scene div.categories ul.tags li.selected a {background-color: #000000; color: #ffffff; padding: 6px 20px;}
+#content .scene div.categories ul.tags li.selected a {background-color: #000000; color: #ffffff;}
 #content .scene div.categories ul.actions {padding-bottom: 0;}
 #content .scene div.categories ul.actions li {font-size: 15px;}
 #content .scene div.related {padding-top: 10px; position: relative; z-index: 1;}
@@ -298,7 +299,7 @@ dd {display: block; vertical-align: top; font-size: 16px; line-height: 1.25em;}
 #content {}
 form {
 }
-fieldset {border: none; display: block;}
+fieldset {display: block;}
 div.field {padding: 0 18px 10px; position: relative; font-size: 0; z-index: 1;}
 div.field label {display: block; padding: 0 0 0 4px; font-size: 10px;}
 div.field input,
@@ -452,162 +453,14 @@ div.field.correct div.hint,
 div.field.correct div.error {display: none;}
 
 
-/*s-form.css*/
-#content {}
-form {
+/*s-articles.css*/
+#content .scene ul.articles {padding: 0;}
+#content .scene ul.articles li.article {padding: 20px 0 15px; border-top: 1px solid #dedede;}
+#content .scene ul.articles li.article ul.tags {padding-bottom: 20px;}
+#content .scene ul.articles li.article h3 {line-height: 1.1em; font-size: 20px; padding-bottom: 10px;
+	font-family: "PT Serif", Times, serif;
 }
-fieldset {border: none; display: block;}
-div.field {padding: 0 18px 10px; position: relative; font-size: 0; z-index: 1;}
-div.field label {display: block; padding: 0 0 0 4px; font-size: 10px;}
-div.field input,
-div.field select,
-div.field textarea {box-shadow: inset 0 1px 2px #dedede; background: #ffffff; border: 1px solid #dcdcdc; display: inline-block; vertical-align: top; border-radius: 3px; margin: 2px; outline: none; position: relative; z-index: 1;}
-div.field input {width: calc(100% - 18px); height: 24px; padding: 2px 6px;
-}
-div.field input::-ms-clear, div.field textarea::-ms-clear {
-	display: none;
-}
-div.field select {width: calc(100% - 2px); height: 30px; color: #333333; padding: 2px 3px 2px 2px;}
-div.field select option {padding: 2px 3px 2px 6px;}
-@media all and (-webkit-min-device-pixel-ratio:0) {
-	div.field select {width: 100%; height: 31px; padding: 2px 3px 2px 7px;
-		background: #ffffff url(../assets/parentnode-skin-default/img/bg_icons.png) no-repeat 360px -977px;
-		-webkit-appearance: none;
-	}
-}
-div.field textarea {width: calc(100% - 18px); height: 100px; overflow: auto; padding: 6px 6px 2px 6px;}
-div.field.short textarea {height: 40px;}
-div.field textarea.autoexpand {width: calc(100% - 24px); padding: 6px 6px 2px; overflow: hidden;}
-div.field .pseudolabel {z-index: 2; display: none; position: absolute; font-size: 14px; padding: 2px 5px 2px; margin: 3px 2px; background-color: #ffffff;}
-div.field input.default ~ .pseudolabel {display: inline-block;}
-div.field.checkbox,
-div.field.boolean {}
-div.field.checkbox input,
-div.field.boolean input {display: inline-block; vertical-align: top; width: auto; height: auto; padding: 0; margin: 1px 10px 0 3px; border: 0;}
-div.field.checkbox label,
-div.field.boolean label {width: auto; display: inline-block; vertical-align: top; font-size: 14px; line-height: 1em;}
-div.field.radiobuttons {}
-div.field.radiobuttons > label {display: block; font-size: 14px; line-height: 1em; padding: 0 0 0 3px;}
-div.field.radiobuttons > label:after {content: ":";}
-div.field.radiobuttons div.item {padding: 10px 0 0;}
-div.field.radiobuttons div.item input {width: auto; height: auto; padding: 0; margin: 1px 10px 0 3px; border: 0;}
-div.field.radiobuttons div.item label {font-size: 14px; line-height: 1em; display: inline-block; vertical-align: top; text-align: left; width: auto;}
-div.field input[type="integer"],
-div.field input[type="number"] {
-	-moz-appearance: textfield;
-}
-div.field input[type="integer"]::-webkit-inner-spin-button,
-div.field input[type="integer"]::-webkit-outer-spin-button,
-div.field input[type="number"]::-webkit-inner-spin-button,
-div.field input[type="number"]::-webkit-outer-spin-button {margin: 0;
-	-webkit-appearance: none;
-}
-div.field.files {border: 3px dashed #dedede; display: block; width: 378px; border-radius: 5px; position: relative; margin: 2px 18px 17px; padding: 0;}
-div.field.files input[type=file] {opacity: 0; width: 360px; height: 49px; margin: 0; border: 0;}
-div.field.files label {color: #333333; font-size: 14px; display: block; position: absolute; width: 120px; left: 50%; padding: 1px 4px 3px; margin: 16px 0 0 -60px; text-align: center; border-radius: 6px; background: #dedede;}
-div.field.files.loading label {display: none;}
-div.field.files.loading {background: transparent url(../assets/parentnode-skin-default/img/gx_loader.gif) no-repeat center center;}
-div.field.focus input,
-div.field.focus textarea {}
-div.field.focus select {padding: 2px 3px 2px 2px; height: 34px;
-	width: calc(100% - 0px);
-}
-@media all and (-webkit-min-device-pixel-ratio:0) {
-	div.field.focus select {padding: 2px 3px 3px 5px;
-		background-position: 358px -979px;
-	}
-}
-div.field.focus input,
-div.field.focus select,
-div.field.focus textarea {border: 3px solid #5c5c5c; margin: 0;}
-div.field.radiobuttons.focus input,
-div.field.checkbox.focus input,
-div.field.boolean.focus input {margin: 1px 10px 0 3px; border: none;}
-div.field.files.focus {border-color: #c8e183;}
-div.field.files.focus input[type=file] {margin: 0; border: none;}
-div.field.files.focus label {background-color: #c8e183;}
-div.field input.default,
-div.field select.default,
-div.field textarea.default,
-div.field .pseudolabel {color: #aaaaaa;}
-div.field .indicator {width: 20px; height: 15px; display: inline-block; margin-bottom: -2px; margin-top: -2px;}
-div.field.required .indicator {
-	background: transparent url(../assets/parentnode-skin-default/img/bg_icons.png) no-repeat 3px -295px;
-}
-div.field.correct .indicator {background-position: 3px -324px;}
-div.field.error {
-}
-div.field.error input,
-div.field.error textarea {}
-div.field.error select {padding: 3px 3px 2px 0px;}
-div.field.error input,
-div.field.error select,
-div.field.error textarea {border: 3px solid #a62300; margin: 0;}
-@media all and (-webkit-min-device-pixel-ratio:0) {
-	div.field.error select {padding: 2px 3px 3px 5px;
-		background-position: 358px -979px;
-	}
-}
-div.field.radiobuttons.error input,
-div.field.checkbox.error input,
-div.field.boolean.error input {margin: 1px 10px 0 3px; border: none;}
-div.field.files.error {border-color: #a62300;}
-ul.actions {}
-ul.actions li {display: inline-block; padding: 0 10px 10px 0; vertical-align: top;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	user-select: none;
-}
-ul.actions a {display: block; height: 18px; padding: 7px 0;}
-ul.actions input.button {width: auto; height: 32px; padding: 3px 12px; display: inline-block; vertical-align: top; outline: none; border-radius: 0; border: 0;
-	-webkit-appearance: none;
-}
-@media all and (-webkit-min-device-pixel-ratio:0) {
-	ul.actions input.button {padding-bottom: 5px;}
-}
-ul.actions a.button {display: block; text-decoration: none; height: 18px; padding: 7px 12px;}
-ul.actions input.button,
-ul.actions a.button,
-#content ul.actions a.button {font-size: 16px; background-color: #dedede; color: #333333; border: none; cursor: pointer; border-radius: 3px;}
-ul.actions input.button:active,
-ul.actions a.button:active,
-#content ul.actions a.button:active {background-color: #bebebe; text-decoration: none;}
-.submitting input[type="submit"].button {
-	padding-left: 40px !important;
-	background-image: url(../assets/parentnode-skin-default/img/gx_loader.gif);
-	background-position: 11px 7px;
-	background-repeat: no-repeat;
-	background-size: 17px auto;
-}
-ul.actions input.button.primary,
-ul.actions a.button.primary,
-#content ul.actions a.button.primary {background-color: #8c9399; color: #ffffff;}
-ul.actions input.button.primary:active,
-ul.actions a.button.primary:active,
-#content ul.actions a.button.primary:active {background-color: #313942;}
-ul.actions input.button.secondary,
-ul.actions a.button.secondary,
-#content ul.actions a.button.secondary {background-color: #8c9399; color: #ffffff;}
-ul.actions input.button.secondary:active,
-ul.actions a.button.secondary:active,
-#content ul.actions a.button.secondary:active {background-color: #313942;}
-ul.actions input.button.disabled,
-ul.actions a.button.disabled,
-#content ul.actions a.button.disabled,
-ul.actions input.button.disabled:active,
-ul.actions a.button.disabled:active,
-#content ul.actions a.button.disabled:active {cursor: default !important; color: #aaaaaa !important; background-color: #eeeeee !important;}
-div.field div.help {width: 100%;}
-div.field.files div.help {left: 404px;}
-div.field div.error,
-div.field div.hint {display: none; box-sizing: border-box; padding: 5px; border-radius: 3px; font-size: 12px; margin: 1px 0 0;}
-div.field div.error {border: 1px solid #a62300; color: #a62300; background: #ffddd5;}
-div.field.error div.error {display: block;}
-div.field div.hint {border: 1px solid #007633; color: #007633; background: #d0f4e0;}
-div.field.focus div.hint {display: block;}
-div.field.error div.hint {display: none;}
-div.field.correct div.hint,
-div.field.correct div.error {display: none;}
+#content .scene ul.articles.articlePreviewList div.description p a.readmore {padding-top: 15px; display: inline-block;}
 
 
 /*s-todos.css*/
@@ -649,6 +502,7 @@ div.field.correct div.error {display: none;}
 
 /*s-pagination.css*/
 #page.paginated #content {padding-top: 110px;}
+#content .scene .pagination.autoload {display: none;}
 #content .scene .pagination ul {text-align: center; padding: 30px 20px;}
 #content .scene .pagination li {width: auto; height: auto; display: inline-block; padding: 0 5px; vertical-align: top;}
 #content .scene .pagination li.next,
@@ -682,14 +536,17 @@ body > div.pagination li.previous a {padding-left: 0; padding-right: 16px;}
 body > div.pagination li.next a {padding-right: 0; padding-left: 16px;}
 
 
-/*s-articles.css*/
-#content .scene ul.articles {padding: 0;}
-#content .scene ul.articles li.article {padding: 20px 0 15px; border-top: 1px solid #dedede;}
-#content .scene ul.articles li.article ul.tags {padding-bottom: 10px;}
-#content .scene ul.articles li.article h3 {line-height: 1.1em; font-size: 20px; padding-bottom: 10px;
-	font-family: "PT Serif", Times, serif;
+/*s-search.css*/
+#content .scene ul.articles li.article div.description span.match {font-weight: bold;}
+#content div.search {font-size: 0; padding-bottom: 30px;}
+#content div.search fieldset {display: inline-block; vertical-align: top; width: calc(100% - 50px);}
+#content div.search div.field {padding-right: 0;}
+#content div.search ul.actions {display: inline-block; vertical-align: top; padding: 0;}
+#content div.search ul.actions li {padding: 15px 0 0;}
+#content div.search ul.actions input {width: 30px; text-indent: -9999px; 
+	background: transparent url(../img/gx_search.png) no-repeat center 7px;
+	background-size: 18px auto;
 }
-
 
 /*s-colorscheme.css*/
 * {color: #26962d;}
@@ -708,7 +565,9 @@ ul.actions a.button.primary,
 #content ul.actions a.button.primary {background-color: #34cc3d; color: #ffffff;}
 ul.actions input.button.primary:active,
 ul.actions a.button.primary:active,
-#content ul.actions a.button.primary:active {background-color: #26962d;}
+#content ul.actions a.button.primary:active,
+#content .scene .pagination li.next a:active,
+#content .scene .pagination li.previous a:active {background-color: #26962d; color: #ffffff;}
 #content .scene div.article ul.tags li a:active,
 #content .scene ul.articles li.article ul.tags li a:active {color: #34cc3d;}
 #content .scene div.categories ul.tags li.selected a {background-color: #26962d;}
@@ -727,6 +586,11 @@ body > div.pagination li.previous > svg.arrow line {stroke: #34cc3d;}
 body > div.pagination li.previous,
 body > div.pagination li.next {border-color: #34cc3d;}
 body > div.pagination li a {color: #34cc3d;}
+body > div.pagination li.previous:active,
+body > div.pagination li.next:active {background-color: #34cc3d; color: #ffffff;}
+body > div.pagination li:active a {color: #ffffff;}
+body > div.pagination li.previous:active > svg.arrow line,
+body > div.pagination li.next:active > svg.arrow line {stroke: #ffffff;}
 .terms_notification {background: #26962d;}
 .front #header .logo,
 .about #navigation ul li.about,
@@ -794,6 +658,7 @@ body > div.pagination li a {color: #34cc3d;}
 #content .scene ul.events li.event h3 {
 	font-family: "PT Serif",Times,serif;	
 }
+#content .scene ul.events li.event span.event_status.eventcancelled {color: #df0000;}
 #content .scene ul.events li.event dl.occurs_at {padding-bottom: 0;}
 #content .scene ul.events li.event dd {width: auto; font-size: 12px; padding-bottom: 0; padding-left: 0;}
 #content .scene ul.events li.event dt {display: none;}
@@ -805,6 +670,13 @@ body > div.pagination li a {color: #34cc3d;}
 #content .scene.event div.event dl.occurs_at {padding-bottom: 0;}
 #content .scene.event div.event dl.occurs_at dt {font-size: 12px; text-align: left;}
 #content .scene.event div.event dl.occurs_at dd {font-size: 16px; padding-bottom: 15px; padding-left: 0;}
+#content .scene.event div.event dl.event_status {padding-bottom: 0;}
+#content .scene.event div.event dl.event_status dt {font-size: 12px; text-align: left;}
+#content .scene.event div.event dl.event_status dd {font-size: 16px; padding-bottom: 15px; padding-left: 0;}
+#content .scene.event div.event dl.event_status dd.eventcancelled {font-size: 20px; color: #df0000;}
+#content .scene.event div.event dl.event_attendance {padding-bottom: 0;}
+#content .scene.event div.event dl.event_attendance dt {font-size: 12px; text-align: left;}
+#content .scene.event div.event dl.event_attendance dd {font-size: 16px; padding-bottom: 15px; padding-left: 0;}
 #content .scene.event div.event div.location {padding-top: 20px;}
 #content .scene.event div.event ul.location {display: block;}
 #content .scene.event div.event ul.location li.name {padding-bottom: 10px; font-size: 15px;}
