@@ -33,8 +33,8 @@ else {
 
 
 	<ul class="tabs">
-		<?= $HTML->link("Upcoming events", "/janitor/admin/event/list", array("wrapper" => "li.".(!$past_events ? "selected" : ""))) ?>
-		<?= $HTML->link("Past events", "/janitor/admin/event/list/past", array("wrapper" => "li.".($past_events ? "selected" : ""))) ?>
+		<?= $HTML->link("Upcoming events", "/janitor/event/list", array("wrapper" => "li.".(!$past_events ? "selected" : ""))) ?>
+		<?= $HTML->link("Past events", "/janitor/event/list/past", array("wrapper" => "li.".($past_events ? "selected" : ""))) ?>
 	</ul>
 
 
@@ -49,6 +49,8 @@ else {
 				<dl class="info">
 					<dt>Starting</dt>
 					<dd class="starting_at"><?= date("Y-m-d @ H:i", strtotime($item["starting_at"])) ?></dd>
+					<dt>Status</dt>
+					<dd class="event_status"><?= $model->event_status_options[$item["event_status"]] ?></dd>
 				</dl>
 
 				<?= $JML->tagList($item["tags"]) ?>

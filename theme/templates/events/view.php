@@ -62,6 +62,8 @@ $related_items = $IC->getRelatedItems($related_pattern);
 		<? endif; ?>
 
 
+
+
 		<?= $HTML->articleTags($item, [
 			"context" => ["service"],
 			"default" => ["/events", "Events"],
@@ -88,6 +90,12 @@ $related_items = $IC->getRelatedItems($related_pattern);
 		<h1 itemprop="name"><?= $item["name"] ?></h1>
 
 
+		<dl class="event_status" itemprop="eventStatus" content="<?= $model->event_status_schema_values[$item["event_status"]] ?>">
+			<dt>Event status</dt>
+			<dd class="<?= strtolower($model->event_status_schema_values[$item["event_status"]]) ?>"><?= $model->event_status_options[$item["event_status"]] ?></dd>
+		</dl>
+
+
 		<dl class="occurs_at">
 			<dt class="starting_at">Starts</dt>
 			<dd class="starting_at" itemprop="startDate" content="<?= date("Y-m-d H:i", strtotime($item["starting_at"])) ?>"><?= date("F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
@@ -95,6 +103,21 @@ $related_items = $IC->getRelatedItems($related_pattern);
 			<dt class="ending_at">Ends</dt>
 			<dd class="ending_at" itemprop="endDate" content="<?= date("Y-m-d H:i", strtotime($item["ending_at"])) ?>"><?= date("F j, Y - H:i", strtotime($item["ending_at"])) ?></dd>
 			<? endif; ?>
+		</dl>
+
+		<dl class="event_attendance">
+			<dt>Attendance</dt>
+			<dd class="event_attendance_mode" itemprop="eventAttendanceMode" content="<?= $model->event_attendance_mode_schema_values[$item["event_attendance_mode"]] ?>"><?= $model->event_attendance_mode_options[$item["event_attendance_mode"]] ?></dd>
+
+<? if($item["event_attendance_limit"]): ?>
+			<dt>Max participants</dt>
+	<? if($item["event_attendance_mode"] != 3): ?>
+			<dd class="event_attendance_limit" itemprop="maximumPhysicalAttendeeCapacity" content="<?= $item["event_attendance_limit"] ?>"><?= $item["event_attendance_limit"] ?></dd>
+	<? else: ?>
+			<dd class="event_attendance_limit" itemprop="maximumVirtualAttendeeCapacity" content="<?= $item["event_attendance_limit"] ?>"><?= $item["event_attendance_limit"] ?></dd>
+	<? endif; ?>
+
+<? endif; ?>
 		</dl>
 
 		<h2>Description</h2>
@@ -152,19 +175,50 @@ $related_items = $IC->getRelatedItems($related_pattern);
 		<? if($item["location"]): ?>
 		<div class="location">
 			<h2>Location</h2>
+
+			<? if($location["location_type"] === 1): ?>
+
 			<ul class="location" itemprop="location" itemscope itemtype="https://schema.org/Place">
 				<li class="name" itemprop="name"><?= $location["location"] ?></li>
 				<li class="address" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
 					<ul>
-						<li class="streetaddress" itemprop="streetAddress"><?= $location["location_address1"] ?><?= $location["location_address2"] ? ", ".$location["location_address2"] : "" ?></li>
-						<li class="city"><span class="postal" itemprop="postalCode"><?= $location["location_postal"] ?></span> <span class="locality" itemprop="addressLocality"><?= $location["location_city"] ?></span></li>
-						<li class="country" itemprop="addressCountry"><?= $countries[arrayKeyValue($countries, "id", $location["location_country"])]["name"] ?></li>
+						<li class="streetaddress" itemprop="streetAddress"><?= 
+								($location["location_address1"] ? $location["location_address1"] : "") . 
+								(($location["location_address1"] && $location["location_address2"]) ? ", " : "") . 
+								($location["location_address2"] ? $location["location_address2"] : "")
+						?></li>
+						<li class="city"><span class="postal" itemprop="postalCode"><?= 
+								$location["location_postal"] ? $location["location_postal"] : "" 
+							?></span> <span class="locality" itemprop="addressLocality"><?= 
+								$location["location_city"] ? $location["location_city"]  : ""
+						?></span></li>
+						<li class="country" itemprop="addressCountry"><?= 
+							$location["location_country"] ? $countries[arrayKeyValue($countries, "id", $location["location_country"])]["name"] : ""
+						?></li>
 					</ul>
 				</li>
 				<? if($location["location_googlemaps"]): ?>
 				<li class="googlemaps" itemprop="hasMap" content="<?= $location["location_googlemaps"] ?>"><a href="<?= $location["location_googlemaps"] ?>" target="_blank">Map</a></li>
 				<? endif; ?>
+				<? if($location["location_comment"]): ?>
+				<li class="location_comment"><?= $location["location_comment"] ?></li>
+				<? endif; ?>
 			</ul>
+
+			<? else: ?>
+
+			<ul class="location" itemprop="location" itemscope itemtype="https://schema.org/VirtualLocation">
+				<li class="name" itemprop="name"><?= $location["location"] ?></li>
+				<? if($location["location_url"]): ?>
+				<li class="url" itemprop="url" content="<?= $location["location_url"] ?>"><a href="<?= $location["location_url"] ?>" target="_blank"><?= $location["location_url"] ?></a></li>
+				<? endif; ?>
+				<? if($location["location_comment"]): ?>
+				<li class="location_comment"><?= $location["location_comment"] ?></li>
+				<? endif; ?>
+			</ul>
+
+			<? endif; ?>
+
 		</div>
 		<? endif; ?>
 
@@ -194,11 +248,11 @@ $related_items = $IC->getRelatedItems($related_pattern);
 
 <? else: ?>
 
-
-	<h1>Technology clearly doesn't solve everything on it's own.</h1>
-	<h2>Technology needs humanity.</h2>
-	<p>We could not find the specified event.</p>
-
+	<div class="article">
+		<h1>Technology clearly doesn't solve everything on it's own.</h1>
+		<h2>Technology needs humanity.</h2>
+		<p>We could not find the specified event.</p>
+	</div>
 
 <? endif; ?>
 
@@ -209,19 +263,21 @@ $related_items = $IC->getRelatedItems($related_pattern);
 	<h2><?= $related_title ?> <a href="/events">(see all)</a></h2>
 
 	<ul class="items events">
-	<? foreach($related_items as $item): ?>
-		<li class="item event item_id:<?= $item["item_id"] ?>">
+	<? foreach($related_items as $related_item): ?>
+		<li class="item event item_id:<?= $related_item["item_id"] ?>">
 
 			<dl class="occurs_at">
 				<dt class="starting_at">Starts</dt>
-				<dd class="starting_at"><?= date("F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
+				<dd class="starting_at"><?= date("F j, Y - H:i", strtotime($related_item["starting_at"])) ?></dd>
 			</dl>
 
-			<h3><a href="/events/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
+			<h3><? if($related_item["event_status"] != 1): 
+				?><span class="event_status <?= strtolower($model->event_status_schema_values[$related_item["event_status"]]) ?>"><?= strtoupper($model->event_status_options[$related_item["event_status"]]).": " ?></span><?
+			endif; ?><a href="/events/<?= $related_item["sindex"] ?>"><?= strip_tags($related_item["name"]) ?></a></h3>
 
-			<? if($item["description"]): ?>
+			<? if($related_item["description"]): ?>
 			<div class="description">
-				<p><?= nl2br($item["description"]) ?></p>
+				<p><?= nl2br($related_item["description"]) ?></p>
 			</div>
 			<? endif; ?>
 

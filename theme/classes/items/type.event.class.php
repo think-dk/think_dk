@@ -342,7 +342,7 @@ class TypeEvent extends Itemtype {
 	// CMS 
 
 	// create a new location
-	// /janitor/admin/events/addLocation (values in POST)
+	// /janitor/events/addLocation (values in POST)
 	function addLocation($action) {
 
 		// Get posted values to make them available for models
@@ -383,7 +383,7 @@ class TypeEvent extends Itemtype {
 
 
 	// update an address
-	// /janitor/admin/event/updateLocation/#location_id# (values in POST)
+	// /janitor/event/updateLocation/#location_id# (values in POST)
 	function updateLocation($action) {
 
 		// Get posted values to make them available for models
@@ -421,7 +421,7 @@ class TypeEvent extends Itemtype {
 	}
 
 	// Delete location
-	// /janitor/admin/event/deleteLocation/#location_id#
+	// /janitor/event/deleteLocation/#location_id#
 	function deleteLocation($action) {
 
 		$location_id = $action[1];

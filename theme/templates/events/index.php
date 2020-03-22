@@ -2,6 +2,7 @@
 global $IC;
 global $action;
 global $itemtype;
+$model = $IC->typeObject($itemtype);
 
 $page_item = $IC->getItem(array("tags" => "page:events", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
 if($page_item) {
@@ -90,11 +91,15 @@ $past_items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" 
 					<dd class="starting_at" content="<?= date("Y-m-d H:i", strtotime($item["starting_at"])) ?>"><?= date("l, F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
 				</dl>
 
-				<h3><a href="/events/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
+				<h3><? if($item["event_status"] != 1): 
+					?><span class="event_status <?= strtolower($model->event_status_schema_values[$item["event_status"]]) ?>"><?= strtoupper($model->event_status_options[$item["event_status"]]).": " ?></span><?
+				endif; ?><a href="/events/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
 
 <?				if($item["description"]): ?>
 				<div class="description">
-					<p><?= nl2br($item["description"]) ?></p>
+					<p><? if($item["event_status"] != 1):
+						?><span class="event_status <?= strtolower($model->event_status_schema_values[$item["event_status"]]) ?>"><?= strtoupper($model->event_status_options[$item["event_status"]]).": " ?></span><?
+					endif; ?><?= nl2br($item["description"]) ?></p>
 				</div>
 <?				endif; ?>
 
@@ -126,11 +131,15 @@ $past_items = $IC->getItems(array("itemtype" => "event", "status" => 1, "where" 
 					<dd class="starting_at" content="<?= date("Y-m-d H:i", strtotime($item["starting_at"])) ?>"><?= date("l, F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
 				</dl>
 
-				<h3><a href="/events/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
+				<h3><? if($item["event_status"] != 1): 
+					?><span class="event_status <?= strtolower($model->event_status_schema_values[$item["event_status"]]) ?>"><?= strtoupper($model->event_status_options[$item["event_status"]]).": " ?></span><?
+				endif; ?><a href="/events/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
 
 <?				if($item["description"]): ?>
 				<div class="description">
-					<p><?= nl2br($item["description"]) ?></p>
+					<p><? if($item["event_status"] != 1):
+						?><span class="event_status <?= strtolower($model->event_status_schema_values[$item["event_status"]]) ?>"><?= strtoupper($model->event_status_options[$item["event_status"]]).": " ?></span><?
+					endif; ?><?= nl2br($item["description"]) ?></p>
 				</div>
 <?				endif; ?>
 
