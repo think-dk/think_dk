@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-03-22 20:08:26
+asset-builder @ 2020-03-23 19:23:46
 */
 
 /*seg_tablet_include.css*/
@@ -7,7 +7,7 @@ asset-builder @ 2020-03-22 20:08:26
 /*seg_tablet.css*/
 /*
 MIT license, 2002-2019 parentNode.dk
-asset-builder @ 2020-03-19 20:44:16
+asset-builder @ 2020-03-23 14:34:46
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -258,8 +258,8 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 #content .scene div.company dl.info,
 #content .scene div.person dl.info {width: 33%; padding: 0 0 30px 70px; box-sizing: border-box; display: inline-block; vertical-align: top;}
 #content .scene div.company dl.info dt,
-#content .scene div.person dl.info dd,
-#content .scene div.company dl.info dt,
+#content .scene div.person dl.info dt,
+#content .scene div.company dl.info dd,
 #content .scene div.person dl.info dd {display: block; width: auto; text-align: left;}
 #content .scene div.company dl.info dd,
 #content .scene div.person dl.info dd {padding-bottom: 10px; font-size: 12px;}
@@ -654,19 +654,35 @@ body > div.pagination li.next a {padding-right: 0;}
 #content .scene .c ul.articles {max-width: 640px;}
 #content .scene .c300 div.company h2,
 #content .scene .c300 div.person h2 {max-width: none;}
+#content .scene .c-sidebar div.image img,
+#content .scene .c100 div.image img,
+#content .scene .c100 div.media img,
+#content .scene .c125 div.image img,
+#content .scene .c125 div.media img,
+#content .scene .c150 div.image img,
+#content .scene .c150 div.media img {width: calc(100% - 100px);}
+#content .scene .c-sidebar div.categories ul.tags li,
 #content .scene .c100 div.categories ul.tags li,
+#content .scene .c125 div.categories ul.tags li,
 #content .scene .c150 div.categories ul.tags li {display: block; margin: 0;}
 #content .scene .c100 div.categories ul.tags li.selected,
+#content .scene .c125 div.categories ul.tags li.selected,
 #content .scene .c150 div.categories ul.tags li.selected {margin: 5px -10px;}
+#content .scene .c-sidebar div.field input,
 #content .scene .c150 div.field input,
+#content .scene .c125 div.field input,
 #content .scene .c100 div.field input,
 #content .scene .c75 div.field input,
 #content .scene .c50 div.field input {width: calc(100% - 18px)}
+#content .scene .c-sidebar div.field textarea,
 #content .scene .c150 div.field textarea,
+#content .scene .c125 div.field textarea,
 #content .scene .c100 div.field textarea,
 #content .scene .c75 div.field textarea,
 #content .scene .c50 div.field textarea {width: calc(100% - 12px)}
+#content .scene .c-sidebar div.field .indicator,
 #content .scene .c150 div.field .indicator,
+#content .scene .c125 div.field .indicator,
 #content .scene .c100 div.field .indicator,
 #content .scene .c75 div.field .indicator,
 #content .scene .c50 div.field .indicator {left: auto; right: 40px;}
@@ -1219,6 +1235,19 @@ body.front #page.fixed {width: auto; margin: 0;}
 	padding-top: 20px;
 	padding-bottom: 40px;
 }
+#content .scene.blogs ul.blogs li.blog h3,
+#content .scene.blogs ul.blogs li.blog dl.author,
+#content .scene.blogs ul.blogs li.blog p {padding-left: 0;}
+#content .scene.blogs ul.blogs li.blog h3 {font-size: 30px; padding-bottom: 7px;}
+#content .scene.blogs ul.blogs li.blog dl.author dt {width: auto;}
+#content .scene.blogs ul.blogs li.blog dl.author dt:after {content: "";}
+#content .scene.blogs ul.blogs li.blog dl.author dt,
+#content .scene.blogs ul.blogs li.blog dl.author dd {font-style: italic;}
+#content .scene.blog dl.author {padding-bottom: 20px; width: auto;}
+#content .scene.blog dl.author dt {width: auto; display: block; text-align: left;}
+#content .scene.blog dl.author dt:after {content: "";}
+#content .scene.blog dl.author dd {font-size: 14px;}
+#content .scene.blog dl.author dt.bio {padding-top: 10px;}
 body.black *,
 body.black #header .logo,
 body.black #content .scene a,

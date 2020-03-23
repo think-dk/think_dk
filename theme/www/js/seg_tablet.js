@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-03-22 20:08:26
+asset-builder @ 2020-03-23 19:23:46
 */
 
 /*seg_tablet_include.js*/
@@ -9692,6 +9692,150 @@ Util.Modules["events"] = new function() {
 		page.cN.scene = scene;
 	}
 }
+
+/*m-blog.js*/
+Util.Modules["blogs"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			var list = u.qs("ul.blogs");
+			if(list) {
+				list.articles = u.qsa("li.article", list);
+				list.initArticle = function(article) {
+					article._a = u.qs("h3 a", article);
+					if(article._a) {
+						article._link = article._a.href ? article._a.href : article._a.url;
+					}
+					article._description_p = u.qs("div.description p", article)
+					if(article._description_p && article._link) {
+						u.ae(article._description_p, "br");
+						u.ae(article._description_p, "a", {href: article._link, class:"readmore", html:u.txt("readmore")});
+					}
+					var i, image;
+					article._images = u.qsa("div.image,div.media", article);
+					for(i = 0; image = article._images[i]; i++) {
+						image.node = article;
+						image.caption = u.qs("p a", image);
+						if(image.caption) {
+							image.caption.removeAttribute("href");
+						}
+						image._id = u.cv(image, "item_id");
+						image._format = u.cv(image, "format");
+						image._variant = u.cv(image, "variant");
+						if(image._id && image._format) {
+							image._image_src = "/images/" + image._id + "/" + (image._variant ? image._variant+"/" : "") + "540x." + image._format;
+							u.ass(image, {
+								"opacity": 0
+							});
+							image.loaded = function(queue) {
+								u.ac(this, "loaded");
+								this._image = u.ie(this, "img");
+								this._image.image = this;
+								this._image.src = queue[0].image.src;
+								u.a.transition(this, "all 0.5s ease-in-out");
+								u.ass(this, {
+									"opacity": 1
+								});
+							}
+							u.preloader(image, [image._image_src]);
+						}
+					}
+				}
+				list.resized = function() {
+					this.browser_h = u.browserH();
+					this.screen_middle = this.browser_h/2;
+				}
+				list.scrolled = function(event) {
+					u.t.resetTimer(this.t_init);
+					this.scroll_y = u.scrollY();
+					if(this._next_url) {
+						var i, node, node_y, list_y;
+						list_y = u.absY(this);
+						if(list_y + this.offsetHeight < this.scroll_y + (this.browser_h*2)) {
+							this.loadNext();
+						}
+					}
+					this.t_init = u.t.setTimer(this, this.initFocusedArticles, 500);
+				}
+				list.initFocusedArticles = function() {
+					var i, node, node_y;
+					for(i = 0; node = this.articles[i]; i++) {
+						if(!node.is_ready) {
+							node_y = u.absY(node);
+							if(node_y > this.scroll_y + this.browser_h) {
+								break;
+							}
+							else if(
+								(
+									node_y + node.offsetHeight > this.scroll_y && 
+									node_y + node.offsetHeight < this.scroll_y + this.browser_h
+								)
+								 || 
+								(
+									node_y > this.scroll_y &&
+									node_y < this.scroll_y + this.browser_h
+								)
+								 ||
+								(
+									node_y < this.scroll_y &&
+									node_y + node.offsetHeight > this.scroll_y + this.browser_h
+								)
+							) {
+								this.initArticle(node);
+								node.is_ready = true;
+							}
+						}
+					}
+				}
+				var i, node;
+				for(i = 0; node = list.articles[i]; i++) {
+					node.article_list = list;
+					u.columns(node, [
+						{"c125": [
+							"div.image"
+						]},
+						{"c175": [
+							"h3",
+							"dl.author",
+							"div.description"
+						]}
+					]);
+				}
+				list.resized();
+				list.scrolled();
+				u.e.addWindowEvent(list, "resize", list.resized);
+				u.e.addWindowEvent(list, "scroll", list.scrolled);
+			}
+			u.showScene(this);
+		}
+		page.cN.scene = scene;
+	}
+}
+Util.Modules["blog"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			u.columns(this, [
+				{"c-main": [
+					"div.article",
+					"div.articles",
+				]},
+				{"c-sidebar": [
+					"div.bio", 
+				]}
+			]);
+			u.showScene(this);
+		}
+		page.cN.scene = scene;
+	}
+}
+
 
 /*m-cart.js*/
 Util.Modules["cart"] = new function() {

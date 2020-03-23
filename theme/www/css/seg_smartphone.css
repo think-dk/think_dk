@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-03-22 20:08:26
+asset-builder @ 2020-03-23 19:23:46
 */
 
 /*seg_smartphone_include.css*/
@@ -7,7 +7,7 @@ asset-builder @ 2020-03-22 20:08:26
 /*seg_smartphone.css*/
 /*
 MIT license, 2002-2019 parentNode.dk
-asset-builder @ 2020-03-19 20:44:16
+asset-builder @ 2020-03-23 14:34:46
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -255,8 +255,8 @@ dd {display: block; vertical-align: top; font-size: 16px; line-height: 1.25em;}
 #content .scene div.company dl.info,
 #content .scene div.person dl.info {padding: 0 20px; display: block;}
 #content .scene div.company dl.info dt,
-#content .scene div.person dl.info dd,
-#content .scene div.company dl.info dt,
+#content .scene div.person dl.info dt,
+#content .scene div.company dl.info dd,
 #content .scene div.person dl.info dd {display: block; width: auto; text-align: left;}
 #content .scene div.company dl.info dd,
 #content .scene div.person dl.info dd {}
@@ -463,6 +463,20 @@ div.field.correct div.error {display: none;}
 #content .scene ul.articles.articlePreviewList div.description p a.readmore {padding-top: 15px; display: inline-block;}
 
 
+/*s-comments.css*/
+#content .scene div.comments {padding-bottom: 15px;}
+#content .scene div.articlebody + div.comments {padding-top: 20px;}
+#content .scene div.comments h2 {font-size: 20px; padding-bottom: 25px;}
+#content .scene div.comments > p {color: #bbbbbb; font-size: 13px; padding-bottom: 25px;}
+#content .scene div.comments ul.comments {padding: 0; margin: 0;}
+#content .scene div.comments ul.comments > li {padding-bottom: 10px; padding-left: 0;}
+#content .scene div.comments ul.comments > li ul.info {padding-bottom: 0; margin: 0; list-style: none; display: block;}
+#content .scene div.comments ul.comments > li ul.info li {display: inline-block; vertical-align: top; font-size: 12px; padding-bottom: 0; padding-left: 0;}
+#content .scene div.comments ul.comments > li ul.info li.user:after {content: ",\00a0";}
+#content .scene div.comments ul.comments > li p.comment {padding-bottom: 15px; font-size: 13px;}
+#content .scene div.comments .field {padding-bottom: 10px;}
+
+
 /*s-todos.css*/
 #content .scene ul.todos dl.info {padding-bottom: 10px;}
 #content .scene ul.todos dl.info dd:after {content: ",\00a0";}
@@ -557,6 +571,8 @@ body {}
 #navigation ul li {color: #34cc3d;}
 #navigation ul li.admin,
 #navigation ul li.user {border-color: #34cc3d}
+#navigation ul li.selected,
+#navigation ul li.path {color: #26962d;}
 #content .scene a,
 #content .scene ul.geo.active li.name {color: #34cc3d;}
 #content .scene hr {border-color: #ccdbcd;}
@@ -592,14 +608,6 @@ body > div.pagination li:active a {color: #ffffff;}
 body > div.pagination li.previous:active > svg.arrow line,
 body > div.pagination li.next:active > svg.arrow line {stroke: #ffffff;}
 .terms_notification {background: #26962d;}
-.front #header .logo,
-.about #navigation ul li.about,
-.contact #navigation ul li.contact,
-.bulletin #navigation ul li.bulletin,
-.posts #navigation ul li.latest,
-.membership #navigation ul li.membership,
-.events #navigation ul li.events,
-.services #navigation ul li.services {color: #26962d;}
 
 
 /*s-pages.css*/
@@ -865,6 +873,17 @@ body > div.pagination li.next:active > svg.arrow line {stroke: #ffffff;}
 #content .scene.shopReceipt dl dt {display: inline-block; vertical-align: bottom; width: 90px; text-align: right; padding: 0 0 4px;}
 #content .scene.shopReceipt dl dt:after {content: ":";}
 #content .scene.shopReceipt dl dd {display: inline-block; vertical-align: bottom; width: 190px; overflow: hidden; padding: 0 0 4px 4px;}
+#content .scene.blogs ul.blogs li.blog h3 {font-size: 30px; padding-bottom: 7px;}
+#content .scene.blogs ul.blogs li.blog dl.author {padding-bottom: 0;}
+#content .scene.blogs ul.blogs li.blog dl.author dt {width: auto; padding-right: 5px;}
+#content .scene.blogs ul.blogs li.blog dl.author dt:after {content: "";}
+#content .scene.blogs ul.blogs li.blog dl.author dt,
+#content .scene.blogs ul.blogs li.blog dl.author dd {font-style: italic; display: inline-block;}
+#content .scene.blog dl.author {padding-bottom: 20px; width: auto;}
+#content .scene.blog dl.author dt {width: auto; display: block; text-align: left;}
+#content .scene.blog dl.author dt:after {content: "";}
+#content .scene.blog dl.author dd {font-size: 14px;}
+#content .scene.blog dl.author dt.bio {padding-top: 10px;}
 body.black *,
 body.black #header .logo,
 body.black #content .scene a,
