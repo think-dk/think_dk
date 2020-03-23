@@ -750,6 +750,21 @@ body.front #page.fixed {width: auto; margin: 0;}
 	padding-bottom: 40px;
 }
 
+#content .scene.blogs ul.blogs li.blog h3,
+#content .scene.blogs ul.blogs li.blog dl.author,
+#content .scene.blogs ul.blogs li.blog p {padding-left: 0;}
+
+#content .scene.blogs ul.blogs li.blog h3 {font-size: 30px; padding-bottom: 7px;}
+#content .scene.blogs ul.blogs li.blog dl.author dt {width: auto;}
+#content .scene.blogs ul.blogs li.blog dl.author dt:after {content: "";}
+#content .scene.blogs ul.blogs li.blog dl.author dt,
+#content .scene.blogs ul.blogs li.blog dl.author dd {font-style: italic;}
+
+#content .scene.blog dl.author {padding-bottom: 20px; width: auto;}
+#content .scene.blog dl.author dt {width: auto; display: block; text-align: left;}
+#content .scene.blog dl.author dt:after {content: "";}
+#content .scene.blog dl.author dd {font-size: 14px;}
+#content .scene.blog dl.author dt.bio {padding-top: 10px;}
 
 
 body.black *,

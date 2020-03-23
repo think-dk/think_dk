@@ -9,7 +9,7 @@ include_once($_SERVER["FRAMEWORK_PATH"]."/config/init.php");
 
 $action = $page->actions();
 $IC = new Items();
-$itemtype = "post";
+$itemtype = "blog";
 
 
 $page->bodyClass("blog");
@@ -17,30 +17,30 @@ $page->pageTitle("Blog");
 
 
 
-// news list for tags
+// list specific blog posts
 // /blog/#sindex#
-if(count($action) == 1) {
+if(count($action) === 1 || count($action) === 3 && $action[1] === "page") {
 
 	$page->page(array(
-		"templates" => "posts/post.php"
+		"templates" => "blog/view.php"
 	));
 	exit();
 
 }
-// /blog/tag/#tag#
-// /blog/tag/#tag#/#sindex#/prev|next
-else if(count($action) >= 2 && $action[0] == "tag") {
+# View specific post
+# /blog/#sindex#/#sindex#
+else if(count($action) === 2) {
 
-	$page->page(array(
-		"templates" => "posts/posts_tag.php"
-	));
+	$page->page([
+		"templates" => "blog/post.php"
+	]);
 	exit();
 
 }
 
-
+# Blog overview
 $page->page(array(
-	"templates" => "posts/blog.php"
+	"templates" => "blog/index.php"
 ));
 exit();
 
