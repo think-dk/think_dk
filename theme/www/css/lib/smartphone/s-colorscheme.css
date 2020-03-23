@@ -14,6 +14,8 @@ body {}
 #navigation ul li {color: #34cc3d;}
 #navigation ul li.admin,
 #navigation ul li.user {border-color: #34cc3d}
+#navigation ul li.selected,
+#navigation ul li.path {color: #26962d;}
 
 #content .scene a,
 #content .scene ul.geo.active li.name {color: #34cc3d;}
@@ -65,15 +67,3 @@ body > div.pagination li.next:active > svg.arrow line {stroke: #ffffff;}
 
 
 .terms_notification {background: #26962d;}
-
-
-
-/* LOCAL */
-.front #header .logo,
-.about #navigation ul li.about,
-.contact #navigation ul li.contact,
-.bulletin #navigation ul li.bulletin,
-.posts #navigation ul li.latest,
-.membership #navigation ul li.membership,
-.events #navigation ul li.events,
-.services #navigation ul li.services {color: #26962d;}
