@@ -112,7 +112,7 @@ $items = $IC->paginate($pagination_pattern);
 	<div class="articles">
 <? if($items): ?>
 
-		<h2><?= $items["total"] ?> Posts</h2>
+		<h2><?= pluralize($items["total"], "post", "posts") ?></h2>
 
 		<?= $HTML->pagination($items, [
 			"base_url" => "/bulletin/tag/".urlencode($selected_tag), 
