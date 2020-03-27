@@ -380,7 +380,7 @@
 #content .scene.blog dl.author {padding-bottom: 20px; width: auto;}
 #content .scene.blog dl.author dt {width: auto; display: block; text-align: left;}
 #content .scene.blog dl.author dt:after {content: "";}
-#content .scene.blog dl.author dd {font-size: 14px;}
+#content .scene.blog dl.author dd {font-size: 14px; line-height: 1.5em;}
 #content .scene.blog dl.author dt.bio {padding-top: 10px; line-height: 1.5em;}
 
 
