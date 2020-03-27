@@ -23,6 +23,7 @@ $blog_item = $IC->getItem([
 $pagination_pattern = [
 	"pattern" => [
 		"itemtype" => "post", 
+		"tags" => "blog:" . $blog_item["name"],
 		"status" => 1, 
 		"extend" => [
 			"tags" => true, 
