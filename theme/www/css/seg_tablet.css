@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-03-27 22:46:54
+asset-builder @ 2020-03-27 22:49:12
 */
 
 /*seg_tablet_include.css*/
@@ -1251,8 +1251,8 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.blog dl.author dt,
 #content .scene.blog dl.author dd {width: auto; display: block; text-align: left;}
 #content .scene.blog dl.author dt:after {content: "";}
-#content .scene.blog dl.author dd {font-size: 14px;}
-#content .scene.blog dl.author dt.bio {padding-top: 10px; line-height: 1.5em;}
+#content .scene.blog dl.author dd {font-size: 14px; line-height: 1.5em;}
+#content .scene.blog dl.author dt.bio {padding-top: 10px;}
 body.black *,
 body.black #header .logo,
 body.black #content .scene a,
