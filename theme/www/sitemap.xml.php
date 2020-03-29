@@ -24,16 +24,6 @@ $item = $IC->getItem(array("tags" => "page:front"));
 		<priority>1</priority>
 	</url>
 <?
-// LATEST PAGE
-$item = $IC->getItem(array("tags" => "post-page:Latest"));
-?>
-	<url>
-		<loc><?= SITE_URL ?>/bulletin</loc>
-		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
-		<changefreq>daily</changefreq>
-		<priority>1</priority>
-	</url>
-<?
 // POSTS
 $items = $IC->getItems(array("itemtype" => "post", "status" => 1)); 
 foreach($items as $item):

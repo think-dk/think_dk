@@ -369,12 +369,14 @@
 #content .scene.blogs ul.blogs li.blog dl.author dd {font-style: italic; display: inline-block;}
 
 /* TEXT SIZE ADJUSTMENTS FOR BLOG AREA */
+#content .scene.blog h1 {font-size: 54px;}
+#content .scene.blog h3 {font-size: 40px;}
 #content .scene.blog ul.info {padding-top: 20px; padding-bottom: 46px;}
 #content .scene.blog ul.info li {font-size: 14px; line-height: 14px;}
 #content .scene.blogs .articlebody p,
 #content .scene.blog .articlebody p {font-size: 16px; line-height: 1.6em; padding-bottom: 30px;}
 #content .scene.blogs .articlebody h3,
-#content .scene.blog .articlebody h3 {font-size: 20px;}
+#content .scene.blog .articlebody h3 {font-size: 20px; color: #26962d;}
 #content .scene.blog .articlebody li {font-size: 16px; line-height: 1.6em; padding-bottom: 15px;}
 
 #content .scene.blog dl.author {padding-bottom: 20px; width: auto;}
@@ -382,6 +384,17 @@
 #content .scene.blog dl.author dt:after {content: "";}
 #content .scene.blog dl.author dd {font-size: 14px; line-height: 1.5em;}
 #content .scene.blog dl.author dt.bio {padding-top: 10px; line-height: 1.5em;}
+
+
+/* CORONA PAGE */
+#content .scene.corona h1 {font-size: 54px;}
+#content .scene.corona h3 {font-size: 40px;}
+#content .scene.corona ul.info {padding-top: 20px; padding-bottom: 46px;}
+#content .scene.corona ul.info li {font-size: 14px; line-height: 14px;}
+#content .scene.corona .articlebody p {font-size: 16px; line-height: 1.6em; padding-bottom: 30px;}
+#content .scene.corona .articlebody h3 {font-size: 20px; color: #26962d;}
+#content .scene.corona .articlebody li {font-size: 16px; line-height: 1.6em; padding-bottom: 15px;}
+
 
 
 
