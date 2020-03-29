@@ -370,7 +370,7 @@
 
 /* TEXT SIZE ADJUSTMENTS FOR BLOG AREA */
 #content .scene.blog h1 {font-size: 54px;}
-#content .scene.blog h3 {font-size: 40px;}
+#content .scene.blog h2 {font-size: 40px;}
 #content .scene.blog ul.info {padding-top: 20px; padding-bottom: 46px;}
 #content .scene.blog ul.info li {font-size: 14px; line-height: 14px;}
 #content .scene.blogs .articlebody p,
@@ -387,8 +387,8 @@
 
 
 /* CORONA PAGE */
-#content .scene.corona h1 {font-size: 54px;}
-#content .scene.corona h3 {font-size: 40px;}
+#content .scene.corona h1 {font-size: 44px;}
+#content .scene.corona h2 {font-size: 30px;}
 #content .scene.corona ul.info {padding-top: 20px; padding-bottom: 46px;}
 #content .scene.corona ul.info li {font-size: 14px; line-height: 14px;}
 #content .scene.corona .articlebody p {font-size: 16px; line-height: 1.6em; padding-bottom: 30px;}
