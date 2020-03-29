@@ -779,7 +779,13 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.corona {width: 740px; margin: 70px auto 0;}
 #content .scene.corona h1 {font-size: 54px;}
 #content .scene.corona h2 {font-size: 40px; padding-bottom: 60px;}
-#content .scene.corona h3 {color: #26962d;}
+#content .scene.corona .articlebody h3 {color: #26962d;}
+#content .scene.corona h1,
+#content .scene.corona h2,
+#content .scene.corona .articlebody p {text-align: center;}
+#content .scene.corona .comments h2 {text-align: left;}
+
+
 #content .scene.corona ul.info {padding-top: 20px; padding-bottom: 46px;}
 #content .scene.corona ul.info li {font-size: 14px; line-height: 14px;}
 #content .scene.corona .articlebody p {font-size: 17px; line-height: 1.6em; padding-bottom: 30px;}
