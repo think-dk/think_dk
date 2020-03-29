@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-03-29 22:56:31
+asset-builder @ 2020-03-29 23:15:40
 */
 
 /*seg_desktop_include.css*/
@@ -1259,13 +1259,23 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.blog dl.author dt:after {content: "";}
 #content .scene.blog dl.author dd {font-size: 14px; line-height: 1.5em;}
 #content .scene.blog dl.author dt.bio {padding-top: 10px;}
+#content .scene.corona {width: 740px; margin: 70px auto 0;}
 #content .scene.corona h1 {font-size: 54px;}
-#content .scene.corona h2 {font-size: 40px;}
+#content .scene.corona h2 {font-size: 40px; padding-bottom: 60px;}
 #content .scene.corona h3 {color: #26962d;}
 #content .scene.corona ul.info {padding-top: 20px; padding-bottom: 46px;}
 #content .scene.corona ul.info li {font-size: 14px; line-height: 14px;}
 #content .scene.corona .articlebody p {font-size: 17px; line-height: 1.6em; padding-bottom: 30px;}
-#content .scene.corona .articlebody li {font-size: 17px; line-height: 1.6em; padding-bottom: 15px;}
+#content .scene.corona .articlebody li {font-size: 19px; line-height: 1.6em; padding-bottom: 15px;}
+#content .scene.corona h1, 
+#content .scene.corona h2, 
+#content .scene.corona h3, 
+#content .scene.corona h4, 
+#content .scene.corona h5, 
+#content .scene.corona h6, 
+#content .scene.corona p {width: 600px;}
+#content .scene.corona .articlebody ul, 
+#content .scene.corona .articlebody ol {width: 585px; padding-top: 20px; padding-bottom: 35px;}
 body.black *,
 body.black #header .logo,
 body.black #content .scene a,
