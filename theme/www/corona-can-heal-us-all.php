@@ -21,6 +21,8 @@ if(count($action) == 1 && $action[0] == "signup") {
 
 	if($csrf && $model->save(["signee", "save"])) {
 
+		message()->resetMessages();
+
 		// redirect to leave POST state
 		header("Location: /corona-can-heal-us-all/receipt");
 		exit();
