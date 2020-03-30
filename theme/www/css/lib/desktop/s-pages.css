@@ -806,7 +806,7 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.corona div.signees h2 {padding-bottom: 30px;}
 
 #content .scene.corona div.signees ul.signees {font-size: 0;}
-#content .scene.corona div.signees ul.signees li {font-size: 20px; display: inline-block; vertical-align: top; width: 50%;}
+#content .scene.corona div.signees ul.signees li {font-size: 20px; display: inline-block; vertical-align: top; width: 50%; padding-bottom: 15px;}
 
 
 body.black *,
