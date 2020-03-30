@@ -163,7 +163,7 @@ body.front #page.fixed {width: auto; margin: 0;}
 /* FRONT - EVENTS */
 #content .scene.front div.all_events {display: none; padding-bottom: 50px;}
 #content .scene.front div.all_events h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
-	font-family: "OpenSans";
+	font-family: "OpenSans", Verdana, Arial, sans-serif;
 }
 /*#content .scene.front div.all_events ul.events {border-top: 1px solid #dedede; padding: 0 20px 0 70px;}
 #content .scene.front div.all_events ul.events h3,
@@ -176,7 +176,7 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.front div.news {display: none;}
 #content .scene.front div.news h2 {padding-bottom: 15px;}
 #content .scene.front div.news h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
-	font-family: "OpenSans";
+	font-family: "OpenSans", Verdana, Arial, sans-serif;
 }
 #content .scene.front div.news ul.articles li.article h3 {padding-bottom: 20px; color: #26962d;}
 
@@ -342,7 +342,7 @@ body.front #page.fixed {width: auto; margin: 0;}
 
 #content .scene div.all_events h2 {padding-bottom: 15px;}
 #content .scene div.all_events h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
-	font-family: "OpenSans";
+	font-family: "OpenSans", Verdana, Arial, sans-serif;
 }
 #content .scene ul.events li.event {padding-bottom: 0;}
 #content .scene ul.events li.event h3 {
@@ -588,7 +588,7 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.checkout div.all_items h2 a,
 #content .scene.checkout div.billing h2 a,
 #content .scene.checkout div.delivery h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
-	font-family: "OpenSans";
+	font-family: "OpenSans", Verdana, Arial, sans-serif;
 }
 
 #content .scene.checkout ul.items > li {padding: 20px 0 10px;}
@@ -745,7 +745,7 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene .articlebody p.quote {
 	font-size: 30px;
 	text-align: center;
-	font-family: "PT Serif";
+	font-family: "PT Serif", Times, serif;
 	padding-top: 20px;
 	padding-bottom: 40px;
 }
@@ -780,16 +780,14 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.corona h1 {font-size: 54px;}
 #content .scene.corona h2 {font-size: 40px; padding-bottom: 60px;}
 #content .scene.corona .articlebody h3 {color: #26962d;}
-/*#content .scene.corona h1,
-#content .scene.corona h2 {text-align: center;}
-*//*#content .scene.corona .articlebody p {text-align: center;}*/
-#content .scene.corona .comments h2 {text-align: left;}
-
-
 #content .scene.corona ul.info {padding-top: 20px; padding-bottom: 46px;}
 #content .scene.corona ul.info li {font-size: 14px; line-height: 14px;}
 #content .scene.corona .articlebody p {font-size: 17px; line-height: 1.6em; padding-bottom: 30px;}
 #content .scene.corona .articlebody li {font-size: 19px; line-height: 1.6em; padding-bottom: 15px;}
+#content .scene.corona .articlebody h2.quote {text-align: center;}
+#content .scene.corona .articlebody h2.quote span.quotee {font-size: 20px; text-align: right; display: block; padding-top: 15px; color: #777777;
+	font-family: "OpenSans", Verdana, Arial, sans-serif;
+}
 
 #content .scene.corona h1, 
 #content .scene.corona h2, 
