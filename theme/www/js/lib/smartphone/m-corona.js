@@ -13,6 +13,11 @@ Util.Modules["corona"] = new function() {
 		scene.ready = function() {
 			// u.bug("scene.ready:", this);
 
+			this.form_signup = u.qs("form.signup", this);
+			if(this.form_signup) {
+				u.f.init(this.form_signup);
+			}
+
 			u.showScene(this);
 
 

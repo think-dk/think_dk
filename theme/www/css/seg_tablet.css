@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-03-30 08:39:28
+asset-builder @ 2020-03-30 10:13:50
 */
 
 /*seg_tablet_include.css*/
@@ -1277,6 +1277,12 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.corona p {width: 600px;}
 #content .scene.corona .articlebody ul, 
 #content .scene.corona .articlebody ol {width: 585px; padding-top: 20px; padding-bottom: 35px;}
+#content .scene.corona div.signee {padding-bottom: 60px;}
+#content .scene.corona div.signee h2 {padding-bottom: 20px;}
+#content .scene.corona div.signees {padding-bottom: 60px;}
+#content .scene.corona div.signees h2 {padding-bottom: 30px;}
+#content .scene.corona div.signees ul.signees {font-size: 0;}
+#content .scene.corona div.signees ul.signees li {font-size: 20px; display: inline-block; vertical-align: top; width: 50%;}
 body.black *,
 body.black #header .logo,
 body.black #content .scene a,

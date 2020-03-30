@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-03-30 08:39:28
+asset-builder @ 2020-03-30 10:13:50
 */
 
 /*seg_smartphone_include.js*/
@@ -9239,6 +9239,10 @@ Util.Modules["corona"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
+			this.form_signup = u.qs("form.signup", this);
+			if(this.form_signup) {
+				u.f.init(this.form_signup);
+			}
 			u.showScene(this);
 			page.resized();
 		}

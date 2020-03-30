@@ -401,6 +401,15 @@
 	font-family: "OpenSans", Verdana, Arial, sans-serif;
 }
 
+#content .scene.corona div.signee {padding-bottom: 50px;}
+#content .scene.corona div.signee h2 {padding-bottom: 20px;}
+
+#content .scene.corona div.signees {padding-bottom: 50px;}
+#content .scene.corona div.signees h2 {padding-bottom: 30px;}
+
+#content .scene.corona div.signees ul.signees {font-size: 0;}
+#content .scene.corona div.signees ul.signees li {font-size: 18px; padding-bottom: 10px;}
+
 
 
 body.black *,
