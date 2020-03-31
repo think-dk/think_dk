@@ -56,8 +56,8 @@ if($page_item) {
 			<?= $model->input("signed_item_id", ["type" => "hidden", "value" => $page_item["item_id"]]) ?>
 			<?= $model->input("name", ["type" => "hidden", "value" => gen_uuid()]) ?>
 			<fieldset>
-				<?= $model->input("fullname", ["label" => "Dit fulde navn"]) ?>
-				<?= $model->input("email", ["label" => "Din email"]) ?>
+				<?= $model->input("fullname", ["label" => "Dit fulde navn", "hint_message" => "Skriv dit fulde navn.", "error_message" => "Dit fulde navn skal udfyldes."]) ?>
+				<?= $model->input("email", ["label" => "Din email", "hint_message" => "Skriv din email.", "error_message" => "Du skal skrive en gyldig email-adresse."]) ?>
 			</fieldset>
 
 			<ul class="actions">
