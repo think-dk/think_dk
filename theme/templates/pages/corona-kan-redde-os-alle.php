@@ -50,7 +50,7 @@ if($page_item) {
 
 	<div class="signee">
 		<h2>Er du enig?</h2>
-		<p>Du kan også hæve niveauet og forpligte dig til at blive en bedre version af dig selv, for at skabe en bedre version af verden. Du kan også <a href="/bulletin/what-to-do-now">hjælpe os med at dele manifestet</a>.</p>
+		<p>Du kan også hæve niveauet og forpligte dig til at blive en bedre version af dig selv, for at skabe en bedre version af verden – <strong>ved at skrive under nedenfor</strong>. Du kan også <a href="/bulletin/what-to-do-now">hjælpe os med at dele manifestet</a>.</p>
 
 		<?= $model->formStart("signup", array("class" => "signup labelstyle:inject")) ?>
 			<?= $model->input("signed_item_id", ["type" => "hidden", "value" => $page_item["item_id"]]) ?>
