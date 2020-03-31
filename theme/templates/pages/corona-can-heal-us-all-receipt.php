@@ -12,7 +12,7 @@ global $IC;
 			Thank you for supporting the development of a better world.
 		</p>
 		<p>
-			Now, please <a href="/corona-can-heal-us-all">return to the Corona page</a> and help share the message.
+			Now, please <a href="/corona-can-heal-us-all">help share the manifest</a> – or <a href="/corona-can-heal-us-all">return to the Corona page</a>.
 		</p>
 	</div>
 

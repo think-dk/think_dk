@@ -12,7 +12,7 @@ global $IC;
 			Tak fordi du støtter udviklingen af en bedre verden.
 		</p>
 		<p>
-			Nu må du meget gerne vende <a href="/corona-kan-redde-os-alle">tilbage til Corona siden</a> og hjælpe med at dele budskabet.
+			Nu må du meget gerne <a href="/bulletin/what-to-do-now">hjælpe med at dele manifestet</a> – eller <a href="/corona-kan-redde-os-alle">vend tilbage til Corona siden</a>.
 		</p>
 	</div>
 
