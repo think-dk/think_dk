@@ -41,8 +41,8 @@ $cart = $model->getCart();
 	<div class="addresses">
 		<ul class="addresses">
 			<? foreach($user["addresses"] as $address): ?>
-			<li<?= ($address["id"] == $cart[$type."_address_id"]) ? ' class="selected"' : "" ?>>
-				<h3 class="address_label"><?= $address["address_label"] ?></h3>
+			<li class="address<?= ($address["id"] == $cart[$type."_address_id"]) ? " selected" : "" ?>">
+				<?= $address["address_label"] ? ('<div class="address_label">' . $address["address_label"] . '</div>') : '' ?>
 				<div class="address_name"><?= $address["address_name"] ?></div>
 				<?= $address["att"] ? ('<div class="att">Att: ' . $address["att"] . '</div>') : '' ?>
 				<div class="address1"><?= $address["address1"] ?></div>
@@ -54,14 +54,14 @@ $cart = $model->getCart();
 				<?= $address["state"] ? ('<div class="state">' . $address["state"] . '</div>') : '' ?>
 				<div class="country"><?= $address["country_name"] ?></div>
 
-				<? if($address["id"] != $cart[$type."_address_id"]): ?>
+				<? /* if($address["id"] != $cart[$type."_address_id"]):*/ ?>
 				<?= $UC->formStart("selectAddress", array("class" => "labelstyle:inject")) ?>
 				<?= $UC->input($type."_address_id", array("type" => "hidden", "value" => $address["id"]))?>
 				<ul class="actions">
 					<?= $UC->submit("Select", array("wrapper" => "li.select")) ?>
 				</ul>
 				<?= $UC->formEnd() ?>
-				<? endif; ?>
+				<? /* endif; */ ?>
 			</li>
 			<? endforeach; ?>
 		</ul>
