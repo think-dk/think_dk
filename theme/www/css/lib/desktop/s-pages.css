@@ -590,6 +590,8 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.checkout div.delivery h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
 	font-family: "OpenSans", Verdana, Arial, sans-serif;
 }
+#content .scene.checkout form li.forgot {padding: 7px 0 0;}
+#content .scene.checkout form li.forgot a {padding: 0; display: inline-block; vertical-align: top;}
 
 #content .scene.checkout ul.items > li {padding: 20px 0 10px;}
 #content .scene.checkout ul.items li h3 {width: auto; font-size: 16px;}
@@ -605,11 +607,11 @@ body.front #page.fixed {width: auto; margin: 0;}
 
 /* ADDRESSES */
 #content .scene.shopAddress ul.addresses {}
-#content .scene.shopAddress ul.addresses > li {display: inline-block; vertical-align: top; width: 220px; height: 220px; padding: 0 10px 0 0; margin-bottom: 40px; position: relative;}
+#content .scene.shopAddress ul.addresses > li {display: inline-block; vertical-align: top; width: 250px; padding: 20px 20px 70px; box-sizing: border-box; border-radius: 5px; border: 1px solid #dedede; margin-bottom: 30px; margin-right: 30px; position: relative;}
 #content .scene.shopAddress ul.addresses > li h3 {width: auto; padding-left: 0; padding-right: 0;}
 #content .scene.shopAddress ul.addresses > li > div {color: #777777;}
 
-#content .scene.shopAddress ul.addresses > li ul.actions {padding: 20px 0 0;}
+#content .scene.shopAddress ul.addresses > li ul.actions {padding: 0; position: absolute; bottom: 10px; left: 20px;}
 #content .scene.shopAddress div.item {border-top: 1px solid #dedede; padding-top: 20px;}
 
 

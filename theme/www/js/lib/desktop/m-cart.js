@@ -240,6 +240,25 @@ Util.Modules["shopAddress"] = new function() {
 		scene.ready = function() {
 //			u.bug("scene.ready:", this);
 
+			var addresses = u.qsa("ul.addresses li.address", this);
+			if(addresses) {
+
+				var i, address, highest = 0;
+				for(i = 0; i < addresses.length; i++) {
+					address = addresses[i];
+					if(address.offsetHeight > highest) {
+						highest = address.offsetHeight;
+					}
+				}
+
+				for(i = 0; i < addresses.length; i++) {
+					address = addresses[i];
+					u.ass(address, {
+						height: highest+"px"
+					})
+				}
+
+			}
 
 
 			var form = u.qs("form.address", this);
