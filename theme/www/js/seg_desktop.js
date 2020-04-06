@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-03-31 16:23:38
+asset-builder @ 2020-04-06 14:45:05
 */
 
 /*seg_desktop_include.js*/
@@ -10051,6 +10051,22 @@ Util.Modules["shopAddress"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
+			var addresses = u.qsa("ul.addresses li.address", this);
+			if(addresses) {
+				var i, address, highest = 0;
+				for(i = 0; i < addresses.length; i++) {
+					address = addresses[i];
+					if(address.offsetHeight > highest) {
+						highest = address.offsetHeight;
+					}
+				}
+				for(i = 0; i < addresses.length; i++) {
+					address = addresses[i];
+					u.ass(address, {
+						height: highest+"px"
+					})
+				}
+			}
 			var form = u.qs("form.address", this);
 			if(form) {
 				u.f.init(form);
