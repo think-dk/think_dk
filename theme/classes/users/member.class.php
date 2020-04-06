@@ -47,7 +47,7 @@ class Member extends MemberCore {
 			// TODO:
 			// Get current membership price
 			// if custom price er det samme som membership price, så slet custom price fra systemet.
-
+			
 
 			// Check that subscription for this membership type exists
 			$sql = "SELECT * FROM ".$this->db_subscriptions." WHERE user_id = $user_id AND item_id = $item_id";
