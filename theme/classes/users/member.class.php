@@ -64,7 +64,17 @@ class Member extends MemberCore {
 
 				if($order) {
 
-					$sql = "UPDATE ".$this->db_subscriptions." SET custom_price = '$custom_price' WHERE id = ".$subscription["id"];
+					$expires_at = "";
+
+					if(!$subscription["expires_at"]) {
+						$IC = new Items();
+						$item = $IC->getItem(["id" => $subscription["item_id"], "extend" => ["subscription_method" => true]]);
+						if($item["subscription_method"] && $item["subscription_method"]["duration"]) {
+							$expires_at = ", expires_at = '".date("Y-m-d")." 00:00:00'";
+						}
+					}
+
+					$sql = "UPDATE ".$this->db_subscriptions." SET custom_price = '$custom_price'$expires_at WHERE id = ".$subscription["id"];
 					if($query->sql($sql)) {
 
 						message()->addMessage("Custom price has been saved");
