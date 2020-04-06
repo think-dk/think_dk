@@ -24,7 +24,7 @@ if(defined("SITE_SHOP") && SITE_SHOP) {
 $price = $SC->getPrice($membership["item_id"]);
 $subscription = $SubscriptionClass->getSubscriptions(["item_id" => $membership["item_id"], "user_id" => $membership["user_id"]]);
 
-if($subscription["custom_price"]) {
+if($subscription["custom_price"] || $subscription["custom_price"] === "0") {
 	$custom_price = $price;
 	$custom_price["price"] = $subscription["custom_price"];
 }
