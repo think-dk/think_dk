@@ -2,7 +2,8 @@ u.site_name = "think.dk";
 u.terms_version = "terms_v1";
 
 u.ga_account = 'UA-10756281-1';
-u.ga_domain = 'think.dk';
+//u.ga_domain = 'think.dk';
+u.ga_domain = '*';
 
 u.gapi_key = "AIzaSyAVqnYpqFln-qAYsp5rkEGs84mrhmGQB_I";
 

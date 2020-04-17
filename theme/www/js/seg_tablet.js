@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-04-06 14:45:05
+asset-builder @ 2020-04-17 10:49:59
 */
 
 /*seg_tablet_include.js*/
@@ -5100,7 +5100,7 @@ u.removeCheckmark = function(node) {
 u.site_name = "think.dk";
 u.terms_version = "terms_v1";
 u.ga_account = 'UA-10756281-1';
-u.ga_domain = 'think.dk';
+u.ga_domain = '*';
 u.gapi_key = "AIzaSyAVqnYpqFln-qAYsp5rkEGs84mrhmGQB_I";
 u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/memberships">Join us</a> to add comments.';
 u.txt["weekday-1"] = "Monday";
