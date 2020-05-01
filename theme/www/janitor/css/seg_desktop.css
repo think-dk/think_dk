@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-04-22 13:35:26
+asset-builder @ 2020-05-01 16:11:15
 */
 
 /*seg_desktop_include.css*/
@@ -653,7 +653,7 @@ body.invoice #content div.scene .payment_info {position: absolute; bottom: 50px;
 #content .defaultList.userList > ul.actions li.unverified_usernames {float: right; padding: 0 0 10px 10px;}
 #content .defaultEdit.userEdit > ul.actions li.cancel {float: right; padding: 0 0 10px 10px;}
 #content .scene.userEdit > div.usernames {border-bottom: 1px solid #bbbbbb;}
-#content .scene.userEdit > div.usernames > div.email {padding-bottom: 20px; position: relative;}
+#content .scene.userEdit > div.usernames div.email {padding-bottom: 20px; position: relative;}
 #content .scene.userEdit > div.usernames form.email {font-size: 0; display: inline-block; vertical-align: top;}
 #content .scene.userEdit > div.usernames div.send_verification_link {position: absolute; right: 5px; top: 4px; width: auto; text-align: right;}
 #content .scene.userEdit > div.usernames div.send_verification_link p {font-size: 11px; padding: 0px; padding-bottom: 4px;}

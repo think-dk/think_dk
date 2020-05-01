@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-04-22 13:35:26
+asset-builder @ 2020-05-01 16:11:15
 */
 
 /*seg_smartphone_include.js*/
@@ -10065,7 +10065,7 @@ Util.Modules["usernames"] = new function() {
 					u.ac(this.actions["save"], "disabled");
 					if(response.cms_object.email_status == "UPDATED") {
 						this.inputs.username_id.val(response.cms_object.username_id);
-						if(send_verification_link.form.action == "/janitor/admin/user/sendVerificationLink/") {
+						if(send_verification_link.form.action.match(/sendVerificationLink\/$/)) {
 							send_verification_link.form.action += this.inputs.username_id.val();
 						}
 						if(response.cms_object.verification_status == "VERIFIED") {
