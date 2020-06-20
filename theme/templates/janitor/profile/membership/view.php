@@ -168,7 +168,7 @@ else {
 		<h3 class="current_price">Current membership price: <span class="price"><?= $custom_price ? formatPrice($custom_price) : formatPrice($price) ?></span></h3>
 		<p>
 			During the lock down, we will not be able to host any events at think.dk.
-			Therefor we allow all members to freely adjust their membership payments.
+			Therefore we allow all members to freely adjust their membership payments.
 		</p>
 		<p>
 			We are not a profit oriented company and we kindly ask you to consider the choice you make. 
