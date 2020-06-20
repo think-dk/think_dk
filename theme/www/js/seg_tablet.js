@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-04-17 13:18:07
+asset-builder @ 2020-06-21 00:14:46
 */
 
 /*seg_tablet_include.js*/
@@ -10144,10 +10144,6 @@ Util.Modules["payment"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			var form = u.qs("form", this);
-			if(form) {
-				u.f.init(form);
-			}
 			u.showScene(this);
 		}
 		page.cN.scene = scene;
@@ -10162,10 +10158,6 @@ Util.Modules["payments"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			var form = u.qs("form", this);
-			if(form) {
-				u.f.init(form);
-			}
 			u.showScene(this);
 		}
 		page.cN.scene = scene;
@@ -10180,7 +10172,6 @@ Util.Modules["stripe"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			this.card_form = u.qs("form.card", this);
 			u.f.customValidate["card"] = function(iN) {
 				var card_number = iN.val().replace(/ /g, "");
 				if(u.paymentCards.validateCardNumber(card_number)) {
@@ -10242,44 +10233,47 @@ Util.Modules["stripe"] = new function() {
 					u.f.inputHasError(iN);
 				}
 			}
-			u.f.init(this.card_form);
-			this.card_form.submitted = function() {
-				if(!this.is_submitting) {
-					this.is_submitting = true;
-					u.ac(this, "submitting");
-					u.ac(this.actions["pay"], "disabled");
-					this.DOMsubmit();
-				}
-			}
-			this.card_form.inputs["card_number"].updated = function(iN) {
-				var value = this.val();
-				this.value = u.paymentCards.formatCardNumber(value.replace(/ /g, ""));
-				var card = u.paymentCards.getCardTypeFromNumber(value);
-				if(card && card.type != this.current_card) {
-					if(this.current_card) {
-						u.rc(this, this.current_card);
-					}
-					this.current_card = card.type;
-					u.ac(this, this.current_card);
-				}
-				else if(!card) {
-					if(this.current_card) {
-						u.rc(this, this.current_card);
+			this.card_form = u.qs("form.card", this);
+			if(this.card_form) {
+				u.f.init(this.card_form);
+				this.card_form.submitted = function() {
+					if(!this.is_submitting) {
+						this.is_submitting = true;
+						u.ac(this, "submitting");
+						u.ac(this.actions["pay"], "disabled");
+						this.DOMsubmit();
 					}
 				}
-			}
-			this.card_form.inputs["card_exp_year"].changed = function(iN) {
-				var year = parseInt(this.val());
-				if(year > 99) {
-					if(year > 2000 && year < 2100) {
-						this.val(year-2000);
+				this.card_form.inputs["card_number"].updated = function(iN) {
+					var value = this.val();
+					this.value = u.paymentCards.formatCardNumber(value.replace(/ /g, ""));
+					var card = u.paymentCards.getCardTypeFromNumber(value);
+					if(card && card.type != this.current_card) {
+						if(this.current_card) {
+							u.rc(this, this.current_card);
+						}
+						this.current_card = card.type;
+						u.ac(this, this.current_card);
+					}
+					else if(!card) {
+						if(this.current_card) {
+							u.rc(this, this.current_card);
+						}
 					}
 				}
-			}
-			this.card_form.inputs["card_exp_month"].changed = function(iN) {
-				var month = parseInt(this.val());
-				if(month < 10) {
-					this.val("0"+month);
+				this.card_form.inputs["card_exp_year"].changed = function(iN) {
+					var year = parseInt(this.val());
+					if(year > 99) {
+						if(year > 2000 && year < 2100) {
+							this.val(year-2000);
+						}
+					}
+				}
+				this.card_form.inputs["card_exp_month"].changed = function(iN) {
+					var month = parseInt(this.val());
+					if(month < 10) {
+						this.val("0"+month);
+					}
 				}
 			}
 			// 

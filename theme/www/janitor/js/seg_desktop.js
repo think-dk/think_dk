@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-05-01 16:11:15
+asset-builder @ 2020-06-21 00:15:21
 */
 
 /*seg_desktop_include.js*/
@@ -10695,25 +10695,80 @@ Util.Modules["orderList"] = new function() {
 			bn_ship = u.qs("ul.actions li.ship", node);
 			if(bn_ship) {
 				bn_ship.node = node;
+				node.bn_ship = bn_ship;
+				bn_ship.dd_shipping_status = u.qs("dd.shipping_status", node);
 				bn_ship.confirmed = function(response) {
-					console.log("yes", response);
-					if(response.cms_status == "success") {
-						this.node.transitioned = function() {
-							this.transitioned = function() {
-								this.parentNode.removeChild(this);
+					if(response.cms_status === "success") {
+						if(!this.node.bn_capture || u.hc(div, "pending")) {
+							this.node.transitioned = function() {
+								this.transitioned = function() {
+									this.parentNode.removeChild(this);
+								}
+								u.a.transition(this, "all 0.3s ease-in-out");
+								u.ass(this, {
+									height: 0,
+								});
 							}
-							u.a.transition(this, "all 0.3s ease-in-out");
-							u.ass(this, {
-								height: 0,
+							u.a.transition(this.node, "all 0.3s ease-in-out");
+							u.ass(this.node, {
+								opacity: 0,
+								height: this.node.offsetHeight+"px",
 							});
-						}	
-						u.a.transition(this.node, "all 0.3s ease-in-out");
-						u.ass(this.node, {
-							opacity: 0,
-							height: this.node.offsetHeight+"px",
-						});
+						}
+						else {
+							delete this.node.bn_ship;
+							this.parentNode.removeChild(this);
+							this.dd_shipping_status.innerHTML = "Shipped";
+							u.rc(this.dd_shipping_status, "unshipped");
+							u.ac(this.dd_shipping_status, "shipped");
+						}
 					}
 				}
+			}
+			bn_capture = u.qs("ul.actions li.capture", node);
+			if(bn_capture) {
+				bn_capture.node = node;
+				node.bn_capture = bn_capture;
+				bn_capture.dd_payment_status = u.qs("dd.payment_status", node);
+				bn_capture.confirmed = function(response) {
+					if(response.cms_status == "success") {
+						if(!this.node.bn_ship || u.hc(div, "pending")) {
+							this.node.transitioned = function() {
+								this.transitioned = function() {
+									this.parentNode.removeChild(this);
+								}
+								u.a.transition(this, "all 0.3s ease-in-out");
+								u.ass(this, {
+									height: 0,
+								});
+							}
+							u.a.transition(this.node, "all 0.3s ease-in-out");
+							u.ass(this.node, {
+								opacity: 0,
+								height: this.node.offsetHeight+"px",
+							});
+						}
+						else {
+							delete this.node.bn_capture;
+							this.parentNode.removeChild(this);
+							this.dd_payment_status.innerHTML = "Paid";
+							u.rc(this.dd_payment_status, "unpaid");
+							u.ac(this.dd_payment_status, "paid");
+						}
+					}
+				}
+			}
+		}
+	}
+}
+Util.Modules["capturePaymentNew"] = new function() {
+	this.init = function(div) {
+		var bn_capture = u.qs("li.capture", div)
+		var bn_back = u.qs("li.back a")
+		bn_capture.bn_back = bn_back;
+		bn_capture.confirmed = function(response) {
+			if(response.cms_status == "success") {
+				location.href = this.bn_back.href;
 			}
 		}
 	}
@@ -10864,6 +10919,23 @@ Util.Modules["passwordProfile"] = new function() {
 			}
 			u.request(this, this.action, {"method":"post", "data" : this.getData()});
 			this.reset();
+		}
+	}
+}
+Util.Modules["paymentMethods"] = new function() {
+	this.init = function(div) {
+		var payment_methods = u.qsa("li.payment_method", div);
+		var i, payment_method;
+		for(i = 0; i < payment_methods.length; i++) {
+			payment_method = payment_methods[i];
+			payment_method.action = u.qs("li.delete", payment_method);
+			payment_method.action.payment_method = payment_method;
+			payment_method.action.confirmed = function(response) {
+				page.notify(response);
+				if(response.cms_status && response.cms_status === "success") {
+					this.payment_method.parentNode.removeChild(this.payment_method);
+				}
+			}
 		}
 	}
 }
