@@ -2,10 +2,9 @@
 global $action;
 global $model;
 
-$user_id = session()->value("user_id");
+$this->pageTitle("Cart");
 
-//$UC = new User();
-//$username = stringOr(getPost("username"));
+$user_id = session()->value("user_id");
 
 
 // if cart reference was passed to cart controller
@@ -24,21 +23,6 @@ $IC = new Items();
 	<h1>Your cart</h1>
 
 	<?= $HTML->serverMessages() ?>
-
-<? if($cart["items"]) :?>
-	<div class="checkout">
-		<ul class="actions">
-			<?= $HTML->oneButtonForm("Checkout", "/shop/checkout", array(
-				"confirm-value" => false,
-				"dom-submit" => true,
-				"success-location" => "/shop/checkout",
-				"class" => "primary",
-				"name" => "continue",
-				"wrapper" => "li.continue",
-			)) ?>
-		</ul>
-	</div>
-<? endif; ?>
 
 	<div class="all_items">
 		<h2>Cart contents</h2>
@@ -124,6 +108,8 @@ $IC = new Items();
 
 <? if($cart["items"]) :?>
 	<div class="checkout">
+		<h2>Continue to checkout</h2>
+		<p>When you are ready, click <em>Checkout</em> to proceed.</p>
 		<ul class="actions">
 			<?= $HTML->oneButtonForm("Checkout", "/shop/checkout", array(
 				"confirm-value" => false,

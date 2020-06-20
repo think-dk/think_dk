@@ -15,10 +15,10 @@ Util.Modules["payment"] = new function() {
 //			u.bug("scene.ready:", this);
 
 
-			var form = u.qs("form", this);
-			if(form) {
-				u.f.init(form);
-			}
+			// var form = u.qs("form", this);
+			// if(form) {
+			// 	u.f.init(form);
+			// }
 
 			u.showScene(this);
 

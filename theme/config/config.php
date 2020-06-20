@@ -35,11 +35,16 @@ define("SITE_MEMBERS", true);
 
 // Enable shop model
 define("SITE_SHOP", true);
-define("SHOP_ORDER_NOTIFIES", "martin@think.dk,anja@think.dk");
+// define("SHOP_ORDER_NOTIFIES", "martin@think.dk,anja@think.dk");
+define("SHOP_ORDER_NOTIFIES", "martin@think.dk");
 
 
 // Enable notifications (send collection email after N notifications)
 define("SITE_COLLECT_NOTIFICATIONS", 50);
+
+
+define("SITE_PAYMENT_REGISTER_INTENT", SITE_URL."/shop/payment-gateway/{GATEWAY}/register-intent");
+define("SITE_PAYMENT_REGISTER_PAID_INTENT", SITE_URL."/shop/payment-gateway/{GATEWAY}/register-paid-intent");
 
 
 //define("SITE_INSTALL", true);

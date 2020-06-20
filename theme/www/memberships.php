@@ -21,9 +21,6 @@ if($action) {
 	# /memberships/already-member
 	if($action[0] == "already-member") {
 
-		// empty cart to avoid using continuing to checkout via cart
-		$model->emptyCart(array("emptyCart"));
-
 		$page->page(array(
 			"templates" => "memberships/already-member.php"
 		));

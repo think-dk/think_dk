@@ -22,31 +22,32 @@ if($order && $order["payment_status"] != 2 && $order["status"] != 3) {
 
 	$remaining_order_price = $model->getRemainingOrderPrice($order["id"]);
 
-
-	$payment_methods = $this->paymentMethods();
-
 	// Get payment methods
 	$user_payment_methods = $UC->getPaymentMethods(["extend" => true]);
+
+	$payment_methods = $this->paymentMethods();
 
 }
 
 ?>
 <div class="scene shopPayment i:payment">
-	<h1>Payment</h1>
 
 <? if($order && $remaining_order_price["price"]): ?>
 
-
-	<?= $HTML->serverMessages() ?>
-
+	<h1>Your order, <?= $order["order_no"]  ?>, has been confirmed.</h1>
+	<p>
+		Your order is confirmed and the content of your order has been reserved.
+		You will receive a confirmation email shortly.
+	</p>
+	<p>
+		We will start processing your order as soon as we receive your payments.
+	</p>
 
 	<dl class="amount">
 		<dt class="amount">Due amount</dt>
 		<dd class="amount"><?= formatPrice($remaining_order_price) ?></dd>
 	</dl>
 
-
-	<h2>For the payment of:</h2>
 
 	<ul class="orders">
 		<li>
@@ -59,6 +60,10 @@ if($order && $order["payment_status"] != 2 && $order["status"] != 3) {
 		</li>
 	</ul>
 
+	<? 
+	// Only show payment options if order has items or price
+	if($order["items"] && $remaining_order_price && $remaining_order_price["price"] !== 0): ?>
+
 
 	<div class="payment_method">
 		<h2>Choose a payment method</h2>
@@ -69,6 +74,7 @@ if($order && $order["payment_status"] != 2 && $order["status"] != 3) {
 			<ul class="payment_methods">
 
 			<? foreach($user_payment_methods as $user_payment_method): ?>
+			<? debug([$user_payment_method]) ?>
 
 				<? if($user_payment_method && $user_payment_method["cards"]): ?>
 
@@ -86,8 +92,7 @@ if($order && $order["payment_status"] != 2 && $order["status"] != 3) {
 								"gateway_payment_method_id" => $card["id"]
 							),
 							"confirm-value" => false,
-							"wait-value" => "Please wait",
-							"dom-submit" => true,
+							"static" => true,
 							"class" => "primary",
 							"name" => "continue",
 							"wrapper" => "li.continue.".$user_payment_method["classname"],
@@ -110,8 +115,7 @@ if($order && $order["payment_status"] != 2 && $order["status"] != 3) {
 								"payment_method_id" => $user_payment_method["payment_method_id"]
 							),
 							"confirm-value" => false,
-							"wait-value" => "Please wait",
-							"dom-submit" => true,
+							"static" => true,
 							"class" => "primary",
 							"name" => "continue",
 							"wrapper" => "li.continue.".$user_payment_method["classname"],
@@ -146,8 +150,7 @@ if($order && $order["payment_status"] != 2 && $order["status"] != 3) {
 								"payment_method_id" => $payment_method["id"]
 							),
 							"confirm-value" => false,
-							"wait-value" => "Please wait",
-							"dom-submit" => true,
+							"static" => true,
 							"class" => "primary",
 							"name" => "continue",
 							"wrapper" => "li.continue.".$payment_method["classname"],
@@ -163,17 +166,21 @@ if($order && $order["payment_status"] != 2 && $order["status"] != 3) {
 		<? endif; ?>
 	</div>
 
-<? // No payments
-elseif($order && $remaining_order_price["price"] === 0): ?>
 
+	<h2>Or contact us to arrange payment</h2>
+	<p>
+		If you are experiencing difficulties with processing your payment, 
+		then please <a href="mailto:payment@think.dk?subject=Payment%20of%20order%20<?= $order["order_no"] ?>">contact us</a> to arrange your payment by other means.
+	</p>
+	<? endif; ?>
+
+
+<? // No payments
+elseif(session()->value("user_group_id") > 1): ?>
+
+	<h1>Payment options</h1>
 	<h2>Great news</h2>
 	<p>You do not have any outstanding payments.</p>
-
-<? // User logged in, but no order
-elseif($user_id > 1): ?>
-
-	<h2>Order could not be found</h2>
-	<p>Check if you have any other <a href="/shop/payments">outstanding payments</a>.</p>
 
 <? 
 // User not logged in
@@ -183,6 +190,7 @@ else:
 	$username = stringOr(getPost("username"));
 	?>
 
+	<h1>Payment options</h1>
 	<h2>Looking to make a payment?</h2>
 	<p>Please log in to your account.</p>
 

@@ -1,6 +1,6 @@
 Util.Modules["stripe"] = new function() {
 	this.init = function(scene) {
-//		u.bug("stripe init:", this);
+		// u.bug("stripe init:", this);
 		
 
 		scene.resized = function() {
@@ -15,7 +15,7 @@ Util.Modules["stripe"] = new function() {
 //			u.bug("scene.ready:", this);
 
 
-			this.card_form = u.qs("form.card", this);
+
 			u.f.customValidate["card"] = function(iN) {
 //				u.bug("local validation");
 
@@ -110,60 +110,68 @@ Util.Modules["stripe"] = new function() {
 			}
 
 
-			// initalize form
-			u.f.init(this.card_form);
+			this.card_form = u.qs("form.card", this);
+			if(this.card_form) {
 
-			this.card_form.submitted = function() {
+				// initalize form
+				u.f.init(this.card_form);
+
+				this.card_form.submitted = function() {
 				
-				if(!this.is_submitting) {
-					this.is_submitting = true;
+					if(!this.is_submitting) {
+						this.is_submitting = true;
 
-					u.ac(this, "submitting");
-					u.ac(this.actions["pay"], "disabled");
+						u.ac(this, "submitting");
+						u.ac(this.actions["pay"], "disabled");
 
-					this.DOMsubmit();
-				}
-
-			}
-
-
-			// format card as you type
-			this.card_form.inputs["card_number"].updated = function(iN) {
-				var value = this.val();
-				this.value = u.paymentCards.formatCardNumber(value.replace(/ /g, ""));
-
-				var card = u.paymentCards.getCardTypeFromNumber(value);
-				if(card && card.type != this.current_card) {
-					if(this.current_card) {
-						u.rc(this, this.current_card);
+						this.DOMsubmit();
 					}
-					this.current_card = card.type;
-					u.ac(this, this.current_card);
-				}
-				else if(!card) {
-					if(this.current_card) {
-						u.rc(this, this.current_card);
-					}
-				}
-			}
 
-			// remove first two digits in 2000-fullyears
-			this.card_form.inputs["card_exp_year"].changed = function(iN) {
-				var year = parseInt(this.val());
-				if(year > 99) {
-					if(year > 2000 && year < 2100) {
-						this.val(year-2000);
+				}
+
+
+				// format card as you type
+				this.card_form.inputs["card_number"].updated = function(iN) {
+					var value = this.val();
+					this.value = u.paymentCards.formatCardNumber(value.replace(/ /g, ""));
+
+					var card = u.paymentCards.getCardTypeFromNumber(value);
+					if(card && card.type != this.current_card) {
+						if(this.current_card) {
+							u.rc(this, this.current_card);
+						}
+						this.current_card = card.type;
+						u.ac(this, this.current_card);
+					}
+					else if(!card) {
+						if(this.current_card) {
+							u.rc(this, this.current_card);
+						}
 					}
 				}
+
+				// remove first two digits in 2000-fullyears
+				this.card_form.inputs["card_exp_year"].changed = function(iN) {
+					var year = parseInt(this.val());
+					if(year > 99) {
+						if(year > 2000 && year < 2100) {
+							this.val(year-2000);
+						}
+					}
+				}
+
+				// prefix month with "0" if less than 10
+				this.card_form.inputs["card_exp_month"].changed = function(iN) {
+					var month = parseInt(this.val());
+					if(month < 10) {
+						this.val("0"+month);
+					}
+				}
+
 			}
 
-			// prefix month with "0" if less than 10
-			this.card_form.inputs["card_exp_month"].changed = function(iN) {
-				var month = parseInt(this.val());
-				if(month < 10) {
-					this.val("0"+month);
-				}
-			}
+
+
 
 			// // remove first two digits in 2000-fullyears
 			// this.card_form.inputs["card_cvc"].updated = function(iN) {
