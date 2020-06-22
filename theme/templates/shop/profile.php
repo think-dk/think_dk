@@ -15,14 +15,14 @@ $user = $UC->getUser();
 //print_r($user);
 ?>
 <div class="scene shopProfile i:shopProfile">
-	<h1>Details</h1>
+	<h1>Profile</h1>
 
 
 	<?= $HTML->serverMessages() ?>
 
 
 	<div class="item">
-		<h2>Name</h2>
+		<h2>Your details</h2>
 		<?= $UC->formStart("updateProfile", array("class" => "details labelstyle:inject")) ?>
 			<fieldset>
 				<?= $UC->input("firstname", array("required" => true, "value" => $user["firstname"])) ?>

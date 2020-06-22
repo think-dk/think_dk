@@ -4,21 +4,11 @@ global $model;
 $IC = new Items();
 $UC = new User();
 
-$username = stringOr(getPost("username"));
-$firstname = stringOr(getPost("firstname"));
-$lastname = stringOr(getPost("lastname"));
-$email = stringOr(getPost("email"));
-$mobile = stringOr(getPost("mobile"));
-
 
 // get current user id
 $user_id = session()->value("user_id");
 
-// update user on cart
-if($user_id != 1) {
-	$_POST["user_id"] = $user_id;
-	$model->updateCart(array("updateCart"));
-}
+
 
 // get current cart
 $cart = $model->getCart();
@@ -40,8 +30,23 @@ if($cart && $cart["items"]) {
 }
 
 
-$delivery_address = $UC->getAddresses(array("address_id" => $cart["delivery_address_id"]));
-$billing_address = $UC->getAddresses(array("address_id" => $cart["billing_address_id"]));
+// update user on cart
+if($user_id != 1) {
+
+	$_POST["user_id"] = $user_id;
+	$model->updateCart(array("updateCart"));
+
+}
+else {
+
+	$username = stringOr(getPost("username"));
+	$firstname = stringOr(getPost("firstname"));
+	$lastname = stringOr(getPost("lastname"));
+	$email = stringOr(getPost("email"));
+	$mobile = stringOr(getPost("mobile"));
+	$terms = stringOr(getPost("terms"));
+
+}
 
 ?>
 <div class="scene checkout i:signup">
@@ -69,12 +74,12 @@ $billing_address = $UC->getAddresses(array("address_id" => $cart["billing_addres
 			<?= $UC->input("maillist", array("type" => "hidden", "value" => 1)); ?>
 
 			<fieldset>
-				<?= $UC->input("firstname", array("value" => $firstname)); ?>
-				<?= $UC->input("lastname", array("value" => $lastname)); ?>
+				<?= $UC->input("firstname", array("value" => $firstname, "required" => true,)); ?>
+				<?= $UC->input("lastname", array("value" => $lastname, "required" => true,)); ?>
 				<?= $UC->input("email", array("value" => $email, "required" => true, "value" => $email, "hint_message" => "Type your email.", "error_message" => "You entered an invalid email.")); ?>
 				<?= $UC->input("mobile", array("value" => $mobile)); ?>
 				<?= $UC->input("password", array("hint_message" => "Type your new password - or leave it blank and we'll generate one for you.", "error_message" => "Your password must be between 8 and 20 characters.")); ?>
-				<?= $UC->input("terms"); ?>
+				<?= $UC->input("terms", array("value" => $terms)); ?>
 			</fieldset>
 
 			<ul class="actions">
