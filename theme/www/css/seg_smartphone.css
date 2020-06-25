@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-06-25 11:17:35
+asset-builder @ 2020-06-25 14:42:53
 */
 
 /*seg_smartphone_include.css*/
@@ -7,7 +7,7 @@ asset-builder @ 2020-06-25 11:17:35
 /*seg_smartphone.css*/
 /*
 MIT license, 2002-2019 parentNode.dk
-asset-builder @ 2020-03-23 14:34:46
+asset-builder @ 2020-06-25 12:00:26
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -786,16 +786,14 @@ body > div.pagination li.next:active > svg.arrow line {stroke: #ffffff;}
 }
 #content .scene.cart ul.items li ul.actions li.delete input.confirm {width: auto; text-indent: 0; background-image: none;}
 #content .scene.cart div.checkout {padding: 20px 0;}
-#content .scene.cart div.checkout ul.actions {text-align: right;}
-#content .scene.cart div.checkout ul.actions li {padding-right: 0;}
 #content .scene.checkout div.confirm {padding: 20px 0;}
-#content .scene.checkout div.confirm ul.actions {text-align: right;}
-#content .scene.checkout div.confirm ul.actions li {padding-right: 0;}
 #content .scene.checkout div.emptycart,
 #content .scene.checkout div.login,
 #content .scene.checkout div.signup,
 #content .scene.checkout div.contact,
 #content .scene.checkout div.all_items {padding: 0 0 20px;}
+#content .scene.checkout div.confirm,
+#content .scene.checkout div.payment_method {padding: 20px 0 50px;}
 #content .scene.checkout div.contact h2,
 #content .scene.checkout div.all_items h2,
 #content .scene.checkout div.delivery h2,
@@ -819,6 +817,14 @@ body > div.pagination li.next:active > svg.arrow line {stroke: #ffffff;}
 #content .scene.checkout ul.items li span.total_price {float: right;}
 #content .scene.checkout ul.items li.total {border-top: 1px solid #dedede; }
 #content .scene.checkout ul.items li.total h3 {font-size: 20px;}
+#content .scene.checkout ul.payment_methods {padding: 0;}
+#content .scene.checkout ul.payment_methods li.payment_method {padding-bottom: 10px;}
+#content .scene.checkout ul.payment_methods li.payment_method ul.actions {padding-bottom: 0;}
+#content .scene.checkout ul.payment_methods li.payment_method.stripe p {
+	background: url(../img/gx_creditcards.png) no-repeat 20px top;
+	background-size: auto 17px;
+	padding-left: 120px;
+}
 #content .scene.shopAddress ul.addresses {}
 #content .scene.shopAddress ul.addresses > li {display: block; padding: 0 10px 0 0; margin-bottom: 30px; position: relative;}
 #content .scene.shopAddress ul.addresses > li h3 {width: auto; padding-left: 0; padding-right: 0;}
@@ -869,6 +875,8 @@ body > div.pagination li.next:active > svg.arrow line {stroke: #ffffff;}
 #content .scene.shopPayment.stripe form span.slash {display: inline-block; vertical-align: top; padding: 16px 4px 0 0; font-size: 16px;}
 #content .scene.shopPayment.stripe form div.field.cvc div.indicator {display: none;}
 #content .scene.shopPayment.stripe form div.field.cvc.correct div.indicator {display: inline-block;}
+#content .scene.shopPayment ul.orders,
+#content .scene.shopReceipt ul.orders {padding: 0 0 10px;}
 #content .scene.shopReceipt dl {width: 320px;}
 #content .scene.shopReceipt dl dt {display: inline-block; vertical-align: bottom; width: 90px; text-align: right; padding: 0 0 4px;}
 #content .scene.shopReceipt dl dt:after {content: ":";}

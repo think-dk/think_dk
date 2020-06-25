@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-06-25 11:17:35
+asset-builder @ 2020-06-25 14:42:53
 */
 
 /*seg_desktop_include.js*/
@@ -439,7 +439,7 @@ Util.getNodeCookie = function(node, name, _options) {
 	var mem = JSON.parse(u.getCookie("man_mem"));
 	if(mem && mem[ref]) {
 		if(name) {
-			return mem[ref][name] ? mem[ref][name] : "";
+			return (typeof(mem[ref][name]) != "undefined") ? mem[ref][name] : false;
 		}
 		else {
 			return mem[ref];
@@ -4157,15 +4157,19 @@ if(document.documentMode && document.documentMode <= 11 && document.documentMode
 		return false;
 	}
 	Util.addClass = u.ac = function(node, classname, dom_update) {
-		var regexp = new RegExp("(^|\\s)" + classname + "(\\s|$)");
-		if(node instanceof SVGElement) {
-			if(!regexp.test(node.className.baseVal)) {
-				node.className.baseVal += node.className.baseVal ? " " + classname : classname;
+		var classnames = classname.split(" ");
+		while(classnames.length) {
+			classname = classnames.shift();
+			var regexp = new RegExp("(^|\\s)" + classname + "(\\s|$)");
+			if(node instanceof SVGElement) {
+				if(!regexp.test(node.className.baseVal)) {
+					node.className.baseVal += node.className.baseVal ? " " + classname : classname;
+				}
 			}
-		}
-		else {
-			if(!regexp.test(node.className)) {
-				node.className += node.className ? " " + classname : classname;
+			else {
+				if(!regexp.test(node.className)) {
+					node.className += node.className ? " " + classname : classname;
+				}
 			}
 		}
 		dom_update = (!dom_update) || (node.offsetTop);
@@ -5022,7 +5026,6 @@ Util.Modules["article"] = new function() {
 			if (video._type == "youtube") {
 				video._id = video._src.match(/watch\?v\=/) ? video._src.split("?v=")[1] : video._src.split("/")[video._src.split("/").length-1];
 				video.iframe = u.ae(video, "iframe", {
-					src: 'https://www.youtube.com/embed/'+video._id+'?autoplay=false&loop=0&color=f0f0ee&modestbranding=1&rel=0&playsinline=1',
 					id: "ytplayer",
 					type: "text/html",
 					webkitallowfullscreen: true,
@@ -5033,12 +5036,12 @@ Util.Modules["article"] = new function() {
 					sandbox:"allow-same-origin allow-scripts",
 					width: "100%",
 					height: 540 / 1.7777,
+					src: 'https://www.youtube.com/embed/'+video._id+'?autoplay=false&loop=0&color=f0f0ee&modestbranding=1&rel=0&playsinline=1',
 				});
 			}
 			else {
 				video._id = video._src.split("/")[video._src.split("/").length-1];
 				video.iframe = u.ae(video, "iframe", {
-					src: 'https://player.vimeo.com/video/'+video._id+'?autoplay=false&loop=0&byline=0&portrait=0',
 					webkitallowfullscreen: true,
 					mozallowfullscreen: true,
 					allowfullscreen: true,
@@ -5046,6 +5049,7 @@ Util.Modules["article"] = new function() {
 					sandbox:"allow-same-origin allow-scripts",
 					width: "100%",
 					height: 540 / 1.7777,
+					src: 'https://player.vimeo.com/video/'+video._id+'?autoplay=false&loop=0&byline=0&portrait=0',
 				});
 			}
 		}
@@ -8599,7 +8603,6 @@ Util.Modules["articlePreviewList"] = new function() {
 				if (video._type == "youtube") {
 					video._id = video._src.match(/watch\?v\=/) ? video._src.split("?v=")[1] : video._src.split("/")[video._src.split("/").length-1];
 					video.iframe = u.ae(video, "iframe", {
-						src: 'https://www.youtube.com/embed/'+video._id+'?autoplay=false&loop=0&color=f0f0ee&modestbranding=1&rel=0&playsinline=1',
 						id: "ytplayer",
 						type: "text/html",
 						webkitallowfullscreen: true,
@@ -8610,12 +8613,12 @@ Util.Modules["articlePreviewList"] = new function() {
 						sandbox:"allow-same-origin allow-scripts",
 						width: "100%",
 						height: 540 / 1.7777,
+						src: 'https://www.youtube.com/embed/'+video._id+'?autoplay=false&loop=0&color=f0f0ee&modestbranding=1&rel=0&playsinline=1',
 					});
 				}
 				else {
 					video._id = video._src.split("/")[video._src.split("/").length-1];
 					video.iframe = u.ae(video, "iframe", {
-						src: 'https://player.vimeo.com/video/'+video._id+'?autoplay=false&loop=0&byline=0&portrait=0',
 						webkitallowfullscreen: true,
 						mozallowfullscreen: true,
 						allowfullscreen: true,
@@ -8623,6 +8626,7 @@ Util.Modules["articlePreviewList"] = new function() {
 						sandbox:"allow-same-origin allow-scripts",
 						width: "100%",
 						height: 540 / 1.7777,
+						src: 'https://player.vimeo.com/video/'+video._id+'?autoplay=false&loop=0&byline=0&portrait=0',
 					});
 				}
 			}
