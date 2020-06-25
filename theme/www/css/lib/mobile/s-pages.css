@@ -20,12 +20,13 @@
 
 /* MEMBERSHIPS */
 #content div.memberships ul.memberships {list-style: none; margin: 0; padding: 0;}
-#content div.memberships ul.memberships > li {}
+#content div.memberships ul.memberships > li {padding-left: 0;}
 #content div.memberships ul.memberships > li h3 {color: #26962d;}
-#content div.memberships ul.memberships > li ul.offer {padding: 0;}
+#content div.memberships ul.memberships > li ul.offer {padding: 0; margin: 0; list-style: none;}
 #content div.memberships ul.memberships > li ul.offer li.price {padding: 0 10px;}
-#content div.memberships ul.memberships > li ul.offer li.description ul {margin: 0;}
-#content div.memberships ul.memberships > li ul.offer li.description ul li {display: block; padding-bottom: 4px;}
+#content div.memberships ul.memberships > li ul.offer li.description {padding-left: 0;}
+#content div.memberships ul.memberships > li ul.offer li.description ul {list-style: disc;}
+#content div.memberships ul.memberships > li ul.offer li.description ul li {padding-bottom: 4px;}
 
 
 /* FEEDBACK ELEMENTS */
