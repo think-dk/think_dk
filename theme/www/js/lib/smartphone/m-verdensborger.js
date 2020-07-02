@@ -1,4 +1,4 @@
-Util.Modules["frios"] = new function() {
+Util.Modules["verdensborger"] = new function() {
 	this.init = function(scene) {
 		// u.bug("scene init:", scene);
 

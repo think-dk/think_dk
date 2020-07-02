@@ -49,5 +49,5 @@ document.write('<script type="text/javascript" src="/js/lib/desktop/m-verify-mai
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-verify-shop.js"></script>');
 
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-black.js"></script>');
-document.write('<script type="text/javascript" src="/js/lib/desktop/m-frios.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/desktop/m-verdensborger.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-corona.js"></script>');
