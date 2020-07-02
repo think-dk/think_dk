@@ -57,8 +57,8 @@ if($page_item) {
 			<dt class="location">Address</dt>
 			<dd class="location" itemprop="location" itemscope itemtype="http://schema.org/Place">
 				<ul class="address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-					<li class="streetaddress" itemprop="streetAddress">Æbeløgade 4</li>
-					<li class="city"><span class="postal" itemprop="postalCode">2100</span> <span class="locality" itemprop="addressLocality">København Ø</span></li>
+					<li class="streetaddress" itemprop="streetAddress">Charlotte Ammundsens Plads 3</li>
+					<li class="city"><span class="postal" itemprop="postalCode">1359</span> <span class="locality" itemprop="addressLocality">København K</span></li>
 					<li class="country" itemprop="addressCountry">Denmark</li>
 				</ul>
 				<ul class="geo" itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
@@ -75,7 +75,7 @@ if($page_item) {
 			<dd class="contact">
 				<ul>
 					<li class="email"><a href="mailto:start@think.dk" itemprop="email" content="start@think.dk">start@think.dk</a></li>
-					<li itemprop="telephone" class="tel" content="+4560692819">+45 6069 2819</li>
+					<li itemprop="telephone" class="tel" content="+4520742819">+45 2074 2819</li>
 				</ul>
 			</dd>
 			<dt class="social">Social media</dt>
