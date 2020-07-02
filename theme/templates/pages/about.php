@@ -98,7 +98,7 @@ $owner_items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "orde
 			<? foreach($volunteer_items as $item): ?>
 			<li class="item person vcard id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Person">
 
-				<h3 itemprop="name" class="fn name"><?= $item["name"] ?></h3>
+				<h4 itemprop="name" class="fn name"><?= $item["name"] ?></h4>
 				<ul class="info">
 					<li itemprop="affiliation" class="affiliation">think.dk</li>
 					<li itemprop="jobTitle" class="title"><?= $item["job_title"] ?></li>
@@ -122,7 +122,7 @@ $owner_items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "orde
 			<? foreach($board_items as $item): ?>
 			<li class="item person vcard id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Person">
 
-				<h3 itemprop="name" class="fn name"><?= $item["name"] ?></h3>
+				<h4 itemprop="name" class="fn name"><?= $item["name"] ?></h4>
 				<ul class="info">
 					<li itemprop="affiliation" class="affiliation">think.dk</li>
 					<li itemprop="jobTitle" class="title"><?= $item["job_title"] ?></li>
@@ -146,7 +146,7 @@ $owner_items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "orde
 			<? foreach($owner_items as $item): ?>
 			<li class="item person vcard id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Person">
 
-				<h3 itemprop="name" class="fn name"><?= $item["name"] ?></h3>
+				<h4 itemprop="name" class="fn name"><?= $item["name"] ?></h4>
 				<ul class="info">
 					<li itemprop="affiliation" class="affiliation">think.dk</li>
 					<li itemprop="jobTitle" class="title"><?= $item["job_title"] ?></li>
