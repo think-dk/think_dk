@@ -81,7 +81,7 @@ $owner_items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "orde
 					<li itemprop="telephone" class="tel" content="<?= $item["tel"] ?>"><?= $item["tel"] ?></li>
 					<li><a href="mailto:<?= $item["email"] ?>" itemprop="email" class="email" content="<?= $item["email"] ?>"><?= $item["email"] ?></a></li>
 				</ul>
-				<? if($item["html"]): ?>
+				<? if(0 && $item["html"]): ?>
 				<div class="description" itemprop="description">
 					<?= $item["html"] ?>
 				</div>
@@ -105,7 +105,7 @@ $owner_items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "orde
 					<li itemprop="telephone" class="tel" content="<?= $item["tel"] ?>"><?= $item["tel"] ?></li>
 					<li><a href="mailto:<?= $item["email"] ?>" itemprop="email" class="email" content="<?= $item["email"] ?>"><?= $item["email"] ?></a></li>
 				</ul>
-				<? if($item["html"]): ?>
+				<? if(0 && $item["html"]): ?>
 				<div class="description" itemprop="description">
 					<?= $item["html"] ?>
 				</div>
@@ -129,7 +129,7 @@ $owner_items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "orde
 					<li itemprop="telephone" class="tel" content="<?= $item["tel"] ?>"><?= $item["tel"] ?></li>
 					<li><a href="mailto:<?= $item["email"] ?>" itemprop="email" class="email" content="<?= $item["email"] ?>"><?= $item["email"] ?></a></li>
 				</ul>
-				<? if($item["html"]): ?>
+				<? if(0 && $item["html"]): ?>
 				<div class="description" itemprop="description">
 					<?= $item["html"] ?>
 				</div>

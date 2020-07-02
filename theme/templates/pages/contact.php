@@ -67,7 +67,7 @@ $daily_items = $IC->getItems(array("itemtype" => "person", "status" => 1, "order
 					<li itemprop="telephone" class="tel" content="<?= $item["tel"] ?>"><?= $item["tel"] ?></li>
 					<li><a href="mailto:<?= $item["email"] ?>" itemprop="email" class="email" content="<?= $item["email"] ?>"><?= $item["email"] ?></a></li>
 				</ul>
-				<? if($item["html"]): ?>
+				<? if(0 && $item["html"]): ?>
 				<div class="description" itemprop="description">
 					<?= $item["html"] ?>
 				</div>
