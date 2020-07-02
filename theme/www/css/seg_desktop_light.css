@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-07-02 20:49:40
+asset-builder @ 2020-07-02 21:40:33
 */
 
 /*seg_desktop_light_include.css*/
@@ -389,6 +389,7 @@ ul.actions a.button.disabled:hover,
 }
 #content div.front div.news ul.articles li.article h3 {padding-bottom: 20px; color: #26962d;}
 #content div.post div.article ul.info {display: block;}
+#content div.about ul.people li.person h4 {width: auto; padding-left: 0; padding-right: 0; font-weight: normal; font-size: 18px; padding-bottom: 10px;}
 #content div.scene ul.events li.event {padding-bottom: 0;}
 #content div.scene ul.events li.event dl.occurs_at {padding-bottom: 0;}
 #content div.scene ul.events li.event dd {font-size: 10px; padding: 0;}

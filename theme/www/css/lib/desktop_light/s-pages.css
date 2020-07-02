@@ -27,6 +27,9 @@
 /* CONTACT */
 /*#content div.about div.teams {display: none;}*/
 
+/* ABOUT */
+#content div.about ul.people li.person h4 {width: auto; padding-left: 0; padding-right: 0; font-weight: normal; font-size: 18px; padding-bottom: 10px;}
+
 
 /* EVENT */
 #content div.scene ul.events li.event {padding-bottom: 0;}

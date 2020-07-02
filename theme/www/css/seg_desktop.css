@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-07-02 20:49:40
+asset-builder @ 2020-07-02 21:40:33
 */
 
 /*seg_desktop_include.css*/
@@ -821,9 +821,10 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.contact div.map {height: 300px; margin: 0 50px 30px; width: 540px; border-radius: 5px;}
 #content .scene.about div.teams {}
 #content .scene.about div.teams h2 {padding-top: 20px;}
-#content .scene.about ul.people {padding: 0 70px 30px; padding-right: calc(100% - 570px); border-top: 1px solid #dedede;}
+#content .scene.about ul.people {padding: 0 70px 30px; margin-top: 10px; padding-right: calc(100% - 570px); border-top: 1px solid #dedede;}
 #content .scene.about ul.items.people li.item.person {width: 230px; padding: 20px 20px 20px 0; display: inline-block; vertical-align: top; border: none;}
 #content .scene.about ul.items.people li.item.person h3 {width: auto; padding-left: 0; padding-right: 0;}
+#content .scene.about ul.items.people li.item.person h4 {width: auto; padding-left: 0; padding-right: 0; font-weight: normal; font-size: 20px; padding-bottom: 10px;}
 #content .scene.about ul.items.people li.item.person ul.info {display: block; padding: 0 0 20px;}
 #content .scene.about ul.items.people li.item.person ul.info li {display: block; color: #777777; padding-bottom: 2px;}
 #content .scene.about ul.items.people li.item.person ul.info li.affiliation {display: none;}

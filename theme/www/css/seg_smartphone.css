@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-07-02 20:49:40
+asset-builder @ 2020-07-02 21:40:33
 */
 
 /*seg_smartphone_include.css*/
@@ -645,6 +645,7 @@ body > div.pagination li.next:active > svg.arrow line {stroke: #ffffff;}
 #content .scene.contact div.map {height: 200px; margin: 0 0px 30px;}
 #content .scene.about ul.people {padding-bottom: 30px;}
 #content .scene.about ul.people li.person {padding-bottom: 10px;}
+#content .scene.about ul.items.people li.item.person h4 {font-weight: normal; font-size: 16px; padding-bottom: 10px;}
 #content .scene.about ul.items.people li.item.person ul.info {display: block; padding: 0 20px 20px;}
 #content .scene.about ul.items.people li.item.person ul.info li {display: block; color: #777777; padding-bottom: 2px;}
 #content .scene.about ul.items.people li.item.person ul.info li.affiliation {display: none;}
