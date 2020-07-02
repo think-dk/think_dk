@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-07-02 21:46:49
+asset-builder @ 2020-07-02 22:56:36
 */
 
 /*seg_tablet_include.js*/
@@ -10144,6 +10144,10 @@ Util.Modules["payment"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
+			var login_form = u.qs("form.login", this);
+			if(login_form) {
+				u.f.init(login_form);
+			}
 			u.showScene(this);
 		}
 		page.cN.scene = scene;
@@ -10158,6 +10162,10 @@ Util.Modules["payments"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
+			var login_form = u.qs("form.login", this);
+			if(login_form) {
+				u.f.init(login_form);
+			}
 			u.showScene(this);
 		}
 		page.cN.scene = scene;

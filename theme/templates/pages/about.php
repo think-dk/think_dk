@@ -93,7 +93,7 @@ $owner_items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "orde
 		<? endif; ?>
 
 		<? if($volunteer_items): ?>
-		<h3>Volunteers</h3>
+		<h3>Volunteers and interns</h3>
 		<ul class="items people">
 			<? foreach($volunteer_items as $item): ?>
 			<li class="item person vcard id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Person">
