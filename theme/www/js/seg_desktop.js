@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-07-02 22:56:36
+asset-builder @ 2020-07-02 23:24:37
 */
 
 /*seg_desktop_include.js*/
@@ -10504,8 +10504,8 @@ Util.Modules["black"] = new function() {
 	}
 }
 
-/*m-frios.js*/
-Util.Modules["frios"] = new function() {
+/*m-verdensborger.js*/
+Util.Modules["verdensborger"] = new function() {
 	this.init = function(scene) {
 		u.txt["login_to_comment"] = '<a href="/login">Log ind</a> eller <a href="/memberships">opret en konto</a> for at tilføje kommentarer.';
 		u.txt["share"] = "Del denne side";
@@ -10560,56 +10560,16 @@ Util.Modules["frios"] = new function() {
 			console.log(this.c_2);
 			var load_queue = [];
 			var i, image, person;
-			this.ul_images = u.qs("ul.images", this);
-			if(this.ul_images) {
-				this.images = u.qsa("li div.image", this.ul_images);
-				for(i = 0; i < this.images.length; i++) {
-					image = this.images[i];
-					image.item_id = u.cv(image, "item_id");
-					image.variant = u.cv(image, "variant");
-					image.format = u.cv(image, "format");
-					load_queue.push("/images/" + image.item_id + "/" + image.variant + "/540x." + image.format);
-				}
-			}
-			this.ul_people = u.qs("ul.people", this);
-			if(this.ul_people) {
-				this.people = u.qsa("li.person", this.ul_people);
-				for(i = 0; i < this.people.length; i++) {
-					person = this.people[i];
-					person.image_src = person.getAttribute("data-image-src");
-					load_queue.push(person.image_src);
-				}
-			}
+			// 	
+			// 
 			this.form_signup = u.qs("form.signup", this);
 			if(this.form_signup) {
 				u.f.init(this.form_signup);
 			}
-			this.help_us = u.qs("div.help_us", this);
-			this.loaded = function(queue) {
-				var i, person;
-				if(this.ul_people) {
-					this.people = u.qsa("li.person", this.ul_people);
-					for(i = 0; i < this.people.length; i++) {
-						person = this.people[i];
-						u.ie(person, "img", {src: person.image_src});
-					}
-				}
-				if(this.ul_images) {
-					this.slideshow = u.slideshow(this.ul_images);
-					this.slideshow.scene = this;
-					this.resized();
-					this.slideshow.preloaded = function() {
-						if(!this.selected_node) {
-							this.selectNode(0);
-						}
-					}
-					this.slideshow.prepare();
-					u.addNextArrow(this.slideshow.bn_next);
-					u.addPreviousArrow(this.slideshow.bn_prev);
-				}
-				u.showScene(this);
-			}
-			u.preloader(this, load_queue);
+			// 	
+			// 		
+			// 			
+			u.showScene(this);
 		}
 		page.cN.scene = scene;
 	}

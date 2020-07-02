@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-07-02 22:56:36
+asset-builder @ 2020-07-02 23:24:37
 */
 
 /*seg_smartphone_include.js*/
@@ -9189,8 +9189,8 @@ Util.Modules["black"] = new function() {
 	}
 }
 
-/*m-frios.js*/
-Util.Modules["frios"] = new function() {
+/*m-verdensborger.js*/
+Util.Modules["verdensborger"] = new function() {
 	this.init = function(scene) {
 		u.txt["login_to_comment"] = '<a href="/login">Log ind</a> eller <a href="/memberships">opret en konto</a> for at tilføje kommentarer.';
 		u.txt["share"] = "Del denne side";
