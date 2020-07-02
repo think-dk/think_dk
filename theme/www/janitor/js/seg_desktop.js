@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-06-25 15:06:24
+asset-builder @ 2020-07-02 20:49:51
 */
 
 /*seg_desktop_include.js*/
@@ -10764,11 +10764,13 @@ Util.Modules["orderList"] = new function() {
 Util.Modules["capturePaymentNew"] = new function() {
 	this.init = function(div) {
 		var bn_capture = u.qs("li.capture", div)
-		var bn_back = u.qs("li.back a")
-		bn_capture.bn_back = bn_back;
-		bn_capture.confirmed = function(response) {
-			if(response.cms_status == "success") {
-				location.href = this.bn_back.href;
+		if(bn_capture) {
+			var bn_back = u.qs("li.back a")
+			bn_capture.bn_back = bn_back;
+			bn_capture.confirmed = function(response) {
+				if(response.cms_status == "success") {
+					location.href = this.bn_back.href;
+				}
 			}
 		}
 	}
