@@ -8,6 +8,8 @@ if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
+$daily_items = $IC->getItems(array("itemtype" => "person", "status" => 1, "order" => "person.position", "tags" => "person:daily", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+
 ?>
 <div class="scene contact i:contact">
 
@@ -49,6 +51,34 @@ if($page_item) {
 <? endif; ?>
 
 
+<? if($daily_items): ?>
+	<div class="teams">
+		<h2>Primary contacts</h2>
+
+		<? if($daily_items): ?>
+		<ul class="items people">
+			<? foreach($daily_items as $item): ?>
+			<li class="item person vcard id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Person">
+
+				<h3 itemprop="name" class="fn name"><?= $item["name"] ?></h3>
+				<ul class="info">
+					<li itemprop="affiliation" class="affiliation">think.dk</li>
+					<li itemprop="jobTitle" class="title"><?= $item["job_title"] ?></li>
+					<li itemprop="telephone" class="tel" content="<?= $item["tel"] ?>"><?= $item["tel"] ?></li>
+					<li><a href="mailto:<?= $item["email"] ?>" itemprop="email" class="email" content="<?= $item["email"] ?>"><?= $item["email"] ?></a></li>
+				</ul>
+				<? if($item["html"]): ?>
+				<div class="description" itemprop="description">
+					<?= $item["html"] ?>
+				</div>
+				<? endif; ?>
+
+			</li>
+			<? endforeach; ?>
+		</ul>
+		<? endif; ?>
+	</div>
+<? endif; ?>
 
 	<div itemtype="http://schema.org/Organization" itemscope class="vcard company">
 		<h2 class="name fn org" itemprop="name">think.dk</h2>

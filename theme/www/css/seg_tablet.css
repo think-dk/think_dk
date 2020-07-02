@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-07-02 21:40:33
+asset-builder @ 2020-07-02 21:46:49
 */
 
 /*seg_tablet_include.css*/
@@ -816,22 +816,22 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.front div.news ul.articles li.article h3 {padding-bottom: 20px; color: #26962d;}
 #content .scene.post div.article ul.info {display: block;}
 #content .scene.contact div.map {height: 300px; margin: 0 50px 30px; width: 540px; border-radius: 5px;}
-#content .scene.about div.teams {}
-#content .scene.about div.teams h2 {padding-top: 20px;}
-#content .scene.about ul.people {padding: 0 70px 30px; margin-top: 10px; padding-right: calc(100% - 570px); border-top: 1px solid #dedede;}
-#content .scene.about ul.items.people li.item.person {width: 230px; padding: 20px 20px 20px 0; display: inline-block; vertical-align: top; border: none;}
-#content .scene.about ul.items.people li.item.person h3 {width: auto; padding-left: 0; padding-right: 0;}
-#content .scene.about ul.items.people li.item.person h4 {width: auto; padding-left: 0; padding-right: 0; font-weight: normal; font-size: 20px; padding-bottom: 10px;}
-#content .scene.about ul.items.people li.item.person ul.info {display: block; padding: 0 0 20px;}
-#content .scene.about ul.items.people li.item.person ul.info li {display: block; color: #777777; padding-bottom: 2px;}
-#content .scene.about ul.items.people li.item.person ul.info li.affiliation {display: none;}
-#content .scene.about ul.items.people li.item.person .description h2, 
-#content .scene.about ul.items.people li.item.person .description h3, 
-#content .scene.about ul.items.people li.item.person .description h4, 
-#content .scene.about ul.items.people li.item.person .description h5, 
-#content .scene.about ul.items.people li.item.person .description h6, 
-#content .scene.about ul.items.people li.item.person .description p {padding-left: 0; padding-right: 0; width: auto;}
-#content .scene.about ul.items.people li.item.person .description p {font-size: 13px;}
+#content .scene div.teams {}
+#content .scene div.teams h2 {padding-top: 20px;}
+#content .scene ul.people {padding: 0 70px 30px; margin-top: 10px; padding-right: calc(100% - 570px); border-top: 1px solid #dedede;}
+#content .scene ul.items.people li.item.person {width: 230px; padding: 20px 20px 20px 0; display: inline-block; vertical-align: top; border: none;}
+#content .scene ul.items.people li.item.person h3 {width: auto; padding-left: 0; padding-right: 0;}
+#content .scene ul.items.people li.item.person h4 {width: auto; padding-left: 0; padding-right: 0; font-weight: normal; font-size: 20px; padding-bottom: 10px;}
+#content .scene ul.items.people li.item.person ul.info {display: block; padding: 0 0 20px;}
+#content .scene ul.items.people li.item.person ul.info li {display: block; color: #777777; padding-bottom: 2px;}
+#content .scene ul.items.people li.item.person ul.info li.affiliation {display: none;}
+#content .scene ul.items.people li.item.person .description h2, 
+#content .scene ul.items.people li.item.person .description h3, 
+#content .scene ul.items.people li.item.person .description h4, 
+#content .scene ul.items.people li.item.person .description h5, 
+#content .scene ul.items.people li.item.person .description h6, 
+#content .scene ul.items.people li.item.person .description p {padding-left: 0; padding-right: 0; width: auto;}
+#content .scene ul.items.people li.item.person .description p {font-size: 13px;}
 #content .scene.service div.all_events {padding-bottom: 50px;}
 #content .scene ul.services li.service {padding-bottom: 0;}
 #content .scene ul.services li.service h3 {
