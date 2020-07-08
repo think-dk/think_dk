@@ -67,10 +67,12 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 <? endif; ?>
 
 
-<? if($event_items): ?>
 	<div class="all_events">
-		<h2>Upcoming events <a href="/events">(see all)</a></h2>
 
+		<h2>Upcoming events <a href="/events">(see all)</a></h2>
+		<p>We will have a new schedule ready soon – see you in our new location in August.</p>
+
+<? if($event_items): ?>
 		<ul class="items events">
 		<? foreach($event_items as $item): ?>
 			<li class="item event item_id:<?= $item["item_id"] ?>">
@@ -86,8 +88,8 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 	<?	endforeach; ?>
 		</ul>
 
-	</div>
 <? endif; ?>
+	</div>
 
 
 
