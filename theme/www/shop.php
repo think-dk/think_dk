@@ -168,7 +168,7 @@ if($action) {
 
 				if($payment_method_result["status"] === "success") {
 
-					$return_url = str_replace("{GATEWAY}", $gateway, SITE_PAYMENT_REGISTER_INTENT);
+					$return_url = str_replace("{GATEWAY}", $gateway, SITE_PAYMENT_REGISTER_PAID_INTENT);
 					$result = payments()->requestPaymentIntentForOrder(
 						$payment_method_result["order"], 
 						$payment_method_result["card"]["id"], 
