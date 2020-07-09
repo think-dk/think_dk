@@ -58,6 +58,7 @@ if($action) {
 
 	// /shop/payment-gateway/#gateway#/cart/#cart_reference#/[process]
 	// /shop/payment-gateway/#gateway#/order/#order_no#/[process]
+	// /shop/payment-gateway/#gateway#/orders/#order_ids#/[process]
 	else if($action[0] == "payment-gateway") {
 
 		// specific gateway payment window for cart
@@ -82,7 +83,7 @@ if($action) {
 
 		}
 
-		// specific gateway payment window for order
+		// specific gateway payment window for orders
 		else if(count($action) == 4 && $action[2] === "orders") {
 
 			$page->page(array(
@@ -123,10 +124,9 @@ if($action) {
 					
 						}
 
+						else if($result["status"] === "error") {
 
-						else if($result["status"] === "CARD_ERROR") {
-
-							// Janitor Validation failed
+							// Some error from Stripe
 							message()->addMessage($result["message"], ["type" => "error"]);
 							// redirect to leave POST state
 							header("Location: /shop/payment-gateway/".$gateway."/cart/".$cart_reference);
