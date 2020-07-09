@@ -432,9 +432,6 @@ if($action) {
 				if($id_result["order_no"]) {
 					header("Location: /shop/payment-gateway/".$id_result["gateway"]."/order/".$id_result["order_no"]);
 				}
-				else if($id_result["order_nos"]) {
-					header("Location: /shop/payment-gateway/".$id_result["gateway"]."/orders/".$id_result["order_nos"]);
-				}
 				else {
 					header("Location: /shop/payments");
 				}
