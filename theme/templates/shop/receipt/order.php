@@ -66,7 +66,11 @@ if(isset($action[3])) {
 		<h2>
 			Your order is confirmed <br />
 			<? if($remaining_order_price["price"] > 0): ?>
-			– payment is being processed
+				<? if($receipt_type == "stripe"): ?>
+				– payment is being processed
+				<? else: ?>
+				– awaiting your payment
+				<? endif; ?>
 			<? else: ?>
 			– and paid
 			<? endif; ?>
