@@ -149,7 +149,6 @@ if($action) {
 			}
 
 			// Janitor Validation failed
-			message()->addMessage($payment_method_result["message"], ["type" => "error"]);
 			// redirect to leave POST state
 			header("Location: /shop/payment-gateway/".$gateway."/cart/".$cart_reference);
 			exit();
