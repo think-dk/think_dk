@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-06-21 00:14:46
+asset-builder @ 2020-07-02 23:24:37
 */
 
 /*seg_desktop_include.js*/
@@ -439,7 +439,7 @@ Util.getNodeCookie = function(node, name, _options) {
 	var mem = JSON.parse(u.getCookie("man_mem"));
 	if(mem && mem[ref]) {
 		if(name) {
-			return mem[ref][name] ? mem[ref][name] : "";
+			return (typeof(mem[ref][name]) != "undefined") ? mem[ref][name] : false;
 		}
 		else {
 			return mem[ref];
@@ -4157,15 +4157,19 @@ if(document.documentMode && document.documentMode <= 11 && document.documentMode
 		return false;
 	}
 	Util.addClass = u.ac = function(node, classname, dom_update) {
-		var regexp = new RegExp("(^|\\s)" + classname + "(\\s|$)");
-		if(node instanceof SVGElement) {
-			if(!regexp.test(node.className.baseVal)) {
-				node.className.baseVal += node.className.baseVal ? " " + classname : classname;
+		var classnames = classname.split(" ");
+		while(classnames.length) {
+			classname = classnames.shift();
+			var regexp = new RegExp("(^|\\s)" + classname + "(\\s|$)");
+			if(node instanceof SVGElement) {
+				if(!regexp.test(node.className.baseVal)) {
+					node.className.baseVal += node.className.baseVal ? " " + classname : classname;
+				}
 			}
-		}
-		else {
-			if(!regexp.test(node.className)) {
-				node.className += node.className ? " " + classname : classname;
+			else {
+				if(!regexp.test(node.className)) {
+					node.className += node.className ? " " + classname : classname;
+				}
 			}
 		}
 		dom_update = (!dom_update) || (node.offsetTop);
@@ -5022,7 +5026,6 @@ Util.Modules["article"] = new function() {
 			if (video._type == "youtube") {
 				video._id = video._src.match(/watch\?v\=/) ? video._src.split("?v=")[1] : video._src.split("/")[video._src.split("/").length-1];
 				video.iframe = u.ae(video, "iframe", {
-					src: 'https://www.youtube.com/embed/'+video._id+'?autoplay=false&loop=0&color=f0f0ee&modestbranding=1&rel=0&playsinline=1',
 					id: "ytplayer",
 					type: "text/html",
 					webkitallowfullscreen: true,
@@ -5033,12 +5036,12 @@ Util.Modules["article"] = new function() {
 					sandbox:"allow-same-origin allow-scripts",
 					width: "100%",
 					height: 540 / 1.7777,
+					src: 'https://www.youtube.com/embed/'+video._id+'?autoplay=false&loop=0&color=f0f0ee&modestbranding=1&rel=0&playsinline=1',
 				});
 			}
 			else {
 				video._id = video._src.split("/")[video._src.split("/").length-1];
 				video.iframe = u.ae(video, "iframe", {
-					src: 'https://player.vimeo.com/video/'+video._id+'?autoplay=false&loop=0&byline=0&portrait=0',
 					webkitallowfullscreen: true,
 					mozallowfullscreen: true,
 					allowfullscreen: true,
@@ -5046,6 +5049,7 @@ Util.Modules["article"] = new function() {
 					sandbox:"allow-same-origin allow-scripts",
 					width: "100%",
 					height: 540 / 1.7777,
+					src: 'https://player.vimeo.com/video/'+video._id+'?autoplay=false&loop=0&byline=0&portrait=0',
 				});
 			}
 		}
@@ -8599,7 +8603,6 @@ Util.Modules["articlePreviewList"] = new function() {
 				if (video._type == "youtube") {
 					video._id = video._src.match(/watch\?v\=/) ? video._src.split("?v=")[1] : video._src.split("/")[video._src.split("/").length-1];
 					video.iframe = u.ae(video, "iframe", {
-						src: 'https://www.youtube.com/embed/'+video._id+'?autoplay=false&loop=0&color=f0f0ee&modestbranding=1&rel=0&playsinline=1',
 						id: "ytplayer",
 						type: "text/html",
 						webkitallowfullscreen: true,
@@ -8610,12 +8613,12 @@ Util.Modules["articlePreviewList"] = new function() {
 						sandbox:"allow-same-origin allow-scripts",
 						width: "100%",
 						height: 540 / 1.7777,
+						src: 'https://www.youtube.com/embed/'+video._id+'?autoplay=false&loop=0&color=f0f0ee&modestbranding=1&rel=0&playsinline=1',
 					});
 				}
 				else {
 					video._id = video._src.split("/")[video._src.split("/").length-1];
 					video.iframe = u.ae(video, "iframe", {
-						src: 'https://player.vimeo.com/video/'+video._id+'?autoplay=false&loop=0&byline=0&portrait=0',
 						webkitallowfullscreen: true,
 						mozallowfullscreen: true,
 						allowfullscreen: true,
@@ -8623,6 +8626,7 @@ Util.Modules["articlePreviewList"] = new function() {
 						sandbox:"allow-same-origin allow-scripts",
 						width: "100%",
 						height: 540 / 1.7777,
+						src: 'https://player.vimeo.com/video/'+video._id+'?autoplay=false&loop=0&byline=0&portrait=0',
 					});
 				}
 			}
@@ -10240,6 +10244,10 @@ Util.Modules["payment"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
+			var login_form = u.qs("form.login", this);
+			if(login_form) {
+				u.f.init(login_form);
+			}
 			u.showScene(this);
 		}
 		page.cN.scene = scene;
@@ -10254,6 +10262,10 @@ Util.Modules["payments"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
+			var login_form = u.qs("form.login", this);
+			if(login_form) {
+				u.f.init(login_form);
+			}
 			u.showScene(this);
 		}
 		page.cN.scene = scene;
@@ -10492,8 +10504,8 @@ Util.Modules["black"] = new function() {
 	}
 }
 
-/*m-frios.js*/
-Util.Modules["frios"] = new function() {
+/*m-verdensborger.js*/
+Util.Modules["verdensborger"] = new function() {
 	this.init = function(scene) {
 		u.txt["login_to_comment"] = '<a href="/login">Log ind</a> eller <a href="/memberships">opret en konto</a> for at tilføje kommentarer.';
 		u.txt["share"] = "Del denne side";
@@ -10548,56 +10560,16 @@ Util.Modules["frios"] = new function() {
 			console.log(this.c_2);
 			var load_queue = [];
 			var i, image, person;
-			this.ul_images = u.qs("ul.images", this);
-			if(this.ul_images) {
-				this.images = u.qsa("li div.image", this.ul_images);
-				for(i = 0; i < this.images.length; i++) {
-					image = this.images[i];
-					image.item_id = u.cv(image, "item_id");
-					image.variant = u.cv(image, "variant");
-					image.format = u.cv(image, "format");
-					load_queue.push("/images/" + image.item_id + "/" + image.variant + "/540x." + image.format);
-				}
-			}
-			this.ul_people = u.qs("ul.people", this);
-			if(this.ul_people) {
-				this.people = u.qsa("li.person", this.ul_people);
-				for(i = 0; i < this.people.length; i++) {
-					person = this.people[i];
-					person.image_src = person.getAttribute("data-image-src");
-					load_queue.push(person.image_src);
-				}
-			}
+			// 	
+			// 
 			this.form_signup = u.qs("form.signup", this);
 			if(this.form_signup) {
 				u.f.init(this.form_signup);
 			}
-			this.help_us = u.qs("div.help_us", this);
-			this.loaded = function(queue) {
-				var i, person;
-				if(this.ul_people) {
-					this.people = u.qsa("li.person", this.ul_people);
-					for(i = 0; i < this.people.length; i++) {
-						person = this.people[i];
-						u.ie(person, "img", {src: person.image_src});
-					}
-				}
-				if(this.ul_images) {
-					this.slideshow = u.slideshow(this.ul_images);
-					this.slideshow.scene = this;
-					this.resized();
-					this.slideshow.preloaded = function() {
-						if(!this.selected_node) {
-							this.selectNode(0);
-						}
-					}
-					this.slideshow.prepare();
-					u.addNextArrow(this.slideshow.bn_next);
-					u.addPreviousArrow(this.slideshow.bn_prev);
-				}
-				u.showScene(this);
-			}
-			u.preloader(this, load_queue);
+			// 	
+			// 		
+			// 			
+			u.showScene(this);
 		}
 		page.cN.scene = scene;
 	}

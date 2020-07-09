@@ -47,7 +47,7 @@ if(isset($action[3])) {
 <? if($user_id > 1 && $order_ids && $total_payment): ?>
 
 
-	<h1>Please enter you card details</h1>
+	<h1>Please enter your card details</h1>
 
 
 	<?= $HTML->serverMessages() ?>

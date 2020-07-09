@@ -195,7 +195,7 @@ else:
 	<p>Please log in to your account.</p>
 
 
-	<?= $model->formStart("?login=true", array("class" => "labelstyle:inject")) ?>
+	<?= $model->formStart("?login=true", array("class" => "login labelstyle:inject")) ?>
 		<?= $model->input("login_forward", ["type" => "hidden", "value" => $this->url]); ?>
 
 

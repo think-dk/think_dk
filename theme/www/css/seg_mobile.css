@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-06-21 00:14:46
+asset-builder @ 2020-07-02 23:24:37
 */
 
 /*seg_mobile_include.css*/
@@ -7,7 +7,7 @@ asset-builder @ 2020-06-21 00:14:46
 /*seg_mobile.css*/
 /*
 MIT license, 2002-2019 parentNode.dk
-asset-builder @ 2020-03-23 14:34:46
+asset-builder @ 2020-06-25 12:00:26
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -348,14 +348,15 @@ div.field.focus div.hint {display: block;}
 #content div.login form {display: none;}
 #content div.front div.intro {display: none;}
 #content div.post div.article ul.info {display: block;}
-#content div.about div.teams {display: none;}
+#content div div.teams {display: none;}
 #content div.memberships ul.memberships {list-style: none; margin: 0; padding: 0;}
-#content div.memberships ul.memberships > li {}
+#content div.memberships ul.memberships > li {padding-left: 0;}
 #content div.memberships ul.memberships > li h3 {color: #26962d;}
-#content div.memberships ul.memberships > li ul.offer {padding: 0;}
+#content div.memberships ul.memberships > li ul.offer {padding: 0; margin: 0; list-style: none;}
 #content div.memberships ul.memberships > li ul.offer li.price {padding: 0 10px;}
-#content div.memberships ul.memberships > li ul.offer li.description ul {margin: 0;}
-#content div.memberships ul.memberships > li ul.offer li.description ul li {display: block; padding-bottom: 4px;}
+#content div.memberships ul.memberships > li ul.offer li.description {padding-left: 0;}
+#content div.memberships ul.memberships > li ul.offer li.description ul {list-style: disc;}
+#content div.memberships ul.memberships > li ul.offer li.description ul li {padding-bottom: 4px;}
 #content .scene div.todos {display: none;}
 #content .scene div.qnas {display: none;}
 #content .scene.blogs ul.blogs li.blog dl.author dt {width: auto; display: inline; padding-right: 5px;}

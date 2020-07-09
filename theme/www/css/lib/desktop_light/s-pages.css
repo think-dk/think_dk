@@ -27,6 +27,9 @@
 /* CONTACT */
 /*#content div.about div.teams {display: none;}*/
 
+/* ABOUT */
+#content div.scene ul.people li.person h4 {width: auto; padding-left: 0; padding-right: 0; font-weight: normal; font-size: 18px; padding-bottom: 10px;}
+
 
 /* EVENT */
 #content div.scene ul.events li.event {padding-bottom: 0;}
@@ -63,7 +66,8 @@
 
 #content div.signup div.maillist {position: relative; padding: 0 0 50px;}
 
-
+/* CART */
+#content div.cart ul.items li {position: relative;}
 #content div.cart ul.items li h3 form {display: inline; vertical-align: top;}
 #content div.cart ul.items li h3 fieldset {display: inline; vertical-align: top;}
 #content div.cart ul.items li h3 form div.field {padding: 0; display: inline;}
@@ -72,7 +76,7 @@
 /*#content .scene.cart ul.items li h3 form > ul.actions {padding: 0; right: 45px; top: 0;}
 */
 #content div.cart ul.items li h3 form ul.actions {display: inline; vertical-align: top;}
-#content div.cart ul.items li h3 form ul.actions li {padding: 18px 0 0; float: none; display: inline; vertical-align: top;}
+#content div.cart ul.items li h3 form ul.actions li {padding: 18px 5px 0 0; float: none; display: inline; vertical-align: top;}
 #content div.cart ul.items li h3 form ul.actions input.button {width: 24px; height: 24px; padding: 0; text-indent: -9999px;
 	background-image: url(/janitor/admin/img/gx_refresh.png);
 	background-position: center center;
@@ -81,10 +85,38 @@
 #content div.cart ul.items li h3 span {display: inline; vertical-align: top;}
 #content div.cart ul.items li ul.actions {}
 
-#content div.cart ul.items li.total {border-top: 1px solid #dedede; text-align: right; padding-top: 10px;}
+#content div.cart ul.items li.total {border-top: 1px solid #dedede; /*text-align: right;*/ padding-top: 10px;}
+#content div.cart ul.items li span.total_price {position: absolute; right: 0; top: 20px;}
+#content div.cart ul.items li.total span.total_price {top: 10px;}
+#content div.cart div.checkout {padding: 20px 0;}
+
+/* CHECKOUT */
+
+#content div.checkout div.emptycart,
+#content div.checkout div.login,
+#content div.checkout div.signup,
+#content div.checkout div.contact,
+#content div.checkout div.all_items {padding: 0 0 30px;}
+
+
+#content div.checkout div.confirm,
+#content div.checkout div.payment_method {padding: 20px 0 50px;}
+
+#content div.checkout ul.items li {position: relative;}
+
+#content div.checkout form li.forgot {padding: 7px 0 0;}
+#content div.checkout form li.forgot a {padding: 0; display: inline; vertical-align: top;}
+
+#content div.checkout ul.items li.total {border-top: 1px solid #dedede; /*text-align: right;*/ padding-top: 10px;}
+#content div.checkout ul.items li span.total_price {position: absolute; right: 0; top: 20px;}
+#content div.checkout ul.items li.total span.total_price {top: 10px;}
+
+#content div.checkout ul.payment_methods li.payment_method ul.actions {padding-bottom: 0;}
+
+/*
 #content div.cart div.checkout ul.actions {text-align: right;}
 #content div.cart div.checkout ul.actions li {float: none; padding-right: 0;}
-
+*/
 #content div.stripe form fieldset {overflow: hidden;}
 #content div.stripe form div.field.exp_month,
 #content div.stripe form div.field.exp_year,

@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-06-21 00:14:46
+asset-builder @ 2020-07-02 23:24:37
 */
 
 /*seg_mobile_include.js*/
@@ -234,7 +234,7 @@ Util.getNodeCookie = function(node, name, _options) {
 	var mem = JSON.parse(u.getCookie("man_mem"));
 	if(mem && mem[ref]) {
 		if(name) {
-			return mem[ref][name] ? mem[ref][name] : "";
+			return (typeof(mem[ref][name]) != "undefined") ? mem[ref][name] : false;
 		}
 		else {
 			return mem[ref];
@@ -1871,15 +1871,19 @@ if(document.documentMode && document.documentMode <= 11 && document.documentMode
 		return false;
 	}
 	Util.addClass = u.ac = function(node, classname, dom_update) {
-		var regexp = new RegExp("(^|\\s)" + classname + "(\\s|$)");
-		if(node instanceof SVGElement) {
-			if(!regexp.test(node.className.baseVal)) {
-				node.className.baseVal += node.className.baseVal ? " " + classname : classname;
+		var classnames = classname.split(" ");
+		while(classnames.length) {
+			classname = classnames.shift();
+			var regexp = new RegExp("(^|\\s)" + classname + "(\\s|$)");
+			if(node instanceof SVGElement) {
+				if(!regexp.test(node.className.baseVal)) {
+					node.className.baseVal += node.className.baseVal ? " " + classname : classname;
+				}
 			}
-		}
-		else {
-			if(!regexp.test(node.className)) {
-				node.className += node.className ? " " + classname : classname;
+			else {
+				if(!regexp.test(node.className)) {
+					node.className += node.className ? " " + classname : classname;
+				}
 			}
 		}
 		dom_update = (!dom_update) || (node.offsetTop);
@@ -1925,15 +1929,20 @@ Util.hasClass = u.hc = function(node, classname) {
 	return false;
 }
 Util.addClass = u.ac = function(node, classname, dom_update) {
-	var regexp = new RegExp("(^|\\s)" + classname + "(\\s|$)");
-	if(typeof(SVGElement) !== "undefined" && node instanceof SVGElement) {
-		if(!regexp.test(node.className.baseVal)) {
-			node.className.baseVal += node.className.baseVal ? " " + classname : classname;
+	var classnames = classname.split(" ");
+	while(classnames.length) {
+		classname = classnames.shift();
+		var regexp = new RegExp("(^|\\s)" + classname + "(\\s|$)");
+		u.bug(classname, regexp.test(node.className));
+		if(typeof(SVGElement) !== "undefined" && node instanceof SVGElement) {
+			if(!regexp.test(node.className.baseVal)) {
+				node.className.baseVal += node.className.baseVal ? " " + classname : classname;
+			}
 		}
-	}
-	else {
-		if(!regexp.test(node.className)) {
-			node.className += node.className ? " " + classname : classname;
+		else {
+			if(!regexp.test(node.className)) {
+				node.className += node.className ? " " + classname : classname;
+			}
 		}
 	}
 	dom_update = (!dom_update) || (node.offsetTop);
@@ -2149,8 +2158,10 @@ if(typeof(document.contains) == "undefined") {
 }
 if(!Element.prototype.matches) {
 	Element.prototype.matches = Element.prototype.matchesSelector || Element.prototype.mozMatchesSelector || Element.prototype.msMatchesSelector || Element.prototype.oMatchesSelector || Element.prototype.webkitMatchesSelector || function(selector) {
-		var matches = (this.parentNode || this.document || this.ownerDocument).querySelectorAll(selector);
-		return u.nodeInList(this, matches);
+		var matches = (this.document || this.ownerDocument).querySelectorAll(selector);
+		var i = matches.length;
+		while (--i >= 0 && matches.item(i) !== this) {}
+		return i > -1;
 	};
 }
 if(document.querySelector == undefined) {
@@ -3682,12 +3693,12 @@ Util.Form = u.f = new function() {
 		var i;
 		var files = this.val();
 		this.field.filelist.innerHTML = "";
-		u.ae(this.field.filelist, "li", {html:this.field.hint ? u.text(this.field.hint) : u.text(this.label), class:"label"})
+		u.ae(this.field.filelist, "li", {"html":this.field.hint ? u.text(this.field.hint) : u.text(this.label), "class":"label"})
 		if(files && files.length) {
 			u.ac(this.field, "has_new_files");
 			var i;
 			for(i = 0; i < files.length; i++) {
-				u.ae(this.field.filelist, "li", {html:files[i].name, class:"new"})
+				u.ae(this.field.filelist, "li", {"html":files[i].name, "class":"new"})
 			}
 			if(this.multiple) {
 				for(i = 0; i < this.field.uploaded_files.length; i++) {
@@ -4728,6 +4739,19 @@ if (typeof JSON !== 'object') {
         };
     }
 }());
+if(String.prototype.trim == undefined) {
+	String.prototype.trim = function() {
+		return this.replace(/^\s+|\s+$/g, "");
+	};
+}
+if(String.prototype.substr == undefined || "ABC".substr(-1,1) == "A") {
+	String.prototype.substr = function(start_index, length) {
+		start_index = start_index < 0 ? this.length + start_index : start_index;
+		start_index = start_index < 0 ? 0 : start_index;
+		length = length ? start_index + length : this.length;
+		return this.substring(start_index, length);
+	};
+}
 u.showScene = function(scene) {
 	var i, node;
 	var nodes = u.cn(scene);
@@ -4869,6 +4893,188 @@ u.txt["smartphone-switch-text"] = [
 ];
 u.txt["smartphone-switch-bn-hide"] = "Hide";
 u.txt["smartphone-switch-bn-switch"] = "Go to Smartphone version";
+u.bug_console_only = true;
+Util.Modules["page"] = new function() {
+	this.init = function(page) {
+		window.page = page;
+		u.bug_force = true;
+		u.bug("This site is built using the combined powers of body, mind and spirit. Well, and also Manipulator, Janitor and Detector");
+		u.bug("Visit https://parentnode.dk for more information");
+		u.bug_force = false;
+		page.hN = u.qs("#header");
+		page.hN.service = u.qs(".servicenavigation", page.hN);
+		page.cN = u.qs("#content", page);
+		page.nN = u.qs("#navigation", page);
+		page.nN = u.ie(page.hN, page.nN);
+		page.fN = u.qs("#footer");
+		page.fN.service = u.qs(".servicenavigation", page.fN);
+		page.logo = u.ie(page.hN, "a", {"class":"logo", "html":u.eitherOr(u.site_name, "Frontpage")});
+		u.ce(page.logo);
+		page.logo.clicked = function(event) {
+			location.href = '/';
+		}
+		page.resized = function() {
+			page.browser_h = u.browserH();
+			page.browser_w = u.browserW();
+			if(page.cN && page.cN.scene && typeof(page.cN.scene.resized) == "function") {
+				page.cN.scene.resized();
+			}
+		}
+		page.scrolled = function() {
+			page.scrolled_y = u.scrollY();
+			if(page.cN && page.cN.scene && typeof(page.cN.scene.scrolled) == "function") {
+				page.cN.scene.scrolled();
+			}
+		}
+		page.ready = function() {
+			if(!u.hc(this, "ready")) {
+				u.ac(this, "ready");
+				this.initNavigation();
+				this.resized();
+				this.acceptCookies();
+			}
+		}
+		page.acceptCookies = function() {
+			if(u.terms_version && !u.getCookie(u.terms_version)) {
+				var terms = u.ie(document.body, "div", {"class":"terms_notification"});
+				u.ae(terms, "h3", {"html":"We love <br />cookies and privacy"});
+				var bn_accept = u.ae(terms, "a", {"class":"accept", "html":"Accept"});
+				bn_accept.terms = terms;
+				u.ce(bn_accept);
+				bn_accept.clicked = function() {
+					this.terms.parentNode.removeChild(this.terms);
+					u.saveCookie(u.terms_version, true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
+				}
+				if(!location.href.match(/\/terms\//)) {
+					var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details", "href":"/terms"});
+					u.ce(bn_details, {"type":"link"});
+				}
+			}
+		}
+		page.initNavigation = function() {
+			var i, node, nodes;
+			if(page.hN.service) {
+				var nav_anchor = u.qs("li.navigation", page.hN.service);
+				if(nav_anchor) {
+					page.hN.service.removeChild(nav_anchor);
+				}
+			}
+			if(page.fN.service) {
+				nodes = u.qsa("li", page.fN.service);
+				for(i = 0; node = nodes[i]; i++) {
+					u.ie(page.hN.service, node);
+				}
+				page.fN.removeChild(page.fN.service);
+			}
+		}
+		page.ready();
+	}
+}
+window.onload = u.init;
+Util.Modules["login"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			u.ae(this, "p", {"html":"Your browser is not supported by the Administration system.<br />Please upgrade:"})
+			var ul = u.ae(this, "ul");
+			u.ae(ul, "li", {"html":'<a href="https://firefox.com/download" target="_blank">Firefox</a>'});
+			u.ae(ul, "li", {"html":'<a href="https://www.google.com/chrome/" target="_blank">Chrome</a>'});
+			page.cN.scene = this;
+		}
+		scene.ready();
+	}
+}
+
+
+/*m-cart.js*/
+Util.Modules["checkout"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			var form_login = u.qs("form.login", this);
+			if(form_login) {
+				u.f.init(form_login);
+			}
+			var form_signup = u.qs("form.signup", this);
+			if(form_signup) {
+				u.f.init(form_signup);
+			}
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+Util.Modules["shopProfile"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			var form = u.qs("form.details", this);
+			if(form) {
+				u.f.init(form);
+			}
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+Util.Modules["shopAddress"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			var form = u.qs("form.address", this);
+			if(form) {
+				u.f.init(form);
+			}
+			page.resized();
+		}
+		scene.ready();
+	}
+}
+
+/*m-memberships.js*/
+Util.Modules["memberships"] = new function() {
+	this.init = function(scene) {
+		u.bug("scene init:", this);
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			page.cN.scene = this;
+			this.div_memberships = u.qs("div.memberships", this);
+			var place_holder = u.qs("div.articlebody .placeholder.memberships", this);
+			if(this.div_memberships && place_holder) {
+				place_holder.parentNode.replaceChild(this.div_memberships, place_holder);
+			}
+			this.div_maillist = u.qs("div.maillist", this);
+			var maillist_place_holder = u.qs("div.articlebody .placeholder.maillist", this);
+			if(this.div_maillist && maillist_place_holder) {
+				maillist_place_holder.parentNode.replaceChild(this.div_maillist, maillist_place_holder);
+			}
+			if(this.div_maillist) {
+				this.div_maillist.form = u.qs("form.maillist", this.div_maillist);
+				u.f.init(this.div_maillist.form);
+			}
+			page.resized();
+		}
+		scene.ready();
+	}
+}
 
 
 /*u-settings.js*/

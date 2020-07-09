@@ -30,7 +30,7 @@ if($order) {
 
 <? if($user_id > 1 && $order && $remaining_order_price && $remaining_order_price["price"] > 0): ?>
 
-	<h1>Please enter you card details</h1>
+	<h1>Please enter your card details</h1>
 
 
 	<?= $HTML->serverMessages() ?>

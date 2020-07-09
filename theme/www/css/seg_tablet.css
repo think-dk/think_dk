@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-06-21 00:14:46
+asset-builder @ 2020-07-02 23:24:37
 */
 
 /*seg_tablet_include.css*/
@@ -7,7 +7,7 @@ asset-builder @ 2020-06-21 00:14:46
 /*seg_tablet.css*/
 /*
 MIT license, 2002-2019 parentNode.dk
-asset-builder @ 2020-03-23 14:34:46
+asset-builder @ 2020-06-25 12:00:26
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -816,21 +816,22 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.front div.news ul.articles li.article h3 {padding-bottom: 20px; color: #26962d;}
 #content .scene.post div.article ul.info {display: block;}
 #content .scene.contact div.map {height: 300px; margin: 0 50px 30px; width: 540px; border-radius: 5px;}
-#content .scene.about div.teams {}
-#content .scene.about div.teams h2 {padding-top: 20px;}
-#content .scene.about ul.people {padding: 0 70px 30px; padding-right: calc(100% - 570px); border-top: 1px solid #dedede;}
-#content .scene.about ul.items.people li.item.person {width: 230px; padding: 20px 20px 20px 0; display: inline-block; vertical-align: top; border: none;}
-#content .scene.about ul.items.people li.item.person h3 {width: auto; padding-left: 0; padding-right: 0;}
-#content .scene.about ul.items.people li.item.person ul.info {display: block; padding: 0 0 20px;}
-#content .scene.about ul.items.people li.item.person ul.info li {display: block; color: #777777; padding-bottom: 2px;}
-#content .scene.about ul.items.people li.item.person ul.info li.affiliation {display: none;}
-#content .scene.about ul.items.people li.item.person .description h2, 
-#content .scene.about ul.items.people li.item.person .description h3, 
-#content .scene.about ul.items.people li.item.person .description h4, 
-#content .scene.about ul.items.people li.item.person .description h5, 
-#content .scene.about ul.items.people li.item.person .description h6, 
-#content .scene.about ul.items.people li.item.person .description p {padding-left: 0; padding-right: 0; width: auto;}
-#content .scene.about ul.items.people li.item.person .description p {font-size: 13px;}
+#content .scene div.teams {}
+#content .scene div.teams h2 {padding-top: 20px;}
+#content .scene ul.people {padding: 0 70px 30px; margin-top: 10px; padding-right: calc(100% - 570px); border-top: 1px solid #dedede;}
+#content .scene ul.items.people li.item.person {width: 230px; padding: 20px 20px 20px 0; display: inline-block; vertical-align: top; border: none;}
+#content .scene ul.items.people li.item.person h3 {width: auto; padding-left: 0; padding-right: 0;}
+#content .scene ul.items.people li.item.person h4 {width: auto; padding-left: 0; padding-right: 0; font-weight: normal; font-size: 20px; padding-bottom: 10px;}
+#content .scene ul.items.people li.item.person ul.info {display: block; padding: 0 0 20px;}
+#content .scene ul.items.people li.item.person ul.info li {display: block; color: #777777; padding-bottom: 2px;}
+#content .scene ul.items.people li.item.person ul.info li.affiliation {display: none;}
+#content .scene ul.items.people li.item.person .description h2, 
+#content .scene ul.items.people li.item.person .description h3, 
+#content .scene ul.items.people li.item.person .description h4, 
+#content .scene ul.items.people li.item.person .description h5, 
+#content .scene ul.items.people li.item.person .description h6, 
+#content .scene ul.items.people li.item.person .description p {padding-left: 0; padding-right: 0; width: auto;}
+#content .scene ul.items.people li.item.person .description p {font-size: 13px;}
 #content .scene.service div.all_events {padding-bottom: 50px;}
 #content .scene ul.services li.service {padding-bottom: 0;}
 #content .scene ul.services li.service h3 {
@@ -1323,43 +1324,43 @@ body.black #header ul.servicenavigation {display: none;}
 #content .scene ul.articles li[class='item article id:255'] h3 {color: #000000 !important;}
 #content .scene ul.articles li[class='item article id:255'] p {color: #000000;}
 #content .scene ul.articles li[class='item article id:255'] a {color: #000000; text-decoration: underline;}
-#content .scene.frios .c .c100 {width: 40%;}
-#content .scene.frios .c .c200 {width: 60%;}
-#content .scene.frios div.signup {padding-bottom: 20px;}
-#content .scene.frios div.signup form {padding-bottom: 20px;}
-#content .scene.frios div.practicalities {padding-bottom: 40px;}
-#content .scene.frios div.practicalities ul {list-style: disc; margin-left: 15px;}
-#content .scene.frios div.practicalities ul li {padding-bottom: 10px;}
-#content .scene.frios div.help_us ul {list-style: disc; margin-left: 15px;}
-#content .scene.frios div.help_us ul li {padding-bottom: 10px;}
-#content .scene.frios div.dictionary {padding-bottom: 40px;}
-#content .scene.frios div.info_meeting {padding-bottom: 40px;}
-#content .scene.frios div.help_us {padding-bottom: 40px;}
-#content .scene.frios div.more_info {padding-bottom: 40px;}
-#content .scene.frios ul.people {font-size: 0;}
-#content .scene.frios ul.people li.person {border: 0; padding-top: 0; width: 50%; display: inline-block; vertical-align: top;}
-#content .scene.frios ul.people li.person img {margin: 0 50px 20px; width: calc(100% - 100px);}
-#content .scene.frios h2.parents {padding-top: 80px;}
-#content .scene.frios .slideshow {position: relative; padding: 0 50px 30px; max-width: 540px;}
-#content .scene.frios .slideshow .next {position: absolute; top: calc(50% - 15px); margin-top: -20px; right: 24px; width: 25px; height: 40px;
+#content .scene.verdensborger .c .c100 {width: 40%;}
+#content .scene.verdensborger .c .c200 {width: 60%;}
+#content .scene.verdensborger div.signup {padding-bottom: 20px;}
+#content .scene.verdensborger div.signup form {padding-bottom: 20px;}
+#content .scene.verdensborger div.practicalities {padding-bottom: 40px;}
+#content .scene.verdensborger div.practicalities ul {list-style: disc; margin-left: 15px;}
+#content .scene.verdensborger div.practicalities ul li {padding-bottom: 10px;}
+#content .scene.verdensborger div.help_us ul {list-style: disc; margin-left: 15px;}
+#content .scene.verdensborger div.help_us ul li {padding-bottom: 10px;}
+#content .scene.verdensborger div.dictionary {padding-bottom: 40px;}
+#content .scene.verdensborger div.info_meeting {padding-bottom: 40px;}
+#content .scene.verdensborger div.help_us {padding-bottom: 40px;}
+#content .scene.verdensborger div.more_info {padding-bottom: 40px;}
+#content .scene.verdensborger ul.people {font-size: 0;}
+#content .scene.verdensborger ul.people li.person {border: 0; padding-top: 0; width: 50%; display: inline-block; vertical-align: top;}
+#content .scene.verdensborger ul.people li.person img {margin: 0 50px 20px; width: calc(100% - 100px);}
+#content .scene.verdensborger h2.parents {padding-top: 80px;}
+#content .scene.verdensborger .slideshow {position: relative; padding: 0 50px 30px; max-width: 540px;}
+#content .scene.verdensborger .slideshow .next {position: absolute; top: calc(50% - 15px); margin-top: -20px; right: 24px; width: 25px; height: 40px;
 	background: #ffffff;
 	border-top-right-radius: 5px; border-bottom-right-radius: 5px;
 	border: 1px solid #26962d; cursor: pointer; 
 }
-#content .scene.frios .slideshow .prev {position: absolute; top: calc(50% - 15px); margin-top: -20px; left: 24px; width: 25px; height: 40px;
+#content .scene.verdensborger .slideshow .prev {position: absolute; top: calc(50% - 15px); margin-top: -20px; left: 24px; width: 25px; height: 40px;
 	background: #ffffff;
 	border-top-left-radius: 5px; border-bottom-left-radius: 5px;
 	border: 1px solid #26962d; cursor: pointer; 
 }
-#content .scene.frios ul.images {padding: 0; overflow: hidden; width: 100%; height: 100%; position: relative;}
-#content .scene.frios ul.images li {position: absolute; top: 0; left: 0;
+#content .scene.verdensborger ul.images {padding: 0; overflow: hidden; width: 100%; height: 100%; position: relative;}
+#content .scene.verdensborger ul.images li {position: absolute; top: 0; left: 0;
 }
-#content .scene.frios ul.images li img {margin: 0; width: 100%; cursor: default;}
-#content .scene.frios .slideshow .next > svg.arrow {position: absolute; top: 14px; right: 2px;}
-#content .scene.frios .slideshow .next > svg.arrow line {stroke: #26962d; stroke-width: 3px;}
-#content .scene.frios .slideshow .prev > svg.arrow {position: absolute; top: 14px; left: 8px;}
-#content .scene.frios .slideshow .prev > svg.arrow line {stroke: #26962d; stroke-width: 3px;}
-#content .scene.frios .highlight {color: #26962d;}
+#content .scene.verdensborger ul.images li img {margin: 0; width: 100%; cursor: default;}
+#content .scene.verdensborger .slideshow .next > svg.arrow {position: absolute; top: 14px; right: 2px;}
+#content .scene.verdensborger .slideshow .next > svg.arrow line {stroke: #26962d; stroke-width: 3px;}
+#content .scene.verdensborger .slideshow .prev > svg.arrow {position: absolute; top: 14px; left: 8px;}
+#content .scene.verdensborger .slideshow .prev > svg.arrow line {stroke: #26962d; stroke-width: 3px;}
+#content .scene.verdensborger .highlight {color: #26962d;}
 @media print {
 	#header .logo {position: absolute; left: 80px;}
 	#header .servicenavigation {display: none;}
