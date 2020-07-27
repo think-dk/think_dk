@@ -2,6 +2,7 @@
 global $IC;
 global $action;
 global $itemtype;
+$model = $IC->typeObject($itemtype);
 
 
 $year = $action[1];
