@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-07-02 23:24:37
+asset-builder @ 2020-07-27 16:06:51
 */
 
 /*seg_smartphone_include.js*/
@@ -8524,11 +8524,11 @@ Util.Modules["contact"] = new function() {
 			var injection_point = u.ns(u.qs("div.article h1", this));
 			this.map = u.ae(this, "div", {"class":"map"});
 			this.map.loaded = function() {
-				u.googlemaps.addMarker(this.g_map, [55.711510,12.564495]);
+				u.googlemaps.addMarker(this.g_map, [55.6835442,12.5625817]);
 				delete this.loaded;
 			}
 			injection_point.parentNode.insertBefore(this.map, injection_point);
-			u.googlemaps.map(this.map, [55.711510,12.564495], {"zoom":14});
+			u.googlemaps.map(this.map, [55.6835442,12.5625817], {"zoom":14});
 			u.showScene(this);
 		}
 		page.cN.scene = scene;
