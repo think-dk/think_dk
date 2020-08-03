@@ -89,10 +89,10 @@ if($page_item) {
 	<div class="practicalities">
 		<h2>Praktisk info</h2>
 		<p>Forløbet foregår i København, hos think.dk i vores hyggelige lokaler med masser af bløde sofaer :)</p>
-		<p>Forløbet løber fra d. 26. september 2020 til april 2021 og indebærer:</p>
+		<p>Forløbet løber fra d. 3. oktober 2020 til april 2021 og indebærer:</p>
 		<ul>
-			<li>25 lørdage fra 11.00-13.00</li>
-			<li>2 weekender med overnatning</li>
+			<li>22 lørdage fra 11.00-13.00</li>
+			<li>1 weekend med overnatning</li>
 			<li>Afslutningsweekend d. 7.-8. maj 2021</li>
 			<li>Overgangsritual fredag, afslutningsceremoni med familien lørdag.</li>
 			<li>Derefter fest i de respektive familiers regi.</li>

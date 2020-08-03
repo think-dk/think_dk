@@ -1,7 +1,6 @@
 Util.Modules["contact"] = new function() {
 	this.init = function(scene) {
 //		u.bug("scene init:", this);
-		
 
 		scene.resized = function() {
 //			u.bug("scene.resized:", this);
@@ -13,8 +12,6 @@ Util.Modules["contact"] = new function() {
 
 		scene.ready = function() {
 //			u.bug("scene.ready:", this);
-
-
 
 			var injection_point = u.ns(u.qs("div.article h1", this));
 			this.map = u.ae(this, "div", {"class":"map"});
@@ -30,7 +27,6 @@ Util.Modules["contact"] = new function() {
 
 
 			u.showScene(this);
-
 
 		}
 
