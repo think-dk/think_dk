@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-07-02 22:56:46
+asset-builder @ 2020-08-06 10:42:04
 */
 
 /*seg_desktop_include.css*/
@@ -50,6 +50,7 @@ fieldset {border: none;}
 input, select, textarea {font-size: 14px;}
 input, textarea {outline: none;}
 a, span {font-size: inherit; font-family: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
+em, strong {font-size: inherit; font-family: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
 h1 {padding: 20px 30px; text-transform: uppercase; font-size: 26px;}
 h2 {padding: 0 30px 10px; font-size: 17px;}
 h3 {padding: 0 30px 10px; font-size: 14px;}
@@ -612,6 +613,8 @@ body #selection_options ul.actions li {padding: 0 5px 0 0;}
 #content .scene.newPayment > div ul.actions li {}
 #content .scene.newPayment > div.capture ul.actions {overflow: hidden;}
 #content .scene.newPayment > div.capture ul.actions li {float: left; clear: both;}
+#content .scene.newPayment > div.capture ul.payment_options ul.actions {padding-bottom: 0;}
+#content .scene.newPayment > div.capture ul.payment_options ul.actions li {float: none; display: inline-block; padding-bottom: 5px;}
 #content .scene.newPayment div.reminder ul.info {padding: 0 30px 25px;}
 #content .scene.newPayment div.reminder ul.info li {padding: 0 0 3px; display: block;}
 body.invoice {background: #ffffff; height: 1000px;}
