@@ -62,6 +62,7 @@ Util.Modules["verdensborger"] = new function() {
 						"div.article", 
 					]},
 					{"c100": [
+						"div.konfirmation",
 						"div.dictionary",
 						"div.info_meeting",
 						"div.practicalities",

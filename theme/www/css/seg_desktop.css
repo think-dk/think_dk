@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-08-06 10:41:57
+asset-builder @ 2020-08-19 00:01:25
 */
 
 /*seg_desktop_include.css*/
@@ -1337,6 +1337,7 @@ body.black #header ul.servicenavigation {display: none;}
 #content .scene.verdensborger div.help_us ul {list-style: disc; margin-left: 15px;}
 #content .scene.verdensborger div.help_us ul li {padding-bottom: 10px;}
 #content .scene.verdensborger div.dictionary {padding-bottom: 40px;}
+#content .scene.verdensborger div.konfirmation {padding-bottom: 40px;}
 #content .scene.verdensborger div.info_meeting {padding-bottom: 40px;}
 #content .scene.verdensborger div.help_us {padding-bottom: 40px;}
 #content .scene.verdensborger div.more_info {padding-bottom: 40px;}

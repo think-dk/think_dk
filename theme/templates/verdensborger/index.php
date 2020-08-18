@@ -67,6 +67,21 @@ if($page_item) {
 
 <? endif; ?>
 
+	<div class="konfirmation">
+		<h2>Konfirmation og Nonfirmation</h2>
+		<p class="note">
+			Konfirmation er en tradition i Danmark, hvor 7.-8. klasseselever ofte spenderer timevis i 
+			præstegården, ofte blot for at få en fest med masser af gaver.
+		</p>
+		<p class="note">
+			Nonfirmation er en begyndende tradition i Danmark, hvor 7.-8. klasseselever springer ritualet og dannelsesrejsen over og blot får en fest med masser af gaver.
+		</p>
+		<p class="note">Vi forstår at festen er vigtig, 
+			men overgangen fra barndommen til det gryende voksenliv er vigtigere, og vi ønsker brændende at 
+			klæde de unge bedre på til denne nye og udfordrende fase af deres liv.
+		</p>
+	</div>
+
 	<div class="info_meeting">
 		<h2>Mød os og hør mere på et intromøde</h2>
 		<p>
@@ -107,10 +122,10 @@ if($page_item) {
 			<a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du har spørgsmål :)
 		</p>
 		<p>
-			Kun 1/3 af kostprisen skal egenfinancieres – og forløbet koster derfor kun 3.500 kr./person. Der er også mulighed for at søge om friplads. Se nedenfor.
+			Kun 1/3 af kostprisen skal egenfinancieres – og forløbet koster derfor kun 4.500 kr./person. Der er også mulighed for at søge om friplads. Se nedenfor.
 		</p>
 		<p>
-			Tilmelding senest 1. september 2020.
+			Tilmelding senest 1. oktober 2020.
 		</p>
 
 		<?= $HTML->formStart("tilmelding", ["class" => "signup labelstyle:inject"]); ?>

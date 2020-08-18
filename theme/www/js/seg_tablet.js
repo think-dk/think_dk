@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-08-06 10:41:57
+asset-builder @ 2020-08-19 00:01:25
 */
 
 /*seg_tablet_include.js*/
@@ -10443,6 +10443,7 @@ Util.Modules["verdensborger"] = new function() {
 						"div.article", 
 					]},
 					{"c100": [
+						"div.konfirmation",
 						"div.dictionary",
 						"div.info_meeting",
 						"div.practicalities",
