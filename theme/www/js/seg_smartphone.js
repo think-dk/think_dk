@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-08-19 00:01:25
+asset-builder @ 2020-08-19 10:40:47
 */
 
 /*seg_smartphone_include.js*/
@@ -9237,31 +9237,10 @@ Util.Modules["verdensborger"] = new function() {
 			if(this.form_signup) {
 				u.f.init(this.form_signup);
 			}
-			this.loaded = function(queue) {
-				var i, person;
-				if(this.ul_people) {
-					this.people = u.qsa("li.person", this.ul_people);
-					for(i = 0; i < this.people.length; i++) {
-						person = this.people[i];
-						u.ie(person, "img", {src: person.image_src});
-					}
-				}
-				if(this.ul_images) {
-					this.slideshow = u.slideshow(this.ul_images);
-					this.slideshow.scene = this;
-					this.resized();
-					this.slideshow.preloaded = function() {
-						if(!this.selected_node) {
-							this.selectNode(0);
-						}
-					}
-					this.slideshow.prepare();
-					u.addNextArrow(this.slideshow.bn_next);
-					u.addPreviousArrow(this.slideshow.bn_prev);
-				}
-				u.showScene(this);
-			}
-			u.preloader(this, load_queue);
+			// 	
+			// 		
+			// 			
+			u.showScene(this);
 		}
 		page.cN.scene = scene;
 	}

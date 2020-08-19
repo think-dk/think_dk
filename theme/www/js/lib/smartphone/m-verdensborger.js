@@ -88,49 +88,49 @@ Util.Modules["verdensborger"] = new function() {
 			}
 
 
-			this.loaded = function(queue) {
+			// this.loaded = function(queue) {
+			//
+			// 	var i, person;
+			//
+			// 	if(this.ul_people) {
+			// 		this.people = u.qsa("li.person", this.ul_people);
+			//
+			// 		for(i = 0; i < this.people.length; i++) {
+			// 			person = this.people[i];
+			// 			u.ie(person, "img", {src: person.image_src});
+			// 		}
+			//
+			// 	}
+			//
+			// 	// console.log(this.ul_images, this.images);
+			//
+			// 	if(this.ul_images) {
+			// 		this.slideshow = u.slideshow(this.ul_images);
+			// 		this.slideshow.scene = this;
+			// 		this.resized();
+			//
+			// 		// Slides are preloaded
+			// 		this.slideshow.preloaded = function() {
+			// 			// select current node (first slide if none specified)
+			// 			if(!this.selected_node) {
+			// 				this.selectNode(0);
+			// 			}
+			//
+			// 		}
+			//
+			// 		this.slideshow.prepare();
+			// 		u.addNextArrow(this.slideshow.bn_next);
+			// 		u.addPreviousArrow(this.slideshow.bn_prev);
+			//
+			// 	}
+			//
+			//
+			//
+			// }
 
-				var i, person;
+			u.showScene(this);
 
-				if(this.ul_people) {
-					this.people = u.qsa("li.person", this.ul_people);
-
-					for(i = 0; i < this.people.length; i++) {
-						person = this.people[i];
-						u.ie(person, "img", {src: person.image_src});
-					}
-
-				}
-
-				// console.log(this.ul_images, this.images);
-
-				if(this.ul_images) {
-					this.slideshow = u.slideshow(this.ul_images);
-					this.slideshow.scene = this;
-					this.resized();
-
-					// Slides are preloaded
-					this.slideshow.preloaded = function() {
-						// select current node (first slide if none specified)
-						if(!this.selected_node) {
-							this.selectNode(0);
-						}
-
-					}
-					
-					this.slideshow.prepare();
-					u.addNextArrow(this.slideshow.bn_next);
-					u.addPreviousArrow(this.slideshow.bn_prev);
-					
-				}
-
-
-				u.showScene(this);
-
-			}
-
-
-			u.preloader(this, load_queue);
+			// u.preloader(this, load_queue);
 
 		}
 
