@@ -235,7 +235,7 @@ if($action) {
 
 				if($payment_method_result["status"] === "success") {
 
-					$return_url = str_replace("{GATEWAY}", $payment_method_result["payment_gateway"], SITE_PAYMENT_REGISTER_PAID_INTENT);
+					$return_url = str_replace("{GATEWAY}", $gateway, SITE_PAYMENT_REGISTER_PAID_INTENT);
 					$result = payments()->requestPaymentIntentForOrders(
 						$payment_method_result["orders"],
 						$payment_method_result["card"]["id"], 
@@ -564,7 +564,7 @@ if($action) {
 		else if($payment_method_result["status"] === "PROCEED_TO_RECEIPT") {
 
 			// redirect to leave POST state
-			header("Location: /shop/receipt/order/".$result["order_no"]."/".superNormalize($result["payment_name"]));
+			header("Location: /shop/receipt/order/".$payment_method_result["order_no"]."/".superNormalize($payment_method_result["payment_name"]));
 			exit();
 
 		}
