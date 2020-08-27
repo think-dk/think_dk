@@ -10,18 +10,13 @@ if($page_item) {
 ?>
 <div class="scene verdensborger i:verdensborger">
 
-<? if($page_item): ?>
+<? if($page_item):
+	$media = $IC->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
-		<? 
-		$mediae = $IC->filterMediae($page_item, "mediae");
-		if($mediae): ?>
-		<ul class="images">
-			<? foreach($mediae as $media): ?>
-			<li><div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div></li>
-			<? endforeach; ?>
+		<? if($media): ?>
+		<div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
 		<? endif; ?>
-		</ul>
 
 
 		<?= $HTML->articleTags($page_item, [
