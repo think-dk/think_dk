@@ -80,11 +80,17 @@ if($page_item) {
 	<div class="info_meeting">
 		<h2>Mød os og hør mere på et intromøde</h2>
 		<h3>
-			6. september, Kl. 19:30-20:30
+			6. september 2020
 		</h3>
+		<p>
+			Kl. 19:30-20:30
+		</p>
 		<h3>
-			20. september, Kl. 19:30-20:30
+			20. september 2020
 		</h3>
+		<p>
+			Kl. 19:30-20:30
+		</p>
 		<p>
 			Alle interesserede er velkomne –
 			Bemærk at grundet Corona, er der begrænsninger på hvor mange vi kan samles – skriv derfor til <a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du vil være sikker på en plads – eller opdateres når vi
@@ -102,7 +108,7 @@ if($page_item) {
 
 	<div class="practicalities">
 		<h2>Praktisk info</h2>
-		<p>Forløbet foregår i København, hos think.dk i vores hyggelige lokaler med masser af bløde sofaer :)</p>
+		<p>Forløbet foregår i København, hos think.dk</p>
 		<p>Forløbet løber fra d. 24. oktober 2020 til 8. maj 2021 og indebærer:</p>
 		<ul>
 			<li>19 lørdage fra 10.00-12.00</li>
@@ -117,11 +123,11 @@ if($page_item) {
 		<h2>Tilmelding</h2>
 
 		<p>
-			Som alternativ til konfirmation kan du forhåndstilmelde dig forløbet 'Verdensborger' ved at udfylde formularen herunder. Du er også meget velkommen til at skrive til os på 
+			Som alternativ til konfirmation kan du forhåndstilmelde dig forløbet <em>Verdensborger</em> ved at udfylde formularen herunder. Du er også meget velkommen til at skrive til os på 
 			<a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du har spørgsmål :)
 		</p>
 		<p>
-			Kun 1/3 af kostprisen skal egenfinancieres – og forløbet koster derfor kun 4.500 kr./person. Der er også mulighed for at søge om friplads. Se nedenfor.
+			Forløbet koster kun 4.500 kr./person. Der er også mulighed for at søge om friplads. Se nedenfor.
 		</p>
 		<p>
 			Tilmelding senest 1. oktober 2020.
