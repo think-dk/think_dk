@@ -87,8 +87,8 @@ if($page_item) {
 		</h3>
 		<p>
 			Alle interesserede er velkomne –
-			Skriv til <a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du vil tilmeldes – eller opdateres når vi
-			tilføjer nye intromøder til listen.
+			Bemærk at grundet Corona, er der begrænsninger på hvor mange vi kan samles – skriv derfor til <a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du vil være sikker på en plads – eller opdateres når vi
+			tilføjer nye intromøder til listen. 
 		</p>
 		<p>
 			Møderne foregår i think.dk’s lokaler.
