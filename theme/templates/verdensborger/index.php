@@ -113,8 +113,9 @@ if($page_item) {
 		<ul>
 			<li>19 lørdage fra 10.00-12.00.</li>
 			<li>1 weekend med overnatning den 30. oktober til den 1. november.</li>
-			<li>Debat inspirerende oplæg eller tur, hver lørdag, efterfulgt af dialog med de unge.</li>
-			<li>Afslutningsweekend d. 7.-8. maj 2021.</li>
+			<li>Ingen lektioner i skolernes ferier.</li>
+			<li>Debatinspirerende oplæg eller tur, hver lørdag, efterfulgt af dialog med de unge.</li>
+			<li>Afslutningsweekend den 7.-8. maj 2021.</li>
 			<li>Overgangsritual fredag den 7. maj.</li>
 			<li>Afslutningsceremoni med familien lørdag den 8. maj.</li>
 			<li>Derefter fest i de respektive familiers regi.</li>
