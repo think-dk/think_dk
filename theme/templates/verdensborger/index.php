@@ -111,10 +111,12 @@ if($page_item) {
 		<p>Forløbet foregår i København, hos think.dk</p>
 		<p>Forløbet løber fra d. 24. oktober 2020 til 8. maj 2021 og indebærer:</p>
 		<ul>
-			<li>19 lørdage fra 10.00-12.00</li>
-			<li>1 weekend med overnatning</li>
-			<li>Afslutningsweekend d. 7.-8. maj 2021</li>
-			<li>Overgangsritual fredag, afslutningsceremoni med familien lørdag.</li>
+			<li>19 lørdage fra 10.00-12.00.</li>
+			<li>1 weekend med overnatning.</li>
+			<li>Debat inspirerende oplæg, efterfulgt af dialog.</li>
+			<li>Afslutningsweekend d. 7.-8. maj 2021.</li>
+			<li>Overgangsritual fredag den 7. maj.</li>
+			<li>Afslutningsceremoni med familien lørdag den 8. maj.</li>
 			<li>Derefter fest i de respektive familiers regi.</li>
 		</ul>
 	</div>
