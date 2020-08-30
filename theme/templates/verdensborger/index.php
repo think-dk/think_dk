@@ -112,7 +112,7 @@ if($page_item) {
 		<p>Forløbet løber fra d. 24. oktober 2020 til 8. maj 2021 og indebærer:</p>
 		<ul>
 			<li>19 lørdage fra 10.00-12.00.</li>
-			<li>1 weekend med overnatning.</li>
+			<li>1 weekend med overnatning den 30. oktober til den 1. november.</li>
 			<li>Debat inspirerende oplæg eller tur, hver lørdag, efterfulgt af dialog med de unge.</li>
 			<li>Afslutningsweekend d. 7.-8. maj 2021.</li>
 			<li>Overgangsritual fredag den 7. maj.</li>
