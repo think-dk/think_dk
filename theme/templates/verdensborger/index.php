@@ -79,13 +79,17 @@ if($page_item) {
 
 	<div class="info_meeting">
 		<h2>Mød os og hør mere på et intromøde</h2>
-		<p>
-			Introduktionsmøder bliver annonceret her meget snart.
-		</p>
+		<h3>
+			6. september, Kl. 19:30-20:30
+		</h3>
+		<h3>
+			20. september, Kl. 19:30-20:30
+		</h3>
 		<p>
 			Alle interesserede er velkomne –
 			Skriv til <a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du vil tilmeldes – eller opdateres når vi
 			tilføjer nye intromøder til listen.
+		</p>
 		<p>
 			Møderne foregår i think.dk’s lokaler.
 		</p>
@@ -99,9 +103,9 @@ if($page_item) {
 	<div class="practicalities">
 		<h2>Praktisk info</h2>
 		<p>Forløbet foregår i København, hos think.dk i vores hyggelige lokaler med masser af bløde sofaer :)</p>
-		<p>Forløbet løber fra d. 3. oktober 2020 til april 2021 og indebærer:</p>
+		<p>Forløbet løber fra d. 24. oktober 2020 til 8. maj 2021 og indebærer:</p>
 		<ul>
-			<li>22 lørdage fra 11.00-13.00</li>
+			<li>19 lørdage fra 10.00-12.00</li>
 			<li>1 weekend med overnatning</li>
 			<li>Afslutningsweekend d. 7.-8. maj 2021</li>
 			<li>Overgangsritual fredag, afslutningsceremoni med familien lørdag.</li>
