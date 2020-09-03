@@ -89,7 +89,7 @@ if($page_item) {
 			20. september 2020
 		</h3>
 		<p>
-			Kl. 19:30-20:30 – <a href="/events/verdensborger-intromoede-1">læs mere</a>
+			Kl. 19:30-20:30 – <a href="/events/verdensborger-intromoede-1">læs mere</a>.
 		</p>
 		<p>
 			Alle interesserede er velkomne –
