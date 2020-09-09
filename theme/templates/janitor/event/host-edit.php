@@ -4,29 +4,27 @@ global $IC;
 global $model;
 global $itemtype;
 
-// include_once("classes/users/superuser.class.php");
-// $UC = new SuperUser();
+$editable = false;
 
 $item_id = $action[1];
 $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "mediae" => true)));
 $user_id = session()->value("user_id");
 
-// $host_options = $model->toOptions($model->getHosts(), "id", "host");
-// $hosts = $model->getHosts();
-// $users = $UC->getUsers(["order" => "nickname ASC"]);
-
-// $user_options_owner = $model->toOptions($users, "id", "nickname", ["add" => ["" => "Select event owner"]]);
-// $user_options_1 = $model->toOptions($users, "id", "nickname", ["add" => ["" => "Select backer 1"]]);
-// $user_options_2 = $model->toOptions($users, "id", "nickname", ["add" => ["" => "Select backer 2"]]);
+$editors = $model->getEditors(["item_id" => $item["item_id"]]);
+foreach($editors as $editor) {
+	if($editor["user_id"] == $user_id) {
+		$editable = true;
+	}
+}
 
 $eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype");
 
 ?>
 <div class="scene i:scene defaultEdit <?= $itemtype ?>Edit">
-	<h1>Edit event as event host or backer</h1>
+	<h1>Edit event as event editor</h1>
 	<h2><?= strip_tags($item["name"]) ?></h2>
 
-<? if($eventtype_tag !== false && $item["tags"][$eventtype_tag]["value"] === "member" && ($item["event_owner"] == $user_id || $item["backer_1"] == $user_id || $item["backer_2"] == $user_id)): ?>
+<? if($eventtype_tag !== false && $item["tags"][$eventtype_tag]["value"] === "member" && $editable): ?>
 
 	<?= $JML->editGlobalActions($item, ["modify" => [
 		"list" => [
@@ -64,8 +62,6 @@ $eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype");
 
 		<?= $model->formEnd() ?>
 	</div>
-
-	<? //= $JML->editPrices($item) ?>
 
 	<?= $JML->editSindex($item) ?>
 

@@ -11,10 +11,14 @@ $user_id = session()->value("user_id");
 $items = $IC->getItems(array("itemtype" => $itemtype, "where" => $itemtype.".starting_at > NOW()", "tags" => "eventtype:member", "order" => "status DESC, ".$itemtype.".starting_at ASC", "extend" => array("tags" => true, "mediae" => true)));
 $filtered_events = [];
 foreach($items as $item) {
-	if($item["event_owner"] == $user_id || $item["backer_1"] == $user_id || $item["backer_2"] == $user_id) {
-		
-		array_push($filtered_events, $item);
-
+	$editors = $model->getEditors(["item_id" => $item["item_id"]]);
+	// debug(["editors", $editors, $item]);
+	if($editors) {
+		foreach($editors as $editor) {
+			if($editor["user_id"] == $user_id) {
+				array_push($filtered_events, $item);
+			}
+		}
 	}
 }
 
