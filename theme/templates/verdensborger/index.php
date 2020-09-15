@@ -130,7 +130,7 @@ if($page_item) {
 			<a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du har spørgsmål :)
 		</p>
 		<p>
-			Forløbet koster kun 4.500 kr./person. Der er også mulighed for at søge om friplads. Se nedenfor.
+			Forløbet koster fra 1000,- til 8.000,- kr. pr. deltager. Se nedenfor.
 		</p>
 		<p>
 			Tilmelding senest 1. oktober 2020.
@@ -151,17 +151,15 @@ if($page_item) {
 		<?= $HTML->formEnd(); ?>
 
 
-		<h3>Søg om en friplads</h3>
+		<h3>Fra 1.000,- til 8.000,- kr.?</h3>
 		<p>
-			Engagement og interesse vejer tungest for os, og derfor har vi budgetteret med et antal fripladser til vores alternative
-			konfirmationsforberedelsesforløb. 
+			Den formelle pris på dette forløb er 4.500,- kr., men vi ønsker at forløbet skal være tilgængeligt for familier og unge fra alle 
+			indkomstgrupper. Derfor har vi lavet en fleksibel prismodel, der tilgodeser alle. Vi opfordrer dem der kan til at betale lidt ekstra, 
+			for at dem der ikke har så meget også kan være med. Lad os blot høre hvad der er den rigtige pris for dig.
 		</p>
 		<p>
 			Det vigtigste for os er, at vi får samlet en gruppe unge, der ønsker at indgå i et givende og åbent 
 			fællesskab, og som er nysgerrige og kan se værdien i at være med.
-		</p>
-		<p>
-			Hvis du ønsker at søge om en friplads, så angiv dette i din ansøgning og fortæl os om din situation.
 		</p>
 	</div>
 
