@@ -27,7 +27,7 @@ foreach($items as $item) {
 	<h1>Events</h1>
 
 	
-	<div class="all_items i:defaultList taggable filters"<?= $HTML->jsData(["tags", "search"]) ?>>
+	<div class="all_items i:defaultList filters"<?= $HTML->jsData(["search"]) ?>>
 <?		if($filtered_events): ?>
 		<ul class="items">
 
@@ -39,8 +39,6 @@ foreach($items as $item) {
 					<dt>Starting</dt>
 					<dd class="starting_at"><?= date("Y-m-d @ H:i", strtotime($item["starting_at"])) ?></dd>
 				</dl>
-
-				<?= $JML->tagList($item["tags"]) ?>
 
 				<?= $JML->listActions($item, ["modify" => [
 					"edit" => [

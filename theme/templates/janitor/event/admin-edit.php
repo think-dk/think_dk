@@ -66,17 +66,6 @@ $eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype");
 			</fieldset>
 
 			<fieldset>
-				<h3>Event owner</h3>
-				<?= $model->input("event_owner", array("type" => "select", "options" => $user_options_owner, "value" => $item["event_owner"])) ?>
-			</fieldset>
-
-			<fieldset class="backers">
-				<h3>Event backers</h3>
-				<?= $model->input("backer_1", array("type" => "select", "options" => $user_options_1, "value" => $item["backer_1"])) ?>
-				<?= $model->input("backer_2", array("type" => "select", "options" => $user_options_2, "value" => $item["backer_2"])) ?>
-			</fieldset>
-
-			<fieldset>
 				<h3>Event descriptions</h3>
 				<?= $model->input("description", array("class" => "autoexpand short", "value" => $item["description"])) ?>
 				<?= $model->input("html", array("value" => $item["html"])) ?>
@@ -87,7 +76,7 @@ $eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype");
 		<?= $model->formEnd() ?>
 	</div>
 
-	<? //= $JML->editPrices($item) ?>
+	<?= $JML->editEditors($item) ?>
 
 	<?= $JML->editTags($item) ?>
 

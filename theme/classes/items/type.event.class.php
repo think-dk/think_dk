@@ -17,7 +17,18 @@ class TypeEvent extends TypeEventCore {
 	}
 
 	function saveAdmin($action) {
-		return $this->save($action);
+		$result = $this->save($action);
+		
+		// Add tags if this is a memberevent
+		$type = getPost("memberevent");
+		if($result && $type) {
+
+			$_POST["tags"] = "eventtype:member";
+			$this->addTag(["addTag", $result["id"]]);
+
+		}
+		
+		return $result;
 	}
 
 	function updateAdmin($action) {

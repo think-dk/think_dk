@@ -1,10 +1,5 @@
 <?php
 $access_item["/"] = true;
-$access_item["/owner"] = true;
-$access_item["/updateOwner"] = "/owner";
-$access_item["/new"] = true;
-$access_item["/edit"] = "/new";
-$access_item["/list"] = "/new";
 $access_item["/admin"] = true;
 $access_item["/admin-list"] = "/admin";
 $access_item["/admin-new"] = "/admin";
@@ -15,8 +10,6 @@ $access_item["/host"] = true;
 $access_item["/host-list"] = "/host";
 $access_item["/host-edit"] = "/host";
 $access_item["/updateHost"] = "/host";
-$access_item["/comments"] = true;
-$access_item["/addComment"] = "/comments";
 if(isset($read_access) && $read_access) {
 	return;
 }
@@ -37,7 +30,7 @@ $page->pageTitle("Events");
 if(is_array($action) && count($action)) {
 
 	// LIST/EDIT/NEW ITEM
-	if(preg_match("/^(list|edit|new|locations|location-new|location-edit|performers|admin-list|admin-new|admin-edit|host-list|host-edit)$/", $action[0])) {
+	if(preg_match("/^(admin-list|admin-new|admin-edit|host-list|host-edit)$/", $action[0])) {
 
 		$page->page(array(
 			"type" => "janitor",

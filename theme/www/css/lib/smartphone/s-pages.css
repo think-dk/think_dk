@@ -496,6 +496,10 @@ body.black #content .scene div.comments h2:active svg.arrow line {stroke: #00000
 #content .scene.frios .highlight {color: #26962d;}
 
 
+#content .scene.verdensborger .overdue,
+#content .scene.verdensborger .overdue a {color: #cdcdcd;}
+
+
 /* FEEDBACK ELEMENTS */
 /*
 #content .scene div.todos {display: none;}

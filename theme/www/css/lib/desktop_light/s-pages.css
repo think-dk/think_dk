@@ -141,3 +141,5 @@
 #content .scene.blogs ul.blogs li.blog dl.author dt,
 #content .scene.blogs ul.blogs li.blog dl.author dd {font-style: italic; display: inline;}
 
+#content .scene.verdensborger .overdue,
+#content .scene.verdensborger .overdue a {color: #cdcdcd;}

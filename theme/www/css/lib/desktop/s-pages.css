@@ -919,6 +919,10 @@ body.black #header ul.servicenavigation {display: none;}
 
 #content .scene.verdensborger .highlight {color: #26962d;}
 
+#content .scene.verdensborger .overdue,
+#content .scene.verdensborger .overdue a {color: #cdcdcd;}
+
+
 /* ABOUT */
 /*#content .scene.about div.comments {margin-top: 20px;}*/
 

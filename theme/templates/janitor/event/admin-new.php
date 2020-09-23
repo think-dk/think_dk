@@ -7,7 +7,7 @@ global $itemtype;
 // Set default location (think.dk)
 $locations = $model->getLocations();
 $think_location_id = false;
-$think_location_index = arrayKeyValue($locations, "location", "think.dk");
+$think_location_index = arrayKeyValue($locations, "location", "think.dk (Salen)");
 if($think_location_index !== false) {
 	$think_location_id = $locations[$think_location_index]["id"];
 }

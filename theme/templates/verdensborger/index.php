@@ -79,17 +79,23 @@ if($page_item) {
 
 	<div class="info_meeting">
 		<h2>Mød os og hør mere på et intromøde</h2>
-		<h3>
+		<h3 class="overdue">
 			6. september 2020
 		</h3>
-		<p>
+		<p class="overdue">
 			Kl. 19:30-20:30 – <a href="/events/verdensborger-intromoede">læs mere</a>.
 		</p>
-		<h3>
+		<h3 class="overdue">
 			20. september 2020
 		</h3>
-		<p>
+		<p class="overdue">
 			Kl. 19:30-20:30 – <a href="/events/verdensborger-intromoede-1">læs mere</a>.
+		</p>
+		<h3>
+			11. oktober 2020
+		</h3>
+		<p>
+			Kl. 19:30-20:30 – <a href="/events/verdensborger-infomoede">læs mere</a>.
 		</p>
 		<p>
 			Alle interesserede er velkomne –
