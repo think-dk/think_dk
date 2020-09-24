@@ -2,5 +2,5 @@
 <ul class="info">
 	<li>Charlotte Ammundsens Plads 3</li>
 	<li>1359 København K</li>
-	<li class="cvr">CVR: DK-25210433</li>
+	<li class="cvr">CVR: DK-40201890</li>
 </ul>
