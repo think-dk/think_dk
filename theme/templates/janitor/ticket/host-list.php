@@ -4,7 +4,6 @@ global $IC;
 global $model;
 global $itemtype;
 
-
 // additional parameter
 $expired = false;
 if(count($action) == 2 && $action[1] == "expired") {
@@ -24,28 +23,38 @@ else {
 }
 
 
-$SC = new Shop();
-?>
+$user_id = session()->value("user_id");
 
+$filtered_tickets = [];
+foreach($items as $item) {
+	$editors = $model->getEditors(["item_id" => $item["item_id"]]);
+	// debug(["editors", $editors, $item]);
+	if($editors) {
+		foreach($editors as $editor) {
+			if($editor["user_id"] == $user_id) {
+				array_push($filtered_tickets, $item);
+			}
+		}
+	}
+}
+
+?>
 <div class="scene i:scene defaultList <?= $itemtype ?>List">
 	<h1>Tickets</h1>
-
-	<ul class="actions">
-		<?= $JML->listNew(array("label" => "New ticket")) ?>
-	</ul>
+	<h2>Ticket Host list</h2>
 
 	<ul class="tabs">
-		<?= $HTML->link("Tickets for sale", "/janitor/ticket/list", array("wrapper" => "li.".(!$expired ? "selected" : ""))) ?>
-		<?= $HTML->link("Expired tickets", "/janitor/ticket/list/expired", array("wrapper" => "li.".($expired ? "selected" : ""))) ?>
+		<?= $HTML->link("Tickets for sale", "/janitor/ticket/host-list", array("wrapper" => "li.".(!$expired ? "selected" : ""))) ?>
+		<?= $HTML->link("Expired tickets", "/janitor/ticket/host-list/expired", array("wrapper" => "li.".($expired ? "selected" : ""))) ?>
 	</ul>
 
 	<div class="all_items i:defaultList filters"<?= $HTML->jsData(["tags", "search"]) ?>>
 <?		if($items): ?>
 		<ul class="items">
-<?			foreach($items as $item): ?>
+
+<?			foreach($filtered_tickets as $item): ?>
 			<li class="item item_id:<?= $item["id"] ?>">
 				<h3><?= strip_tags($item["name"]) ?></h3>
-
 				<dl class="info">
 					<dt class="sale_opens">Sale opens</dt>
 					<dd class="sale_opens"><?= date("Y-m-d H:i", strtotime($item["sale_opens"])) ?></dd>
@@ -58,9 +67,6 @@ $SC = new Shop();
 					<dd class="tickets_sold"><?= $model->getSoldTickets($item["item_id"]) ?></dd>
 					<dt class="tickets_reserved">Tickets reserved</dt>
 					<dd class="tickets_reserved"><?= $model->getReservedTickets($item["item_id"]) ?></dd>
-
-					<dt class="price">Ticket price</dt>
-					<dd class="price"><?= formatPrice($SC->getPrice($item["id"])) ?></dd>
 				</dl>
 
 <? 			if($expired): ?>
@@ -70,20 +76,26 @@ $SC = new Shop();
 						"status" => false,
 						"edit" => [
 							"label" => "View",
-							"url" => "/janitor/ticket/view/".$item["id"]
+							"url" => "/janitor/ticket/host-view/".$item["id"]
 						]
 					]
 				]) ?>
 <?			else: ?>
-				<?= $JML->listActions($item) ?>
+				<?= $JML->listActions($item, ["modify" => [
+					"delete" => false,
+					"status" => false,
+					"edit" => [
+						"url" => "/janitor/ticket/host-edit/". $item["id"]
+					],
+				]]) ?>
 <?			endif; ?>
-
 
 			 </li>
 <?			endforeach; ?>
+
 		</ul>
 <?		else: ?>
-		<p>No tickets.</p>
+		<p>No tickets for you.</p>
 <?		endif; ?>
 	</div>
 

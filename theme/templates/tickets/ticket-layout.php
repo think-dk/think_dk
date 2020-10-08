@@ -33,7 +33,9 @@ $ticket_info = $model->getTicketInfo($ticket_no);
 		<p class="batch"><?= $batch ?></p>
 		<? endif; ?>
 
-		<p><?= nl2br($ticket_info["item"]["ticket_information"]) ?></p>
+		<? if($ticket_info["item"]["ticket_information"]): ?>
+		<?= $ticket_info["item"]["ticket_information"] ?>
+		<? endif ?>
 
 		<p class="note">This ticket is only valid when full payment is registered.</p>
 

@@ -61,6 +61,9 @@ $SC = new Shop();
 
 		<ul class="items tickets i:articleMiniList">
 			<? foreach($ticket_items as $item):
+
+			if($item["classname"] !== "test-only"):
+
 				$media = $IC->sliceMediae($item, "single_media");
 				$remaining_tickets = $item["total_tickets"] - ($model->getSoldTickets($item["item_id"]) + $model->getReservedTickets($item["item_id"]));
 			?>
@@ -94,6 +97,9 @@ $SC = new Shop();
 				<? endif; ?>
 
 			</li>
+
+			<? endif; ?>
+
 			<? endforeach; ?>
 		</ul>
 
