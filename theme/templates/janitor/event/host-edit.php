@@ -4,16 +4,18 @@ global $IC;
 global $model;
 global $itemtype;
 
-$editable = false;
 
 $item_id = $action[1];
 $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "mediae" => true)));
 $user_id = session()->value("user_id");
 
+$editable = false;
 $editors = $model->getEditors(["item_id" => $item["item_id"]]);
-foreach($editors as $editor) {
-	if($editor["user_id"] == $user_id) {
-		$editable = true;
+if($editors) {
+	foreach($editors as $editor) {
+		if($editor["user_id"] == $user_id) {
+			$editable = true;
+		}
 	}
 }
 
