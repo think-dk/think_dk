@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-09-10 07:36:52
+asset-builder @ 2020-10-08 10:54:54
 */
 
 /*seg_desktop_include.css*/
@@ -1062,9 +1062,9 @@ body.invoice #content div.scene .payment_info {position: absolute; bottom: 50px;
 #content .scene.defaultEdit > div.qnas ul.qnas > li ul.info li.user:after {content: ",\00a0";}
 #content .scene.defaultEdit > div.qnas ul.qnas > li {display: block; border-top: 1px solid #dedede; position: relative; padding-bottom: 8px; padding-top: 15px;}
 #content .scene.defaultEdit > div.qnas ul.qnas > li p {padding-bottom: 7px;}
-#content .scene.defaultEdit > div.editors {padding: 0 0 15px; border-bottom: 1px solid #bbbbbb; position: relative;}
+#content .scene.defaultEdit > div.editors {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
 #content .scene.defaultEdit > div.editors ul.editors {border-top: 1px solid #dedede; padding-bottom: 30px;}
-#content .scene.defaultEdit > div.editors > form {padding-bottom: 10px; padding-top: 5px;}
+#content .scene.defaultEdit > div.editors form.editors {padding-bottom: 15px;}
 
 
 /*s-default_new.css*/
@@ -1089,6 +1089,8 @@ body.invoice #content div.scene .payment_info {position: absolute; bottom: 50px;
 #content .scene.wishList ul.items > li dl dt.reserved {display: none;}
 #content .scene.wishList ul.items > li dl dd.reserved {font-size: 14px;}
 #content .scene.eventList ul.items > li.past {background: #dddddd;}
+#content .scene.ticketEdit div.item.expired {background: orange; padding-top: 25px;}
+#content .scene.ticketEdit div.item.expired p {color: #ffffff;}
 #content .scene fieldset h3 {font-size: 0.8em; text-transform: uppercase; padding-top: 7px; padding-bottom: 10px; margin: 0;}
 #content .scene fieldset + fieldset h3 {margin: 20px 0 0px;}
 #content .scene.messageList > ul.actions li.maillists {float: right; padding: 0 0 10px 10px;}
@@ -1112,10 +1114,13 @@ body.invoice #content div.scene .basics h1 {color: #26962d; text-transform: lowe
 #content .scene.ticketList ul.items > li dl.info dt.price {display: none;}
 #content .scene.ticketList ul.items > li dl.info dd.price {position: absolute; top: 45px; right: 30px; font-size: 26px;}
 #content .scene.ticketEdit div.participants {border-bottom: 1px solid #bbbbbb;}
-#content .scene.ticketEdit div.all_items {padding-bottom: 30px;}
+#content .scene.ticketEdit div.participants div.all_items {padding-bottom: 30px;}
+#content .scene.ticketEdit div.participants > div > ul.actions {padding-bottom: 20px; text-align: right;}
 #content .scene.ticketEdit ul.items.participants {}
 #content .scene.ticketEdit ul.items.participants li {padding: 0 30px;}
 #content .scene.ticketEdit ul.items.participants li ul.actions {top: 4px;}
-#content .scene.ticketEdit ul.items.participants li span {padding: 10px 7px 10px 0; display: inline-block; width: 250px;}
-#content .scene.ticketEdit ul.items.participants li span.ticket_no {width: 150px;}
+#content .scene.ticketEdit ul.items.participants li ul.actions li {padding: 0 0 0 10px;}
+#content .scene.ticketEdit ul.items.participants li span {padding: 10px 7px 10px 0; display: inline-block; width: 300px;}
+#content .scene.ticketEdit ul.items.participants li span.ticket_no {width: 130px;}
+#content .scene.ticketEdit ul.items.participants li span.unit_price {width: 80px;}
 
