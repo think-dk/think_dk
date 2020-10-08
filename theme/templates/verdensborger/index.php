@@ -139,7 +139,7 @@ if($page_item) {
 			Forløbet koster fra 1000,- til 8.000,- kr. pr. deltager. Se nedenfor.
 		</p>
 		<p>
-			Tilmelding senest 1. oktober 2020.
+			Tilmelding senest 15. oktober 2020.
 		</p>
 
 		<?= $HTML->formStart("tilmelding", ["class" => "signup labelstyle:inject"]); ?>
