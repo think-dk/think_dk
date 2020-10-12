@@ -50,6 +50,7 @@ if(count($action) && $action[0] == "2") {
 	$page->page(array(
 		"templates" => "verdensborger/index2.php"
 	));
+	exit();
 
 }
 
