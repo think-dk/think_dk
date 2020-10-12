@@ -8,7 +8,7 @@ if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 ?>
-<div class="scene verdensborger i:verdensborger">
+<div class="scene verdensborger i:verdensborger" lang="da">
 
 <? if($page_item):
 	$media = $IC->sliceMediae($page_item, "single_media"); ?>
@@ -31,7 +31,7 @@ if($page_item) {
 		<? endif; ?>
 
 
-		<?= $HTML->articleInfo($page_item, "/friosfradevoksnes", [
+		<?= $HTML->articleInfo($page_item, "/verdensborger", [
 			"media" => $media,
 			"sharing" => true
 		]) ?>
@@ -65,11 +65,10 @@ if($page_item) {
 	<div class="konfirmation">
 		<h2>Konfirmation og Nonfirmation</h2>
 		<p class="note">
-			Konfirmation er en tradition i Danmark, hvor 7.-8. klasseselever ofte spenderer timevis i 
-			præstegården, ofte blot for at få en fest med masser af gaver.
+			Konfirmation har været en tradition i Danmark siden 1736, hvor 7.-8. klasseselever bekræfter dåben, gennem en kirkelig handling, udført i regi af folkekirken.
 		</p>
 		<p class="note">
-			Nonfirmation er en begyndende tradition i Danmark, hvor 7.-8. klasseselever springer ritualet og dannelsesrejsen over og blot får en fest med masser af gaver.
+			Nonfirmation er en begyndende tradition i Danmark, hvor 7.-8. klasseselever i mange tilfælde springer ritualet og dannelsesrejsen over og blot markere overgangen fra barn til voksen med en fest
 		</p>
 		<p class="note">Vi forstår at festen er vigtig, 
 			men overgangen fra barndommen til det gryende voksenliv er vigtigere, og vi ønsker brændende at 
@@ -91,11 +90,17 @@ if($page_item) {
 		<p class="overdue">
 			Kl. 19:30-20:30 – <a href="/events/verdensborger-intromoede-1">læs mere</a>.
 		</p>
-		<h3>
+		<h3 class="overdue">
 			11. oktober 2020
 		</h3>
-		<p>
+		<p class="overdue">
 			Kl. 19:30-20:30 – <a href="/events/verdensborger-infomoede">læs mere</a>.
+		</p>
+		<h3>
+			18. oktober 2020
+		</h3>
+		<p>
+			Kl. 19:30-20:30 – <a href="/events/verdensborger-infomoede-1">læs mere</a>.
 		</p>
 		<p>
 			Alle interesserede er velkomne –
@@ -117,8 +122,8 @@ if($page_item) {
 		<p>Forløbet foregår i København, hos think.dk</p>
 		<p>Forløbet løber fra d. 24. oktober 2020 til 8. maj 2021 og indebærer:</p>
 		<ul>
-			<li>19 lørdage fra 10.00-12.00.</li>
-			<li>1 weekend med overnatning den 30. oktober til den 1. november.</li>
+			<li>14 lørdage fra 10.00-12.00 (24/10, 7/11, 14/11, 21/11, 5/12, 12/12, 16/1, 23/1, 30/1, 27/2, 6/3, 20/3, 10/4, 24/4).</li>
+			<li>1 lørdag fra 10:00 til 20:00 (30/10).</li>
 			<li>Ingen lektioner i skolernes ferier.</li>
 			<li>Debatinspirerende oplæg eller tur, hver lørdag, efterfulgt af dialog med de unge.</li>
 			<li>Afslutningsweekend den 7.-8. maj 2021.</li>
@@ -126,20 +131,25 @@ if($page_item) {
 			<li>Afslutningsceremoni med familien lørdag den 8. maj.</li>
 			<li>Derefter fest i de respektive familiers regi.</li>
 		</ul>
+		<h3>Corona information</h3>
+		<p>
+			Forløbet gennemføres i Kulturhuset Indre By under skarp hensynstagen til Corona-situationen. 
+			Vi har rigtig god plads og alle forholdsregler på plads, så vi kan gennemfører forløbet, også selvom der sker yderligere skærpelse af forsamlingsreglerne.
+		</p>
 	</div>
 
 	<div class="signup">
 		<h2>Tilmelding</h2>
 
 		<p>
-			Som alternativ til konfirmation kan du forhåndstilmelde dig forløbet <em>Verdensborger</em> ved at udfylde formularen herunder. Du er også meget velkommen til at skrive til os på 
+			Du kan tilmelde dig forløbet <em>Verdensborger</em> ved at udfylde formularen herunder. Du er også meget velkommen til at skrive til os på 
 			<a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du har spørgsmål :)
 		</p>
 		<p>
 			Forløbet koster fra 1000,- til 8.000,- kr. pr. deltager. Se nedenfor.
 		</p>
 		<p>
-			Tilmelding senest 15. oktober 2020.
+			Tilmelding senest 19. oktober 2020.
 		</p>
 
 		<?= $HTML->formStart("tilmelding", ["class" => "signup labelstyle:inject"]); ?>
@@ -147,8 +157,8 @@ if($page_item) {
 				<?= $HTML->input("name", ["type" => "string", "label" => "Deltagers navn", "required" => true, "value" => ""]); ?>
 				<?= $HTML->input("parentname", ["type" => "string", "label" => "Forælder navn"]); ?>
 				<?= $HTML->input("email", ["type" => "email", "label" => "Email", "required" => true]); ?>
-				<?= $HTML->input("phone", ["type" => "tel", "label" => "Telefon"]); ?>
-				<?= $HTML->input("comment", ["type" => "text", "label" => "Hvorfor vil du gerne deltage?", "required" => true, "class" => "autoexpand"]); ?>
+				<?= $HTML->input("phone", ["type" => "tel", "label" => "Telefon", "required" => true]); ?>
+				<?= $HTML->input("comment", ["type" => "text", "label" => "Hvorfor vil du gerne deltage?", "class" => "autoexpand"]); ?>
 			</fieldset>
 
 			<ul class="actions">
@@ -173,7 +183,7 @@ if($page_item) {
 		<h2>Vil du vide mere?</h2>
 		<p>
 			Du kan tilmelde dig ved at udfylde formularen her på siden. Du er også meget velkommen til at skrive til os på 
-			<a href="mailto:start@think.dk?subject=Fri%20os%20fra%20de%20voksnes">start@think.dk</a>, hvis du har spørgsmål til forløbet.
+			<a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du har spørgsmål til forløbet.
 		</p>
 	</div>
 
