@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-10-08 10:54:43
+asset-builder @ 2020-10-19 11:40:45
 */
 
 /*seg_smartphone_include.css*/
@@ -7,7 +7,7 @@ asset-builder @ 2020-10-08 10:54:43
 /*seg_smartphone.css*/
 /*
 MIT license, 2002-2019 parentNode.dk
-asset-builder @ 2020-06-25 12:00:26
+asset-builder @ 2020-10-19 11:37:39
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -695,6 +695,14 @@ body > div.pagination li.next:active > svg.arrow line {stroke: #ffffff;}
 }
 #content .scene.event div.event div.sponsor.lokaludvalg p {width: 210px; color: #cccccc;}
 #content .scene div.all_events.past_events {padding-top: 50px;}
+#content .scene.event div.tickets li.ticket {padding-bottom: 40px;}
+#content .scene.event div.tickets ul.ticket_info {padding: 0;}
+#content .scene.event div.tickets ul.ticket_info li.price {font-size: 34px;}
+#content .scene.event div.tickets ul.ticket_info li.buy ul.actions {padding: 20px 0 0;}
+#content .scene.event div.tickets ul.ticket_info li.buy ul.actions li {padding: 0;}
+#content .scene.ticket div.ticket ul.ticket_info li.price {font-size: 34px;}
+#content .scene.ticket div.ticket ul.ticket_info li.buy ul.actions {padding: 40px 0 0;}
+#content .scene.ticket div.ticket ul.ticket_info li.buy ul.actions li {padding: 0;}
 #content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-bottom: 30px; font-size: 0; position: relative; width: auto;}
 #content .scene div.memberships ul.memberships > li {display: inline-block; vertical-align: top; padding: 10px 10px 70px; margin: 0 0 10px; 
 	border-right: 1px solid #26962d; position: relative;

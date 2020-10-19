@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-10-08 10:54:43
+asset-builder @ 2020-10-19 11:40:45
 */
 
 /*seg_smartphone_include.js*/
@@ -1929,6 +1929,7 @@ Util.Form = u.f = new function() {
 		_form._label_style = u.cv(_form, "labelstyle");
 		_form._callback_ready = "ready";
 		_form._callback_submitted = "submitted";
+		_form._callback_submit_failed = "submitFailed";
 		_form._callback_pre_submitted = "preSubmitted";
 		_form._callback_resat = "resat";
 		_form._callback_updated = "updated";
@@ -1947,6 +1948,7 @@ Util.Form = u.f = new function() {
 					case "label_style"              : _form._label_style               = _options[_argument]; break;
 					case "callback_ready"           : _form._callback_ready            = _options[_argument]; break;
 					case "callback_submitted"       : _form._callback_submitted        = _options[_argument]; break;
+					case "callback_submit_failed"   : _form._callback_submit_failed    = _options[_argument]; break;
 					case "callback_pre_submitted"   : _form._callback_pre_submitted    = _options[_argument]; break;
 					case "callback_resat"           : _form._callback_resat            = _options[_argument]; break;
 					case "callback_updated"         : _form._callback_updated          = _options[_argument]; break;
@@ -2191,6 +2193,11 @@ Util.Form = u.f = new function() {
 					}
 				}
 				this.DOMsubmit();
+			}
+		}
+		else {
+			if(fun(this[this._callback_submit_failed])) {
+				this[this._callback_submit_failed](iN);
 			}
 		}
 	}
@@ -6728,7 +6735,7 @@ u.paymentCards = new function() {
 		{
 			"type": 'maestro',
 			"patterns": [5018, 502, 503, 506, 56, 58, 639, 6220, 67],
-			"format": /(\d{1,4})/g,
+			"format": /([\d]{1,4})([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?/,
 			"card_length": [12,13,14,15,16,17,18,19],
 			"cvc_length": [3],
 			"luhn": true
@@ -6736,7 +6743,7 @@ u.paymentCards = new function() {
 		{
 			"type": 'forbrugsforeningen',
 			"patterns": [600],
-			"format": /(\d{1,4})/g,
+			"format": /([\d]{1,4})([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?/,
 			"card_length": [16],
 			"cvc_length": [3],
 			"luhn": true,
@@ -6744,7 +6751,7 @@ u.paymentCards = new function() {
 		{
 			"type": 'dankort',
 			"patterns": [5019],
-			"format": /(\d{1,4})/g,
+			"format": /([\d]{1,4})([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?/,
 			"card_length": [16],
 			"cvc_length": [3],
 			"luhn": true
@@ -6760,7 +6767,7 @@ u.paymentCards = new function() {
 		{
 			"type": 'mastercard',
 			"patterns": [51, 52, 53, 54, 55, 22, 23, 24, 25, 26, 27],
-			"format": /(\d{1,4})/g,
+			"format": /([\d]{1,4})([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?/,
 			"card_length": [16],
 			"cvc_length": [3],
 			"luhn": true
@@ -6850,13 +6857,11 @@ u.paymentCards = new function() {
 		if(card) {
 			var matches = card_number.match(card.format);
 			if(matches) {
-				if(matches.length > 1 && matches[0] == card_number) {
-					matches.shift();
-					card_number = matches.join(" ").trim();
-				}
-				else {
-					card_number = matches.join(" ");
-				}
+				var matched_text = matches[0];
+				matches.shift(); 
+				var unmatched_suffix = card_number.slice(matched_text.length);
+				matches.push(unmatched_suffix);
+				card_number = matches.join(" ").trim().replace(/ +/g, " ");
 			}
 		}
 		return card_number;
@@ -8548,6 +8553,23 @@ Util.Modules["events"] = new function() {
 		page.cN.scene = scene;
 	}
 }
+
+/*m-event.js*/
+Util.Modules["event"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+			this.offsetHeight;
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			u.showScene(this);
+		}
+		page.cN.scene = scene;
+	}
+}
+
+
 
 /*m-blog.js*/
 Util.Modules["blogs"] = new function() {

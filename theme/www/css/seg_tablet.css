@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-10-08 10:54:43
+asset-builder @ 2020-10-19 11:40:45
 */
 
 /*seg_tablet_include.css*/
@@ -7,7 +7,7 @@ asset-builder @ 2020-10-08 10:54:43
 /*seg_tablet.css*/
 /*
 MIT license, 2002-2019 parentNode.dk
-asset-builder @ 2020-06-25 12:00:26
+asset-builder @ 2020-10-19 11:37:39
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -325,9 +325,9 @@ div.field input.default ~ .pseudolabel {display: inline-block;}
 div.field.checkbox,
 div.field.boolean {}
 div.field.checkbox input,
-div.field.boolean input {display: inline-block; vertical-align: top; width: auto; height: auto; padding: 0; margin: 1px 10px 0 3px; border: 0;}
+div.field.boolean input {display: inline-block; vertical-align: top; width: auto; height: auto; padding: 0; margin: 2px 10px 0 3px; border: 0;}
 div.field.checkbox label,
-div.field.boolean label {width: auto; display: inline-block; vertical-align: top; font-size: 14px; line-height: 1em;}
+div.field.boolean label {width: auto; display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.2em;}
 div.field.radiobuttons {}
 div.field.radiobuttons > label {display: block; font-size: 14px; line-height: 1em; padding: 0 0 0 3px;}
 div.field.radiobuttons > label:after {content: ":";}
@@ -344,13 +344,13 @@ div.field input[type="number"]::-webkit-inner-spin-button,
 div.field input[type="number"]::-webkit-outer-spin-button {margin: 0;
 	-webkit-appearance: none;
 }
-div.field.files {border: 3px dashed #dedede; display: block; width: 378px; border-radius: 5px; position: relative; margin: 2px 68px 17px; padding: 0;}
-div.field.files input[type=file] {opacity: 0; width: 360px; height: 49px; margin: 0; border: 0;}
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-	div.field.files input[type=file] {font-size: 130px;}
+div.field.files {padding: 0; margin: 2px 68px 17px;}
+div.field.files input[type="file"] {z-index: 10; opacity: 0; position: absolute; top: 0; left: 0; width: 384px; border: none; height: 60px; margin: 0; padding: 0; height: 100%; position: absolute; top: 0; left: 0;
 }
-div.field.files label {color: #333333; font-size: 14px; display: block; position: absolute; width: 120px; left: 50%; padding: 1px 4px 3px; margin: 16px 0 0 -60px; text-align: center; border-radius: 6px; background: #dedede;}
-div.field.files ul.filelist {color: #333333; font-size: 14px; display: block; position: absolute; width: 120px; left: 50%; padding: 1px 4px 3px; margin: 16px 0 0 -60px; text-align: center; border-radius: 6px; background: #dedede;}
+div.field.files ul.filelist {border: 3px dashed #dedede;  text-align: center; display: block; border-radius: 5px; position: relative; padding: 20px 0 !important; margin: 0; overflow: hidden;}
+div.field.files ul.filelist li {box-sizing: border-box; display: block; padding: 2px 0 2px; font-size: 13px; line-height: 17px; text-align: center;}
+div.field.files ul.filelist li.new {font-weight: bold;}
+div.field.files ul.filelist li.label {display: inline-block; padding: 1px 10px 3px; margin: 0 20px 5px; border-radius: 6px; background: #dedede;}
 div.field.files.loading label {display: none;}
 div.field.files.loading {background: transparent url(../assets/parentnode-skin-default/img/gx_loader.gif) no-repeat center center;}
 div.field.focus input,
@@ -1255,6 +1255,11 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.ticket div.ticket ul.ticket_info li.price {font-size: 34px;}
 #content .scene.ticket div.ticket ul.ticket_info li.buy ul.actions {padding: 40px 0 0;}
 #content .scene.ticket div.ticket ul.ticket_info li.buy ul.actions li {padding: 0;}
+#content .scene.event div.tickets li.ticket {padding-bottom: 40px;}
+#content .scene.event div.tickets ul.ticket_info {padding: 0;}
+#content .scene.event div.tickets ul.ticket_info li.price {font-size: 34px;}
+#content .scene.event div.tickets ul.ticket_info li.buy ul.actions {padding: 20px 0 0;}
+#content .scene.event div.tickets ul.ticket_info li.buy ul.actions li {padding: 0;}
 #content .scene .articlebody p.quote {
 	font-size: 30px;
 	text-align: center;
@@ -1365,6 +1370,142 @@ body.black #header ul.servicenavigation {display: none;}
 #content .scene.verdensborger .overdue,
 #content .scene.verdensborger .overdue a {color: #cdcdcd;}
 #content .scene.verdensborger .extendedpadding {padding-bottom: 35px;}
+#content .scene.eventProposal .c .c100 {width: 40%;}
+#content .scene.eventProposal .c .c200 {width: 60%;}
+#content .scene.eventProposal fieldset {padding-bottom: 30px;}
+#content .scene.eventProposal div.field input {
+	width: calc(100% - 18px);
+}
+#content .scene.eventProposal div.field.checkbox {
+	white-space: nowrap;
+}
+#content .scene.eventProposal div.field.checkbox input {
+	width: auto;
+}
+#content .scene.eventProposal div.field.checkbox label,
+#content .scene.eventProposal div.field.checkbox .help {
+	white-space: normal;
+}
+#content .scene.eventProposal div.field textarea {
+	width: calc(100% - 12px);
+}
+#content .scene.eventProposal div.field select {
+	width: calc(100% - 4px);
+	background-position: calc(100% + 18px) -977px;
+}
+#content .scene.eventProposal div.field.files {
+	width: calc(100% - 140px);
+}
+#content .scene.eventProposal div.field.files input {
+	width: 100%;
+}
+#content .scene.eventProposal div.field div.help {
+	left: auto;
+	right: -150px;
+}
+#content .scene.eventProposal div.field .indicator {
+	left: auto;
+	right: 40px;
+}
+#content .scene.eventProposal .criteria ul li {
+	display: inline-block;
+	width: 100px;
+	height: 100px;
+	margin: 0 10px 10px 0;
+}
+#content .scene.eventProposal .criteria ul li .field {
+	cursor: pointer;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+#content .scene.eventProposal .criteria ul li .field label {
+	text-indent: -1000px;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+#content .scene.eventProposal .criteria ul li .field input {
+	display: none;
+}	
+#content .scene.eventProposal .criteria ul li.criteria .field {
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+}
+#content .scene.eventProposal .criteria ul li.criteria.personal_development .field {
+	background-image: url(../img/proposal/ic-personal_development.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.physical_exercise .field {
+	background-image: url(../img/proposal/ic-physical_exercise.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.brand_new .field {
+	background-image: url(../img/proposal/ic-brand_new.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.recycling_upcycling .field {
+	background-image: url(../img/proposal/ic-recycling_upcycling.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.authentic_relating .field {
+	background-image: url(../img/proposal/ic-authentic_relating.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.collaboration .field {
+	background-image: url(../img/proposal/ic-collaboration.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.community .field {
+	background-image: url(../img/proposal/ic-community.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.disruption .field {
+	background-image: url(../img/proposal/ic-disruption.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.documentary .field {
+	background-image: url(../img/proposal/ic-documentary.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.effective_communication .field {
+	background-image: url(../img/proposal/ic-effective_communication.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.environment .field {
+	background-image: url(../img/proposal/ic-environment.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.equality_fairness .field {
+	background-image: url(../img/proposal/ic-equality_fairness.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.food .field {
+	background-image: url(../img/proposal/ic-food.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.legal_rights .field {
+	background-image: url(../img/proposal/ic-legal_rights.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.maker_culture .field {
+	background-image: url(../img/proposal/ic-maker_culture.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.mindfulness .field {
+	background-image: url(../img/proposal/ic-mindfulness.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.musical_performance .field {
+	background-image: url(../img/proposal/ic-musical_performance.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.not_yet_mainstream .field {
+	background-image: url(../img/proposal/ic-not_yet_mainstream.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.repair_improve .field {
+	background-image: url(../img/proposal/ic-repair_improve.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.resource_sharing .field {
+	background-image: url(../img/proposal/ic-resource_sharing.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.self_sufficiency .field {
+	background-image: url(../img/proposal/ic-self_sufficiency.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.skill_development .field {
+	background-image: url(../img/proposal/ic-skill_development.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.technology .field {
+	background-image: url(../img/proposal/ic-technology.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.visual_creativity .field {
+	background-image: url(../img/proposal/ic-visual_creativity.png);
+}
 @media print {
 	#header .logo {position: absolute; left: 80px;}
 	#header .servicenavigation {display: none;}
