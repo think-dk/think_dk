@@ -8,7 +8,7 @@ global $itemtype;
 $user_id = session()->value("user_id");
 
 
-$items = $IC->getItems(array("itemtype" => $itemtype, "where" => $itemtype.".starting_at > NOW()", "tags" => "eventtype:member", "order" => "status DESC, ".$itemtype.".starting_at ASC", "extend" => array("tags" => true, "mediae" => true)));
+$items = $IC->getItems(array("itemtype" => $itemtype, "where" => $itemtype.".starting_at > NOW()", "order" => "status DESC, ".$itemtype.".starting_at ASC", "extend" => array("tags" => true, "mediae" => true)));
 $filtered_events = [];
 foreach($items as $item) {
 	$editors = $model->getEditors(["item_id" => $item["item_id"]]);

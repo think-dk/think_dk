@@ -70,7 +70,6 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 	<div class="all_events">
 
 		<h2>Upcoming events <a href="/events">(see all)</a></h2>
-		<p>We will have a new schedule ready soon – see you in our new location in August.</p>
 
 <? if($event_items): ?>
 		<ul class="items events">

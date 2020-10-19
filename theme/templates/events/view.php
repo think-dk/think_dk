@@ -4,8 +4,10 @@ global $action;
 global $itemtype;
 $model = $IC->typeObject($itemtype);
 
-$countries = $this->countries();
+$ticket_model = $IC->typeObject("ticket");
 
+$countries = $this->countries();
+$location = false;
 $next = false;
 $prev = false;
 
@@ -24,6 +26,9 @@ if($item) {
 	// get host info
 	$location = $model->getLocations(array("id" => $item["location"]));
 
+	$SC = new Shop();
+	$event_tickets = $model->getEventTickets(["item_id" => $item["item_id"]]);
+	// debug(["event_tickets", $event_tickets]);
 
 	// set related pattern
 	$related_pattern = array("itemtype" => $item["itemtype"], "status" => 1, "tags" => $item["tags"], "exclude" => $item["id"]);
@@ -47,7 +52,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 
 ?>
 
-<div class="scene event i:scene">
+<div class="scene event i:event">
 
 <? if($item):
 	$media = $IC->sliceMediae($item, "single_media");
@@ -172,11 +177,12 @@ $related_items = $IC->getRelatedItems($related_pattern);
 <? 			endif; 
 		endif; ?>
 
-		<? if($item["location"]): ?>
+
+		<? if($location): ?>
 		<div class="location">
 			<h2>Location</h2>
 
-			<? if($location["location_type"] === 1): ?>
+			<? if($location["location_type"] == 1): ?>
 
 			<ul class="location" itemprop="location" itemscope itemtype="https://schema.org/Place">
 				<li class="name" itemprop="name"><?= $location["location"] ?></li>
@@ -224,6 +230,49 @@ $related_items = $IC->getRelatedItems($related_pattern);
 
 	</div>
 
+	<div class="tickets">
+		<? if($event_tickets): ?>
+		<h2>Tickets</h2>
+		<ul class="tickets">
+			<? foreach($event_tickets as $event_ticket):
+
+				if($event_ticket["status"] == 1):
+					$remaining_tickets = $event_ticket["total_tickets"] - ($ticket_model->getSoldTickets($event_ticket["item_id"]) + $ticket_model->getReservedTickets($event_ticket["item_id"]));
+					$ticket_price = $SC->getPrice($event_ticket["id"]);
+			// debug([$event_ticket, $SC->getPrice($event_ticket["id"])]);
+			?>
+			<li class="ticket">
+
+				<ul class="ticket_info">
+					<li class="name"><?= $event_ticket["name"] ?></li>
+					<? if($ticket_price): ?>
+					<li class="price"><?= formatPrice($ticket_price) ?></li>
+					<? endif; ?>
+
+					<? if(strtotime($event_ticket["sale_closes"]) < time()): ?>
+					<li class="remaining_tickets">Closed</li>
+					<? elseif(strtotime($event_ticket["sale_opens"]) > time()): ?>
+					<li class="remaining_tickets">Sale opens on <?= $event_ticket["sale_opens"] ?></li>
+					<? elseif($remaining_tickets <= 0):?>
+					<li class="remaining_tickets">Sold out</li>
+					<? else:?>
+					<li class="remaining_tickets"><?= $remaining_tickets ?> tickets left</li>
+					<li class="buy">
+						<ul class="actions">
+							<?= $model->link("Buy ticket", "/tickets/".$event_ticket["sindex"], ["wrapper" => "li.buy", "class" => "button primary"]) ?>
+						</ul>
+					</li>
+					<? endif; ?>
+				</ul>
+
+			</li>
+				<? endif;
+			endforeach; ?>
+		</ul>
+		<? endif; ?>
+	</div>
+
+
 
 	<? if($next || $prev): ?>
 	<div class="pagination i:pagination">
@@ -259,32 +308,32 @@ $related_items = $IC->getRelatedItems($related_pattern);
 
 <? if($related_items): ?>
 
-<div class="related">
-	<h2><?= $related_title ?> <a href="/events">(see all)</a></h2>
+	<div class="related">
+		<h2><?= $related_title ?> <a href="/events">(see all)</a></h2>
 
-	<ul class="items events">
-	<? foreach($related_items as $related_item): ?>
-		<li class="item event item_id:<?= $related_item["item_id"] ?>">
+		<ul class="items events">
+		<? foreach($related_items as $related_item): ?>
+			<li class="item event item_id:<?= $related_item["item_id"] ?>">
 
-			<dl class="occurs_at">
-				<dt class="starting_at">Starts</dt>
-				<dd class="starting_at"><?= date("F j, Y - H:i", strtotime($related_item["starting_at"])) ?></dd>
-			</dl>
+				<dl class="occurs_at">
+					<dt class="starting_at">Starts</dt>
+					<dd class="starting_at"><?= date("F j, Y - H:i", strtotime($related_item["starting_at"])) ?></dd>
+				</dl>
 
-			<h3><? if($related_item["event_status"] != 1): 
-				?><span class="event_status <?= strtolower($model->event_status_schema_values[$related_item["event_status"]]) ?>"><?= strtoupper($model->event_status_options[$related_item["event_status"]]).": " ?></span><?
-			endif; ?><a href="/events/<?= $related_item["sindex"] ?>"><?= strip_tags($related_item["name"]) ?></a></h3>
+				<h3><? if($related_item["event_status"] != 1): 
+					?><span class="event_status <?= strtolower($model->event_status_schema_values[$related_item["event_status"]]) ?>"><?= strtoupper($model->event_status_options[$related_item["event_status"]]).": " ?></span><?
+				endif; ?><a href="/events/<?= $related_item["sindex"] ?>"><?= strip_tags($related_item["name"]) ?></a></h3>
 
-			<? if($related_item["description"]): ?>
-			<div class="description">
-				<p><?= nl2br($related_item["description"]) ?></p>
-			</div>
-			<? endif; ?>
+				<? if($related_item["description"]): ?>
+				<div class="description">
+					<p><?= nl2br($related_item["description"]) ?></p>
+				</div>
+				<? endif; ?>
 
-		</li>
-	<?	endforeach; ?>
-	</ul>
-</div>
+			</li>
+		<?	endforeach; ?>
+		</ul>
+	</div>
 
 <? endif; ?>
 

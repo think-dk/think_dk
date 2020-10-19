@@ -38,6 +38,8 @@ document.write('<script type="text/javascript" src="/js/lib/smartphone/m-front.j
 document.write('<script type="text/javascript" src="/js/lib/smartphone/m-unsubscribe.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/m-contact.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/m-events.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/smartphone/m-event.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/smartphone/m-event_proposal.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/m-blog.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/m-cart.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/m-memberships.js"></script>');

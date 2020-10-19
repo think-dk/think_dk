@@ -785,6 +785,15 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.ticket div.ticket ul.ticket_info li.buy ul.actions {padding: 40px 0 0;}
 #content .scene.ticket div.ticket ul.ticket_info li.buy ul.actions li {padding: 0;}
 
+#content .scene.event div.tickets li.ticket {padding-bottom: 40px;}
+#content .scene.event div.tickets ul.ticket_info {padding: 0;}
+#content .scene.event div.tickets ul.ticket_info li.price {font-size: 34px;}
+
+#content .scene.event div.tickets ul.ticket_info li.buy ul.actions {padding: 20px 0 0;}
+#content .scene.event div.tickets ul.ticket_info li.buy ul.actions li {padding: 0;}
+
+
+
 #content .scene .articlebody p.quote {
 	font-size: 30px;
 	text-align: center;
@@ -923,6 +932,152 @@ body.black #header ul.servicenavigation {display: none;}
 #content .scene.verdensborger .overdue a {color: #cdcdcd;}
 
 #content .scene.verdensborger .extendedpadding {padding-bottom: 35px;}
+
+
+
+#content .scene.eventProposal .c .c100 {width: 40%;}
+#content .scene.eventProposal .c .c200 {width: 60%;}
+
+#content .scene.eventProposal fieldset {padding-bottom: 30px;}
+
+#content .scene.eventProposal div.field input {
+	width: calc(100% - 18px);
+}
+#content .scene.eventProposal div.field.checkbox {
+	white-space: nowrap;
+}
+#content .scene.eventProposal div.field.checkbox input {
+	width: auto;
+}
+#content .scene.eventProposal div.field.checkbox label,
+#content .scene.eventProposal div.field.checkbox .help {
+	white-space: normal;
+}
+#content .scene.eventProposal div.field textarea {
+	width: calc(100% - 12px);
+}
+
+#content .scene.eventProposal div.field select {
+	width: calc(100% - 4px);
+	background-position: calc(100% + 18px) -977px;
+}
+#content .scene.eventProposal div.field.files {
+	width: calc(100% - 140px);
+}
+#content .scene.eventProposal div.field.files input {
+	width: 100%;
+}
+
+
+#content .scene.eventProposal div.field div.help {
+	left: auto;
+	right: -150px;
+}
+#content .scene.eventProposal div.field .indicator {
+	left: auto;
+	right: 40px;
+}
+
+#content .scene.eventProposal .criteria ul li {
+	display: inline-block;
+	width: 100px;
+	height: 100px;
+	margin: 0 10px 10px 0;
+}
+#content .scene.eventProposal .criteria ul li .field {
+	cursor: pointer;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+#content .scene.eventProposal .criteria ul li .field label {
+	text-indent: -1000px;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+#content .scene.eventProposal .criteria ul li .field input {
+	display: none;
+}	
+#content .scene.eventProposal .criteria ul li.criteria .field {
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+}
+
+#content .scene.eventProposal .criteria ul li.criteria.personal_development .field {
+	background-image: url(/img/proposal/ic-personal_development.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.physical_exercise .field {
+	background-image: url(/img/proposal/ic-physical_exercise.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.brand_new .field {
+	background-image: url(/img/proposal/ic-brand_new.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.recycling_upcycling .field {
+	background-image: url(/img/proposal/ic-recycling_upcycling.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.authentic_relating .field {
+	background-image: url(/img/proposal/ic-authentic_relating.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.collaboration .field {
+	background-image: url(/img/proposal/ic-collaboration.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.community .field {
+	background-image: url(/img/proposal/ic-community.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.disruption .field {
+	background-image: url(/img/proposal/ic-disruption.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.documentary .field {
+	background-image: url(/img/proposal/ic-documentary.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.effective_communication .field {
+	background-image: url(/img/proposal/ic-effective_communication.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.environment .field {
+	background-image: url(/img/proposal/ic-environment.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.equality_fairness .field {
+	background-image: url(/img/proposal/ic-equality_fairness.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.food .field {
+	background-image: url(/img/proposal/ic-food.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.legal_rights .field {
+	background-image: url(/img/proposal/ic-legal_rights.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.maker_culture .field {
+	background-image: url(/img/proposal/ic-maker_culture.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.mindfulness .field {
+	background-image: url(/img/proposal/ic-mindfulness.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.musical_performance .field {
+	background-image: url(/img/proposal/ic-musical_performance.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.not_yet_mainstream .field {
+	background-image: url(/img/proposal/ic-not_yet_mainstream.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.repair_improve .field {
+	background-image: url(/img/proposal/ic-repair_improve.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.resource_sharing .field {
+	background-image: url(/img/proposal/ic-resource_sharing.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.self_sufficiency .field {
+	background-image: url(/img/proposal/ic-self_sufficiency.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.skill_development .field {
+	background-image: url(/img/proposal/ic-skill_development.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.technology .field {
+	background-image: url(/img/proposal/ic-technology.png);
+}
+#content .scene.eventProposal .criteria ul li.criteria.visual_creativity .field {
+	background-image: url(/img/proposal/ic-visual_creativity.png);
+}
 
 
 /* ABOUT */

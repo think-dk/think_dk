@@ -20,7 +20,23 @@ $page->pageTitle("Events");
 // /posts/#sindex#
 // Used by calendar to go back through months
 // /events/past/#year#/#month#
-if(count($action) == 1) {
+if(count($action) == 1 && $action[0] == "proposal") {
+
+	$page->page(array(
+		"templates" => "events/proposal.php"
+	));
+	exit();
+	
+}
+else if(count($action) == 1 && $action[0] == "forslag") {
+
+	$page->page(array(
+		"templates" => "events/forslag.php"
+	));
+	exit();
+	
+}
+else if(count($action) == 1) {
 
 	$page->page(array(
 		"templates" => "events/view.php"

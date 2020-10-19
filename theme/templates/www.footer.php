@@ -17,7 +17,7 @@
 			<li class="terms"><a href="/terms">Terms</a></li>
 		</ul>
 
-		<p><a href="http://parentnode.dk">&lt;aliens&gt;we are all&lt;/aliens&gt;</a></p>
+		<p>think.dk – Charlotte Ammundsens Plads 3, 1359 København K – <a href="mailto:start@think.dk">start@think.dk</a></p>
 	</div>
 
 </div>

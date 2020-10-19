@@ -11,6 +11,8 @@ document.write('<script type="text/javascript" src="/assets/parentnode-skin-defa
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-form-builder.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-googlemaps.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-events-movements.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-form-field-html.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-sortable.js"></script>');
 
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/beta-u-columns.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/beta-u-paymentcards.js"></script>');
@@ -39,6 +41,8 @@ document.write('<script type="text/javascript" src="/js/lib/desktop/m-front.js">
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-unsubscribe.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-contact.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-events.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/desktop/m-event.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/desktop/m-event_proposal.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-blog.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-cart.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-memberships.js"></script>');

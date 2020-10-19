@@ -1,5 +1,7 @@
 @import url(/assets/parentnode-skin-default/css/seg_desktop.css);
 
+@import url(/assets/parentnode-skin-default/css/lib/desktop/s-form.css);
+
 @import url(/assets/parentnode-skin-default/css/optionals/lib/desktop/s-articles.css);
 @import url(/assets/parentnode-skin-default/css/optionals/lib/desktop/s-pagination.css);
 @import url(/assets/parentnode-skin-default/css/optionals/lib/desktop/s-sharing.css);
@@ -8,6 +10,7 @@
 @import url(/assets/parentnode-skin-default/css/optionals/lib/desktop/s-wishlist.css);
 @import url(/assets/parentnode-skin-default/css/optionals/lib/desktop/s-columns.css);
 @import url(/assets/parentnode-skin-default/css/optionals/lib/desktop/s-search.css);
+@import url(/assets/parentnode-skin-default/css/optionals/lib/desktop/s-form-field-html.css);
 
 
 /* Project css and overrides */

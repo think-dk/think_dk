@@ -37,8 +37,8 @@ $eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype");
 
 	<?= $JML->editSingleMedia($item, ["label" => "Main event image"]) ?>
 
-	<div class="item i:defaultEdit">
-		<h2>Event</h2>
+	<div class="item i:defaultEdit i:collapseHeader">
+		<h2>Event details</h2>
 		<?= $model->formStart("updateAdmin/".$item["id"], array("class" => "labelstyle:inject")) ?>
 
 			<fieldset>
@@ -75,6 +75,8 @@ $eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype");
 
 		<?= $model->formEnd() ?>
 	</div>
+
+	<?= $JML->editEventTickets($item) ?>
 
 	<?= $JML->editEditors($item) ?>
 

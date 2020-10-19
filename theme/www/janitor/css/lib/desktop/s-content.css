@@ -1,29 +1,5 @@
-/*body.article #navigation .article a,
-body.target #navigation .target a,
-body.topic #navigation .topic a {padding-left: 35px; color: #ffffff;}
-*/
-
 body.invoice #content div.scene .basics h1 {color: #26962d; text-transform: lowercase; font-size: 30px;
 	font-family: "PT Serif", Times, serif;
 }
 
-#content .scene.ticketList ul.items > li {min-height: 85px;}
-#content .scene.ticketList ul.items > li dl.info dt.price {display: none;}
-#content .scene.ticketList ul.items > li dl.info dd.price {position: absolute; top: 45px; right: 30px; font-size: 26px;}
-
-#content .scene.ticketEdit div.participants {border-bottom: 1px solid #bbbbbb;}
-#content .scene.ticketEdit div.participants div.all_items {padding-bottom: 30px;}
-#content .scene.ticketEdit div.participants > div > ul.actions {padding-bottom: 20px; text-align: right;}
-
-#content .scene.ticketEdit ul.items.participants {}
-#content .scene.ticketEdit ul.items.participants li {padding: 0 30px;}
-#content .scene.ticketEdit ul.items.participants li ul.actions {top: 4px;}
-#content .scene.ticketEdit ul.items.participants li ul.actions li {padding: 0 0 0 10px;}
-#content .scene.ticketEdit ul.items.participants li span {padding: 10px 7px 10px 0; display: inline-block; width: 300px;}
-#content .scene.ticketEdit ul.items.participants li span.ticket_no {width: 130px;}
-#content .scene.ticketEdit ul.items.participants li span.unit_price {width: 80px;}
-/*
-#content .topicEdit fieldset h3 {border-top: 1px solid #aaaaaa; font-size: 0.8em; margin: 20px 0 20px; padding-bottom: 10px; padding-top: 7px; text-transform: uppercase;}
-#content .topicEdit fieldset .field.html {border-top: none; border-bottom: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0;}
-*/
-
+#content .scene.eventproposalEdit ul.actions li.convert {float: right; padding-left: 10px; padding-right: 0;}
