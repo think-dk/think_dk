@@ -19,14 +19,14 @@ if($editors) {
 	}
 }
 
-$eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype");
+// $eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype");
 
 ?>
 <div class="scene i:scene defaultEdit <?= $itemtype ?>Edit">
 	<h1>Edit event as event editor</h1>
 	<h2><?= strip_tags($item["name"]) ?></h2>
 
-<? if($eventtype_tag !== false && $item["tags"][$eventtype_tag]["value"] === "member" && $editable): ?>
+<? if($editable): ?>
 
 	<?= $JML->editGlobalActions($item, ["modify" => [
 		"list" => [

@@ -13,20 +13,19 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 
 // $host_options = $model->toOptions($model->getHosts(), "id", "host");
 $location_options = $model->toOptions($model->getLocations(), "id", "location", ["add" => ["" => "Select event location"]]);
-$users = $UC->getUsers(["order" => "nickname ASC"]);
 
-$user_options_owner = $model->toOptions($users, "id", "nickname", ["add" => ["" => "Select event owner"]]);
-$user_options_1 = $model->toOptions($users, "id", "nickname", ["add" => ["" => "Select backer 1"]]);
-$user_options_2 = $model->toOptions($users, "id", "nickname", ["add" => ["" => "Select backer 2"]]);
-
-$eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype");
+// $users = $UC->getUsers(["order" => "nickname ASC"]);
+// $user_options_owner = $model->toOptions($users, "id", "nickname", ["add" => ["" => "Select event owner"]]);
+// $user_options_1 = $model->toOptions($users, "id", "nickname", ["add" => ["" => "Select backer 1"]]);
+// $user_options_2 = $model->toOptions($users, "id", "nickname", ["add" => ["" => "Select backer 2"]]);
+//
+// $eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype");
 
 ?>
 <div class="scene i:scene defaultEdit <?= $itemtype ?>Edit">
 	<h1>Edit event as event admin</h1>
 	<h2><?= strip_tags($item["name"]) ?></h2>
 
-<? if($eventtype_tag !== false && $item["tags"][$eventtype_tag]["value"] === "member"): ?>
 
 	<?= $JML->editGlobalActions($item, ["modify" => [
 		"list" => [
@@ -85,11 +84,5 @@ $eventtype_tag = arrayKeyValue($item["tags"], "context", "eventtype");
 	<?= $JML->editSindex($item) ?>
 
 	<?= $JML->editDeveloperSettings($item) ?>
-
-<? else: ?>
-
-	<p>You do not have permission to edit this event.</p>
-
-<? endif; ?>
 
 </div>
