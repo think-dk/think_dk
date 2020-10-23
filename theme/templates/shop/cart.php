@@ -26,7 +26,7 @@ $IC = new Items();
 
 	<div class="all_items">
 		<h2>Cart contents</h2>
-		<? if($cart["items"]): ?>
+		<? if($cart && $cart["items"]): ?>
 		<ul class="items">
 			<? foreach($cart["items"] as $cart_item):
 				$item = $IC->getItem(array("id" => $cart_item["item_id"], "extend" => array("subscription_method" => true))); 
@@ -98,7 +98,7 @@ $IC = new Items();
 				<h3>
 					<span class="name">Total</span>
 					<span class="total_price">
-						<?= formatPrice($model->getTotalCartPrice($cart["id"]), array("vat" => true)) ?>
+						<?= formatPrice(["price" => 0, "currency" => $this->currency()]) ?>
 					</span>
 				</h3>
 			</li>
@@ -106,7 +106,7 @@ $IC = new Items();
 		<? endif; ?>
 	</div>
 
-<? if($cart["items"]) :?>
+<? if($cart && $cart["items"]) :?>
 	<div class="checkout">
 		<h2>Continue to checkout</h2>
 		<p>When you are ready, click <em>Checkout</em> to proceed.</p>

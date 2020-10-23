@@ -178,7 +178,7 @@ else {
 
 	<div class="all_items">
 		<h2>Cart contents <a href="/shop/cart">(Edit)</a></h2>
-		<? if($cart["items"]): ?>
+		<? if($cart && $cart["items"]): ?>
 		<ul class="items">
 			<? foreach($cart["items"] as $cart_item):
 				$item = $IC->getItem(array("id" => $cart_item["item_id"], "extend" => array("subscription_method" => true))); 
