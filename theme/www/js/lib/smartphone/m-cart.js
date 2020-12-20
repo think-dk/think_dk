@@ -1,10 +1,10 @@
 Util.Modules["cart"] = new function() {
 	this.init = function(scene) {
-//		u.bug("scene init:", this);
+		// u.bug("scene init:", this);
 		
 
 		scene.resized = function() {
-//			u.bug("scene.resized:", this);
+			// u.bug("scene.resized:", this);
 
 
 			// refresh dom
@@ -12,11 +12,11 @@ Util.Modules["cart"] = new function() {
 		}
 
 		scene.scrolled = function() {
-//			u.bug("scrolled:", this);;
+			// u.bug("scrolled:", this);
 		}
 
 		scene.ready = function() {
-//			u.bug("scene.ready:", this);
+			// u.bug("scene.ready:", this);
 
 
 
@@ -24,7 +24,10 @@ Util.Modules["cart"] = new function() {
 			page.notify(this);
 
 			this.header_cart = u.qs("li.cart span.total", page.hN);
+
 			this.total_cart_price = u.qs("li.total span.total_price", this);
+			this.total_cart_vat = u.qs("li.total span.total_vat", this);
+
 			this.cart_nodes = u.qsa("ul.items li.item", this);
 
 
@@ -73,6 +76,8 @@ Util.Modules["cart"] = new function() {
 							if(response) {
 
 								var total_price = u.qs("div.scene li.total span.total_price", response);
+								var total_vat = u.qs("div.scene li.total span.total_vat", response);
+
 								var header_cart = u.qs("div#header li.cart span.total", response);
 								var item_row = u.ge("id:"+this.node.item_id, response);
 								var item_total_price = u.qs("span.total_price", item_row);
@@ -80,8 +85,11 @@ Util.Modules["cart"] = new function() {
 
 								// update prices
 								this.node.scene.total_cart_price.innerHTML = total_price.innerHTML;
+								this.node.scene.total_vat_price.innerHTML = total_vat.innerHTML;
+
 								this.node.scene.header_cart.innerHTML = header_cart.innerHTML;
 								this.node.total_price.innerHTML = item_total_price.innerHTML;
+
 								this.node.unit_price.innerHTML = item_unit_price.innerHTML;
 
 					 			u.rc(this.actions["update"], "primary");
@@ -105,11 +113,15 @@ Util.Modules["cart"] = new function() {
 
 						if(response) {
 
-							var total_price = u.qs("div.scene li.total span.total_price", response);
 							var header_cart = u.qs("div#header li.cart span.total", response);
+
+							var total_price = u.qs("div.scene li.total span.total_price", response);
+							var total_vat = u.qs("div.scene li.total span.total_vat", response);
 
 							// update total price
 							this.node.scene.total_cart_price.innerHTML = total_price.innerHTML;
+							this.node.scene.total_cart_vat.innerHTML = total_vat ? total_vat.innerHTML : this.node.scene.total_cart_vat.innerHTML.replace(/\d/g, "0").replace(/[0]+,/, "0,");
+
 							this.node.scene.header_cart.innerHTML = header_cart.innerHTML;
 
 							this.node.parentNode.removeChild(this.node);

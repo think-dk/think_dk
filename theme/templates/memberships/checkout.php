@@ -4,6 +4,7 @@ global $model;
 $IC = new Items();
 $UC = new User();
 
+$this->pageTitle("Membership checkout");
 
 // get current user id
 $user_id = session()->value("user_id");
@@ -86,6 +87,32 @@ else {
 				<?= $UC->submit("Continue", array("class" => "primary", "wrapper" => "li.signup")) ?>
 			</ul>
 		<?= $UC->formEnd() ?>
+
+	</div>
+
+
+	<div class="account">
+		<h3>Already have an account?</h3>
+		<p>If you already have an account you can change your membership on <a href="/janitor/admin/profile">account profile</a>.</p>
+	</div>
+
+	<div class="why_account">
+		<h3>Why do I need an account?</h3>
+		<p>
+			As a think.dk member, an account is a natural extension of your membership. The account
+			will also give you access to certain features on this site, that is only available to
+			our members.
+		</p>
+		<p>
+			For all other purchases we are legally required to keep a minimum set of information
+			when we receive payments to prevent whitewashing and other types of fraud. For your convenience
+			we officially associate this information with an account – to enable full transparency
+			about what data is stored on our site.
+		</p>
+		<p>
+			You can cancel your account or your membership anytime you like,
+			but we are required to keep basic information about your payments for a minimum of 5 years.
+		</p>
 	</div>
 
 <? else: ?>
@@ -93,14 +120,13 @@ else {
 	<div class="emptycart">
 		<h2>You didn't select a membership yet.</h2>
 		<p>Check out our <a href="/memberships">memberships</a> now.</p>
-
 	</div>
-
-<? endif; ?>
 
 	<div class="account">
 		<h3>Already have an account?</h3>
 		<p>If you already have an account you can change your membership on <a href="/janitor/admin/profile">account profile</a>.</p>
 	</div>
+
+<? endif; ?>
 
 </div>

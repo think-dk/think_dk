@@ -80,6 +80,7 @@ if($action) {
 		// add membership to new or existing cart
 		$cart = $model->addToCart(array("addToCart"));
 
+
 		// successful creation
 		if($cart) {
 

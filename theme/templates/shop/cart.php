@@ -13,8 +13,9 @@ if(count($action) > 1) {
 	session()->value("cart_reference", $action[1]);
 }
 $cart = $model->getCart();
-
-
+if($cart) {
+	$total_cart_price = $model->getTotalCartPrice($cart["id"]);
+}
 
 $IC = new Items();
 
@@ -30,10 +31,12 @@ $IC = new Items();
 		<ul class="items">
 			<? foreach($cart["items"] as $cart_item):
 				$item = $IC->getItem(array("id" => $cart_item["item_id"], "extend" => array("subscription_method" => true))); 
-				$price = $model->getPrice($cart_item["item_id"], array("quantity" => $cart_item["quantity"], "currency" => $cart["currency"], "country" => $cart["country"]));
+				$price = $model->getCartItemPrice($cart_item, $cart);
 			?>
 			<li class="item id:<?= $item["id"] ?>">
 				<h3>
+
+					<? if($item["itemtype"] != "membership"): ?>
 					<?= $model->formStart("/shop/updateCartItemQuantity/".$cart["cart_reference"]."/".$cart_item["id"], array("class" => "updateCartItemQuantity labelstyle:inject")) ?>
 						<fieldset>
 							<?= $model->input("quantity", array(
@@ -46,18 +49,29 @@ $IC = new Items();
 							<?= $model->submit("Update", array("name" => "update", "wrapper" => "li.save")) ?>
 						</ul>
 					<?= $model->formEnd() ?>
+					<? else: ?>
+					<span class="quantity"><?= $cart_item["quantity"] ?></span>
+					<? endif; ?>
+
 					<span class="x">x </span>
 					<span class="name"><?= $item["name"] ?> </span>
 					<span class="a">á </span>
-					<span class="unit_price"><?= formatPrice($price) ?></span>
+					<span class="unit_price">
+						<?= formatPrice([
+							"price" => $price["cart_price"], 
+							"vat" => $price["cart_vat"], 
+							"currency" => $cart["currency"], 
+							"country" => $cart["country"]
+						]) ?>
+					</span>
 					<span class="total_price">
 						<?= formatPrice(array(
-								"price" => $price["price"]*$cart_item["quantity"], 
-								"vat" => $price["vat"]*$cart_item["quantity"], 
+								"price" => $price["cart_price"]*$cart_item["quantity"], 
+								"vat" => $price["cart_vat"]*$cart_item["quantity"], 
 								"currency" => $cart["currency"], 
 								"country" => $cart["country"]
 							), 
-							array("vat" => true)
+							array("vat" => false)
 						) ?>
 					</span>
 				</h3>
@@ -83,10 +97,16 @@ $IC = new Items();
 			<? endforeach; ?>
 
 			<li class="total">
+				<p>
+					<span class="name">Hereof Moms</span>
+					<span class="total_vat">
+						(<?= formatPrice(array("price" => $total_cart_price["vat"], "currency" => $total_cart_price["currency"])) ?>)
+					</span>
+				</p>
 				<h3>
 					<span class="name">Total</span>
 					<span class="total_price">
-						<?= formatPrice($model->getTotalCartPrice($cart["id"]), array("vat" => true)) ?>
+						<?= formatPrice($total_cart_price, array("vat" => false)) ?>
 					</span>
 				</h3>
 			</li>

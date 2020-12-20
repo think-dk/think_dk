@@ -34,6 +34,7 @@ document.write('<script type="text/javascript" src="/assets/parentnode-skin-defa
 
 
 // Project
+document.write('<script type="text/javascript" src="/js/lib/smartphone/u-form-field-range.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/m-front.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/m-unsubscribe.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/m-contact.js"></script>');

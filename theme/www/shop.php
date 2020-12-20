@@ -137,7 +137,7 @@ if($action) {
 					}
 
 				}
-				else if($payment_method_result["status"] === "STRIPE_ERROR" || $payment_method_result["status"] === "CART_NOT_FOUND") {
+				else if($payment_method_result["status"] === "STRIPE_ERROR" || $payment_method_result["status"] === "CART_NOT_FOUND" || $payment_method_result["status"] === "CARD_ERROR") {
 
 					message()->addMessage($payment_method_result["message"], ["type" => "error"]);
 					// redirect to leave POST state
@@ -150,6 +150,8 @@ if($action) {
 
 			// Janitor Validation failed
 			// redirect to leave POST state
+			// debug([$payment_method_result, "messages", message()->getMessages()]);
+
 			header("Location: /shop/payment-gateway/".$gateway."/cart/".$cart_reference);
 			exit();
 

@@ -37,6 +37,7 @@ document.write('<script type="text/javascript" src="/assets/parentnode-skin-defa
 
 
 // Project specific
+document.write('<script type="text/javascript" src="/js/lib/desktop/u-form-field-range.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-front.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-unsubscribe.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-contact.js"></script>');

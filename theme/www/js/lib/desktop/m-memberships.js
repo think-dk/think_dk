@@ -36,12 +36,35 @@ Util.Modules["memberships"] = new function() {
 			// page.cN.scene = this;
 
 
-			this.div_memberships = u.qs("div.memberships", this);
+			// this.div_memberships = u.qs("div.memberships", this);
+			this.div_memberships = false;
+
+			// Membership
+			this.div_membership = u.qs("div.membership", this);
 			var place_holder = u.qs("div.articlebody .placeholder.memberships", this);
 
-			if(this.div_memberships && place_holder) {
-				place_holder.parentNode.replaceChild(this.div_memberships, place_holder);
+			// if(this.div_memberships && place_holder) {
+			// 	place_holder.parentNode.replaceChild(this.div_memberships, place_holder);
+			// }
+
+			if(this.div_membership && place_holder) {
+				place_holder.parentNode.replaceChild(this.div_membership, place_holder);
+
+				this.form_membership = u.qs("form.membership", this.div_membership);
+				u.f.init(this.form_membership);
 			}
+
+
+			// Donations
+			this.div_donation = u.qs("div.donation", this);
+			var place_holder = u.qs("div.articlebody .placeholder.donations", this);
+			if(this.div_donation && place_holder) {
+				place_holder.parentNode.replaceChild(this.div_donation, place_holder);
+
+				this.form_donation = u.qs("form.donation", this.div_donation);
+				u.f.init(this.form_donation);
+			}
+
 
 
 			// build benefits grid
@@ -224,33 +247,33 @@ Util.Modules["memberships"] = new function() {
 				page.resized();
 
 
-				u.textscaler(this.div_memberships, {
-					"min_height":900,
-					"max_height":900,
-					"min_width":600,
-					"max_width":900,
-					"unit":"px",
-					"h3":{
-						"min_size":14,
-						"max_size":20,
-					},
-					"li.allin h3":{
-						"min_size":18,
-						"max_size":24,
-					},
-					"p":{
-						"min_size":11,
-						"max_size":13
-					},
-					"li.price":{
-						"min_size":9,
-						"max_size":11
-					},
-					"li.benefits li":{
-						"min_size":10,
-						"max_size":13
-					}
-				});
+				// u.textscaler(this.div_memberships, {
+				// 	"min_height":900,
+				// 	"max_height":900,
+				// 	"min_width":600,
+				// 	"max_width":900,
+				// 	"unit":"px",
+				// 	"h3":{
+				// 		"min_size":14,
+				// 		"max_size":20,
+				// 	},
+				// 	"li.allin h3":{
+				// 		"min_size":18,
+				// 		"max_size":24,
+				// 	},
+				// 	"p":{
+				// 		"min_size":11,
+				// 		"max_size":13
+				// 	},
+				// 	"li.price":{
+				// 		"min_size":9,
+				// 		"max_size":11
+				// 	},
+				// 	"li.benefits li":{
+				// 		"min_size":10,
+				// 		"max_size":13
+				// 	}
+				// });
 			}
 
 			// preload fonts

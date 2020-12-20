@@ -45,7 +45,7 @@ if($user_id != 1) {
 
 
 	// Only get payment methods if cart has items
-	if($cart["items"]) {
+	if($cart && $cart["items"]) {
 
 		// Get the total cart price
 		$total_cart_price = $model->getTotalCartPrice($cart["id"]);
@@ -115,6 +115,8 @@ else {
 		<?= $UC->formEnd() ?>
 	</div>
 
+	<? if($cart && $cart["items"]): ?>
+	
 	<div class="signup">
 		<h2>Or enter your details</h2>
 		<p>This will create an account so you can continue checkout.</h2>
@@ -142,21 +144,29 @@ else {
 
 		<h3>Why do I need an account?</h3>
 		<p>
-			As a think.dk member, an account is a natural extension of your membership. The account
-			will also give you access to certain features on this site, that is only available to
-			our members.
+			As a think.dk customer, an account is a natural extension of your purchase. The account
+			will also give you access to follow your order on this site.
 		</p>
 		<p>
-			For all other purchases we are legally required to store a minimum of information 
-			when we receive payments to prevent whitewashing. For your convenience
+			For all purchases we are legally required to keep a minimum set of information
+			when we receive payments to prevent whitewashing and other types of fraud. For your convenience
 			we officially associate this information with an account – to enable full transparency
-			about what data is stored on our side.
+			about what data is stored on our site.
 		</p>
 		<p>
-			You can cancel your account anytime you like,
+			You can cancel your account or your membership anytime you like,
 			but we are required to keep basic information about your payments for a minimum of 5 years.
 		</p>
 	</div>
+
+	<? else: ?>
+
+	<div class="emptycart">
+		<h2>Your cart is empty.</h2>
+		<p>Check out our <a href="/memberships">memberships</a> now.</p>
+	</div>
+
+	<? endif; ?>
 
 
 	<?
@@ -182,7 +192,8 @@ else {
 		<ul class="items">
 			<? foreach($cart["items"] as $cart_item):
 				$item = $IC->getItem(array("id" => $cart_item["item_id"], "extend" => array("subscription_method" => true))); 
-				$price = $model->getPrice($cart_item["item_id"], array("quantity" => $cart_item["quantity"], "currency" => $cart["currency"], "country" => $cart["country"]));
+				// $price = $model->getPrice($cart_item["item_id"], array("quantity" => $cart_item["quantity"], "currency" => $cart["currency"], "country" => $cart["country"]));
+				$price = $model->getCartItemPrice($cart_item, $cart);
 			?>
 			<li class="item id:<?= $item["id"] ?>">
 				<h3>
@@ -190,15 +201,24 @@ else {
 					<span class="x">x </span>
 					<span class="name"><?= $item["name"] ?> </span>
 					<span class="a">á </span>
-					<span class="unit_price"><?= formatPrice($price) ?></span>
-					<span class="total_price">
+					<span class="unit_price">
 						<?= formatPrice(array(
-								"price" => $price["price"]*$cart_item["quantity"], 
-								"vat" => $price["vat"]*$cart_item["quantity"], 
+								"price" => $price["cart_price"], 
+								"vat" => $price["cart_vat"], 
 								"currency" => $cart["currency"], 
 								"country" => $cart["country"]
 							), 
-							array("vat" => true)
+							array("vat" => false)
+						) ?>
+					</span>
+					<span class="total_price">
+						<?= formatPrice(array(
+								"price" => $price["cart_price"]*$cart_item["quantity"], 
+								"vat" => $price["cart_vat"]*$cart_item["quantity"], 
+								"currency" => $cart["currency"], 
+								"country" => $cart["country"]
+							), 
+							array("vat" => false)
 						) ?>
 					</span>
 				</h3>
@@ -221,10 +241,16 @@ else {
 			<? endforeach; ?>
 
 			<li class="total">
+				<p>
+					<span class="name">Hereof Moms</span>
+					<span class="total_vat">
+						(<?= formatPrice(array("price" => $total_cart_price["vat"], "currency" => $total_cart_price["currency"])) ?>)
+					</span>
+				</p>
 				<h3>
 					<span class="name">Total</span>
 					<span class="total_price">
-						<?= formatPrice($total_cart_price, array("vat" => true)) ?>
+						<?= formatPrice($total_cart_price, array("vat" => false)) ?>
 					</span>
 				</h3>
 			</li>
@@ -237,7 +263,7 @@ else {
 
 	<? 
 	// Only show payment options if cart has items
-	if($cart["items"] && $total_cart_price && $total_cart_price["price"] !== 0): ?>
+	if($cart && $cart["items"] && $total_cart_price && $total_cart_price["price"] !== 0): ?>
 
 
 	<div class="payment_method">

@@ -12,9 +12,14 @@ if($page_item) {
 
 $email = $model->getProperty("email", "value");
 
-$memberships = $IC->getItems(array("itemtype" => "membership", "tags" => "membership:v2", "order" => "position ASC", "status" => 1, "extend" => array("prices" => true, "subscription_method" => true)));
+// $memberships = $IC->getItems(array("itemtype" => "membership", "tags" => "membership:v2", "order" => "position ASC", "status" => 1, "extend" => array("prices" => true, "subscription_method" => true)));
 
 
+$membership = $IC->getItem(array("itemtype" => "membership", "tags" => "membership:v3", "order" => "position ASC", "status" => 1, "extend" => array("prices" => true, "subscription_method" => true)));
+
+$donations = $IC->getItems(array("itemtype" => "donation", "order" => "position ASC", "status" => 1, "extend" => array("prices" => true, "subscription_method" => true)));
+
+$donation_options = $HTML->toOptions($donations, "item_id", "name");
 // $maillist = session()->value("user_id") === 1 ? true : false;
 
 ?>
@@ -60,12 +65,27 @@ $memberships = $IC->getItems(array("itemtype" => "membership", "tags" => "member
 
 
 
-<? if($memberships): ?>
+	<?= $HTML->serverMessages() ?>
+
+
+	<div class="membership">
+		<?= $model->formStart("/memberships/addToCart", array("class" => "membership labelstyle:inject")) ?>
+			<?= $model->input("quantity", array("value" => 1, "type" => "hidden")); ?>
+			<?= $model->input("item_id", array("value" => $membership["item_id"], "type" => "hidden")); ?>
+
+			<?= $model->input("custom_price", array("value" => 100, "type" => "range", "min" => 100, "max" => 5000, "step" => 10)); ?>
+
+			<ul class="actions">
+				<?= $model->submit("Join now", array("class" => "primary", "wrapper" => "li.signup")) ?>
+				<?= $model->link("Read more", "/memberships/".$membership["sindex"], array("wrapper" => "li.readmore")) ?>
+			</ul>
+		<?= $model->formEnd() ?>
+	</div>
+
+
+<? /* if($memberships): ?>
 
 	<div class="memberships">
-
-
-		<?= $HTML->serverMessages() ?>
 
 
 		<ul class="memberships">
@@ -101,7 +121,7 @@ $memberships = $IC->getItems(array("itemtype" => "membership", "tags" => "member
 		</ul>
 	</div>
 
-<? endif; ?>
+<? endif; */ ?>
 
 
 	<div class="maillist">
