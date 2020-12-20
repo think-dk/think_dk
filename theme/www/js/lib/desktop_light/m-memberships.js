@@ -21,12 +21,26 @@ Util.Modules["memberships"] = new function() {
 
 			page.cN.scene = this;
 
-			this.div_memberships = u.qs("div.memberships", this);
-			var place_holder = u.qs("div.articlebody .placeholder.memberships", this);
+			this.div_memberships = false;
 
-			if(this.div_memberships && place_holder) {
-				place_holder.parentNode.replaceChild(this.div_memberships, place_holder);
+			this.div_membership = u.qs("div.membership", this);
+			var place_holder = u.qs("div.articlebody .placeholder.memberships", this);
+			// this.div_memberships = u.qs("div.memberships", this);
+			// var place_holder = u.qs("div.articlebody .placeholder.memberships", this);
+
+			if(this.div_membership && place_holder) {
+				place_holder.parentNode.replaceChild(this.div_membership, place_holder);
+
+				this.form_membership = u.qs("form.membership", this.div_membership);
+				u.f.init(this.form_membership);
 			}
+
+			// this.div_memberships = u.qs("div.memberships", this);
+			// var place_holder = u.qs("div.articlebody .placeholder.memberships", this);
+			//
+			// if(this.div_memberships && place_holder) {
+			// 	place_holder.parentNode.replaceChild(this.div_memberships, place_holder);
+			// }
 
 
 			this.div_maillist = u.qs("div.maillist", this);
