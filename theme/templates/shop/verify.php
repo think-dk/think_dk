@@ -2,6 +2,8 @@
 global $action;
 global $model;
 
+$UC = new User();
+
 $IC = new Items();
 $page_item = $IC->getItem(array("tags" => "page:verify", "status" => 1, "extend" => array("user" => true, "tags" => true, "mediae" => true)));
 if($page_item) {
@@ -54,7 +56,7 @@ if($page_item) {
 
 <? endif ?>
 
-	<?= $model->formStart("/shop/verify/confirm", ["class" => "verify_code labelstyle:inject"]) ?>
+	<?= $UC->formStart("/shop/verify/confirm", ["class" => "verify_code labelstyle:inject"]) ?>
 
 <?	if(message()->hasMessages(array("type" => "error"))): ?>
 		<p class="errormessage">
@@ -67,14 +69,14 @@ if($page_item) {
 <?	endif; ?>
 
 		<fieldset>
-			<?= $model->input("verification_code"); ?>
+			<?= $UC->input("verification_code", ["required" => true]); ?>
 		</fieldset>
 
 		<ul class="actions">
-			<?= $model->submit("Verify email", array("class" => "primary", "wrapper" => "li.verify")) ?>
-			<li class="skip"><a href="/shop/verify/skip" class="button">Skip</a></li>
+			<?= $UC->submit("Verify email", array("class" => "primary", "wrapper" => "li.verify")) ?>
+			<li class="skip"><a href="/shop/verify/skip" class="button">Skip verification</a></li>
 		</ul>
-	<?= $model->formEnd() ?>
+	<?= $UC->formEnd() ?>
 
 	<p class="note">You can also skip verification for now and go straight to checkout – but you need to verify your account to receive any news from us or to log in to your account.</p>
 

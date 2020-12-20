@@ -19,71 +19,72 @@ Util.Modules["verify_shop"] = new function() {
 
 			if(form_verify) {
 				u.f.init(form_verify);
-			}
 
-			// Using the new verify form
-			form_verify.submitted = function() {
-				var data = this.getData();
+				// Using the new verify form
+				form_verify.submitted = function() {
+					var data = this.getData();
 
-				// submit state
-				this.is_submitting = true; 
-				u.ac(this, "submitting");
-				u.ac(this.actions["verify"], "disabled");
-				u.ac(this.actions["skip"], "disabled");
+					// submit state
+					this.is_submitting = true; 
+					u.ac(this, "submitting");
+					u.ac(this.actions["verify"], "disabled");
+					u.ac(this.actions["skip"], "disabled");
 
-				this.response = function(response, request_id) {
-					// User is already verified
-					if (u.qs(".scene.login", response)) {
-						scene.replaceScene(response);
-						u.h.navigate("/login", false, true);
-					}
-					// Verification success
-					else if (u.hc(u.qs(".scene", response), "confirmed|checkout|cart|shopReceipt")) {
-						// Update scene
-						scene.replaceScene(response);
-
-						// Get returned actions only
-						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
-
-						// Update url
-						u.h.navigate(url_actions, false, true);
-					}
-					// Error
-					else {
-						// Remove submit state if present
-						if (this.is_submitting) {
-							this.is_submitting = false; 
-							u.rc(this, "submitting");
-							u.rc(this.actions["verify"], "disabled");
-							u.rc(this.actions["skip"], "disabled");
+					this.response = function(response, request_id) {
+						// User is already verified
+						if (u.qs(".scene.login", response)) {
+							scene.replaceScene(response);
+							u.h.navigate("/login", false, true);
 						}
+						// Verification success
+						else if (u.hc(u.qs(".scene", response), "confirmed|checkout|cart|shopReceipt")) {
+							// Update scene
+							scene.replaceScene(response);
 
-						// Remove past error from DOM
-						if (this.error) {
-							this.error.parentNode.removeChild(this.error);
+							// Get returned actions only
+							var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
+
+							// Update url
+							u.h.navigate(url_actions, false, true);
 						}
+						// Error
+						else {
+							// Remove submit state if present
+							if (this.is_submitting) {
+								this.is_submitting = false; 
+								u.rc(this, "submitting");
+								u.rc(this.actions["verify"], "disabled");
+								u.rc(this.actions["skip"], "disabled");
+							}
+
+							// Remove past error from DOM
+							if (this.error) {
+								this.error.parentNode.removeChild(this.error);
+							}
 						
-						// Append error to scene
-						this.error = scene.showMessage(this, response);
+							// Append error to scene
+							this.error = scene.showMessage(this, response);
 
-						// Set inital state before animating
-						u.ass(this.error, {
-							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
-							opacity:0
-						});
+							// Set inital state before animating
+							u.ass(this.error, {
+								transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
+								opacity:0
+							});
 
-						// Animate error
-						u.a.transition(this.error, "all .6s ease");
-						u.ass(this.error, {
-							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
-							opacity:1
-						});
+							// Animate error
+							u.a.transition(this.error, "all .6s ease");
+							u.ass(this.error, {
+								transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
+								opacity:1
+							});
+						}
 					}
-				}
 
-				// Post to "confirm"
-				u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
+					// Post to "confirm"
+					u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
+				}
 			}
+
 
 
 			u.showScene(this);

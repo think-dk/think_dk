@@ -18,7 +18,6 @@ Util.Modules["verify_maillist"] = new function() {
 			var form_verify = u.qs("form.verify_code", this);
 
 			if(form_verify) {
-				u.bug("init form")
 				u.f.init(form_verify);
 			}
 

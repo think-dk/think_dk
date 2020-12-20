@@ -70,7 +70,7 @@ if($page_item) {
 <?	endif; ?>
 
 		<fieldset>
-			<?= $UC->input("verification_code"); ?>
+			<?= $UC->input("verification_code", ["required" => true]); ?>
 		</fieldset>
 
 		<ul class="actions">
