@@ -11,6 +11,8 @@ document.write('<script type="text/javascript" src="/assets/parentnode-skin-defa
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-form-builder.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-googlemaps.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-events-movements.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-form-field-html.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/u-sortable.js"></script>');
 
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/beta-u-columns.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/manipulator/src/beta-u-paymentcards.js"></script>');
@@ -35,6 +37,7 @@ document.write('<script type="text/javascript" src="/assets/parentnode-skin-defa
 
 
 // Project
+document.write('<script type="text/javascript" src="/js/lib/desktop/u-form-field-range.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-front.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-unsubscribe.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-contact.js"></script>');

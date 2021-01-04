@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-10-19 11:40:45
+asset-builder @ 2021-01-04 15:21:02
 */
 
 /*seg_tablet_light_include.js*/
@@ -5058,10 +5058,13 @@ Util.Modules["memberships"] = new function() {
 		}
 		scene.ready = function() {
 			page.cN.scene = this;
-			this.div_memberships = u.qs("div.memberships", this);
+			this.div_memberships = false;
+			this.div_membership = u.qs("div.membership", this);
 			var place_holder = u.qs("div.articlebody .placeholder.memberships", this);
-			if(this.div_memberships && place_holder) {
-				place_holder.parentNode.replaceChild(this.div_memberships, place_holder);
+			if(this.div_membership && place_holder) {
+				place_holder.parentNode.replaceChild(this.div_membership, place_holder);
+				this.form_membership = u.qs("form.membership", this.div_membership);
+				u.f.init(this.form_membership);
 			}
 			this.div_maillist = u.qs("div.maillist", this);
 			var maillist_place_holder = u.qs("div.articlebody .placeholder.maillist", this);

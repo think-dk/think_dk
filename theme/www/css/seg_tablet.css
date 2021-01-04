@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-10-19 11:40:45
+asset-builder @ 2021-01-04 15:21:02
 */
 
 /*seg_tablet_include.css*/
@@ -7,7 +7,7 @@ asset-builder @ 2020-10-19 11:40:45
 /*seg_tablet.css*/
 /*
 MIT license, 2002-2019 parentNode.dk
-asset-builder @ 2020-10-19 11:37:39
+asset-builder @ 2020-12-12 12:42:07
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -963,7 +963,50 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.event div.event ul.location ul {padding-left: 0; padding-right: 0;}
 #content .scene.messages ul.info,
 #content .scene.messages ul.info li.modified_at {display: block;}
-#content .scene.signup .articlebody p.fullwidth {width: auto;}
+#content .scene.signup h1 {text-align: center;}
+#content .scene.signup h1 + h2 {text-align: center;}
+#content .scene.signup h1,
+#content .scene.signup h2,
+#content .scene.signup h3,
+#content .scene.signup h4,
+#content .scene.signup p {margin: 0 auto;}
+#content .scene.signup div.sharing {width: 640px; margin: 0 auto;}
+div.field.range {padding-bottom: 8px;}
+div.field.range input {display: block; width: 100%; height: 6px; background: #26962d; outline: none; border-radius: 5px; padding: 0; box-shadow: none;
+	-webkit-appearance: none;
+}
+div.field.focus.range input {background-color: #34cc3d; border-color: #ffffff;}
+div.field.range input::-webkit-slider-runnable-track {width: 100%; height: 6px; cursor: pointer; background: #26962d; border-radius: 5px; padding: 0;
+	-webkit-appearance: none;
+}
+div.field.focus.range input::-webkit-slider-runnable-track {background-color: #34cc3d; border-color: #ffffff;}
+div.field.range input::-ms-fill-lower {background: #26962d; border-radius: 0;}
+div.field.range input:focus::-ms-fill-lower {background: #26962d;}
+div.field.range input::-ms-fill-upper {background: #26962d; border-radius: 0;}
+div.field.range input:focus::-ms-fill-upper {background: #26962d;}
+div.field.range input::-webkit-slider-thumb {box-shadow: 1px 1px 5px 0px #8a8a8a; border: 3px solid #26962d; height: 32px; width: 32px; border-radius: 100%; background: #ffffff; cursor: pointer; margin-top: -14px;
+	-webkit-appearance: none;
+}
+div.field.range input::-moz-range-thumb {box-shadow: 1px 1px 5px 0px #8a8a8a; border: 3px solid #26962d; height: 26px; width: 26px; border-radius: 100%; background: #ffffff; cursor: pointer;}
+div.field.range input::-ms-thumb {box-shadow: 1px 1px 5px 0px #8a8a8a; border: 3px solid #26962d; height: 26px; width: 26px; border-radius: 100%; background: #ffffff; cursor: pointer;}
+div.field.range.focus input::-webkit-slider-thumb {border-color: #34cc3d;}
+div.field.range.focus input::-moz-range-thumb {border-color: #34cc3d;}
+div.field.range.focus input::-ms-thumb {border-color: #34cc3d;}
+div.field.range div.input_wrapper {padding: 0 0 30px; width: 300px; margin: 0 auto;}
+div.field.range div.input_wrapper div.input {padding: 20px 22px; text-align: center; font-size: 56px; height: 80px; border-radius: 3px; margin: 2px; border: 1px solid #dcdcdc; box-shadow: inset 0 1px 2px #dedede; outline: none;}
+div.field.range div.input_wrapper div.input.focus {margin: 0;border: 3px solid #5c5c5c;}
+div.field.range .help {display: none !important;}
+#content .scene div.membership {width: 640px; margin: 0 auto;}
+#content .scene div.membership ul.actions {text-align: center; margin: 20px 0; width: 500px;}
+#content .scene div.membership ul.actions li {padding: 0; display: block;}
+#content .scene div.membership ul.actions li input {font-size: 28px; height: 55px; padding: 0 40px 5px; line-height: 50px;}
+#content .scene div.donation {width: 640px; margin: 0 auto;}
+#content .scene h2.center {text-align: center;}
+#content .scene div.donation div.field.range div.input_wrapper {width: 350px;}
+#content .scene div.donation div.field.range div.input_wrapper div.input {font-size: 44px; height: 70px;}
+#content .scene div.donation ul.actions {text-align: center; margin: 20px 0; width: 500px;}
+#content .scene div.donation ul.actions li {padding: 0; display: block;}
+#content .scene div.donation ul.actions li input {font-size: 22px; height: 44px; padding: 0 40px 5px; line-height: 50px;}
 #content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-top: 20px; padding-bottom: 30px; font-size: 0; position: relative; width: auto;}
 #content .scene div.memberships ul.memberships > li {display: inline-block; vertical-align: top; 
 	height: 520px;
@@ -1045,7 +1088,7 @@ body.front #page.fixed {width: auto; margin: 0;}
 	font-weight: 600; font-size: 18px;
 }
 #content .scene.signup .articlebody h2.maillist {padding-bottom: 10px;}
-#content .scene.signup div.maillist {border: 1px solid #26962d; position: relative; margin: 0 70px 50px;
+#content .scene.signup div.maillist {border: 1px solid #26962d; position: relative; margin: 0 auto 50px;
 	border-radius: 5px; padding: 22px 20px 15px; width: 456px;
 }
 #content .scene.signup div.maillist form.maillist {font-size: 0;}
@@ -1090,6 +1133,8 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.cart ul.items li span.total_price {float: right;}
 #content .scene.cart ul.items li.total {border-top: 1px solid #dedede;}
 #content .scene.cart ul.items li.total h3 {font-size: 20px;}
+#content .scene.cart ul.items li.total p {font-size: 16px; width: auto;}
+#content .scene.cart ul.items li.total p span.total_vat {float: right;}
 #content .scene.cart ul.items li ul.actions {padding: 0; top: 20px; position: absolute; right: 15px;}
 #content .scene.cart ul.items li ul.actions li.delete input {width: 30px; overflow: hidden; text-indent: -9999px;
 	background-image: url(../assets/janitor/admin/img/bg_icons.png);
@@ -1126,6 +1171,8 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.checkout ul.items li span.total_price {float: right;}
 #content .scene.checkout ul.items li.total {border-top: 1px solid #dedede; }
 #content .scene.checkout ul.items li.total h3 {font-size: 20px;}
+#content .scene.checkout ul.items li.total p {font-size: 16px; width: auto;}
+#content .scene.checkout ul.items li.total p span.total_vat {float: right;}
 #content .scene.checkout ul.payment_methods {padding: 0;}
 #content .scene.checkout ul.payment_methods li.payment_method {padding-bottom: 10px;}
 #content .scene.checkout ul.payment_methods li.payment_method ul.actions {padding-bottom: 0;}

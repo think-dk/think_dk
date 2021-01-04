@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-10-19 11:40:45
+asset-builder @ 2021-01-04 15:21:02
 */
 
 /*seg_smartphone_include.js*/
@@ -8280,6 +8280,63 @@ Util.Modules["search"] = new function() {
 }
 
 
+/*u-form-field-range.js*/
+Util.Form.customInit["range"] = function(field) {
+	field.type = "range";
+	field.input = u.qs("input", field);
+	field.input._form = field._form;
+	field.input.label = u.qs("label[for='"+field.input.id+"']", field);
+	field.input.field = field;
+	field.input.val = u.f._value;
+	field._virtual_input_wrapper = u.ae(field, "div", {"class":"input_wrapper"});
+	field.insertBefore(field._virtual_input_wrapper, field.input);
+	field._virtual_input = u.ae(field._virtual_input_wrapper, "div", {"class":"input", "contentEditable":"true"});
+	field._virtual_input._form = field._form;
+	field._virtual_input.field = field;
+	field._input_range_updated = function() {
+		var range_value = this.val();
+		var formatted_range = Number(range_value).toLocaleString("da") + " kr.";
+		this.field._virtual_input.innerHTML = formatted_range;
+	}
+	field._virtual_input_updated = function() {
+		var range_value = this.innerHTML.replace(/[\., a-zA-Z\;\$]+/g, "");
+		this.field.input.val(range_value);
+	}
+	field._virtual_input_blurred = function() {
+		u.rc(this.field, "focus");
+		u.rc(this, "focus");
+		var range_value = this.innerHTML.replace(/[\., a-zA-Z\;\$]+/g, "");
+		var formatted_price = Number(range_value).toLocaleString("da") + " kr.";
+		this.innerHTML = formatted_price;
+	}
+	field._virtual_input_focused = function() {
+		u.ac(this.field, "focus");
+		u.ac(this, "focus");
+		var range_value = this.innerHTML.replace(/[\., a-zA-Z\;\$]+/g, "");
+		this.innerHTML = range_value;
+	}
+	u.e.addEvent(field._virtual_input, "input", field._virtual_input_updated);
+	u.e.addEvent(field._virtual_input, "blur", field._virtual_input_blurred);
+	u.e.addEvent(field._virtual_input, "focus", field._virtual_input_focused);
+	u.e.addEvent(field.input, "input", field._input_range_updated);
+	u.e.addEvent(field.input, "change", field._input_range_changed);
+	u.e.addEvent(field.input, "input", u.f._updated);
+	u.e.addEvent(field.input, "change", u.f._changed);
+	u.f.activateInput(field.input);
+	field._input_range_updated.bind(field.input)();
+}
+Util.Form.customValidate["range"] = function(iN) {
+	if(
+		!isNaN(iN.val())
+	) {
+		u.f.inputIsCorrect(iN);
+	}
+	else {
+		u.f.inputHasError(iN);
+	}
+}
+
+
 /*m-front.js*/
 Util.Modules["front"] = new function() {
 	this.init = function(scene) {
@@ -8708,6 +8765,7 @@ Util.Modules["cart"] = new function() {
 			page.notify(this);
 			this.header_cart = u.qs("li.cart span.total", page.hN);
 			this.total_cart_price = u.qs("li.total span.total_price", this);
+			this.total_cart_vat = u.qs("li.total span.total_vat", this);
 			this.cart_nodes = u.qsa("ul.items li.item", this);
 			var i, node;
 			for(i = 0; node = this.cart_nodes[i]; i++) {
@@ -8735,11 +8793,13 @@ Util.Modules["cart"] = new function() {
 							page.notify(response);
 							if(response) {
 								var total_price = u.qs("div.scene li.total span.total_price", response);
+								var total_vat = u.qs("div.scene li.total span.total_vat", response);
 								var header_cart = u.qs("div#header li.cart span.total", response);
 								var item_row = u.ge("id:"+this.node.item_id, response);
 								var item_total_price = u.qs("span.total_price", item_row);
 								var item_unit_price = u.qs("span.unit_price", item_row);
 								this.node.scene.total_cart_price.innerHTML = total_price.innerHTML;
+								this.node.scene.total_vat_price.innerHTML = total_vat.innerHTML;
 								this.node.scene.header_cart.innerHTML = header_cart.innerHTML;
 								this.node.total_price.innerHTML = item_total_price.innerHTML;
 								this.node.unit_price.innerHTML = item_unit_price.innerHTML;
@@ -8755,9 +8815,11 @@ Util.Modules["cart"] = new function() {
 					bn_delete.node = node;	
 					bn_delete.confirmed = function(response) {
 						if(response) {
-							var total_price = u.qs("div.scene li.total span.total_price", response);
 							var header_cart = u.qs("div#header li.cart span.total", response);
+							var total_price = u.qs("div.scene li.total span.total_price", response);
+							var total_vat = u.qs("div.scene li.total span.total_vat", response);
 							this.node.scene.total_cart_price.innerHTML = total_price.innerHTML;
+							this.node.scene.total_cart_vat.innerHTML = total_vat ? total_vat.innerHTML : this.node.scene.total_cart_vat.innerHTML.replace(/\d/g, "0").replace(/[0]+,/, "0,");
 							this.node.scene.header_cart.innerHTML = header_cart.innerHTML;
 							this.node.parentNode.removeChild(this.node);
 						}
@@ -8852,10 +8914,13 @@ Util.Modules["memberships"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			this.div_memberships = u.qs("div.memberships", this);
+			this.div_memberships = false;
+			this.div_membership = u.qs("div.membership", this);
 			var place_holder = u.qs("div.articlebody .placeholder.memberships", this);
-			if(this.div_memberships && place_holder) {
-				place_holder.parentNode.replaceChild(this.div_memberships, place_holder);
+			if(this.div_membership && place_holder) {
+				place_holder.parentNode.replaceChild(this.div_membership, place_holder);
+				this.form_membership = u.qs("form.membership", this.div_membership);
+				u.f.init(this.form_membership);
 			}
 			if(this.div_memberships) {
 				this.membership_nodes = u.qsa("li.membership", this.div_memberships);
@@ -9131,46 +9196,46 @@ Util.Modules["verify_shop"] = new function() {
 			var form_verify = u.qs("form.verify_code", this);
 			if(form_verify) {
 				u.f.init(form_verify);
-			}
-			form_verify.submitted = function() {
-				var data = this.getData();
-				this.is_submitting = true; 
-				u.ac(this, "submitting");
-				u.ac(this.actions["verify"], "disabled");
-				u.ac(this.actions["skip"], "disabled");
-				this.response = function(response, request_id) {
-					if (u.qs(".scene.login", response)) {
-						scene.replaceScene(response);
-						u.h.navigate("/login", false, true);
-					}
-					else if (u.hc(u.qs(".scene", response), "confirmed|checkout|cart|shopReceipt")) {
-						scene.replaceScene(response);
-						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
-						u.h.navigate(url_actions, false, true);
-					}
-					else {
-						if (this.is_submitting) {
-							this.is_submitting = false; 
-							u.rc(this, "submitting");
-							u.rc(this.actions["verify"], "disabled");
-							u.rc(this.actions["skip"], "disabled");
+				form_verify.submitted = function() {
+					var data = this.getData();
+					this.is_submitting = true; 
+					u.ac(this, "submitting");
+					u.ac(this.actions["verify"], "disabled");
+					u.ac(this.actions["skip"], "disabled");
+					this.response = function(response, request_id) {
+						if (u.qs(".scene.login", response)) {
+							scene.replaceScene(response);
+							u.h.navigate("/login", false, true);
 						}
-						if (this.error) {
-							this.error.parentNode.removeChild(this.error);
+						else if (u.hc(u.qs(".scene", response), "confirmed|checkout|cart|shopReceipt")) {
+							scene.replaceScene(response);
+							var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
+							u.h.navigate(url_actions, false, true);
 						}
-						this.error = scene.showMessage(this, response);
-						u.ass(this.error, {
-							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
-							opacity:0
-						});
-						u.a.transition(this.error, "all .6s ease");
-						u.ass(this.error, {
-							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
-							opacity:1
-						});
+						else {
+							if (this.is_submitting) {
+								this.is_submitting = false; 
+								u.rc(this, "submitting");
+								u.rc(this.actions["verify"], "disabled");
+								u.rc(this.actions["skip"], "disabled");
+							}
+							if (this.error) {
+								this.error.parentNode.removeChild(this.error);
+							}
+							this.error = scene.showMessage(this, response);
+							u.ass(this.error, {
+								transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
+								opacity:0
+							});
+							u.a.transition(this.error, "all .6s ease");
+							u.ass(this.error, {
+								transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
+								opacity:1
+							});
+						}
 					}
+					u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
 				}
-				u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
 			}
 			u.showScene(this);
 		}
