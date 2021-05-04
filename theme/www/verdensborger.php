@@ -15,7 +15,7 @@ $page->bodyClass("verdensborger");
 $page->pageTitle("Verdensborger – konfirmation");
 
 
-# /friosfradevoksnes/tilmelding
+# /verdensborger/tilmelding
 if(count($action) && $action[0] == "tilmelding") {
 
 
@@ -39,16 +39,6 @@ else if(count($action) && $action[0] == "kvittering") {
 
 	$page->page(array(
 		"templates" => "verdensborger/receipt.php"
-	));
-	exit();
-
-}
-
-# /friosfradevoksnes/tilmelding
-if(count($action) && $action[0] == "2") {
-
-	$page->page(array(
-		"templates" => "verdensborger/index2.php"
 	));
 	exit();
 
