@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2021-01-04 15:21:02
+asset-builder @ 2021-05-19 09:53:15
 */
 
 /*seg_desktop_include.js*/
@@ -11580,11 +11580,11 @@ Util.Modules["contact"] = new function() {
 				var injection_point = u.ns(u.qs("div.article h1", this));
 				this.map = u.ae(this, "div", {"class":"map"});
 				this.map.loaded = function() {
-					u.googlemaps.addMarker(this, [55.683577,12.563829]);
+					u.googlemaps.addMarker(this, [55.6912109,12.5631139]);
 					delete this.loaded;
 				}
 				injection_point.parentNode.insertBefore(this.map, injection_point);
-				u.googlemaps.map(this.map, [55.683577,12.563829], {"zoom":14});
+				u.googlemaps.map(this.map, [55.6912109,12.5631139], {"zoom":14});
 			}
 			u.showScene(this);
 			// 
@@ -11866,34 +11866,6 @@ Util.Modules["event"] = new function() {
 					"div.related",
 				]}
 			]);
-			u.showScene(this);
-		}
-		page.cN.scene = scene;
-	}
-}
-
-
-/*m-event_proposal.js*/
-Util.Modules["eventProposal"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-			this.offsetHeight;
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			u.columns(this, [
-				{"c300":[
-					{"c200": [
-						"div.proposal", 
-					]},
-					{"c100": [
-						"div.info",
-					]},
-				]},
-			]);
-			this._form = u.qs("form", this);
-			u.f.init(this._form);
 			u.showScene(this);
 		}
 		page.cN.scene = scene;

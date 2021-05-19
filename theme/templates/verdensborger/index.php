@@ -112,8 +112,8 @@ if($page_item) {
 		</p>
 		<p>
 			Adresse:<br />
-			Charlotte Ammundsens Plads 3<br />
-			1359 København K
+			Ryesgade 15<br />
+			2200 København N
 		</p>
 	</div>
 

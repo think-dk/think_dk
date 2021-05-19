@@ -43,7 +43,7 @@ document.write('<script type="text/javascript" src="/js/lib/desktop/m-unsubscrib
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-contact.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-events.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-event.js"></script>');
-document.write('<script type="text/javascript" src="/js/lib/desktop/m-event_proposal.js"></script>');
+// document.write('<script type="text/javascript" src="/js/lib/desktop/m-event_proposal.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-blog.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-cart.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-memberships.js"></script>');

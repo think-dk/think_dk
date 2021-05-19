@@ -17,13 +17,13 @@ Util.Modules["contact"] = new function() {
 			this.map = u.ae(this, "div", {"class":"map"});
 			this.map.loaded = function() {
 
-				u.googlemaps.addMarker(this, [55.683577,12.563829]);
+				u.googlemaps.addMarker(this, [55.6912109,12.5631139]);
 
 				delete this.loaded;
 
 			}
 			injection_point.parentNode.insertBefore(this.map, injection_point);
-			u.googlemaps.map(this.map, [55.683577,12.563829], {"zoom":14});
+			u.googlemaps.map(this.map, [55.6912109,12.5631139], {"zoom":14});
 
 
 			u.showScene(this);

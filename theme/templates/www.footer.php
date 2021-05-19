@@ -17,7 +17,7 @@
 			<li class="terms"><a href="/terms">Terms</a></li>
 		</ul>
 
-		<p>think.dk – Charlotte Ammundsens Plads 3, 1359 København K – <a href="mailto:start@think.dk">start@think.dk</a></p>
+		<p>think.dk – Ryesgade 15, 2200 København N – <a href="mailto:start@think.dk">start@think.dk</a></p>
 	</div>
 
 </div>

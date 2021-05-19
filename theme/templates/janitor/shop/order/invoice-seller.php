@@ -1,6 +1,6 @@
 <h1><?= SITE_NAME ?></h1>
 <ul class="info">
-	<li>Charlotte Ammundsens Plads 3</li>
-	<li>1359 København K</li>
+	<li>Ryesgade 15</li>
+	<li>2200 København N</li>
 	<li class="cvr">CVR: DK-40201890</li>
 </ul>
