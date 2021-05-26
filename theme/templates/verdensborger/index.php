@@ -79,7 +79,7 @@ if($page_item) {
 	<div class="info_meeting">
 		<h2>Mød os og hør mere på et intromøde</h2>
 		<h3>
-			9. juni 2020
+			9. juni 2021
 		</h3>
 		<p>
 			Kl. 19:00-20:00 – <a href="/events/verdensborger-infomoede-2">læs mere</a>.
