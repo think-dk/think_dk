@@ -79,28 +79,10 @@ if($page_item) {
 	<div class="info_meeting">
 		<h2>Mød os og hør mere på et intromøde</h2>
 		<h3 class="overdue">
-			6. september 2020
-		</h3>
-		<p class="overdue">
-			Kl. 19:30-20:30 – <a href="/events/verdensborger-intromoede">læs mere</a>.
-		</p>
-		<h3 class="overdue">
-			20. september 2020
-		</h3>
-		<p class="overdue">
-			Kl. 19:30-20:30 – <a href="/events/verdensborger-intromoede-1">læs mere</a>.
-		</p>
-		<h3 class="overdue">
-			11. oktober 2020
-		</h3>
-		<p class="overdue">
-			Kl. 19:30-20:30 – <a href="/events/verdensborger-infomoede">læs mere</a>.
-		</p>
-		<h3>
-			18. oktober 2020
+			9. juni 2020
 		</h3>
 		<p>
-			Kl. 19:30-20:30 – <a href="/events/verdensborger-infomoede-1">læs mere</a>.
+			Kl. 19:00-20:00 – <a href="/events/verdensborger-infomoede-2">læs mere</a>.
 		</p>
 		<p>
 			Alle interesserede er velkomne –
@@ -108,7 +90,7 @@ if($page_item) {
 			tilføjer nye intromøder til listen. 
 		</p>
 		<p>
-			Møderne foregår i think.dk’s lokaler.
+			Møderne foregår hos Relational Spaces.
 		</p>
 		<p>
 			Adresse:<br />
@@ -120,21 +102,17 @@ if($page_item) {
 	<div class="practicalities">
 		<h2>Praktisk info</h2>
 		<p>Forløbet foregår i København, hos think.dk</p>
-		<p>Forløbet løber fra d. 24. oktober 2020 til 8. maj 2021 og indebærer:</p>
+		<p>Forløbet løber fra oktober 2021 til maj 2022 og indebærer:</p>
 		<ul>
-			<li>14 lørdage fra 10.00-12.00 (24/10, 7/11, 14/11, 21/11, 5/12, 12/12, 16/1, 23/1, 30/1, 27/2, 6/3, 20/3, 10/4, 24/4).</li>
-			<li>1 lørdag fra 10:00 til 20:00 (30/10).</li>
+			<li>16 lørdage fra 10.00-12.00.</li>
+			<li>1 lørdag fra 10:00 til 16:00.</li>
 			<li>Ingen lektioner i skolernes ferier.</li>
 			<li>Debatinspirerende oplæg eller tur, hver lørdag, efterfulgt af dialog med de unge.</li>
-			<li>Afslutningsweekend den 7.-8. maj 2021.</li>
-			<li>Overgangsritual fredag den 7. maj.</li>
-			<li>Afslutningsceremoni med familien lørdag den 8. maj.</li>
-			<li>Derefter fest i de respektive familiers regi.</li>
+			<li>Afslutningsweekend med overgangsritual og ceremoni i maj 2022.</li>
 		</ul>
 		<h3>Corona information</h3>
 		<p>
-			Forløbet gennemføres i Kulturhuset Indre By under skarp hensynstagen til Corona-situationen. 
-			Vi har rigtig god plads og alle forholdsregler på plads, så vi kan gennemfører forløbet, også selvom der sker yderligere skærpelse af forsamlingsreglerne.
+			Vi har netop gennemført forløbet under den seneste Corona nedlukning. Vi har derfor allerede erfaringer med hvad det kræver at overholde gældende regler og stadig gennemføre hele forløbet.
 		</p>
 	</div>
 
@@ -145,12 +123,9 @@ if($page_item) {
 			Du kan tilmelde dig forløbet <em>Verdensborger</em> ved at udfylde formularen herunder. Du er også meget velkommen til at skrive til os på 
 			<a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du har spørgsmål :)
 		</p>
-		<p>
-			Forløbet koster fra 1000,- til 8.000,- kr. pr. deltager. Se nedenfor.
-		</p>
-		<p>
-			Tilmelding senest 19. oktober 2020.
-		</p>
+		<!--p>
+			Forløbet koster fra 5.000,- til 8.000,- kr. pr. deltager. Se nedenfor.
+		</p-->
 
 		<?= $HTML->formStart("tilmelding", ["class" => "signup labelstyle:inject"]); ?>
 			<fieldset>
@@ -167,7 +142,7 @@ if($page_item) {
 		<?= $HTML->formEnd(); ?>
 
 
-		<h3>Fra 1.000,- til 8.000,- kr.?</h3>
+		<!--h3>Fra 1.000,- til 8.000,- kr.?</h3>
 		<p>
 			Den formelle pris på dette forløb er 4.500,- kr., men vi ønsker at forløbet skal være tilgængeligt for familier og unge fra alle 
 			indkomstgrupper. Derfor har vi lavet en fleksibel prismodel, der tilgodeser alle. Vi opfordrer dem der kan til at betale lidt ekstra, 
@@ -176,7 +151,7 @@ if($page_item) {
 		<p>
 			Det vigtigste for os er, at vi får samlet en gruppe unge, der ønsker at indgå i et givende og åbent 
 			fællesskab, og som er nysgerrige og kan se værdien i at være med.
-		</p>
+		</p-->
 	</div>
 
 	<div class="more_info">
