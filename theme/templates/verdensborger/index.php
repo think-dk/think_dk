@@ -78,7 +78,7 @@ if($page_item) {
 
 	<div class="info_meeting">
 		<h2>Mød os og hør mere på et intromøde</h2>
-		<h3 class="overdue">
+		<h3>
 			9. juni 2020
 		</h3>
 		<p>
