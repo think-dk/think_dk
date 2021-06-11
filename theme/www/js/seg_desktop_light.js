@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2021-05-19 09:53:15
+asset-builder @ 2021-06-11 22:06:45
 */
 
 /*seg_desktop_light_include.js*/
@@ -5176,6 +5176,25 @@ Util.Modules["memberships"] = new function() {
 				u.f.init(this.div_maillist.form);
 			}
 			page.resized();
+		}
+		scene.ready();
+	}
+}
+
+
+/*m-verdensborger.js*/
+Util.Modules["verdensborger"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+			this.offsetHeight;
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			this.form_signup = u.qs("form.signup", this);
+			if(this.form_signup) {
+				u.f.init(this.form_signup);
+			}
 		}
 		scene.ready();
 	}

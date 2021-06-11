@@ -26,8 +26,10 @@ if(count($action) && $action[0] == "tilmelding") {
 	$comment = getPost("comment");
 
 	mailer()->send([
+		"subject" => "",
 		"recipient" => "martin@think.dk",
-		"message" => "Navn: $name\nForælders navn: $parentname\nEmail: $email\nTelefon: $phone\n\nAnsøgning:\n$comment"
+		"message" => "Navn: $name<br>\nForælders navn: $parentname<br>\nEmail: $email<br>\nTelefon: $phone<br>\n\nAnsøgning:<br>\n$comment",
+		"template" => "system",
 	]);
 
 

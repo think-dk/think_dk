@@ -78,11 +78,17 @@ if($page_item) {
 
 	<div class="info_meeting">
 		<h2>Mød os og hør mere på et intromøde</h2>
-		<h3>
+		<h3 class="overdue">
 			9. juni 2021
 		</h3>
-		<p>
+		<p class="overdue">
 			Kl. 19:00-20:00 – <a href="/events/verdensborger-infomoede-2">læs mere</a>.
+		</p>
+		<h3>
+			6. juli 2021
+		</h3>
+		<p>
+			Kl. 19:00-20:00 – <a href="/events/verdensborger-infomoede-3">læs mere</a>.
 		</p>
 		<p>
 			Alle interesserede er velkomne –
@@ -90,7 +96,7 @@ if($page_item) {
 			tilføjer nye intromøder til listen. 
 		</p>
 		<p>
-			Møderne foregår hos Relational Spaces.
+			Møderne foregår enten <a href="https://meet.jit.si/verdensborger">online</a> eller hos Relational Spaces.
 		</p>
 		<p>
 			Adresse:<br />
