@@ -129,9 +129,9 @@ if($page_item) {
 			Du kan tilmelde dig forløbet <em>Verdensborger</em> ved at udfylde formularen herunder. Du er også meget velkommen til at skrive til os på 
 			<a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du har spørgsmål :)
 		</p>
-		<!--p>
-			Forløbet koster fra 5.000,- til 8.000,- kr. pr. deltager. Se nedenfor.
-		</p-->
+		<p>
+			Standardprisen for Verdensborger konfirmationsforløbet er 7.500,- kr. pr. deltager. Der er 12 pladser på holdet.
+		</p>
 
 		<?= $HTML->formStart("tilmelding", ["class" => "signup labelstyle:inject"]); ?>
 			<fieldset>
