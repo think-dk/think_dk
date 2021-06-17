@@ -27,7 +27,7 @@ if(count($action) && $action[0] == "tilmelding") {
 
 	mailer()->send([
 		"subject" => "",
-		"recipient" => "martin@think.dk",
+		"recipient" => "anja@think.dk",
 		"message" => "Navn: $name<br>\nForælders navn: $parentname<br>\nEmail: $email<br>\nTelefon: $phone<br>\n\nAnsøgning:<br>\n$comment",
 		"template" => "system",
 	]);
