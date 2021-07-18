@@ -84,11 +84,17 @@ if($page_item) {
 		<p class="overdue">
 			Kl. 19:00-20:00 – <a href="/events/verdensborger-infomoede-2">læs mere</a>.
 		</p>
-		<h3>
+		<h3 class="overdue">
 			6. juli 2021
 		</h3>
-		<p>
+		<p class="overdue">
 			Kl. 19:00-20:00 – <a href="/events/verdensborger-infomoede-3">læs mere</a>.
+		</p>
+		<h3>
+			2. august 2021
+		</h3>
+		<p>
+			Kl. 19:00-20:00 – <a href="/events/verdensborger-infomoede-4">læs mere</a>.
 		</p>
 		<p>
 			Alle interesserede er velkomne –
