@@ -179,6 +179,9 @@ else {
 		<p>
 			Enter the price you can afford below and click the <em>Update membership price</em> button.
 		</p>
+		<p class="note">
+			Please note that any amount below 2,50 dkr. will not be charged due to creditcard clearance fees being approx. 2,50 dkr. as well.
+		</p>
 
 		<?= $MC->formStart("/janitor/admin/profile/membership/updateMembershipPrice/".$user_id, array("class" => "customprice labelstyle:inject")) ?>
 			<?= $MC->input("item_id", ["type" => "hidden", "value" => $membership["item_id"]]) ?>
