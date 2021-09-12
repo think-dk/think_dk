@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2021-06-11 22:06:45
+asset-builder @ 2021-09-13 00:02:23
 */
 
 /*seg_smartphone_include.js*/
@@ -7004,10 +7004,8 @@ Util.Modules["oneButtonForm"] = new function() {
 					u.ac(this, "submitting");
 					this._ob_submit_button.value = u.stringOr(this._ob_submit_button.wait_value, "Wait");
 					if(this._ob_dom_submit) {
-						u.bug("should submit:" + this._ob_download);
 						if(this._ob_download) {
 							this.response({"cms_status":"success"});
-							u.bug("wait for download");
 						}
 						this.DOMsubmit();
 					}
