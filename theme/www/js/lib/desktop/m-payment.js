@@ -12,7 +12,7 @@ Util.Modules["payment"] = new function() {
 		}
 
 		scene.ready = function() {
-//			u.bug("scene.ready:", this);
+			// u.bug("scene.ready:", this);
 
 
 			var login_form = u.qs("form.login", this);

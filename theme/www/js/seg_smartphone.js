@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2021-09-13 00:02:23
+asset-builder @ 2021-09-13 14:13:17
 */
 
 /*seg_smartphone_include.js*/
@@ -7004,8 +7004,10 @@ Util.Modules["oneButtonForm"] = new function() {
 					u.ac(this, "submitting");
 					this._ob_submit_button.value = u.stringOr(this._ob_submit_button.wait_value, "Wait");
 					if(this._ob_dom_submit) {
+						u.bug("should submit:" + this._ob_download);
 						if(this._ob_download) {
 							this.response({"cms_status":"success"});
+							u.bug("wait for download");
 						}
 						this.DOMsubmit();
 					}
@@ -9015,9 +9017,9 @@ Util.Modules["payment"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			var form = u.qs("form", this);
-			if(form) {
-				u.f.init(form);
+			var login_form = u.qs("form.login", this);
+			if(login_form) {
+				u.f.init(login_form);
 			}
 			u.showScene(this);
 		}
@@ -9033,9 +9035,9 @@ Util.Modules["payments"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			var form = u.qs("form", this);
-			if(form) {
-				u.f.init(form);
+			var login_form = u.qs("form.login", this);
+			if(login_form) {
+				u.f.init(login_form);
 			}
 			u.showScene(this);
 		}
