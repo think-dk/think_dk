@@ -96,11 +96,17 @@ if($page_item) {
 		<p class="overdue">
 			Kl. 19:00-20:00 – <a href="/events/verdensborger-infomoede-4">læs mere</a>.
 		</p>
-		<h3>
+		<h3 class="overdue">
 			1. september 2021
 		</h3>
-		<p>
+		<p class="overdue">
 			Kl. 19:30-20:30 – <a href="/events/verdensborger-infomoede-cloned">læs mere</a>.
+		</p>
+		<h3>
+			28. september 2021
+		</h3>
+		<p>
+			Kl. 19:00-20:00 – <a href="/events/verdensborger-infomoede-cloned-1">læs mere</a>.
 		</p>
 		<p>
 			Alle interesserede er velkomne – skriv derfor til <a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du vil være sikker på en plads – eller opdateres når vi
