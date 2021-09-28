@@ -25,16 +25,22 @@ if(count($action) && $action[0] == "tilmelding") {
 	$phone = getPost("phone");
 	$comment = getPost("comment");
 
-	mailer()->send([
-		"subject" => "",
-		"recipients" => "anja@think.dk",
-		"message" => "Navn: $name<br>\nForælders navn: $parentname<br>\nEmail: $email<br>\nTelefon: $phone<br>\n\nAnsøgning:<br>\n$comment",
-		"template" => "system",
-	]);
+	if($name && $email && $phone) {
+		mailer()->send([
+			"subject" => "",
+			"recipients" => "anja@think.dk",
+			// "recipients" => "martin@think.dk",
+			"message" => "Navn: $name<br>\nForælders navn: $parentname<br>\nEmail: $email<br>\nTelefon: $phone<br>\n\nAnsøgning:<br>\n$comment",
+			"template" => "system",
+		]);
 
 
-	header("Location: /verdensborger/kvittering");
-	exit();
+		header("Location: /verdensborger/kvittering");
+		exit();
+	}
+	else {
+		message()->addMessage("Formularen er ikke udfyldt korrekt", ["type" => "error"]);
+	}
 
 }
 else if(count($action) && $action[0] == "kvittering") {

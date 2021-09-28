@@ -7,6 +7,13 @@ $page_item = $IC->getItem(array("tags" => "page:Verdensborger", "status" => 1, "
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
+
+$name = getPost("name");
+$parentname = getPost("parentname");
+$email = getPost("email");
+$phone = getPost("phone");
+$coment = getPost("comment");
+
 ?>
 <div class="scene verdensborger i:verdensborger" lang="da">
 
@@ -151,12 +158,13 @@ if($page_item) {
 		</p>
 
 		<?= $HTML->formStart("tilmelding", ["class" => "signup labelstyle:inject"]); ?>
+			<?= $HTML->serverMessages() ?>
 			<fieldset>
-				<?= $HTML->input("name", ["type" => "string", "label" => "Deltagers navn", "required" => true, "value" => ""]); ?>
-				<?= $HTML->input("parentname", ["type" => "string", "label" => "Forælder navn"]); ?>
-				<?= $HTML->input("email", ["type" => "email", "label" => "Email", "required" => true]); ?>
-				<?= $HTML->input("phone", ["type" => "tel", "label" => "Telefon", "required" => true]); ?>
-				<?= $HTML->input("comment", ["type" => "text", "label" => "Hvorfor vil du gerne deltage?", "class" => "autoexpand"]); ?>
+				<?= $HTML->input("name", ["type" => "string", "label" => "Deltagers navn", "required" => true, "value" => $name]); ?>
+				<?= $HTML->input("parentname", ["type" => "string", "label" => "Forælder navn", "value" => $parentname]); ?>
+				<?= $HTML->input("email", ["type" => "email", "label" => "Email", "required" => true, "value" => $email]); ?>
+				<?= $HTML->input("phone", ["type" => "tel", "label" => "Telefon", "required" => true, "value" => $phone]); ?>
+				<?= $HTML->input("comment", ["type" => "text", "label" => "Hvorfor vil du gerne deltage?", "class" => "autoexpand", "value" => $comment]); ?>
 			</fieldset>
 
 			<ul class="actions">
