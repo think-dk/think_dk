@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2021-06-11 22:06:45
+asset-builder @ 2021-09-13 14:13:17
 */
 
 /*seg_smartphone_include.js*/
@@ -9017,9 +9017,9 @@ Util.Modules["payment"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			var form = u.qs("form", this);
-			if(form) {
-				u.f.init(form);
+			var login_form = u.qs("form.login", this);
+			if(login_form) {
+				u.f.init(login_form);
 			}
 			u.showScene(this);
 		}
@@ -9035,9 +9035,9 @@ Util.Modules["payments"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			var form = u.qs("form", this);
-			if(form) {
-				u.f.init(form);
+			var login_form = u.qs("form.login", this);
+			if(login_form) {
+				u.f.init(login_form);
 			}
 			u.showScene(this);
 		}

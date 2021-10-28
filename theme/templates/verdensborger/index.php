@@ -7,6 +7,13 @@ $page_item = $IC->getItem(array("tags" => "page:Verdensborger", "status" => 1, "
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
+
+$name = getPost("name");
+$parentname = getPost("parentname");
+$email = getPost("email");
+$phone = getPost("phone");
+$comment = getPost("comment");
+
 ?>
 <div class="scene verdensborger i:verdensborger" lang="da">
 
@@ -90,15 +97,32 @@ if($page_item) {
 		<p class="overdue">
 			Kl. 19:00-20:00 – <a href="/events/verdensborger-infomoede-3">læs mere</a>.
 		</p>
-		<h3>
+		<h3 class="overdue">
 			2. august 2021
 		</h3>
-		<p>
+		<p class="overdue">
 			Kl. 19:00-20:00 – <a href="/events/verdensborger-infomoede-4">læs mere</a>.
 		</p>
+		<h3 class="overdue">
+			1. september 2021
+		</h3>
+		<p class="overdue">
+			Kl. 19:30-20:30 – <a href="/events/verdensborger-infomoede-cloned">læs mere</a>.
+		</p>
+		<h3 class="overdue">
+			28. september 2021
+		</h3>
+		<p class="overdue">
+			Kl. 19:00-20:00 – <a href="/events/verdensborger-infomoede-cloned-1">læs mere</a>.
+		</p>
+		<h3>
+			12. oktober 2021
+		</h3>
 		<p>
-			Alle interesserede er velkomne –
-			Bemærk at grundet Corona, er der begrænsninger på hvor mange vi kan samles – skriv derfor til <a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du vil være sikker på en plads – eller opdateres når vi
+			Kl. 19:00-20:00 – <a href="/events/verdensborger-infomoede-5">læs mere</a>.
+		</p>
+		<p>
+			Alle interesserede er velkomne – skriv derfor til <a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du vil være sikker på en plads – eller opdateres når vi
 			tilføjer nye intromøder til listen. 
 		</p>
 		<p>
@@ -140,12 +164,13 @@ if($page_item) {
 		</p>
 
 		<?= $HTML->formStart("tilmelding", ["class" => "signup labelstyle:inject"]); ?>
+			<?= $HTML->serverMessages() ?>
 			<fieldset>
-				<?= $HTML->input("name", ["type" => "string", "label" => "Deltagers navn", "required" => true, "value" => ""]); ?>
-				<?= $HTML->input("parentname", ["type" => "string", "label" => "Forælder navn"]); ?>
-				<?= $HTML->input("email", ["type" => "email", "label" => "Email", "required" => true]); ?>
-				<?= $HTML->input("phone", ["type" => "tel", "label" => "Telefon", "required" => true]); ?>
-				<?= $HTML->input("comment", ["type" => "text", "label" => "Hvorfor vil du gerne deltage?", "class" => "autoexpand"]); ?>
+				<?= $HTML->input("name", ["type" => "string", "label" => "Deltagers navn", "required" => true, "value" => $name]); ?>
+				<?= $HTML->input("parentname", ["type" => "string", "label" => "Forælder navn", "value" => $parentname]); ?>
+				<?= $HTML->input("email", ["type" => "email", "label" => "Email", "required" => true, "value" => $email]); ?>
+				<?= $HTML->input("phone", ["type" => "tel", "label" => "Telefon", "required" => true, "value" => $phone]); ?>
+				<?= $HTML->input("comment", ["type" => "text", "label" => "Hvorfor vil du gerne deltage?", "class" => "autoexpand", "value" => $comment]); ?>
 			</fieldset>
 
 			<ul class="actions">
