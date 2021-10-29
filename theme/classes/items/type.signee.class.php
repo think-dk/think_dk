@@ -54,11 +54,14 @@ class TypeSignee extends Itemtype {
 			"hint_message" => "Write your email.",
 			"error_message" => "Your email must be a valid email."
 		));
-
+		
 		// signed item
 		$this->addToModel("signed_item_id", array(
 			"type" => "item_id",
+			"label" => "Signed item",
 			"required" => true,
+			"hint_message" => "Signed item.",
+			"error_message" => "Invalid."
 		));
 
 	}
