@@ -12,7 +12,7 @@ define("VERSION", "0.7.9.2");
 define("SITE_UID", "TNK");
 define("SITE_NAME", "think.dk");
 define("SITE_URL", (isset($_SERVER["HTTPS"]) ? "https" : "http")."://".$_SERVER["SERVER_NAME"]);
-define("SITE_EMAIL", "test.parentnode@gmail.com");
+define("SITE_EMAIL", "start@think.dk");
 
 define("DEFAULT_PAGE_DESCRIPTION", "Accelerate change");
 define("DEFAULT_PAGE_IMAGE", "/img/logo-large.png");
@@ -29,7 +29,8 @@ define("SITE_SIGNUP_URL", "/signup");
 define("SITE_ITEMS", true);
 
 define("SITE_SHOP", true);
-define("SHOP_ORDER_NOTIFIES", "martin@think.dk,anja@think.dk");
+// define("SHOP_ORDER_NOTIFIES", "martin@think.dk,anja@think.dk");
+define("SHOP_ORDER_NOTIFIES", "martin@think.dk");
 
 define("SITE_SUBSCRIPTIONS", true);
 
