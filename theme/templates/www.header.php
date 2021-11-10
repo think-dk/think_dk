@@ -41,7 +41,7 @@ if(defined("SITE_SHOP") && SITE_SHOP) {
 	<div id="header">
 		<ul class="servicenavigation">
 			<li class="keynav navigation nofollow"><a href="#navigation">To navigation</a></li>
-			<li class="keynav contact"><a href="/contact">Contact</a></li>
+			<?= $HTML->navigationLink(["link" => "/contact", "name" => "Contact", "classname" => "keynav contact", "target" => false, "fallback" => false]); ?>
 <? if(defined("SITE_SHOP") && SITE_SHOP): ?>
 			<li class="keynav cart nofollow<?= $cart && $cart["total_items"] ? " used" : "" ?>"><a href="/shop/cart">Cart<?= ($cart ? ' (<span class="total">'.$cart["total_items"].'</span>)' : '') ?></a></li>
 <? endif; ?>
@@ -51,9 +51,9 @@ if(defined("SITE_SHOP") && SITE_SHOP) {
 			<li class="keynav admin nofollow"><a href="/janitor">Janitor</a></li>
 <? endif; ?>
 <? if(session()->value("user_id") && session()->value("user_group_id") > 1): ?>
-			<li class="keynav user nofollow"><a href="?logoff=true">Logoff</a></li>
+			<li class="keynav user nofollow logoff"><a href="?logoff=true">Logoff</a></li>
 <? else: ?>
-			<li class="keynav user nofollow"><a href="/login">Login</a></li>
+			<?= $HTML->navigationLink(["link" => "/login", "name" => "Login", "classname" => "keynav user nofollow login", "target" => false, "fallback" => false]); ?>
 <? endif; ?>
 		</ul>
 	</div>
