@@ -53,7 +53,7 @@ if(defined("SITE_SHOP") && SITE_SHOP) {
 <? if(session()->value("user_id") && session()->value("user_group_id") > 1): ?>
 			<li class="keynav user nofollow logoff"><a href="?logoff=true">Logoff</a></li>
 <? else: ?>
-			<?= $HTML->navigationLink(["link" => "/login", "name" => "Login", "classname" => "keynav user nofollow login", "target" => false, "fallback" => false]); ?>
+			<?= $HTML->navigationLink(["link" => SITE_LOGIN_URL, "name" => "Login", "classname" => "keynav user nofollow login", "target" => false, "fallback" => false]); ?>
 <? endif; ?>
 		</ul>
 	</div>
