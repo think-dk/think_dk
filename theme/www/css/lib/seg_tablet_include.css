@@ -1,16 +1,50 @@
-@import url(../../assets/parentnode-skin-default/css/seg_tablet.css);
+/*@import url("/assets/parentnode-skin-default/css/seg_desktop.css");*/
 
-@import url(/assets/parentnode-skin-default/css/optionals/lib/desktop/s-articles.css);
-@import url(/assets/parentnode-skin-default/css/optionals/lib/desktop/s-pagination.css);
-@import url(/assets/parentnode-skin-default/css/optionals/lib/desktop/s-sharing.css);
-@import url(/assets/parentnode-skin-default/css/optionals/lib/desktop/s-comments.css);
-@import url(/assets/parentnode-skin-default/css/optionals/lib/desktop/s-login_overlay.css);
-@import url(/assets/parentnode-skin-default/css/optionals/lib/desktop/s-wishlist.css);
-@import url(/assets/parentnode-skin-default/css/optionals/lib/desktop/s-columns.css);
-@import url(/assets/parentnode-skin-default/css/optionals/lib/desktop/s-search.css);
+/* BASE INCLUDES */
+@import url("/assets/parentnode-skin-default/css/lib/s-fonts.css");
+
+@import url("/css/lib/desktop/s-page.css");
+@import url("/css/lib/desktop/s-header.css");
+@import url("/css/lib/desktop/s-footer.css");
+@import url("/css/lib/desktop/s-content.css");
+
+@import url("/css/lib/desktop/s-article.css");
+@import url("/css/lib/desktop/s-readstate.css");
+@import url("/css/lib/desktop/s-form.css");
+@import url("/css/lib/desktop/s-articles.css");
+@import url("/css/lib/desktop/s-pagination.css");
+@import url("/css/lib/desktop/s-sharing.css");
+@import url("/css/lib/desktop/s-comments.css");
+@import url("/css/lib/desktop/s-columns.css");
+@import url("/css/lib/desktop/s-search.css");
+
+@import url("/assets/parentnode-skin-default/css/optionals/lib/desktop/s-login_overlay.css");
+/*@import url("/assets/parentnode-skin-default/css/optionals/lib/desktop/s-form-field-html.css");*/
 
 
-/* Project css and overrides */
-@import url(/css/lib/desktop/s-pages.css);
-@import url(/css/lib/desktop/s-colorscheme.css);
-@import url(/css/lib/tablet/s-pages-active.css);
+/* AREAS */
+@import url("/css/lib/desktop/s-front.css");
+@import url("/css/lib/desktop/s-bulletin.css");
+@import url("/css/lib/desktop/s-contact.css");
+@import url("/css/lib/desktop/s-about.css");
+@import url("/css/lib/desktop/s-blog.css");
+@import url("/css/lib/desktop/s-memberships.css");
+@import url("/css/lib/desktop/s-events.css");
+@import url("/css/lib/desktop/s-shop.css");
+@import url("/css/lib/desktop/s-tickets.css");
+@import url("/css/lib/desktop/s-services.css");
+@import url("/css/lib/desktop/s-projects.css");
+@import url("/css/lib/desktop/s-wishlist.css");
+@import url("/css/lib/desktop/s-messages.css");
+
+@import url("/css/lib/desktop/s-black.css");
+@import url("/css/lib/desktop/s-corona.css");
+@import url("/css/lib/desktop/s-verdensborger.css");
+
+
+/*@import url("/css/lib/desktop/s-pages.css");*/
+/*@import url("/css/lib/desktop/s-event-proposal.css");*/
+
+
+
+@import url("/css/lib/desktop/s-active.css");
