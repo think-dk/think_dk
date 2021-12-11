@@ -64,7 +64,7 @@ $items = $IC->paginate($pagination_pattern);
 // $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 ?>
 
-<div class="scene news i:columns">
+<div class="scene bulletin i:bulletin">
 
 <? if($page_item): 
 	$media = $IC->sliceMediae($page_item, "single_media"); ?>

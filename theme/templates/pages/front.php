@@ -11,8 +11,8 @@ if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
-$post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage", "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
-$event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.starting_at > NOW() AND event.event_status != 0" , "order" => "event.starting_at", "limit" => 4, "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
+$post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage", "limit" => 2, "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
+$event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.starting_at > NOW() AND event.event_status != 0" , "order" => "event.starting_at", "limit" => 2, "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
 
 
 ?>
@@ -66,73 +66,95 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 	</div>
 <? endif; ?>
 
+	<div class="projects">
+		<h2>Projects</h2>
+		<p>Engaged projects for the cause – not the profit. Because doing nothing is not an option.</p> 
+		<p>Get on board.</p>
 
-	<div class="all_events">
-
-		<h2>Upcoming events <a href="/events">(see all)</a></h2>
-
-<? if($event_items): ?>
-		<ul class="items events">
-		<? foreach($event_items as $item): ?>
-			<li class="item event item_id:<?= $item["item_id"] ?>">
-
-				<dl class="occurs_at">
-					<dt class="starting_at">Starts</dt>
-					<dd class="starting_at"><?= date("l, F j, Y - H:i", strtotime($item["starting_at"])) ?></dd>
-				</dl>
-
-				<h3><a href="/events/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
-
-			</li>
-	<?	endforeach; ?>
+		<ul class="actions">
+			<li><a href="/projects">Read more</a></li>
+			<li><a href="/projects/join">Join a project</a></li>
 		</ul>
-
-<? endif; ?>
 	</div>
 
+	<div class="services">
+		<h2>Services</h2>
+		<p>
+			We offer a range of services, workshops and lectures, aiming to provide holistic alternatives and eyeopening input.
+		</p>
 
-
-<? if($post_items): ?>
-	<div class="news">
-		<h2>Latest bulletins <a href="/bulletin">(see all)</a></h2>
-		<ul class="items articles i:articlePreviewList articlePreviewList">
-		<? foreach($post_items as $item): 
-			$media = $IC->sliceMediae($item, "mediae"); ?>
-			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
-				data-readstate="<?= $item["readstate"] ?>"
-				>
-
-				<? if($media): ?>
-				<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
-				<? endif; ?>
-
-
-				<?= $HTML->articleTags($item, [
-					"context" => ["post"],
-					"url" => "/bulletin/tag",
-					"default" => ["/bulletin", "Posts"]
-				]) ?>
-
-
-				<h3 itemprop="headline"><?= strip_tags($item["name"]) ?></h3>
-
-
-				<?= $HTML->articleInfo($item, "/posts/".$item["sindex"], [
-					"media" => $media
-				]) ?>
-
-
-				<? if($item["html"]): ?>
-				<div class="articlebody" itemprop="articleBody">
-					<?= $item["html"] ?>
-				</div>
-				<? endif; ?>
-
-			</li>
-		<? endforeach; ?>
+		<ul class="actions">
+			<li><a href="/services">Read more</a></li>
+			<li><a href="/services">Offer a service</a></li>
 		</ul>
-
 	</div>
-<?	endif; ?>
+
+	<div class="events">
+		<h2>Events</h2>
+		<p>We arrange and host events that bring people together for a more caring, smarter and better world.</p>
+		<p>You can do yours too.</p>
+
+		<ul class="actions">
+			<li><a href="/events">Calendar</a></li>
+			<li><a href="/events/new-event">Host your event</a></li>
+		</ul>
+	</div>
+
+	<div class="membership">
+		<h2>Membership</h2>
+		<p>
+			We are a membership based community. The membership fees support the establishment and continuation of our
+			projects.
+		</p>
+		
+		<ul class="actions">
+			<li><a href="/memberships">Join us</a></li>
+			<li><a href="/memberships">Support us</a></li>
+		</ul>
+	</div>
+
+	<div class="bulletin">
+		<h2>Bulletin</h2>
+		<p>Bulletins, latest news, organisational guidelines and all the stuff in-between.</p>
+
+		<ul class="actions">
+			<li><a href="/bulletin">Read more</a></li>
+		</ul>
+	</div>
+
+	<div class="about">
+		<h2>About</h2>
+		<p>
+			Our vision, mission, strategy and values. What we do and why we do it.
+		</p>
+
+		<ul class="actions">
+			<li><a href="/about">Read more</a></li>
+		</ul>
+	</div>
+
+	<div class="blog">
+		<h2>Blog</h2>
+		<p>
+			Personal reflections on society, politics and life in general.
+		</p>
+
+		<ul class="actions">
+			<li><a href="/blog">Read more</a></li>
+			<li><a href="/blog/contribute">Contribute</a></li>
+		</ul>
+	</div>
+
+	<div class="contact">
+		<h2>Contact</h2>
+		<p>
+			We are at the other end of
+			<a href="mailto:start@think.dk">start@think.dk</a> – feel free to reach out.
+		</p>
+
+		<ul class="actions">
+			<li><a href="/contact">Read more</a></li>
+		</ul>
+	</div>
 
 </div>

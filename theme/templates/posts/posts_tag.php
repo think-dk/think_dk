@@ -64,7 +64,7 @@ $items = $IC->paginate($pagination_pattern);
 ?>
 
 
-<div class="scene posts tag i:columns">
+<div class="scene bulletin tag i:bulletin">
 
 <? if($page_item): 
 	$media = $IC->sliceMediae($page_item, "single_media"); ?>

@@ -60,7 +60,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 ?>
 
-<div class="scene post tag i:columns">
+<div class="scene post tag i:bulletin">
 
 
 <? if($item):

@@ -11,8 +11,6 @@ $tags = $IC->getTags(["context" => "criteria"]);
 <div class="scene i:eventProposal eventProposal">
 	<h1>Event proposal</h1>
 
-
-
 	<div class="proposal">
 
 		<?= $model->formStart("saveProposal", array("class" => "labelstyle:inject")) ?>
@@ -24,6 +22,7 @@ $tags = $IC->getTags(["context" => "criteria"]);
 				<? foreach($tags as $tag): ?>
 					<li class="criteria <?= preg_replace("/-/", "_", superNormalize($tag["value"])) ?>">
 						<?= $model->input("criteria[".$tag["id"]."]", ["label" => $tag["value"], "type" => "checkbox"]) ?>
+						<p><?= $tag["description"] ?></p>
 					</li>
 				<? endforeach; ?>
 			</div>
@@ -105,6 +104,7 @@ $tags = $IC->getTags(["context" => "criteria"]);
 				</ul>
 
 			</div>
+		<? $model->formEnd() ?>
 	</div>
 
 	<div class="info">

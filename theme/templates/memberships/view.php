@@ -39,7 +39,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 
 ?>
 
-<div class="scene membership i:scene">
+<div class="scene membership i:membership">
 
 
 <? if($item):
@@ -91,7 +91,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 	</div>
 
 
-	<? if($next || $prev): ?>
+	<? /* if($next || $prev): ?>
 	<div class="pagination i:pagination">
 		<ul>
 		<? if($prev): ?>
@@ -108,7 +108,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 		<? endif; ?>
 		</ul>
 	</div>
-	<? endif; ?>
+	<? endif; */ ?>
 
 
 <? else: ?>
@@ -122,7 +122,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 <? endif; ?>
 
 
-<? if($related_items): ?>
+<? if(0 && $related_items): ?>
 	<div class="related">
 		<h2>Other memberships <a href="/memberships">(overview)</a></h2>
 

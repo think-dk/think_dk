@@ -73,7 +73,7 @@ $donation_options = $HTML->toOptions($donations, "item_id", "name");
 			<?= $model->input("quantity", array("value" => 1, "type" => "hidden")); ?>
 			<?= $model->input("item_id", array("value" => $membership["item_id"], "type" => "hidden")); ?>
 
-			<?= $model->input("custom_price", array("value" => 100, "type" => "range", "min" => 100, "max" => 5000, "step" => 10)); ?>
+			<?= $model->input("custom_price", array("value" => 100, "type" => "range", "min" => 50, "max" => 1000, "step" => 10)); ?>
 
 			<ul class="actions">
 				<?= $model->submit("Join now", array("class" => "primary", "wrapper" => "li.signup")) ?>

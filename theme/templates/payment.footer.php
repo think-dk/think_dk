@@ -3,7 +3,7 @@
 	<div id="navigation"></div>
 
 	<div id="footer">
-		<p><a href="http://parentnode.dk">&lt;aliens&gt;we are all&lt;/aliens&gt;</a></p>
+		<p>think.dk – Ryesgade 15, 2200 København N – <a href="mailto:start@think.dk">start@think.dk</a></p>
 	</div>
 
 </div>

@@ -71,7 +71,7 @@ $items = $IC->getItems([
 
 	<div class="article">
 		<h1>Blogs</h1>
-		<h2>Personal commentaries with substance. Pick your flavor.</h2>
+		<h2>Personal commentaries with substance. <br />Pick your flavor.</h2>
 	</div>
 
 <? endif; ?>

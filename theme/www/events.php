@@ -63,6 +63,20 @@ else if(count($action) == 3 && $action[0] == "print" && is_numeric($action[1]) &
 
 }
 
+if(count($action) == 1 && preg_match("/saveProposal/", $action[0]) && $_SERVER["REQUEST_METHOD"] === "POST" && isset($_SERVER["HTTP_ORIGIN"]) && ($_SERVER["HTTP_ORIGIN"] === "https://lsb.dk" || $_SERVER["HTTP_ORIGIN"] === "https://www.lsb.dk" || $_SERVER["HTTP_ORIGIN"] === "http://forms.lsb-kampagne.local" || $_SERVER["HTTP_ORIGIN"] === "https://forms.lsb-kampagne.dk")) {
+
+	$model = $IC->typeObject("eventproposal");
+
+	// check if custom function exists on User class
+	if($model && method_exists($model, $action[0])) {
+
+		$output = new Output();
+		$output->screen($model->saveProposal($action));
+		exit();
+
+	}
+}
+
 
 // /events
 // /events/#year#/#month#

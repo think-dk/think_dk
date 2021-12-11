@@ -35,7 +35,7 @@ $items = $IC->search(["pattern" => $pattern, "query" => $query]);
 
 ?>
 
-<div class="scene posts i:columns">
+<div class="scene bulletin i:bulletin">
 
 
 	<div class="article">

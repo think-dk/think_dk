@@ -49,24 +49,14 @@ if($page_item) {
 	<h1>Thank you</h1>
 	<h2>We've sent you a verification email</h2>
 	<p>Please verify to get our newsletter.</p>
-	<p>The email contains a verification code which you can use in the input field below.</p>
-	<p>Alternatively the email also has a link you can use to verify.</p>
-
-	<p>You can also skip verifying for now and go to checkout.</p>
+	<p>The email contains a verification code which you need to type in the input field below. If you don't see our email in your inbox, maybe try to look in your spam folder.</p>
 
 <? endif ?>
 
 	<?= $model->formStart("/verify/confirm", ["class" => "verify_code labelstyle:inject"]) ?>
+		<h3>Please enter the verification code:</h3>
 
-<?	if(message()->hasMessages(array("type" => "error"))): ?>
-		<p class="errormessage">
-<?		$messages = message()->getMessages(array("type" => "error"));
-		message()->resetMessages();
-		foreach($messages as $message): ?>
-			<?= $message ?><br>
-<?		endforeach;?>
-		</p>
-<?	endif; ?>
+		<?= $HTML->serverMessages() ?>
 
 		<fieldset>
 			<?= $model->input("verification_code"); ?>
@@ -76,6 +66,20 @@ if($page_item) {
 			<?= $model->submit("Verify email", array("class" => "primary", "wrapper" => "li.verify")) ?>
 			<li class="skip"><a href="/verify/skip" class="button">Skip</a></li>
 		</ul>
+
+		<p class="note">You can also skip verification for now and go straight to checkout – but you need to verify your account to receive any news from us or to log in to your account.</p>
 	<?= $model->formEnd() ?>
+
+	<div class="why_verification">
+		<h3>Why do I need to verify my email?</h3>
+		<p>
+			We want to be sure we have the right email address in order for us to send order confirmation emails and receipts 
+			to you.
+		</p>
+		<p>
+			If you sign up for a membership we will send you a welcome mail with more information about your
+			membership. If you have purchased tickets, we will also send the tickets in an email.
+		</p>
+	</div>
 
 </div>

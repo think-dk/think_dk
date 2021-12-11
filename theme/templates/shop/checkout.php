@@ -86,7 +86,7 @@ else {
 // debug([$user_id, $cart, $membership]);
 
 ?>
-<div class="scene checkout i:checkout">
+<div class="scene checkout i:<?= $user_id == 1 ? "checkoutSignup" : "checkout" ?>">
 	<h1>Checkout</h1>
 
 
@@ -142,6 +142,9 @@ else {
 			</ul>
 		<?= $model->formEnd() ?>
 
+	</div>
+
+	<div class="why_account">
 		<h3>Why do I need an account?</h3>
 		<p>
 			As a think.dk customer, an account is a natural extension of your purchase. The account

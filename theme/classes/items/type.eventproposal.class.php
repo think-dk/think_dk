@@ -157,7 +157,7 @@ class TypeEventproposal extends Itemtype {
 		// Tickets
 		$this->addToModel("tickets", array(
 			"type" => "checkbox",
-			"label" => "I wish to sell tickets or otherwise charge and entry fee.",
+			"label" => "I wish to sell tickets or otherwise charge an entry fee.",
 			"hint_message" => "Do you plan to sell tickets or otherwise charge an entry fee?", 
 			"error_message" => "Must be a valid option."
 		));
@@ -407,6 +407,13 @@ class TypeEventproposal extends Itemtype {
 
 	}
 
+
+	// Save proposal
+	function saveProposal($action) {
+		
+		
+	}
+		
 }
 
 ?>

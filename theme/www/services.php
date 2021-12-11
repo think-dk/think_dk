@@ -17,7 +17,7 @@ $page->pageTitle("Services");
 
 
 // news list for tags
-// /posts/#sindex#
+// /services/#sindex#
 if(count($action) == 1) {
 
 	$page->page(array(

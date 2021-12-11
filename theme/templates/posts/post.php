@@ -58,7 +58,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 ?>
 
-<div class="scene post i:columns">
+<div class="scene post i:bulletin">
 
 
 <? if($item):
@@ -111,7 +111,13 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 	</div>
 
-
+	<?= $HTML->pagination($pagination_items, [
+		"class" => "pagination i:pagination",
+		"type" => "sindex",
+		"base_url" => "/bulletin", 
+		"show_total" => false,
+		"labels" => ["prev" => "{name}", "next" => "{name}"]
+	]) ?>
 
 <? else: ?>
 

@@ -50,7 +50,7 @@ else {
 }
 
 ?>
-<div class="scene checkout i:signup">
+<div class="scene checkout i:<?= $membership ? "checkoutSignup" : "checkout" ?>">
 	<h1>Sign up</h1>
 
 	<?= $HTML->serverMessages() ?>

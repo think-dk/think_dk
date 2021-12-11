@@ -8,7 +8,6 @@ $type = $action[1];
 // get current user id
 $user_id = session()->value("user_id");
 
-
 $address_label = stringOr(getPost("address_label"));
 $address_name = stringOr(getPost("address_name"));
 $att = stringOr(getPost("att"));
@@ -30,13 +29,15 @@ $country = stringOr(getPost("country"));
 $user = $UC->getUser();
 $cart = $model->getCart();
 //print_r($user);
+
+
 ?>
 <div class="scene shopAddress i:shopAddress">
 	<h1><?= $type == "delivery" ? "Delivery" : "Billing" ?> address</h1>
 
 	<?= $HTML->serverMessages() ?>
 
-<? if($user["addresses"]): ?>
+	<? if($user["addresses"]): ?>
 
 	<div class="addresses">
 		<ul class="addresses">
@@ -67,7 +68,7 @@ $cart = $model->getCart();
 		</ul>
 	</div>
 
-<? endif; ?>
+	<? endif; ?>
 
 
 	<div class="item">
@@ -81,10 +82,10 @@ $cart = $model->getCart();
 				<?= $UC->input("address2", array("value" => $address2)) ?>
 				<?= $UC->input("city", array("value" => $city)) ?>
 				<?= $UC->input("postal", array("value" => $postal)) ?>
-				<?= $UC->input("state", array("value" => $state)) ?>
+				<?= $UC->input("state", array("value" => $state, "tabindex" => 1)) ?>
 				<?= $UC->input("country", array(
 					"type" => "select",
-					"options" => $UC->toOptions($this->countries(), "id", "name"),
+					"options" => $UC->toOptions($this->countries(), "id", "name", ["add" => ["" => "Country"]]),
 					"value" => $country
 				)) ?>
 			</fieldset>

@@ -16,7 +16,7 @@ $board_items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "orde
 $owner_items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => $itemtype.".position", "tags" => "person:owner", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
 
 ?>
-<div class="scene about i:scene">
+<div class="scene about i:about">
 
 <? if($page_item): 
 	$media = $IC->sliceMediae($page_item, "single_media"); ?>
@@ -69,7 +69,7 @@ $owner_items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "orde
 		<h2>Behind the scenes</h2>
 
 		<? if($daily_items): ?>
-		<h3>Daily operations / Primary contacts</h3>
+		<h3>Daily operations</h3>
 		<ul class="items people">
 			<? foreach($daily_items as $item): ?>
 			<li class="item person vcard id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Person">

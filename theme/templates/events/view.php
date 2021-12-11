@@ -12,16 +12,36 @@ $next = false;
 $prev = false;
 
 $sindex = $action[0];
-$item = $IC->getItem(array("sindex" => $sindex, "status" => 1, "extend" => array("tags" => true, "user" => true, "mediae" => true, "comments" => true, "readstate" => true, "prices" => true)));
-if($item) {
+
+
+$pagination_pattern = [
+	"pattern" => [
+		"itemtype" => "event", 
+		"status" => 1, 
+		"extend" => [
+			"tags" => true, 
+			"user" => true, 
+			"mediae" => true,
+			"comments" => true, 
+			"readstate" => true,
+			"prices" => true
+		],
+		"where" => "event.starting_at > NOW()",
+		"order" => "event.starting_at ASC"
+	],
+	"sindex" => $sindex,
+	"limit" => 1
+];
+
+
+// Get posts
+$pagination_items = $IC->paginate($pagination_pattern);
+
+
+if($pagination_items && $pagination_items["range_items"]) {
+
+	$item = $pagination_items["range_items"][0];
 	$this->sharingMetaData($item);
-
-
-	$next = $IC->getNext($item["item_id"], array("itemtype" => $itemtype, "status" => 1, "where" => "event.starting_at >= '".$item["starting_at"]."'", "order" => "event.starting_at ASC", "extend" => true));
-	$prev = $IC->getPrev($item["item_id"], array("itemtype" => $itemtype, "status" => 1, "where" => "event.starting_at <= '".$item["starting_at"]."'", "order" => "event.starting_at ASC", "extend" => true));
-
-	// $next = $IC->getNext($item["item_id"], array("itemtype" => $itemtype, "status" => 1, "where" => "event.starting_at > NOW()", "order" => "event.starting_at ASC", "extend" => true));
-	// $prev = $IC->getPrev($item["item_id"], array("itemtype" => $itemtype, "status" => 1, "where" => "event.starting_at > NOW()", "order" => "event.starting_at ASC", "extend" => true));
 
 	// get host info
 	$location = $model->getLocations(array("id" => $item["location"]));
@@ -33,12 +53,14 @@ if($item) {
 	// set related pattern
 	$related_pattern = array("itemtype" => $item["itemtype"], "status" => 1, "tags" => $item["tags"], "exclude" => $item["id"]);
 	$related_title = "Related events";
+
 }
 else {
 	// itemtype pattern for missing item
 	$related_pattern = array("itemtype" => $itemtype);
 	$related_title = "Other events";
 }
+
 
 $related_pattern["where"] = "event.starting_at > NOW()";
 
@@ -67,13 +89,12 @@ $related_items = $IC->getRelatedItems($related_pattern);
 		<? endif; ?>
 
 
-
-
 		<?= $HTML->articleTags($item, [
 			"context" => ["service"],
 			"default" => ["/events", "Events"],
 			"schema" => false
 		]) ?>
+
 
 		<ul class="info">
 			<li class="main_entity share" itemprop="mainEntityOfPage" content="<?= SITE_URL."/events/".$item["sindex"] ?>"></li>
@@ -228,10 +249,19 @@ $related_items = $IC->getRelatedItems($related_pattern);
 		</div>
 		<? endif; ?>
 
+
+		<?= $HTML->pagination($pagination_items, [
+			"class" => "pagination i:pagination",
+			"type" => "sindex",
+			"base_url" => "/events", 
+			"show_total" => false,
+			"labels" => ["prev" => "{name}", "next" => "{name}"]
+		]) ?>
+
 	</div>
 
+	<? if($event_tickets): ?>
 	<div class="tickets">
-		<? if($event_tickets): ?>
 		<h2>Tickets</h2>
 		<ul class="tickets">
 			<? foreach($event_tickets as $event_ticket):
@@ -268,27 +298,6 @@ $related_items = $IC->getRelatedItems($related_pattern);
 			</li>
 				<? endif;
 			endforeach; ?>
-		</ul>
-		<? endif; ?>
-	</div>
-
-
-
-	<? if($next || $prev): ?>
-	<div class="pagination i:pagination">
-		<ul>
-		<? if($prev): ?>
-			<li class="previous">
-				<!-- <h2>Previous</h2> -->
-				<a href="/events/<?= $prev[0]["sindex"] ?>"><?= strip_tags($prev[0]["name"]) ?></a>
-			</li>
-		<? endif; ?>
-		<? if($next): ?>
-			<li class="next">
-				<!-- <h2>Next</h2> -->
-				<a href="/events/<?= $next[0]["sindex"] ?>"><?= strip_tags($next[0]["name"]) ?></a>
-			</li>
-		<? endif; ?>
 		</ul>
 	</div>
 	<? endif; ?>
