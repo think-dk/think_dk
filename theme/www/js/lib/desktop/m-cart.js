@@ -80,7 +80,7 @@ Util.Modules["cart"] = new function() {
 
 								// update prices and quantity
 								this.node.scene.total_cart_price.innerHTML = total_price.innerHTML;
-								this.node.scene.total_vat_price.innerHTML = total_vat.innerHTML;
+								this.node.scene.total_cart_vat.innerHTML = total_vat.innerHTML;
 
 								this.node.scene.header_cart.innerHTML = header_cart.innerHTML;
 								this.node.total_price.innerHTML = item_total_price.innerHTML;
@@ -144,6 +144,67 @@ Util.Modules["cart"] = new function() {
 
 
 
+Util.Modules["checkoutSignup"] = new function() {
+	this.init = function(scene) {
+		u.bug("scene init:", this);
+		
+
+		scene.resized = function() {
+//			u.bug("scene.resized:", this);
+		}
+
+		scene.scrolled = function() {
+//			u.bug("scrolled:", this);;
+		}
+
+		scene.ready = function() {
+//			u.bug("scene.ready:", this);
+
+
+			u.columns(this, [
+				{"c200": [
+					"h1",
+					"div.login",
+					"div.signup",
+					"div.emptycart",
+				]},
+				{"c100": [
+					"div.account",
+					"div.why_account",
+				]},
+			]);
+
+
+			var form_login = u.qs("form.login", this);
+			if(form_login) {
+				u.f.init(form_login);
+			}
+
+
+			var form_signup = u.qs("form.signup", this);
+			if(form_signup) {
+				u.f.init(form_signup);
+
+				form_signup.preSubmitted = function() {
+					this.actions["signup"].value = "Wait";
+					u.ac(this, "submitting");
+					u.ac(this.actions["signup"], "disabled");
+//					this.DOMsubmit();
+				}
+			}
+
+
+			u.showScene(this);
+
+		}
+
+
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
+
+	}
+}
+
 Util.Modules["checkout"] = new function() {
 	this.init = function(scene) {
 //		u.bug("scene init:", this);
@@ -159,7 +220,6 @@ Util.Modules["checkout"] = new function() {
 
 		scene.ready = function() {
 //			u.bug("scene.ready:", this);
-
 
 
 			var form_login = u.qs("form.login", this);
@@ -193,7 +253,6 @@ Util.Modules["checkout"] = new function() {
 }
 
 
-
 Util.Modules["shopProfile"] = new function() {
 	this.init = function(scene) {
 //		u.bug("scene init:", this);
@@ -210,9 +269,16 @@ Util.Modules["shopProfile"] = new function() {
 		scene.ready = function() {
 //			u.bug("scene.ready:", this);
 
+			u.columns(this, [
+				{"c300": [
+					"h1",
+				]},
+				{"c200": [
+					"div.item",
+				]},
+			]);
 
-
-			this.isHTML = true;
+			// this.isHTML = true;
 //			page.notify(this);
 
 //			this.header_cart = u.qs("li.cart span.total", page.hN);
@@ -252,6 +318,19 @@ Util.Modules["shopAddress"] = new function() {
 
 		scene.ready = function() {
 //			u.bug("scene.ready:", this);
+
+
+			u.columns(this, [
+				{"c300": [
+					"h1",
+					"div.addresses",
+				]},
+				{"c200": [
+					"div.item",
+					"div.why_account",
+				]},
+			]);
+
 
 			var addresses = u.qsa("ul.addresses li.address", this);
 			if(addresses) {

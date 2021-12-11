@@ -20,27 +20,27 @@ Util.Modules["verdensborger"] = new function() {
 			// u.bug("scene.resized:", this);
 			// console.log(this.ul_images, this.images);
 
-			if(this.ul_images) {
-				// console.log("height:", this.ul_images.offsetWidth);
-				u.ass(this.ul_images, {
-					"height":Math.floor(this.ul_images.offsetWidth / 1.32) +"px"
-				});
-			}
-
-			if(this.c_1) {
-
-				u.ass(this.help_us, {
-					"padding-top": "0px"
-				});
-
-
-				if(this.c_1.offsetHeight < this.c_2.offsetHeight) {
-					u.ass(this.help_us, {
-						"padding-top": (this.c_2.offsetHeight - this.c_1.offsetHeight) + "px"
-					});
-				}
-
-			}
+			// if(this.ul_images) {
+			// 	// console.log("height:", this.ul_images.offsetWidth);
+			// 	u.ass(this.ul_images, {
+			// 		"height":Math.floor(this.ul_images.offsetWidth / 1.32) +"px"
+			// 	});
+			// }
+			//
+			// if(this.c_1) {
+			//
+			// 	u.ass(this.help_us, {
+			// 		"padding-top": "0px"
+			// 	});
+			//
+			//
+			// 	if(this.c_1.offsetHeight < this.c_2.offsetHeight) {
+			// 		u.ass(this.help_us, {
+			// 			"padding-top": (this.c_2.offsetHeight - this.c_1.offsetHeight) + "px"
+			// 		});
+			// 	}
+			//
+			// }
 
 			// refresh dom
 			this.offsetHeight;
@@ -77,13 +77,13 @@ Util.Modules["verdensborger"] = new function() {
 				]}
 			]);
 
-			this.c_1 = u.qs(".c .c100", this);
-			this.c_2 = u.qs(".c .c200", this);
-			
-			console.log(this.c_2);
-
-			var load_queue = [];
-			var i, image, person;
+			// this.c_1 = u.qs(".c .c100", this);
+			// this.c_2 = u.qs(".c .c200", this);
+			//
+			// console.log(this.c_2);
+			//
+			// var load_queue = [];
+			// var i, image, person;
 
 			// this.ul_images = u.qs("ul.images", this);
 			// if(this.ul_images) {
@@ -114,57 +114,33 @@ Util.Modules["verdensborger"] = new function() {
 			// }
 
 
+			this.div_signup = u.qs("div.signup", this);
+
 			this.form_signup = u.qs("form.signup", this);
 			if(this.form_signup) {
+				this.form_signup.div_signup = this.div_signup;
 				u.f.init(this.form_signup);
+
+				// Scroll to error if it exists
+				var error = u.qs("div.messages .error", this.div_signup);
+				if(error) {
+					u.scrollTo(window, {"node": this.div_signup, "offset_y":100});
+				}
+
+				// this.form_signup.submitted = function() {
+				// 	this.response = function(response) {
+				// 		var response_form_signup = u.qs("form.signup", response);
+				// 		if(response_form_signup) {
+				// 			this.div_signup.replaceChild(response_form_signup, this);
+				// 		}
+				// 		else {
+				// 			this.div_signup.replaceChild(u.wc(u.qs(".scene.verdensborger", response), "div", {"class":"receipt"}), this);
+				// 		}
+				// 	}
+				// 	u.request(this, this.action, {"method":"post", "data":this.getData()})
+				// }
 			}
 
-			// this.help_us = u.qs("div.help_us", this);
-			//
-			//
-			// this.loaded = function(queue) {
-			//
-			// 	var i, person;
-			//
-			// 	if(this.ul_people) {
-			// 		this.people = u.qsa("li.person", this.ul_people);
-			//
-			// 		for(i = 0; i < this.people.length; i++) {
-			// 			person = this.people[i];
-			// 			u.ie(person, "img", {src: person.image_src});
-			// 		}
-			//
-			// 	}
-			//
-			// 	// console.log(this.ul_images, this.images);
-			//
-			// 	if(this.ul_images) {
-			// 		this.slideshow = u.slideshow(this.ul_images);
-			// 		this.slideshow.scene = this;
-			// 		this.resized();
-			//
-			// 		// Slides are preloaded
-			// 		this.slideshow.preloaded = function() {
-			// 			// select current node (first slide if none specified)
-			// 			if(!this.selected_node) {
-			// 				this.selectNode(0);
-			// 			}
-			//
-			// 		}
-			//
-			// 		this.slideshow.prepare();
-			// 		u.addNextArrow(this.slideshow.bn_next);
-			// 		u.addPreviousArrow(this.slideshow.bn_prev);
-			//
-			// 	}
-			//
-			//
-			// 	u.showScene(this);
-			//
-			// }
-			//
-			//
-			// u.preloader(this, load_queue);
 
 			u.showScene(this);
 

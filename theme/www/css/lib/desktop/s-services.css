@@ -1,0 +1,4 @@
+/* SERVICES */
+#content .scene div.all_services {padding: 0 25px; font-size: 0;}
+#content .scene div.all_services ul.services li.service {padding-top: 30px; padding-bottom: 15px; overflow: hidden;}
+#content .scene div.all_services ul.services li.service div.image {float: left; width: 35%; margin-right: 30px;}

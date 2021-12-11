@@ -1,0 +1,4 @@
+/* EMAIL VIEW */
+#content .scene.messages ul.info,
+#content .scene.messages ul.info li.modified_at {display: block;}
+

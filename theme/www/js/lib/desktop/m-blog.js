@@ -33,7 +33,8 @@ Util.Modules["blogs"] = new function() {
 					article._description_p = u.qs("div.description p", article)
 					if(article._description_p && article._link) {
 						u.ae(article._description_p, "br");
-						u.ae(article._description_p, "a", {href: article._link, class:"readmore", html:u.txt("readmore")});
+						var a = u.ae(article._description_p, "a", {href: article._link, class:"readmore", html:u.txt("readmore")});
+						u.ce(a, {"type":"link"});
 					}
 
 					// INIT IMAGES
@@ -181,6 +182,16 @@ Util.Modules["blogs"] = new function() {
 				}
 
 
+				list.destroy = function() {
+
+					// set specific resize handler for list
+					u.e.removeWindowEvent(this.e_resize);
+
+					// set specific scroll handler for list
+					u.e.removeWindowEvent(this.e_scroll);
+
+				}
+
 				// Map article_list to articles
 				var i, node;
 				for(i = 0; node = list.articles[i]; i++) {
@@ -207,14 +218,26 @@ Util.Modules["blogs"] = new function() {
 				list.scrolled();
 
 				// set specific resize handler for list
-				u.e.addWindowEvent(list, "resize", list.resized);
+				list.e_resize = u.e.addWindowEvent(list, "resize", list.resized);
 
 				// set specific scroll handler for list
-				u.e.addWindowEvent(list, "scroll", list.scrolled);
+				list.e_scroll = u.e.addWindowEvent(list, "scroll", list.scrolled);
 
 			}
 
 			u.showScene(this);
+
+		}
+
+		scene.destroy = function() {
+
+			// set specific resize handler for list
+			u.e.removeWindowEvent(this.e_resize);
+
+			// set specific scroll handler for list
+			u.e.removeWindowEvent(this.e_scroll);
+
+			page.cN.removeChild(this);
 
 		}
 
@@ -251,6 +274,35 @@ Util.Modules["blog"] = new function() {
 
 
 			u.showScene(this);
+
+		}
+
+		// Destroy active scene modules
+		scene.destroy = function() {
+
+			var list, article_lists = u.qsa(".articlePreviewList");
+			if(article_lists) {
+				for(i = 0; i < article_lists.length; i++) {
+					list = article_lists[i];
+
+					list.destroy();
+
+				}
+			}
+
+			var pagination, paginations = u.qsa(".pagination");
+			if(paginations) {
+				for(i = 0; i < paginations.length; i++) {
+					pagination = paginations[i];
+
+					if(fun(pagination.destroy)) {
+						pagination.destroy();
+					}
+
+				}
+			}
+
+			page.cN.removeChild(this);
 
 		}
 

@@ -1,0 +1,4 @@
+/* PROJECTS */
+#content .scene.projects div.all_projects {padding: 0 25px; font-size: 0;}
+#content .scene.projects div.all_projects ul.projects li.project {padding-top: 30px; padding-bottom: 15px; overflow: hidden;}
+#content .scene div.all_projects ul.projects li.project div.image {float: left; width: 35%; margin-right: 30px;}

@@ -241,49 +241,48 @@ Util.Modules["memberships"] = new function() {
 
 
 			// required fonts loaded
-			this.fontsLoaded = function() {
-//				u.bug("fontsLoaded callback");
-
-				page.resized();
-
-
-				// u.textscaler(this.div_memberships, {
-				// 	"min_height":900,
-				// 	"max_height":900,
-				// 	"min_width":600,
-				// 	"max_width":900,
-				// 	"unit":"px",
-				// 	"h3":{
-				// 		"min_size":14,
-				// 		"max_size":20,
-				// 	},
-				// 	"li.allin h3":{
-				// 		"min_size":18,
-				// 		"max_size":24,
-				// 	},
-				// 	"p":{
-				// 		"min_size":11,
-				// 		"max_size":13
-				// 	},
-				// 	"li.price":{
-				// 		"min_size":9,
-				// 		"max_size":11
-				// 	},
-				// 	"li.benefits li":{
-				// 		"min_size":10,
-				// 		"max_size":13
-				// 	}
-				// });
-			}
-
-			// preload fonts
-			u.fontsReady(this, [
-				{"family":"OpenSans", "weight":"normal", "style":"normal"},
-				{"family":"OpenSans", "weight":"bold", "style":"normal"},
-				{"family":"OpenSans", "weight":"normal", "style":"italic"},
-				{"family":"PT Serif", "weight":"normal", "style":"normal"}
-			]);
-
+// 			this.fontsLoaded = function() {
+// //				u.bug("fontsLoaded callback");
+//
+//
+//
+// 				// u.textscaler(this.div_memberships, {
+// 				// 	"min_height":900,
+// 				// 	"max_height":900,
+// 				// 	"min_width":600,
+// 				// 	"max_width":900,
+// 				// 	"unit":"px",
+// 				// 	"h3":{
+// 				// 		"min_size":14,
+// 				// 		"max_size":20,
+// 				// 	},
+// 				// 	"li.allin h3":{
+// 				// 		"min_size":18,
+// 				// 		"max_size":24,
+// 				// 	},
+// 				// 	"p":{
+// 				// 		"min_size":11,
+// 				// 		"max_size":13
+// 				// 	},
+// 				// 	"li.price":{
+// 				// 		"min_size":9,
+// 				// 		"max_size":11
+// 				// 	},
+// 				// 	"li.benefits li":{
+// 				// 		"min_size":10,
+// 				// 		"max_size":13
+// 				// 	}
+// 				// });
+// 			}
+//
+// 			// preload fonts
+// 			u.fontsReady(this, [
+// 				{"family":"OpenSans", "weight":"normal", "style":"normal"},
+// 				{"family":"OpenSans", "weight":"bold", "style":"normal"},
+// 				{"family":"OpenSans", "weight":"normal", "style":"italic"},
+// 				{"family":"PT Serif", "weight":"normal", "style":"normal"}
+// 			]);
+//
 
 			u.showScene(this);
 
@@ -291,6 +290,43 @@ Util.Modules["memberships"] = new function() {
 			// page.resized();
 		}
 
+
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
+
+	}
+}
+
+
+Util.Modules["membership"] = new function() {
+	this.init = function(scene) {
+		// u.bug("scene init:", this);
+
+		scene.resized = function() {
+			// u.bug("scene.resized:", this);
+		}
+
+		scene.scrolled = function() {
+			// u.bug("scene.scrolled:", this);
+		}
+
+		scene.ready = function() {
+			// u.bug("scene.ready:", this);
+
+			u.columns(this, [
+				{"c200": [
+					"div.article", 
+				]},
+				{"c100": [
+					"ul.offer",
+					"form.signup",
+				]},
+			]);
+
+
+			u.showScene(this);
+
+		}
 
 		// Map scene – page will call scene.ready
 		page.cN.scene = scene;

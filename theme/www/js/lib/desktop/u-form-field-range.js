@@ -46,22 +46,31 @@ Util.Form.customInit["range"] = function(field) {
 
 	}
 	field._virtual_input_updated = function() {
-
+		u.bug("_virtual_input_updated updated");
 		// var price = this._form.inputs["price"].val().replace(/[\., a-zA-Z\;\$]+/g, "");
 
 		var range_value = this.innerHTML.replace(/[\., a-zA-Z\;\$]+/g, "");
-
 		this.field.input.val(range_value);
 		// this.field._percent_viewer.innerHTML = this.field.input.val() + "%";
 
 	}
 	field._virtual_input_blurred = function() {
-		// u.bug("virtual blurred");
+		u.bug("virtual blurred");
 
 		u.rc(this.field, "focus");
 		u.rc(this, "focus");
 
 		var range_value = this.innerHTML.replace(/[\., a-zA-Z\;\$]+/g, "");
+		var min = this.field.input.getAttribute("min");
+		var max = this.field.input.getAttribute("max");
+
+		if(range_value < min) {
+			range_value = min;
+		}
+		else if(range_value > max) {
+			range_value = max;
+		}
+
 		var formatted_price = Number(range_value).toLocaleString("da") + " kr.";
 		this.innerHTML = formatted_price;
 

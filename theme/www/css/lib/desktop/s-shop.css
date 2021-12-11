@@ -1,0 +1,227 @@
+/* SHOP CART */
+#content .scene.cart .messages {display: none;}
+
+#content .scene.cart div.all_items h2 {padding-bottom: 15px;}
+
+#content .scene.cart ul.items > li {padding: 20px 0 10px;}
+#content .scene.cart ul.items li h3 {max-width: none; font-size: 16px;}
+#content .scene.cart ul.items li h3 > span {display: inline-block; vertical-align: top; padding-top: 4px;}
+#content .scene.cart ul.items li h3 form {display: inline-block; vertical-align: top; position: relative;}
+#content .scene.cart ul.items li h3 form div.field {padding: 0;}
+#content .scene.cart ul.items li h3 form div.field label {display: none;}
+#content .scene.cart ul.items li h3 form div.field .indicator {display: none;}
+#content .scene.cart ul.items li h3 form div.field .help {left: 47px; display: none;}
+#content .scene.cart ul.items li h3 form div.field input {height: 25px; width: 45px; text-align: right;}
+#content .scene.cart ul.items li h3 form > ul.actions {padding: 0; right: 50px; top: 0;}
+#content .scene.cart ul.items li h3 form > ul.actions li {padding: 5px 0 0;}
+#content .scene.cart ul.items li h3 form > ul.actions input.button {width: 16px; height: 16px; padding: 0; text-indent: -9999px; border-radius: 15px;
+	background-image: url(../../../janitor/admin/img/gx_refresh.png);
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+#content .scene.cart ul.items li.item h3 {
+	padding-right: 50px;
+}
+#content .scene.cart ul.items li p {padding-bottom: 10px; max-width: none;}
+#content .scene.cart ul.items li p.subscription_method+p.membership {margin-top: -10px;}
+#content .scene.cart ul.items li span.total_price {float: right;}
+
+#content .scene.cart ul.items li.total {border-top: 1px solid #dedede;}
+#content .scene.cart ul.items li.total h3 {font-size: 20px;}
+#content .scene.cart ul.items li.total p {font-size: 16px;}
+#content .scene.cart ul.items li.total p span.total_vat {float: right;}
+
+
+/* ROW BUTTONS */
+#content .scene.cart ul.items li ul.actions {padding: 0; top: 18px; position: absolute; right: 10px;}
+#content .scene.cart ul.items li ul.actions li.delete {padding: 0;}
+#content .scene.cart ul.items li ul.actions li.delete input {width: 30px; height: 30px; overflow: hidden; text-indent: -9999px;
+	background-image: url(../../../janitor/admin/img/bg_icons.png);
+	background-position: 8px -42px;
+	background-repeat: no-repeat;
+}
+#content .scene.cart ul.items li ul.actions li.delete input.confirm {width: auto; text-indent: 0; background-image: none;}
+
+#content .scene.cart div.checkout {padding: 20px 0;}
+/*
+#content .scene.cart div.checkout ul.actions {text-align: right;}
+#content .scene.cart div.checkout ul.actions li {padding-right: 0;}
+*/
+
+/* SHOP CHECKOUT */
+#content .scene.checkout .c100 {padding-top: 76px;}
+
+
+#content .scene.checkout div.confirm {padding: 20px 0;}
+/*
+#content .scene.checkout div.confirm ul.actions {text-align: right;}
+#content .scene.checkout div.confirm ul.actions li {padding-right: 0;}
+*/
+
+#content .scene.checkout div.emptycart,
+#content .scene.checkout div.login,
+#content .scene.checkout div.signup,
+#content .scene.checkout div.contact,
+#content .scene.checkout div.delivery,
+#content .scene.checkout div.all_items {padding: 0 0 30px;}
+
+#content .scene.checkout div.confirm,
+#content .scene.checkout div.payment_method {padding: 20px 0 50px;}
+
+#content .scene.checkout div.contact h2,
+#content .scene.checkout div.all_items h2,
+#content .scene.checkout div.delivery h2,
+#content .scene.checkout div.billing h2 {padding-bottom: 15px;}
+#content .scene.checkout div.contact h2 a,
+#content .scene.checkout div.all_items h2 a,
+#content .scene.checkout div.billing h2 a,
+#content .scene.checkout div.delivery h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
+	font-family: "OpenSans", Verdana, Arial, sans-serif;
+}
+#content .scene.checkout form.signup {
+	max-width: 600px;
+}
+
+#content .scene.checkout form li.forgot {padding: 8px 0 0;}
+#content .scene.checkout form li.forgot a {padding: 0; display: inline-block; vertical-align: top;}
+
+#content .scene.checkout ul.items > li {padding: 20px 0 10px;}
+#content .scene.checkout ul.items li h3 {max-width: none; font-size: 16px;}
+#content .scene.checkout ul.items li h3 > span {display: inline-block; vertical-align: top; padding-top: 4px;}
+#content .scene.checkout ul.items li p {max-width: none; padding-bottom: 10px;}
+#content .scene.checkout ul.items li p.subscription_method+p.membership {margin-top: -10px;}
+#content .scene.checkout ul.items li span.total_price {float: right;}
+
+#content .scene.checkout ul.items li.total {border-top: 1px solid #dedede;}
+#content .scene.checkout ul.items li.total h3 {font-size: 20px;}
+#content .scene.checkout ul.items li.total p {font-size: 16px; width: auto;}
+#content .scene.checkout ul.items li.total p span.total_vat {float: right;}
+
+#content .scene.checkout ul.payment_methods {padding: 0;}
+#content .scene.checkout ul.payment_methods li.payment_method {padding-bottom: 10px;}
+#content .scene.checkout ul.payment_methods li.payment_method ul.actions {padding-bottom: 0;}
+
+#content .scene.checkout ul.payment_methods li.payment_method.stripe p {
+	background: url(/img/gx_creditcards.png) no-repeat 50px top;
+	background-size: auto 17px;
+	padding-left: 150px;
+}
+
+
+/* ADDRESSES */
+#content .scene.shopAddress div.addresses {
+	border-bottom: 1px solid #dedede;
+}
+#content .scene.shopAddress ul.addresses {}
+#content .scene.shopAddress ul.addresses > li {display: inline-block; vertical-align: top; width: 250px; padding: 20px 20px 70px; box-sizing: border-box; border: 1px solid #dedede; margin-bottom: 30px; margin-right: 30px; position: relative;}
+#content .scene.shopAddress ul.addresses > li.selected {border-color: #26962d; border-width: 3px;}
+#content .scene.shopAddress ul.addresses > li h3 {width: auto; padding-left: 0; padding-right: 0;}
+#content .scene.shopAddress ul.addresses > li > div {color: #777777;}
+
+#content .scene.shopAddress ul.addresses > li ul.actions {padding: 0; position: absolute; bottom: 10px; left: 20px;}
+#content .scene.shopAddress div.item {padding-top: 20px;}
+
+
+/* PAYMENT */
+#content .scene.shopPayment {}
+#content .scene.shopPayment dl.amount {}
+#content .scene.shopPayment dl.amount dt {width: auto; font-size: 18px; display: block; text-align: left;}
+#content .scene.shopPayment dl.amount dd {width: auto; font-size: 28px; display: block;}
+
+#content .scene.shopPayment ul.payment_methods {padding: 0;}
+#content .scene.shopPayment ul.payment_methods li.payment_method {padding-bottom: 10px;}
+#content .scene.shopPayment ul.payment_methods li.payment_method ul.actions {padding-bottom: 0;}
+
+#content .scene.shopPayment ul.payment_methods li.payment_method.stripe p {
+	background: url(../../../img/gx_creditcards.png) no-repeat 50px top;
+	background-size: auto 17px;
+	padding-left: 150px;
+}
+
+/*#content .scene.shopPayment ul.payment_methods li.payment_method.stripe {
+	background: url(../../../img/gx_creditcards.png) no-repeat 260px 0px;
+}
+*/
+
+#content .scene.shopPayment.stripe h1,
+#content .scene.shopPayment.stripe h2,
+#content .scene.shopPayment.stripe p {text-align: center; margin: 0 auto;}
+#content .scene.shopPayment.stripe h1 {font-size: 30px;}
+#content .scene.shopPayment.stripe p.note {padding-top: 10px; padding-bottom: 40px;
+	background: url(../../../img/gx_creditcards.png) no-repeat center bottom;
+}
+#content .scene.shopPayment.stripe form {width: 280px; margin: 15px auto 20px;}
+#content .scene.shopPayment.stripe form div.field {padding-left: 0; padding-right: 0; padding-bottom: 10px;}
+#content .scene.shopPayment.stripe form div.field label {opacity: 1;}
+/*#content .scene.shopPayment.stripe form div.field.card input {width: 182px;}
+*/#content .scene.shopPayment.stripe form div.field.card input.visa {
+	background: url(../../../img/gx_visa_small.png) no-repeat right 7px;
+}
+#content .scene.shopPayment.stripe form div.field.card input.amex {
+	background: url(../../../img/gx_amex_small.png) no-repeat right 7px;
+}
+#content .scene.shopPayment.stripe form div.field.card input.mastercard {
+	background: url(../../../img/gx_mastercard_small.png) no-repeat right 7px;
+}
+#content .scene.shopPayment.stripe form div.field.exp_month,
+#content .scene.shopPayment.stripe form div.field.exp_year,
+#content .scene.shopPayment.stripe form div.field.cvc {display: inline-block; vertical-align: top;}
+#content .scene.shopPayment.stripe form div.field.exp_month input {width: 56px;}
+#content .scene.shopPayment.stripe form div.field.exp_year input {width: 56px;}
+#content .scene.shopPayment.stripe form div.field.cvc {float: right;}
+#content .scene.shopPayment.stripe form div.field.cvc input {width: 66px;}
+#content .scene.shopPayment.stripe form ul.actions {padding: 10px 2px;}
+#content .scene.shopPayment.stripe form ul.actions li {padding: 0; display: block;}
+#content .scene.shopPayment.stripe form ul.actions li input {width: 100%;}
+
+#content .scene.shopPayment.stripe form div.field.card div.indicator {display: none; right: -21px; top: 16px;}
+#content .scene.shopPayment.stripe form div.field.card.correct div.indicator {display: block;}
+#content .scene.shopPayment.stripe form div.field.card div.help {left: 302px;}
+
+#content .scene.shopPayment.stripe form div.field.exp_month div.indicator {display: none;}
+#content .scene.shopPayment.stripe form div.field.exp_month div.help {left: 304px;}
+#content .scene.shopPayment.stripe form div.field.exp_year div.indicator {display: none; left: 55px; top: 16px;}
+#content .scene.shopPayment.stripe form div.field.exp_year.correct div.indicator {display: block;}
+#content .scene.shopPayment.stripe form div.field.exp_year div.help {left: 234px;}
+#content .scene.shopPayment.stripe form span.slash {display: inline-block; vertical-align: top; padding: 16px 4px 0 0; font-size: 16px;}
+
+#content .scene.shopPayment.stripe form div.field.cvc div.indicator {display: none; left: 64px; top: 16px;}
+#content .scene.shopPayment.stripe form div.field.cvc.correct div.indicator {display: block;}
+#content .scene.shopPayment.stripe form div.field.cvc div.help {left: 90px;}
+
+/* DONT SHOW HINT ON HOVER WHEN FIELD IS CORRECT */
+#content .scene.shopPayment.stripe div.field.hover.correct div.hint {display: none;}
+#content .scene.shopPayment.stripe div.field.focus.correct div.hint {display: block;}
+
+#content .scene.shopPayment.stripe div.cartitems {width: 380px; margin: 15px auto 20px;}
+#content .scene.shopPayment.stripe div.cartitems ul.cartitems {padding-bottom: 30px;}
+#content .scene.shopPayment.stripe div.cartitems li.modify {display: block; padding-right: 0; text-align: center;}
+#content .scene.shopPayment.stripe div.cartitems h3 {width: auto;}
+
+#content .scene.shopPayment.stripe div.orderitems {width: 380px; margin: 15px auto 20px;}
+#content .scene.shopPayment.stripe div.orderitems ul.orderitems {padding-bottom: 30px;}
+#content .scene.shopPayment.stripe div.orderitems h3,
+#content .scene.shopPayment.stripe div.orderitems p {text-align: left; width: auto;}
+
+#content .scene.shopPayment.stripe div.confirm {}
+#content .scene.shopPayment.stripe div.confirm ul.actions {text-align: center;}
+#content .scene.shopPayment.stripe div.confirm li.confirm {padding-right: 0;}
+/*#content .scene.shopPayment.stripe div.confirm h2 {width: auto; padding-left: 0; padding-right: 0;}
+#content .scene.shopPayment.stripe div.confirm p {width: auto; padding-left: 0; padding-right: 0;}
+*/
+/* BULK PAYMENTS */
+#content .scene.shopPayment ul.orders,
+#content .scene.shopReceipt ul.orders {padding: 0 0 10px;}
+
+
+#content .scene.shopReceipt div.membership_info,
+#content .scene.shopReceipt div.activation_info,
+#content .scene.shopReceipt div.order_info {padding: 0 0 20px;}
+
+
+#content .scene.shopPayment form.login,
+#content .scene.shopPayments form.login {max-width: 500px; margin: 0 auto;}
+
+
+#content .scene.verify .c100 {padding-top: 76px;}
+

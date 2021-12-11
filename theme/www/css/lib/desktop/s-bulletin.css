@@ -1,0 +1,6 @@
+#content .scene.bulletin div.search,
+#content .scene.post div.search {padding-top: 76px;}
+
+/* POST ARTICLE */
+#content .scene.post div.article ul.info {display: block;}
+

@@ -1,0 +1,21 @@
+
+body.black *,
+body.black #header .logo,
+body.black #content .scene a,
+body.black #content .scene p,
+body.black #content .scene div.comments.open h2,
+body.black #footer a {color: #000000;}
+body.black #content .scene a:not(.button) {text-decoration: underline;}
+body.black #content .scene div.article {max-width: 800px; margin: 0 auto;}
+body.black #content .scene ul.actions a.button,
+body.black #content .scene ul.actions input.button {background: #000000 !important; color: #ffffff;}
+body.black #navigation ul,
+body.black #header ul.servicenavigation {display: none;}
+
+
+#content .scene ul.articles li[class='item article id:255'] h3 {color: #000000 !important;}
+#content .scene ul.articles li[class='item article id:255'] p {color: #000000;}
+#content .scene ul.articles li[class='item article id:255'] a {color: #000000; text-decoration: underline;}
+/*body.black #footer {display: none;}*/
+
+

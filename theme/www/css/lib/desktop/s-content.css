@@ -1,0 +1,202 @@
+#content {position: relative; max-width: 1100px; margin: 0 auto;}
+#content .scene {opacity: 0; position: relative; padding: 50px 0 75px;}
+#content .scene h1 span {display: inline-block;}
+
+/* BASIC CONTENT */
+#content .scene .link {cursor: pointer;}
+#content .scene a {color: #34cc3d;}
+#content .scene h1,
+#content .scene h2,
+#content .scene h3,
+#content .scene h4,
+#content .scene h5,
+#content .scene h6,
+#content .scene p {max-width: 700px; position: relative;}
+#content .scene hr {border: none; border-top: 1px solid #ccdbcd; margin: 30px 0 50px; padding: 0;}
+#content .scene p.note {font-style: italic;}
+
+
+#content .scene h3,
+#content .scene h4,
+#content .scene h5,
+#content .scene h6,
+#content .scene p,
+#content .scene li,
+#content .scene dd {color: #777777;}
+
+
+/* ADDITIONAL H2 PADDING IN CERTAIN CASES */
+#content .scene p+h2,
+#content .scene ul+h2,
+#content .scene ol+h2,
+#content .scene ul+.pagination+h2,
+#content .scene dl+h2,
+#content .scene div.article+h2,
+#content .scene code+h2 {padding-top: 20px;}
+
+#content .scene ul.tags+h2,
+#content .scene ul.info+h2 {padding-top: 0;}
+
+#content .scene p+code {margin-top: -15px;}
+
+
+/* LISTS */
+#content .scene ul,
+#content .scene ol {padding: 0 50px 15px;}
+
+
+/* ITEMS */
+#content .scene ul.items {padding: 0 30px;}
+#content .scene ul.items li.item {display: block; padding: 20px 0 15px; border-top: 1px solid #dedede; position: relative;}
+#content .scene ul.items li.item h2 {position: relative; z-index: 1;}
+
+#content .scene ul.items h2,
+#content .scene ul.items h3,
+#content .scene ul.items p,
+#content .scene ul.items dl {padding-left: 20px; padding-right: 20px;}
+
+
+/* DEFINITION LIST */
+#content .scene dl {padding: 0 50px 15px; width: 500px;}
+#content .scene dt {width: 115px; text-align: right; padding: 0 5px 6px 0; color: #bbbbbb;}
+#content .scene dt:after {content: ":";}
+#content .scene dd {padding: 0 0 6px; width: 380px;}
+#content .scene dt span {text-transform: none;}
+#content .scene dl dl {padding: 0 0 10px; margin-left: -30px; width: 425px;}
+#content .scene dl dl dt {width: 80px;}
+#content .scene dl dl dd {width: 339px;}
+#content .scene dl h3,
+#content .scene dl h4,
+#content .scene dl h5,
+#content .scene dl h6 {padding-left: 0; padding-right: 0; padding-top: 10px;}
+
+/* SCENE ACTIONS */
+#content .scene > ul.actions {margin: 0 0 20px; padding: 15px 50px;}
+
+/* TAGS */
+#content .scene ul.tags {position: relative; z-index: 1; padding-bottom: 20px;}
+#content .scene ul.tags li {font-size: 12px; display: inline-block; vertical-align: top;}
+#content .scene ul.tags li:after {content: "\00a0|\00a0"; color: #bbbbbb;}
+#content .scene ul.tags li:last-child:after {content: none;}
+#content .scene ul.tags li a {}
+#content .scene li.item ul.tags {padding-left: 20px; padding-right: 20px;}
+
+#content .scene ul.tags li.editing {background: #666666; border-radius: 3px; color: #ffffff !important; margin: -2px 10px -2px -2px; padding: 2px 10px;}
+#content .scene ul.tags li.editing:after {content: none;}
+
+
+/* INFO UL */
+#content .scene ul.info {position: relative; z-index: 1; padding-bottom: 26px; padding-right: 0; display: inline-block; vertical-align: top; width: auto; font-size: 0;}
+#content .scene ul.info li {width: auto; font-size: 12px; line-height: 12px; color: #bbbbbb; display: inline-block; vertical-align: top;}
+#content .scene ul.info > li.author:before,
+#content .scene ul.info > li.place:before {content: "\00a0|\00a0"; color: #bbbbbb; display: inline-block; vertical-align: top; font-size: 12px; line-height: 10px; }
+#content .scene ul.info li.main_entity,
+#content .scene ul.info li.url,
+#content .scene ul.info li.publisher,
+#content .scene ul.info li.image_info,
+#content .scene ul.info li.modified_at,
+#content .scene ul.info li.latitude,
+#content .scene ul.info li.longitude {display: none;}
+
+#content .scene ul.info {display: none;}
+
+
+/* IMAGE/MEDIA */
+#content .scene div.image,
+#content .scene div.media {position: relative; z-index: 10;}
+#content .scene div.image img,
+#content .scene div.media img {cursor: zoom-in; margin: 0 30px 30px; width: calc(100% - 60px); overflow: hidden;}
+#content .scene div.image p,
+#content .scene div.media p {margin-top: -27px; padding: 0 50px 33px; font-size: 0; display: none;}
+#content .scene div.image p a,
+#content .scene div.media p a {font-style: italic; font-size: 13px; line-height: 1.1em; color: #bbbbbb; cursor: default; text-decoration: none;}
+#content .scene div.image.loaded p,
+#content .scene div.media.loaded p {display: block;}
+
+#content .scene div.vimeo,
+#content .scene div.youtube {margin: 0 30px 30px; position: relative; z-index: 1; width: calc(100% - 60px); padding-bottom: 57%;}
+#content .scene div.vimeo iframe,
+#content .scene div.youtube iframe {width: 100%; height: 100%; overflow: hidden; position: absolute; top: 0; left: 0;}
+
+
+/* CATEGORIES */
+#content .scene div.categories {padding-bottom: 20px;}
+#content .scene div.categories ul.tags li {font-size: 14px; margin: 0 20px 0 0; display: inline-block; vertical-align: top;}
+#content .scene div.categories ul.tags li.all {padding-top: 15px;}
+#content .scene div.categories ul.tags li a {padding: 5px 0; display: block;}
+#content .scene div.categories ul.tags li:after {content: none;}
+#content .scene div.categories ul.tags li.selected a {background-color: #26962d; color: #ffffff; padding: 4px 15px; border-radius: 13px;}
+#content .scene div.categories ul.actions {padding-bottom: 0;}
+#content .scene div.categories ul.actions li {font-size: 15px;}
+
+
+/* RELATED */
+#content .scene div.related {padding-top: 10px; position: relative; z-index: 1;}
+#content .scene div.related h2 {padding-bottom: 15px;}
+#content .scene div.related h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
+	font-family: "OpenSans";
+}
+
+
+/* OFFER */
+#content .scene ul.offer,
+#content .scene .articlebody ul.offer {font-size: 0; padding: 0; margin: 0; list-style: none;}
+#content .scene ul.offer li.name,
+#content .scene ul.offer li.currency,
+#content .scene ul.offer li.url {display: none;}
+#content .scene ul.offer li {font-size: 11px; width: auto; display: inline-block; vertical-align: top; padding: 0 5px 0 0;}
+#content .scene ul.offer li.default {text-decoration: line-through;}
+#content .scene ul.offer li.description {padding-top: 4px; display: block;}
+
+#content .scene ul.offer li.description ul {list-style: disc;}
+#content .scene ul.offer li.description ul li {display: list-item; padding: 0 0 3px; font-size: 13px;}
+
+/*#content .scene ul.offer dd.currency:after {content: "\00a0";}*/
+
+/* CODE AND TYPECASTING */
+#content .scene code {padding: 10px 20px; margin: 0 50px 15px; background-color: #ededed; color: #333333; font-size: 12px; display: block; overflow: auto; white-space: pre; border-radius: 5px;
+	font-family: "Monaco", "Courier New", "Courier";
+	-webkit-tab-size: 4;
+	-moz-tab-size: 4;
+	-ms-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+}
+#content .scene span.type,
+#content .scene span.var,
+#content .scene span.value,
+#content .scene span.file,
+#content .scene span.htmltag,
+#content .scene span.command {
+	font-family: "Monaco", "Courier New", "Courier"; font-size: 0.8em;
+}
+#content .scene span.type {color: #a67800;}
+#content .scene span.var {color: #007633;}
+#content .scene span.value {color: #a65900; font-style: italic;}
+#content .scene span.file {color: #a62300;}
+#content .scene span.htmltag {text-transform: uppercase; font-size: 0.7em;}
+#content .scene span.htmltag:before {content: "<"; line-height: 2.1em; vertical-align: top;}
+#content .scene span.htmltag:after {content: ">"; line-height: 2.1em; vertical-align: top;}
+
+#content .scene span.command {color: #4b5cd7;}
+
+
+
+
+
+/* LOGIN */
+#content .scene.login {max-width: 500px; margin: 0 auto;}
+#content .scene.login form {padding-bottom: 20px;}
+#content .scene.login form li.forgot {padding: 8px 0 0;}
+#content .scene.login form li.forgot a {padding: 0; display: inline-block; vertical-align: top;}
+
+/* ERROR MESSAGES */
+#content .scene p.error,
+#content .scene p.errormessage {color: #df0000;}
+
+
+
+#content .scene ul.geo.active li.name {color: #34cc3d;}
+
+
+

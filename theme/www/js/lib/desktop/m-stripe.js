@@ -122,6 +122,7 @@ Util.Modules["stripe"] = new function() {
 						this.is_submitting = true;
 
 						u.ac(this, "submitting");
+						this.actions["pay"].value = "Please wait ...";
 						u.ac(this.actions["pay"], "disabled");
 
 						this.DOMsubmit();

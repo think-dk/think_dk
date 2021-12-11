@@ -15,6 +15,17 @@ Util.Modules["verify_maillist"] = new function() {
 			// u.bug("scene.ready:", this);
 
 
+			u.columns(this, [
+				{"c200": [
+					"div.article",
+					"form.verify_code",
+				]},
+				{"c100": [
+					"div.why_verification",
+				]},
+			]);
+
+
 			var form_verify = u.qs("form.verify_code", this);
 
 			if(form_verify) {

@@ -355,6 +355,7 @@ Util.Modules["events"] = new function() {
 			var h3 = u.ae(day, u.qs("h3", event).cloneNode(true));
 			var h3_a = u.qs("a", h3);
 			h3.day = day;
+			h3.text = u.text(h3);
 			var div_description = u.qs("div.description p", event);
 
 			// Event might not have a description
@@ -369,7 +370,7 @@ Util.Modules["events"] = new function() {
 
 			u.e.hover(h3);
 			h3.over = function() {
-				this.div_description = u.ae(this, "div", {"class":"description", "html":this.description});
+				this.div_description = u.ae(this, "div", {"class":"description", "html":"<strong>"+this.text + "</strong><br />" + this.description});
 				if(u.hc(this.day, "weekend")) {
 					u.ass(this.div_description, {
 						"left":-(150) + "px"

@@ -1,0 +1,58 @@
+
+#content .scene.verdensborger .c .c100 {width: 40%;}
+#content .scene.verdensborger .c .c200 {width: 60%;}
+
+#content .scene.verdensborger div.signup {padding-bottom: 20px;}
+#content .scene.verdensborger div.signup form {padding-bottom: 20px;}
+#content .scene.verdensborger div.signup form ul.actions input {width: 100px;}
+
+#content .scene.verdensborger div.practicalities {padding-bottom: 40px;}
+
+#content .scene.verdensborger div.practicalities ul {list-style: disc; margin-left: 15px;}
+#content .scene.verdensborger div.practicalities ul li {padding-bottom: 10px;}
+#content .scene.verdensborger div.help_us ul {list-style: disc; margin-left: 15px;}
+#content .scene.verdensborger div.help_us ul li {padding-bottom: 10px;}
+
+#content .scene.verdensborger div.dictionary {padding-bottom: 40px;}
+
+#content .scene.verdensborger div.konfirmation {padding-bottom: 40px;}
+#content .scene.verdensborger div.info_meeting {padding-bottom: 40px;}
+#content .scene.verdensborger div.help_us {padding-bottom: 40px;}
+#content .scene.verdensborger div.more_info {padding-bottom: 40px;}
+
+#content .scene.verdensborger ul.people {font-size: 0;}
+#content .scene.verdensborger ul.people li.person {border: 0; padding-top: 0; width: 50%; display: inline-block; vertical-align: top;}
+#content .scene.verdensborger ul.people li.person img {margin: 0 50px 20px; width: calc(100% - 100px);}
+
+#content .scene.verdensborger h2.parents {padding-top: 80px;}
+
+
+#content .scene.verdensborger .slideshow {position: relative; padding: 0 50px 30px; max-width: 540px;}
+#content .scene.verdensborger .slideshow .next {position: absolute; top: calc(50% - 15px); margin-top: -20px; right: 24px; width: 25px; height: 40px;
+	background: #ffffff;
+	border-top-right-radius: 5px; border-bottom-right-radius: 5px;
+	border: 1px solid #26962d; cursor: pointer; 
+}
+#content .scene.verdensborger .slideshow .prev {position: absolute; top: calc(50% - 15px); margin-top: -20px; left: 24px; width: 25px; height: 40px;
+	background: #ffffff;
+	border-top-left-radius: 5px; border-bottom-left-radius: 5px;
+	border: 1px solid #26962d; cursor: pointer; 
+}
+#content .scene.verdensborger ul.images {padding: 0; overflow: hidden; width: 100%; height: 100%; position: relative;}
+#content .scene.verdensborger ul.images li {position: absolute; top: 0; left: 0;
+	/* opacity: 0;*/
+}
+#content .scene.verdensborger ul.images li img {margin: 0; width: 100%; cursor: default;}
+
+#content .scene.verdensborger .slideshow .next > svg.arrow {position: absolute; top: 14px; right: 2px;}
+#content .scene.verdensborger .slideshow .next > svg.arrow line {stroke: #26962d; stroke-width: 3px;}
+#content .scene.verdensborger .slideshow .prev > svg.arrow {position: absolute; top: 14px; left: 8px;}
+#content .scene.verdensborger .slideshow .prev > svg.arrow line {stroke: #26962d; stroke-width: 3px;}
+
+#content .scene.verdensborger .highlight {color: #26962d;}
+
+#content .scene.verdensborger .overdue,
+#content .scene.verdensborger .overdue a {color: #cdcdcd;}
+
+#content .scene.verdensborger .extendedpadding {padding-bottom: 35px;}
+

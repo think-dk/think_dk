@@ -13,10 +13,23 @@ Util.Modules["contact"] = new function() {
 		scene.ready = function() {
 			// u.bug("scene.ready:", this);
 
+			u.columns(this, [
+				{"c200": [
+					"div.article", 
+				]},
+				{"c100": [
+					".teams",
+				]},
+				{"c300": [
+					"div.company"
+				]}
+			]);
 
-			if (u.qs("div.article", this)) {
 
-				var injection_point = u.ns(u.qs("div.article h1", this));
+			this.article = u.qs("div.article", this);
+			if(this.article) {
+
+				var injection_point = u.ns(u.qs("h1", this.article));
 				this.map = u.ae(this, "div", {"class":"map"});
 				this.map.loaded = function() {
 	
@@ -32,16 +45,7 @@ Util.Modules["contact"] = new function() {
 
 			u.showScene(this);
 
-
-			// // accept cookies?
-			// page.acceptCookies();
-
-
-			// page.resized();
 		}
-
-		// scene is ready
-		// scene.ready();
 
 		// Map scene – page will call scene.ready
 		page.cN.scene = scene;

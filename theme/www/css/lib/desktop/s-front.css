@@ -1,0 +1,196 @@
+
+/* FRONT */
+/*#content .scene.front {opacity: 1;
+	box-sizing: border-box;
+}
+*/
+/* HIDE HEADER AND FOOTER FOR INTRO SEQUENCE */
+/*body.front #header {opacity: 0;}
+body.front #footer {display: none;}
+body.front #page {overflow: hidden;}
+body.front #page.fixed {width: auto; margin: 0;}
+*/
+
+#content .scene.front {padding: 40px 0;}
+
+#content .scene.front div.intro {display: none;}
+
+
+/*
+div.intro li.hotspot.hotspot6 {
+	top: 85%; left: 40%;
+}
+div.intro li.hotspot.hotspot7 {
+	top: 85%; left: 60%;
+}*/
+
+@media screen and (max-width: 900px) {
+
+	#content .scene.front .c200 {width: 66.666%;}
+	#content .scene.front .c100 {width: 33.333%;}
+
+}
+
+@media screen and (max-width: 820px) {
+
+	#content .scene.front .c200 {width: 100%;}
+	#content .scene.front .c100 {width: 50%;}
+
+	#content .scene.front .c200 + .c100 {width: 100%;}
+	#content .scene.front .c200 + .c100 div.projects,
+	#content .scene.front .c200 + .c100 div.services {width: 50%; display: inline-block; vertical-align: top;}
+
+}
+
+
+#content .scene.front div.c100 > div h2,
+#content .scene.front div.c200 > div h1 {
+	padding: 13px 20px;
+}
+#content .scene.front div.c200 > div h2,
+#content .scene.front div.c100 > div p,
+#content .scene.front div.c200 > div p,
+#content .scene.front div.c100 > div ul,
+#content .scene.front div.c200 > div ul {
+	padding: 0 20px 13px;
+}
+#content .scene.front div.c200 > div div.sharing {
+/*	padding-bottom: 8px;*/
+}
+#content .scene.front div.c200 > div div.sharing h3 {
+	left: 90px;
+}
+#content .scene.front div.c200 > div div.sharing p {
+	left: 90px;
+	padding: 0;
+}
+#content .scene.front div.c200 > div div.sharing svg {
+	margin-left: 20px;
+}
+#content .scene.front div.sharing svg line {
+	stroke: #ffffff;
+}
+#content .scene.front div.sharing svg circle {
+	stroke: #ffffff;
+}
+
+#content .scene.front div.c100 > div,
+#content .scene.front div.c200 > div {overflow: hidden; position: relative;
+	transition: all 0.5s ease;
+	background-color: #ffffff;
+}
+
+#content .scene.front div.c100 > div p,
+#content .scene.front div.c100 > div h3,
+#content .scene.front div.c100 > div ul,
+
+#content .scene.front div.c200 > div p,
+#content .scene.front div.c200 > div h2,
+#content .scene.front div.c200 > div h3,
+#content .scene.front div.c200 > div ul,
+#content .scene.front div.c200 > div div.sharing {
+
+	opacity: 0;
+	transform: translate(0, 500px);
+
+	transition: all 0.5s ease;
+}
+
+#content .scene.front div.c100 > div ul.actions {position: absolute; bottom: 0; right: 0;}
+
+
+#content .scene.front div.c100 > div h2,
+#content .scene.front div.c200 > div h1 {
+	transition: all 0.5s ease;
+}
+#content .scene.front div.c100 > div h2 {
+	transform: translate(0, 50px);
+}
+#content .scene.front div.c200 > div h1 {
+	transform: translate(0, 100px);
+}
+
+
+/*
+#content .scene.front div.c100 > div:hover p,
+#content .scene.front div.c100 > div:hover h2,
+#content .scene.front div.c100 > div:hover h3,
+#content .scene.front div.c100 > div:hover ul,
+
+#content .scene.front div.c200 > div:hover p,
+#content .scene.front div.c200 > div:hover h1,
+#content .scene.front div.c200 > div:hover h2,
+#content .scene.front div.c200 > div:hover h3,
+#content .scene.front div.c200 > div:hover ul,
+#content .scene.front div.c200 > div:hover div.sharing,
+*/
+
+#content .scene.front div.c100 > div.hover p,
+#content .scene.front div.c100 > div.hover h2,
+#content .scene.front div.c100 > div.hover h3,
+#content .scene.front div.c100 > div.hover ul,
+
+#content .scene.front div.c200 > div.hover p,
+#content .scene.front div.c200 > div.hover h1,
+#content .scene.front div.c200 > div.hover h2,
+#content .scene.front div.c200 > div.hover h3,
+#content .scene.front div.c200 > div.hover ul,
+#content .scene.front div.c200 > div.hover div.sharing {
+	opacity: 1;
+	transform: translate(0, 0);
+	color: #ffffff;
+}
+#content .scene.front div.c100 > div.hover a,
+#content .scene.front div.c200 > div.hover a {color: #ffffff;}
+
+#content .scene.front div.c100 > div.hover,
+#content .scene.front div.c200 > div.hover {
+	background-color: #26962d;
+}
+
+
+/* FRONT - ARTICLE */
+#content .scene.front div.article {z-index: 11; /*display: none;*//*margin-top: -70px;*/ padding: 20px;}
+
+
+
+#content .scene.front div.projects {}
+#content .scene.front div.services {}
+
+
+/* FRONT - EVENTS */
+#content .scene.front div.events {/*display: none;*/ /*padding-bottom: 50px;*/}
+#content .scene.front div.events h2 {}
+/*#content .scene.front div.events ul.events {border-top: 1px solid #dedede; padding: 0 20px 0 70px;}
+#content .scene.front div.events ul.events h3,
+#content .scene.front div.events ul.events dl {padding-left: 0; padding-right: 0; width: auto;}
+#content .scene.front div.events ul.events li.event {border-top: none; padding-top: 15px; padding-bottom: 5px; display: inline-block; vertical-align: top; width: 230px; padding-right: 20px;}
+*/
+#content .scene.front div.events ul.events li.event {border-top: none; padding-top: 5px; padding-bottom: 5px;}
+#content .scene.front div.events ul.events li.event h3 {font-size: 14px;
+	font-family: "OpenSans", Verdana, Arial, sans-serif;
+}
+
+#content .scene.front div.membership {width: auto;}
+
+
+
+/* FRONT - NEWS */
+#content .scene.front div.bulletin {/*display: none;*/}
+#content .scene.front div.bulletin h2 {padding-bottom: 15px;}
+#content .scene.front div.bulletin ul.articles li.article {border: none; padding: 0 0 13px;}
+#content .scene.front div.bulletin ul.articles li.article h3 {
+	padding: 0;
+/*	padding-bottom: 20px; color: #26962d;*/
+	
+	font-size: 14px;
+	font-family: "OpenSans", Verdana, Arial, sans-serif;
+}
+
+#content .scene.front div.about {}
+#content .scene.front div.blog {}
+#content .scene.front div.contact {}
+
+
+#content .scene.front div div:hover ul.actions li a {background-color: #ffffff; color: #26962d; padding: 6px 15px; border-radius: 15px; height: auto; text-decoration: none;}
+#content .scene.front div div:hover ul.actions li a:hover {text-decoration: none; background-color: #34cc3d; color: #ffffff;}

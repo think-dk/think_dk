@@ -1,0 +1,22 @@
+/* CONTACT */
+#content .scene.contact div.map {height: 300px; margin: 0 30px 30px;}
+
+#content .scene.contact div.teams {padding-top: 76px;}
+
+#content .scene.contact ul.people {padding: 0 50px 30px; margin-top: 10px;}
+#content .scene.contact ul.items.people li.item.person {padding: 0 0 20px; border: none;}
+#content .scene.contact ul.items.people li.item.person h3 {padding-left: 0; padding-right: 0; font-size: 16px;}
+#content .scene.contact ul.items.people li.item.person ul.info {display: block; padding: 0;}
+#content .scene.contact ul.items.people li.item.person ul.info li {display: block; color: #777777; padding-bottom: 4px;}
+#content .scene.contact ul.items.people li.item.person ul.info li.affiliation {display: none;}
+
+
+/* VCARD */
+#content .scene.contact div.company {padding: 0 30px; font-size: 0;}
+#content .scene.contact div.company h2 {border-bottom: 1px solid #dedede; margin-bottom: 30px; padding-left: 20px; padding-right: 20px;}
+#content .scene.contact div.company dl.info {width: 33%; padding: 0 0 30px 20px; box-sizing: border-box; display: inline-block; vertical-align: top;}
+#content .scene.contact div.company dl.info dt,
+#content .scene.contact div.company dl.info dd {display: block; width: auto; text-align: left;}
+#content .scene.contact div.company dl.info dd {padding-bottom: 10px; font-size: 12px;}
+#content .scene.contact div.company dl.info dd ul {padding: 0;}
+#content .scene.contact div.company dl.info dd li {font-size: 12px;}

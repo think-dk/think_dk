@@ -1,0 +1,42 @@
+/* HEADER */
+#header {position: relative; height: 250px;}
+#header .logo {opacity: 0; z-index: 60; position: fixed; top: 10px; left: 30px; font-size: 20px; padding: 10px 20px; color: #26962d; cursor: pointer;
+	background-color: rgba(255,255,255, 1); border-radius: 40px;
+	font-family: "PT Serif", Times, serif;
+}
+#header .logo.reduced {
+	transition: background-color 1s ease-in-out !important;
+	background-color: rgba(255,255,255, 0.7);
+}
+
+
+/* SERVICENAVIGATION */
+#header .servicenavigation {opacity: 0; z-index: 10; position: absolute; top: 0; right: 33px;
+	background-color: #ffffff; padding: 0 20px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;
+}
+#header .servicenavigation li {display: inline-block; vertical-align: top; color: #777777; padding: 5px 0;}
+#header .servicenavigation li.navigation {display: none;}
+#header .servicenavigation li:before {content: "\00a0\00a0|\00a0\00a0"; color: #bbbbbb;}
+#header .servicenavigation li.navigation:before,
+#header .servicenavigation li:first-child:before {content: none;}
+#header .servicenavigation li.cart.used {color: #df0000;}
+#header .servicenavigation li.selected {font-weight: bold;}
+
+/* NAViGATION */
+#navigation {opacity: 0; z-index: 50; position: fixed; right: 33px; top: 220px; 
+	background-color: rgba(255, 255, 255, 1); border-top-left-radius: 22px; border-top-right-radius: 22px; padding: 0 20px;
+}
+#navigation.reduced {
+	transition: background-color 1s ease-in-out !important;
+	border-radius: 22px; background-color: rgba(255, 255, 255, 0.7);}
+
+#navigation ul {white-space: nowrap;}
+#navigation ul li {display: inline-block; vertical-align: top; padding: 10px; font-size: 20px; color: #34cc3d;
+	font-family: "PT Serif", Times, serif;
+}
+#navigation ul li.selected,
+#navigation ul li.path {color: #26962d;}
+
+#navigation ul li.front {display: none;}
+#navigation ul li.membership {color: #ffffff; margin: 5px 3px; padding: 5px 20px; background-color: #34cc3d; border-radius: 20px;}
+
