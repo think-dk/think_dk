@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2021-09-13 14:13:17
+asset-builder @ 2021-12-13 02:23:33
 */
 
 /*seg_desktop_include.js*/
@@ -351,6 +351,7 @@ Util.Animation = u.a = new function() {
 Util.saveCookie = function(name, value, _options) {
 	var expires = true;
 	var path = false;
+	var samesite = "lax";
 	var force = false;
 	if(obj(_options)) {
 		var _argument;
@@ -358,6 +359,7 @@ Util.saveCookie = function(name, value, _options) {
 			switch(_argument) {
 				case "expires"	: expires	= _options[_argument]; break;
 				case "path"		: path		= _options[_argument]; break;
+				case "samesite"	: samesite	= _options[_argument]; break;
 				case "force"	: force		= _options[_argument]; break;
 			}
 		}
@@ -386,7 +388,8 @@ Util.saveCookie = function(name, value, _options) {
 	else {
 		path = "";
 	}
-	document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + path + expires;
+	samesite = ";samesite="+samesite;
+	document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + path + expires + samesite;
 }
 Util.getCookie = function(name) {
 	var matches;
@@ -778,7 +781,10 @@ Util.clickableElement = u.ce = function(node, _options) {
 		u.ac(node, "link");
 		if(a.getAttribute("href") !== null) {
 			node.url = a.href;
-			a.removeAttribute("href");
+			a.url = a.href;
+			node.onclick = function(event) {
+				event.preventDefault();
+			}
 			node._a = a;
 		}
 	}
@@ -942,10 +948,10 @@ u.containsOrIs = function(scope, node) {
 u.elementMatches = u.em = function(node, selector) {
 	return node.matches(selector);
 }
-Util.insertAfter = u.ia = function(after_node, insert_node) {
+Util.insertAfter = u.ia = function(insert_node, after_node) {
 	var next_node = u.ns(after_node);
 	if(next_node) {
-		after_node.parentNode.insertBefore(next_node, insert_node);
+		after_node.parentNode.insertBefore(insert_node, next_node);
 	}
 	else {
 		after_node.parentNode.appendChild(insert_node);
@@ -1275,7 +1281,7 @@ Util.Events = u.e = new function() {
 			}
 			if(this.e_drag || this.e_swipe) {
 				u.e.addMoveEvent(this, u.e._pick);
-				u.e.addEndEvent(this, u.e._cancelPick);
+				this.e_cancelPick = u.e.addWindowEndEvent(this, u.e._cancelPick);
 			}
 			if(this.e_scroll) {
 				u.e.addMoveEvent(this, u.e._scrollStart);
@@ -1327,7 +1333,7 @@ Util.Events = u.e = new function() {
 		u.e.addStartEvent(node, this._inputStart);
 	}
 	this._held = function(event) {
-		this.e_hold_options.event = event;
+		this.e_hold_options.event = this.e_hold_options.event || "hold";
 		u.stats.event(this, this.e_hold_options);
 		u.e.resetNestedEvents(this);
 		if(fun(this.held)) {
@@ -1342,7 +1348,7 @@ Util.Events = u.e = new function() {
 	}
 	this._clicked = function(event) {
 		if(this.e_click_options) {
-			this.e_click_options.event = event;
+			this.e_click_options.event = this.e_click_options.event || "click";
 			u.stats.event(this, this.e_click_options);
 		}
 		u.e.resetNestedEvents(this);
@@ -1360,7 +1366,7 @@ Util.Events = u.e = new function() {
 	this._rightclicked = function(event) {
 		u.bug("_rightclicked:", this);
 		if(this.e_rightclick_options) {
-			this.e_rightclick_options.event = event;
+			this.e_rightclick_options.event = this.e_rightclick_options.event || "rightclick";
 			u.stats.event(this, this.e_rightclick_options);
 		}
 		u.e.resetNestedEvents(this);
@@ -1376,7 +1382,7 @@ Util.Events = u.e = new function() {
 	}
 	this._dblclicked = function(event) {
 		if(u.t.valid(this.t_clicked) && event) {
-			this.e_dblclick_options.event = event;
+			this.e_dblclick_options.event = this.e_dblclick_options.event || "doubleclick";
 			u.stats.event(this, this.e_dblclick_options);
 			u.e.resetNestedEvents(this);
 			if(fun(this.dblclicked)) {
@@ -1458,9 +1464,22 @@ u.e.addDOMReadyEvent = function(action) {
 		}
 		else {
 			var id = u.randomString();
-			window["DOMReady_" + id] = action;
-			eval('window["_DOMReady_' + id + '"] = function() {window["DOMReady_'+id+'"](); u.e.removeEvent(document, "DOMContentLoaded", window["_DOMReady_' + id + '"])}');
-			u.e.addEvent(document, "DOMContentLoaded", window["_DOMReady_" + id]);
+			window["_DOMReady_" + id] = {
+				id: id,
+				action: action,
+				callback: function(event) {
+					if(fun(this.action)) {
+						this.action.bind(window)(event);
+					}
+					else if(fun(this[this.action])){
+						this[this.action].bind(window)(event);
+					}
+ 					u.e.removeEvent(document, "DOMContentLoaded", window["_DOMReady_" + this.id].eventCallback); 
+					delete window["_DOMReady_" + this.id];
+				}
+			}
+			eval('window["_DOMReady_' + id + '"].eventCallback = function() {window["_DOMReady_'+id+'"].callback(event);}');
+			u.e.addEvent(document, "DOMContentLoaded", window["_DOMReady_" + id].eventCallback);
 		}
 	}
 	else {
@@ -1473,81 +1492,124 @@ u.e.addOnloadEvent = function(action) {
 	}
 	else {
 		var id = u.randomString();
-		window["Onload_" + id] = action;
-		eval('window["_Onload_' + id + '"] = function() {window["Onload_'+id+'"](); u.e.removeEvent(window, "load", window["_Onload_' + id + '"])}');
-		u.e.addEvent(window, "load", window["_Onload_" + id]);
+		window["_Onload_" + id] = {
+			id: id,
+			action: action,
+			callback: function(event) {
+				if(fun(this.action)) {
+					this.action.bind(window)(event);
+				}
+				else if(fun(this[this.action])){
+					this[this.action].bind(window)(event);
+				}
+				u.e.removeEvent(document, "load", window["_Onload_" + this.id].eventCallback); 
+				delete window["_Onload_" + this.id];
+			}
+		}
+		eval('window["_Onload_' + id + '"].eventCallback = function() {u.bug("load");window["_Onload_'+id+'"].callback(event);}');
+		u.e.addEvent(window, "load", window["_Onload_" + id].eventCallback);
 	}
 }
 u.e.addWindowEvent = function(node, type, action) {
 	var id = u.randomString();
-	window["_OnWindowEvent_node_"+ id] = node;
-	if(fun(action)) {
-		eval('window["_OnWindowEvent_callback_' + id + '"] = function(event) {window["_OnWindowEvent_node_'+ id + '"]._OnWindowEvent_callback_'+id+' = '+action+'; window["_OnWindowEvent_node_'+ id + '"]._OnWindowEvent_callback_'+id+'(event);};');
-	} 
-	else {
-		eval('window["_OnWindowEvent_callback_' + id + '"] = function(event) {if(fun(window["_OnWindowEvent_node_'+ id + '"]["'+action+'"])) {window["_OnWindowEvent_node_'+id+'"]["'+action+'"](event);}};');
-	}
-	u.e.addEvent(window, type, window["_OnWindowEvent_callback_" + id]);
+	window["_OnWindowEvent_"+ id] = {
+		id: id,
+		node: node,
+		type: type,
+		action: action,
+		callback: function(event) {
+			if(fun(this.action)) {
+				this.action.bind(this.node)(event);
+			}
+			else if(fun(this[this.action])){
+				this[this.action](event);
+			}
+		}
+	};
+	eval('window["_OnWindowEvent_' + id + '"].eventCallback = function(event) {window["_OnWindowEvent_'+ id + '"].callback(event);}');
+	u.e.addEvent(window, type, window["_OnWindowEvent_" + id].eventCallback);
 	return id;
 }
-u.e.removeWindowEvent = function(node, type, id) {
-	u.e.removeEvent(window, type, window["_OnWindowEvent_callback_"+id]);
-	delete window["_OnWindowEvent_node_"+id];
-	delete window["_OnWindowEvent_callback_"+id];
+u.e.removeWindowEvent = function(id) {
+	if(window["_OnWindowEvent_" + id]) {
+		u.e.removeEvent(window, window["_OnWindowEvent_"+id].type, window["_OnWindowEvent_"+id].eventCallback);
+		delete window["_OnWindowEvent_"+id];
+	}
 }
 u.e.addWindowStartEvent = function(node, action) {
 	var id = u.randomString();
-	window["_Onstart_node_"+ id] = node;
-	if(fun(action)) {
-		eval('window["_Onstart_callback_' + id + '"] = function(event) {window["_Onstart_node_'+ id + '"]._Onstart_callback_'+id+' = '+action+'; window["_Onstart_node_'+ id + '"]._Onstart_callback_'+id+'(event);};');
-	} 
-	else {
-		eval('window["_Onstart_callback_' + id + '"] = function(event) {if(fun(window["_Onstart_node_'+ id + '"]["'+action+'"])) {window["_Onstart_node_'+id+'"]["'+action+'"](event);}};');
-	}
-	u.e.addStartEvent(window, window["_Onstart_callback_" + id]);
+	window["_OnWindowStartEvent_"+ id] = {
+		id: id,
+		node: node,
+		action: action,
+		callback: function(event) {
+			if(fun(this.action)) {
+				this.action.bind(this.node)(event);
+			}
+			else if(fun(this[this.action])){
+				this[this.action](event);
+			}
+		}
+	};
+	eval('window["_OnWindowEvent_' + id + '"].eventCallback = function(event) {window["_OnWindowStartEvent_'+ id + '"].callback(event);}');
+	u.e.addEvent(window, type, window["_OnWindowStartEvent_" + id].eventCallback);
 	return id;
 }
-u.e.removeWindowStartEvent = function(node, id) {
-	u.e.removeStartEvent(window, window["_Onstart_callback_"+id]);
-	delete window["_Onstart_node_"+id]["_Onstart_callback_"+id];
-	delete window["_Onstart_node_"+id];
-	delete window["_Onstart_callback_"+id];
+u.e.removeWindowStartEvent = function(id) {
+	if(window["_OnWindowStartEvent_" + id]) {
+		u.e.removeEvent(window, window["_OnWindowStartEvent_"+id].type, window["_OnWindowStartEvent_"+id].eventCallback);
+		delete window["_OnWindowStartEvent_"+id];
+	}
 }
 u.e.addWindowMoveEvent = function(node, action) {
 	var id = u.randomString();
-	window["_Onmove_node_"+ id] = node;
-	if(fun(action)) {
-		eval('window["_Onmove_callback_' + id + '"] = function(event) {window["_Onmove_node_'+ id + '"]._Onmove_callback_'+id+' = '+action+'; window["_Onmove_node_'+ id + '"]._Onmove_callback_'+id+'(event);};');
-	} 
-	else {
-		eval('window["_Onmove_callback_' + id + '"] = function(event) {if(fun(window["_Onmove_node_'+ id + '"]["'+action+'"])) {window["_Onmove_node_'+id+'"]["'+action+'"](event);}};');
-	}
-	u.e.addMoveEvent(window, window["_Onmove_callback_" + id]);
+	window["_OnWindowMoveEvent_"+ id] = {
+		id: id,
+		node: node,
+		action: action,
+		callback: function(event) {
+			if(fun(this.action)) {
+				this.action.bind(this.node)(event);
+			}
+			else if(fun(this[this.action])){
+				this[this.action](event);
+			}
+		}
+	};
+	eval('window["_OnWindowMoveEvent_' + id + '"].eventCallback = function(event) {window["_OnWindowMoveEvent_'+ id + '"].callback(event);}');
+	u.e.addEvent(window, type, window["_OnWindowMoveEvent_" + id].eventCallback);
 	return id;
 }
-u.e.removeWindowMoveEvent = function(node, id) {
-	u.e.removeMoveEvent(window, window["_Onmove_callback_" + id]);
-	delete window["_Onmove_node_"+ id]["_Onmove_callback_"+id];
-	delete window["_Onmove_node_"+ id];
-	delete window["_Onmove_callback_"+ id];
+u.e.removeWindowMoveEvent = function(id) {
+	if(window["_OnWindowMoveEvent_" + id]) {
+		u.e.removeEvent(window, window["_OnWindowMoveEvent_"+id].type, window["_OnWindowMoveEvent_"+id].eventCallback);
+		delete window["_OnWindowMoveEvent_"+id];
+	}
 }
 u.e.addWindowEndEvent = function(node, action) {
 	var id = u.randomString();
-	window["_Onend_node_"+ id] = node;
-	if(fun(action)) {
-		eval('window["_Onend_callback_' + id + '"] = function(event) {window["_Onend_node_'+ id + '"]._Onend_callback_'+id+' = '+action+'; window["_Onend_node_'+ id + '"]._Onend_callback_'+id+'(event);};');
-	} 
-	else {
-		eval('window["_Onend_callback_' + id + '"] = function(event) {if(fun(window["_Onend_node_'+ id + '"]["'+action+'"])) {window["_Onend_node_'+id+'"]["'+action+'"](event);}};');
-	}
-	u.e.addEndEvent(window, window["_Onend_callback_" + id]);
+	window["_OnWindowEndEvent_"+ id] = {
+		id: id,
+		node: node,
+		action: action,
+		callback: function(event) {
+			if(fun(this.action)) {
+				this.action.bind(this.node)(event);
+			}
+			else if(fun(this[this.action])){
+				this[this.action](event);
+			}
+		}
+	};
+	eval('window["_OnWindowEndEvent_' + id + '"].eventCallback = function(event) {window["_OnWindowEndEvent_'+ id + '"].callback(event);}');
+	u.e.addEndEvent(window, window["_OnWindowEndEvent_" + id].eventCallback);
 	return id;
 }
-u.e.removeWindowEndEvent = function(node, id) {
-	u.e.removeEndEvent(window, window["_Onend_callback_" + id]);
-	delete window["_Onend_node_"+ id]["_Onend_callback_"+id];
-	delete window["_Onend_node_"+ id];
-	delete window["_Onend_callback_"+ id];
+u.e.removeWindowEndEvent = function(id) {
+	if(window["_OnWindowEndEvent_" + id]) {
+		u.e.removeEndEvent(window, window["_OnWindowEndEvent_" + id].eventCallback);
+		delete window["_OnWindowEndEvent_"+id];
+	}
 }
 Util.Form = u.f = new function() {
 	this.customInit = {};
@@ -1793,9 +1855,17 @@ Util.Form = u.f = new function() {
 				this.validate(field.input);
 			}
 		}
+		if(field.virtual_input && !field.virtual_input.tabindex) {
+			field.virtual_input.setAttribute("tabindex", 0);
+			field.input.setAttribute("tabindex", 0);
+		}
+		else if(!field.input.tabindex) {
+			field.input.setAttribute("tabindex", 0);
+		}
 	}
 	this.initButton = function(_form, action) {
 		action._form = _form;
+		action.setAttribute("tabindex", 0);
 		this.buttonOnEnter(action);
 		this.activateButton(action);
 	}
@@ -1941,6 +2011,7 @@ Util.Form = u.f = new function() {
 		return "";
 	}
 	this._changed = function(event) {
+		u.f.positionHint(this.field);
 		if(fun(this[this._form._callback_changed])) {
 			this[this._form._callback_changed](this);
 		}
@@ -2177,8 +2248,14 @@ Util.Form = u.f = new function() {
 					return;
 				}
 			}
-			var input_middle = field.input.offsetTop + (field.input.offsetHeight / 2);
-			var help_top = input_middle - field.help.offsetHeight / 2;
+			var input_middle, help_top;
+			if(field.virtual_input) {
+				input_middle = field.virtual_input.parentNode.offsetTop + (field.virtual_input.parentNode.offsetHeight / 2);
+			}
+			else {
+				input_middle = field.input.offsetTop + (field.input.offsetHeight / 2);
+			}
+			help_top = input_middle - field.help.offsetHeight / 2;
 			u.ass(field.help, {
 				"top": help_top + "px"
 			});
@@ -2276,6 +2353,7 @@ Util.Form = u.f = new function() {
 			delete iN.is_correct;
 			this.updateInputValidationState(iN);
 		}
+		this.positionHint(iN.field);
 	}
 	this.updateInputValidationState = function(iN) {
 		if(iN.has_error && fun(iN[iN._form._callback_validation_failed])) {
@@ -2697,6 +2775,7 @@ Util.Form.customLabelStyle["inject"] = function(iN) {
 		iN.default_value = u.text(iN.label);
 		u.e.addEvent(iN, "focus", u.f._changed_state);
 		u.e.addEvent(iN, "blur", u.f._changed_state);
+		u.e.addEvent(iN, "change", u.f._changed_state);
 		if(iN.type.match(/number|integer|password|datetime|date/)) {
 			iN.pseudolabel = u.ae(iN.parentNode, "span", {"class":"pseudolabel", "html":iN.default_value});
 			iN.pseudolabel.iN = iN;
@@ -2717,6 +2796,9 @@ u.f._changed_state = function() {
 u.f.updateDefaultState = function(iN) {
 	if(iN.is_focused || iN.val() !== "") {
 		u.rc(iN, "default");
+		if(iN.field.virtual_input) {
+			u.rc(iN.field.virtual_input, "default");
+		}
 		if(iN.val() === "") {
 			iN.val("");
 		}
@@ -2724,6 +2806,9 @@ u.f.updateDefaultState = function(iN) {
 	else {
 		if(iN.val() === "") {
 			u.ac(iN, "default");
+			if(obj(iN.field.virtual_input)) {
+				u.ac(iN.field.virtual_input, "default");
+			}
 			iN.val(iN.default_value);
 		}
 	}
@@ -3562,6 +3647,9 @@ Util.svg = function(svg_object) {
 	if(svg_object.id) {
 		svg.setAttributeNS(null, "id", svg_object.id);
 	}
+	if(svg_object.viewBox) {
+		svg.setAttributeNS(null, "viewBox", svg_object.viewBox);
+	}
 	if(svg_object.node) {
 		svg.node = svg_object.node;
 	}
@@ -3571,8 +3659,8 @@ Util.svg = function(svg_object) {
 	return svg;
 }
 Util.svgShape = function(svg, svg_object) {
+	var detail, svg_shape;
 	svg_shape = document.createElementNS("http://www.w3.org/2000/svg", svg_object["type"]);
-	svg_object["type"] = null;
 	delete svg_object["type"];
 	for(detail in svg_object) {
 		svg_shape.setAttributeNS(null, detail, svg_object[detail]);
@@ -3777,7 +3865,7 @@ Util.Timer = u.t = new function() {
 	this._timers = new Array();
 	this.setTimer = function(node, action, timeout, param) {
 		var id = this._timers.length;
-		param = param ? param : {"target":node, "type":"timeout"};
+		param = param != undefined ? param : {"target":node, "type":"timeout"};
 		this._timers[id] = {"_a":action, "_n":node, "_p":param, "_t":setTimeout("u.t._executeTimer("+id+")", timeout)};
 		return id;
 	}
@@ -4094,106 +4182,9 @@ u.txt["assign"] = function(obj) {
 		u.txt[x] = obj[x];
 	}
 }
-if(document.documentMode && document.documentMode <= 10 && document.documentMode >= 8) {
-	Util.appendElement = u.ae = function(_parent, node_type, attributes) {
-		try {
-			var node = (obj(node_type)) ? node_type : (node_type == "svg" ? document.createElementNS("http://www.w3.org/2000/svg", node_type) : document.createElement(node_type));
-			if(attributes) {
-				var attribute;
-				for(attribute in attributes) {
-					if(!attribute.match(/^(value|html)$/)) {
-						node.setAttribute(attribute, attributes[attribute]);
-					}
-				}
-			}
-			node = _parent.appendChild(node);
-			if(attributes) {
-				if(attributes["value"]) {
-					node.value = attributes["value"];
-				}
-				if(attributes["html"]) {
-					node.innerHTML = attributes["html"];
-				}
-			}
-			return node;
-		}
-		catch(exception) {
-			u.exception("u.ae (desktop_ie10)", arguments, exception);
-		}
-	}
-	Util.insertElement = u.ie = function(_parent, node_type, attributes) {
-		try {
-			var node = (obj(node_type)) ? node_type : (node_type == "svg" ? document.createElementNS("http://www.w3.org/2000/svg", node_type) : document.createElement(node_type));
-			if(attributes) {
-				var attribute;
-				for(attribute in attributes) {
-					if(!attribute.match(/^(value|html)$/)) {
-						node.setAttribute(attribute, attributes[attribute]);
-					}
-				}
-			}
-			node = _parent.insertBefore(node, _parent.firstChild);
-			if(attributes) {
-				if(attributes["value"]) {
-					node.value = attributes["value"];
-				}
-				if(attributes["html"]) {
-					node.innerHTML = attributes["html"];
-				}
-			}
-			return node;
-		}
-		catch(exception) {
-			u.exception("u.ie (desktop_ie10)", arguments, exception);
-		}
-	}
-}
-if(document.documentMode && document.documentMode <= 11 && document.documentMode >= 8) {
-	Util.hasClass = u.hc = function(node, classname) {
-		var regexp = new RegExp("(^|\\s)(" + classname + ")(\\s|$)");
-		if(node instanceof SVGElement) {
-			if(regexp.test(node.className.baseVal)) {
-				return true;
-			}
-		}
-		else {
-			if(regexp.test(node.className)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	Util.addClass = u.ac = function(node, classname, dom_update) {
-		var classnames = classname.split(" ");
-		while(classnames.length) {
-			classname = classnames.shift();
-			var regexp = new RegExp("(^|\\s)" + classname + "(\\s|$)");
-			if(node instanceof SVGElement) {
-				if(!regexp.test(node.className.baseVal)) {
-					node.className.baseVal += node.className.baseVal ? " " + classname : classname;
-				}
-			}
-			else {
-				if(!regexp.test(node.className)) {
-					node.className += node.className ? " " + classname : classname;
-				}
-			}
-		}
-		dom_update = (!dom_update) || (node.offsetTop);
-		return node.className;
-	}
-	Util.removeClass = u.rc = function(node, classname, dom_update) {
-		var regexp = new RegExp("(^|\\s)(" + classname + ")(?=[\\s]|$)", "g");
-		if(node instanceof SVGElement) {
-			node.className.baseVal = node.className.baseVal.replace(regexp, " ").trim().replace(/[\s]{2}/g, " ");
-		}
-		else {
-			node.className = node.className.replace(regexp, " ").trim().replace(/[\s]{2}/g, " ");
-		}
-		dom_update = (!dom_update) || (node.offsetTop);
-		return node.className;
-	}
-}
+
+
+/*u-basics.js*/
 u.showScene = function(scene) {
 	var i, node;
 	var nodes = u.cn(scene);
@@ -4310,6 +4301,9 @@ u._stepA2 = function() {
 		}
 	}
 }
+
+
+/*u-settings.js*/
 u.txt["share"] = "Share this page";
 u.txt["share-info-headline"] = "(How do I share?)";
 u.txt["share-info-txt"] = "We have not included social media plugins on this site, because they are frequently abused to collect data about you. Also we don't want to promote some channels over others. Instead, just copy the link and share it wherever you find relevant.";
@@ -4335,6 +4329,786 @@ u.txt["smartphone-switch-text"] = [
 ];
 u.txt["smartphone-switch-bn-hide"] = "Hide";
 u.txt["smartphone-switch-bn-switch"] = "Go to Smartphone version";
+
+
+/*u-settings.js*/
+u.site_name = "think.dk";
+u.terms_version = "terms_v1";
+u.ga_account = 'UA-10756281-1';
+u.ga_domain = 'think.dk';
+u.gapi_key = "AIzaSyAVqnYpqFln-qAYsp5rkEGs84mrhmGQB_I";
+u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/memberships">Join us</a> to add comments.';
+u.txt["weekday-1"] = "Monday";
+u.txt["weekday-2"] = "Tuesday";
+u.txt["weekday-3"] = "Wednesday";
+u.txt["weekday-4"] = "Thursday";
+u.txt["weekday-5"] = "Friday";
+u.txt["weekday-6"] = "Saturday";
+u.txt["weekday-7"] = "Sunday";
+u.txt["weekday-1-abbr"] = "Mon";
+u.txt["weekday-2-abbr"] = "Tue";
+u.txt["weekday-3-abbr"] = "Wed";
+u.txt["weekday-4-abbr"] = "Thu";
+u.txt["weekday-5-abbr"] = "Fri";
+u.txt["weekday-6-abbr"] = "Sat";
+u.txt["weekday-7-abbr"] = "Sun";
+u.txt["month-1"] = "January";
+u.txt["month-2"] = "February";
+u.txt["month-3"] = "Marts";
+u.txt["month-4"] = "April";
+u.txt["month-5"] = "May";
+u.txt["month-6"] = "June";
+u.txt["month-7"] = "July";
+u.txt["month-8"] = "August";
+u.txt["month-9"] = "September";
+u.txt["month-10"] = "October";
+u.txt["month-11"] = "November";
+u.txt["month-12"] = "December";
+
+
+/*u-googleanalytics.js*/
+u.includeGoogleAnalytics = function() {
+	if(typeof(ga) !== "function") {
+	    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	    m=s.getElementsByTagName(o)[0];a.async=1;a.defer=true;a.src=g;m.parentNode.insertBefore(a,m)
+	    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	    ga('create', u.ga_account, u.ga_domain);
+	    ga('send', 'pageview');
+		u.stats = new function() {
+			this.pageView = function(url) {
+				ga('send', 'pageview', url);
+			}
+			this.event = function(node, _options) {
+				var event = false;
+				var eventCategory = "Uncategorized";
+				var eventAction = null;
+				var eventLabel = null;
+				var eventValue = null;
+				var nonInteraction = false;
+				var hitCallback = null;
+				if(obj(_options)) {
+					var _argument;
+					for(_argument in _options) {
+						switch(_argument) {
+							case "event"				: event					= _options[_argument]; break;
+							case "eventCategory"		: eventCategory			= _options[_argument]; break;
+							case "eventAction"			: eventAction			= _options[_argument]; break;
+							case "eventLabel"			: eventLabel			= _options[_argument]; break;
+							case "eventValue"			: eventValue			= _options[_argument]; break;
+							case "nonInteraction"		: nonInteraction		= _options[_argument]; break;
+							case "hitCallback"			: hitCallback			= _options[_argument]; break;
+						}
+					}
+				}
+				if(!eventAction && event && event.type) {
+					eventAction = event.type;
+				}
+				else if(!eventAction && event) {
+					eventAction = event;
+				}
+ 				else if(!eventAction) {
+					eventAction = "Unknown";
+				}
+				if(!eventLabel && event && event.currentTarget && event.currentTarget.url) {
+					eventLabel = event.currentTarget.url;
+				}
+				else if(!eventLabel) {
+					eventLabel = this.nodeSnippet(node);
+				}
+				ga('send', 'event', {
+					"eventCategory": eventCategory, 
+					"eventAction": eventAction,
+					"eventLabel": eventLabel,
+					"eventValue": eventValue,
+					"nonInteraction": nonInteraction,
+					"hitCallback": hitCallback
+				});
+			}
+			// 	
+			// 	//       slot,		
+			// 	//       name,		
+			// 	//       value,	
+			// 	//       scope		
+			// 	
+			this.nodeSnippet = function(node) {
+				if(node.id) {
+					return node.id;
+				}
+				else if(node._a && node._a.id) {
+					return node._a.id;
+				}
+				else if(u.text(node)) {
+					return u.cutString(u.text(node).trim(), 20);
+				}
+				else if(event && event.currentTarget && event.currentTarget.url) {
+					return event.currentTarget.url;
+				}
+				else {
+					return node.nodeName + (node.className ? "."+node.className : "");
+				}
+			}
+		}
+	}
+}
+if(u.ga_account && !u.cookies_disallowed) {
+	u.includeGoogleAnalytics();
+}
+
+
+/*beta-u-notifier.js*/
+u.notifier = function(node) {
+	var notifications = u.qs("div.notifications", node);
+	if(!notifications) {
+		node.notifications = u.ae(node, "div", {"id":"notifications"});
+	}
+	node.notifications.hide_delay = 4500;
+	node.notifications.hide = function(node) {
+		u.a.transition(this, "all 0.5s ease-in-out");
+		u.a.translate(this, 0, -this.offsetHeight);
+	}
+	node.notify = function(response, _options) {
+		var class_name = "message";
+		if(obj(_options)) {
+			var argument;
+			for(argument in _options) {
+				switch(argument) {
+					case "class"	: class_name	= _options[argument]; break;
+				}
+			}
+		}
+		var output = [];
+		if(obj(response) && response.isJSON) {
+			var message = response.cms_message;
+			var cms_status = typeof(response.cms_status) != "undefined" ? response.cms_status : "";
+			if(obj(message)) {
+				for(type in message) {
+					if(str(message[type])) {
+						output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":message[type]}));
+					}
+					else if(obj(message[type]) && message[type].length) {
+						var node, i;
+						for(i = 0; i < message[type].length; i++) {
+							_message = message[type][i];
+							output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":_message}));
+						}
+					}
+				}
+			}
+			else if(str(message)) {
+				output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message}));
+			}
+			if(fun(this.notifications.show)) {
+				this.notifications.show();
+			}
+		}
+		else if(obj(response) && response.isHTML) {
+			var login = u.qs(".scene.login form", response);
+			var messages = u.qsa(".scene div.messages p", response);
+			if(login && !u.qs("#login_overlay")) {
+				// 
+				// 
+				this.autosave_disabled = true;
+				if(page.t_autosave) {
+					u.t.resetTimer(page.t_autosave);
+				}
+				var overlay = u.ae(document.body, "div", {"id":"login_overlay"});
+				overlay.node = this;
+				u.ae(overlay, login);
+				u.as(document.body, "overflow", "hidden");
+				var relogin = u.ie(login, "h1", {"class":"relogin", "html":(u.txt["relogin"] ? u.txt["relogin"] : "Your session expired")});
+				login.overlay = overlay;
+				u.ae(login, "input", {"type":"hidden", "name":"ajaxlogin", "value":"true"})
+				u.f.init(login);
+				login.inputs["username"].focus();
+				login.submitted = function() {
+					this.response = function(response) {
+						if(response.isJSON && response.cms_status == "success") {
+							var csrf_token = response.cms_object["csrf-token"];
+							var data_vars = u.qsa("[data-csrf-token]", page);
+							var input_vars = u.qsa("[name=csrf-token]", page);
+							var dom_vars = u.qsa("*", page);
+							var i, node;
+							for(i = 0; i < data_vars.length; i++) {
+								node = data_vars[i];
+								node.setAttribute("data-csrf-token", csrf_token);
+							}
+							for(i = 0; i < input_vars.length; i++) {
+								node = input_vars[i];
+								node.value = csrf_token;
+							}
+							for(i = 0; i < dom_vars.length; i++) {
+								node = dom_vars[i];
+								if(node.csrf_token) {
+									node.csrf_token = csrf_token;
+								}
+							}
+							this.overlay.parentNode.removeChild(this.overlay);
+							var multiple_overlays = u.qsa("#login_overlay");
+							if(multiple_overlays) {
+								for(i = 0; i < multiple_overlays.length; i++) {
+									overlay = multiple_overlays[i];
+									overlay.parentNode.removeChild(overlay);
+								}
+							}
+							u.as(document.body, "overflow", "auto");
+							this.overlay.node.autosave_disabled = false;
+							if(this.overlay.node._autosave_node && this.overlay.node._autosave_interval) {
+								u.t.setTimer(this.overlay.node._autosave_node, "autosave", this.overlay.node._autosave_interval);
+							}
+						}
+						else {
+							this.inputs["username"].focus();
+							this.inputs["password"].val("");
+							var error_message = u.qs(".errormessage", response);
+							if(error_message) {
+								this.overlay.node.notify({"isJSON":true, "cms_status":"error", "cms_message":error_message.innerHTML});
+							}
+							else {
+								this.overlay.node.notify({"isJSON":true, "cms_status":"error", "cms_message":"An error occured"});
+							}
+						}
+					}
+					u.request(this, this.action, {"method":this.method, "data":this.getData()});
+				}
+			}
+			else if(messages) {
+				for(i = 0; i < messages.length; i++) {
+					message = messages[i];
+					output.push(u.ae(this.notifications, "div", {"class":message.className, "html":message.innerHTML}));
+				}
+			}
+		}
+		this.t_notifier = u.t.setTimer(this.notifications, this.notifications.hide, this.notifications.hide_delay, output);
+	}
+}
+
+
+/*beta-u-smartphoneswitch.js*/
+u.smartphoneSwitch = new function() {
+	this.state = 0;
+	this.init = function(node) {
+		this.callback_node = node;
+		this.event_id = u.e.addWindowEvent(this, "resize", this.resized);
+		this.resized();
+	}
+	this.resized = function() {
+		if(u.browserW() < 520 && !this.state) {
+			this.switchOn();
+		}
+		else if(u.browserW() > 520 && this.state) {
+			this.switchOff();
+		}
+	}
+	this.switchOn = function() {
+		if(!this.panel) {
+			this.state = true;
+			this.panel = u.ae(document.body, "div", {"id":"smartphone_switch"});
+			u.ass(this.panel, {
+				opacity: 0
+			});
+			u.ae(this.panel, "h1", {html:u.stringOr(u.txt("smartphone-switch-headline"), "Hello curious")});
+			if(u.txt("smartphone-switch-text").length) {
+				for(i = 0; i < u.txt("smartphone-switch-text").length; i++) {
+					u.ae(this.panel, "p", {html:u.txt("smartphone-switch-text")[i]});
+				}
+			}
+			var ul_actions = u.ae(this.panel, "ul", {class:"actions"});
+			var li; 
+			li = u.ae(ul_actions, "li", {class:"hide"});
+			var bn_hide = u.ae(li, "a", {class:"hide button", html:u.txt("smartphone-switch-bn-hide")});
+			li = u.ae(ul_actions, "li", {class:"switch"});
+			var bn_switch = u.ae(li, "a", {class:"switch button primary", html:u.txt("smartphone-switch-bn-switch")});
+			u.e.click(bn_switch);
+			bn_switch.clicked = function() {
+				u.saveCookie("smartphoneSwitch", "on");
+				location.href = location.href.replace(/[&]segment\=desktop|segment\=desktop[&]?/, "") + (location.href.match(/\?/) ? "&" : "?") + "segment=smartphone";
+			}
+			u.e.click(bn_hide);
+			bn_hide.clicked = function() {
+				u.e.removeWindowEvent(u.smartphoneSwitch.event_id);
+				u.smartphoneSwitch.switchOff();
+			}
+			u.a.transition(this.panel, "all 0.5s ease-in-out");
+			u.ass(this.panel, {
+				opacity: 1
+			});
+			if(this.callback_node && typeof(this.callback_node.smartphoneSwitchedOn) == "function") {
+				this.callback_node.smartphoneSwitchedOn();
+			}
+		}
+	}
+	this.switchOff = function() {
+		if(this.panel) {
+			this.state = false;
+			this.panel.transitioned = function() {
+				this.parentNode.removeChild(this);
+				delete u.smartphoneSwitch.panel;
+			}
+			u.a.transition(this.panel, "all 0.5s ease-in-out");
+			u.ass(this.panel, {
+				opacity: 0
+			});
+			if(this.callback_node && typeof(this.callback_node.smartphoneSwitchedOff) == "function") {
+				this.callback_node.smartphoneSwitchedOff();
+			}
+		}
+	}
+}
+
+/*beta-u-columns.js*/
+u.columns = function(node, _columns, insert) {
+	var current_node = node;
+	insert = insert || false;
+	if(!node._tree) {
+		if(insert) {
+			node._tree = u.ie(node, "div", {
+				"class":"c"
+			})
+		}
+		else {
+			node._tree = u.ae(node, "div", {
+				"class":"c"
+			})
+		}
+		node._tree.node = node;
+		current_node = node._tree;
+	}
+	var _column, div_column, column, i, key, value, j;
+	for(j = 0; j < _columns.length; j++) {
+		_column = _columns[j];
+		if(typeof(_column) === "object") {
+			key = Object.keys(_column)[0];
+			value = _column[key];
+			div_column = u.ae(current_node, "div", {
+				"class":key
+			});
+			div_column._tree = node._tree;
+			u.columns(div_column, value);
+		}
+		else {
+			var target = u.qs(_column, node._tree.node);
+			if(target) {
+				div_column = u.ae(current_node, target);
+				div_column._tree = node._tree;
+			}
+		}
+	}
+}
+
+
+/*beta-u-paymentcards.js*/
+u.paymentCards = new function() {
+	this.payment_cards = [
+		{
+			"type": 'maestro',
+			"patterns": [5018, 502, 503, 506, 56, 58, 639, 6220, 67],
+			"format": /([\d]{1,4})([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?/,
+			"card_length": [12,13,14,15,16,17,18,19],
+			"cvc_length": [3],
+			"luhn": true
+		},
+		{
+			"type": 'forbrugsforeningen',
+			"patterns": [600],
+			"format": /([\d]{1,4})([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?/,
+			"card_length": [16],
+			"cvc_length": [3],
+			"luhn": true,
+		},
+		{
+			"type": 'dankort',
+			"patterns": [5019],
+			"format": /([\d]{1,4})([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?/,
+			"card_length": [16],
+			"cvc_length": [3],
+			"luhn": true
+		},
+		{
+			"type": 'visa',
+			"patterns": [4],
+			"format": /([\d]{1,4})([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?/,
+			"card_length": [13, 16],
+			"cvc_length": [3],
+			"luhn": true
+		},
+		{
+			"type": 'mastercard',
+			"patterns": [51, 52, 53, 54, 55, 22, 23, 24, 25, 26, 27],
+			"format": /([\d]{1,4})([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?/,
+			"card_length": [16],
+			"cvc_length": [3],
+			"luhn": true
+		},
+		{
+			"type": 'amex',
+			"patterns": [34, 37],
+			"format": /(\d{1,4})([\d]{0,6})?(\d{1,5})?/,
+			"card_length": [15],
+			"cvc_length": [3,4],
+			"luhn": true
+		}
+	];
+	this.validateCardNumber = function(card_number) {
+		var card = this.getCardTypeFromNumber(card_number);
+		if(card && parseInt(card_number) == card_number) {
+			var i, allowed_length;
+			for(i = 0; i < card.card_length.length; i++) {
+				allowed_length = card.card_length[i];
+				if(card_number.length == allowed_length) {
+					if(card.luhn) {
+						return this.luhnCheck(card_number);
+					}
+					else {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	this.validateExpDate = function(month, year) {
+		if(
+			this.validateExpMonth(month) && 
+			this.validateExpYear(year) && 
+			new Date(year, month-1) >= new Date(new Date().getFullYear(), new Date().getMonth())
+		) {
+			return true;
+		}
+		return false;
+	}
+	this.validateExpMonth = function(month) {
+		if(month && parseInt(month) == month && month >= 1 && month <= 12) {
+			return true;
+		}
+		return false;
+	}
+	this.validateExpYear = function(year) {
+		if(year && parseInt(year) == year && new Date(year, 0) >= new Date(new Date().getFullYear(), 0)) {
+			return true;
+		}
+		return false;
+	}
+	this.validateCVC = function(cvc, card_number) {
+		var cvc_length = [3,4];
+		if(card_number && parseInt(card_number) == card_number) {
+			var card = this.getCardTypeFromNumber(card_number);
+			if(card) {
+				cvc_length = card.cvc_length;
+			}
+		}
+		if(cvc && parseInt(cvc) == cvc) {
+			var i, allowed_length;
+			for(i = 0; i < cvc_length.length; i++) {
+				allowed_length = cvc_length[i];
+				if(cvc.toString().length == allowed_length) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	this.getCardTypeFromNumber = function(card_number) {
+		var i, j, card, pattern, regex;
+		for(i = 0; card = this.payment_cards[i]; i++) {
+			for(j = 0; j < card.patterns.length; j++) {
+				pattern = card.patterns[j];
+				if(card_number.match('^' + pattern)) {
+					return card;
+				}
+			}
+		}
+		return false;
+	}
+	this.formatCardNumber = function(card_number) {
+		var card = this.getCardTypeFromNumber(card_number);
+		if(card) {
+			var matches = card_number.match(card.format);
+			if(matches) {
+				var matched_text = matches[0];
+				matches.shift(); 
+				var unmatched_suffix = card_number.slice(matched_text.length);
+				matches.push(unmatched_suffix);
+				card_number = matches.join(" ").trim().replace(/ +/g, " ");
+			}
+		}
+		return card_number;
+	}
+	this.luhnCheck = function(card_number) {
+		var ca, sum = 0, mul = 1;
+		var len = card_number.length;
+		while (len--) {
+			ca = parseInt(card_number.charAt(len),10) * mul;
+			sum += ca - (ca>9)*9;
+			mul ^= 3;
+		};
+		return (sum%10 === 0) && (sum > 0);
+	};
+}
+
+
+/*beta-u-form-onebuttonform.js*/
+Util.Modules["oneButtonForm"] = new function() {
+	this.init = function(node) {
+		if(!node.childNodes.length) {
+			var csrf_token = node.getAttribute("data-csrf-token");
+			if(csrf_token) {
+				if(node.nodeName.toLowerCase() === "form") {
+					node._ob_form = node;
+				}
+				else {
+					var form_action = node.getAttribute("data-form-action");
+					var form_target = node.getAttribute("data-form-target");
+					if(form_action) {
+						var form_options = {"action":form_action, "class":"confirm_action_form"};
+						if(form_target) {
+							form_options["target"] = form_target;
+						}
+						node._ob_form = u.f.addForm(node, form_options);
+					}
+					else {
+						u.bug("oneButtonForm missin information");
+						return;
+					}
+				}
+				u.ae(node._ob_form, "input", {"type":"hidden","name":"csrf-token", "value":csrf_token});
+				var inputs = node.getAttribute("data-inputs");
+				if(inputs) {
+					inputs = JSON.parse(inputs);
+					for(input_name in inputs) {
+						u.ae(node._ob_form, "input", {"type":"hidden","name":input_name, "value":inputs[input_name]});
+					}
+				}
+				var button_value = node.getAttribute("data-button-value");
+				var button_name = node.getAttribute("data-button-name");
+				var button_class = node.getAttribute("data-button-class");
+				u.f.addAction(node._ob_form, {"value":button_value, "class":"button" + (button_class ? " "+button_class : ""), "name":u.stringOr(button_name, "save")});
+			}
+		}
+		else {
+			if(node.nodeName.toLowerCase() === "form") {
+				node._ob_form = node;
+			}
+			else {
+				node._ob_form = u.qs("form", node);
+			}
+		}
+		if(node._ob_form) {
+			u.f.init(node._ob_form);
+			node._ob_form._ob_node = node;
+			node._ob_form._ob_submit_button = u.qs("input[type=submit]", node._ob_form);
+			if(u.objectValues(node._ob_form.actions).indexOf(node._ob_form._ob_submit_button) === -1) {
+				u.f.initButton(node._ob_form, node._ob_form._ob_submit_button);
+			}
+			node._ob_form._ob_submit_button.org_value = node._ob_form._ob_submit_button.value;
+			node._ob_form._ob_submit_button.confirm_value = node.getAttribute("data-confirm-value");
+			node._ob_form._ob_submit_button.wait_value = node.getAttribute("data-wait-value");
+			node._ob_form._ob_success_function = node.getAttribute("data-success-function");
+			node._ob_form._ob_success_location = node.getAttribute("data-success-location");
+			node._ob_form._ob_error_function = node.getAttribute("data-error-function");
+			node._ob_form._ob_dom_submit = node.getAttribute("data-dom-submit");
+			node._ob_form._ob_download = node.getAttribute("data-download");
+			node._ob_form.restore = function(event) {
+				u.t.resetTimer(this.t_confirm);
+				u.rc(this._ob_submit_button, "confirm");
+				delete this._ob_submit_button._ob_wait_for_confirm;
+				this._ob_submit_button.value = this._ob_submit_button.org_value;
+			}
+			node._ob_form.submitted = function(action) {
+				if(!this._ob_submit_button._ob_wait_for_confirm && this._ob_submit_button.confirm_value) {
+					u.ac(this._ob_submit_button, "confirm");
+					this._ob_submit_button._ob_wait_for_confirm = true;
+					this._ob_submit_button.value = this._ob_submit_button.confirm_value;
+					this.t_confirm = u.t.setTimer(this, this.restore, 3000);
+				}
+				else {
+					u.t.resetTimer(this.t_confirm);
+					this.response = function(response) {
+						u.rc(this, "submitting");
+						u.rc(this._ob_submit_button, "disabled");
+						if(obj(page) && fun(page.notify)) {
+							page.notify(response);
+						}
+						else if(obj(app) && fun(app.notify)) {
+							app.notify(response);
+						}
+						this.restore();
+						if(!response.cms_status || response.cms_status == "success") {
+							if(response.cms_object && response.cms_object.constraint_error) {
+								this._ob_submit_button.value = this._ob_submit_button.org_value;
+								u.ac(this, "disabled");
+							}
+							else {
+								if(this._ob_success_location) {
+									u.ass(this._ob_submit_button, {
+										"display": "none"
+									});
+									location.href = this._ob_success_location;
+								}
+								else if(this._ob_success_function) {
+									if(fun(this._ob_node[this._ob_success_function])) {
+										this._ob_node[this._ob_success_function](response);
+									}
+								}
+								else if(fun(this._ob_node.confirmed)) {
+									this._ob_node.confirmed(response);
+								}
+								else {
+									u.bug("default return handling" + this._ob_success_location)
+								}
+							}
+						}
+						else {
+							if(this._ob_error_function) {
+								u.bug("error function:" + this._ob_error_function);
+								if(fun(this._ob_node[this._ob_error_function])) {
+									this._ob_node[this._ob_error_function](response);
+								}
+							}
+							else if(fun(this._ob_node.confirmedError)) {
+								u.bug("confirmedError");
+								this._ob_node.confirmedError(response);
+							}
+						}
+					}
+					u.ac(this._ob_submit_button, "disabled");
+					u.ac(this, "submitting");
+					this._ob_submit_button.value = u.stringOr(this._ob_submit_button.wait_value, "Wait");
+					if(this._ob_dom_submit) {
+						u.bug("should submit:" + this._ob_download);
+						if(this._ob_download) {
+							this.response({"cms_status":"success"});
+							u.bug("wait for download");
+						}
+						this.DOMsubmit();
+					}
+					else {
+						u.request(this, this.action, {"method":"post", "data":this.getData()});
+					}
+				}
+			}
+		}
+	}
+}
+
+/*beta-u-animation-to.js*/
+	u.a.parseSVGPolygon = function(value) {
+		var pairs = value.trim().split(" ");
+		var sets = [];
+		var part;
+		for(x in pairs) {
+			parts = pairs[x].trim().split(",");
+			for(part in parts) {
+				parts[part] = Number(parts[part]);
+			}
+			sets[x] = parts;
+		}
+		return sets;
+	}
+	u.a.parseSVGPath = function(value) {
+		var pairs = {"m":2, "l":2, "a":7, "c":6, "s":4, "q":4, "z":0};
+		var x, sets;
+		value = value.replace(/-/g, " -");
+		value = value.replace(/,/g, " ");
+		value = value.replace(/(m|l|a|c|s|q|M|L|A|C|S|Q)/g, " $1 ");
+		value = value.replace(/  /g, " ");
+		sets = value.match(/(m|l|a|c|s|q|M|L|A|C|S|Q)([0-9 \-\.]+)/g);
+		for(x in sets) {
+			parts = sets[x].trim().split(" ");
+			sets[x] = parts;
+			if(parts && pairs[parts[0].toLowerCase()] == parts.length-1) {
+			}
+			else {
+			}
+		}
+		return sets;
+	}
+	u.a.getInitialValue = function(node, attribute) {
+		var value = (node.getAttribute(attribute) ? node.getAttribute(attribute) : u.gcs(node, attribute)).replace(node._unit[attribute], "")
+		if(attribute.match(/^(d|points)$/)) {
+			return value;
+		}
+		else {
+			return Number(value.replace(/auto/, 0));
+		}
+	}
+	u.a.to = function(node, transition, attributes) {
+		var transition_parts = transition.split(" ");
+		if(transition_parts.length >= 3) {
+			node._target = transition_parts[0];
+			node.duration = transition_parts[1].match("ms") ? parseFloat(transition_parts[1]) : (parseFloat(transition_parts[1]) * 1000);
+			node._ease = transition_parts[2];
+			if(transition_parts.length == 4) {
+				node.delay = transition_parts[3].match("ms") ? parseFloat(transition_parts[3]) : (parseFloat(transition_parts[3]) * 1000);
+			}
+		}
+		var value, d;
+		node._start = {};
+		node._end = {};
+		node._unit = {};
+		for(attribute in attributes) {
+			if(attribute.match(/^(d)$/)) {
+				node._start[attribute] = this.parseSVGPath(this.getInitialValue(node, attribute));
+				node._end[attribute] = this.parseSVGPath(attributes[attribute]);
+			}
+			else if(attribute.match(/^(points)$/)) {
+				node._start[attribute] = this.parseSVGPolygon(this.getInitialValue(node, attribute));
+				node._end[attribute] = this.parseSVGPolygon(attributes[attribute]);
+			}
+			else {
+				node._unit[attribute] = attributes[attribute].toString().match(/\%|px/);
+				node._start[attribute] = this.getInitialValue(node, attribute);
+				node._end[attribute] = attributes[attribute].toString().replace(node._unit[attribute], "");
+			}
+		}
+		node.easing = u.easings[node._ease];
+		node.transitionTo = function(progress) {
+			var easing = node.easing(progress);
+			for(attribute in attributes) {
+				if(attribute.match(/^(translate|rotate|scale)$/)) {
+					if(attribute == "translate") {
+						u.a.translate(this, Math.round((this._end_x - this._start_x) * easing), Math.round((this._end_y - this._start_y) * easing))
+					}
+					else if(attribute == "rotate") {
+					}
+				}
+				else if(attribute.match(/^(x1|y1|x2|y2|r|cx|cy|stroke-width)$/)) {
+					var new_value = (this._start[attribute] + ((this._end[attribute] - this._start[attribute]) * easing)) +  this._unit[attribute]
+					this.setAttribute(attribute, new_value);
+				}
+				else if(attribute.match(/^(d)$/)) {
+					var new_value = "";
+					for(x in this._start[attribute]) {
+						for(y in this._start[attribute][x]) {
+							if(parseFloat(this._start[attribute][x][y]) == this._start[attribute][x][y]) {
+								new_value += (Number(this._start[attribute][x][y]) + ((Number(this._end[attribute][x][y]) - Number(this._start[attribute][x][y])) * easing)) + " ";
+							}
+							else {
+								new_value += this._end[attribute][x][y] + " ";
+							}
+						}
+					}
+					this.setAttribute(attribute, new_value);
+				}
+				else if(attribute.match(/^(points)$/)) {
+					var new_value = "";
+					for(x in this._start[attribute]) {
+						new_value += (this._start[attribute][x][0] + ((this._end[attribute][x][0] - this._start[attribute][x][0]) * easing)) + ",";
+						new_value += (this._start[attribute][x][1] + ((this._end[attribute][x][1] - this._start[attribute][x][1]) * easing)) + " ";
+					}
+					this.setAttribute(attribute, new_value);
+				}
+				else {
+					var new_value = (this._start[attribute] + ((this._end[attribute] - this._start[attribute]) * easing)) +  this._unit[attribute]
+					u.as(node, attribute, new_value, false);
+				}
+			}
+		}
+		u.a.requestAnimationFrame(node, "transitionTo", node.duration);
+	}
+
+
+/*beta-u-fontsready.js*/
 u.fontsReady = function(node, fonts, _options) {
 	var callback_loaded = "fontsLoaded";
 	var callback_timeout = "fontsNotLoaded";
@@ -4481,830 +5255,6 @@ u.fontsReady = function(node, fonts, _options) {
 		window["_man_fonts_"+loadkey].checkFontsFallback();
 	}
 }
-u.notifier = function(node) {
-	var notifications = u.qs("div.notifications", node);
-	if(!notifications) {
-		node.notifications = u.ae(node, "div", {"id":"notifications"});
-	}
-	node.notifications.hide_delay = 4500;
-	node.notifications.hide = function(node) {
-		u.a.transition(this, "all 0.5s ease-in-out");
-		u.a.translate(this, 0, -this.offsetHeight);
-	}
-	node.notify = function(response, _options) {
-		var class_name = "message";
-		if(obj(_options)) {
-			var argument;
-			for(argument in _options) {
-				switch(argument) {
-					case "class"	: class_name	= _options[argument]; break;
-				}
-			}
-		}
-		var output = [];
-		if(obj(response) && response.isJSON) {
-			var message = response.cms_message;
-			var cms_status = typeof(response.cms_status) != "undefined" ? response.cms_status : "";
-			if(obj(message)) {
-				for(type in message) {
-					if(str(message[type])) {
-						output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":message[type]}));
-					}
-					else if(obj(message[type]) && message[type].length) {
-						var node, i;
-						for(i = 0; i < message[type].length; i++) {
-							_message = message[type][i];
-							output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":_message}));
-						}
-					}
-				}
-			}
-			else if(str(message)) {
-				output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message}));
-			}
-			if(fun(this.notifications.show)) {
-				this.notifications.show();
-			}
-		}
-		else if(obj(response) && response.isHTML) {
-			var login = u.qs(".scene.login form", response);
-			var messages = u.qsa(".scene div.messages p", response);
-			if(login && !u.qs("#login_overlay")) {
-				this.autosave_disabled = true;
-				if(page.t_autosave) {
-					u.t.resetTimer(page.t_autosave);
-				}
-				var overlay = u.ae(document.body, "div", {"id":"login_overlay"});
-				overlay.node = this;
-				u.ae(overlay, login);
-				u.as(document.body, "overflow", "hidden");
-				var relogin = u.ie(login, "h1", {"class":"relogin", "html":(u.txt["relogin"] ? u.txt["relogin"] : "Your session expired")});
-				login.overlay = overlay;
-				u.ae(login, "input", {"type":"hidden", "name":"ajaxlogin", "value":"true"})
-				u.f.init(login);
-				login.inputs["username"].focus();
-				login.submitted = function() {
-					this.response = function(response) {
-						if(response.isJSON && response.cms_status == "success") {
-							var csrf_token = response.cms_object["csrf-token"];
-							var data_vars = u.qsa("[data-csrf-token]", page);
-							var input_vars = u.qsa("[name=csrf-token]", page);
-							var dom_vars = u.qsa("*", page);
-							var i, node;
-							for(i = 0; i < data_vars.length; i++) {
-								node = data_vars[i];
-								node.setAttribute("data-csrf-token", csrf_token);
-							}
-							for(i = 0; i < input_vars.length; i++) {
-								node = input_vars[i];
-								node.value = csrf_token;
-							}
-							for(i = 0; i < dom_vars.length; i++) {
-								node = dom_vars[i];
-								if(node.csrf_token) {
-									node.csrf_token = csrf_token;
-								}
-							}
-							this.overlay.parentNode.removeChild(this.overlay);
-							var multiple_overlays = u.qsa("#login_overlay");
-							if(multiple_overlays) {
-								for(i = 0; i < multiple_overlays.length; i++) {
-									overlay = multiple_overlays[i];
-									overlay.parentNode.removeChild(overlay);
-								}
-							}
-							u.as(document.body, "overflow", "auto");
-							this.overlay.node.autosave_disabled = false;
-							if(this.overlay.node._autosave_node && this.overlay.node._autosave_interval) {
-								u.t.setTimer(this.overlay.node._autosave_node, "autosave", this.overlay.node._autosave_interval);
-							}
-						}
-						else {
-							this.inputs["username"].focus();
-							this.inputs["password"].val("");
-							var error_message = u.qs(".errormessage", response);
-							if(error_message) {
-								this.overlay.node.notify({"isJSON":true, "cms_status":"error", "cms_message":error_message.innerHTML});
-							}
-							else {
-								this.overlay.node.notify({"isJSON":true, "cms_status":"error", "cms_message":"An error occured"});
-							}
-						}
-					}
-					u.request(this, this.action, {"method":this.method, "data":this.getData()});
-				}
-			}
-			else if(messages) {
-				for(i = 0; i < messages.length; i++) {
-					message = messages[i];
-					output.push(u.ae(this.notifications, "div", {"class":message.className, "html":message.innerHTML}));
-				}
-			}
-		}
-		this.t_notifier = u.t.setTimer(this.notifications, this.notifications.hide, this.notifications.hide_delay, output);
-	}
-}
-u.smartphoneSwitch = new function() {
-	this.state = 0;
-	this.init = function(node) {
-		this.callback_node = node;
-		this.event_id = u.e.addWindowEvent(this, "resize", this.resized);
-		this.resized();
-	}
-	this.resized = function() {
-		if(u.browserW() < 520 && !this.state) {
-			this.switchOn();
-		}
-		else if(u.browserW() > 520 && this.state) {
-			this.switchOff();
-		}
-	}
-	this.switchOn = function() {
-		if(!this.panel) {
-			this.state = true;
-			this.panel = u.ae(document.body, "div", {"id":"smartphone_switch"});
-			u.ass(this.panel, {
-				opacity: 0
-			});
-			u.ae(this.panel, "h1", {html:u.stringOr(u.txt("smartphone-switch-headline"), "Hello curious")});
-			if(u.txt("smartphone-switch-text").length) {
-				for(i = 0; i < u.txt("smartphone-switch-text").length; i++) {
-					u.ae(this.panel, "p", {html:u.txt("smartphone-switch-text")[i]});
-				}
-			}
-			var ul_actions = u.ae(this.panel, "ul", {class:"actions"});
-			var li; 
-			li = u.ae(ul_actions, "li", {class:"hide"});
-			var bn_hide = u.ae(li, "a", {class:"hide button", html:u.txt("smartphone-switch-bn-hide")});
-			li = u.ae(ul_actions, "li", {class:"switch"});
-			var bn_switch = u.ae(li, "a", {class:"switch button primary", html:u.txt("smartphone-switch-bn-switch")});
-			u.e.click(bn_switch);
-			bn_switch.clicked = function() {
-				u.saveCookie("smartphoneSwitch", "on");
-				location.href = location.href.replace(/[&]segment\=desktop|segment\=desktop[&]?/, "") + (location.href.match(/\?/) ? "&" : "?") + "segment=smartphone";
-			}
-			u.e.click(bn_hide);
-			bn_hide.clicked = function() {
-				u.e.removeWindowEvent(u.smartphoneSwitch, "resize", u.smartphoneSwitch.event_id);
-				u.smartphoneSwitch.switchOff();
-			}
-			u.a.transition(this.panel, "all 0.5s ease-in-out");
-			u.ass(this.panel, {
-				opacity: 1
-			});
-			if(this.callback_node && typeof(this.callback_node.smartphoneSwitchedOn) == "function") {
-				this.callback_node.smartphoneSwitchedOn();
-			}
-		}
-	}
-	this.switchOff = function() {
-		if(this.panel) {
-			this.state = false;
-			this.panel.transitioned = function() {
-				this.parentNode.removeChild(this);
-				delete u.smartphoneSwitch.panel;
-			}
-			u.a.transition(this.panel, "all 0.5s ease-in-out");
-			u.ass(this.panel, {
-				opacity: 0
-			});
-			if(this.callback_node && typeof(this.callback_node.smartphoneSwitchedOff) == "function") {
-				this.callback_node.smartphoneSwitchedOff();
-			}
-		}
-	}
-}
-Util.Modules["page"] = new function() {
-	this.init = function(page) {
-		u.bug_force = true;
-		u.bug("This site is built using the combined powers of body, mind and spirit. Well, and also Manipulator, Janitor and Detector");
-		if(document.domain !== "parentnode.dk") {
-			u.bug("Visit https://parentnode.dk for more information");
-		}
-		u.bug_force = false;
-		page.style_tag = document.createElement("style");
-		page.style_tag.setAttribute("media", "all");
-		page.style_tag.setAttribute("type", "text/css");
-		page.style_tag = u.ae(document.head, page.style_tag);
-		page.hN = u.qs("#header");
-		page.hN.service = u.qs("ul.servicenavigation", page.hN);
-		page.cN = u.qs("#content", page);
-		page.nN = u.qs("#navigation", page);
-		page.nN = u.ie(page.hN, page.nN);
-		page.fN = u.qs("#footer");
-		page.fN.service = u.qs("ul.servicenavigation", page.fN);
-		page.resized = function(event) {
-			page.browser_h = u.browserH();
-			page.browser_w = u.browserW();
-			page.available_height = page.browser_h - page.hN.offsetHeight - page.fN.offsetHeight;
-			u.as(page.cN, "min-height", "auto", false);
-			if(page.available_height >= page.cN.offsetHeight) {
-				u.as(page.cN, "min-height", page.available_height+"px", false);
-			}
-			if(page.browser_w > 1080) {
-				u.ac(page, "fixed");
-			}
-			else {
-				u.rc(page, "fixed");
-			}
-			if(page.cN && page.cN.scene && typeof(page.cN.scene.resized) == "function") {
-				page.cN.scene.resized(event);
-			}
-			page.offsetHeight;
-		}
-		page.scrolled = function(event) {
-			this.scrolled_y = u.scrollY();
-			if(fun(u.logoScroller)) {
-				u.logoScroller();
-			}
-			else {
-				if(this.scrolled_y < this.logo.top_offset) {
-					this.logo.is_reduced = false;
-					var reduce_font = (1-(this.logo.top_offset-this.scrolled_y)/this.logo.top_offset) * this.logo.font_size_gap;
-					this.logo.css_rule.style.setProperty("font-size", (this.logo.font_size-reduce_font)+"px", "important");
-				}
-				else if(!this.logo.is_reduced) {
-					this.logo.is_reduced = true;
-					this.logo.css_rule.style.setProperty("font-size", (this.logo.font_size-this.logo.font_size_gap)+"px", "important");
-				}
-			}
-			if(this.nN.top_offset && this.scrolled_y < this.nN.top_offset) {
-				this.nN.is_reduced = false;
-				var factor = (1-(this.nN.top_offset-this.scrolled_y)/this.nN.top_offset);
-				var reduce_font = factor * this.nN.font_size_gap;
-				this.nN.list.css_rule.style.setProperty("font-size", (this.nN.font_size-reduce_font)+"px", "important");
-				var reduce_top = factor * this.nN.top_offset_gap;
-				this.nN.css_rule.style.setProperty("top", (this.nN.top_offset-reduce_top)+"px", "important");
-			}
-			else if(this.nN.top_offset && !this.nN.is_reduced) {
-				this.nN.is_reduced = true;
-				this.nN.list.css_rule.style.setProperty("font-size", (this.nN.font_size-this.nN.font_size_gap)+"px", "important");
-				this.nN.css_rule.style.setProperty("top", (this.nN.top_offset-this.nN.top_offset_gap)+"px", "important");
-			}
-			if(this.cN && this.cN.scene && typeof(this.cN.scene.scrolled) == "function") {
-				this.cN.scene.scrolled(event);
-			}
-		}
-		page.preload = function() {
-			if(fun(u.pagePreloader)) {
-				u.pagePreloader();
-			}
-			else {
-				u.fontsReady(this, [
-					{"family":"OpenSans", "weight":"normal", "style":"normal"},
-					{"family":"OpenSans", "weight":"bold", "style":"normal"},
-					{"family":"OpenSans", "weight":"normal", "style":"italic"},
-					{"family":"PT Serif", "weight":"normal", "style":"normal"}
-				], {"callback": "ready"});
-			}
-		}
-		page.ready = function() {
-			if(!this.is_ready) {
-				this.is_ready = true;
-				u.e.addWindowEvent(this, "resize", this.resized);
-				u.e.addWindowEvent(this, "scroll", this.scrolled);
-				if(fun(u.notifier)) {
-					u.notifier(this);
-				}
-				if(obj(u.smartphoneSwitch)) {
-					u.smartphoneSwitch.init(this);
-				}
-				if(fun(u.navigation)) {
-					u.navigation();
-				}
-				this.initHeader();
-				this.initNavigation();
-				this.initFooter();
-				this.resized();
-				this.scrolled();
-				if(!fun(this.cN.scene.revealPage)) {
-					this.revealPage();
-				}
-				this.cN.scene.ready();
-			}
-		}
-		page.cN.navigate = function(url, raw_url) {
-			if(raw_url) {
-				location.reload(true);
-			}
-			else {
-				location.href = url;
-			}
-		}
-		page.acceptCookies = function() {
-			if(u.terms_version && !u.getCookie(u.terms_version)) {
-				var terms_link = u.qs("li.terms a");
-				if(terms_link && terms_link.href) {
-					var terms = u.ie(document.body, "div", {"class":"terms_notification"});
-					u.ae(terms, "h3", {"html":u.stringOr(u.txt["terms-headline"], "We love <br />cookies and privacy")});
-					var bn_accept = u.ae(terms, "a", {"class":"accept", "html":u.stringOr(u.txt["terms-accept"], "Accept")});
-					bn_accept.terms = terms;
-					u.ce(bn_accept);
-					bn_accept.clicked = function() {
-						this.terms.parentNode.removeChild(this.terms);
-						u.saveCookie(u.terms_version, true, {"path":"/", "expires":false});
-					}
-					if(!location.href.match(terms_link.href)) {
-						var bn_details = u.ae(terms, "a", {"class":"details", "html":u.stringOr(u.txt["terms-details"], "Details"), "href":terms_link.href});
-						u.ce(bn_details, {"type":"link"});
-					}
-					u.a.transition(terms, "all 0.5s ease-in");
-					u.ass(terms, {
-						"opacity": 1
-					});
-				}
-			}
-		}
-		page.initHeader = function() {
-			page.logo = u.ie(page.hN, "a", {"class":"logo", "html":u.eitherOr(u.site_name, "Frontpage")});
-			page.logo.url = '/';
-			page.logo.font_size = parseInt(u.gcs(page.logo, "font-size"));
-			page.logo.font_size_gap = page.logo.font_size-14;
-			page.logo.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
-			page.style_tag.sheet.insertRule("#header a.logo {}", 0);
-			page.logo.css_rule = page.style_tag.sheet.cssRules[0];
-		}
-		page.initNavigation = function() {
-			var i, node, nodes;
-			page.nN.list = u.qs("ul", page.nN);
-			if(page.nN.list) {
-				page.nN.list.nodes = u.qsa("li", page.nN.list);
-				if(page.nN.list.nodes.length > 1) {
-					page.nN.font_size = parseInt(u.gcs(page.nN.list.nodes[1], "font-size"));
-					page.nN.font_size_gap = page.nN.font_size-14;
-					page.nN.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
-					page.nN.top_offset_gap = page.nN.top_offset-10;
-					page.style_tag.sheet.insertRule("#navigation {}", 0);
-					page.nN.css_rule = page.style_tag.sheet.cssRules[0];
-					page.style_tag.sheet.insertRule("#navigation ul li {}", 0);
-					page.nN.list.css_rule = page.style_tag.sheet.cssRules[0];
-				}
-			}
-			nodes = u.qsa("#navigation li,a.logo", page.hN);
-			for(i = 0; node = nodes[i]; i++) {
-				u.ce(node, {"type":"link"});
-				u.e.hover(node);
-				node.over = function() {
-					u.a.transition(this, "none");
-					this.transitioned = function() {
-						this.transitioned = function() {
-							this.transitioned = function() {
-								u.a.transition(this, "none");
-							}
-							u.a.transition(this, "all 0.1s ease-in-out");
-							u.a.scale(this, 1.2);
-						}
-						u.a.transition(this, "all 0.1s ease-in-out");
-						u.a.scale(this, 1.15);
-					}
-					if(this._scale != 1.22) {
-						u.a.transition(this, "all 0.1s ease-in-out");
-						u.a.scale(this, 1.22);
-					}
-					else {
-						this.transitioned();
-					}
-				}
-				node.out = function() {
-					u.a.transition(this, "none");
-					this.transitioned = function() {
-						this.transitioned = function() {
-							u.a.transition(this, "none");
-						}
-						u.a.transition(this, "all 0.1s ease-in");
-						u.a.scale(this, 1);
-					}
-					if(this._scale != 0.8) {
-						u.a.transition(this, "all 0.1s ease-in");
-						u.a.scale(this, 0.8);
-					}
-					else {
-						this.transitioned();
-					}
-				}
-			}
-			if(page.hN.service) {
-				var nav_anchor = u.qs("li.navigation", page.hN.service);
-				if(nav_anchor) {
-					page.hN.service.removeChild(nav_anchor);
-				}
-			}
-			if(page.fN.service) {
-				nodes = u.qsa("li", page.fN.service);
-				for(i = 0; node = nodes[i]; i++) {
-					u.ie(page.hN.service, node);
-				}
-				page.fN.removeChild(page.fN.service);
-			}
-			if(u.github_fork) {
-				var github = u.ae(page.hN.service, "li", {"html":'<a href="'+u.github_fork.url+'">'+u.github_fork.text+'</a>', "class":"github"});
-				u.ce(github, {"type":"link"});
-			}
-			if(fun(u.logoInjected)) {
-				u.logoInjected();
-			}
-		}
-		page.initFooter = function() {}
-		page.revealPage = function() {
-			u.a.transition(page.hN, "all 0.3s ease-in");
-			u.ass(page.hN, {
-				"opacity":1
-			});
-			u.a.transition(page.nN, "all 0.3s ease-in");
-			u.ass(page.nN, {
-				"opacity":1
-			});
-			u.a.transition(page.fN, "all 0.3s ease-in");
-			u.ass(page.fN, {
-				"opacity":1
-			});
-			this.acceptCookies();
-		}
-		page.preload();
-	}
-}
-u.e.addDOMReadyEvent(u.init);
-Util.Modules["login"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			this._form = u.qs("form", this);
-			u.f.init(this._form);
-			this._form.inputs["username"].focus();
-			u.showScene(this);
-		}
-		page.cN.scene = scene;
-	}
-}
-Util.Modules["scene"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-			this.offsetHeight;
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			u.showScene(this);
-		}
-		page.cN.scene = scene;
-	}
-}
-Util.Modules["article"] = new function() {
-	this.init = function(article) {
-		article.csrf_token = article.getAttribute("data-csrf-token");
-		article.header = u.qs("h1,h2,h3", article);
-		article.header.article = article;
-		var i, image;
-		article._images = u.qsa("div.image,div.media", article);
-		for(i = 0; image = article._images[i]; i++) {
-			image.node = article;
-			image.caption = u.qs("p a", image);
-			if(image.caption) {
-				image.caption.removeAttribute("href");
-			}
-			image._id = u.cv(image, "item_id");
-			image._format = u.cv(image, "format");
-			image._variant = u.cv(image, "variant");
-			if(image._id && image._format) {
-				image._image_src = "/images/" + image._id + "/" + (image._variant ? image._variant+"/" : "") + "540x." + image._format;
-				u.ass(image, {
-					"opacity": 0
-				});
-				image.loaded = function(queue) {
-					u.ac(this, "loaded");
-					this._image = u.ie(this, "img");
-					this._image.image = this;
-					this._image.src = queue[0].image.src;
-					if(this.node.article_list) {
-						this.node.article_list.correctScroll(this);
-					}
-					u.ce(this._image);
-					this._image.clicked = function() {
-						if(u.hc(this.image, "fullsize")) {
-							u.a.transition(this, "all 0.3s ease-in-out");
-							u.rc(this.image, "fullsize");
-							u.ass(this, {
-								width: "540px"
-							});
-							this.src = this.image._image_src;
-						}
-						else {
-							u.a.transition(this, "all 0.3s ease-in-out");
-							u.ac(this.image, "fullsize");
-							u.ass(this, {
-								width: (page.browser_w < 1080 ? page.browser_w : 1080) + "px"
-							});
-							if(this._fullsize_src) {
-								u.bug("this._fullsize_src:", this._fullsize_src);
-								this.src = this._fullsize_src;
-							}
-							else {
-								this._fullsize_width = 1080;
-								this._fullsize_src = "/images/" + this.image._id + "/" + (this.image._variant ? this.image._variant+"/" : "") + this._fullsize_width + "x." + this.image._format;
-								this.response = function() {
-									this.src = this._fullsize_src;
-								}
-								this.responseError = function() {
-									u.bug("error")
-									this._fullsize_width = this._fullsize_width-200;
-									this._fullsize_src = "/images/" + this.image._id + "/" + (this.image._variant ? this.image._variant+"/" : "") + this._fullsize_width + "x." + this.image._format;
-									u.request(this, this._fullsize_src);
-								}
-								u.request(this, this._fullsize_src);
-							}
-						}
-					}
-					u.a.transition(this, "all 0.5s ease-in-out");
-					u.ass(this, {
-						"opacity": 1
-					});
-				}
-				u.preloader(image, [image._image_src]);
-			}
-		}
-		var video;
-		article._videos = u.qsa("div.youtube, div.vimeo", article);
-		for (i = 0; video = article._videos[i]; i++) {
-			video._src = u.cv(video, "video_id");
-			video._type = video._src.match(/youtube|youtu\.be/) ? "youtube" : "vimeo";
-			if (video._type == "youtube") {
-				video._id = video._src.match(/watch\?v\=/) ? video._src.split("?v=")[1] : video._src.split("/")[video._src.split("/").length-1];
-				video.iframe = u.ae(video, "iframe", {
-					id: "ytplayer",
-					type: "text/html",
-					webkitallowfullscreen: true,
-					mozallowfullscreen: true,
-					allowfullscreen: true,
-					frameborder: 0,
-					allow: "autoplay",
-					sandbox:"allow-same-origin allow-scripts",
-					width: "100%",
-					height: 540 / 1.7777,
-					src: 'https://www.youtube.com/embed/'+video._id+'?autoplay=false&loop=0&color=f0f0ee&modestbranding=1&rel=0&playsinline=1',
-				});
-			}
-			else {
-				video._id = video._src.split("/")[video._src.split("/").length-1];
-				video.iframe = u.ae(video, "iframe", {
-					webkitallowfullscreen: true,
-					mozallowfullscreen: true,
-					allowfullscreen: true,
-					frameborder: 0,
-					sandbox:"allow-same-origin allow-scripts",
-					width: "100%",
-					height: 540 / 1.7777,
-					src: 'https://player.vimeo.com/video/'+video._id+'?autoplay=false&loop=0&byline=0&portrait=0',
-				});
-			}
-		}
-		article.geolocation = u.qs("ul.geo", article);
-		if(article.geolocation && typeof(u.injectGeolocation) == "function") {
-			u.injectGeolocation(article);
-		}
-		var hardlink = u.qs("li.main_entity.share", article);
-		article.hardlink = hardlink ? (hardlink.hasAttribute("content") ? hardlink.getAttribute("content") : hardlink.innerHTML) : false;
-		if(article.hardlink && typeof(u.injectSharing) == "function") {
-			article.shareInjected = function() {
-				if(this.article_list) {
-					this.article_list.correctScroll(this, this.sharing);
-				}
-			}
-			u.injectSharing(article);
-		}
-		article.header.current_readstate = article.getAttribute("data-readstate");
-		article.add_readstate_url = article.getAttribute("data-readstate-add");
-		article.delete_readstate_url = article.getAttribute("data-readstate-delete");
-		if(article.header.current_readstate || (article.add_readstate_url && article.delete_readstate_url)) {
-			u.addCheckmark(article.header);
-			u.ce(article.header.checkmark);
-			article.header.checkmark.clicked = function(event) {
-				this.out(event);
-				if(this.node.current_readstate) {
-					this.response = function(response) {
-						if(response.cms_status == "success" && response.cms_object) {
-							this.setAttribute("class", "checkmark not_read");
-							this.node.current_readstate = false;
-							this.node.article.setAttribute("data-readstate", "");
-							this.hint_txt = u.txt["readstate-not_read"];
-						}
-					}
-					u.request(this, this.node.article.delete_readstate_url, {"method":"post", "params":"csrf-token="+this.node.article.csrf_token+"&item_id"});
-				}
-				else {
-					this.response = function(response) {
-						if(response.cms_status == "success" && response.cms_object) {
-							this.setAttribute("class", "checkmark read");
-							this.node.current_readstate = new Date();
-							this.node.article.setAttribute("data-readstate", this.node.current_readstate);
-							this.hint_txt = u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", this.node.current_readstate);
-						}
-					}
-					u.request(this, this.node.article.add_readstate_url, {"method":"post", "params":"csrf-token="+this.node.article.csrf_token});
-				}
-			}
-		}
-	}
-}
-u.injectGeolocation = function(node) {
-	if(!u.browser("IE", "<=9")) {
-		node.geolocation.node = node;
-		var li_longitude = u.qs("li.longitude", node.geolocation);
-		var li_latitude = u.qs("li.latitude", node.geolocation);
-		if(li_longitude && li_latitude) {
-			node.geo_longitude = parseFloat(li_longitude.getAttribute("content"));
-			node.geo_latitude = parseFloat(li_latitude.getAttribute("content"));
-			node.showMap = function() {
-				if(!this.geomap) {
-					this.geomap = u.ae(this, "div", {"class":"geomap"});
-					this.insertBefore(this.geomap, u.qs("ul.info", this));
-					var maps_url = "https://maps.googleapis.com/maps/api/js" + (u.gapi_key ? "?key="+u.gapi_key : "");
-					var html = '<html><head>';
-					html += '<style type="text/css">body {margin: 0;}#map {height: 300px;}</style>';
-					html += '<script type="text/javascript" src="'+maps_url+'"></script>';
-					html += '<script type="text/javascript">';
-					html += 'var map, marker;';
-					html += 'var initialize = function() {';
-					html += '	window._map_loaded = true;';
-					html += '	var mapOptions = {center: new google.maps.LatLng('+this.geo_latitude+', '+this.geo_longitude+'),zoom: 12};';
-					html += '	map = new google.maps.Map(document.getElementById("map"),mapOptions);';
-					html += '	marker = new google.maps.Marker({position: new google.maps.LatLng('+this.geo_latitude+', '+this.geo_longitude+'), draggable:true});';
-					html += '	marker.setMap(map);';
-					html += '};';
-					html += 'google.maps.event.addDomListener(window, "load", initialize);';
-					html += '</script>';
-					html += '</head><body><div id="map"></div></body></html>';
-					this.mapsiframe = u.ae(this.geomap, "iframe");
-					this.mapsiframe.doc = this.mapsiframe.contentDocument? this.mapsiframe.contentDocument: this.mapsiframe.contentWindow.document;
-					this.mapsiframe.doc.open();
-					this.mapsiframe.doc.write(html);
-					this.mapsiframe.doc.close();
-				}
-			}
-			node.geolocation.clicked = function() {
-				this.node.showMap();
-			}
-			u.ce(node.geolocation);
-			u.ac(node.geolocation, "active");
-		}
-	}
-}
-u.addCheckmark = function(node) {
-	node.checkmark = u.svg({
-		"name":"checkmark",
-		"node":node,
-		"class":"checkmark "+(node.current_readstate ? "read" : "not_read"),
-		"width":17,
-		"height":17,
-		"shapes":[
-			{
-				"type": "line",
-				"x1": 2,
-				"y1": 8,
-				"x2": 7,
-				"y2": 15
-			},
-			{
-				"type": "line",
-				"x1": 6,
-				"y1": 15,
-				"x2": 12,
-				"y2": 2
-			}
-		]
-	});
-	node.checkmark.hint_txt = (node.current_readstate ? (u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", node.current_readstate)) : u.txt["readstate-not_read"]),
-	node.checkmark.node = node;
-	u.e.hover(node.checkmark);
-	node.checkmark.over = function(event) {
-		this.hint = u.ae(document.body, "div", {"class":"hint", "html":this.hint_txt});
-		u.ass(this.hint, {
-			"top":(u.absY(this.parentNode)+parseInt(u.gcs(this, "top"))+(Number(this.getAttribute("height")))) + "px",
-			"left":(u.absX(this.parentNode)+parseInt(u.gcs(this, "left"))+Number(this.getAttribute("width"))) + "px"
-		});
-	}
-	node.checkmark.out = function(event) {
-		if(this.hint) {
-			this.hint.parentNode.removeChild(this.hint);
-			delete this.hint;
-		}
-	}
-}
-u.removeCheckmark = function(node) {
-	if(node.checkmark.hint) {
-		node.checkmark.hint.parentNode.removeChild(node.checkmark.hint);
-	}
-	if(node.checkmark) {
-		node.checkmark.parentNode.removeChild(node.checkmark);
-		node.checkmark = false;
-	}
-}
-
-
-/*u-settings.js*/
-u.site_name = "think.dk";
-u.terms_version = "terms_v1";
-u.ga_account = 'UA-10756281-1';
-u.ga_domain = 'think.dk';
-u.gapi_key = "AIzaSyAVqnYpqFln-qAYsp5rkEGs84mrhmGQB_I";
-u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/memberships">Join us</a> to add comments.';
-u.txt["weekday-1"] = "Monday";
-u.txt["weekday-2"] = "Tuesday";
-u.txt["weekday-3"] = "Wednesday";
-u.txt["weekday-4"] = "Thursday";
-u.txt["weekday-5"] = "Friday";
-u.txt["weekday-6"] = "Saturday";
-u.txt["weekday-7"] = "Sunday";
-u.txt["weekday-1-abbr"] = "Mon";
-u.txt["weekday-2-abbr"] = "Tue";
-u.txt["weekday-3-abbr"] = "Wed";
-u.txt["weekday-4-abbr"] = "Thu";
-u.txt["weekday-5-abbr"] = "Fri";
-u.txt["weekday-6-abbr"] = "Sat";
-u.txt["weekday-7-abbr"] = "Sun";
-u.txt["month-1"] = "January";
-u.txt["month-2"] = "February";
-u.txt["month-3"] = "Marts";
-u.txt["month-4"] = "April";
-u.txt["month-5"] = "May";
-u.txt["month-6"] = "June";
-u.txt["month-7"] = "July";
-u.txt["month-8"] = "August";
-u.txt["month-9"] = "September";
-u.txt["month-10"] = "October";
-u.txt["month-11"] = "November";
-u.txt["month-12"] = "December";
-
-
-/*u-googleanalytics.js*/
-if(u.ga_account) {
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.defer=true;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', u.ga_account, u.ga_domain);
-    ga('send', 'pageview');
-	u.stats = new function() {
-		this.pageView = function(url) {
-			ga('send', 'pageview', url);
-		}
-		this.event = function(node, _options) {
-			var event = false;
-			var eventCategory = "Uncategorized";
-			var eventAction = null;
-			var eventLabel = null;
-			var eventValue = null;
-			var nonInteraction = false;
-			var hitCallback = null;
-			if(obj(_options)) {
-				var _argument;
-				for(_argument in _options) {
-					switch(_argument) {
-						case "event"				: event					= _options[_argument]; break;
-						case "eventCategory"		: eventCategory			= _options[_argument]; break;
-						case "eventAction"			: eventAction			= _options[_argument]; break;
-						case "eventLabel"			: eventLabel			= _options[_argument]; break;
-						case "eventValue"			: eventValue			= _options[_argument]; break;
-						case "nonInteraction"		: nonInteraction		= _options[_argument]; break;
-						case "hitCallback"			: hitCallback			= _options[_argument]; break;
-					}
-				}
-			}
-			if(!eventAction && event && event.type) {
-				eventAction = event.type;
-			}
-			else if(!eventAction) {
-				eventAction = "Unknown";
-			}
-			if(!eventLabel && event && event.currentTarget && event.currentTarget.url) {
-				eventLabel = event.currentTarget.url;
-			}
-			else if(!eventLabel) {
-				eventLabel = this.nodeSnippet(node);
-			}
-			ga('send', 'event', {
-				"eventCategory": eventCategory, 
-				"eventAction": eventAction,
-				"eventLabel": eventLabel,
-				"eventValue": eventValue,
-				"nonInteraction": nonInteraction,
-				"hitCallback": hitCallback
-			});
-		}
-		// 	
-		// 	//       slot,		
-		// 	//       name,		
-		// 	//       value,	
-		// 	//       scope		
-		// 	
-		this.nodeSnippet = function(node) {
-			return u.cutString(u.text(node).trim(), 20) + "(<"+node.nodeName+">)";
-		}
-	}
-}
-
 
 /*u-media.js*/
 Util.audioPlayer = function(_options) {
@@ -5799,7 +5749,8 @@ u.detectMediaAutoplay = function(player) {
 		u.e.addEvent(u.test_autoplay, "playing", u.test_autoplay.playing);
 		u.e.addEvent(u.test_autoplay, "error", u.test_autoplay.error);
 		if(u.test_autoplay.canPlayType("video/mp4")) {
-			var data = "data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDEAAAAIZnJlZQAAAxJtZGF0AAACoAYF//+c3EXpvebZSLeWLNgg2SPu73gyNjQgLSBjb3JlIDE1NyAtIEguMjY0L01QRUctNCBBVkMgY29kZWMgLSBDb3B5bGVmdCAyMDAzLTIwMTggLSBodHRwOi8vd3d3LnZpZGVvbGFuLm9yZy94MjY0Lmh0bWwgLSBvcHRpb25zOiBjYWJhYz0xIHJlZj0zIGRlYmxvY2s9MTowOjAgYW5hbHlzZT0weDM6MHgxMTMgbWU9aGV4IHN1Ym1lPTcgcHN5PTEgcHN5X3JkPTEuMDA6MC4wMCBtaXhlZF9yZWY9MSBtZV9yYW5nZT0xNiBjaHJvbWFfbWU9MSB0cmVsbGlzPTEgOHg4ZGN0PTEgY3FtPTAgZGVhZHpvbmU9MjEsMTEgZmFzdF9wc2tpcD0xIGNocm9tYV9xcF9vZmZzZXQ9LTIgdGhyZWFkcz0xIGxvb2thaGVhZF90aHJlYWRzPTEgc2xpY2VkX3RocmVhZHM9MCBucj0wIGRlY2ltYXRlPTEgaW50ZXJsYWNlZD0wIGJsdXJheV9jb21wYXQ9MCBjb25zdHJhaW5lZF9pbnRyYT0wIGJmcmFtZXM9MyBiX3B5cmFtaWQ9MiBiX2FkYXB0PTEgYl9iaWFzPTAgZGlyZWN0PTEgd2VpZ2h0Yj0xIG9wZW5fZ29wPTAgd2VpZ2h0cD0yIGtleWludD0yNTAga2V5aW50X21pbj0yNSBzY2VuZWN1dD00MCBpbnRyYV9yZWZyZXNoPTAgcmNfbG9va2FoZWFkPTQwIHJjPWNyZiBtYnRyZWU9MSBjcmY9MjMuMCBxY29tcD0wLjYwIHFwbWluPTAgcXBtYXg9NjkgcXBzdGVwPTQgaXBfcmF0aW89MS40MCBhcT0xOjEuMDAAgAAAABpliIQAM//+9uy+BTYUyFCXESoMDuxA1w9RcQAAAAlBmiJsQr/+RRgAAAAIAZ5BeQr/IeHeAgBMYXZjNTguMzUuMTAwAEIgCMEYOCEQBGCMHCEQBGCMHCEQBGCMHCEQBGCMHAAABXNtb292AAAAbG12aGQAAAAAAAAAAAAAAAAAAAPoAAAAeAABAAABAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAACb3RyYWsAAABcdGtoZAAAAAMAAAAAAAAAAAAAAAEAAAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAEAAAAAAMAAAADAAAAAAACRlZHRzAAAAHGVsc3QAAAAAAAAAAQAAAHgAAAQAAAEAAAAAAedtZGlhAAAAIG1kaGQAAAAAAAAAAAAAAAAAADIAAAAGAFXEAAAAAAAtaGRscgAAAAAAAAAAdmlkZQAAAAAAAAAAAAAAAFZpZGVvSGFuZGxlcgAAAAGSbWluZgAAABR2bWhkAAAAAQAAAAAAAAAAAAAAJGRpbmYAAAAcZHJlZgAAAAAAAAABAAAADHVybCAAAAABAAABUnN0YmwAAACmc3RzZAAAAAAAAAABAAAAlmF2YzEAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAMAAwAEgAAABIAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY//8AAAAwYXZjQwFkAAr/4QAXZ2QACqzZTewEQAAAAwBAAAAMg8SJZYABAAZo6+PLIsAAAAAQcGFzcAAAAAEAAAABAAAAGHN0dHMAAAAAAAAAAQAAAAMAAAIAAAAAFHN0c3MAAAAAAAAAAQAAAAEAAAAoY3R0cwAAAAAAAAADAAAAAQAABAAAAAABAAAGAAAAAAEAAAIAAAAAHHN0c2MAAAAAAAAAAQAAAAEAAAADAAAAAQAAACBzdHN6AAAAAAAAAAAAAAADAAACwgAAAA0AAAAMAAAAFHN0Y28AAAAAAAAAAQAAADAAAAIudHJhawAAAFx0a2hkAAAAAwAAAAAAAAAAAAAAAgAAAAAAAAB1AAAAAAAAAAAAAAABAQAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAJGVkdHMAAAAcZWxzdAAAAAAAAAABAAAAdQAAAAAAAQAAAAABpm1kaWEAAAAgbWRoZAAAAAAAAAAAAAAAAAAArEQAABQAVcQAAAAAAC1oZGxyAAAAAAAAAABzb3VuAAAAAAAAAAAAAAAAU291bmRIYW5kbGVyAAAAAVFtaW5mAAAAEHNtaGQAAAAAAAAAAAAAACRkaW5mAAAAHGRyZWYAAAAAAAAAAQAAAAx1cmwgAAAAAQAAARVzdGJsAAAAZ3N0c2QAAAAAAAAAAQAAAFdtcDRhAAAAAAAAAAEAAAAAAAAAAAACABAAAAAArEQAAAAAADNlc2RzAAAAAAOAgIAiAAIABICAgBRAFQAAAAAAEX4AAAymBYCAgAISEAaAgIABAgAAABhzdHRzAAAAAAAAAAEAAAAFAAAEAAAAABxzdHNjAAAAAAAAAAEAAAABAAAABQAAAAEAAAAoc3RzegAAAAAAAAAAAAAABQAAABcAAAAGAAAABgAAAAYAAAAGAAAAFHN0Y28AAAAAAAAAAQAAAwsAAAAac2dwZAEAAAByb2xsAAAAAgAAAAH//wAAABxzYmdwAAAAAHJvbGwAAAABAAAABQAAAAEAAABidWR0YQAAAFptZXRhAAAAAAAAACFoZGxyAAAAAAAAAABtZGlyYXBwbAAAAAAAAAAAAAAAAC1pbHN0AAAAJal0b28AAAAdZGF0YQAAAAEAAAAATGF2ZjU4LjIwLjEwMA==";
+			var data = "data:audio/aac;base64,//FQgAPf/N4CAExhdmM1OC45MS4xMDAAQiAIwRg4//FQgAG//CEQBGCMHP/xUIABv/whEARgjBz/8VCAAb/8IRAEYIwc//FQgAG//CEQBGCMHP/xUIABv/whEARgjBw=";
+			// var data = "data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDEAAAAIZnJlZQAAAxJtZGF0AAACoAYF//+c3EXpvebZSLeWLNgg2SPu73gyNjQgLSBjb3JlIDE1NyAtIEguMjY0L01QRUctNCBBVkMgY29kZWMgLSBDb3B5bGVmdCAyMDAzLTIwMTggLSBodHRwOi8vd3d3LnZpZGVvbGFuLm9yZy94MjY0Lmh0bWwgLSBvcHRpb25zOiBjYWJhYz0xIHJlZj0zIGRlYmxvY2s9MTowOjAgYW5hbHlzZT0weDM6MHgxMTMgbWU9aGV4IHN1Ym1lPTcgcHN5PTEgcHN5X3JkPTEuMDA6MC4wMCBtaXhlZF9yZWY9MSBtZV9yYW5nZT0xNiBjaHJvbWFfbWU9MSB0cmVsbGlzPTEgOHg4ZGN0PTEgY3FtPTAgZGVhZHpvbmU9MjEsMTEgZmFzdF9wc2tpcD0xIGNocm9tYV9xcF9vZmZzZXQ9LTIgdGhyZWFkcz0xIGxvb2thaGVhZF90aHJlYWRzPTEgc2xpY2VkX3RocmVhZHM9MCBucj0wIGRlY2ltYXRlPTEgaW50ZXJsYWNlZD0wIGJsdXJheV9jb21wYXQ9MCBjb25zdHJhaW5lZF9pbnRyYT0wIGJmcmFtZXM9MyBiX3B5cmFtaWQ9MiBiX2FkYXB0PTEgYl9iaWFzPTAgZGlyZWN0PTEgd2VpZ2h0Yj0xIG9wZW5fZ29wPTAgd2VpZ2h0cD0yIGtleWludD0yNTAga2V5aW50X21pbj0yNSBzY2VuZWN1dD00MCBpbnRyYV9yZWZyZXNoPTAgcmNfbG9va2FoZWFkPTQwIHJjPWNyZiBtYnRyZWU9MSBjcmY9MjMuMCBxY29tcD0wLjYwIHFwbWluPTAgcXBtYXg9NjkgcXBzdGVwPTQgaXBfcmF0aW89MS40MCBhcT0xOjEuMDAAgAAAABpliIQAM//+9uy+BTYUyFCXESoMDuxA1w9RcQAAAAlBmiJsQr/+RRgAAAAIAZ5BeQr/IeHeAgBMYXZjNTguMzUuMTAwAEIgCMEYOCEQBGCMHCEQBGCMHCEQBGCMHCEQBGCMHAAABXNtb292AAAAbG12aGQAAAAAAAAAAAAAAAAAAAPoAAAAeAABAAABAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAACb3RyYWsAAABcdGtoZAAAAAMAAAAAAAAAAAAAAAEAAAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAEAAAAAAMAAAADAAAAAAACRlZHRzAAAAHGVsc3QAAAAAAAAAAQAAAHgAAAQAAAEAAAAAAedtZGlhAAAAIG1kaGQAAAAAAAAAAAAAAAAAADIAAAAGAFXEAAAAAAAtaGRscgAAAAAAAAAAdmlkZQAAAAAAAAAAAAAAAFZpZGVvSGFuZGxlcgAAAAGSbWluZgAAABR2bWhkAAAAAQAAAAAAAAAAAAAAJGRpbmYAAAAcZHJlZgAAAAAAAAABAAAADHVybCAAAAABAAABUnN0YmwAAACmc3RzZAAAAAAAAAABAAAAlmF2YzEAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAMAAwAEgAAABIAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY//8AAAAwYXZjQwFkAAr/4QAXZ2QACqzZTewEQAAAAwBAAAAMg8SJZYABAAZo6+PLIsAAAAAQcGFzcAAAAAEAAAABAAAAGHN0dHMAAAAAAAAAAQAAAAMAAAIAAAAAFHN0c3MAAAAAAAAAAQAAAAEAAAAoY3R0cwAAAAAAAAADAAAAAQAABAAAAAABAAAGAAAAAAEAAAIAAAAAHHN0c2MAAAAAAAAAAQAAAAEAAAADAAAAAQAAACBzdHN6AAAAAAAAAAAAAAADAAACwgAAAA0AAAAMAAAAFHN0Y28AAAAAAAAAAQAAADAAAAIudHJhawAAAFx0a2hkAAAAAwAAAAAAAAAAAAAAAgAAAAAAAAB1AAAAAAAAAAAAAAABAQAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAJGVkdHMAAAAcZWxzdAAAAAAAAAABAAAAdQAAAAAAAQAAAAABpm1kaWEAAAAgbWRoZAAAAAAAAAAAAAAAAAAArEQAABQAVcQAAAAAAC1oZGxyAAAAAAAAAABzb3VuAAAAAAAAAAAAAAAAU291bmRIYW5kbGVyAAAAAVFtaW5mAAAAEHNtaGQAAAAAAAAAAAAAACRkaW5mAAAAHGRyZWYAAAAAAAAAAQAAAAx1cmwgAAAAAQAAARVzdGJsAAAAZ3N0c2QAAAAAAAAAAQAAAFdtcDRhAAAAAAAAAAEAAAAAAAAAAAACABAAAAAArEQAAAAAADNlc2RzAAAAAAOAgIAiAAIABICAgBRAFQAAAAAAEX4AAAymBYCAgAISEAaAgIABAgAAABhzdHRzAAAAAAAAAAEAAAAFAAAEAAAAABxzdHNjAAAAAAAAAAEAAAABAAAABQAAAAEAAAAoc3RzegAAAAAAAAAAAAAABQAAABcAAAAGAAAABgAAAAYAAAAGAAAAFHN0Y28AAAAAAAAAAQAAAwsAAAAac2dwZAEAAAByb2xsAAAAAgAAAAH//wAAABxzYmdwAAAAAHJvbGwAAAABAAAABQAAAAEAAABidWR0YQAAAFptZXRhAAAAAAAAACFoZGxyAAAAAAAAAABtZGlyYXBwbAAAAAAAAAAAAAAAAC1pbHN0AAAAJal0b28AAAAdZGF0YQAAAAEAAAAATGF2ZjU4LjIwLjEwMA==";
 			u.test_autoplay.volume = 0.01;
 			u.test_autoplay.autoplay = true;
 			u.test_autoplay.playsinline = true;
@@ -5989,6 +5940,481 @@ u.textscaler = function(node, _settings) {
 	window._man_text.precalculate();
 	node.scaleText();
 }
+
+/*u-form-field-select.js*/
+Util.Form.customInit["select"] = function(field) {
+	field.type = "select";
+	field.input = u.qs("select", field);
+	field.input._form = field._form;
+	field.input.label = u.qs("label[for='"+field.input.id+"']", field);
+	field.input.field = field;
+	field._value_select = function (value) {
+		if (value !== undefined) {
+			var i, option;
+			for (i = 0; option = this.options[i]; i++) {
+				if (option.value == value) {
+					this.selectedIndex = i;
+					u.f.validate(this);
+					this.field.virtual_input.val(option.text);
+					return i;
+				}
+			}
+			if (value === "") {
+				this.selectedIndex = -1;
+				u.f.validate(this);
+				this.field.virtual_input.val("");
+				return -1;
+			}
+			return false;
+		}
+		else {
+			return (this.selectedIndex >= 0 && this.default_value != this.options[this.selectedIndex].value) ? this.options[this.selectedIndex].value : "";
+		}
+	}
+	field.input.val = field._value_select;
+	var virtual_input_wrapper = u.ae(field, "div", {"class": "virtual"});
+	field.insertBefore(virtual_input_wrapper, field.input);
+	field.virtual_input = u.ae(virtual_input_wrapper, "div", {"class": "input"});
+	field.virtual_input._form = field._form;
+	field.virtual_input.field = field;
+	field.bn_select = u.ae(virtual_input_wrapper, "div", {"class": "button"});
+	field.bn_select.arrow = u.svg({
+		"name":"arrow",
+		"node":field.bn_select,
+		"class":"arrow",
+		"width":30,
+		"height":30,
+		"viewBox": "0 0 30 30",
+		"shapes":[
+			{
+				"type": "line",
+				"x1": 8,
+				"y1": 12,
+				"x2": 15,
+				"y2": 19
+			},
+			{
+				"type": "line",
+				"x1": 22,
+				"y1": 12,
+				"x2": 15,
+				"y2": 19
+			}
+		]
+	});
+	field.bn_select._form = field._form;
+	field.bn_select.field = field;
+	field.select_options = u.ae(virtual_input_wrapper, "div", { "class": "options" });
+	field.select_options.field = field;
+	field.select_options_list = u.ae(field.select_options, "ul", { "class": "options" });
+	field._value_virtual = function(value) {
+		if (value !== undefined) {
+			this.field.virtual_input.innerHTML = value;
+			var i, node;
+			for(i = 0; option = this.field.select_options.nodes[i]; i++) {
+				if(option.option_text == value) {
+					u.ac(option, "selected");
+				}
+				else {
+					u.rc(option, "selected");
+				}
+			}
+			this.field.input.dispatchEvent(new Event("change"));
+			return;
+		}
+		else {
+			if (this.field.virtual_input) {
+				return u.text(this.field.virtual_input);
+			} else {
+				return "";
+			}
+		}
+	}
+	field.virtual_input.val = field._value_virtual;
+	if(u.e.event_support != "touch") {
+		u.e.addEvent(field.virtual_input, "mouseenter", u.f._mouseenter);
+		u.e.addEvent(field.virtual_input, "mouseleave", u.f._mouseleave);
+	}
+	u.e.addEvent(field.input, "change", u.f._updated);
+	u.e.addEvent(field.input, "keyup", u.f._updated);
+	u.e.addEvent(field.input, "change", u.f._changed);
+	field.windowClick = function() {
+		this.optionsHidden = function() {
+			this.virtual_input.blur();
+			delete this.optionsHidden;
+		}
+		this.hideOptions();
+	}
+	field.virtual_input._focus = function(event) {
+		u.bug("this._focus:", this);
+		if(!this.is_focused) {
+			this.blur_event_id = u.e.addWindowEndEvent(this.field, this.field.windowClick);
+			this.field.is_focused = true;
+			this.is_focused = true;
+			u.ac(this.field, "focus");
+			u.ac(this, "focus");
+			u.as(this.field, "zIndex", this._form._focus_z_index);
+			u.f.positionHint(this.field);
+			if(this.field.input && typeof(this.field.input.focused) == "function") {
+				this.field.input.focused(this);
+			}
+			if(typeof(this._form.focused) == "function") {
+				this._form.focused(this);
+			}
+		}
+	}
+	field.virtual_input.blur = function() {
+		u.bug("this.blur:", this, this.blur_event_id);
+		u.e.removeWindowEndEvent(this.blur_event_id);
+		u.rc(this.field, "focus");
+		u.rc(this, "focus");
+		if(this.field.highlighted_option) {
+			u.rc(this.field.highlighted_option, "hover");
+			this.field.highlighted_option = false;
+		}
+		this.field.input._used = true;
+		u.f.validate(this.field.input);
+		this.is_focused = false;
+		this.field.is_focused = false;
+		u.as(this.field, "zIndex", this.field._base_z_index);
+		if(this.field.input && typeof(this.field.input.blurred) == "function") {
+			this.field.input.blurred(this);
+		}
+		if(typeof(this._form.blurred) == "function") {
+			this._form.blurred(this);
+		}
+	}
+	u.e.addEvent(field.virtual_input, "focus", field.virtual_input._focus);
+	field.virtual_input.preKeyEvent = function (event) {
+		if (event.keyCode == 27) {
+			u.e.kill(event);
+			this.field.hideOptions();
+		}
+		else if (event.keyCode == 13) {
+			u.e.kill(event);
+			if (this.field.highlighted_option && this.field.is_expanded) {
+				this.field.selectOption(this.field.highlighted_option);
+			}
+			else if(this.field.is_expanded) {
+				this.field.hideOptions();
+			}
+			else if(!this.field.is_expanded) {
+				this._form.submit();
+			}
+		}
+		else if (event.keyCode == 9) {
+			if (this.field.highlighted_option) {
+				this.field.selectOption(this.field.highlighted_option);
+			}
+			else {
+				this.field.hideOptions();
+			}
+			this.blur();
+		}
+		else if (event.keyCode == 32) {
+			if (!this.field.is_expanded) {
+				this.field.showOptions();
+			}
+			else if (this.field.highlighted_option) {
+				this.field.selectOption(this.field.highlighted_option);
+			}
+			else {
+				this.field.hideOptions();
+			}
+		}
+		else if (event.keyCode == 38) {
+			u.e.kill(event);
+			if (!this.field.is_expanded) {
+				this.field.showOptions();
+			}
+			else {
+				this.field.highlightPreviousOption();
+			}
+		}
+		else if (event.keyCode == 40) {
+			u.e.kill(event);
+			if (!this.field.is_expanded) {
+				this.field.showOptions();
+			}
+			else {
+				this.field.highlightNextOption();
+			}
+		}
+	}
+	u.e.addEvent(field.virtual_input, "keydown", field.virtual_input.preKeyEvent);
+	u.ce(field.virtual_input);
+	field.virtual_input.clicked = function(event) {
+		u.e.kill(event);
+		if(this.field.is_expanded) {
+			this.field.hideOptions();
+		}
+		else {
+			this.field.showOptions();
+		}
+	}
+	field.showOptions = function() {
+		if(!this.is_expanded) {
+			u.ass(this.select_options, {
+				transition: "all 0.3s ease-in-out",
+				height: this.select_options_list.offsetHeight + "px"
+			});
+			this.is_expanded = true;
+		}
+	}
+	field.hideOptions = function() {
+		if(this.is_expanded) {
+			this.select_options.transitioned = function() {
+				if(fun(this.field.optionsHidden)) {
+					this.field.optionsHidden();
+				}
+			}
+			u.ass(this.select_options, {
+				transition: "all 0.2s ease-in-out",
+				height: "0px"
+			});
+			this.is_expanded = false;
+		}
+		else if(fun(this.optionsHidden)) {
+			this.optionsHidden();
+		}
+	}
+	field.highlightNextOption = function() {
+		var node;
+		if(this.highlighted_option) {
+			node = u.ns(this.highlighted_option);
+		}
+		else {
+			node = this.select_options.nodes[0];
+		}
+		if(node) {
+			if (this.highlighted_option) {
+				u.rc(this.highlighted_option, "hover");
+			}
+			u.ac(node, "hover");
+			this.highlighted_option = node;
+		}
+	}
+	field.highlightPreviousOption = function() {
+		var node;
+		if(this.highlighted_option) {
+			node = u.ps(this.highlighted_option);
+		}
+		if(node) {
+			if (field.highlighted_option) {
+				u.rc(field.highlighted_option, "hover");
+			}
+			u.ac(node, "hover");
+			field.highlighted_option = node;
+		}
+	}
+	field.addOption = function (node) {
+		if(node.text) {
+			var li = u.ae(this.select_options_list, "li", { "class": (!node.value ? " default" : ""), "html": node.text });
+			li.field = this;
+			li.option_value = node.value;
+			li.option_text = node.text;
+			u.ce(li);
+			li.clicked = function (event) {
+				u.e.kill(event);
+				this.field.selectOption(this);
+			}
+			u.e.hover(li);
+			li.over = function (event) {
+				if(this.field.highlighted_option) {
+					u.rc(this.field.highlighted_option, "hover");
+				}
+				u.ac(this, "hover");
+				this.field.highlighted_option = this;
+			}
+			li.out = function (event) {
+				u.rc(this, "hover");
+				this.field.highlighted_option = false;
+			}
+		}
+	}
+	field.selectOption = function(li) {
+		this.input.val(li.option_value);
+		this.hideOptions();
+	}
+	field.bn_select.clicked = function(event) {
+		u.e.kill(event);
+		this.field.virtual_input.focus();
+ 		if(this.field.is_expanded) {
+			this.field.hideOptions();
+		}
+		else {
+			this.field.showOptions();
+		}
+	}
+	u.e.click(field.bn_select);
+	field.loadOptions = function() {
+		var i, node, li;
+		for (i = 0; node = this.input.options[i]; i++) {
+			this.addOption(node);
+		}
+		this.select_options.nodes = u.qsa("li", this.select_options_list);
+		this.input.val(this.input.val());
+	}
+	field.loadOptions();
+	u.f.activateInput(field.input);
+}
+Util.Form.customValidate["select"] = function(iN) {
+	if(iN.val()) {
+		u.f.inputIsCorrect(iN);
+	}
+	else {
+		u.f.inputHasError(iN);
+	}
+}
+
+
+/*u-form-field-checkbox.js*/
+Util.Form.customInit["checkbox"] = function(field) {
+	field.type = "checkbox";
+	field.input = u.qs("input[type=checkbox]", field);
+	field.input._form = field._form;
+	field.input.label = u.qs("label[for='"+field.input.id+"']", field);
+	field.input.field = field;
+	field._value_checkbox = function(value) {
+		if(value !== undefined) {
+			if(value) {
+				this.checked = true
+			}
+			else {
+				this.checked = false;
+			}
+			u.f._update_checkbox_field.bind(this)();
+			this.field.virtual_input.val(value);
+			u.f.validate(this);
+		}
+		if(this.checked) {
+			return this.value;
+		}
+		return "";
+	}
+	field.input.val = field._value_checkbox;
+	u.f._update_checkbox_field.bind(field.input)();
+	var virtual_input_wrapper = u.ae(field, "div", {"class": "virtual"});
+	field.insertBefore(virtual_input_wrapper, field.input);
+	field.virtual_input = u.ae(virtual_input_wrapper, "div", {"class": "input"});
+	field.virtual_input._form = field._form;
+	field.virtual_input.field = field;
+	field.gx_checkmark = u.svg({
+		"name":"checkbox_checkmark",
+		"node":field.virtual_input,
+		"class":"checkbox_checkmark",
+		"width":30,
+		"height":30,
+		"viewBox": "0 0 30 30",
+		"shapes":[
+			{
+				"type": "line",
+				"class":"checkmark",
+				"x1": 7,
+				"y1": 15,
+				"x2": 14,
+				"y2": 26
+			},
+			{
+				"type": "line",
+				"class":"checkmark",
+				"x1": 14,
+				"y1": 26,
+				"x2": 23,
+				"y2": 6
+			}
+		]
+	});
+	field._value_virtual = function(value) {
+		if (value !== undefined) {
+			this.field.input.val(value);
+			this.field.input.dispatchEvent(new Event("change"));
+			return;
+		}
+		else {
+			return this.field.input.val();
+		}
+	}
+	field.virtual_input.val = field._value_virtual;
+	if(u.e.event_support != "touch") {
+		u.e.addEvent(field.virtual_input, "mouseenter", u.f._mouseenter);
+		u.e.addEvent(field.virtual_input, "mouseleave", u.f._mouseleave);
+	}
+	u.e.addEvent(field.input, "change", u.f._changed);
+	u.e.addEvent(field.input, "change", u.f._updated);
+	u.e.addEvent(field.input, "change", u.f._update_checkbox_field);
+	field.windowClick = function() {
+		this.virtual_input.blur();
+	}
+	field.virtual_input._focus = function(event) {
+		if(!this.is_focused) {
+			this.blur_event_id = u.e.addWindowEndEvent(this.field, this.field.windowClick);
+			this.field.is_focused = true;
+			this.is_focused = true;
+			u.ac(this.field, "focus");
+			u.ac(this, "focus");
+			u.as(this.field, "zIndex", this._form._focus_z_index);
+			u.f.positionHint(this.field);
+			if(this.field.input && typeof(this.field.input.focused) == "function") {
+				this.field.input.focused(this);
+			}
+			if(typeof(this._form.focused) == "function") {
+				this._form.focused(this);
+			}
+		}
+	}
+	field.virtual_input.blur = function() {
+		u.e.removeWindowEndEvent(this.blur_event_id);
+		u.rc(this.field, "focus");
+		u.rc(this, "focus");
+		this.field.input._used = true;
+		u.f.validate(this.field.input);
+		this.is_focused = false;
+		this.field.is_focused = false;
+		u.as(this.field, "zIndex", this.field._base_z_index);
+		if(this.field.input && typeof(this.field.input.blurred) == "function") {
+			this.field.input.blurred(this);
+		}
+		if(typeof(this._form.blurred) == "function") {
+			this._form.blurred(this);
+		}
+	}
+	u.e.addEvent(field.virtual_input, "focus", field.virtual_input._focus);
+	field.virtual_input.preKeyEvent = function (event) {
+		if (event.keyCode == 13) {
+			u.e.kill(event);
+			this._form.submit();
+		}
+		else if (event.keyCode == 9) {
+			this.blur();
+		}
+		else if (event.keyCode == 32) {
+			this.clicked();
+		}
+	}
+	u.e.addEvent(field.virtual_input, "keydown", field.virtual_input.preKeyEvent);
+	u.ce(field.virtual_input);
+	field.virtual_input.clicked = function(event) {
+		u.e.kill(event);
+		if(this.field.input.checked) {
+			this.field.input.checked = false;
+		}
+		else {
+			this.field.input.checked = true;
+		}
+		this.field.input.dispatchEvent(new Event("change"));
+	}
+	u.f.activateInput(field.input);
+}
+Util.Form.customValidate["checkbox"] = function(iN) {
+	if(iN.val()) {
+		u.f.inputIsCorrect(iN);
+	}
+	else {
+		u.f.inputHasError(iN);
+	}
+}
+
 
 /*u-form-builder.js*/
 u.f.customBuild = {};
@@ -6428,8 +6854,7 @@ u.e.resetDragEvents = function(node) {
 	this.removeEvent(node, "touchmove", this._drag);
 	this.removeEvent(node, "mouseup", this._drop);
 	this.removeEvent(node, "touchend", this._drop);
-	this.removeEvent(node, "mouseup", this._cancelPick);
-	this.removeEvent(node, "touchend", this._cancelPick);
+	this.removeWindowEndEvent(node.e_cancelPick);
 	this.removeEvent(node, "mouseout", this._dropOut);
 	this.removeEvent(node, "mousemove", this._scrollStart);
 	this.removeEvent(node, "touchmove", this._scrollStart);
@@ -6820,3088 +7245,120 @@ u.e.swipe = function(node, boundaries, _options) {
 }
 
 
-/*u-form-field-html.js*/
-Util.Form.customInit["html"] = function(field) {
-	field.type = "html";
-	field.input = u.qs("textarea", field);
-	field.input._form = field._form;
-	field.input.label = u.qs("label[for='"+field.input.id+"']", field);
-	field.input.field = field;
-	field.input.val = u.f._value;
-	u.f.textEditor(field);
-}
-Util.Form.customValidate["html"] = function(iN) {
-	min = Number(u.cv(iN.field, "min"));
-	max = Number(u.cv(iN.field, "max"));
-	min = min ? min : 1;
-	max = max ? max : 10000000;
-	pattern = iN.getAttribute("pattern");
-	if(
-		u.text(iN.field._viewer) &&
-		u.text(iN.field._viewer).length >= min && 
-		u.text(iN.field._viewer).length <= max && 
-		(!pattern || iN.val().match("^"+pattern+"$"))
-	) {
-		u.f.inputIsCorrect(iN);
-	}
-	else {
-		u.f.inputHasError(iN);
+/*m-login.js*/
+Util.Modules["login"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			this._form = u.qs("form", this);
+			u.f.init(this._form);
+			this._form.inputs["username"].focus();
+			u.showScene(this);
+		}
+		page.cN.scene = scene;
 	}
 }
-Util.Form.customHintPosition["html"] = function(field) {
-	var input_middle = field._editor.offsetTop + (field._editor.offsetHeight / 2);
-	var help_top = input_middle - field.help.offsetHeight / 2;
-	u.ass(field.help, {
-		"top": help_top + "px"
+
+
+/*u-geolocation.js*/
+u.injectGeolocation = function(node) {
+	if(!u.browser("IE", "<=9")) {
+		node.geolocation.node = node;
+		var li_longitude = u.qs("li.longitude", node.geolocation);
+		var li_latitude = u.qs("li.latitude", node.geolocation);
+		if(li_longitude && li_latitude) {
+			node.geo_longitude = parseFloat(li_longitude.getAttribute("content"));
+			node.geo_latitude = parseFloat(li_latitude.getAttribute("content"));
+			node.showMap = function() {
+				if(!this.geomap) {
+					this.geomap = u.ae(this, "div", {"class":"geomap"});
+					this.insertBefore(this.geomap, u.qs("ul.info", this));
+					var maps_url = "https://maps.googleapis.com/maps/api/js" + (u.gapi_key ? "?key="+u.gapi_key : "");
+					var html = '<html><head>';
+					html += '<style type="text/css">body {margin: 0;}#map {height: 300px;}</style>';
+					html += '<script type="text/javascript" src="'+maps_url+'"></script>';
+					html += '<script type="text/javascript">';
+					html += 'var map, marker;';
+					html += 'var initialize = function() {';
+					html += '	window._map_loaded = true;';
+					html += '	var mapOptions = {center: new google.maps.LatLng('+this.geo_latitude+', '+this.geo_longitude+'),zoom: 12};';
+					html += '	map = new google.maps.Map(document.getElementById("map"),mapOptions);';
+					html += '	marker = new google.maps.Marker({position: new google.maps.LatLng('+this.geo_latitude+', '+this.geo_longitude+'), draggable:true});';
+					html += '	marker.setMap(map);';
+					html += '};';
+					html += 'google.maps.event.addDomListener(window, "load", initialize);';
+					html += '</script>';
+					html += '</head><body><div id="map"></div></body></html>';
+					this.mapsiframe = u.ae(this.geomap, "iframe");
+					this.mapsiframe.doc = this.mapsiframe.contentDocument? this.mapsiframe.contentDocument: this.mapsiframe.contentWindow.document;
+					this.mapsiframe.doc.open();
+					this.mapsiframe.doc.write(html);
+					this.mapsiframe.doc.close();
+				}
+			}
+			node.geolocation.clicked = function() {
+				this.node.showMap();
+			}
+			u.ce(node.geolocation);
+			u.ac(node.geolocation, "active");
+		}
+	}
+}
+
+
+/*u-checkmark.js*/
+u.addCheckmark = function(node) {
+	node.checkmark = u.svg({
+		"name":"checkmark",
+		"node":node,
+		"class":"checkmark "+(node.current_readstate ? "read" : "not_read"),
+		"width":17,
+		"height":17,
+		"shapes":[
+			{
+				"type": "line",
+				"x1": 2,
+				"y1": 8,
+				"x2": 7,
+				"y2": 15
+			},
+			{
+				"type": "line",
+				"x1": 6,
+				"y1": 15,
+				"x2": 12,
+				"y2": 2
+			}
+		]
 	});
-}
-u.f.textEditor = function(field) {
-	field.text_support = "h1,h2,h3,h4,h5,h6,p";
-	field.code_support = "code";
-	field.list_support = "ul,ol";
-	field.media_support = "png,jpg,mp4";
-	field.ext_video_support = "youtube,vimeo";
-	field.file_support = "download"; 
-	field.allowed_tags = u.cv(field, "tags");
-	if(!field.allowed_tags) {
-		u.bug("allowed_tags not specified")
-		return;
-	}
-	field.filterAllowedTags = function(type) {
-		tags = this.allowed_tags.split(",");
-		this[type+"_allowed"] = new Array();
-		var tag, i;
-		for(i = 0; i < tags.length; i++) {
-			tag = tags[i];
-			if(tag.match("^("+this[type+"_support"].split(",").join("|")+")$")) {
-				this[type+"_allowed"].push(tag);
-			}
-		}
-	}
-	field.filterAllowedTags("text");
-	field.filterAllowedTags("list");
-	field.filterAllowedTags("media");
-	field.filterAllowedTags("ext_video");
-	field.filterAllowedTags("file");
-	field.filterAllowedTags("code");
-	field.file_add_action = field.getAttribute("data-file-add");
-	field.file_delete_action = field.getAttribute("data-file-delete");
-	field.media_add_action = field.getAttribute("data-media-add");
-	field.media_delete_action = field.getAttribute("data-media-delete");
-	field.item_id;
-	var item_id_match = field._form.action.match(/\/([0-9]+)(\/|$)/);
-	if(item_id_match) {
-		field.item_id = item_id_match[1];
-	}
-	field._viewer = u.ae(field, "div", {"class":"viewer"});
-	field._editor = u.ae(field, "div", {"class":"editor"});
-	field._editor.field = field;
-	u.ae(field._editor, field.indicator);
-	field._editor.dropped = function() {
-		this.field.update();
-	}
-	field.addOptions = function() {
-		this.bn_show_raw = u.ae(this.input.label, "span", {"html":"(RAW HTML)"});
-		this.bn_show_raw.field = this;
-		u.ce(this.bn_show_raw);
-		this.bn_show_raw.clicked = function() {
-			if(u.hc(this.field.input, "show")) {
-				u.rc(this.field.input, "show");
-			}
-			else {
-				u.ac(this.field.input, "show");
-			}
-		}
-		this.options = u.ae(this, "ul", {"class":"options"});
-		this.bn_add = u.ae(this.options, "li", {"class":"add", "html":"+"});
-		this.bn_add.field = field;
-		u.ce(this.bn_add);
-		u.ce(this.options);
-		this.options.inputStarted = function(event) {
-			u.e.kill(event);
-		}
-		this.bn_add.clicked = function(event) {
-			if(u.hc(this.field.options, "show")) {
-				u.rc(this.field.options, "show");
-				u.rc(this.field, "optionsshown");
-				if(this.start_event_id) {
-					u.e.removeWindowStartEvent(this, this.start_event_id);
-					delete this.start_event_id;
-				}
-			}
-			else {
-				u.ac(this.field.options, "show");
-				u.ac(this.field, "optionsshown");
-				this.start_event_id = u.e.addWindowStartEvent(this, this.clicked);
-			}
-		}
-		if(this.text_allowed.length) {
-			this.bn_add_text = u.ae(this.options, "li", {"class":"text", "html":"Text ("+this.text_allowed.join(", ")+")"});
-			this.bn_add_text.field = this;
-			u.ce(this.bn_add_text);
-			this.bn_add_text.clicked = function(event) {
-				this.field.addTextTag(this.field.text_allowed[0]);
-				this.field.bn_add.clicked();
-			}
-		}
-		if(this.list_allowed.length) {
-			this.bn_add_list = u.ae(this.options, "li", {"class":"list", "html":"List ("+this.list_allowed.join(", ")+")"});
-			this.bn_add_list.field = this;
-			u.ce(this.bn_add_list);
-			this.bn_add_list.clicked = function(event) {
-				this.field.addListTag(this.field.list_allowed[0]);
-				this.field.bn_add.clicked();
-			}
-		}
-		if(this.code_allowed.length) {
-			this.bn_add_code = u.ae(this.options, "li", {"class":"code", "html":"Code"});
-			this.bn_add_code.field = this;
-			u.ce(this.bn_add_code);
-			this.bn_add_code.clicked = function(event) {
-				this.field.addCodeTag(this.field.code_allowed[0]);
-				this.field.bn_add.clicked();
-			}
-		}
-		if(this.media_allowed.length && this.item_id && this.media_add_action && this.media_delete_action && !u.browser("IE", "<=9")) {
-			this.bn_add_media = u.ae(this.options, "li", {"class":"list", "html":"Media ("+this.media_allowed.join(", ")+")"});
-			this.bn_add_media.field = this;
-			u.ce(this.bn_add_media);
-			this.bn_add_media.clicked = function(event) {
-				this.field.addMediaTag();
-				this.field.bn_add.clicked();
-			}
-		}
-		else if(this.media_allowed.length) {
-			u.bug("some information is missing to support media upload:\nitem_id="+this.item_id+"\nmedia_add_action="+this.media_add_action+"\nmedia_delete_action="+this.media_delete_action);
-		}
-		if(this.ext_video_allowed.length) {
-			this.bn_add_ext_video = u.ae(this.options, "li", {"class":"video", "html":"External video ("+this.ext_video_allowed.join(", ")+")"});
-			this.bn_add_ext_video.field = this;
-			u.ce(this.bn_add_ext_video);
-			this.bn_add_ext_video.clicked = function(event) {
-				this.field.addExternalVideoTag(this.field.ext_video_allowed[0]);
-				this.field.bn_add.clicked();
-			}
-		}
-		if(this.file_allowed.length && this.item_id && this.file_add_action && this.file_delete_action && !u.browser("IE", "<=9")) {
-			this.bn_add_file = u.ae(this.options, "li", {"class":"file", "html":"Downloadable file"});
-			this.bn_add_file.field = this;
-			u.ce(this.bn_add_file);
-			this.bn_add_file.clicked = function(event) {
-				this.field.addFileTag();
-				this.field.bn_add.clicked();
-			}
-		}
-		else if(this.file_allowed.length) {
-			u.bug("some information is missing to support file upload:\nitem_id="+this.item_id+"\nfile_add_action="+this.file_add_action+"\nfile_delete_action="+this.file_delete_action);
-		}
-	}
-	field.update = function() {
-		this.updateViewer();
-		this.updateContent();
-		if(fun(this.updated)) {
-			this.updated(this.input);
-		}
-		if(fun(this.changed)) {
-			this.changed(this.input);
-		}
-		if(this.input._form && fun(this.input._form.updated)) {
-			this.input._form.updated(this.input);
-		}
-		if(this.input._form && fun(this.input._form.changed)) {
-			this.input._form.changed(this.input);
-		}
-	}
-	field.updateViewer = function() {
-		var tags = u.qsa("div.tag", this);
-		var i, tag, j, list, li, lis, div, p, a;
-		this._viewer.innerHTML = "";
-		for(i = 0; i < tags.length; i++) {
-			tag = tags[i];
-			if(u.hc(tag, this.text_allowed.join("|"))) {
-				u.ae(this._viewer, tag._type.val(), {"html":tag._input.val()});
-			}
-			else if(u.hc(tag, this.list_allowed.join("|"))) {
-				list = u.ae(this._viewer, tag._type.val());
-				lis = u.qsa("div.li", tag);
-				for(j = 0; j < lis.length; j++) {
-					li = lis[j];
-					li = u.ae(list, tag._type.val(), {"html":li._input.val()});
-				}
-			}
-			else if(u.hc(tag, this.ext_video_allowed.join("|")) && tag._video_id) {
-				div = u.ae(this._viewer, "div", {"class":tag._type.val()+" video_id:"+tag._video_id});
-			}
-			else if(u.hc(tag, "code")) {
-				div = u.ae(this._viewer, "code", {"html":tag._input.val()});
-			}
-			else if(u.hc(tag, "file") && tag._variant) {
-				div = u.ae(this._viewer, "div", {"class":"file item_id:"+tag._item_id+" variant:"+tag._variant+" name:"+encodeURIComponent(tag._name)+" filesize:"+tag._filesize});
-				p = u.ae(div, "p");
-				a = u.ae(p, "a", {"href":"/download/"+tag._item_id+"/"+tag._variant+"/"+tag._name, "html":tag._input.val()});
-			}
-			else if(u.hc(tag, "media") && tag._variant) {
-				div = u.ae(this._viewer, "div", {"class":"media item_id:"+tag._item_id+" variant:"+tag._variant+" name:"+encodeURIComponent(tag._name)+" filesize:"+tag._filesize + " format:"+tag._format});
-				p = u.ae(div, "p");
-				a = u.ae(p, "a", {"href":"/images/"+tag._item_id+"/"+tag._variant+"/480x."+tag._format, "html":tag._input.val()});
-			}
-		}
-	}
-	field.updateContent = function() {
-		u.bug("updateContent");
-		var tags = u.qsa("div.tag", this);
-		this.input.val("");
-		var i, node, tag, type, value, j, html = "";
-		for(i = 0; i < tags.length; i++) {
-			tag = tags[i];
-			if(u.hc(tag, this.text_allowed.join("|"))) {
-				type = tag._type.val();
-				html += '<'+type + (tag._classname ? (' class="'+tag._classname+'"') : '')+'>'+tag._input.val()+'</'+type+'>'+"\n";
-			}
-			else if(u.hc(tag, this.list_allowed.join("|"))) {
-				type = tag._type.val();
-				html += "<"+type+(tag._classname ? (' class="'+tag._classname+'"') : '')+">\n";
-				lis = u.qsa("div.li", tag);
-				for(j = 0; j < lis.length; j++) {
-					li = lis[j];
-					html += "\t<li>"+li._input.val()+"</li>\n";
-				}
-				html += "</"+type+">\n";
-			}
-			else if(u.hc(tag, this.ext_video_allowed.join("|")) && tag._video_id) {
-				html += '<div class="'+tag._type.val()+' video_id:'+tag._video_id+'"></div>\n';
-			}
-			else if(u.hc(tag, "code")) {
-				html += '<code'+(tag._classname ? (' class="'+tag._classname+'"') : '')+'>'+tag._input.val()+'</code>'+"\n";
-			}
-			else if(u.hc(tag, "media") && tag._variant) {
-				html += '<div class="media item_id:'+tag._item_id+' variant:'+tag._variant+' name:'+encodeURIComponent(tag._name)+' filesize:'+tag._filesize+' format:'+tag._format+' width:'+tag._width+' height:'+tag._height+'">'+"\n";
-				html += '\t<p><a href="/images/'+tag._item_id+'/'+tag._variant+'/480x.'+tag._format+'">'+tag._input.val()+"</a></p>";
-				html += "</div>\n";
-			}
-			else if(u.hc(tag, "file") && tag._variant) {
-				html += '<div class="file item_id:'+tag._item_id+' variant:'+tag._variant+' name:'+encodeURIComponent(tag._name)+' filesize:'+tag._filesize+'">'+"\n";
-				html += '\t<p><a href="/download/'+tag._item_id+'/'+tag._variant+'/'+tag._name+'">'+tag._input.val()+"</a></p>";
-				html += "</div>\n";
-			}
-		}
-		this.input.val(html);
-	}
-	field.createTag = function(allowed_tags, type) {
-		var tag = u.ae(this._editor, "div", {"class":"tag"});
-		tag.field = this;
-		tag._drag = u.ae(tag, "div", {"class":"drag"});
-		tag._drag.field = this;
-		tag._drag.tag = tag;
-		this.createTagSelector(tag, allowed_tags);
-		tag._type.val(type);
-		tag.bn_remove = u.ae(tag, "div", {"class":"remove"});
-		tag.bn_remove.field = this;
-		tag.bn_remove.tag = tag;
-		u.ce(tag.bn_remove);
-		tag.bn_remove.clicked = function() {
-			this.field.deleteTag(this.tag);
-		}
-		if(u.hc(tag, this.list_allowed.join("|")) || u.hc(tag, this.text_allowed.join("|")) || u.hc(tag, this.code_allowed.join("|"))) {
-			tag.bn_classname = u.ae(tag, "div", {"class":"classname"});
-			u.ae(tag.bn_classname, "span", {"html":"CSS"});
-			tag.bn_classname.field = this;
-			tag.bn_classname.tag = tag;
-			u.ce(tag.bn_classname);
-			tag.bn_classname.clicked = function() {
-				this.field.classnameTag(this.tag);
-			}
-		}
-		return tag;
-	}
-	field.deleteTag = function(tag) {
-		if(u.qsa("div.tag", this).length > 1) {
-			if(u.hc(tag, "file")) {
-				this.deleteFile(tag);
-			}
-			else if(u.hc(tag, "media")) {
-				this.deleteMedia(tag);
-			}
-			tag.parentNode.removeChild(tag);
-			this._editor.updateTargets();
-			this._editor.updateDraggables();
-			this.update();
-			this._form.submit();
-		}
-	}
-	field.classnameTag = function(tag) {
-		if(!u.hc(tag.bn_classname, "open")) {
-			var form = u.f.addForm(tag.bn_classname, {"class":"labelstyle:inject"});
-			var fieldset = u.f.addFieldset(form);
-			var input_classname = u.f.addField(fieldset, {"label":"classname", "name":"classname", "error_message":"", "value":tag._classname});
-			input_classname.tag = tag;
-			u.ac(tag.bn_classname, "open");
-			u.f.init(form);
-			input_classname.input.focus();
-			input_classname.input.blurred = function() {
-				this.field.tag._classname = this.val();
-				this.field.tag.bn_classname.removeChild(this._form);
-				u.rc(this.field.tag.bn_classname, "open");
-				this.field.tag.field.update();
-			}
-		}
-	}
-	field.createTagSelector = function(tag, allowed_tags) {
-		var i, allowed_tag;
-		tag._type = u.ae(tag, "ul", {"class":"type"});
-		tag._type.field = this;
-		tag._type.tag = tag;
-		for(i = 0; allowed_tag = allowed_tags[i]; i++) {
-			u.ae(tag._type, "li", {"html":allowed_tag, "class":allowed_tag});
-		}
-		tag._type.val = function(value) {
-			if(value !== undefined) {
-				var i, option;
-				for(i = 0; i < this.childNodes.length; i++) {
-					option = this.childNodes[i];
-					if(u.text(option) == value) {
-						if(this.selected_option) {
-							u.rc(this.selected_option, "selected");
-							u.rc(this.tag, u.text(this.selected_option));
-						}
-						u.ac(option, "selected");
-						this.selected_option = option;
-						u.ac(this.tag, value);
-						return option;
-					}
-				}
-				u.ac(this.childNodes[0], "selected");
-				this.selected_option = this.childNodes[0];
-				u.ac(this.tag, u.text(this.childNodes[0]));
-				return this.childNodes[0];
-			}
-			else {
-				return u.text(this.selected_option);
-			}
-		}
-		if(allowed_tags.length > 1) {
-			u.ce(tag._type);
-			tag._type.clicked = function(event) {
-				u.t.resetTimer(this.t_autohide);
-				if(u.hc(this, "open")) {
-					u.rc(this, "open");
-					u.rc(this.tag, "focus");
-					u.ass(this.field, {
-						"zIndex": this.field._base_z_index
-					});
-					u.as(this, "top", 0);
-					if(event.target) {
-						this.val(u.text(event.target));
-					}
-					u.e.removeEvent(this, "mouseout", this.autohide);
-					u.e.removeEvent(this, "mouseover", this.delayautohide);
-					this.field.returnFocus(this.tag);
-					this.field.update();
-				}
-				else {
-					u.ac(this, "open");
-					u.ac(this.tag, "focus");
-					u.ass(this.field, {
-						"zIndex": this.field._form._focus_z_index,
-					});
-					u.as(this, "top", -(this.selected_option.offsetTop) + "px");
-					u.e.addEvent(this, "mouseout", this.autohide);
-					u.e.addEvent(this, "mouseover", this.delayautohide);
-				}
-			}
-			tag._type.hide = function() {
-				u.rc(this, "open");
-				if(!this.field.is_focused) {
-					u.rc(this.tag, "focus");
-					u.ass(this.field, {
-						"zIndex": this.field._base_z_index
-					});
-					this.field.returnFocus(this);
-				}
-				u.as(this, "top", 0);
-				u.e.removeEvent(this, "mouseout", this.autohide);
-				u.e.removeEvent(this, "mouseover", this.delayautohide);
-				u.t.resetTimer(this.t_autohide);
-			}
-			tag._type.autohide = function(event) {
-				u.t.resetTimer(this.t_autohide);
-				this.t_autohide = u.t.setTimer(this, this.hide, 800);
-			}
-			tag._type.delayautohide = function(event) {
-				u.t.resetTimer(this.t_autohide);
-			}
-		}
-	}
-	field.addExternalVideoTag = function(type, node) {
-		var tag = this.createTag(this.ext_video_allowed, type);
-		tag._input = u.ae(tag, "div", {"class":"text", "contentEditable":true});
-		tag._input.tag = tag;
-		tag._input.field = this;
-		if(node) {
-			tag._video_id = u.cv(node, "video_id");
-			tag._input.innerHTML = tag._video_id;
-		}
-		tag._input.val = function(value) {
-			if(value !== undefined) {
-				this.innerHTML = value;
-			}
-			return this.innerHTML;
-		}
-		u.e.addEvent(tag._input, "keydown", tag.field._changing_content);
-		u.e.addEvent(tag._input, "keyup", this._changed_ext_video_content);
-		u.e.addEndEvent(tag._input, this._changed_ext_video_content);
-		u.e.addEvent(tag._input, "focus", tag.field._focused_content);
-		u.e.addEvent(tag._input, "blur", tag.field._blurred_content);
-		this._editor.updateTargets();
-		this._editor.updateDraggables();
-		return tag;
-	}
-	field._changed_ext_video_content = function(event) {
-		if(this.val() && !this.val().replace(/<br>/, "")) {
-			this.val("");
-		}
-		this.tag._video_id = this.val();
-		this.tag.field.update();
-	}
-	field.addMediaTag = function(node) {
-		var tag = this.createTag(["media"], "media");
-		tag._input = u.ae(tag, "div", {"class":"text"});
-		tag._input.tag = tag;
-		tag._input.field = this;
-		tag._input._form = this._form;
-		if(node) {
-			tag._name = u.cv(node, "name");
-			tag._item_id = u.cv(node, "item_id");
-			tag._filesize = u.cv(node, "filesize");
-			tag._format = u.cv(node, "format");
-			tag._variant = u.cv(node, "variant");
-			tag._width = u.cv(node, "width");
-			tag._height = u.cv(node, "height");
-			tag._input.contentEditable = true;
-			tag._input.innerHTML = u.qs("a", node).innerHTML;
-			tag._image = u.ie(tag, "img");
-			tag._image.src = "/images/"+tag._item_id+"/"+tag._variant+"/400x."+tag._format;
-			tag._input.val = function(value) {
-				if(value !== undefined) {
-					this.innerHTML = value;
-				}
-				return this.innerHTML;
-			}
-			u.e.addEvent(tag._input, "keydown", tag.field._changing_content);
-			u.e.addEvent(tag._input, "keyup", this._changed_media_content);
-			u.e.addEndEvent(tag._input, this._changed_media_content);
-			u.e.addEvent(tag._input, "focus", tag.field._focused_content);
-			u.e.addEvent(tag._input, "blur", tag.field._blurred_content);
-			u.ac(tag, "done");
-		}
-		else {
-			tag._text = tag._input;
-			tag._text.tag = tag;
-			tag._text.field = this;
-			tag._label = u.ae(tag._text, "label", {"html":"Drag media here"});
-			tag._input = u.ae(tag._text, "input", {"type":"file", "name":"htmleditor_media[]"});
-			tag._input.tag = tag;
-			tag._input.field = this;
-			tag._input._form = this._form;
-			tag._input.val = function(value) {return false;}
-			u.e.addEvent(tag._input, "change", this._media_updated);
-			u.e.addEvent(tag._input, "focus", this._focused_content);
-			u.e.addEvent(tag._input, "blur", this._blurred_content);
-			if(u.e.event_pref == "mouse") {
-				u.e.addEvent(tag._input, "mouseenter", u.f._mouseenter);
-				u.e.addEvent(tag._input, "mouseleave", u.f._mouseleave);
-			}
-		}
-		this._editor.updateTargets();
-		this._editor.updateDraggables();
-		return tag;
-	}
-	field.deleteMedia = function(tag) {
-		var form_data = new FormData();
-		form_data.append("csrf-token", this._form.inputs["csrf-token"].val());
-		tag.response = function(response) {
-			page.notify(response);
-			if(response.cms_status && response.cms_status == "success") {
-				this.field.update();
-			}
-		}
-		u.request(tag, this.file_delete_action+"/"+tag._item_id+"/"+tag._variant, {"method":"post", "data":form_data});
-	}
-	field._media_updated = function(event) {
-		var form_data = new FormData();
-		form_data.append(this.name, this.files[0], this.value);
-		form_data.append("csrf-token", this._form.inputs["csrf-token"].val());
-		form_data.append("input-name", this.tag.field.input.name);
-		this.response = function(response) {
-			page.notify(response);
-			if(response.cms_status && response.cms_status == "success") {
-				this.parentNode.removeChild(this.tag._label);
-				this.parentNode.removeChild(this);
-				this.tag._input = this.tag._text;
-				this.tag._variant = response.cms_object["variant"];
-				this.tag._filesize = response.cms_object["filesize"]
-				this.tag._format = response.cms_object["format"]
-				this.tag._width = response.cms_object["width"]
-				this.tag._height = response.cms_object["height"]
-				this.tag._name = response.cms_object["name"]
-				this.tag._item_id = response.cms_object["item_id"]
-				this.tag._input.contentEditable = true;
-				this.tag._image = u.ie(this.tag, "img");
-				this.tag._image.src = "/images/"+this.tag._item_id+"/"+this.tag._variant+"/400x."+this.tag._format;
-				this.tag._input.innerHTML = this.tag._name + " ("+ u.round((this.tag._filesize/1000), 2) +"Kb)";
-				this.tag._input.val = function(value) {
-					if(value !== undefined) {
-						this.innerHTML = value;
-					}
-					return this.innerHTML;
-				}
-				u.e.addEvent(this.tag._input, "keydown", this.tag.field._changing_content);
-				u.e.addEvent(this.tag._input, "keyup", this.tag.field._changed_media_content);
-				u.e.addEndEvent(this.tag._input, this.tag.field._changed_media_content);
-				u.e.addEvent(this.tag._input, "focus", this.tag.field._focused_content);
-				u.e.addEvent(this.tag._input, "blur", this.tag.field._blurred_content);
-				u.ac(this.tag, "done");
-				this.tag.field.update();
-				this.tag.field._form.submit();
-			}
-		}
-		u.request(this, this.field.media_add_action+"/"+this.field.item_id, {"method":"post", "data":form_data});
-	}
-	field._changed_media_content = function(event) {
-		if(this.val() && !this.val().replace(/<br>/, "")) {
-			this.val("");
-		}
-		this.field.update();
-	}
-	field.addFileTag = function(node) {
-		var tag = this.createTag(["file"], "file");
-		tag._input = u.ae(tag, "div", {"class":"text"});
-		tag._input.tag = tag;
-		tag._input.field = this;
-		tag._input._form = this._form;
-		if(node) {
-			tag._input.contentEditable = true;
-			tag._variant = u.cv(node, "variant");
-			tag._name = u.cv(node, "name");
-			tag._item_id = u.cv(node, "item_id");
-			tag._filesize = u.cv(node, "filesize");
-			tag._input.innerHTML = u.qs("a", node).innerHTML;
-			tag._input.val = function(value) {
-				if(value !== undefined) {
-					this.innerHTML = value;
-				}
-				return this.innerHTML;
-			}
-			u.e.addEvent(tag._input, "keydown", tag.field._changing_content);
-			u.e.addEvent(tag._input, "keyup", this._changed_file_content);
-			u.e.addEndEvent(tag._input, this._changed_file_content);
-			u.e.addEvent(tag._input, "focus", tag.field._focused_content);
-			u.e.addEvent(tag._input, "blur", tag.field._blurred_content);
-			u.ac(tag, "done");
-		}
-		else {
-			tag._text = tag._input;
-			tag._text.tag = tag;
-			tag._text.field = this;
-			tag._label = u.ae(tag._text, "label", {"html":"Drag file here"});
-			tag._input = u.ae(tag._text, "input", {"type":"file", "name":"htmleditor_file[]"});
-			tag._input.tag = tag;
-			tag._input.field = this;
-			tag._input._form = this._form;
-			tag._input.val = function(value) {return false;}
-			u.e.addEvent(tag._input, "change", this._file_updated);
-			u.e.addEvent(tag._input, "focus", this._focused_content);
-			u.e.addEvent(tag._input, "blur", this._blurred_content);
-			if(u.e.event_pref == "mouse") {
-				u.e.addEvent(tag._input, "mouseenter", u.f._mouseenter);
-				u.e.addEvent(tag._input, "mouseleave", u.f._mouseleave);
-			}
-		}
-		this._editor.updateTargets();
-		this._editor.updateDraggables();
-		return tag;
-	}
-	field.deleteFile = function(tag) {
-		var form_data = new FormData();
-		form_data.append("csrf-token", this._form.inputs["csrf-token"].val());
-		tag.response = function(response) {
-			page.notify(response);
-			if(response.cms_status && response.cms_status == "success") {
-				this.field.update();
-			}
-		}
-		u.request(tag, this.file_delete_action+"/"+tag._item_id+"/"+tag._variant, {"method":"post", "data":form_data});
-	}
-	field._file_updated = function(event) {
-		var form_data = new FormData();
-		form_data.append(this.name, this.files[0], this.value);
-		form_data.append("csrf-token", this._form.inputs["csrf-token"].val());
-		form_data.append("input-name", this.tag.field.input.name);
-		this.response = function(response) {
-			page.notify(response);
-			if(response.cms_status && response.cms_status == "success") {
-				this.parentNode.removeChild(this.tag._label);
-				this.parentNode.removeChild(this);
-				this.tag._variant = response.cms_object["variant"];
-				this.tag._filesize = response.cms_object["filesize"]
-				this.tag._name = response.cms_object["name"]
-				this.tag._item_id = response.cms_object["item_id"]
-				this.tag._text.contentEditable = true;
-				this.tag._text.innerHTML = this.tag._name + " ("+ u.round((this.tag._filesize/1000), 2) +"Kb)";
-				this.tag._input = this.tag._text;
-				this.tag._input.val = function(value) {
-					if(value !== undefined) {
-						this.innerHTML = value;
-					}
-					return this.innerHTML;
-				}
-				u.e.addEvent(this.tag._input, "keydown", this.tag.field._changing_content);
-				u.e.addEvent(this.tag._input, "keyup", this.tag.field._changed_file_content);
-				u.e.addEvent(this.tag._input, "mouseup", this.tag.field._changed_file_content);
-				u.e.addEvent(this.tag._input, "focus", this.tag.field._focused_content);
-				u.e.addEvent(this.tag._input, "blur", this.tag.field._blurred_content);
-				u.ac(this.tag, "done");
-				this.tag.field.update();
-				this.tag.field._form.submit();
-			}
-		}
-		u.request(this, this.field.file_add_action+"/"+this.field.item_id, {"method":"post", "data":form_data});
-	}
-	field._changed_file_content = function(event) {
-		if(this.val() && !this.val().replace(/<br>/, "")) {
-			this.val("");
-		}
-		this.field.update();
-	}
-	field.addCodeTag = function(type, value) {
-		var tag = this.createTag(this.code_allowed, type);
-		tag._input = u.ae(tag, "div", {"class":"text", "contentEditable":true});
-		tag._input.tag = tag;
-		tag._input.field = this;
-		tag._input._form = this._form;
-		tag._input.val = function(value) {
-			if(value !== undefined) {
-				this.innerHTML = value;
-			}
-			return this.innerHTML;
-		}
-		tag._input.val(u.stringOr(value));
-		u.e.addEvent(tag._input, "keydown", this._changing_code_content);
-		u.e.addEvent(tag._input, "keyup", this._code_updated);
-		u.e.addStartEvent(tag._input, this._code_selection_started);
-		u.e.addEvent(tag._input, "focus", this._focused_content);
-		u.e.addEvent(tag._input, "blur", this._blurred_content);
-		if(u.e.event_pref == "mouse") {
-			u.e.addEvent(tag._input, "mouseenter", u.f._mouseenter);
-			u.e.addEvent(tag._input, "mouseleave", u.f._mouseleave);
-		}
-		u.e.addEvent(tag._input, "paste", this._pasted_content);
-		tag.addNew = function() {
-			this.field.addTextItem(this.field.text_allowed[0]);
-		}
-		this._editor.updateTargets();
-		this._editor.updateDraggables();
-		return tag;
-	}
-	field._code_selection_started = function(event) {
-		this._selection_event_id = u.e.addWindowEndEvent(this, this.field._code_updated);
-	}
-	field._changing_code_content = function(event) {
-		if(event.keyCode == 13 || event.keyCode == 9) {
-			u.e.kill(event);
-		}
-		if(event.keyCode == 9 && event.shiftKey) {
-			this.field.backwards_tab = true;
-		}
-	}
-	field._code_updated = function(event) {
-		if(this._selection_event_id) {
-			u.e.removeWindowEndEvent(this, this._selection_event_id);
-			delete this._selection_event_id;
-		}
-		var selection = window.getSelection(); 
-		if(event.keyCode == 13) {
-			u.e.kill(event);
-			if(selection && selection.isCollapsed) {
-				var br = document.createTextNode("\n");
-				range = selection.getRangeAt(0);
-				range.insertNode(br);
-				range.collapse(false);
-				var selection = window.getSelection();
-				selection.removeAllRanges();
-				selection.addRange(range);
-			}
-		}
-		if(event.keyCode == 9) {
-			u.e.kill(event);
-			if(selection && selection.isCollapsed) {
-				var br = document.createTextNode("\t");
-				range = selection.getRangeAt(0);
-				range.insertNode(br);
-				range.collapse(false);
-				var selection = window.getSelection();
-				selection.removeAllRanges();
-				selection.addRange(range);
-			}
-		}
-		else if(event.keyCode == 8) {
-			if(this.is_deletable) {
-				u.e.kill(event);
-				var all_tags = u.qsa("div.tag", this.field);
-				var prev = this.field.findPreviousInput(this);
-				if(prev) {
-					this.tag.parentNode.removeChild(this.tag);
-					prev.focus();
-				}
-				this.field._editor.updateTargets();
-				this.field._editor.updateDraggables();
-			}
-			else if(!this.val() || !this.val().replace(/<br>/, "")) {
-				this.is_deletable = true;
-			}
-			else if(selection.anchorNode != this && selection.anchorNode.innerHTML == "") {
-				selection.anchorNode.parentNode.removeChild(selection.anchorNode);
-			}
-		}
-		else {
-			this.is_deletable = false;
-		}
-		this.field.hideSelectionOptions();
-		if(selection && !selection.isCollapsed) {
-			var node = selection.anchorNode;
-			while(node != this) {
-				if(node.nodeName == "HTML" || !node.parentNode) {
-					break;
-				}
-				node = node.parentNode;
-			}
-			if(node == this) {
-				this.field.showSelectionOptions(this, selection);
-			}
-		}
-		// 	
-		this.field.update();
-	}
-	field.addListTag = function(type, value) {
-		var tag = this.createTag(this.list_allowed, type);
-		this.addListItem(tag, value);
-		this._editor.updateTargets();
-		this._editor.updateDraggables();
-		return tag;
-	}
-	field.addListItem = function(tag, value) {
-		var li = u.ae(tag, "div", {"class":"li"});
-		li.tag = tag;
-		li.field = this;
-		li._input = u.ae(li, "div", {"class":"text", "contentEditable":true});
-		li._input.li = li;
-		li._input.tag = tag;
-		li._input.field = this;
-		li._input._form = this._form;
-		li._input.val = function(value) {
-			if(value !== undefined) {
-				this.innerHTML = value;
-			}
-			return this.innerHTML;
-		}
-		li._input.val(u.stringOr(value));
-		u.e.addEvent(li._input, "keydown", this._changing_content);
-		u.e.addEvent(li._input, "keyup", this._changed_content);
-		u.e.addStartEvent(li._input, this._selection_started);
-		u.e.addEvent(li._input, "focus", this._focused_content);
-		u.e.addEvent(li._input, "blur", this._blurred_content);
-		if(u.e.event_pref == "mouse") {
-			u.e.addEvent(li._input, "mouseenter", u.f._mouseenter);
-			u.e.addEvent(li._input, "mouseleave", u.f._mouseleave);
-		}
-		u.e.addEvent(li._input, "paste", this._pasted_content);
-		this._editor.updateTargets();
-		this._editor.updateDraggables();
-		return li;
-	}
-	field.addTextTag = function(type, value) {
-		var tag = this.createTag(this.text_allowed, type);
-		tag._input = u.ae(tag, "div", {"class":"text", "contentEditable":true});
-		tag._input.tag = tag;
-		tag._input.field = this;
-		tag._input._form = this._form;
-		tag._input.val = function(value) {
-			if(value !== undefined) {
-				this.innerHTML = value;
-			}
-			return this.innerHTML;
-		}
-		tag._input.val(u.stringOr(value));
-		u.e.addEvent(tag._input, "keydown", this._changing_content);
-		u.e.addEvent(tag._input, "keyup", this._changed_content);
-		u.e.addStartEvent(tag._input, this._selection_started);
-		u.e.addEvent(tag._input, "focus", this._focused_content);
-		u.e.addEvent(tag._input, "blur", this._blurred_content);
-		if(u.e.event_pref == "mouse") {
-			u.e.addEvent(tag._input, "mouseenter", u.f._mouseenter);
-			u.e.addEvent(tag._input, "mouseleave", u.f._mouseleave);
-		}
-		u.e.addEvent(tag._input, "paste", this._pasted_content);
-		tag.addNew = function() {
-			this.field.addTextItem(this.field.text_allowed[0]);
-		}
-		this._editor.updateTargets();
-		this._editor.updateDraggables();
-		return tag;
-	}
-	field._changing_content = function(event) {
-		if(event.keyCode == 13) {
-			u.e.kill(event);
-		}
-		if(event.keyCode == 9 && event.shiftKey) {
-			this.field.backwards_tab = true;
-		}
-	}
-	field._selection_started = function(event) {
-		this._selection_event_id = u.e.addWindowEndEvent(this, this.field._changed_content);
-	}
-	field._changed_content = function(event) {
-		if(this._selection_event_id) {
-			u.e.removeWindowEndEvent(this, this._selection_event_id);
-			delete this._selection_event_id;
-		}
-		var selection = window.getSelection(); 
-		if(event.keyCode == 13) {
-			u.e.kill(event);
-			if(!event.ctrlKey && !event.metaKey) {
-				if(u.hc(this.tag, this.field.list_allowed.join("|"))) {
-					var new_li = this.field.addListItem(this.tag);
-					var next_li = u.ns(this.li);
-					if(next_li) {
-						this.tag.insertBefore(new_li, next_li);
-					}
-					else {
-						this.tag.appendChild(new_li);
-					}
-					new_li._input.focus();
-				}
-				else {
-					var new_tag = this.field.addTextTag(this.field.text_allowed[0]);
-					var next_tag = u.ns(this.tag);
-					if(next_tag) {
-						this.tag.parentNode.insertBefore(new_tag, next_tag);
-					}
-					else {
-						this.tag.parentNode.appendChild(new_tag);
-					}
-					new_tag._input.focus();
-				}
-			}
-			else {
-				if(selection && selection.isCollapsed) {
-					var br = document.createElement("br");
-					range = selection.getRangeAt(0);
-					range.insertNode(br);
-					range.collapse(false);
-					var selection = window.getSelection();
-					selection.removeAllRanges();
-					selection.addRange(range);
-				}
-			}
-		}
-		else if(event.keyCode == 8) {
-			if(this.is_deletable) {
-				u.e.kill(event);
-				var all_tags = u.qsa("div.tag", this.field);
-				var prev = this.field.findPreviousInput(this);
-				if(u.hc(this.tag, this.field.list_allowed.join("|"))) {
-					var all_lis = u.qsa("div.li", this.tag);
-					if(prev || all_tags.length > 1) {
-						this.li._input.blur();
-						this.tag.removeChild(this.li);
-						if(!u.qsa("div.li", this.tag).length) {
-							this.tag.parentNode.removeChild(this.tag);
-						}
-					}
-				}
-				else {
-					if(prev || all_tags.length > 1) {
-						this.tag.parentNode.removeChild(this.tag);
-					}
-				}
-				this.field._editor.updateTargets();
-				this.field._editor.updateDraggables();
-				if(prev) {
-					prev.focus();
-				}
-				else {
-					if(u.hc(this.tag, this.field.list_allowed.join("|"))) {
-						var all_lis = u.qsa("div.li", this.tag);
-						all_lis[0]._input.focus();
-					}
-					else {
-						var all_tags = u.qsa("div.tag", this.field);
-						all_tags[0]._input.focus();
-					}
-				}
-			}
-			else if(!this.val() || !this.val().replace(/<br>/, "")) {
-				this.is_deletable = true;
-			}
-			else if(selection.anchorNode != this && selection.anchorNode.innerHTML == "") {
-				selection.anchorNode.parentNode.removeChild(selection.anchorNode);
-			}
-		}
-		else {
-			this.is_deletable = false;
-		}
-		this.field.hideSelectionOptions();
-		if(selection && !selection.isCollapsed) {
-			u.bug("selection:", this);
-			var node = selection.anchorNode;
-			while(node != this) {
-				if(node.nodeName == "HTML" || !node.parentNode) {
-					break;
-				}
-				node = node.parentNode;
-			}
-			if(node == this) {
-				this.field.showSelectionOptions(this, selection);
-			}
-		}
-		// 	
-		this.field.update();
-	}
-	field._focused_content = function(event) {
-		this.field.is_focused = true;
-		u.ac(this.tag, "focus");
-		u.ac(this.field, "focus");
-		u.as(this.field, "zIndex", this.field._form._focus_z_index);
-		u.f.positionHint(this.field);
-		if(this.field.backwards_tab) {
-			this.field.backwards_tab = false;
-			var range = document.createRange();
-			range.selectNodeContents(this);
-			range.collapse(false);
-			var selection = window.getSelection();
-			selection.removeAllRanges();
-			selection.addRange(range);
-		}
-	}
-	field._blurred_content = function() {
-		this.field.is_focused = false;
-		u.rc(this.tag, "focus");
-		u.rc(this.field, "focus");
-		u.as(this.field, "zIndex", this.field._base_z_index);
-		u.f.positionHint(this.field);
-		this.field.hideSelectionOptions();
-	}
-	field._pasted_content = function(event) {
-		u.e.kill(event);
-		var i, node;
-		var paste_content = event.clipboardData.getData("text/plain");
-		if(paste_content !== "") {
-			var selection = window.getSelection();
-			if(!selection.isCollapsed) {
-				selection.deleteFromDocument();
-			}
-			var paste_parts = paste_content.trim().split(/\n\r|\n|\r/g);
-				var text_nodes = [];
-				for(i = 0; i < paste_parts.length; i++) {
-					text = paste_parts[i];
-					u.bug("text part", text);
-					text_nodes.push(document.createTextNode(text));
-					if(paste_parts.length && i < paste_parts.length-1) {
-						text_nodes.push(document.createElement("br"));
-					}
-				}
-				for(i = text_nodes.length-1; i >= 0; i--) {
-					node = text_nodes[i];
-					var range = selection.getRangeAt(0);
-					range.insertNode(node);
-					selection.addRange(range);
-				}
-				selection.collapseToEnd();
-		}
-	}
-	field.findPreviousInput = function(iN) {
-		var prev = false;
-		if(u.hc(iN.tag, this.list_allowed.join("|"))) {
-			prev = u.ps(iN.li, {"exclude":".drag,.remove,.type"});
-		}
-		if(!prev) {
-			prev = u.ps(iN.tag);
-			if(prev && u.hc(prev, this.list_allowed.join("|"))) {
-				var items = u.qsa("div.li", prev);
-				prev = items[items.length-1];
-			}
-			else if(prev && u.hc(prev, "file")) {
-				if(!prev._variant) {
-					var prev_iN = this.findPreviousInput(prev._input);
-					if(prev_iN) {
-						prev = prev_iN.tag;
-					}
-					else {
-						prev = false;
-					}
-				}
-			}
-		}
-		if(!prev) {
-			prev = u.qs("div.tag", this);
-			if(u.hc(prev, this.list_allowed.join("|"))) {
-				prev = u.qs("div.li", prev);
-			}
-			else if(prev && u.hc(prev, "file")) {
-				if(!prev._variant) {
-					var prev_iN = this.findPreviousInput(prev._input);
-					if(prev_iN) {
-						prev = prev_iN.tag;
-					}
-					else {
-						prev = false;
-					}
-				}
-			}
-		}
-		return prev && prev._input != iN ? prev._input : false;
-	}
-	field.returnFocus = function(tag) {
-		if(u.hc(tag, this.text_allowed.join("|"))) {
-			tag._input.focus();
-		}
-		else if(u.hc(tag, "code")) {
-			tag._input.focus();
-		}
-		else if(u.hc(tag, this.list_allowed.join("|"))) {
-			var li = u.qs("div.li", tag);
-			li._input.focus();
-		}
-	}
-	field.hideSelectionOptions = function() {
-		if(this.selection_options && !this.selection_options.is_active) {
-			this.selection_options.parentNode.removeChild(this.selection_options);
-			this.selection_options = null;
-		}
-		this.update();
-	}
-	field.showSelectionOptions = function(node, selection) {
-		var x = u.absX(node);
-		var y = u.absY(node);
-		this.selection_options = u.ae(document.body, "div", {"id":"selection_options"});
-		u.as(this.selection_options, "top", y+"px");
-		u.as(this.selection_options, "left", (x + node.offsetWidth) +"px");
-		var ul = u.ae(this.selection_options, "ul", {"class":"options"});
-		this.selection_options._link = u.ae(ul, "li", {"class":"link", "html":"Link"});
-		this.selection_options._link.field = this;
-		this.selection_options._link.tag = node;
-		this.selection_options._link.selection = selection;
-		u.ce(this.selection_options._link);
-		this.selection_options._link.inputStarted = function(event) {
-			u.e.kill(event);
-			this.field.selection_options.is_active = true;
-		}
-		this.selection_options._link.clicked = function(event) {
-			u.e.kill(event);
-			this.field.addAnchorTag(this.selection, this.tag);
-		}
-		this.selection_options._em = u.ae(ul, "li", {"class":"em", "html":"Italic"});
-		this.selection_options._em.field = this;
-		this.selection_options._em.tag = node;
-		this.selection_options._em.selection = selection;
-		u.ce(this.selection_options._em);
-		this.selection_options._em.inputStarted = function(event) {
-			u.e.kill(event);
-		}
-		this.selection_options._em.clicked = function(event) {
-			u.e.kill(event);
-			this.field.addEmTag(this.selection, this.tag);
-		}
-		this.selection_options._strong = u.ae(ul, "li", {"class":"strong", "html":"Bold"});
-		this.selection_options._strong.field = this;
-		this.selection_options._strong.tag = node;
-		this.selection_options._strong.selection = selection;
-		u.ce(this.selection_options._strong);
-		this.selection_options._strong.inputStarted = function(event) {
-			u.e.kill(event);
-		}
-		this.selection_options._strong.clicked = function(event) {
-			u.e.kill(event);
-			this.field.addStrongTag(this.selection, this.tag);
-		}
-		this.selection_options._sup = u.ae(ul, "li", {"class":"sup", "html":"Superscript"});
-		this.selection_options._sup.field = this;
-		this.selection_options._sup.tag = node;
-		this.selection_options._sup.selection = selection;
-		u.ce(this.selection_options._sup);
-		this.selection_options._sup.inputStarted = function(event) {
-			u.e.kill(event);
-		}
-		this.selection_options._sup.clicked = function(event) {
-			u.e.kill(event);
-			this.field.addSupTag(this.selection, this.tag);
-		}
-		this.selection_options._span = u.ae(ul, "li", {"class":"span", "html":"CSS class"});
-		this.selection_options._span.field = this;
-		this.selection_options._span.tag = node;
-		this.selection_options._span.selection = selection;
-		u.ce(this.selection_options._span);
-		this.selection_options._span.inputStarted = function(event) {
-			u.e.kill(event);
-			this.field.selection_options.is_active = true;
-		}
-		this.selection_options._span.clicked = function(event) {
-			u.e.kill(event);
-			this.field.addSpanTag(this.selection, this.tag);
-		}
-	}
-	field.deleteOrEditOption = function(node) {
-		node.over = function(event) {
-			if(!this.bn_delete) {
-				this.bn_delete = u.ae(document.body, "span", {"class":"delete_selection", "html":"X"});
-				this.bn_delete.node = this;
-				this.bn_delete.over = function(event) {
-					u.t.resetTimer(this.node.t_out);
-				}
-				u.e.addEvent(this.bn_delete, "mouseover", this.bn_delete.over);
-				u.ce(this.bn_delete);
-				this.bn_delete.clicked = function() {
-					u.e.kill(event);
-					if(this.node.field.selection_options) {
-						this.node.field.selection_options.is_active = false;
-						this.node.field.hideSelectionOptions();
-					}
-					var fragment = document.createTextNode(this.node.innerHTML);
-					this.node.parentNode.replaceChild(fragment, this.node);
-					this.node.out();
-					this.node.field.update();
-				}
-				u.as(this.bn_delete, "top", (u.absY(this)-5)+"px");
-				u.as(this.bn_delete, "left", (u.absX(this)-5)+"px");
-			}
-			if(this.nodeName.toLowerCase() == "a" || this.nodeName.toLowerCase() == "span" && !this.bn_edit) {
-				this.bn_edit = u.ae(document.body, "span", {"class":"edit_selection", "html":"?"});
-				this.bn_edit.node = this;
-				this.bn_edit.over = function(event) {
-					u.t.resetTimer(this.node.t_out);
-				}
-				u.e.addEvent(this.bn_edit, "mouseover", this.bn_edit.over);
-				u.ce(this.bn_edit);
-				this.bn_edit.clicked = function() {
-					u.e.kill(event);
-					if(this.node.nodeName.toLowerCase() == "span") {
-						this.node.field.editSpanTag(this.node);
-					}
-					else if(this.node.nodeName.toLowerCase() == "a") {
-						this.node.field.editAnchorTag(this.node);
-					}
-				}
-				u.as(this.bn_edit, "top", (u.absY(this)-5)+"px");
-				u.as(this.bn_edit, "left", (u.absX(this)-23)+"px");
-			}
-		}
-		node.out = function(event) {
-			if(this.bn_delete) {
-				document.body.removeChild(this.bn_delete);
-				delete this.bn_delete;
-			}
-			if(this.bn_edit) {
-				document.body.removeChild(this.bn_edit);
-				delete this.bn_edit;
-			}
-		}
-		u.e.hover(node, {"delay":1000});
-	}
-	field.activateInlineFormatting = function(input, tag) {
-		var i, node;
-		var inline_tags = u.qsa("a,strong,em,span", input);
-		for(i = 0; i < inline_tags.length; i++) {
-			node = inline_tags[i];
-			node.field = input.field;
-			node.tag = tag;
-			this.deleteOrEditOption(node);
-		}
-	}
-	field.addAnchorTag = function(selection, tag) {
-		var range, a, url, target;
-		var a = document.createElement("a");
-		a.field = this;
-		a.tag = tag;
-		range = selection.getRangeAt(0);
-		try {
-			range.surroundContents(a);
-			selection.removeAllRanges();
-			this.anchorOptions(a);
-			this.deleteOrEditOption(a);
-		}
-		catch(exception) {
-			selection.removeAllRanges();
-			this.hideSelectionOptions();
-			alert("You cannot cross the boundaries of another selection. Yet.");
-		}
-	}
-	field.anchorOptions = function(a) {
-		var form = u.f.addForm(this.selection_options, {"class":"labelstyle:inject"});
-		u.ae(form, "h3", {"html":"Link options"});
-		var fieldset = u.f.addFieldset(form);
-		var input_url = u.f.addField(fieldset, {
-			"label":"url", 
-			"name":"url", 
-			"value":a.href.replace(location.protocol + "//" + document.domain, ""), 
-			"pattern":"(http[s]?:\\/\\/|mailto:|tel:)[^$]+|\/[^$]*",
-			"error_message":"Must start with /, http:// or https://, mailto: or tel:"
-		});
-		var input_target = u.f.addField(fieldset, {
-			"type":"checkbox", 
-			"label":"Open in new window?", 
-			"checked":(a.target ? "checked" : false), 
-			"name":"target", 
-			"error_message":""
-		});
-		var bn_save = u.f.addAction(form, {
-			"value":"Save link", 
-			"class":"button"
-		});
-		u.f.init(form);
-		form.a = a;
-		form.field = this;
-		form.submitted = function() {
-			if(this.inputs["url"].val()) {
-				this.a.href = this.inputs["url"].val();
-			}
-			else {
-				this.a.removeAttribute("href");
-			}
-			if(this.inputs["target"].val()) {
-				this.a.target = "_blank";
-			}
-			else {
-				this.a.removeAttribute("target");
-			}
-			this.field.selection_options.is_active = false;
-			this.field.hideSelectionOptions();
-		}
-	}
-	field.editAnchorTag = function(a) {
-		this.hideSelectionOptions();
-		var x = u.absX(a.tag);
-		var y = u.absY(a.tag);
-		this.selection_options = u.ae(document.body, "div", {"id":"selection_options"});
-		u.as(this.selection_options, "top", y+"px");
-		u.as(this.selection_options, "left", (x + a.tag.offsetWidth) +"px");
-		this.selection_options.is_active = false;
-		this.anchorOptions(a);
-	}
-	field.addStrongTag = function(selection, tag) {
-		var range, a, url, target;
-		var strong = document.createElement("strong");
-		strong.field = this;
-		strong.tag = tag;
-		range = selection.getRangeAt(0);
-		try {
-			range.surroundContents(strong);
-			selection.removeAllRanges();
-			this.deleteOrEditOption(strong);
-			this.hideSelectionOptions();
-		}
-		catch(exception) {
-			selection.removeAllRanges();
-			this.hideSelectionOptions();
-			alert("You cannot cross the boundaries of another selection. Yet.");
-		}
-	}
-	field.addEmTag = function(selection, tag) {
-		var range, a, url, target;
-		var em = document.createElement("em");
-		em.field = this;
-		em.tag = tag;
-		range = selection.getRangeAt(0);
-		try {
-			range.surroundContents(em);
-			selection.removeAllRanges();
-			this.deleteOrEditOption(em);
-			this.hideSelectionOptions();
-		}
-		catch(exception) {
-			selection.removeAllRanges();
-			this.hideSelectionOptions();
-			alert("You cannot cross the boundaries of another selection. Yet.");
-		}
-	}
-	field.addSupTag = function(selection, tag) {
-		var range, a, url, target;
-		var sup = document.createElement("sup");
-		sup.field = this;
-		sup.tag = tag;
-		range = selection.getRangeAt(0);
-		try {
-			range.surroundContents(sup);
-			selection.removeAllRanges();
-			this.deleteOrEditOption(sup);
-			this.hideSelectionOptions();
-		}
-		catch(exception) {
-			selection.removeAllRanges();
-			this.hideSelectionOptions();
-			alert("You cannot cross the boundaries of another selection. Yet.");
-		}
-	}
-	field.addSpanTag = function(selection, tag) {
-		var span = document.createElement("span");
-		span.field = this;
-		span.tag = tag;
-		var range = selection.getRangeAt(0);
-		try {
-			range.surroundContents(span);
-			selection.removeAllRanges();
-			this.spanOptions(span);
-			this.deleteOrEditOption(span);
-		}
-		catch(exception) {
-			selection.removeAllRanges();
-			this.hideSelectionOptions();
-			alert("You cannot cross the boundaries of another selection. Yet.");
-		}
-	}
-	field.editSpanTag = function(span) {
-		this.hideSelectionOptions();
-		var x = u.absX(span.tag);
-		var y = u.absY(span.tag);
-		this.selection_options = u.ae(document.body, "div", {"id":"selection_options"});
-		u.as(this.selection_options, "top", y+"px");
-		u.as(this.selection_options, "left", (x + span.tag.offsetWidth) +"px");
-		this.selection_options.is_active = false;
-		this.spanOptions(span);
-	}
-	field.spanOptions = function(span) {
-		var form = u.f.addForm(this.selection_options, {"class":"labelstyle:inject"});
-		u.ae(form, "h3", {"html":"CSS class"});
-		var fieldset = u.f.addFieldset(form);
-		var input_classname = u.f.addField(fieldset, {"label":"classname", "name":"classname", "value":span.className, "error_message":""});
-		var bn_save = u.f.addAction(form, {"value":"Save class", "class":"button"});
-		u.f.init(form);
-		form.span = span;
-		form.field = this;
-		form.submitted = function() {
-			if(this.inputs["classname"].val()) {
-				this.span.className = this.inputs["classname"].val();
-			}
-			else {
-				this.span.removeAttribute("class");
-			}
-			this.field.selection_options.is_active = false;
-			this.field.hideSelectionOptions();
-		}
-	}
-	field._viewer.innerHTML = field.input.val();
-	u.sortable(field._editor, {"draggables":"div.tag", "targets":"div.editor"});
-	var value, node, i, tag, j, lis, li;
-	var nodes = u.cn(field._viewer, {"exclude":"br"});
-	if(nodes.length) {
-		for(i = 0; i < field._viewer.childNodes.length; i++) {
-			node = field._viewer.childNodes[i];
-			if(node.nodeName == "#text") {
-				if(node.nodeValue.trim()) {
-					var fragments = node.nodeValue.trim().split(/\n\r\n\r|\n\n|\r\r/g);
-					if(fragments) {
-						for(index in fragments) {
-							value = fragments[index].replace(/\n\r|\n|\r/g, "<br>");
-							tag = field.addTextTag("p", fragments[index]);
-							field.activateInlineFormatting(tag._input, tag);
-						}
-					}
-					else {
-						value = node.nodeValue; 
-						tag = field.addTextTag("p", value);
-						field.activateInlineFormatting(tag._input, tag);
-					}
-				}
-			}
-			else if(field.text_allowed && node.nodeName.toLowerCase().match(field.text_allowed.join("|"))) {
-				value = node.innerHTML.trim().replace(/(<br>|<br \/>)$/, "").replace(/\n\r|\n|\r/g, "<br>"); 
-				tag = field.addTextTag(node.nodeName.toLowerCase(), value);
-				if(node.className) {
-					tag._classname = node.className;
-				}
-				field.activateInlineFormatting(tag._input, tag);
-			}
-			else if(node.nodeName.toLowerCase() == "code") {
-				// 
-				tag = field.addCodeTag(node.nodeName.toLowerCase(), node.innerHTML);
-				if(node.className) {
-					tag._classname = node.className;
-				}
-				field.activateInlineFormatting(tag._input, tag);
-			}
-			else if(field.list_allowed.length && node.nodeName.toLowerCase().match(field.list_allowed.join("|"))) {
-				var lis = u.qsa("li", node);
-				value = lis[0].innerHTML.trim().replace(/(<br>|<br \/>)$/, "").replace(/\n\r|\n|\r/g, "<br>");
-				tag = field.addListTag(node.nodeName.toLowerCase(), value);
-				if(node.className) {
-					tag._classname = node.className;
-				}
-				var li = u.qs("div.li", tag);
-				field.activateInlineFormatting(li._input, li);
-				if(lis.length > 1) {
-					for(j = 1; j < lis.length; j++) {
-						li = lis[j];
-						value = li.innerHTML.trim().replace(/(<br>|<br \/>)$/, "").replace(/\n\r|\n|\r/g, "<br>");
-						li = field.addListItem(tag, value);
-						field.activateInlineFormatting(li._input, li);
-					}
-				}
-			}
-			else if(u.hc(node, "youtube|vimeo")) {
-				field.addExternalVideoTag(node.className.match(field.ext_video_allowed.join("|")[0]), node);
-			}
-			else if(u.hc(node, "file")) {
-				field.addFileTag(node);
-			}
-			else if(u.hc(node, "media")) {
-				field.addMediaTag(node);
-			}
-			else if(node.nodeName.toLowerCase().match(/dl|ul|ol/)) {
-				var children = u.cn(node);
-				for(j = 0; j < children.length; j++) {
-					child = children[j];
-					value = child.innerHTML.replace(/\n\r|\n|\r/g, "");
-					tag = field.addTextTag(field.text_allowed[0], value);
-					field.activateInlineFormatting(tag._input, tag);
-				}
-			}
-			else if(node.nodeName.toLowerCase().match(/h1|h2|h3|h4|h5|code/)) {
-				value = node.innerHTML.replace(/\n\r|\n|\r/g, "");
-				tag = field.addTextTag(field.text_allowed[0], value);
-				field.activateInlineFormatting(tag._input, tag);
-			}
-			else {
-				alert("HTML contains unautorized node:" + node.nodeName + "\nIt has been altered to conform with SEO and design.");
-			}
-		}
-	}
-	else {
-		value = field._viewer.innerHTML.replace(/\<br[\/]?\>/g, "\n");
-		tag = field.addTextTag(field.text_allowed[0], value);
-		field.activateInlineFormatting(tag._input, tag);
-	}
-	field._editor.updateTargets();
-	field._editor.updateDraggables();
-	field.updateViewer();
-	field.addOptions();
-}
-
-
-/*u-sortable.js*/
-u.sortable = function(scope, _options) {
-	scope._callback_picked = "picked";
-	scope._callback_moved = "moved";
-	scope._callback_dropped = "dropped";
-	scope._draggable_selector;
-	scope._target_selector;
-	scope._layout;
-	scope._allow_clickpick = false;
-	scope._allow_nesting = false;
-	scope._sorting_disabled = false;
-	scope._distance_to_pick = 2;
-	if(obj(_options)) {
-		var _argument;
-		for(_argument in _options) {
-			switch(_argument) {
-				case "picked"				: scope._callback_picked		= _options[_argument]; break;
-				case "moved"				: scope._callback_moved			= _options[_argument]; break;
-				case "dropped"				: scope._callback_dropped		= _options[_argument]; break;
-				case "draggables"			: scope._draggable_selector		= _options[_argument]; break;
-				case "targets"				: scope._target_selector		= _options[_argument]; break;
-				case "layout"				: scope._layout					= _options[_argument]; break;
-				case "allow_clickpick"		: scope._allow_clickpick		= _options[_argument]; break;
-				case "allow_nesting"		: scope._allow_nesting			= _options[_argument]; break;
-				case "sorting_disabled"		: scope._sorting_disabled		= _options[_argument]; break;
-				case "distance_to_pick"		: scope._distance_to_pick		= _options[_argument]; break;
-			}
-		}
-	}
-	if(!fun(scope.resetSortableEvents)) {
-		scope._sortableInputStart = function(event) {
-			if(!this.draggable_node.scope._sorting_disabled) {
-				this.draggable_node._start_event_x = u.eventX(event);
-				this.draggable_node._start_event_y = u.eventY(event);
-				this.draggable_node.current_xps = 0;
-				this.draggable_node.current_yps = 0;
-				this.draggable_node._move_timestamp = event.timeStamp;
-				this.draggable_node._move_last_x = 0;
-				this.draggable_node._move_last_y = 0;
-				u.e.addMoveEvent(this.draggable_node, this.draggable_node.scope._sortablePick);
-				u.e.addEndEvent(this.draggable_node, this.draggable_node.scope._cancelSortablePick);
-				if(event.type.match(/mouse/)) {
-		 			u.e.addOutEvent(this.draggable_node.drag, this.draggable_node.scope._sortableOut);
-				}
-				this.draggable_node.scope._org_css_user_select = document.body.style.userSelect;
-				u.ass(document.body, {
-					"user-select": "none"
-				});
-			}
-		}
-		scope._cancelSortablePick = function(event) {
-			if(!this.scope._allow_clickpick) {
-				this.scope.resetSortableEvents(this);
-				u.ass(document.body, {
-					"user-select": this.scope._org_css_user_select
-				});
-			}
-		}
-		scope._sortableOut = function(event) {
-			var edoi = this.draggable_node._event_drop_out_id = u.randomString();
-			document["_DroppedOutNode" + edoi] = this.draggable_node;
-			eval('document["_DroppedOutMove' + edoi + '"] = function(event) {document["_DroppedOutNode' + edoi + '"].scope._sortablePick.bind(document["_DroppedOutNode' + edoi + '"])(event);}');
-			u.e.addEvent(document, "mousemove", document["_DroppedOutMove" + edoi]);
-			eval('document["_DroppedOutOver' + edoi + '"] = function(event) {document["_DroppedOutNode' + edoi + '"].scope.resetSortableOutEvents(document["_DroppedOutNode' + edoi + '"]);}');
-			u.e.addEvent(this.draggable_node, "mouseover", document["_DroppedOutOver" + edoi]);
-			eval('document["_DroppedOutEnd' + edoi + '"] = function(event) {u.bug("### up save");document["_DroppedOutNode' + edoi + '"].scope._cancelSortablePick.bind(document["_DroppedOutNode' + edoi + '"])(event);}');
-			u.e.addEvent(document, "mouseup", document["_DroppedOutEnd" + edoi]);
-		}
-		scope._sortablePick = function(event) {
-			var event_x = u.eventX(event);
-			var event_y = u.eventY(event);
-			this.current_x = event_x - this._start_event_x;
-			this.current_y = event_y - this._start_event_y;
-			var init_distance_x = Math.abs(this.current_x);
-			var init_distance_y = Math.abs(this.current_y);
-			if((init_distance_x > this.scope._distance_to_pick || init_distance_y > this.scope._distance_to_pick)) {
-				this.scope.resetNestedSortableEvents(this);
-				u.e.kill(event);
-				this.scope._dragged_node = this;
-				this._mouse_ox = event_x - u.absX(this);
-				this._mouse_oy = event_y - u.absY(this);
-				this.current_xps = Math.round(((this.current_x - this._move_last_x) / (event.timeStamp - this._move_timestamp)) * 1000);
-				this.current_yps = Math.round(((this.current_y - this._move_last_y) / (event.timeStamp - this._move_timestamp)) * 1000);
-				this._move_timestamp = event.timeStamp;
-				this._move_last_x = this.current_x;
-				this._move_last_y = this.current_y;
-				this.scope._shadow_node = u.ae(this.parentNode, this.cloneNode(true));
-				this.parentNode.insertBefore(this.scope._shadow_node, this);
-				u.ac(this.scope._shadow_node, "shadow");
-				this.scope._recalculateRelativeShadowOffset();
-				var _start_width = u.gcs(this, "width");
-				u.ass(this.scope._shadow_node, {
-					width: _start_width,
-					position: "absolute",
-					left: ((event_x - this.scope._shadow_node._rel_ox) - this._mouse_ox) + "px",
-					top: ((event_y - this.scope._shadow_node.rel_oy) - this._mouse_oy) + "px",
-				});
-				u.ac(this, "dragged");
-				this._event_move_id = u.e.addWindowMoveEvent(this, this.scope._sortableDrag);
-				this._event_end_id = u.e.addWindowEndEvent(this, this.scope._sortableDrop);
-				if(fun(this.scope[this.scope._callback_picked])) {
-					this.scope[this.scope._callback_picked](this);
-				}
-			}
-		}
-		scope._sortableDrag = function(event) {
-			var i, node;
-			var event_x = u.eventX(event);
-			var event_y = u.eventY(event);
-			var d_left = event_x - this._mouse_ox;
-			var d_top = event_y - this._mouse_oy;
-			this.current_x = event_x - this._start_event_x;
-			this.current_y = event_y - this._start_event_y;
-			this.current_xps = Math.round(((this.current_x - this._move_last_x) / (event.timeStamp - this._move_timestamp)) * 1000);
-			this.current_yps = Math.round(((this.current_y - this._move_last_y) / (event.timeStamp - this._move_timestamp)) * 1000);
-			this._move_timestamp = event.timeStamp;
-			this._move_last_x = this.current_x;
-			this._move_last_y = this.current_y;
-			// 	
-			// 		
-			// 		
-			// 
-			// 	
-			// 		
-			// 		
-			// 
-			this.scope._detectAndInject(event_x, event_y);
-			u.ass(this.scope._shadow_node, {
-				"position": "absolute",
-				"left": (d_left - this.scope._shadow_node._rel_ox)+"px",
-				"top": (d_top - this.scope._shadow_node._rel_oy)+"px",
-				"bottom": "auto"
-			});
-			if(fun(this.scope[this.scope._callback_moved])) {
-				this.scope[this.scope._callback_moved](this);
-			}
-		}
-		scope._sortableDrop = function(event) {
-			u.e.kill(event);
-			this.scope.resetSortableEvents(this);
-			this.scope._shadow_node.parentNode.removeChild(this.scope._shadow_node);
-			delete this.scope._shadow_node;
-			u.rc(this, "dragged");
-			this.scope._dragged_node = false;
-			this.current_xps = 0;
-			this.current_yps = 0;
-			this._move_timestamp = event.timeStamp;
-			this._move_last_x = 0;
-			this._move_last_y = 0;
-			this.scope.updateDraggables();
-			u.ass(document.body, {
-				"user-select": this.scope._org_css_user_select
-			});
-			if(fun(this.scope[this.scope._callback_dropped])) {
-				this.scope[this.scope._callback_dropped](this);
-			}
-		}
-		scope._recalculateRelativeShadowOffset = function() {
-			if(this._shadow_node) {
-				this._shadow_node._rel_ox = u.absX(this._shadow_node) - u.relX(this._shadow_node);
-				this._shadow_node._rel_oy = u.absY(this._shadow_node) - u.relY(this._shadow_node);
-			}
-		}
-		scope._detectAndInject = function(event_x, event_y) {
-			for(i = this.draggable_nodes.length-1; i >= 0; i--) {
-				node = this.draggable_nodes[i];
-				if(this.target_nodes.indexOf(node.parentNode) !== -1) {
-					if(node.parentNode._layout == "multiline") {
-						var o_left = u.absX(node);
-						var o_top = u.absY(node);
-						var o_width = node.offsetWidth;
-						var o_height = node.offsetHeight;
-					 	if(event_x > o_left && event_x < o_left + o_width && event_y > o_top && event_y < o_top + o_height) {
-							if(node !== this._dragged_node) {
-								if(event_x < o_left + o_width/2) {
-									node.parentNode.insertBefore(this._dragged_node, node);
-								}
-								else {
-									var next = u.ns(node, {exclude: ".target,.dragged"});
-									if(next) {
-										node.parentNode.insertBefore(this._dragged_node, next);
-									}
-									else {
-										node.parentNode.appendChild(this._dragged_node);
-									}
-								}
-								this._recalculateRelativeShadowOffset();
-								break;
-							}
-						}
-					}
-					else if(node.parentNode._layout == "horizontal") {
-						var o_left = u.absX(node);
-						var o_width = node.offsetWidth;
-					 	if(event_x > o_left && event_x < o_left + o_width) {
-							if(node !== this._dragged_node && !u.pn(node, {include:".dragged"})) {
-								if(event_x < o_left + o_width/2) {
-									node.parentNode.insertBefore(this._dragged_node, node);
-								}
-								else {
-									var next = u.ns(node, {exclude: ".target,.dragged"});
-									if(next) {
-										node.parentNode.insertBefore(this._dragged_node, next);
-									}
-									else {
-										node.parentNode.appendChild(this._dragged_node);
-									}
-								}
-							}
-							this._recalculateRelativeShadowOffset();
-							break;
-						}
-					}
-					else {
-						var o_top, o_height;
-						if(this._allow_nesting) {
-							o_top = u.absY(node) - node._extra_height_top;
-							o_height = node._top_node_height + node._extra_height_top + node._extra_height_bottom;
-						}
-						else {
-							o_top = u.absY(node);
-							o_height = node._top_node_height;
-						}
-					 	if(event_y >= o_top && event_y <= o_top + o_height) {
-							if(node !== this._dragged_node && !u.pn(node, {include:".dragged"})) {
-								if(this._allow_nesting) {
-									if(event_y < o_top + (o_height / 3) && (!node.sub_target || !node.sub_target.childNodes.length || this._dragged_node.current_yps < 0)) {
-										node.parentNode.insertBefore(this._dragged_node, node);
-									}
-									else if(event_y > o_top + ((o_height / 3) * 2)) {
-										var next = u.ns(node, {exclude:".target,.dragged"});
-										if(next) {
-											node.parentNode.insertBefore(this._dragged_node, next);
-										}
-										else {
-											node.parentNode.appendChild(this._dragged_node);
-										}
-									}
-									else {
-										if(!node.sub_target) {
-											node.sub_target = u.ae(node, "ul", {"class":this._target_selector.replace(/([a-z]*.?)/, "").replace(/\./g, " ")});
-											this.target_nodes.push(node.sub_target);
-										}
-										node.sub_target.insertBefore(this._dragged_node, node.sub_target.firstChild);
-									}
-								}
-								else {
-									if(event_y < o_top + o_height/2) {
-										node.parentNode.insertBefore(this._dragged_node, node);
-									}
-									else {
-										var next = u.ns(node);
-										if(next) {
-											node.parentNode.insertBefore(this._dragged_node, next);
-										}
-										else {
-											node.parentNode.appendChild(this._dragged_node);
-										}
-									}
-								}
-								this._recalculateRelativeShadowOffset();
-								break;
-							}
-							else {
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-		scope.resetSortableEvents = function(node) {
-			u.e.removeMoveEvent(node, this._sortablePick);
-			u.e.removeEndEvent(node, this._cancelSortablePick);
-			u.e.removeOverEvent(node, this._sortableOver);
-			if(node._event_move_id) {
-				u.e.removeWindowMoveEvent(node, node._event_move_id);
-				delete node._event_move_id;
-			}
-			if(node._event_end_id) {
-				u.e.removeWindowEndEvent(node, node._event_end_id);
-				delete node._event_end_id;
-			}
-			u.e.removeOutEvent(node.drag, this._sortableOut);
-			this.resetSortableOutEvents(node);
-		}
-		scope.resetSortableOutEvents = function(node) {
-			if(node._event_drop_out_id) {
-				u.e.removeEvent(document, "mousemove", document["_DroppedOutMove" + node._event_drop_out_id]);
-				u.e.removeEvent(node, "mouseover", document["_DroppedOutOver" + node._event_drop_out_id]);
-				u.e.removeEvent(document, "mouseup", document["_DroppedOutEnd" + node._event_drop_out_id]);
-				delete document["_DroppedOutMove" + node._event_drop_out_id];
-				delete document["_DroppedOutOver" + node._event_drop_out_id];
-				delete document["_DroppedOutEnd" + node._event_drop_out_id];
-				delete document["_DroppedOutNode" + node._event_drop_out_id];
-				delete node._event_drop_out_id;
-			}
-		}
-		scope.resetNestedSortableEvents = function(node) {
-			while(node && node != this) {
-				if(node.drag) {
-					this.resetSortableEvents(node);
-				}
-				node = node.parentNode;
-			}
-		}
-		scope.getNodeOrder = function(_options) {
-			var class_var = "item_id";
-			if(obj(_options)) {
-				var _argument;
-				for(_argument in _options) {
-					switch(_argument) {
-						case "class_var"			: class_var 		= _options[_argument]; break;
-					}
-				}
-			}
-			this.updateDraggables();
-			var order = [];
-			var i, node, id;
-			for(i = 0; i < this.draggable_nodes.length; i++) {
-				node = this.draggable_nodes[i];
-				id = u.cv(node, class_var);
-				if(id) {
-					order.push(id);
-				}
-				else {
-					order.push(node);
-				}
-			}
-			return order;
-		}
-		scope.getNodeRelations = function(_options) {
-			var class_var = "item_id";
-			if(obj(_options)) {
-				var _argument;
-				for(_argument in _options) {
-					switch(_argument) {
-						case "class_var"			: class_var 		= _options[_argument]; break;
-					}
-				}
-			}
-			this.updateDraggables();
-			var structure = [];
-			var i, node, id, relation, position;
-			for(i = 0; i < this.draggable_nodes.length; i++) {
-				node = this.draggable_nodes[i];
-				id = u.cv(node, class_var);
-				relation = this.getNodeRelation(node);
-				position = this.getNodePositionInList(node);
-				if(id) {
-					structure.push({"id": id, "relation": relation, "position": position});
-				}
-				else {
-					structure.push({"node": node, "relation": relation, "position": position});
-				}
-			}
-			return structure;
-		}
-		scope.getNodePositionInList = function(node) {
-			var pos = 1;
-			var test_node = node;
-			while(u.ps(test_node)) {
-				test_node = u.ps(test_node);
-				pos++;
-			}
-			return pos;
-		}
-		scope.getNodeRelation = function(node) {
-			var relation = 0;
-			var relation_node = u.pn(node, {"include":(this._draggable_selector ? this._draggable_selector : "li")});
-			if(u.inNodeList(relation_node, this.draggable_nodes)) {
-				var id = u.cv(relation_node, "item_id");
-				if(id) {
-					relation = id;
-				}
-				else {
-					relation = relation_node;
-				}
-			}
-			return relation;
-		}
-		scope.detectSortableLayout = function() {
-			var i, target;
-			for(i = 0; i < this.target_nodes.length; i++) {
-				target = this.target_nodes[i];
-					if((target._n_top || target._n_bottom) && (u.cn(target).length > 1 || target._n_display != "block")) {
-						target._layout = "horizontal";
-					}
-					else if(target._n_left || target._n_right) {
-						target._layout = "vertical";
-					}
-					else {
-						target._layout = "multiline";
-					}
-			}
-		}
-		scope.updateDraggables = function() {
-			var i, target, draggable_node;
-			if(this.draggable_nodes && this.draggable_nodes.length) {
-				for(i = 0; i < this.draggable_nodes.length; i++) {
-					draggable_node = this.draggable_nodes[i];
-					if(draggable_node && draggable_node.drag) {
-						this.resetSortableEvents(draggable_node);
-						u.e.removeStartEvent(draggable_node.drag, this._sortableInputStart);
-						u.e.removeOverEvent(draggable_node, this._sortableOver);
-						delete draggable_node.drag;
-						delete draggable_node.sub_target;
-						delete draggable_node.draggable_node;
-					}
-				}
-			}
-			delete scope.draggable_nodes;
-			if(this._draggable_selector) {
-				this.draggable_nodes = Array.prototype.slice.call(u.qsa(this._draggable_selector, this));
-			}
-			else {
-				if(this.nodeName.toLowerCase() === "ul") {
-					this.draggable_nodes = u.cn(this, {include:"li"});
-				}
-				else {
-					this.draggable_nodes = [];
-					for(i = 0; i < this.target_nodes.length; i++) {
-						target = this.target_nodes[i];
-						this.draggable_nodes = this.draggable_nodes.concat(u.cn(target, {include:"li"}));
-					}
-				}
-			}
-			for(i = 0; i < this.draggable_nodes.length; i++) {
-				draggable_node = this.draggable_nodes[i];
-				draggable_node.scope = this;
-				draggable_node.drag = u.qs(".drag", draggable_node);
-				if(!draggable_node.drag) {
-					draggable_node.drag = draggable_node;
-				}
-				draggable_node.drag.draggable_node = draggable_node;
-				draggable_node.draggable_node = draggable_node;
-				var _top = draggable_node.offsetTop;
-				var _height = draggable_node.offsetHeight;
-				var _left = draggable_node.offsetLeft;
-				var _width = draggable_node.offsetWidth;
-				var _display = u.gcs(draggable_node, "display");
-				draggable_node.parentNode._n_top = draggable_node.parentNode._n_top === undefined ? _top : (draggable_node.parentNode._n_top == _top ? draggable_node.parentNode._n_top : false);
-				draggable_node.parentNode._n_left = draggable_node.parentNode._n_left === undefined ? _left : (draggable_node.parentNode._n_left == _left ? draggable_node.parentNode._n_left : false);
-				draggable_node.parentNode._n_bottom = draggable_node.parentNode._n_bottom === undefined ? _top + _height : (draggable_node.parentNode._n_bottom == _top + _height ? draggable_node.parentNode._n_bottom : false);
-				draggable_node.parentNode._n_right = draggable_node.parentNode._n_right === undefined ? _left + _width : (draggable_node.parentNode._n_right == _left + _width ? draggable_node.parentNode._n_right : false);
-				draggable_node.parentNode._n_display = draggable_node.parentNode._n_display === undefined ? _display : (draggable_node.parentNode._n_display == _display ? draggable_node.parentNode._n_display : false);
-				if(this._allow_nesting) {
-					draggable_node.sub_target = u.qs(this._target_selector, draggable_node);
-					if(draggable_node.sub_target) {
-						var _position = u.gcs(draggable_node, "position");
-						var node_height = _height - draggable_node.sub_target.offsetHeight;
-						if(_position !== "static") {
-							draggable_node._top_node_height = node_height - (node_height - draggable_node.sub_target.offsetTop);
-						}
-						else {
-							draggable_node._top_node_height = node_height - (node_height - (draggable_node.sub_target.offsetTop - _top));
-						}
-					}
-					else {
-						draggable_node._top_node_height = _height;
-					}
-					var _margin_top = parseInt(u.gcs(draggable_node, "margin-top"));
-					var _margin_bottom = parseInt(u.gcs(draggable_node, "margin-bottom"));
-					var _box_sizing = u.gcs(draggable_node, "box-sizing");
-					if(_box_sizing == "content-box") {
-						var _border_top_width = parseInt(u.gcs(draggable_node, "border-top-width"));
-						var _border_bottom_width = parseInt(u.gcs(draggable_node, "border-bottom-width"));
-						draggable_node._extra_height_top = _margin_top + _border_top_width;
-						draggable_node._extra_height_bottom = _margin_bottom + _border_bottom_width;
-					}
-					else {
-						draggable_node._extra_height_top = _start_margin_top;
-						draggable_node._extra_height_bottom = _start_margin_bottom;
-					}
-				}
-				else {
-					draggable_node._top_node_height = _height;
-				}
-				u.e.addStartEvent(draggable_node.drag, this._sortableInputStart);
-			}
-		}
-		scope.updateTargets = function() {
-			if(this._target_selector) {
-				this.target_nodes = Array.prototype.slice.call(u.qsa(this._target_selector, this));
-				if(u.elementMatches(this, this._target_selector)) {
-					this.target_nodes.unshift(this);
-				}
-			}
-			else {
-				if(this.nodeName.toLowerCase() === "ul") {
-					this.target_nodes = [this];
-				}
-				else {
-					var i, target, target_nodes, parent_ul;
-					this.target_nodes = [];
-					target_nodes = u.qsa("ul", this);
-					for(i = 0; i < target_nodes.length; i++) {
-						target = target_nodes[i];
-						if(this._allow_nesting) {
-							this.target_nodes.push(target);
-						}
-						else {
-							parent_ul = u.pn(target, {include:"ul"});
-							if(!parent_ul || !u.contains(this, parent_ul)) {
-								this.target_nodes.push(target);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	scope.updateTargets();
-	scope.updateDraggables();
-	scope.detectSortableLayout();
-	if(!scope.draggable_nodes.length || !scope.target_nodes.length) {
-		return;
-	}
-}
-
-
-/*beta-u-columns.js*/
-u.columns = function(node, _columns, insert) {
-	var current_node = node;
-	insert = insert || false;
-	if(!node._tree) {
-		if(insert) {
-			node._tree = u.ie(node, "div", {
-				"class":"c"
-			})
-		}
-		else {
-			node._tree = u.ae(node, "div", {
-				"class":"c"
-			})
-		}
-		node._tree.node = node;
-		current_node = node._tree;
-	}
-	var _column, div_column, column, i, key, value, j;
-	for(j = 0; j < _columns.length; j++) {
-		_column = _columns[j];
-		if(typeof(_column) === "object") {
-			key = Object.keys(_column)[0];
-			value = _column[key];
-			div_column = u.ae(current_node, "div", {
-				"class":key
-			});
-			div_column._tree = node._tree;
-			u.columns(div_column, value);
-		}
-		else {
-			var target = u.qs(_column, node._tree.node);
-			if(target) {
-				div_column = u.ae(current_node, target);
-				div_column._tree = node._tree;
-			}
-		}
-	}
-}
-
-
-/*beta-u-paymentcards.js*/
-u.paymentCards = new function() {
-	this.payment_cards = [
-		{
-			"type": 'maestro',
-			"patterns": [5018, 502, 503, 506, 56, 58, 639, 6220, 67],
-			"format": /([\d]{1,4})([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?/,
-			"card_length": [12,13,14,15,16,17,18,19],
-			"cvc_length": [3],
-			"luhn": true
-		},
-		{
-			"type": 'forbrugsforeningen',
-			"patterns": [600],
-			"format": /([\d]{1,4})([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?/,
-			"card_length": [16],
-			"cvc_length": [3],
-			"luhn": true,
-		},
-		{
-			"type": 'dankort',
-			"patterns": [5019],
-			"format": /([\d]{1,4})([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?/,
-			"card_length": [16],
-			"cvc_length": [3],
-			"luhn": true
-		},
-		{
-			"type": 'visa',
-			"patterns": [4],
-			"format": /([\d]{1,4})([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?/,
-			"card_length": [13, 16],
-			"cvc_length": [3],
-			"luhn": true
-		},
-		{
-			"type": 'mastercard',
-			"patterns": [51, 52, 53, 54, 55, 22, 23, 24, 25, 26, 27],
-			"format": /([\d]{1,4})([\d]{1,4})?([\d]{1,4})?([\d]{1,4})?/,
-			"card_length": [16],
-			"cvc_length": [3],
-			"luhn": true
-		},
-		{
-			"type": 'amex',
-			"patterns": [34, 37],
-			"format": /(\d{1,4})([\d]{0,6})?(\d{1,5})?/,
-			"card_length": [15],
-			"cvc_length": [3,4],
-			"luhn": true
-		}
-	];
-	this.validateCardNumber = function(card_number) {
-		var card = this.getCardTypeFromNumber(card_number);
-		if(card && parseInt(card_number) == card_number) {
-			var i, allowed_length;
-			for(i = 0; i < card.card_length.length; i++) {
-				allowed_length = card.card_length[i];
-				if(card_number.length == allowed_length) {
-					if(card.luhn) {
-						return this.luhnCheck(card_number);
-					}
-					else {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-	this.validateExpDate = function(month, year) {
-		if(
-			this.validateExpMonth(month) && 
-			this.validateExpYear(year) && 
-			new Date(year, month-1) >= new Date(new Date().getFullYear(), new Date().getMonth())
-		) {
-			return true;
-		}
-		return false;
-	}
-	this.validateExpMonth = function(month) {
-		if(month && parseInt(month) == month && month >= 1 && month <= 12) {
-			return true;
-		}
-		return false;
-	}
-	this.validateExpYear = function(year) {
-		if(year && parseInt(year) == year && new Date(year, 0) >= new Date(new Date().getFullYear(), 0)) {
-			return true;
-		}
-		return false;
-	}
-	this.validateCVC = function(cvc, card_number) {
-		var cvc_length = [3,4];
-		if(card_number && parseInt(card_number) == card_number) {
-			var card = this.getCardTypeFromNumber(card_number);
-			if(card) {
-				cvc_length = card.cvc_length;
-			}
-		}
-		if(cvc && parseInt(cvc) == cvc) {
-			var i, allowed_length;
-			for(i = 0; i < cvc_length.length; i++) {
-				allowed_length = cvc_length[i];
-				if(cvc.toString().length == allowed_length) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	this.getCardTypeFromNumber = function(card_number) {
-		var i, j, card, pattern, regex;
-		for(i = 0; card = this.payment_cards[i]; i++) {
-			for(j = 0; j < card.patterns.length; j++) {
-				pattern = card.patterns[j];
-				if(card_number.match('^' + pattern)) {
-					return card;
-				}
-			}
-		}
-		return false;
-	}
-	this.formatCardNumber = function(card_number) {
-		var card = this.getCardTypeFromNumber(card_number);
-		if(card) {
-			var matches = card_number.match(card.format);
-			if(matches) {
-				var matched_text = matches[0];
-				matches.shift(); 
-				var unmatched_suffix = card_number.slice(matched_text.length);
-				matches.push(unmatched_suffix);
-				card_number = matches.join(" ").trim().replace(/ +/g, " ");
-			}
-		}
-		return card_number;
-	}
-	this.luhnCheck = function(card_number) {
-		var ca, sum = 0, mul = 1;
-		var len = card_number.length;
-		while (len--) {
-			ca = parseInt(card_number.charAt(len),10) * mul;
-			sum += ca - (ca>9)*9;
-			mul ^= 3;
-		};
-		return (sum%10 === 0) && (sum > 0);
-	};
-}
-
-
-/*beta-u-form-onebuttonform.js*/
-Util.Modules["oneButtonForm"] = new function() {
-	this.init = function(node) {
-		if(!node.childNodes.length) {
-			var csrf_token = node.getAttribute("data-csrf-token");
-			if(csrf_token) {
-				if(node.nodeName.toLowerCase() === "form") {
-					node._ob_form = node;
-				}
-				else {
-					var form_action = node.getAttribute("data-form-action");
-					var form_target = node.getAttribute("data-form-target");
-					if(form_action) {
-						var form_options = {"action":form_action, "class":"confirm_action_form"};
-						if(form_target) {
-							form_options["target"] = form_target;
-						}
-						node._ob_form = u.f.addForm(node, form_options);
-					}
-					else {
-						u.bug("oneButtonForm missin information");
-						return;
-					}
-				}
-				u.ae(node._ob_form, "input", {"type":"hidden","name":"csrf-token", "value":csrf_token});
-				var inputs = node.getAttribute("data-inputs");
-				if(inputs) {
-					inputs = JSON.parse(inputs);
-					for(input_name in inputs) {
-						u.ae(node._ob_form, "input", {"type":"hidden","name":input_name, "value":inputs[input_name]});
-					}
-				}
-				var button_value = node.getAttribute("data-button-value");
-				var button_name = node.getAttribute("data-button-name");
-				var button_class = node.getAttribute("data-button-class");
-				u.f.addAction(node._ob_form, {"value":button_value, "class":"button" + (button_class ? " "+button_class : ""), "name":u.stringOr(button_name, "save")});
-			}
-		}
-		else {
-			if(node.nodeName.toLowerCase() === "form") {
-				node._ob_form = node;
-			}
-			else {
-				node._ob_form = u.qs("form", node);
-			}
-		}
-		if(node._ob_form) {
-			u.f.init(node._ob_form);
-			node._ob_form._ob_node = node;
-			node._ob_form._ob_submit_button = u.qs("input[type=submit]", node._ob_form);
-			if(u.objectValues(node._ob_form.actions).indexOf(node._ob_form._ob_submit_button) === -1) {
-				u.f.initButton(node._ob_form, node._ob_form._ob_submit_button);
-			}
-			node._ob_form._ob_submit_button.org_value = node._ob_form._ob_submit_button.value;
-			node._ob_form._ob_submit_button.confirm_value = node.getAttribute("data-confirm-value");
-			node._ob_form._ob_submit_button.wait_value = node.getAttribute("data-wait-value");
-			node._ob_form._ob_success_function = node.getAttribute("data-success-function");
-			node._ob_form._ob_success_location = node.getAttribute("data-success-location");
-			node._ob_form._ob_error_function = node.getAttribute("data-error-function");
-			node._ob_form._ob_dom_submit = node.getAttribute("data-dom-submit");
-			node._ob_form._ob_download = node.getAttribute("data-download");
-			node._ob_form.restore = function(event) {
-				u.t.resetTimer(this.t_confirm);
-				u.rc(this._ob_submit_button, "confirm");
-				delete this._ob_submit_button._ob_wait_for_confirm;
-				this._ob_submit_button.value = this._ob_submit_button.org_value;
-			}
-			node._ob_form.submitted = function(action) {
-				if(!this._ob_submit_button._ob_wait_for_confirm && this._ob_submit_button.confirm_value) {
-					u.ac(this._ob_submit_button, "confirm");
-					this._ob_submit_button._ob_wait_for_confirm = true;
-					this._ob_submit_button.value = this._ob_submit_button.confirm_value;
-					this.t_confirm = u.t.setTimer(this, this.restore, 3000);
-				}
-				else {
-					u.t.resetTimer(this.t_confirm);
-					this.response = function(response) {
-						u.rc(this, "submitting");
-						u.rc(this._ob_submit_button, "disabled");
-						if(fun(page.notify)) {
-							page.notify(response);
-						}
-						this.restore();
-						if(!response.cms_status || response.cms_status == "success") {
-							if(response.cms_object && response.cms_object.constraint_error) {
-								this._ob_submit_button.value = this._ob_submit_button.org_value;
-								u.ac(this, "disabled");
-							}
-							else {
-								if(this._ob_success_location) {
-									u.ass(this._ob_submit_button, {
-										"display": "none"
-									});
-									location.href = this._ob_success_location;
-								}
-								else if(this._ob_success_function) {
-									if(fun(this._ob_node[this._ob_success_function])) {
-										this._ob_node[this._ob_success_function](response);
-									}
-								}
-								else if(fun(this._ob_node.confirmed)) {
-									this._ob_node.confirmed(response);
-								}
-								else {
-									u.bug("default return handling" + this._ob_success_location)
-								}
-							}
-						}
-						else {
-							if(this._ob_error_function) {
-								u.bug("error function:" + this._ob_error_function);
-								if(fun(this._ob_node[this._ob_error_function])) {
-									this._ob_node[this._ob_error_function](response);
-								}
-							}
-							else if(fun(this._ob_node.confirmedError)) {
-								u.bug("confirmedError");
-								this._ob_node.confirmedError(response);
-							}
-						}
-					}
-					u.ac(this._ob_submit_button, "disabled");
-					u.ac(this, "submitting");
-					this._ob_submit_button.value = u.stringOr(this._ob_submit_button.wait_value, "Wait");
-					if(this._ob_dom_submit) {
-						u.bug("should submit:" + this._ob_download);
-						if(this._ob_download) {
-							this.response({"cms_status":"success"});
-							u.bug("wait for download");
-						}
-						this.DOMsubmit();
-					}
-					else {
-						u.request(this, this.action, {"method":"post", "data":this.getData()});
-					}
-				}
-			}
-		}
-	}
-}
-
-/*beta-u-animation-to.js*/
-	u.a.parseSVGPolygon = function(value) {
-		var pairs = value.trim().split(" ");
-		var sets = [];
-		var part;
-		for(x in pairs) {
-			parts = pairs[x].trim().split(",");
-			for(part in parts) {
-				parts[part] = Number(parts[part]);
-			}
-			sets[x] = parts;
-		}
-		return sets;
-	}
-	u.a.parseSVGPath = function(value) {
-		var pairs = {"m":2, "l":2, "a":7, "c":6, "s":4, "q":4, "z":0};
-		var x, sets;
-		value = value.replace(/-/g, " -");
-		value = value.replace(/,/g, " ");
-		value = value.replace(/(m|l|a|c|s|q|M|L|A|C|S|Q)/g, " $1 ");
-		value = value.replace(/  /g, " ");
-		sets = value.match(/(m|l|a|c|s|q|M|L|A|C|S|Q)([0-9 \-\.]+)/g);
-		for(x in sets) {
-			parts = sets[x].trim().split(" ");
-			sets[x] = parts;
-			if(parts && pairs[parts[0].toLowerCase()] == parts.length-1) {
-			}
-			else {
-			}
-		}
-		return sets;
-	}
-	u.a.getInitialValue = function(node, attribute) {
-		var value = (node.getAttribute(attribute) ? node.getAttribute(attribute) : u.gcs(node, attribute)).replace(node._unit[attribute], "")
-		if(attribute.match(/^(d|points)$/)) {
-			return value;
-		}
-		else {
-			return Number(value.replace(/auto/, 0));
-		}
-	}
-	u.a.to = function(node, transition, attributes) {
-		var transition_parts = transition.split(" ");
-		if(transition_parts.length >= 3) {
-			node._target = transition_parts[0];
-			node.duration = transition_parts[1].match("ms") ? parseFloat(transition_parts[1]) : (parseFloat(transition_parts[1]) * 1000);
-			node._ease = transition_parts[2];
-			if(transition_parts.length == 4) {
-				node.delay = transition_parts[3].match("ms") ? parseFloat(transition_parts[3]) : (parseFloat(transition_parts[3]) * 1000);
-			}
-		}
-		var value, d;
-		node._start = {};
-		node._end = {};
-		node._unit = {};
-		for(attribute in attributes) {
-			if(attribute.match(/^(d)$/)) {
-				node._start[attribute] = this.parseSVGPath(this.getInitialValue(node, attribute));
-				node._end[attribute] = this.parseSVGPath(attributes[attribute]);
-			}
-			else if(attribute.match(/^(points)$/)) {
-				node._start[attribute] = this.parseSVGPolygon(this.getInitialValue(node, attribute));
-				node._end[attribute] = this.parseSVGPolygon(attributes[attribute]);
-			}
-			else {
-				node._unit[attribute] = attributes[attribute].toString().match(/\%|px/);
-				node._start[attribute] = this.getInitialValue(node, attribute);
-				node._end[attribute] = attributes[attribute].toString().replace(node._unit[attribute], "");
-			}
-		}
-		node.easing = u.easings[node._ease];
-		node.transitionTo = function(progress) {
-			var easing = node.easing(progress);
-			for(attribute in attributes) {
-				if(attribute.match(/^(translate|rotate|scale)$/)) {
-					if(attribute == "translate") {
-						u.a.translate(this, Math.round((this._end_x - this._start_x) * easing), Math.round((this._end_y - this._start_y) * easing))
-					}
-					else if(attribute == "rotate") {
-					}
-				}
-				else if(attribute.match(/^(x1|y1|x2|y2|r|cx|cy|stroke-width)$/)) {
-					var new_value = (this._start[attribute] + ((this._end[attribute] - this._start[attribute]) * easing)) +  this._unit[attribute]
-					this.setAttribute(attribute, new_value);
-				}
-				else if(attribute.match(/^(d)$/)) {
-					var new_value = "";
-					for(x in this._start[attribute]) {
-						for(y in this._start[attribute][x]) {
-							if(parseFloat(this._start[attribute][x][y]) == this._start[attribute][x][y]) {
-								new_value += (Number(this._start[attribute][x][y]) + ((Number(this._end[attribute][x][y]) - Number(this._start[attribute][x][y])) * easing)) + " ";
-							}
-							else {
-								new_value += this._end[attribute][x][y] + " ";
-							}
-						}
-					}
-					this.setAttribute(attribute, new_value);
-				}
-				else if(attribute.match(/^(points)$/)) {
-					var new_value = "";
-					for(x in this._start[attribute]) {
-						new_value += (this._start[attribute][x][0] + ((this._end[attribute][x][0] - this._start[attribute][x][0]) * easing)) + ",";
-						new_value += (this._start[attribute][x][1] + ((this._end[attribute][x][1] - this._start[attribute][x][1]) * easing)) + " ";
-					}
-					this.setAttribute(attribute, new_value);
-				}
-				else {
-					var new_value = (this._start[attribute] + ((this._end[attribute] - this._start[attribute]) * easing)) +  this._unit[attribute]
-					u.as(node, attribute, new_value, false);
-				}
-			}
-		}
-		u.a.requestAnimationFrame(node, "transitionTo", node.duration);
-	}
-
-
-/*beta-u-fontsready.js*/
-u.fontsReady = function(node, fonts, _options) {
-	var callback_loaded = "fontsLoaded";
-	var callback_timeout = "fontsNotLoaded";
-	var max_time = 3000;
-	if(obj(_options)) {
-		var _argument;
-		for(_argument in _options) {
-			switch(_argument) {
-				case "callback"					: callback_loaded		= _options[_argument]; break;
-				case "timeout"					: callback_timeout		= _options[_argument]; break;
-				case "max"						: max_time				= _options[_argument]; break;
-			}
-		}
-	}
-	window["_man_fonts_"] = window["_man_fonts_"] || {};
-	window["_man_fonts_"].fontApi = document.fonts && fun(document.fonts.check) ? true : false;
-	window["_man_fonts_"].fonts = window["_man_fonts_"].fonts || {};
-	var font, node, i;
-	if(typeof(fonts.length) == "undefined") {
-		font = fonts;
-		fonts = new Array();
-		fonts.push(font);
-	}
-	var loadkey = u.randomString(8);
-	if(window["_man_fonts_"].fontApi) {
-		window["_man_fonts_"+loadkey] = {};
-	}
-	else {
-		window["_man_fonts_"+loadkey] = u.ae(document.body, "div");
-		window["_man_fonts_"+loadkey].basenodes = {};
-	}
-	window["_man_fonts_"+loadkey].nodes = [];
-	window["_man_fonts_"+loadkey].t_timeout = u.t.setTimer(window["_man_fonts_"+loadkey], "fontCheckTimeout", max_time);
-	window["_man_fonts_"+loadkey].loadkey = loadkey;
-	window["_man_fonts_"+loadkey].callback_node = node;
-	window["_man_fonts_"+loadkey].callback_loaded = callback_loaded;
-	window["_man_fonts_"+loadkey].callback_timeout = callback_timeout;
-	for(i = 0; i < fonts.length; i++) {
-		font = fonts[i];
-		font.style = font.style || "normal";
-		font.weight = font.weight || "400";
-		font.size = font.size || "16px";
-		font.status = "waiting";
-		font.id = u.superNormalize(font.family+font.style+font.weight);
-		if(!window["_man_fonts_"].fonts[font.id]) {
-			window["_man_fonts_"].fonts[font.id] = font;
-		}
-		if(window["_man_fonts_"].fontApi) {
-			node = {};
-		}
-		else {
-			if(!window["_man_fonts_"+loadkey].basenodes[u.superNormalize(font.style+font.weight)]) {
-				window["_man_fonts_"+loadkey].basenodes[u.superNormalize(font.style+font.weight)] = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!","style":"font-family: Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: "+font.size+" !important; line-height: 1em !important; opacity: 0 !important;"});
-			}
-			node = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!","style":"font-family: '"+font.family+"', Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: "+font.size+" !important; line-height: 1em !important; opacity: 0 !important;"});
-		}
-		node.font_size = font.size;
-		node.font_family = font.family;
-		node.font_weight = font.weight;
-		node.font_style = font.style;
-		node.font_id = font.id;
-		node.loadkey = loadkey;
-		window["_man_fonts_"+loadkey].nodes.push(node);
-	}
-	window["_man_fonts_"+loadkey].checkFontsAPI = function() {
-		var i, node, font_string;
-		for(i = 0; i < this.nodes.length; i++) {
-			node = this.nodes[i];
-			if(window["_man_fonts_"].fonts[node.font_id] && window["_man_fonts_"].fonts[node.font_id].status == "waiting") {
-				font_string = node.font_style + " " + node.font_weight + " " + node.font_size + " " + node.font_family;
-				document.fonts.load(font_string).then(function(fontFaceSetEvent) {
-					if(fontFaceSetEvent && fontFaceSetEvent.length && fontFaceSetEvent[0].status == "loaded") {
-						window["_man_fonts_"].fonts[this.font_id].status = "loaded";
-					}
-					else {
-						window["_man_fonts_"].fonts[this.font_id].status = "failed";
-					}
-					if(window["_man_fonts_"+this.loadkey] && fun(window["_man_fonts_"+this.loadkey].checkFontsStatus)) {
-						window["_man_fonts_"+this.loadkey].checkFontsStatus();
-					}
-				}.bind(node));
-			}
-		}
-		if(fun(this.checkFontsStatus)) {
-			this.checkFontsStatus();
-		}
-	}
-	window["_man_fonts_"+loadkey].checkFontsFallback = function() {
-		var basenode, i, node;
-		for(i = 0; i < this.nodes.length; i++) {
-			node = this.nodes[i];
-			basenode = this.basenodes[u.superNormalize(node.font_style+node.font_weight)];
-			if(node.offsetWidth != basenode.offsetWidth || node.offsetHeight != basenode.offsetHeight) {
-				window["_man_fonts_"].fonts[node.font_id].status = "loaded";
-			}
-		}
-		this.t_fallback = u.t.setTimer(this, "checkFontsFallback", 30);
-		if(fun(this.checkFontsStatus)) {
-			this.checkFontsStatus();
-		}
-	}
-	window["_man_fonts_"+loadkey].fontCheckTimeout = function(event) {
-		u.t.resetTimer(this.t_fallback);
-		delete window["_man_fonts_"+this.loadkey];
-		if(this.parentNode) {
-			this.parentNode.removeChild(this);
-		}
-		if(fun(this.callback_node[this.callback_timeout])) {
-			this.callback_node[this.callback_timeout](this.nodes);
-		}
-		else if(fun(this.callback_node[this.callback_loaded])) {
-			this.callback_node[this.callback_loaded](this.nodes);
-		}
-	}
-	window["_man_fonts_"+loadkey].checkFontsStatus = function(event) {
-		var i, node;
-		for(i = 0; i < this.nodes.length; i++) {
-			node = this.nodes[i];
-			if(window["_man_fonts_"].fonts[node.font_id].status == "waiting") {
-				return;
-			}
-		}
-		u.t.resetTimer(this.t_timeout);
-		u.t.resetTimer(this.t_fallback);
-		delete window["_man_fonts_"+this.loadkey];
-		if(this.parentNode) {
-			this.parentNode.removeChild(this);
-		}
-		if(fun(this.callback_node[this.callback_loaded])) {
-			if(this.fontApi) {
-				this.callback_node[this.callback_loaded](this.nodes);
-			}
-			else {
-				setTimeout(function() {
-					this.callback_node[this.callback_loaded](this.nodes); 
-				}.bind(this), 250);
-			}
-		}
-	}
-	if(window["_man_fonts_"].fontApi) {
-		window["_man_fonts_"+loadkey].checkFontsAPI();
-	}
-	else {
-		window["_man_fonts_"+loadkey].checkFontsFallback();
-	}
-}
-
-/*beta-u-slideshow.js*/
-u.slideshow = function(list, _options) {
-	var i, node;
-	var slideshow = u.wrapElement(list, "div", {"class":"slideshow"});
-	slideshow._selector = "";
-	slideshow._layout = "horizontal";
-	slideshow._navigation = true;
-	slideshow._index = false;
-	slideshow._transition = "ease-out";
-	slideshow._duration = 0.6; 
-	slideshow._loading = "incremental";
-	slideshow._callback_picked = "picked";
-	slideshow._callback_moved = "moved";
-	slideshow._callback_dropped = "dropped";
-	if(obj(_options)) {
-		var argument;
-		for(argument in _options) {
-			switch(argument) {
-				case "selector"			: slideshow._selector			= _options[argument]; break;
-				case "layout"			: slideshow._layout				= _options[argument]; break;
-				case "navigation"		: slideshow._navigation			= _options[argument]; break;
-				case "index"			: slideshow._index				= _options[argument]; break;
-				case "transition"		: slideshow._transition			= _options[argument]; break;
-				case "duration"			: slideshow._duration			= _options[argument]; break;
-				case "callback_picked"	: slideshow._callback_picked	= settings[argument]; break;
-				case "callback_moved"	: slideshow._callback_moved		= settings[argument]; break;
-				case "callback_dropped"	: slideshow._callback_dropped	= settings[argument]; break;
-			}
-		}
-	}
-	slideshow.list = list;
-	slideshow._width = slideshow.offsetWidth;
-	slideshow._height = slideshow.offsetHeight;
-	slideshow.nodes = u.qsa("li"+slideshow._selector, slideshow.list);
-	if(slideshow._navigation) {
-		slideshow.bn_next = u.ae(slideshow, "div", {"class":"next"});
-		slideshow.bn_next.slideshow = slideshow;
-		u.e.click(slideshow.bn_next);
-		slideshow.bn_next.clicked = function(event) {
-			this.slideshow.selectNode(this.slideshow.selected_node._i+1);
-		}
-		slideshow.bn_prev = u.ae(slideshow, "div", {"class":"prev"});
-		slideshow.bn_prev.slideshow = slideshow;
-		u.e.click(slideshow.bn_prev);
-		slideshow.bn_prev.clicked = function(event) {
-			this.slideshow.selectNode(this.slideshow.selected_node._i-1);
-		}
-	}
-	if(slideshow._index) {
-		slideshow.index = u.ae(slideshow, "ul", {class:"index"});
-		for(i = 0; i < slideshow.nodes.length; i++) {
-			node = u.ae(slideshow.index, "li", {class: slideshow.nodes[i].className});
-			node.slide = slideshow.nodes[i];
-			node.slideshow = slideshow;
-			slideshow.nodes[i].index = node;
-			u.ce(node);
-			node.clicked = function() {
-				this.slideshow.selectNode(this.slide._i);
-			}
-		}
-	}
-	slideshow.showLoading = function() {
-		u.ac(this, "loading");
-	}
-	slideshow.loading = function() {
-		if(!u.t.valid(this.t_loading)) {
-			this.t_loading = u.t.setTimer(this, this.showLoading, 1000);
-		}
-	}
-	slideshow._loaded = function() {
-		u.t.resetTimer(this.t_loading);
-		u.rc(this, "loading");
-		if(fun(this.loaded)) {
-			this.loaded();
-		}
-	}
-	slideshow.resized = function() {
-		u.bug("slideshow resized");
-		this._width = this.offsetWidth;
-		this._height = this.offsetHeight;
-	}
-	slideshow.prepare = function() {
-		if(this.nodes.length > 1) {
-			if(this._layout == "vertical") {
-				u.e.swipe(this, this, {"vertical_lock":true, "callback_picked":"slideshow_picked", "callback_moved":"slideshow_moved", "callback_dropped":"slideshow_dropped"});
-				this.swipedLeft = this.swipedRight = function(event) {
-					this.swiped = false;
-				}
-				this.swipedUp = function(event) {
-					if(this.selected_node._y < 0) {
-						this.selectNode(this.selected_node._i+1);
-					}
-					else {
-						this.swiped = false;
-					}
-				}
-				this.swipedDown = function(event) {
-					if(this.selected_node._y > 0) {
-						this.selectNode(this.selected_node._i-1);
-					}
-					else {
-						this.swiped = false;
-					}
-				}
-			}
-			else {
-				u.e.swipe(this, this, {"horizontal_lock":true, "callback_picked":"slideshow_picked", "callback_moved":"slideshow_moved", "callback_dropped":"slideshow_dropped"});
-				this.swipedDown = this.swipedUp = function(event) {
-					this.swiped = false;
-				}
-				this.swipedLeft = function(event) {
-					if(this.selected_node._x < 0) {
-						this.selectNode(this.selected_node._i+1);
-					}
-					else {
-						this.swiped = false;
-					}
-				}
-				this.swipedRight = function(event) {
-					if(this.selected_node._x > 0) {
-						this.selectNode(this.selected_node._i-1);
-					}
-					else {
-						this.swiped = false;
-					}
-				}
-			}
-			this.slideshow_picked = function(event) {
-				this.prev_node = this.selected_node._i-1 < 0 ? this.nodes[this.nodes.length-1] : this.nodes[this.selected_node._i-1];
-				this.next_node = this.selected_node._i+1 >= this.nodes.length ? this.nodes[0] : this.nodes[this.selected_node._i+1];
-				this._unclearNode(this.prev_node, "picked prev");
-				this._unclearNode(this.next_node, "picked next");
-				u.a.transition(this.prev_node, "none");
-				u.a.transition(this.selected_node, "none");
-				u.a.transition(this.next_node, "none");
-				if(this._layout == "vertical") {
-					u.a.translate(this.prev_node, 0, -(this._height));
-					u.a.translate(this.next_node, 0, (this._height));
-				}
-				else {
-					u.a.translate(this.prev_node, -(this._width), 0);
-					u.a.translate(this.next_node, (this._width), 0);
-				}
-				if(fun(this[this._callback_picked])) {
-					this[this._callback_picked](event);
-				}
-			}
-			this.slideshow_moved = function(event) {
-				if(this._layout == "vertical") {
-					if(this.current_y > 0) {
-						u.a.translate(this.prev_node, 0, (this.current_y-this._height));
-					}
-					else if(this.prev_node._y > -(this._height) && this._prev_node != this._next_node) {
-						u.a.translate(this.prev_node, 0, -(this._height));
-						this.slideshow._clearNode(this.prev_node, "moved out prev vertical");
-					}
-					u.a.translate(this.selected_node, 0, this.current_y);
-					if(this.current_y < 0) {
-						u.a.translate(this.next_node, 0, (this.current_y+this._height));
-					}
-					else if(this.next_node._y < (this._height) && this._prev_node != this._next_node) {
-						u.a.translate(this.next_node, 0, (this._height));
-						this.slideshow._clearNode(this.next_node, "moved out next vertical");
-					}
-				}
-				else {
-					if(this.current_x > 0) {
-						u.a.translate(this.prev_node, (this.current_x-this._width), 0);
-					}
-					else if(this.prev_node._x > -(this._width) && this._prev_node != this._next_node) {
-						u.a.translate(this.prev_node, -(this._width), 0);
-						this.slideshow._clearNode(this.next_node, "moved out prev horizontal");
-					}
-					u.a.translate(this.selected_node, this.current_x, 0);
-					if(this.current_x < 0) {
-						u.a.translate(this.next_node, (this.current_x+this._width), 0);
-					}
-					else if(this.next_node._x < (this._width) && this._prev_node != this._next_node) {
-						u.a.translate(this.next_node, (this._width), 0);
-						this.slideshow._clearNode(this.next_node, "moved out next horizontal");
-					}
-				}
-				if(fun(this[this._callback_moved])) {
-					this[this._callback_moved](event);
-				}
-			}
-			this.slideshow_dropped = function(event) {
-				if(this._layout == "vertical") {
-					if(!this.swiped && this.selected_node._y != 0) {
-						var duration = this._duration / (this._height / this.current_y);
-						this.selected_node.transitioned = function() {
-							u.bug("no swipe cleared (vertical)")
-							u.a.transition(this, "none");
-							this.slideshow._clearNode(this.slideshow.prev_node, "dropped vert retured prev");
-							this.slideshow._clearNode(this.slideshow.next_node, "dropped vert retured next");
-						}
-						u.a.transition(this.prev_node, "all " + duration + "s " + this._transition);
-						u.a.transition(this.selected_node, "all " + duration + "s " + this._transition);
-						u.a.transition(this.next_node, "all " + duration + "s " + this._transition);
-						u.a.translate(this.prev_node, 0, -(this._height));
-						u.a.translate(this.selected_node, 0, 0);
-						u.a.translate(this.next_node, 0, (this._height));
-					}
-				}
-				else {
-					if(!this.swiped && this.selected_node._x != 0) {
-						this.selected_node.transitioned = function() {
-							u.bug("no swipe cleared (horizontal)")
-							u.a.transition(this, "none");
-							this.slideshow._clearNode(this.slideshow.prev_node, "dropped hor retured prev");
-							this.slideshow._clearNode(this.slideshow.next_node, "dropped hor retured next");
-						}
-						var duration = this._duration / (this._width / this.current_x);
-						u.a.transition(this.prev_node, "all " + duration + "s " + this._transition);
-						u.a.transition(this.selected_node, "all " + duration + "s " + this._transition);
-						u.a.transition(this.next_node, "all " + duration + "s " + this._transition);
-						u.a.translate(this.prev_node, -(this._width), 0);
-						u.a.translate(this.selected_node, 0, 0);
-						u.a.translate(this.next_node, (this._width), 0);
-					}
-				}
-				if(fun(this[this._callback_dropped])) {
-					this[this._callback_dropped](event);
-				}
-			}
-		}
-		if(fun(this.prepared)) {
-			this.prepared();
-		}
-		else {
-			this.build();
-		}
-	}
-	slideshow.preload = function(start_with) {
-		this.loading();
-		if(!this.selected_node) {
-			if(start_with) {
-				start_with = start_with ? start_with : 0;
-				if(this.nodes.length > start_with) {
-					this._load_base = this.nodes[start_with];
-				}
-				else {
-					this._load_base = this.nodes[0];
-				}
-			}
-			else if(!this._load_base) {
-				this._load_base = this.nodes[0];
-			}
-		}
-		else {
-			this._load_base = this.selected_node;
-		}
-		if(!this._load_base.is_ready) {
-			if(fun(this.loadNode)) {
-				this.loadNode(this._load_base);
-			}
-			else {
-				this._loadNode(this._load_base);
-			}
-			return;
-		}
-		var next_1 = this.nodes.length > this._load_base._i+1 ? this.nodes[this._load_base._i+1] : this.nodes[0];
-		if(next_1 && !next_1.is_ready) {
-			if(fun(this.loadNode)) {
-				this.loadNode(next_1);
-			}
-			else {
-				this._loadNode(next_1);
-			}
-			return;
-		}
-		var prev_1 = this._load_base._i > 0 ? this.nodes[this._load_base._i-1] : this.nodes[this.nodes.length-1];
-		if(prev_1 && !prev_1.is_ready) {
-			if(fun(this.loadNode)) {
-				this.loadNode(prev_1);
-			}
-			else {
-				this._loadNode(prev_1);
-			}
-			return;
-		}
-		if(next_1) {
-			var next_2 = this.nodes.length > next_1._i+1 ? this.nodes[next_1._i+1] : this.nodes[0];
-			if(next_2 && !next_2.is_ready) {
-				if(fun(this.loadNode)) {
-					this.loadNode(next_2);
-				}
-				else {
-					this._loadNode(next_2);
-				}
-				return;
-			}
-		}
-		if(prev_1) {
-			var prev_2 = prev_1._i > 0 ? this.nodes[prev_1._i-1] : this.nodes[this.nodes.length-1];
-			if(prev_2 && !prev_2.is_ready) {
-				if(fun(this.loadNode)) {
-					this.loadNode(prev_2);
-				}
-				else {
-					this._loadNode(prev_2);
-				}
-				return;
-			}
-		}
-		this._loaded();
-		if(fun(this.preloaded)) {
-			this.preloaded();
-		}
-	}
-	slideshow.build = function() {
-		var i, node;
-		for(i = 0; i < this.nodes.length; i++) {
-			node = this.nodes[i];
-			node.slideshow = this;
-			node._i = i;
-			u.a.transition(node, "none");
-			u.ass(node, {
-				transform: "translate3d(0, "+(-this._height)+"px, 0)"
-			});
-			if(fun(this.buildNode)) {
-				this.buildNode(node);
-			}
-			else {
-				this._buildNode(node);
-			}
-			this._clearNode(node, "initial");
-		}
-		if(fun(this.built)) {
-			this.built();
-		}
-		else {
-			this.preload();
-		}
-	}
-	slideshow._buildNode = function(node) {
-	}
-	slideshow._loadNode = function(node) {
-		if(!node.is_ready) {
-			node.is_ready = true;
-			var item_id = u.cv(node, "item_id");
-			var image_src = false;
-			if(item_id) {
-				var variant = u.cv(node, "variant");
-				var format = u.cv(node, "format");
-				image_src = "/images/"+item_id+"/"+variant+"/"+this._width+"x."+format;
-			}
-			else {
-				image_src = node.getAttribute("data-image-src");
-			}
-			if(image_src) {
-				node.loaded = function(queue) {
-					u.as(this, "backgroundImage", "url("+queue[0]._image.src+")");
-					// 	
-					u.ac(this, "ready");
-					this.slideshow.preload();
-				}
-				u.preloader(node, [image_src]);
-			}
-			else {
-				// 	
-				u.ac(node, "ready");
-				this.preload();
-			}
-		}
-		else {
-			this.preload();
-		}
-	}
-	slideshow._clearNode = function(node, comment) {
-		node._hidden = true;
-		u.ass(node, {
-			display: "none"
-		});
-		u.a.transition(node, "none");
-	}
-	slideshow._unclearNode = function(node, comment) {
-		node._hidden = false;
-		u.ass(node, {
-			display: "block"
+	node.checkmark.hint_txt = (node.current_readstate ? (u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", node.current_readstate)) : u.txt["readstate-not_read"]),
+	node.checkmark.node = node;
+	u.e.hover(node.checkmark);
+	node.checkmark.over = function(event) {
+		this.hint = u.ae(document.body, "div", {"class":"hint", "html":this.hint_txt});
+		u.ass(this.hint, {
+			"top":(u.absY(this.parentNode)+parseInt(u.gcs(this, "top"))+(Number(this.getAttribute("height")))) + "px",
+			"left":(u.absX(this.parentNode)+parseInt(u.gcs(this, "left"))+Number(this.getAttribute("width"))) + "px"
 		});
 	}
-	slideshow.selectNode = function(index, static_update) {
-		if(!this.selected_node) {
-			this.selected_node = this.nodes[index];
-			this._unclearNode(this.selected_node, "hard start show");
-			u.a.transition(this.selected_node, "none");
-			u.ass(this.selected_node, {
-				opacity: 0,
-				transform: "translate3d(0, 0, 0)"
-			});
-			this.selected_node.transitioned = function() {
-				if(fun(this.slideshow.nodeEntered)) {
-					this.slideshow.nodeEntered(this);
-				}
-			}
-			u.a.transition(this.selected_node, "opacity 0.5s ease-in-out");
-			u.ass(this.selected_node, {
-				opacity: 1
-			})
-		}
-		else if(this.nodes[index] != this.selected_node) {
-			var org_node = this.selected_node;
-			this.direction = (index - org_node._i) > 0 ? 1 : -1;
-			if(index < 0) {
-				index = this.nodes.length-1;
-			}
-			else if(index >= this.nodes.length) {
-				index = 0;
-			}
-			this.selected_node = this.nodes[index];
-			this._unclearNode(this.selected_node, "new selected node");
-			if(static_update) {
-				u.a.transition(org_node, "none");
-				u.a.transition(this.selected_node, "none");
-			}
-			else if(this.swiped) {
-				var duration;
-				if(this._layout == "vertical") {
-					if(this.current_yps) {
-						duration = ((this._height / Math.abs(this.current_yps)) * this._duration);
-						duration = duration > this._duration ? this._duration : duration;
-					}
-					else {
-						duration = this._duration / (1 - Math.abs(this.current_y / this._height));
-					}
-				}
-				else {
-					if(this.current_xps) {
-						duration = ((this._width / Math.abs(this.current_xps)) * this._duration);
-						duration = duration > this._duration ? this._duration : duration;
-					}
-					else {
-						duration = this._duration / (1 - Math.abs(this.current_x / this._width));
-					}
-				}
-				duration = (duration > 1.5) ? 1.5 : ((duration < 0.2) ? 0.2 : duration);
-				u.a.transition(org_node, "all " + duration + "s " + this._transition);
-				u.a.transition(this.selected_node, "all " + duration + "s " + this._transition);
-			}
-			else {
-				if(this._layout == "vertical") {
-					u.a.transition(this.selected_node, "none");
-					u.a.translate(this.selected_node, 0, this._height*this.direction);
-				}
-				else {
-					u.a.transition(this.selected_node, "none");
-					u.a.translate(this.selected_node, this._width*this.direction, 0);
-				}
-				u.a.transition(org_node, "all " + this._duration + "s " + this._transition);
-				u.a.transition(this.selected_node, "all " + this._duration + "s " + this._transition);
-			}
-			if(!static_update) {
-				this.selected_node.transitioned = function() {
-					u.a.transition(this, "none");
-					if(fun(this.slideshow.nodeEntered)) {
-						this.slideshow.nodeEntered(this);
-					}
-				}
-			}
-			if(org_node != this.selected_node) {
-				org_node.transitioned = function() {
-					if(this.slideshow.prev_node && this.slideshow.prev_node != this.slideshow.selected_node) {
-						this.slideshow._clearNode(slideshow.prev_node, "prev node cleared on regular transistion");
-					}
-					if(this.slideshow.next_node && this.slideshow.next_node != this.slideshow.selected_node) {
-						this.slideshow._clearNode(slideshow.next_node, "prev node cleared on regular transistion");
-					}
-					this.slideshow._clearNode(this, "org node cleared");
-					if(fun(this.slideshow.nodeCleared)) {
-						this.slideshow.nodeCleared(this);
-					}
-				}
-			}
-			if(this._layout == "vertical") {
-				u.a.translate(org_node, 0, -(this._height*this.direction));
-				u.a.translate(this.selected_node, 0, 0);
-			}
-			else {
-				u.a.translate(org_node, -(this._width*this.direction), 0);
-				u.a.translate(this.selected_node, 0, 0);
-			}
-			if(static_update && org_node != this.selected_node) {
-				org_node.transitioned();
-			}
-		}
-		if(this.selected_node.index) {
-			u.ac(this.selected_node.index, "selected");
-		}
-		if(org_node && org_node.index) {
-			u.rc(org_node.index, "selected");
-		}
-		this.preload();
-		if(fun(this.nodeSelected)) {
-			this.nodeSelected(this.selected_node);
+	node.checkmark.out = function(event) {
+		if(this.hint) {
+			this.hint.parentNode.removeChild(this.hint);
+			delete this.hint;
 		}
 	}
-	return slideshow;
+}
+u.removeCheckmark = function(node) {
+	if(node.checkmark.hint) {
+		node.checkmark.hint.parentNode.removeChild(node.checkmark.hint);
+	}
+	if(node.checkmark) {
+		node.checkmark.parentNode.removeChild(node.checkmark);
+		node.checkmark = false;
+	}
 }
 
 
@@ -10362,520 +7819,64 @@ Util.Modules["pagination"] = new function() {
 		if(pagination) {
 			u.ae(document.body, pagination);
 			u.as(pagination, "transform", "none");
-			var next = u.qs(".next", pagination);
-			if(next) {
-				u.addNextArrow(next);
-				next.a = u.qs("a", next);
-				u.ce(next, {"type":"link"});
-				u.e.hover(next);
-				next.over = function() {
+			pagination.next = u.qs(".next", pagination);
+			if(pagination.next) {
+				u.addNextArrow(pagination.next);
+				pagination.next.a = u.qs("a", pagination.next);
+				u.ce(pagination.next, {"type":"link"});
+				u.e.hover(pagination.next);
+				pagination.next.over = function() {
 					u.ass(this, {
+						"transition": "width 0.3s ease",
 						"width":this.a.offsetWidth+"px"
 					});
 					u.ass(this.a, {
+						"transition": "opacity 0.2s ease 0.2s",
 						"opacity":1
 					});
 				}
-				next.out = function() {
+				pagination.next.out = function() {
 					u.ass(this.a, {
+						"transition": "opacity 0.2s ease",
 						"opacity":0
 					});
 					u.ass(this, {
+						"transition": "width 0.3s ease 0.2s",
 						"width":0
 					});
 				}
 			}
-			var prev = u.qs(".previous", pagination);
-			if(prev) {
-				u.addPreviousArrow(prev);
-				prev.a = u.qs("a", prev);
-				u.ce(prev, {"type":"link"});
-				u.e.hover(prev);
-				prev.over = function() {
+			pagination.prev = u.qs(".previous", pagination);
+			if(pagination.prev) {
+				u.addPreviousArrow(pagination.prev);
+				pagination.prev.a = u.qs("a", pagination.prev);
+				u.ce(pagination.prev, {"type":"link"});
+				u.e.hover(pagination.prev);
+				pagination.prev.over = function() {
 					u.ass(this, {
+						"transition": "width 0.3s ease",
 						"width":this.a.offsetWidth+"px"
 					});
 					u.ass(this.a, {
+						"transition": "opacity 0.2s ease 0.2s",
 						"opacity":1
 					});
 				}
-				prev.out = function() {
+				pagination.prev.out = function() {
 					u.ass(this.a, {
+						"transition": "opacity 0.2s ease",
 						"opacity":0
 					});
 					u.ass(this, {
+						"transition": "width 0.3s ease 0.2s",
 						"width":0
 					});
 				}
 			}
-		}
-	}
-}
-
-
-/*m-article_list.js*/
-Util.Modules["articleList"] = new function() {
-	this.init = function(list) {
-		list.articles = u.qsa("li.article", list);
-		list.resized = function() {
-			this.browser_h = u.browserH();
-			this.screen_middle = this.browser_h/2;
-		}
-		list.scrolled = function(event) {
-			u.t.resetTimer(this.t_init);
-			this.scroll_y = u.scrollY();
-			if(this._next_url) {
-				var i, node, node_y, list_y;
-				list_y = u.absY(this);
-				if(list_y + this.offsetHeight < this.scroll_y + (this.browser_h*2)) {
-					this.loadNext();
-				}
-			}
-			this.t_init = u.t.setTimer(this, this.initFocusedArticles, 500);
-		}
-		list.initFocusedArticles = function() {
-			var i, node, node_y;
-			for(i = 0; node = this.articles[i]; i++) {
-				if(!node.is_ready) {
-					node_y = u.absY(node);
-					if(node_y > this.scroll_y + this.browser_h) {
-						break;
-					}
-					else if(
-						(
-							node_y + node.offsetHeight > this.scroll_y && 
-							node_y + node.offsetHeight < this.scroll_y + this.browser_h
-						)
-						 || 
-						(
-							node_y > this.scroll_y &&
-							node_y < this.scroll_y + this.browser_h
-						)
-						 ||
-						(
-							node_y < this.scroll_y &&
-							node_y + node.offsetHeight > this.scroll_y + this.browser_h
-						)
-					) {
-						u.m.article.init(node);
-						node.is_ready = true;
-					}
-				}
+			pagination.destroy = function() {
+				document.body.removeChild(this);
 			}
 		}
-		list.correctScroll = function(div_image) {
-			if(this.scroll_y) {
-				var image_node_y = u.absY(div_image);
-				if(image_node_y < this.scroll_y + this.screen_middle) {
-					var new_scroll_y = this.scroll_y + (div_image.offsetHeight);
-					window.scrollTo(0, new_scroll_y);
-				}
-			}
-		}
-		var next = u.qs(".pagination li.next a", list.parentNode);
-		list._next_url = false;
-		if(next) {
-			u.ac(u.pn(next, {include:"div"}), "autoload");
-			list._next_url = next ? next.href : false;
-		}
-		list.loadNext = function() {
-			if(this._next_url) {
-				this.response = function(response) {
-					var articles = u.qsa("li.article", response);
-					var i, node;
-					for(i = 0; i < articles.length; i++) {
-						node = u.ae(this, articles[i]);
-						node.article_list = this;
-					}
-					var next = u.qs(".pagination li.next a", response);
-					this._next_url = next ? next.href : false;
-					this.articles = u.qsa("li.article", this);
-				}
-				u.request(this, this._next_url);
-				this._next_url = false;
-			}
-		}
-		var i, node;
-		for(i = 0; node = list.articles[i]; i++) {
-			node.article_list = list;
-		}
-		list.resized();
-		list.scrolled();
-		u.e.addWindowEvent(list, "resize", list.resized);
-		u.e.addWindowEvent(list, "scroll", list.scrolled);
-	}
-}
-
-
-/*m-article_preview_list.js*/
-Util.Modules["articlePreviewList"] = new function() {
-	this.init = function(list) {
-		list.articles = u.qsa("li.article", list);
-		list.initArticle = function(article) {
-			article._a = u.qs("h3 a", article);
-			if(article._a) {
-				article._link = article._a.href ? article._a.href : article._a.url;
-			}
-			article._description_p = u.qs("div.description p", article)
-			if(article._description_p && article._link) {
-				u.ae(article._description_p, "br");
-				u.ae(article._description_p, "a", {href: article._link, class:"readmore", html:u.txt("readmore")});
-			}
-			var i, image;
-			article._images = u.qsa("div.image,div.media", article);
-			for(i = 0; image = article._images[i]; i++) {
-				image.node = article;
-				image.caption = u.qs("p a", image);
-				if(image.caption) {
-					image.caption.removeAttribute("href");
-				}
-				image._id = u.cv(image, "item_id");
-				image._format = u.cv(image, "format");
-				image._variant = u.cv(image, "variant");
-				if(image._id && image._format) {
-					image._image_src = "/images/" + image._id + "/" + (image._variant ? image._variant+"/" : "") + "540x." + image._format;
-					u.ass(image, {
-						"opacity": 0
-					});
-					image.loaded = function(queue) {
-						u.ac(this, "loaded");
-						this._image = u.ie(this, "img");
-						this._image.image = this;
-						this._image.src = queue[0].image.src;
-						if(this.node.article_list && fun(this.node.article_list.correctScroll)) {
-							this.node.article_list.correctScroll(this);
-						}
-						u.ce(this._image);
-						this._image.clicked = function() {
-							if(u.hc(this.image, "fullsize")) {
-								u.a.transition(this, "all 0.3s ease-in-out");
-								u.rc(this.image, "fullsize");
-								this.src = this.image._image_src;
-								u.ass(this, {
-									width: ""
-								});
-							}
-							else {
-								u.a.transition(this, "all 0.3s ease-in-out");
-								u.ac(this.image, "fullsize");
-								u.ass(this, {
-									width: (page.browser_w < 1080 ? page.browser_w : 1080) + "px"
-								});
-								if(this._fullsize_src) {
-									this.src = this._fullsize_src;
-								}
-								else {
-									this._fullsize_width = 1080;
-									this._fullsize_src = "/images/" + this.image._id + "/" + (this.image._variant ? this.image._variant+"/" : "") + this._fullsize_width + "x." + this.image._format;
-									this.response = function() {
-										this.src = this._fullsize_src;
-									}
-									this.responseError = function() {
-										this._fullsize_width = this._fullsize_width-200;
-										this._fullsize_src = "/images/" + this._id + "/" + (this.image._variant ? this.image._variant+"/" : "") + this._fullsize_width + "x." + this.image._format;
-										u.request(this, this._fullsize_src);
-									}
-									u.request(this, this._fullsize_src);
-								}
-							}
-						}
-						u.a.transition(this, "all 0.5s ease-in-out");
-						u.ass(this, {
-							"opacity": 1
-						});
-					}
-					u.preloader(image, [image._image_src]);
-				}
-			}
-			var video;
-			article._videos = u.qsa("div.youtube, div.vimeo", article);
-			for (i = 0; video = article._videos[i]; i++) {
-				video._src = u.cv(video, "video_id");
-				video._type = video._src.match(/youtube|youtu\.be/) ? "youtube" : "vimeo";
-				if (video._type == "youtube") {
-					video._id = video._src.match(/watch\?v\=/) ? video._src.split("?v=")[1] : video._src.split("/")[video._src.split("/").length-1];
-					video.iframe = u.ae(video, "iframe", {
-						id: "ytplayer",
-						type: "text/html",
-						webkitallowfullscreen: true,
-						mozallowfullscreen: true,
-						allowfullscreen: true,
-						frameborder: 0,
-						allow: "autoplay",
-						sandbox:"allow-same-origin allow-scripts",
-						width: "100%",
-						height: 540 / 1.7777,
-						src: 'https://www.youtube.com/embed/'+video._id+'?autoplay=false&loop=0&color=f0f0ee&modestbranding=1&rel=0&playsinline=1',
-					});
-				}
-				else {
-					video._id = video._src.split("/")[video._src.split("/").length-1];
-					video.iframe = u.ae(video, "iframe", {
-						webkitallowfullscreen: true,
-						mozallowfullscreen: true,
-						allowfullscreen: true,
-						frameborder: 0,
-						sandbox:"allow-same-origin allow-scripts",
-						width: "100%",
-						height: 540 / 1.7777,
-						src: 'https://player.vimeo.com/video/'+video._id+'?autoplay=false&loop=0&byline=0&portrait=0',
-					});
-				}
-			}
-			var header = u.qs("h2,h3", article);
-			header.current_readstate = article.getAttribute("data-readstate");
-			if(header.current_readstate) {
-				u.ac(header, "read");
-				u.addCheckmark(header);
-			}
-			article.geolocation = u.qs("ul.geo", article);
-			if(article.geolocation && typeof(u.injectGeolocation) == "function") {
-				u.injectGeolocation(article);
-			}
-		}
-		list.resized = function() {
-			this.browser_h = u.browserH();
-			this.screen_middle = this.browser_h/2;
-		}
-		list.scrolled = function(event) {
-			u.t.resetTimer(this.t_init);
-			this.scroll_y = u.scrollY();
-			if(this._next_url) {
-				var i, node, node_y, list_y;
-				list_y = u.absY(this);
-				if(list_y + this.offsetHeight < this.scroll_y + (this.browser_h*2)) {
-					this.loadNext();
-				}
-			}
-			this.t_init = u.t.setTimer(this, this.initFocusedArticles, 500);
-		}
-		list.initFocusedArticles = function() {
-			var i, node, node_y;
-			for(i = 0; node = this.articles[i]; i++) {
-				if(!node.is_ready) {
-					node_y = u.absY(node);
-					if(node_y > this.scroll_y + this.browser_h) {
-						break;
-					}
-					else if(
-						(
-							node_y + node.offsetHeight > this.scroll_y && 
-							node_y + node.offsetHeight < this.scroll_y + this.browser_h
-						)
-						 || 
-						(
-							node_y > this.scroll_y &&
-							node_y < this.scroll_y + this.browser_h
-						)
-						 ||
-						(
-							node_y < this.scroll_y &&
-							node_y + node.offsetHeight > this.scroll_y + this.browser_h
-						)
-					) {
-						this.initArticle(node);
-						node.is_ready = true;
-					}
-				}
-			}
-		}
-		list.correctScroll = function(div_image) {
-			if(this.scroll_y) {
-				var image_node_y = u.absY(div_image);
-				if(image_node_y < this.scroll_y + this.screen_middle) {
-					var new_scroll_y = this.scroll_y + (div_image.offsetHeight);
-					window.scrollTo(0, new_scroll_y);
-				}
-			}
-		}
-		var next = u.qs(".pagination li.next a", list.parentNode);
-		list._next_url = false;
-		if(next) {
-			u.ac(u.pn(next, {include:"div"}), "autoload");
-			list._next_url = next ? next.href : false;
-		}
-		list.loadNext = function() {
-			if(this._next_url) {
-				this.response = function(response) {
-					var articles = u.qsa("li.article", response);
-					var i, node;
-					for(i = 0; i < articles.length; i++) {
-						node = u.ae(this, articles[i]);
-						node.article_list = this;
-					}
-					var next = u.qs(".pagination li.next a", response);
-					this._next_url = next ? next.href : false;
-					this.articles = u.qsa("li.article", this);
-				}
-				u.request(this, this._next_url);
-				this._next_url = false;
-			}
-		}
-		var i, node;
-		for(i = 0; node = list.articles[i]; i++) {
-			node.article_list = list;
-		}
-		list.resized();
-		list.scrolled();
-		u.e.addWindowEvent(list, "resize", list.resized);
-		u.e.addWindowEvent(list, "scroll", list.scrolled);
-	}
-}
-
-
-/*m-signup.js*/
-Util.Modules["signup"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			var form_signup = u.qs("form.signup", this);
-			if(form_signup) {
-				var place_holder = u.qs("div.articlebody .placeholder.signup", this);
-				if(form_signup && place_holder) {
-					place_holder.parentNode.replaceChild(form_signup, place_holder);
-				}
-				if(form_signup) {
-					u.f.init(form_signup);
-				}
-				form_signup.submitted = function() {
-					var data = this.getData();
-					this.is_submitting = true; 
-					u.ac(this, "submitting");
-					u.ac(this.actions["signup"], "disabled");
-					this.response = function(response, request_id) {
-						if (u.qs(".scene.verify", response)) {
-							u.bug(response);
-							scene.replaceScene(response);
-							var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
-							u.h.navigate(url_actions, false, true);
-						}
-						else {
-							if (this.is_submitting) {
-								this.is_submitting = false; 
-								u.rc(this, "submitting");
-								u.rc(this.actions["signup"], "disabled");
-							}
-							if (this.error) {
-								this.error.parentNode.removeChild(this.error);
-							}
-							this.error = scene.showMessage(this, response);
-							u.ass(this.error, {
-								transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
-								opacity:0
-							});
-							u.a.transition(this.error, "all .6s ease");
-							u.ass(this.error, {
-								transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
-								opacity:1
-							});
-						}
-					}
-					u.request(this, this.action, {"data":data, "method":"POST"});
-				}
-			}
-			u.showScene(this);
-		}
-		scene.replaceScene = function(response) {
-			var current_scene = u.qs(".scene", page);
-			var new_scene = u.qs(".scene", response);
-			page.cN.replaceChild(new_scene, current_scene); 
-			u.init();
-			new_scene.ready();
-			return new_scene;
-		}
-		scene.showMessage = function(form, response) {
-			var new_error = (u.qs("p.errormessage", response) || u.qs("p.error", response));
-			var current_error = (u.qs("p.errormessage", form) || u.qs("p.error", form));
-			if (!current_error) {
-				u.ie(form, new_error);
-			}
-			else {
-				form.replaceChild(new_error, current_error);
-			}
-			return new_error;
-		}
-		page.cN.scene = scene;
-	}
-}
-
-
-/*m-verify.js*/
-Util.Modules["verify"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			var form_verify = u.qs("form.verify_code", this);
-			if(form_verify) {
-				u.f.init(form_verify);
-			}
-			form_verify.submitted = function() {
-				var data = this.getData();
-				this.is_submitting = true; 
-				u.ac(this, "submitting");
-				u.ac(this.actions["verify"], "disabled");
-				u.ac(this.actions["skip"], "disabled");
-				this.response = function(response, request_id) {
-					if (u.qs(".scene.login", response)) {
-						scene.replaceScene(response);
-						u.h.navigate("/login", false, true);
-					}
-					else if (u.qs(".scene.confirmed", response)) {
-						scene.replaceScene(response);
-						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
-						u.h.navigate(url_actions, false, true);
-					}
-					else {
-						if (this.is_submitting) {
-							this.is_submitting = false; 
-							u.rc(this, "submitting");
-							u.rc(this.actions["verify"], "disabled");
-							u.rc(this.actions["skip"], "disabled");
-						}
-						if (this.error) {
-							this.error.parentNode.removeChild(this.error);
-						}
-						this.error = scene.showMessage(this, response);
-						u.ass(this.error, {
-							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
-							opacity:0
-						});
-						u.a.transition(this.error, "all .6s ease");
-						u.ass(this.error, {
-							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
-							opacity:1
-						});
-					}
-				}
-				u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
-			}
-			u.showScene(this);
-		}
-		scene.replaceScene = function(response) {
-			var current_scene = u.qs(".scene", page);
-			var new_scene = u.qs(".scene", response);
-			page.cN.replaceChild(new_scene, current_scene); 
-			u.init();
-			new_scene.ready();
-			return new_scene;
-		}
-		scene.showMessage = function(form, response) {
-			var new_error = (u.qs("p.errormessage", response) || u.qs("p.error", response));
-			var current_error = (u.qs("p.errormessage", form) || u.qs("p.error", form));
-			if (!current_error) {
-				u.ie(form, new_error);
-			}
-			else {
-				form.replaceChild(new_error, current_error);
-			}
-			return new_error;
-		}
-		page.cN.scene = scene;
 	}
 }
 
@@ -10982,36 +7983,6 @@ Util.Modules["wishes"] = new function() {
 }
 
 
-/*m-columns.js*/
-Util.Modules["columns"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-			this.offsetHeight;
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			u.columns(this, [
-				{"c200": [
-					"div.article", 
-					"div.articles",
-					"div.related"
-				]},
-				{"c100": [
-					".search",
-					".categories"
-				]},
-				{"c300": [
-					"div.company"
-				]}
-			]);
-			u.showScene(this);
-		}
-		page.cN.scene = scene;
-	}
-}
-
-
 /*m-search.js*/
 Util.Modules["search"] = new function() {
 	this.init = function(div) {
@@ -11019,6 +7990,939 @@ Util.Modules["search"] = new function() {
 		if(div.form) {
 			u.f.init(div.form);
 		}
+	}
+}
+
+
+/*m-page.js*/
+Util.Modules["page"] = new function() {
+	this.init = function(page) {
+		u.bug_force = true;
+		u.bug("This site is built using the combined powers of body, mind and spirit. Well, and also Manipulator, Janitor and Detector");
+		u.bug("Visit https://parentnode.dk for more information");
+		u.bug_force = false;
+		page.style_tag = document.createElement("style");
+		page.style_tag.setAttribute("media", "all");
+		page.style_tag.setAttribute("type", "text/css");
+		page.style_tag = u.ae(document.head, page.style_tag);
+		page.hN = u.qs("#header");
+		page.hN.service = u.qs("ul.servicenavigation", page.hN);
+		page.cN = u.qs("#content", page);
+		page.nN = u.qs("#navigation", page);
+		page.nN = page.insertBefore(page.nN, page.cN);
+		page.fN = u.qs("#footer");
+		page.fN.service = u.qs("ul.servicenavigation", page.fN);
+		page.resized = function(event) {
+			this.browser_h = u.browserH();
+			this.browser_w = u.browserW();
+			this.available_height = this.browser_h - this.hN.offsetHeight - this.fN.offsetHeight;
+			u.as(this.cN, "min-height", "auto", false);
+			if(this.available_height >= this.cN.offsetHeight) {
+				u.as(this.cN, "min-height", this.available_height+"px", false);
+			}
+			if(this.cN && this.cN.scene && typeof(this.cN.scene.resized) == "function") {
+				this.cN.scene.resized(event);
+			}
+			this.offsetHeight;
+		}
+		page.scrolled = function(event) {
+			this.scrolled_y = u.scrollY();
+			if(this.scrolled_y < this.logo.top_offset) {
+				if(this.logo.is_reduced) {
+					this.logo.is_reduced = false;
+					u.rc(this.logo, "reduced");
+				}
+				var reduce_font = (1-(this.logo.top_offset-this.scrolled_y)/this.logo.top_offset) * this.logo.font_size_gap;
+				this.logo.css_rule.style.setProperty("font-size", (this.logo.font_size-reduce_font)+"px", "important");
+			}
+			else if(!this.logo.is_reduced) {
+				this.logo.css_rule.style.setProperty("font-size", (this.logo.font_size-this.logo.font_size_gap)+"px", "important");
+				this.logo.is_reduced = true;
+				u.ac(this.logo, "reduced");
+			}
+			if(this.nN.top_offset && this.scrolled_y < this.nN.top_offset) {
+				if(this.nN.is_reduced) {
+					this.nN.is_reduced = false;
+					u.rc(this.nN, "reduced");
+				}
+				var factor = (1-(this.nN.top_offset-this.scrolled_y)/this.nN.top_offset);
+				var reduce_font = factor * this.nN.font_size_gap;
+				this.nN.list.css_rule.style.setProperty("font-size", (this.nN.font_size-reduce_font)+"px", "important");
+				var reduce_top = factor * this.nN.top_offset_gap;
+				this.nN.css_rule.style.setProperty("top", (this.nN.top_offset-reduce_top)+"px", "important");
+			}
+			else if(this.nN.top_offset && !this.nN.is_reduced) {
+				this.nN.list.css_rule.style.setProperty("font-size", (this.nN.font_size-this.nN.font_size_gap)+"px", "important");
+				this.nN.css_rule.style.setProperty("top", (this.nN.top_offset-this.nN.top_offset_gap)+"px", "important");
+				this.nN.is_reduced = true;
+				u.ac(this.nN, "reduced");
+			}
+			if(this.cN && this.cN.scene && typeof(this.cN.scene.scrolled) == "function") {
+				this.cN.scene.scrolled(event);
+			}
+		}
+		page.buildLoader = function() {
+			this.loader = u.ae(this, "div", {"id":"loader"});
+			u.ass(this.loader, {
+				"height": this.browser_h + "px",
+			});
+			this.loader.dot = u.ae(this.loader, "div", {"class": "dot"});
+			this.loader.loaderAnimation = function() {
+				var random = u.random(1, 4);
+				u.ass(this.dot, {
+					"transition":"all 0.3s ease-in-out",
+					"transform":"scale("+random+")",
+				});
+			}
+			this.loader.t_loader = u.t.setInterval(this.loader, "loaderAnimation", 300);
+		}
+		page.destroyLoader = function(node) {
+			if(this.loader) {
+				u.t.resetInterval(this.loader.t_loader);
+				this.loader.dot.transitioned = function() {
+					page.removeChild(page.loader);
+					if(node && fun(node.loaderDestroyed)) {
+						node.loaderDestroyed();
+					}
+					delete page.loader;
+				}
+				u.ass(this.loader.dot, {
+					"transition":"all 0.2s ease-in-out",
+					"transform":"scale(0)",
+					"opacity": 0,
+				});
+			}
+		}
+		page.bg_image_count = 20;
+		page.getRandomBackgrounds = function(count) {
+			var i, images = [];
+			while(images.length < this.bg_image_count) {
+				images.push(images.length+1);
+			}
+			var return_images = [];
+			for(i = 0; i < count; i++) {
+				return_images.push("/img/intro/bg_"+images.splice(u.random(0, images.length-1), 1)[0]+".jpg");
+			}
+			return return_images;
+		}
+		page.preload = function() {
+			this.buildLoader();
+			this.intro = u.ie(this.hN, "div", {"id":"intro"});
+			var random_images = this.getRandomBackgrounds(2);
+			this.intro.bg_image_1 = random_images[0];
+			this.intro.bg_image_2 = random_images[1];
+			this.intro.bg_1 = u.ae(this.intro, "div", {"class":"bg bg1"});
+			this.intro.bg_2 = u.ae(this.intro, "div", {"class":"bg bg2"});
+			this.loader.checkLoading = function() {
+				if(this.images_loaded && this.fonts_loaded) {
+					window.scrollTo(0, 0);
+					page.destroyLoader();
+					page.showIntro();
+					var random_images = page.getRandomBackgrounds(2);
+					page.intro.bg_image_3 = random_images[0];
+					page.intro.bg_image_4 = random_images[1];
+					u.preloader(page.intro, [
+						page.intro.bg_image_3,
+						page.intro.bg_image_4,
+					]);
+				}
+			}
+			this.loader.fontsLoaded = function() {
+				this.fonts_loaded = true;
+				this.checkLoading();
+			}
+			u.fontsReady(this.loader, [
+				{"family":"OpenSans", "weight":"normal", "style":"normal"},
+				{"family":"OpenSans", "weight":"bold", "style":"normal"},
+				{"family":"OpenSans", "weight":"normal", "style":"italic"},
+				{"family":"PT Serif", "weight":"normal", "style":"normal"}
+			], {"callback": "fontsLoaded"});
+			this.loader.imagesLoaded = function() {
+				this.images_loaded = true;
+				this.checkLoading();
+			}
+			u.preloader(this.loader, [
+				this.intro.bg_image_1,
+				this.intro.bg_image_2,
+			], {"loaded": "imagesLoaded"});
+		}
+		page.showIntro = function() {
+			u.ass(this.hN, {
+				"opacity": 1,
+			});
+			u.ass(this.intro, {
+				"height": page.browser_h + "px",
+			});
+			u.ass(this.intro.bg_1, {
+				"background-image":"url("+this.intro.bg_image_1+")",
+			});
+			u.ass(this.intro.bg_2, {
+				"background-image":"url("+this.intro.bg_image_2+")",
+			});
+			this.intro.bg_2.transitioned = function() {
+				if(fun(page.cN.scene.takeoverIntro)) {
+					page.cN.scene.takeoverIntro(page.intro);
+				}
+				else {
+					page.finishIntro();
+				}
+			}
+			u.ass(this.intro.bg_1, {
+				"clipPath": "polygon(100% 0, 100% 0, 50% 100%, 50% 100%)",
+			});
+			u.ass(this.intro.bg_1, {
+				"transition": "all 0.5s ease 0.5s",
+				"clipPath": "polygon(0 0, 100% 0, 50% 100%, -50% 100%)",
+			});
+			u.ass(this.intro.bg_2, {
+				"clipPath": "polygon(50% 0, 50% 0, 0 100%, 0 100%)",
+			});
+			u.ass(this.intro.bg_2, {
+				"transition": "all 0.5s ease 0.5s",
+				"clipPath": "polygon(50% 0, 150% 0, 100% 100%, 0 100%)",
+			});
+		}
+		page.finishIntro = function() {
+			u.ass(this.intro.bg_1, {
+				"clipPath": "polygon(100% 0, 0 0, 0 100%, 50% 100%)",
+			});
+			u.ass(this.intro.bg_2, {
+				"clipPath": "polygon(100% 0, 50% 0, 0 100%, 100% 100%)",
+			});
+			this.intro.transitioned = function() {
+				u.ass(this, {
+					"position": "relative",
+					"z-index": 1,
+				});
+				page.build();
+			}
+			u.ass(this.intro, {
+				"transition": "all 0.6s ease 0.14s",
+				"height": "250px",
+			});
+			u.ass(this.intro.bg_1, {
+				"transition": "all 0.6s ease",
+				"width": "57.2%",
+				"clipPath": "polygon(75% 0, 0 0, 0 100%, 100% 100%)",
+			});
+			u.ass(this.intro.bg_2, {
+				"transition": "all 0.6s ease",
+				"width": "57.2%",
+				"clipPath": "polygon(100% 0, 0 0, 25% 100%, 100% 100%)",
+			});
+		}
+		page.ready = function() {
+			if(!this.is_ready) {
+				this.is_ready = true;
+				u.e.addWindowEvent(this, "resize", this.resized);
+				u.e.addWindowEvent(this, "scroll", this.scrolled);
+				if(fun(u.notifier)) {
+					u.notifier(this);
+				}
+				if(obj(u.smartphoneSwitch)) {
+					u.smartphoneSwitch.init(this);
+				}
+				if(fun(u.navigation)) {
+					u.navigation();
+				}
+				this.resized();
+				this.preload();
+				this.initHeader();
+				this.initNavigation();
+				this.initFooter();
+				this.resized();
+				this.scrolled();
+			}
+		}
+		page.build = function() {
+			if(!fun(this.cN.scene.revealPage)) {
+				this.revealPage();
+			}
+			this.cN.scene.ready();
+			this.resized();
+			var i, scene_link, scene_links = u.qsa("a[href]", this.cN.scene);
+			for(i = 0; i < scene_links.length; i++) {
+				scene_link = scene_links[i];
+				u.ce(scene_link, {"type":"link"});
+			}
+		}
+		page.pageLoadController = function() {
+			if(this.outro.ready && this.cN.response_ready) {
+				if(fun(page.cN.scene.takeoverIntro)) {
+					page.cN.scene.takeoverIntro(this.outro);
+				}
+				else {
+					page.endPageTransition();
+				}
+			}
+		}
+		page.cN.navigate = function(url, raw_url) {
+			this.response_ready = false;
+			if(url.match(/^\/janitor/)) {
+				location.href = url;
+			}
+			else {
+				page.startPageTransition();
+				this.response = function(response, request_id) {
+					u.bug("page response", response);
+					if(fun(page.cN.scene.destroy)) {
+						page.cN.scene.destroy();
+					}
+					else {
+						this.removeChild(page.cN.scene);
+					}
+					page.cN.scene = u.qs(".scene", response);
+					u.sc(document.body, response.body_class);
+					document.title = response.head_title;
+					var current_selected_navigation = u.qs("#navigation li.selected, .servicenavigation li.selected", page);
+					if(current_selected_navigation) {
+						u.rc(current_selected_navigation, "selected");
+					}
+					var current_path_navigation = u.qs("#navigation li.path", page);
+					if(current_path_navigation) {
+						u.rc(current_path_navigation, "path");
+					}
+					var selected_navigation = u.qs("#navigation li.selected, .servicenavigation li.selected", response);
+					if(selected_navigation) {
+						var matching_navigation = u.qs("." + selected_navigation.className.replace(/selected/, "").replace(/[ ]+/g, " ").trim().split(" ").join("."), page);
+						if(matching_navigation) {
+							u.ac(matching_navigation, "selected");
+						}
+					}
+					var path_navigation = u.qs("#navigation li.path", response);
+					if(path_navigation) {
+						var matching_path_navigation = u.qs("." + path_navigation.className.replace(/path/, "").replace(/[ ]+/g, " ").trim().split(" ").join("."), page);
+						if(matching_path_navigation) {
+							u.ac(matching_path_navigation, "path");
+						}
+					}
+					u.ae(page.cN, page.cN.scene);
+					u.init(page.cN);
+					window.scrollTo(0, 0);
+					this.response_ready = true;
+					page.pageLoadController();
+				}
+				u.request(this, url);
+			}
+		}
+		page.startPageTransition = function() {
+			this.outro = u.ae(page, "div", {"id":"outro"});
+			this.outro.ready = false;
+			this.outro.bg_1 = u.ae(this.outro, "div", {"class":"bg bg1", "style":"background-image: url("+this.intro.bg_image_3+")"});
+			this.outro.bg_2 = u.ae(this.outro, "div", {"class":"bg bg2", "style":"background-image: url("+this.intro.bg_image_4+")"});
+			this.outro.bg_2.transitioned = function() {
+				page.outro.ready = true;
+				page.pageLoadController();
+			}
+			u.ass(this.outro.bg_1, {
+				"transition": "all 0.4s ease",
+				"clipPath": "polygon(0 0, 100% 0, 50% 100%, -50% 100%)",
+			});
+			u.ass(this.outro.bg_2, {
+				"transition": "all 0.4s ease",
+				"clipPath": "polygon(50% 0, 150% 0, 100% 100%, 0 100%)",
+			});
+		}
+		page.endPageTransition = function() {
+			u.ass(this.outro.bg_1, {
+				"clipPath": "polygon(100% 0, 0 0, 0 100%, 50% 100%)",
+			});
+			u.ass(this.outro.bg_2, {
+				"clipPath": "polygon(100% 0, 50% 0, 0 100%, 100% 100%)",
+			});
+			this.outro.transitioned = function() {
+				u.ass(page.intro.bg_1, {
+					"background-image": "url("+page.intro.bg_image_3+")"
+				});
+				u.ass(page.intro.bg_2, {
+					"background-image": "url("+page.intro.bg_image_4+")"
+				});
+				this.transitioned = function() {
+					page.removeChild(this);
+					delete page.outro;
+				}
+				u.ass(this, {
+					"transition": "all 0.3s ease",
+					"opacity": 0,
+				});
+				page.cN.scene.ready();
+				var i, scene_link, scene_links = u.qsa("a[href]", page.cN.scene);
+				for(i = 0; i < scene_links.length; i++) {
+					scene_link = scene_links[i];
+					u.ce(scene_link, {"type":"link"});
+				}
+				var random_images = page.getRandomBackgrounds(2);
+				page.intro.bg_image_3 = random_images[0];
+				page.intro.bg_image_4 = random_images[1];
+				u.preloader(page.intro, [
+					page.intro.bg_image_3,
+					page.intro.bg_image_4,
+				]);
+			}
+			u.ass(this.outro, {
+				"transition": "all 0.6s ease 0.48s",
+				"height": "250px",
+			});
+			u.ass(this.outro.bg_1, {
+				"transition": "all 0.6s ease 0.3s",
+				"width": "57.2%",
+				"clipPath": "polygon(75% 0, 0 0, 0 100%, 100% 100%)",
+			});
+			u.ass(this.outro.bg_2, {
+				"transition": "all 0.6s ease 0.3s",
+				"width": "57.2%",
+				"clipPath": "polygon(100% 0, 0 0, 25% 100%, 100% 100%)",
+			});
+		}
+		page.acceptCookies = function() {
+			if(u.terms_version && !u.getCookie(u.terms_version)) {
+				var terms_link = u.qs("li.terms a");
+				if(terms_link && terms_link.href) {
+					var terms = u.ie(document.body, "div", {"id":"terms_notification"});
+					u.ae(terms, "h3", {"html":u.stringOr(u.txt["terms-headline"], "We love <br />cookies and privacy")});
+					var bn_accept = u.ae(terms, "a", {"class":"accept", "html":u.stringOr(u.txt["terms-accept"], "Accept")});
+					bn_accept.terms = terms;
+					u.ce(bn_accept);
+					bn_accept.clicked = function() {
+						this.terms.parentNode.removeChild(this.terms);
+						u.saveCookie(u.terms_version, true, {"path":"/", "expires":false});
+					}
+					var bn_details = u.ae(terms, "a", {"class":"details", "html":u.stringOr(u.txt["terms-details"], "Details"), "href":terms_link.href});
+					u.ce(bn_details, {"type":"link"});
+					u.a.transition(terms, "all 0.5s ease-in");
+					u.ass(terms, {
+						"opacity": 1
+					});
+				}
+			}
+		}
+		page.initHeader = function() {
+			this.logo = u.ae(this.hN, "a", {"class":"logo", "html":"think.dk"});
+			this.logo.url = '/';
+			this.logo.font_size = parseInt(u.gcs(this.logo, "font-size"));
+			this.logo.font_size_gap = this.logo.font_size-14;
+			this.logo.top_offset = u.absY(this.nN) + parseInt(u.gcs(this.nN, "padding-top"));
+			this.style_tag.sheet.insertRule("#header a.logo {}", 0);
+			this.logo.css_rule = this.style_tag.sheet.cssRules[0];
+		}
+		page.initNavigation = function() {
+			var i, node, nodes;
+			this.nN.list = u.qs("ul", this.nN);
+			if(this.nN.list) {
+				this.nN.list.nodes = u.qsa("li", this.nN.list);
+				if(this.nN.list.nodes.length > 1) {
+					this.nN.font_size = parseInt(u.gcs(this.nN.list.nodes[1], "font-size"));
+					this.nN.font_size_gap = this.nN.font_size-14;
+					this.nN.top_offset = u.absY(this.nN) + parseInt(u.gcs(this.nN, "padding-top"));
+					this.nN.top_offset_gap = this.nN.top_offset-10;
+					this.style_tag.sheet.insertRule("#navigation {}", 0);
+					this.nN.css_rule = this.style_tag.sheet.cssRules[0];
+					this.style_tag.sheet.insertRule("#navigation ul li {}", 0);
+					this.nN.list.css_rule = this.style_tag.sheet.cssRules[0];
+				}
+			}
+			if(this.hN.service) {
+				var nav_anchor = u.qs("li.navigation", this.hN.service);
+				if(nav_anchor) {
+					this.hN.service.removeChild(nav_anchor);
+				}
+			}
+			if(this.fN.service) {
+				nodes = u.qsa("li", this.fN.service);
+				for(i = 0; node = nodes[i]; i++) {
+					u.ie(this.hN.service, node);
+				}
+				this.fN.removeChild(this.fN.service);
+			}
+			nodes = u.qsa("#navigation li,a.logo,.servicenavigation li", this);
+			for(i = 0; node = nodes[i]; i++) {
+				if(!u.hc(node, "logoff")) {
+					u.ce(node, {"type":"link"});
+				}
+				u.e.hover(node);
+				node.over = function() {
+					u.a.transition(this, "none");
+					this.transitioned = function() {
+						this.transitioned = function() {
+							this.transitioned = function() {
+								u.a.transition(this, "none");
+							}
+							u.a.transition(this, "all 0.1s ease-in-out");
+							u.a.scale(this, 1.2);
+						}
+						u.a.transition(this, "all 0.1s ease-in-out");
+						u.a.scale(this, 1.15);
+					}
+					if(this._scale != 1.22) {
+						u.a.transition(this, "all 0.1s ease-in-out");
+						u.a.scale(this, 1.22);
+					}
+					else {
+						this.transitioned();
+					}
+				}
+				node.out = function() {
+					u.a.transition(this, "none");
+					this.transitioned = function() {
+						this.transitioned = function() {
+							u.a.transition(this, "none");
+						}
+						u.a.transition(this, "all 0.2s ease-in-out");
+						u.a.scale(this, 1);
+					}
+						this.transitioned();
+				}
+			}
+		}
+		page.initFooter = function() {}
+		page.revealPage = function() {
+			if(this.hN.service) {
+				u.a.transition(this.hN.service, "all 0.3s ease-in");
+				u.ass(this.hN.service, {
+					"opacity":1
+				});
+			}
+			u.a.transition(this.logo, "all 0.3s ease-in");
+			u.ass(this.logo, {
+				"opacity":1
+			});
+			u.a.transition(this.nN, "all 0.3s ease-in");
+			u.ass(this.nN, {
+				"opacity":1
+			});
+			u.a.transition(this.fN, "all 0.3s ease-in");
+			u.ass(this.fN, {
+				"opacity":1
+			});
+			this.acceptCookies();
+		}
+		page.ready();
+	}
+}
+u.e.addDOMReadyEvent(u.init);
+
+
+/*m-article.js*/
+Util.Modules["article"] = new function() {
+	this.init = function(article) {
+		article.csrf_token = article.getAttribute("data-csrf-token");
+		article.header = u.qs("h1,h2,h3", article);
+		article.header.article = article;
+		var i, image;
+		article._images = u.qsa("div.image,div.media", article);
+		for(i = 0; image = article._images[i]; i++) {
+			image.node = article;
+			image.caption = u.qs("p a", image);
+			if(image.caption) {
+				image.caption.removeAttribute("href");
+			}
+			image._id = u.cv(image, "item_id");
+			image._format = u.cv(image, "format");
+			image._variant = u.cv(image, "variant");
+			if(image._id && image._format) {
+				image._image_src = "/images/" + image._id + "/" + (image._variant ? image._variant+"/" : "") + "960x." + image._format;
+				u.ass(image, {
+					"opacity": 0
+				});
+				image.loaded = function(queue) {
+					u.ac(this, "loaded");
+					this._image = u.ie(this, "img");
+					this._image.image = this;
+					this._image.src = queue[0].image.src;
+					if(this.node.article_list) {
+						this.node.article_list.correctScroll(this);
+					}
+					u.ce(this._image);
+					this._image.clicked = function() {
+						u.ass(document.body, {
+							"overflow":"hidden"
+						});
+						this.image.fullscreen_image = u.ae(page, "div", {"class":"fullscreen"});
+						u.ce(this.image.fullscreen_image);
+						this.image.fullscreen_image.clicked = function() {
+							u.ass(document.body, {
+								"overflow":"auto"
+							});
+							this.transitioned = function() {
+								page.removeChild(this);
+							}
+							u.ass(this, {
+								"transition": "all 0.3s ease",
+								"top":u.absY(this.image._image) - page.scrolled_y + "px",
+								"left":u.absX(this.image._image) + "px",
+								"width": this.image._image.offsetWidth + "px",
+								"height": this.image._image.offsetHeight + "px"
+							});
+						}
+						this.image.fullscreen_image.image = this.image;
+						u.ass(this.image.fullscreen_image, {
+							"background-image": "url("+this.src+")",
+							"top":u.absY(this) - page.scrolled_y + "px",
+							"left":u.absX(this) + "px",
+							"width": this.offsetWidth + "px",
+							"height": this.offsetHeight + "px"
+						});
+						u.ass(this.image.fullscreen_image, {
+							transition: "all 0.6s ease",
+							left: 0,
+							top: 0,
+							width: page.browser_w + "px",
+							height: page.browser_h + "px"
+						});
+						if(this.image._fullsize_src) {
+							this.image.fullscreen_image.src = this.image._fullsize_src;
+						}
+						else {
+							this.image._fullsize_width = 1600;
+							this.image._fullsize_src = "/images/" + this.image._id + "/" + (this.image._variant ? this.image._variant+"/" : "") + this.image._fullsize_width + "x." + this.image._format;
+							this.image.fullscreen_image.response = function() {
+								u.ass(this, {
+									"background-image": "url("+this.image._fullsize_src+")",
+								});
+							}
+							this.image.fullscreen_image.responseError = function() {
+								u.bug("error")
+								this.image._fullsize_width = this.image._fullsize_width-100;
+								this.image._fullsize_src = "/images/" + this.image._id + "/" + (this.image._variant ? this.image._variant+"/" : "") + this._fullsize_width + "x." + this.image._format;
+								u.request(this.image.fullscreen_image, this._fullsize_src);
+							}
+							u.request(this.image.fullscreen_image, this.image._fullsize_src);
+						}
+					}
+					u.a.transition(this, "all 0.5s ease-in-out");
+					u.ass(this, {
+						"opacity": 1
+					});
+				}
+				u.preloader(image, [image._image_src]);
+			}
+		}
+		var video;
+		article._videos = u.qsa("div.youtube, div.vimeo", article);
+		for (i = 0; video = article._videos[i]; i++) {
+			video._src = u.cv(video, "video_id");
+			video._type = video._src.match(/youtube|youtu\.be/) ? "youtube" : "vimeo";
+			if (video._type == "youtube") {
+				video._id = video._src.match(/watch\?v\=/) ? video._src.split("?v=")[1] : video._src.split("/")[video._src.split("/").length-1];
+				video.iframe = u.ae(video, "iframe", {
+					id: "ytplayer",
+					type: "text/html",
+					webkitallowfullscreen: true,
+					mozallowfullscreen: true,
+					allowfullscreen: true,
+					frameborder: 0,
+					allow: "autoplay",
+					sandbox:"allow-same-origin allow-scripts",
+					src: 'https://www.youtube.com/embed/'+video._id+'?autoplay=false&loop=0&color=f0f0ee&modestbranding=1&rel=0&playsinline=1',
+				});
+			}
+			else {
+				video._id = video._src.split("/")[video._src.split("/").length-1];
+				video.iframe = u.ae(video, "iframe", {
+					webkitallowfullscreen: true,
+					mozallowfullscreen: true,
+					allowfullscreen: true,
+					frameborder: 0,
+					sandbox:"allow-same-origin allow-scripts",
+					src: 'https://player.vimeo.com/video/'+video._id+'?autoplay=false&loop=0&byline=0&portrait=0',
+				});
+			}
+		}
+		article.geolocation = u.qs("ul.geo", article);
+		if(article.geolocation && typeof(u.injectGeolocation) == "function") {
+			u.injectGeolocation(article);
+		}
+		var hardlink = u.qs("li.main_entity.share", article);
+		article.hardlink = hardlink ? (hardlink.hasAttribute("content") ? hardlink.getAttribute("content") : hardlink.innerHTML) : false;
+		if(article.hardlink && typeof(u.injectSharing) == "function") {
+			article.shareInjected = function() {
+				if(this.article_list) {
+					this.article_list.correctScroll(this, this.sharing);
+				}
+			}
+			u.injectSharing(article);
+		}
+		article.header.current_readstate = article.getAttribute("data-readstate");
+		article.add_readstate_url = article.getAttribute("data-readstate-add");
+		article.delete_readstate_url = article.getAttribute("data-readstate-delete");
+		if(article.header.current_readstate || (article.add_readstate_url && article.delete_readstate_url)) {
+			u.addCheckmark(article.header);
+			u.ce(article.header.checkmark);
+			article.header.checkmark.clicked = function(event) {
+				this.out(event);
+				if(this.node.current_readstate) {
+					this.response = function(response) {
+						if(response.cms_status == "success" && response.cms_object) {
+							this.setAttribute("class", "checkmark not_read");
+							this.node.current_readstate = false;
+							this.node.article.setAttribute("data-readstate", "");
+							this.hint_txt = u.txt["readstate-not_read"];
+						}
+					}
+					u.request(this, this.node.article.delete_readstate_url, {"method":"post", "params":"csrf-token="+this.node.article.csrf_token+"&item_id"});
+				}
+				else {
+					this.response = function(response) {
+						if(response.cms_status == "success" && response.cms_object) {
+							this.setAttribute("class", "checkmark read");
+							this.node.current_readstate = new Date();
+							this.node.article.setAttribute("data-readstate", this.node.current_readstate);
+							this.hint_txt = u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", this.node.current_readstate);
+						}
+					}
+					u.request(this, this.node.article.add_readstate_url, {"method":"post", "params":"csrf-token="+this.node.article.csrf_token});
+				}
+			}
+		}
+	}
+}
+
+
+/*m-article_preview_list.js*/
+Util.Modules["articlePreviewList"] = new function() {
+	this.init = function(list) {
+		list.articles = u.qsa("li.article", list);
+		list.initArticle = function(article) {
+			article._a = u.qs("h3 a, h2 a", article);
+			if(article._a) {
+				article._link = article._a.href ? article._a.href : article._a.url;
+			}
+			article._description_p = u.qs("div.description p", article)
+			if(article._description_p && article._link) {
+				u.ae(article._description_p, "br");
+				var a = u.ae(article._description_p, "a", {href: article._link, class:"readmore", html:u.txt("readmore")});
+				u.ce(a, {"type":"link"});
+			}
+			var i, image;
+			article._images = u.qsa("div.image,div.media", article);
+			for(i = 0; image = article._images[i]; i++) {
+				image.node = article;
+				image.caption = u.qs("p a", image);
+				if(image.caption) {
+					image.caption.removeAttribute("href");
+				}
+				image._id = u.cv(image, "item_id");
+				image._format = u.cv(image, "format");
+				image._variant = u.cv(image, "variant");
+				if(image._id && image._format) {
+					image._image_src = "/images/" + image._id + "/" + (image._variant ? image._variant+"/" : "") + "540x." + image._format;
+					u.ass(image, {
+						"opacity": 0
+					});
+					image.loaded = function(queue) {
+						u.ac(this, "loaded");
+						this._image = u.ie(this, "img");
+						this._image.image = this;
+						this._image.src = queue[0].image.src;
+						if(this.node.article_list) {
+							this.node.article_list.correctScroll(this);
+						}
+						u.ce(this._image);
+						this._image.clicked = function() {
+							u.ass(document.body, {
+								"overflow":"hidden"
+							});
+							this.image.fullscreen_image = u.ae(page, "div", {"class":"fullscreen"});
+							u.ce(this.image.fullscreen_image);
+							this.image.fullscreen_image.clicked = function() {
+								u.ass(document.body, {
+									"overflow":"auto"
+								});
+								this.transitioned = function() {
+									page.removeChild(this);
+								}
+								u.ass(this, {
+									"transition": "all 0.3s ease",
+									"top":u.absY(this.image._image) - page.scrolled_y + "px",
+									"left":u.absX(this.image._image) + "px",
+									"width": this.image._image.offsetWidth + "px",
+									"height": this.image._image.offsetHeight + "px"
+								});
+							}
+							this.image.fullscreen_image.image = this.image;
+							u.ass(this.image.fullscreen_image, {
+								"background-image": "url("+this.src+")",
+								"top":u.absY(this) - page.scrolled_y + "px",
+								"left":u.absX(this) + "px",
+								"width": this.offsetWidth + "px",
+								"height": this.offsetHeight + "px"
+							});
+							u.ass(this.image.fullscreen_image, {
+								transition: "all 0.6s ease",
+								left: 0,
+								top: 0,
+								width: page.browser_w + "px",
+								height: page.browser_h + "px"
+							});
+							if(this.image._fullsize_src) {
+								this.image.fullscreen_image.src = this.image._fullsize_src;
+							}
+							else {
+								this.image._fullsize_width = 1600;
+								this.image._fullsize_src = "/images/" + this.image._id + "/" + (this.image._variant ? this.image._variant+"/" : "") + this.image._fullsize_width + "x." + this.image._format;
+								this.image.fullscreen_image.response = function() {
+									u.ass(this, {
+										"background-image": "url("+this.image._fullsize_src+")",
+									});
+								}
+								this.image.fullscreen_image.responseError = function() {
+									u.bug("error")
+									this.image._fullsize_width = this.image._fullsize_width-100;
+									this.image._fullsize_src = "/images/" + this.image._id + "/" + (this.image._variant ? this.image._variant+"/" : "") + this._fullsize_width + "x." + this.image._format;
+									u.request(this.image.fullscreen_image, this._fullsize_src);
+								}
+								u.request(this.image.fullscreen_image, this.image._fullsize_src);
+							}
+						}
+						u.a.transition(this, "all 0.5s ease-in-out");
+						u.ass(this, {
+							"opacity": 1
+						});
+						// 
+						// 
+						// 	
+						// 	
+						// 		
+						// 		
+						// 		
+						// 			
+						// 			
+					}
+					u.preloader(image, [image._image_src]);
+				}
+			}
+			var video;
+			article._videos = u.qsa("div.youtube, div.vimeo", article);
+			for (i = 0; video = article._videos[i]; i++) {
+				video._src = u.cv(video, "video_id");
+				video._type = video._src.match(/youtube|youtu\.be/) ? "youtube" : "vimeo";
+				if (video._type == "youtube") {
+					video._id = video._src.match(/watch\?v\=/) ? video._src.split("?v=")[1] : video._src.split("/")[video._src.split("/").length-1];
+					video.iframe = u.ae(video, "iframe", {
+						id: "ytplayer",
+						type: "text/html",
+						webkitallowfullscreen: true,
+						mozallowfullscreen: true,
+						allowfullscreen: true,
+						frameborder: 0,
+						allow: "autoplay",
+						sandbox:"allow-same-origin allow-scripts",
+						src: 'https://www.youtube.com/embed/'+video._id+'?autoplay=false&loop=0&color=f0f0ee&modestbranding=1&rel=0&playsinline=1',
+					});
+				}
+				else {
+					video._id = video._src.split("/")[video._src.split("/").length-1];
+					video.iframe = u.ae(video, "iframe", {
+						webkitallowfullscreen: true,
+						mozallowfullscreen: true,
+						allowfullscreen: true,
+						frameborder: 0,
+						sandbox:"allow-same-origin allow-scripts",
+						src: 'https://player.vimeo.com/video/'+video._id+'?autoplay=false&loop=0&byline=0&portrait=0',
+					});
+				}
+			}
+			var header = u.qs("h2,h3", article);
+			header.current_readstate = article.getAttribute("data-readstate");
+			if(header.current_readstate) {
+				u.ac(header, "read");
+				u.addCheckmark(header);
+			}
+			article.geolocation = u.qs("ul.geo", article);
+			if(article.geolocation && typeof(u.injectGeolocation) == "function") {
+				u.injectGeolocation(article);
+			}
+		}
+		list.resized = function() {
+			this.browser_h = u.browserH();
+			this.screen_middle = this.browser_h/2;
+		}
+		list.scrolled = function(event) {
+			u.t.resetTimer(this.t_init);
+			this.scroll_y = u.scrollY();
+			if(this._next_url) {
+				var i, node, node_y, list_y;
+				list_y = u.absY(this);
+				if(list_y + this.offsetHeight < this.scroll_y + (this.browser_h*2)) {
+					this.loadNext();
+				}
+			}
+			this.t_init = u.t.setTimer(this, this.initFocusedArticles, 500);
+		}
+		list.initFocusedArticles = function() {
+			var i, node, node_y;
+			for(i = 0; node = this.articles[i]; i++) {
+				if(!node.is_ready) {
+					node_y = u.absY(node);
+					if(node_y > this.scroll_y + this.browser_h) {
+						break;
+					}
+					else if(
+						(
+							node_y + node.offsetHeight > this.scroll_y && 
+							node_y + node.offsetHeight < this.scroll_y + this.browser_h
+						)
+						 || 
+						(
+							node_y > this.scroll_y &&
+							node_y < this.scroll_y + this.browser_h
+						)
+						 ||
+						(
+							node_y < this.scroll_y &&
+							node_y + node.offsetHeight > this.scroll_y + this.browser_h
+						)
+					) {
+						this.initArticle(node);
+						node.is_ready = true;
+					}
+				}
+			}
+		}
+		list.correctScroll = function(div_image) {
+			if(this.scroll_y) {
+				var image_node_y = u.absY(div_image);
+				if(image_node_y < this.scroll_y + this.screen_middle) {
+					var new_scroll_y = this.scroll_y + (div_image.offsetHeight);
+					window.scrollTo(0, new_scroll_y);
+				}
+			}
+		}
+		var next = u.qs(".pagination li.next a", list.parentNode);
+		list._next_url = false;
+		if(next) {
+			u.ac(u.pn(next, {include:"div"}), "autoload");
+			list._next_url = next ? next.href : false;
+		}
+		list.loadNext = function() {
+			if(this._next_url) {
+				this.response = function(response) {
+					var articles = u.qsa("li.article", response);
+					var i, node;
+					for(i = 0; i < articles.length; i++) {
+						node = u.ae(this, articles[i]);
+						node.article_list = this;
+					}
+					var next = u.qs(".pagination li.next a", response);
+					this._next_url = next ? next.href : false;
+					this.articles = u.qsa("li.article", this);
+				}
+				u.request(this, this._next_url);
+				this._next_url = false;
+			}
+		}
+		list.destroy = function() {
+			u.e.removeWindowEvent(this.e_resize);
+			u.e.removeWindowEvent(this.e_scroll);
+		}
+		var i, node;
+		for(i = 0; node = list.articles[i]; i++) {
+			node.article_list = list;
+		}
+		list.resized();
+		list.scrolled();
+		list.e_resize = u.e.addWindowEvent(list, "resize", list.resized);
+		list.e_scroll = u.e.addWindowEvent(list, "scroll", list.scrolled);
 	}
 }
 
@@ -11042,13 +8946,23 @@ Util.Form.customInit["range"] = function(field) {
 		this.field._virtual_input.innerHTML = formatted_range;
 	}
 	field._virtual_input_updated = function() {
+		u.bug("_virtual_input_updated updated");
 		var range_value = this.innerHTML.replace(/[\., a-zA-Z\;\$]+/g, "");
 		this.field.input.val(range_value);
 	}
 	field._virtual_input_blurred = function() {
+		u.bug("virtual blurred");
 		u.rc(this.field, "focus");
 		u.rc(this, "focus");
 		var range_value = this.innerHTML.replace(/[\., a-zA-Z\;\$]+/g, "");
+		var min = this.field.input.getAttribute("min");
+		var max = this.field.input.getAttribute("max");
+		if(range_value < min) {
+			range_value = min;
+		}
+		else if(range_value > max) {
+			range_value = max;
+		}
 		var formatted_price = Number(range_value).toLocaleString("da") + " kr.";
 		this.innerHTML = formatted_price;
 	}
@@ -11080,22 +8994,33 @@ Util.Form.customValidate["range"] = function(iN) {
 }
 
 
+/*m-scene.js*/
+Util.Modules["scene"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+			this.offsetHeight;
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			u.showScene(this);
+		}
+		page.cN.scene = scene;
+	}
+}
+
+
 /*m-front.js*/
 Util.Modules["front"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
-			if(this.intro) {
-				if(!this.intro.is_small) {
-					u.ass(this.intro, {
-						"height": page.browser_h + "px",
-						"width": page.browser_w + "px"
-					});
-				}
-				else {
-					var width = (this.intro.parentNode.offsetWidth - 100);
-					u.ass(this.intro, {
-						"height": (width / (540 / 350)) + "px",
-						"width": width + "px"
+			var i, box;
+			if(this.div_article) {
+				var box_height = (this.div_article.offsetHeight/2);
+				for(i = 0; i < this.boxes.length; i++) {
+					box = this.boxes[i];
+					u.ass(box, {
+						"height": box_height + "px",
 					});
 				}
 			}
@@ -11104,450 +9029,68 @@ Util.Modules["front"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			page.cN.scene = this;
-			this.fontsLoaded = function() {
-				u.columns(this, [
-					{"c-main": [
+			u.columns(this, [
+				{"c300": [
+					{"c200": [
 						"div.intro", 
-						"div.article", 
-						"div.news"
+						"div.article",
 					]},
-					{"c-sidebar": [
-						".all_events",
+					{"c100": [
+						"div.projects",
+						"div.services",
 					]},
-					{"c300": [
-						"div.company"
+				]},
+				{"c300": [
+					{"c100": [
+						"div.events",
+					]},
+					{"c100": [
+						"div.membership",
+					]},
+					{"c100": [
+						"div.bulletin",
+					]},
+					{"c100": [
+						"div.about",
+					]},
+					{"c100": [
+						"div.blog",
+					]},
+					{"c100": [
+						"div.contact",
 					]}
-				]);
-				page.resized();
-				this.build();
-			}
-			u.fontsReady(this, [
-				{"family":"OpenSans", "weight":"normal", "style":"normal"},
-				{"family":"OpenSans", "weight":"bold", "style":"normal"},
-				{"family":"OpenSans", "weight":"normal", "style":"italic"},
-				{"family":"PT Serif", "weight":"normal", "style":"normal"}
+				]},
 			]);
-		}
-		scene.build = function() {
-			var intro_cookie = u.getCookie("intro_v1");
-			if (u.qs(".intro", this)) {
-				this.intro = u.qs(".intro", this);
-				this.intro.scene = this;
-				this.showLoader();
+			this.div_article = u.qs(".article", this);
+			u.e.hover(this.div_article);
+			this.div_article.over = function() {
+				u.ac(this, "hover");
 			}
-			if(!intro_cookie && this.intro) {
-				this.show_full_intro = true;
-				this.initIntro();
+			this.div_article.out = function() {
+				u.rc(this, "hover");
 			}
-			else if (intro_cookie && this.intro) {
-				this.show_full_intro = false;
-				this.initShortIntro();
-			}
-			else {
-				this.initNoIntro();
-			}
-		}
-		scene.showLoader = function() {
-			this.intro_loader = u.ae(this.intro, "div", {"class":"loader"});
-			this.intro_loader_dot = u.ae(this.intro_loader, "div", {"class":"dot"});
-			this.intro_loader_dot.scene = this;
-			this.intro_loader_dot.loaderAnimation = function() {
-				var random = u.random(0, 5);
-				u.a.transition(this, "all 0.3s ease-in-out");
-				u.ass(this, {
-					"transform":"scale("+random+")",
-				});
-			}
-			this.t_intro_loader = u.t.setInterval(this.intro_loader_dot, "loaderAnimation", 300);
-		}
-		scene.removeLoader = function() {
-			u.t.resetInterval(this.t_intro_loader);
-			this.intro_loader_dot.transitioned = function() {
-				this.scene.intro_loader.parentNode.removeChild(this.scene.intro_loader);
-			}
-			u.a.transition(this.intro_loader_dot, "all 0.2s ease-in-out");
-			u.ass(this.intro_loader_dot, {
-				"transform":"scale(25)",
-			});
-		}
-		scene.createIntroBgs = function() {
-			u.preloader(this.intro, [
-				"/img/intro/bg_front_1.jpg",
-				"/img/intro/bg_front_2.jpg",
-				"/img/intro/bg_front_3.jpg",
-				"/img/intro/bg_front_4.jpg",
-				"/img/intro/bg_front_5.jpg",
-				"/img/intro/bg_front_6.jpg",
-				"/img/intro/bg_front_7.jpg",
-			]);
-			this.intro.bgs = [""];
-			this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg1", "html":"<h2>do you</h2>"}));
-			this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg2", "html":"<h2>want</h2>"}));
-			this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg3", "html":"<h2>to make</h2>"}));
-			this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg4", "html":"<h2>a</h2>"}));
-			this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg5", "html":"<h2>difference?</h2>"}));
-			this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg6", "html":"<h2>welcome</h2>"}));
-			this.intro.bgs.push(u.ae(this.intro, "div", {"class":"bg bg7", "html":"<h2>to the club</h2>"}));
-		}
-		scene.injectHotspots = function() {
-			var ul_hotspots = u.ae(this.intro, "ul", {"class":"hotspots"});
-			u.ce(ul_hotspots);
-			ul_hotspots.clicked = function(event) {
-				u.e.kill(event);
-			}
-			this.intro.hotspots = [""];
-			this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot1", "html":"t"}));
-			this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot2", "html":"h"}));
-			this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot3", "html":"i"}));
-			this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot4", "html":"n"}));
-			this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot5", "html":"k"}));
-			this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot6", "html":"d"}));
-			this.intro.hotspots.push(u.ae(ul_hotspots, "li", {"class":"hotspot hotspot7", "html":"k"}));
-			var i;
-			for(i = 1; i < this.intro.hotspots.length; i++) {
-				this.intro.hotspots[i].intro = this.intro;
-				this.intro.hotspots[i].i = i;
-				this.intro.hotspots[i].over = function(event) {
-					this.intro.scene.showIntroFrame(this.i);
+			this.boxes = [];
+			this.boxes.push(u.qs(".projects", this));
+			this.boxes.push(u.qs(".services", this));
+			this.boxes.push(u.qs(".events", this));
+			this.boxes.push(u.qs(".membership", this));
+			this.boxes.push(u.qs(".bulletin", this));
+			this.boxes.push(u.qs(".about", this));
+			this.boxes.push(u.qs(".blog", this));
+			this.boxes.push(u.qs(".contact", this));
+			var i, box;
+			for(i = 0; i < this.boxes.length; i++) {
+				box = this.boxes[i];
+				u.e.hover(box);
+				box.over = function() {
+					u.ac(this, "hover");
 				}
-				u.e.addOverEvent(this.intro.hotspots[i], this.intro.hotspots[i].over);
-			}
-			this.hideIntro();
-			this.intro.is_active = true;
-		}
-		scene.showIntroFrame = function(frame) {
-			if(this.frame != frame) {
-				u.ass(this.intro.bgs[frame], {
-					"opacity":0,
-					"display":"block",
-				});
-				u.a.transition(this.intro.bgs[frame], "all 0.15s ease-in-out");
-				u.ass(this.intro.bgs[frame], {
-					"opacity":1,
-				});
-				if(this.intro.hotspots) {
-					u.ac(this.intro.hotspots[frame], "selected");
-				}
-				if(this.frame) {
-					u.a.transition(this.intro.bgs[this.frame], "all 0.15s ease-in-out 0.05s");
-					u.ass(this.intro.bgs[this.frame], {
-						"opacity":0,
-					});
-					if(this.intro.hotspots) {
-						u.rc(this.intro.hotspots[this.frame], "selected");
-					}
-				}
-				this.frame = frame;
-			}
-			// 
-		}
-		scene.showCarousel = function() {
-			this.intro.loaded = function() {
-				this.scene.injectHotspots();
-				u.textscaler(this, {
-					"min_height":400,
-					"max_height":1000,
-					"min_width":600,
-					"max_width":1300,
-					"unit":"rem",
-					"h2":{
-						"min_size":4,
-						"max_size":6
-					},
-					"h3":{
-						"min_size":3,
-						"max_size":6
-					},
-					"p":{
-						"min_size":2,
-						"max_size":4
-					}
-				});
-				this.scene.showIntroFrame(u.random(1, this.bgs.length-1));
-			}
-			this.createIntroBgs();
-		}
-		scene.initNoIntro = function() {
-			u.bug("initNoIntro");
-			this.intro = u.ie(scene, "div", {class:"intro"});
-			this.intro.scene = this;
-			this.showCarousel();
-		}
-		scene.initShortIntro = function() {
-			u.bug("initShortIntro");
-			this.removeLoader();
-			this.showCarousel();
-		}
-		scene.initIntro = function() {
-			 u.bug("initIntro")
-			this.intro._textnodes = u.qsa("p,h2,h3,h4", this.intro);
-			if(this.intro._textnodes.length) {
-				u.textscaler(this.intro, {
-					"min_height":400,
-					"max_height":1000,
-					"min_width":600,
-					"max_width":1300,
-					"unit":"rem",
-					"h2":{
-						"min_size":4,
-						"max_size":6
-					},
-					"h3":{
-						"min_size":3,
-						"max_size":6
-					},
-					"p":{
-						"min_size":2,
-						"max_size":4
-					}
-				});
-				u.ass(this.intro, {
-					"height": page.browser_h + "px",
-					"width": page.browser_w + "px",
-					"opacity": 1,
-				});
-				var i, node;
-				for(i = 0; node = this.intro._textnodes[i]; i++) {
-					u.ass(node, {
-						"position":"absolute",
-						"opacity": 0, 
-						"right": "50px", 
-						"bottom": (50) + "px",
-					});
-				}
-				u.ass(this, {
-					"height":this.intro.offsetHeight - page.hN.offsetHeight+"px"
-				});
-				this.intro.loaded = function() {
-					this.scene.showIntro();
-				}
-				this.createIntroBgs();
-			}
-			else {
-				this.hideIntro();
-			}
-		}
-		scene.showIntro = function() {
-			var node, duration, i;
-			this.intro.audioPlayer = u.audioPlayer({autoplay:true});
-			this.intro.audioPlayer.playing = function(event) {
-				u.t.resetTimer(this.t_timeout);
-				var _time = event.target.currentTime;
-				this.intro.timestamps = ["", 2330, 2625, 2900, 3200, 3487, 4349, 4645];
-				u.t.setTimer(this.intro.scene, "removeLoader", this.intro.timestamps[1]-_time - 200);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[1]-_time, 1);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[2]-_time, 2);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[3]-_time, 3);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[4]-_time, 4);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[5]-_time, 5);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[6]-_time, 6);
-				u.t.setTimer(this.intro.scene, "showIntroFrame", this.intro.timestamps[7]-_time, 7);
-				u.t.setTimer(this.intro.scene, "injectHotspots", 6045 - _time);
-				delete this.playing;
-			}
-			u.ae(this, this.intro.audioPlayer);
-			this.intro.audioPlayer.timeout = function() {
-				if(this.currentTime) {
-					this.playing({"target":{"currentTime":this.currentTime}});
-				}
-				else {
-					this.stop();
-					this.playing({"target":{"currentTime":2000}});
+				box.out = function() {
+					u.rc(this, "hover");
 				}
 			}
-			this.intro.audioPlayer.ready = function() {
-				if(this.can_autoplay) {
-					this.t_timeout = u.t.setTimer(this, "timeout", 4000);
-					this.load("/assets/audio/intro-4-2.mp3");
-				}
-				else {
-					this.playing({"target":{"currentTime":2000}});
-				}
-			}
-			this.intro.audioPlayer.intro = this.intro;
-			//         
-			//         
-		}
-		scene.hideIntro = function() {
-			u.saveCookie("intro_v1", 1, {"expires":false});
-			// 	
-			// 	
-			// 	
-			if(!this.intro.is_active) {
-				u.ass(this, {
-					"height":"auto"
-				});
-				u.ce(this.intro);
-				this.intro.clicked = function() {
-					u.a.transition(this, "all .5s ease-in-out");
-					u.a.transition(this.scene._article, "all .5s ease-in-out");
-					if(this.is_small) {
-						u.ass(this, {
-							"width": page.browser_w + "px",
-							"height": page.browser_h + "px",
-							"top": "-150px",
-							"left": "0px",
-							"border-radius":"0px",
-							"cursor":"zoom-out",
-						});
-						u.ass(this.scene._article, {
-							"margin-top": "-70px",
-						});
-						this.is_small = false;
-					}
-					else {
-						u.ass(this, {
-							"width": "540px",
-							"top": 0,
-							"height": 350 + "px",
-							"left": "50px",
-							"border-radius":"5px",
-							"cursor":"zoom-in",
-						});
-						u.ass(this.scene._article, {
-							"margin-top": "50px",
-						});
-						this.is_small = true;
-					}
-				}
-				if(this.frame) {
-					u.ac(this.intro.hotspots[this.frame], "selected");
-				}
-				if(this.show_full_intro) {
-					u.a.transition(this.intro, "all .5s ease-in-out");
-				}
-				var width = (this.intro.parentNode.offsetWidth - 100);
-				u.ass(this.intro, {
-					"width": width + "px",
-					"top": 0,
-					"height": (width / (540 / 350))+"px",
-					"left": "50px",
-					"border-radius":"5px",
-					"cursor":"zoom-in",
-				});
-				this.intro.is_small = true;
-				u.a.transition(this.intro, "all .5s ease-in-out");
-				u.ass(this.intro, {
-					"opacity":1,
-				});
-				u.a.transition(page.hN, "none");
-				u.ass(page.hN, {
-					"opacity":0,
-					"display":"block"
-				});
-				u.a.transition(page.fN, "none");
-				u.ass(page.fN, {
-					"opacity":0,
-					"display":"block"
-				});
-				u.a.transition(page.hN, "all 0.5s ease-in");
-				u.ass(page.hN, {
-					"opacity":1,
-				});
-				u.a.transition(page.fN, "all 0.5s ease-in");
-				u.ass(page.fN, {
-					"opacity":1,
-				});
-				page.acceptCookies();
-				this.showArticle();
-			}
-		}
-		scene.showArticle = function() {
-			this._article = u.qs("div.article", this);
-			if(this._article) {
-				this._article.scene = this;
-				u.ass(this._article, {
-					"opacity":0,
-					"display":"block"
-				});
-				var cn = u.cn(this._article);
-				this._article.nodes = [];
-				for(i = 0; node = cn[i]; i++) {
-					if(u.gcs(node, "display") != "none") {
-						u.ass(node, {
-							"opacity":0,
-						});
-						this._article.nodes.push(node);
-					}
-				}
-				u.ass(this._article, {
-					"opacity":1,
-				});
-				u._stepA1.call(this._article.nodes[0]);
-				for(i = 1; node = cn[i]; i++) {
-					u.a.transition(node, "all 0.3s ease-in "+(100+(i*200))+"ms");
-					u.ass(node, {
-						"transform":"translate(0, 0)",
-						"opacity":1
-					});
-				}
-				u.t.setTimer(this, "showEvents", 800);
-			}
-			else {
-				this.showEvents();
-			}
-		}
-		scene.showEvents = function() {
-			this._events = u.qs("div.all_events", this);
-			if(this._events) {
-				this._events.scene = this;
-				u.ass(this._events, {
-					"opacity": 0,
-					"display":"block"
-				});
-				u.a.transition(this._events, "all 0.4s ease-in-out", "showPosts");
-				u.ass(this._events, {
-					"opacity":1
-				});
-				this._events.showPosts = function() {
-					this._posts = u.qsa("li.item", this._events);
-					if(this._posts) {
-						var i, node;
-						for(i = 0; node = this._posts[i]; i++) {
-							u.a.transition(node, "all 0.4s ease-in-out "+(100*i)+"ms", "done");
-							u.ass(node, {
-								"opacity": 1
-							});
-						}
-					}
-				} 
-				u.t.setTimer(this, "showNews", 800);
-			}
-			else {
-				this.showNews();
-			}
-		}
-		scene.showNews = function() {
-			this._news = u.qs("div.news", this);
-			if(this._news) {
-				this._news.scene = this;
-				u.ass(this._news, {
-					"opacity": 0,
-					"display":"block"
-				});
-				u.a.transition(this._news, "all 0.4s ease-in-out", "showPosts");
-				u.ass(this._news, {
-					"opacity":1
-				});
-				this._news.showPosts = function() {
-					this._posts = u.qsa("li.item", this._news);
-					if(this._posts) {
-						var i, node;
-						for(i = 0; node = this._posts[i]; i++) {
-							var header = u.qs("h2,h3", node);
-							header.current_readstate = node.getAttribute("data-readstate");
-							if(header.current_readstate) {
-								u.addCheckmark(header);
-							}
-							u.a.transition(node, "all 0.4s ease-in-out "+(100*i)+"ms", "done");
-							u.ass(node, {
-								"opacity": 1
-							});
-						}
-					}
-				} 
-			}
+			page.resized();
+			u.showScene(this);
 		}
 		page.cN.scene = scene;
 	}
@@ -11576,8 +9119,20 @@ Util.Modules["contact"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			if (u.qs("div.article", this)) {
-				var injection_point = u.ns(u.qs("div.article h1", this));
+			u.columns(this, [
+				{"c200": [
+					"div.article", 
+				]},
+				{"c100": [
+					".teams",
+				]},
+				{"c300": [
+					"div.company"
+				]}
+			]);
+			this.article = u.qs("div.article", this);
+			if(this.article) {
+				var injection_point = u.ns(u.qs("h1", this.article));
 				this.map = u.ae(this, "div", {"class":"map"});
 				this.map.loaded = function() {
 					u.googlemaps.addMarker(this, [55.6912109,12.5631139]);
@@ -11587,7 +9142,168 @@ Util.Modules["contact"] = new function() {
 				u.googlemaps.map(this.map, [55.6912109,12.5631139], {"zoom":14});
 			}
 			u.showScene(this);
-			// 
+		}
+		page.cN.scene = scene;
+	}
+}
+
+/*m-about.js*/
+Util.Modules["about"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			u.columns(this, [
+				{"c200": [
+					"div.article", 
+				]},
+				{"c100": [
+					".teams",
+				]},
+			]);
+			u.showScene(this);
+		}
+		scene.takeoverIntro = function(node) {
+			this.loadIntro(node);
+			u.ce(node);
+			node.clicked = function() {
+				page.cN.scene.finishIntro();
+				delete this.clicked;
+			}
+		}
+		scene.loadIntro = function(node) {
+			page.buildLoader();
+			this.ul_hotspots = u.ae(node, "ul", {"class":"hotspots"});
+			this.hotspots = [];
+			this.hotspots.push(u.ae(this.ul_hotspots, "li", {"class":"hotspot hotspot1", "html":"t"}));
+			this.hotspots.push(u.ae(this.ul_hotspots, "li", {"class":"hotspot hotspot2", "html":"h"}));
+			this.hotspots.push(u.ae(this.ul_hotspots, "li", {"class":"hotspot hotspot3", "html":"i"}));
+			this.hotspots.push(u.ae(this.ul_hotspots, "li", {"class":"hotspot hotspot4", "html":"n"}));
+			this.hotspots.push(u.ae(this.ul_hotspots, "li", {"class":"hotspot hotspot5", "html":"k"}));
+			this.hotspots.push(u.ae(this.ul_hotspots, "li", {"class":"hotspot hotspot6", "html":"d"}));
+			this.hotspots.push(u.ae(this.ul_hotspots, "li", {"class":"hotspot hotspot7", "html":"k"}));
+			this.bgs = [];
+			this.bgs.push(u.ae(node, "div", {"class":"bg about"}));
+			this.bgs.push(u.ae(node, "div", {"class":"bg about"}));
+			this.bgs.push(u.ae(node, "div", {"class":"bg about"}));
+			this.bgs.push(u.ae(node, "div", {"class":"bg about"}));
+			this.bgs.push(u.ae(node, "div", {"class":"bg about"}));
+			this.bgs.push(u.ae(node, "div", {"class":"bg about"}));
+			this.bgs.push(u.ae(node, "div", {"class":"bg about"}));
+			this.bg_images = page.getRandomBackgrounds(7);
+			this.loaded = function(queue) {
+				var i;
+				for(i = 0; i < this.bg_images.length; i++) {
+					u.ass(this.bgs[i], {
+						"background-image":"url("+this.bg_images[i]+")",
+					});
+				}
+				this.images_ready = true;
+				this.loadController();
+			}
+			u.preloader(this, this.bg_images);
+			if(this.audioPlayer) {
+				this.audioPlayer.stop();
+				this.removeChild(this.audioPlayer);
+			}
+			this.audioPlayer = u.audioPlayer({autoplay:true});
+			u.ae(this, this.audioPlayer);
+			this.audioPlayer.scene = this;
+			this.audioPlayer.ready = function() {
+				this.scene.audioplayer_ready = true;
+				this.scene.loadController();
+			}
+		}
+		scene.loadController = function() {
+			if(this.images_ready && this.audioplayer_ready) {
+				page.destroyLoader();
+				this.playIntro();
+			}
+		}
+		scene.showIntroFrame = function(frame) {
+			u.ass(this.hotspots[frame], {
+				"transition": "all 0.1s ease",
+				"color": "#26962d",
+				"background-color": "#ffffff",
+			});
+			u.ass(this.bgs[frame], {
+				"transition": "all 0.1s ease",
+				"opacity": 1,
+			});
+		}
+		scene.intro_timestamps = [2341, 2635, 2925, 3215, 3505, 4360, 4670];
+		scene.playIntro = function() {
+			u.ass(this.ul_hotspots, {
+				"transition":"all 0.5s ease 0.5s",
+				"opacity": 1,
+			});
+			if(this.audioPlayer.can_autoplay) {
+				this.current_frame = 0;
+				this.audioPlayer.timeupdate = function() {
+					scene.playIntroManually(this.currentTime*1000);
+						delete this.timeupdate;
+				}
+				this.audioPlayer.loadAndPlay("/assets/audio/intro-4-2.mp3", {"position": 0}).then().catch(error => {
+					this.scene.playIntroManually(0);
+				});
+				this.audioPlayer.ended = function() {
+					this.scene.removeChild(this);
+					delete this.scene.audioPlayer;
+				}
+			}
+			else {
+				scene.playIntroManually(0);
+			}
+		}
+		scene.playIntroManually = function(start_at) {
+			this.sequence_timers = [];
+			for(i = 0; i < this.intro_timestamps.length; i++) {
+				this.sequence_timers.push(u.t.setTimer(this, "showIntroFrame", this.intro_timestamps[i]-start_at, i));
+			}
+			this.t_finish = u.t.setTimer(this, "finishIntro", 5000);
+		}
+		scene.finishIntro = function() {
+			u.t.resetTimer(this.t_finish);
+			for(i = 0; i < this.sequence_timers.length; i++) {
+				u.t.resetTimer(this.sequence_timers[i]);
+			}
+			var i, bg;
+			for(i = 0; i < this.bgs.length-1; i++) {
+				bg = this.bgs[i];
+				bg.parentNode.removeChild(bg);
+			}
+			this.ul_hotspots.transitioned = function() {
+				this.parentNode.removeChild(this);
+			}
+			u.ass(this.ul_hotspots, {
+				"transition": "all 0.5s ease",
+				"opacity":0,
+			});
+			this.bgs[6].transitioned = function() {
+				this.parentNode.removeChild(this);
+			}
+			u.ass(this.bgs[6], {
+				"transition": "all 0.5s ease",
+				"opacity":0,
+			});
+			if(this.ul_hotspots.parentNode.id == "outro") {
+				page.endPageTransition();
+			}
+			else {
+				page.finishIntro();
+			}
+			this.intro_is_finished = true;
+		}
+		scene.destroy = function() {
+			if(this.audioPlayer) {
+				this.audioPlayer.ended();
+			}
+			if(!this.intro_is_finished) {
+				this.finishIntro()
+			}
+			page.cN.removeChild(this);
 		}
 		page.cN.scene = scene;
 	}
@@ -11796,6 +9512,7 @@ Util.Modules["events"] = new function() {
 			var h3 = u.ae(day, u.qs("h3", event).cloneNode(true));
 			var h3_a = u.qs("a", h3);
 			h3.day = day;
+			h3.text = u.text(h3);
 			var div_description = u.qs("div.description p", event);
 			if(div_description) {
 				h3.description = div_description.innerHTML;
@@ -11806,7 +9523,7 @@ Util.Modules["events"] = new function() {
 			u.ie(h3_a, "span", {"html":u.date("H:i", event.date.getTime())});
 			u.e.hover(h3);
 			h3.over = function() {
-				this.div_description = u.ae(this, "div", {"class":"description", "html":this.description});
+				this.div_description = u.ae(this, "div", {"class":"description", "html":"<strong>"+this.text + "</strong><br />" + this.description});
 				if(u.hc(this.day, "weekend")) {
 					u.ass(this.div_description, {
 						"left":-(150) + "px"
@@ -11860,13 +9577,24 @@ Util.Modules["event"] = new function() {
 					]},
 					{"c100": [
 						"div.tickets",
+						"div.related",
 					]},
-				]},
-				{"c300": [
-					"div.related",
 				]}
 			]);
 			u.showScene(this);
+		}
+		scene.destroy = function() {
+			var i;
+			var pagination, paginations = u.qsa(".pagination");
+			if(paginations) {
+				for(i = 0; i < paginations.length; i++) {
+					pagination = paginations[i];
+					if(fun(pagination.destroy)) {
+						pagination.destroy();
+					}
+				}
+			}
+			page.cN.removeChild(this);
 		}
 		page.cN.scene = scene;
 	}
@@ -11892,7 +9620,8 @@ Util.Modules["blogs"] = new function() {
 					article._description_p = u.qs("div.description p", article)
 					if(article._description_p && article._link) {
 						u.ae(article._description_p, "br");
-						u.ae(article._description_p, "a", {href: article._link, class:"readmore", html:u.txt("readmore")});
+						var a = u.ae(article._description_p, "a", {href: article._link, class:"readmore", html:u.txt("readmore")});
+						u.ce(a, {"type":"link"});
 					}
 					var i, image;
 					article._images = u.qsa("div.image,div.media", article);
@@ -11970,6 +9699,10 @@ Util.Modules["blogs"] = new function() {
 						}
 					}
 				}
+				list.destroy = function() {
+					u.e.removeWindowEvent(this.e_resize);
+					u.e.removeWindowEvent(this.e_scroll);
+				}
 				var i, node;
 				for(i = 0; node = list.articles[i]; i++) {
 					node.article_list = list;
@@ -11986,10 +9719,15 @@ Util.Modules["blogs"] = new function() {
 				}
 				list.resized();
 				list.scrolled();
-				u.e.addWindowEvent(list, "resize", list.resized);
-				u.e.addWindowEvent(list, "scroll", list.scrolled);
+				list.e_resize = u.e.addWindowEvent(list, "resize", list.resized);
+				list.e_scroll = u.e.addWindowEvent(list, "scroll", list.scrolled);
 			}
 			u.showScene(this);
+		}
+		scene.destroy = function() {
+			u.e.removeWindowEvent(this.e_resize);
+			u.e.removeWindowEvent(this.e_scroll);
+			page.cN.removeChild(this);
 		}
 		page.cN.scene = scene;
 	}
@@ -12012,10 +9750,101 @@ Util.Modules["blog"] = new function() {
 			]);
 			u.showScene(this);
 		}
+		scene.destroy = function() {
+			var list, article_lists = u.qsa(".articlePreviewList");
+			if(article_lists) {
+				for(i = 0; i < article_lists.length; i++) {
+					list = article_lists[i];
+					list.destroy();
+				}
+			}
+			var pagination, paginations = u.qsa(".pagination");
+			if(paginations) {
+				for(i = 0; i < paginations.length; i++) {
+					pagination = paginations[i];
+					if(fun(pagination.destroy)) {
+						pagination.destroy();
+					}
+				}
+			}
+			page.cN.removeChild(this);
+		}
 		page.cN.scene = scene;
 	}
 }
 
+
+/*m-bulletin.js*/
+Util.Modules["bulletin"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+			this.offsetHeight;
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			u.columns(this, [
+				{"c200": [
+					"div.article", 
+					"div.articles",
+					"div.related"
+				]},
+				{"c100": [
+					".search",
+					".categories"
+				]},
+				{"c300": [
+					"div.company"
+				]}
+			]);
+			u.showScene(this);
+		}
+		scene.destroy = function() {
+			var i;
+			var list, article_lists = u.qsa(".articlePreviewList");
+			if(article_lists) {
+				for(i = 0; i < article_lists.length; i++) {
+					list = article_lists[i];
+					list.destroy();
+				}
+			}
+			var pagination, paginations = u.qsa(".pagination");
+			if(paginations) {
+				for(i = 0; i < paginations.length; i++) {
+					pagination = paginations[i];
+					if(fun(pagination.destroy)) {
+						pagination.destroy();
+					}
+				}
+			}
+			page.cN.removeChild(this);
+		}
+		page.cN.scene = scene;
+	}
+}
+
+
+/*m-project.js*/
+Util.Modules["project"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			u.columns(this, [
+				{"c200": [
+					"div.article", 
+				]},
+				{"c100": [
+					".projectdetails",
+				]},
+			]);
+			u.showScene(this);
+		}
+		page.cN.scene = scene;
+	}
+}
 
 /*m-cart.js*/
 Util.Modules["cart"] = new function() {
@@ -12058,7 +9887,7 @@ Util.Modules["cart"] = new function() {
 								var item_unit_price = u.qs("span.unit_price", item_row);
 								var item_quantity = u.qs("#input_quantity", response);
 								this.node.scene.total_cart_price.innerHTML = total_price.innerHTML;
-								this.node.scene.total_vat_price.innerHTML = total_vat.innerHTML;
+								this.node.scene.total_cart_vat.innerHTML = total_vat.innerHTML;
 								this.node.scene.header_cart.innerHTML = header_cart.innerHTML;
 								this.node.total_price.innerHTML = item_total_price.innerHTML;
 								this.node.unit_price.innerHTML = item_unit_price.innerHTML;
@@ -12084,6 +9913,44 @@ Util.Modules["cart"] = new function() {
 							this.node.parentNode.removeChild(this.node);
 						}
 					}
+				}
+			}
+			u.showScene(this);
+		}
+		page.cN.scene = scene;
+	}
+}
+Util.Modules["checkoutSignup"] = new function() {
+	this.init = function(scene) {
+		u.bug("scene init:", this);
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			u.columns(this, [
+				{"c200": [
+					"h1",
+					"div.login",
+					"div.signup",
+					"div.emptycart",
+				]},
+				{"c100": [
+					"div.account",
+					"div.why_account",
+				]},
+			]);
+			var form_login = u.qs("form.login", this);
+			if(form_login) {
+				u.f.init(form_login);
+			}
+			var form_signup = u.qs("form.signup", this);
+			if(form_signup) {
+				u.f.init(form_signup);
+				form_signup.preSubmitted = function() {
+					this.actions["signup"].value = "Wait";
+					u.ac(this, "submitting");
+					u.ac(this.actions["signup"], "disabled");
 				}
 			}
 			u.showScene(this);
@@ -12123,7 +9990,14 @@ Util.Modules["shopProfile"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			this.isHTML = true;
+			u.columns(this, [
+				{"c300": [
+					"h1",
+				]},
+				{"c200": [
+					"div.item",
+				]},
+			]);
 			var form = u.qs("form.details", this);
 			if(form) {
 				u.f.init(form);
@@ -12140,6 +10014,16 @@ Util.Modules["shopAddress"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
+			u.columns(this, [
+				{"c300": [
+					"h1",
+					"div.addresses",
+				]},
+				{"c200": [
+					"div.item",
+					"div.why_account",
+				]},
+			]);
 			var addresses = u.qsa("ul.addresses li.address", this);
 			if(addresses) {
 				var i, address, highest = 0;
@@ -12288,21 +10172,32 @@ Util.Modules["memberships"] = new function() {
 				this.div_maillist.form = u.qs("form.maillist", this.div_maillist);
 				u.f.init(this.div_maillist.form);
 			}
-			this.fontsLoaded = function() {
-				page.resized();
-			}
-			u.fontsReady(this, [
-				{"family":"OpenSans", "weight":"normal", "style":"normal"},
-				{"family":"OpenSans", "weight":"bold", "style":"normal"},
-				{"family":"OpenSans", "weight":"normal", "style":"italic"},
-				{"family":"PT Serif", "weight":"normal", "style":"normal"}
+			u.showScene(this);
+		}
+		page.cN.scene = scene;
+	}
+}
+Util.Modules["membership"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			u.columns(this, [
+				{"c200": [
+					"div.article", 
+				]},
+				{"c100": [
+					"ul.offer",
+					"form.signup",
+				]},
 			]);
 			u.showScene(this);
 		}
 		page.cN.scene = scene;
 	}
 }
-
 
 /*m-payment.js*/
 Util.Modules["payment"] = new function() {
@@ -12416,6 +10311,7 @@ Util.Modules["stripe"] = new function() {
 					if(!this.is_submitting) {
 						this.is_submitting = true;
 						u.ac(this, "submitting");
+						this.actions["pay"].value = "Please wait ...";
 						u.ac(this.actions["pay"], "disabled");
 						this.DOMsubmit();
 					}
@@ -12459,27 +10355,8 @@ Util.Modules["stripe"] = new function() {
 	}
 }
 
-/*m-verify-maillist.js*/
-Util.Modules["verify_maillist"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			var form_verify = u.qs("form.verify_code", this);
-			if(form_verify) {
-				u.f.init(form_verify);
-			}
-			u.showScene(this);
-		}
-		page.cN.scene = scene;
-	}
-}
-
-
-/*m-verify-shop.js*/
-Util.Modules["verify_shop"] = new function() {
+/*m-verify.js*/
+Util.Modules["verify"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -12487,71 +10364,40 @@ Util.Modules["verify_shop"] = new function() {
 		}
 		scene.ready = function() {
 			u.bug("scene.ready:", this);
+			u.columns(this, [
+				{"c200": [
+					"div.article",
+					"form.verify_code",
+				]},
+				{"c100": [
+					"div.why_verification",
+				]},
+			]);
 			var form_verify = u.qs("form.verify_code", this);
 			if(form_verify) {
 				u.f.init(form_verify);
-				form_verify.submitted = function() {
-					var data = this.getData();
-					this.is_submitting = true; 
-					u.ac(this, "submitting");
-					u.ac(this.actions["verify"], "disabled");
-					u.ac(this.actions["skip"], "disabled");
-					this.response = function(response, request_id) {
-						if (u.qs(".scene.login", response)) {
-							scene.replaceScene(response);
-							u.h.navigate("/login", false, true);
-						}
-						else if (u.hc(u.qs(".scene", response), "confirmed|checkout|cart|shopReceipt")) {
-							scene.replaceScene(response);
-							var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
-							u.h.navigate(url_actions, false, true);
-						}
-						else {
-							if (this.is_submitting) {
-								this.is_submitting = false; 
-								u.rc(this, "submitting");
-								u.rc(this.actions["verify"], "disabled");
-								u.rc(this.actions["skip"], "disabled");
-							}
-							if (this.error) {
-								this.error.parentNode.removeChild(this.error);
-							}
-							this.error = scene.showMessage(this, response);
-							u.ass(this.error, {
-								transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
-								opacity:0
-							});
-							u.a.transition(this.error, "all .6s ease");
-							u.ass(this.error, {
-								transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
-								opacity:1
-							});
-						}
-					}
-					u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
-				}
+				// 
+				// 	
+				// 		
+				// 		
+				// 			
+				// 			
+				// 			
+				// 		
+				// 			
+				// 			
+				// 			
+				// 			
+				// 			
+				// 	
 			}
 			u.showScene(this);
 		}
-		scene.replaceScene = function(response) {
-			var current_scene = u.qs(".scene", page);
-			var new_scene = u.qs(".scene", response);
-			page.cN.replaceChild(new_scene, current_scene); 
-			u.init();
-			new_scene.ready();
-			return new_scene;
-		}
-		scene.showMessage = function(form, response) {
-			var new_error = (u.qs("p.errormessage", response) || u.qs("p.error", response));
-			var current_error = (u.qs("p.errormessage", form) || u.qs("p.error", form));
-			if (!current_error) {
-				u.ie(form, new_error);
-			}
-			else {
-				form.replaceChild(new_error, current_error);
-			}
-			return new_error;
-		}
+		// 	page.cN.replaceChild(new_scene, current_scene); 
+		// 	
+		// 	
+		// 	
+		// 	
 		page.cN.scene = scene;
 	}
 }
@@ -12584,21 +10430,7 @@ Util.Modules["verdensborger"] = new function() {
 		u.txt["comment"] = "Kommentar";
 		u.txt["cancel"] = "Fortryd";
 		scene.resized = function() {
-			if(this.ul_images) {
-				u.ass(this.ul_images, {
-					"height":Math.floor(this.ul_images.offsetWidth / 1.32) +"px"
-				});
-			}
-			if(this.c_1) {
-				u.ass(this.help_us, {
-					"padding-top": "0px"
-				});
-				if(this.c_1.offsetHeight < this.c_2.offsetHeight) {
-					u.ass(this.help_us, {
-						"padding-top": (this.c_2.offsetHeight - this.c_1.offsetHeight) + "px"
-					});
-				}
-			}
+			// 	
 			this.offsetHeight;
 		}
 		scene.scrolled = function() {
@@ -12624,20 +10456,18 @@ Util.Modules["verdensborger"] = new function() {
 					"div.people",
 				]}
 			]);
-			this.c_1 = u.qs(".c .c100", this);
-			this.c_2 = u.qs(".c .c200", this);
-			console.log(this.c_2);
-			var load_queue = [];
-			var i, image, person;
 			// 	
 			// 
+			this.div_signup = u.qs("div.signup", this);
 			this.form_signup = u.qs("form.signup", this);
 			if(this.form_signup) {
+				this.form_signup.div_signup = this.div_signup;
 				u.f.init(this.form_signup);
+				var error = u.qs("div.messages .error", this.div_signup);
+				if(error) {
+					u.scrollTo(window, {"node": this.div_signup, "offset_y":100});
+				}
 			}
-			// 	
-			// 		
-			// 			
 			u.showScene(this);
 		}
 		page.cN.scene = scene;

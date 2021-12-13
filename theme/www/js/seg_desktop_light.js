@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2021-09-13 14:13:17
+asset-builder @ 2021-12-13 02:23:33
 */
 
 /*seg_desktop_light_include.js*/
@@ -5025,70 +5025,92 @@ u.txt["month-12"] = "December";
 
 
 /*u-googleanalytics.js*/
-if(u.ga_account) {
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.defer=true;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', u.ga_account, u.ga_domain);
-    ga('send', 'pageview');
-	u.stats = new function() {
-		this.pageView = function(url) {
-			ga('send', 'pageview', url);
-		}
-		this.event = function(node, _options) {
-			var event = false;
-			var eventCategory = "Uncategorized";
-			var eventAction = null;
-			var eventLabel = null;
-			var eventValue = null;
-			var nonInteraction = false;
-			var hitCallback = null;
-			if(obj(_options)) {
-				var _argument;
-				for(_argument in _options) {
-					switch(_argument) {
-						case "event"				: event					= _options[_argument]; break;
-						case "eventCategory"		: eventCategory			= _options[_argument]; break;
-						case "eventAction"			: eventAction			= _options[_argument]; break;
-						case "eventLabel"			: eventLabel			= _options[_argument]; break;
-						case "eventValue"			: eventValue			= _options[_argument]; break;
-						case "nonInteraction"		: nonInteraction		= _options[_argument]; break;
-						case "hitCallback"			: hitCallback			= _options[_argument]; break;
+u.includeGoogleAnalytics = function() {
+	if(typeof(ga) !== "function") {
+	    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	    m=s.getElementsByTagName(o)[0];a.async=1;a.defer=true;a.src=g;m.parentNode.insertBefore(a,m)
+	    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	    ga('create', u.ga_account, u.ga_domain);
+	    ga('send', 'pageview');
+		u.stats = new function() {
+			this.pageView = function(url) {
+				ga('send', 'pageview', url);
+			}
+			this.event = function(node, _options) {
+				var event = false;
+				var eventCategory = "Uncategorized";
+				var eventAction = null;
+				var eventLabel = null;
+				var eventValue = null;
+				var nonInteraction = false;
+				var hitCallback = null;
+				if(obj(_options)) {
+					var _argument;
+					for(_argument in _options) {
+						switch(_argument) {
+							case "event"				: event					= _options[_argument]; break;
+							case "eventCategory"		: eventCategory			= _options[_argument]; break;
+							case "eventAction"			: eventAction			= _options[_argument]; break;
+							case "eventLabel"			: eventLabel			= _options[_argument]; break;
+							case "eventValue"			: eventValue			= _options[_argument]; break;
+							case "nonInteraction"		: nonInteraction		= _options[_argument]; break;
+							case "hitCallback"			: hitCallback			= _options[_argument]; break;
+						}
 					}
 				}
+				if(!eventAction && event && event.type) {
+					eventAction = event.type;
+				}
+				else if(!eventAction && event) {
+					eventAction = event;
+				}
+ 				else if(!eventAction) {
+					eventAction = "Unknown";
+				}
+				if(!eventLabel && event && event.currentTarget && event.currentTarget.url) {
+					eventLabel = event.currentTarget.url;
+				}
+				else if(!eventLabel) {
+					eventLabel = this.nodeSnippet(node);
+				}
+				ga('send', 'event', {
+					"eventCategory": eventCategory, 
+					"eventAction": eventAction,
+					"eventLabel": eventLabel,
+					"eventValue": eventValue,
+					"nonInteraction": nonInteraction,
+					"hitCallback": hitCallback
+				});
 			}
-			if(!eventAction && event && event.type) {
-				eventAction = event.type;
+			// 	
+			// 	//       slot,		
+			// 	//       name,		
+			// 	//       value,	
+			// 	//       scope		
+			// 	
+			this.nodeSnippet = function(node) {
+				if(node.id) {
+					return node.id;
+				}
+				else if(node._a && node._a.id) {
+					return node._a.id;
+				}
+				else if(u.text(node)) {
+					return u.cutString(u.text(node).trim(), 20);
+				}
+				else if(event && event.currentTarget && event.currentTarget.url) {
+					return event.currentTarget.url;
+				}
+				else {
+					return node.nodeName + (node.className ? "."+node.className : "");
+				}
 			}
-			else if(!eventAction) {
-				eventAction = "Unknown";
-			}
-			if(!eventLabel && event && event.currentTarget && event.currentTarget.url) {
-				eventLabel = event.currentTarget.url;
-			}
-			else if(!eventLabel) {
-				eventLabel = this.nodeSnippet(node);
-			}
-			ga('send', 'event', {
-				"eventCategory": eventCategory, 
-				"eventAction": eventAction,
-				"eventLabel": eventLabel,
-				"eventValue": eventValue,
-				"nonInteraction": nonInteraction,
-				"hitCallback": hitCallback
-			});
-		}
-		// 	
-		// 	//       slot,		
-		// 	//       name,		
-		// 	//       value,	
-		// 	//       scope		
-		// 	
-		this.nodeSnippet = function(node) {
-			return u.cutString(u.text(node).trim(), 20) + "(<"+node.nodeName+">)";
 		}
 	}
+}
+if(u.ga_account && !u.cookies_disallowed) {
+	u.includeGoogleAnalytics();
 }
 
 

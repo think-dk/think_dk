@@ -1,14 +1,10 @@
 /*
-asset-builder @ 2021-09-13 14:13:17
+asset-builder @ 2021-12-13 02:23:33
 */
 
 /*seg_desktop_include.css*/
 
-/*seg_desktop.css*/
-/*
-MIT license, 2002-2019 parentNode.dk
-asset-builder @ 2020-12-12 12:42:07
-*/
+/*s-fonts.css*/
 @font-face {
 	font-family: 'OpenSans';
 	src: url('../assets/parentnode-skin-default/css/fonts/open_sans/opensans-regular-webfont.woff2') format('woff2'),
@@ -45,7 +41,10 @@ asset-builder @ 2020-12-12 12:42:07
 	font-weight: normal;
 	font-style: normal;
 }
-* {font-family: "OpenSans", Verdana, Arial, sans-serif; color: #000000;
+
+
+/*s-page.css*/
+* {font-family: "OpenSans", Verdana, Arial, sans-serif; color: #26962d;
 	-webkit-text-size-adjust: none;
 	-webkit-font-smoothing: antialiased;
 }
@@ -58,86 +57,170 @@ a {text-decoration: none; cursor: pointer;}
 img {border: 0; display: block;}
 form, fieldset, label, input, select, textarea {padding: 0; margin: 0; font-weight: normal;}
 fieldset {border: none;}
-input, select, textarea {font-size: 14px; color: #333333;}
+input, select, textarea, div.virtual div.input {font-size: 14px; color: #333333;}
 input, textarea {outline: none;}
 a, span {font-size: inherit; font-family: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
 em, strong {font-size: inherit; font-family: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
 sup {line-height: 1em; font-family: inherit; color: inherit;}
-h1 {padding: 0 70px 26px; font-size: 48px; line-height: 1.05em;
+h1 {padding: 0 50px 26px; font-size: 48px; line-height: 1.05em;
 	font-family: "PT Serif", Times, serif;
 }
-h2 {padding: 0 70px 26px; font-size: 30px; line-height: 1.1em;
+h2 {padding: 0 50px 26px; font-size: 30px; line-height: 1.1em;
 	font-family: "PT Serif", Times, serif;
 }
-h3 {padding: 0 70px 10px; font-size: 22px; line-height: 1.1em;}
-h4 {padding: 0 70px 5px; font-size: 17px; line-height: 1.2em; font-weight: bold;}
-h5 {padding: 0 70px 2px; font-size: 14px; line-height: 1.2em; font-weight: bold;}
-h6 {padding: 0 70px 2px; font-size: 14px; line-height: 1em; font-weight: normal; font-style: italic;}
-p {padding: 0 70px 20px; font-size: 14px; line-height: 1.38em;}
+h3 {padding: 0 50px 10px; font-size: 22px; line-height: 1.1em;}
+h4 {padding: 0 50px 5px; font-size: 17px; line-height: 1.2em; font-weight: bold;}
+h5 {padding: 0 50px 2px; font-size: 14px; line-height: 1.2em; font-weight: bold;}
+h6 {padding: 0 50px 2px; font-size: 14px; line-height: 1em; font-weight: normal; font-style: italic;}
+p {padding: 0 50px 20px; font-size: 14px; line-height: 1.38em;}
 ul,
 ol {font-size: 0;}
 li {font-size: 13px; line-height: 1.25em;}
 dl {font-size: 0;}
 dt,
 dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
-#page {position: relative; min-height: 100%; min-width: 640px;}
-#page.fixed {width: 1080px; margin: 0 auto;}
-.terms_notification {opacity: 0; position: fixed; z-index: 90; top: 50%; margin-top: -140px; right: 0px; padding: 15px 20px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; background: #000000; border-right: none;}
-.terms_notification h3 {padding: 0 0 20px; font-size: 14px; color: #ffffff;}
-.terms_notification .accept,
-.terms_notification .details {padding: 3px 15px; font-size: 16px; display: inline-block; vertical-align: bottom; color: #ffffff;}
-.terms_notification .accept {float: left; border-radius: 3px; background-color: #8c9399;}
-.terms_notification .details {float: right;}
+#page {position: relative; min-height: 100%; min-width: 700px;}
+#terms_notification {opacity: 0; position: fixed; z-index: 90; left: 50%; margin-left: -200px; width: 400px; bottom: 0px; box-sizing: border-box; padding: 15px 20px; border-top-left-radius: 22px; border-top-right-radius: 22px; background: #26962d;}
+#terms_notification h3 {padding: 0; font-size: 14px; color: #ffffff; display: inline-block;}
+#terms_notification .accept,
+#terms_notification .details {float: right; padding: 3px 15px; margin-top: 5px; font-size: 16px; vertical-align: bottom; color: #ffffff;}
+#terms_notification .accept {border-radius: 14px; background-color: #34cc3d;}
+body.terms #terms_notification .details {display: none;}
+#smartphone_switch {z-index: 11000; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.95); text-align: left; opacity: 0;}
+#smartphone_switch h1 {padding: 40px 20px; font-size: 36px; width: 300px;}
+#smartphone_switch p {padding: 0 20px 20px; width: 250px; color: #777777;}
+#smartphone_switch ul {padding: 30px 20px 20px;}
+#smartphone_switch li.switch {float: right;}
+#page #loader {z-index: 100; width: 100%; position: fixed; top: 0; left: 0;
+	-o-user-select: none;
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+#page #loader div.dot {width: 50px; height: 50px; position: absolute; top: 50%; left: 50%; margin-top: -25px; margin-left: -25px; border-radius: 50%; background: #26962d;}
+div#intro {z-index: 90; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+	-o-user-select: none;
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+div#intro div.bg {position: absolute; top: 0; width: 66.7%; height: 100%; z-index: 9;
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+div#intro div.bg.bg1 {left: 0;}
+div#intro div.bg.bg2 {right: 0;}
+div#outro {opacity: 1; z-index: 90; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+	-o-user-select: none;
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+div#outro div.bg {position: absolute; top: 0; width: 66.7%; height: 100%; z-index: 9;
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+div#outro div.bg.bg1 {left: 0;
+	clip-path: polygon(0 0, 0 0, -50% 100%, -50% 100%);
+}
+div#outro div.bg.bg2 {right: 0;
+	clip-path: polygon(150% 0, 150% 0, 100% 100%, 100% 100%);
+}
+#page div.fullscreen {
+	position: fixed;
+	cursor: zoom-out;
+	z-index: 120;
+	background-color: #000000;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: contain;
+}
 #page #notifications {position: fixed; z-index: 110; top: 0; width: 200px; left: 50%; margin-left: -100px; background: #333333; color: #ffffff;}
 #page #notifications div {padding: 10px 20px; color: #ffffff;}
 #page #notifications .error {background: #df0000;}
 body > div.hint {z-index: 100; position: absolute; top: 0; left: 0; padding: 3px 5px; background: #ffffff; color: #888888; border: 1px solid #888888; box-shadow: 0 1px 1px #888888; border-radius: 5px; font-size: 12px; max-width: 400px;}
 body > div.hint p {padding: 5px; color: #888888; font-size: 12px;}
 body > div.hint a {text-decoration: underline; display: inline-block; vertical-align: top; padding: 5px;}
-#smartphone_switch {z-index: 11000; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.95); text-align: left; opacity: 0;}
-#smartphone_switch h1 {padding: 40px 20px; font-size: 36px; width: 300px;}
-#smartphone_switch p {padding: 0 20px 20px; width: 250px;}
-#smartphone_switch ul {padding: 30px 20px 20px;}
-#smartphone_switch li.switch {float: right;}
-#header {opacity: 0; position: relative; height: 100px;}
-#header .logo {z-index: 50; position: absolute; top: 10px; left: 30px; font-size: 30px; padding: 10px 13px; color: #888888; cursor: pointer; 
-	background-color: rgba(255,255,255, 0.8); border-radius: 5px;
+@media print {
+	#header .logo {position: absolute; left: 80px;}
+	#header .servicenavigation {display: none;}
+	#navigation {display: none;}
+	#footer {display: none;}
+	#content .scene.events {padding: 20px;}
+	#content .scene.events .article {display: none;}
+	#content .scene.events ul.events li.event {padding-top: 10px;}
+	#content .scene.events ul.events h3 {padding-bottom: 0; font-size: 18px;}
+	#content .scene.events ul.events p {padding-bottom: 10px; font-size: 12px;}
+}
+
+/*s-header.css*/
+#header {position: relative; height: 250px;}
+#header .logo {opacity: 0; z-index: 60; position: fixed; top: 10px; left: 30px; font-size: 20px; padding: 10px 20px; color: #26962d; cursor: pointer;
+	background-color: rgba(255,255,255, 1); border-radius: 40px;
 	font-family: "PT Serif", Times, serif;
 }
-#header .logo {position: fixed;}
-#header .servicenavigation {position: absolute; top: 5px; right: 43px;}
-#header .servicenavigation li {display: inline-block; vertical-align: top; color: #bbbbbb; padding: 3px 0;}
+#header .logo.reduced {
+	transition: background-color 1s ease-in-out !important;
+	background-color: rgba(255,255,255, 0.7);
+}
+#header .servicenavigation {opacity: 0; z-index: 10; position: absolute; top: 0; right: 33px;
+	background-color: #ffffff; padding: 0 20px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;
+}
+#header .servicenavigation li {display: inline-block; vertical-align: top; color: #777777; padding: 5px 0;}
 #header .servicenavigation li.navigation {display: none;}
 #header .servicenavigation li:before {content: "\00a0\00a0|\00a0\00a0"; color: #bbbbbb;}
-#header .servicenavigation li.github:before,
 #header .servicenavigation li.navigation:before,
 #header .servicenavigation li:first-child:before {content: none;}
-#header .servicenavigation li.github {margin: 0 0 0 10px; padding: 4px 12px; background: #8c9399; border-radius: 3px; cursor: pointer; font-size: 12px; color: #ffffff;}
 #header .servicenavigation li.cart.used {color: #df0000;}
-#navigation {opacity: 0; z-index: 50; position: fixed; right: 33px; top: 65px; 
-	background-color: rgba(255,255,255, 0.8); border-radius: 5px;
+#header .servicenavigation li.selected {font-weight: bold;}
+#navigation {opacity: 0; z-index: 50; position: fixed; right: 33px; top: 220px; 
+	background-color: rgba(255, 255, 255, 1); border-top-left-radius: 22px; border-top-right-radius: 22px; padding: 0 20px;
 }
-#navigation ul {}
-#navigation ul li {display: inline-block; vertical-align: top; padding: 10px; font-size: 20px; color: #888888;
+#navigation.reduced {
+	transition: background-color 1s ease-in-out !important;
+	border-radius: 22px; background-color: rgba(255, 255, 255, 0.7);}
+#navigation ul {white-space: nowrap;}
+#navigation ul li {display: inline-block; vertical-align: top; padding: 10px; font-size: 20px; color: #34cc3d;
 	font-family: "PT Serif", Times, serif;
 }
+#navigation ul li.selected,
+#navigation ul li.path {color: #26962d;}
 #navigation ul li.front {display: none;}
-#footer {opacity: 0; text-align: center; border-top: 1px solid #888888;}
-#footer p {padding: 10px; cursor: pointer; font-size: 13px;}
-#content {position: relative;}
+#navigation ul li.membership {color: #ffffff; margin: 5px 3px; padding: 5px 20px; background-color: #34cc3d; border-radius: 20px;}
+
+
+/*s-footer.css*/
+#footer {opacity: 0; text-align: center; border-top: 1px solid #ccdbcd;}
+#footer p {padding: 10px; font-size: 13px;}
+
+
+/*s-content.css*/
+#content {position: relative; max-width: 1100px; margin: 0 auto;}
 #content .scene {opacity: 0; position: relative; padding: 50px 0 75px;}
 #content .scene h1 span {display: inline-block;}
 #content .scene .link {cursor: pointer;}
-#content .scene a {color: #888888;}
+#content .scene a {color: #34cc3d;}
 #content .scene h1,
 #content .scene h2,
 #content .scene h3,
 #content .scene h4,
 #content .scene h5,
 #content .scene h6,
-#content .scene p {width: 500px; position: relative;}
-#content .scene hr {border: none; border-top: 1px solid #888888; margin: 30px 0 50px; padding: 0;}
+#content .scene p {max-width: 700px; position: relative;}
+#content .scene hr {border: none; border-top: 1px solid #ccdbcd; margin: 30px 0 50px; padding: 0;}
 #content .scene p.note {font-style: italic;}
+#content .scene h3,
+#content .scene h4,
+#content .scene h5,
+#content .scene h6,
+#content .scene p,
+#content .scene li,
+#content .scene dd {color: #777777;}
 #content .scene p+h2,
 #content .scene ul+h2,
 #content .scene ol+h2,
@@ -149,11 +232,15 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 #content .scene ul.info+h2 {padding-top: 0;}
 #content .scene p+code {margin-top: -15px;}
 #content .scene ul,
-#content .scene ol {padding: 0 70px 15px;}
-#content .scene ul.items {padding: 0;}
-#content .scene ul.items li.item {display: block; padding-top: 20px; padding-bottom: 30px; border-top: 1px solid #dedede; position: relative;}
+#content .scene ol {padding: 0 50px 15px;}
+#content .scene ul.items {padding: 0 30px;}
+#content .scene ul.items li.item {display: block; padding: 20px 0 15px; border-top: 1px solid #dedede; position: relative;}
 #content .scene ul.items li.item h2 {position: relative; z-index: 1;}
-#content .scene dl {padding: 0 70px 15px; width: 500px;}
+#content .scene ul.items h2,
+#content .scene ul.items h3,
+#content .scene ul.items p,
+#content .scene ul.items dl {padding-left: 20px; padding-right: 20px;}
+#content .scene dl {padding: 0 50px 15px; width: 500px;}
 #content .scene dt {width: 115px; text-align: right; padding: 0 5px 6px 0; color: #bbbbbb;}
 #content .scene dt:after {content: ":";}
 #content .scene dd {padding: 0 0 6px; width: 380px;}
@@ -165,13 +252,13 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 #content .scene dl h4,
 #content .scene dl h5,
 #content .scene dl h6 {padding-left: 0; padding-right: 0; padding-top: 10px;}
-#content .scene > ul.actions {margin: 0 0 20px; padding: 15px 70px;}
+#content .scene > ul.actions {margin: 0 0 20px; padding: 15px 50px;}
 #content .scene ul.tags {position: relative; z-index: 1; padding-bottom: 20px;}
 #content .scene ul.tags li {font-size: 12px; display: inline-block; vertical-align: top;}
 #content .scene ul.tags li:after {content: "\00a0|\00a0"; color: #bbbbbb;}
 #content .scene ul.tags li:last-child:after {content: none;}
 #content .scene ul.tags li a {}
-#content .scene li.item ul.tags {}
+#content .scene li.item ul.tags {padding-left: 20px; padding-right: 20px;}
 #content .scene ul.tags li.editing {background: #666666; border-radius: 3px; color: #ffffff !important; margin: -2px 10px -2px -2px; padding: 2px 10px;}
 #content .scene ul.tags li.editing:after {content: none;}
 #content .scene ul.info {position: relative; z-index: 1; padding-bottom: 26px; padding-right: 0; display: inline-block; vertical-align: top; width: auto; font-size: 0;}
@@ -185,31 +272,27 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 #content .scene ul.info li.modified_at,
 #content .scene ul.info li.latitude,
 #content .scene ul.info li.longitude {display: none;}
+#content .scene ul.info {display: none;}
 #content .scene div.image,
 #content .scene div.media {position: relative; z-index: 10;}
 #content .scene div.image img,
-#content .scene div.media img {cursor: zoom-in; margin: 0 50px 30px; width: 540px; border-radius: 5px; overflow: hidden;}
+#content .scene div.media img {cursor: zoom-in; margin: 0 30px 30px; width: calc(100% - 60px); overflow: hidden;}
 #content .scene div.image p,
-#content .scene div.media p {margin-top: -27px; padding: 0 70px 33px; font-size: 0; display: none;}
+#content .scene div.media p {margin-top: -27px; padding: 0 50px 33px; font-size: 0; display: none;}
 #content .scene div.image p a,
 #content .scene div.media p a {font-style: italic; font-size: 13px; line-height: 1.1em; color: #bbbbbb; cursor: default; text-decoration: none;}
 #content .scene div.image.loaded p,
 #content .scene div.media.loaded p {display: block;}
-#content .scene div.image.fullsize,
-#content .scene div.media.fullsize {}
-#content .scene div.image.fullsize img,
-#content .scene div.media.fullsize img {cursor: zoom-out; margin: 0 0 30px; border-radius: 0;}
 #content .scene div.vimeo,
-#content .scene div.youtube {position: relative; z-index: 1;}
+#content .scene div.youtube {margin: 0 30px 30px; position: relative; z-index: 1; width: calc(100% - 60px); padding-bottom: 57%;}
 #content .scene div.vimeo iframe,
-#content .scene div.youtube iframe {margin: 0 50px 30px; width: 540px; border-radius: 5px; overflow: hidden;}
+#content .scene div.youtube iframe {width: 100%; height: 100%; overflow: hidden; position: absolute; top: 0; left: 0;}
 #content .scene div.categories {padding-bottom: 20px;}
 #content .scene div.categories ul.tags li {font-size: 14px; margin: 0 20px 0 0; display: inline-block; vertical-align: top;}
 #content .scene div.categories ul.tags li.all {padding-top: 15px;}
-#content .scene div.categories ul.tags li a {padding: 5px 0; display: block; text-decoration: none;}
+#content .scene div.categories ul.tags li a {padding: 5px 0; display: block;}
 #content .scene div.categories ul.tags li:after {content: none;}
-#content .scene div.categories ul.tags li.selected {}
-#content .scene div.categories ul.tags li.selected a {background-color: #000000; color: #ffffff; padding: 4px 10px; border-radius: 3px;}
+#content .scene div.categories ul.tags li.selected a {background-color: #26962d; color: #ffffff; padding: 4px 15px; border-radius: 13px;}
 #content .scene div.categories ul.actions {padding-bottom: 0;}
 #content .scene div.categories ul.actions li {font-size: 15px;}
 #content .scene div.related {padding-top: 10px; position: relative; z-index: 1;}
@@ -251,27 +334,16 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 #content .scene span.htmltag:before {content: "<"; line-height: 2.1em; vertical-align: top;}
 #content .scene span.htmltag:after {content: ">"; line-height: 2.1em; vertical-align: top;}
 #content .scene span.command {color: #4b5cd7;}
-#content .scene div.company,
-#content .scene div.person {padding: 0 0 25px; font-size: 0;}
-#content .scene div.company h2,
-#content .scene div.person h2 {border-bottom: 1px solid #dedede; margin-bottom: 30px; width: auto;}
-#content .scene div.company dl.info,
-#content .scene div.person dl.info {width: 33%; padding: 0 0 30px 70px; box-sizing: border-box; display: inline-block; vertical-align: top;}
-#content .scene div.company dl.info dt,
-#content .scene div.person dl.info dt,
-#content .scene div.company dl.info dd,
-#content .scene div.person dl.info dd {display: block; width: auto; text-align: left;}
-#content .scene div.company dl.info dd,
-#content .scene div.person dl.info dd {padding-bottom: 10px; font-size: 12px;}
-#content .scene div.company dl.info dd ul,
-#content .scene div.person dl.info dd ul {padding: 0;}
-#content .scene div.company dl.info dd li,
-#content .scene div.person dl.info dd li {font-size: 12px;}
+#content .scene.login {max-width: 500px; margin: 0 auto;}
 #content .scene.login form {padding-bottom: 20px;}
-#content .scene.login form li.forgot {padding: 7px 0 0;}
+#content .scene.login form li.forgot {padding: 8px 0 0;}
 #content .scene.login form li.forgot a {padding: 0; display: inline-block; vertical-align: top;}
 #content .scene p.error,
 #content .scene p.errormessage {color: #df0000;}
+#content .scene ul.geo.active li.name {color: #34cc3d;}
+
+
+/*s-article.css*/
 #content .scene div.article {position: relative; padding-bottom: 30px;}
 #content .scene div.article h1 svg.checkmark {cursor: pointer;}
 #content .scene div.article ul.tags {padding-bottom: 30px;}
@@ -288,232 +360,129 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 #content .scene div.article div.articlebody span.sup.reference {font-size: 10px; line-height: 1.1em; vertical-align: top; padding-left: 2px;}
 #content .scene div.article div.articlebody h3.reference {padding-top: 20px;}
 #content .scene div.article div.articlebody p.reference {font-style: italic;}
+#content .scene div.article div.articlebody p.quote {font-size: 30px; text-align: center; font-family: "PT Serif", Times, serif; padding-top: 20px; padding-bottom: 40px;}
 #content .scene .article ul.info > li.place {font-size: 0;}
-#content .scene .article ul.geo.active li.name {cursor: pointer; color: #888888;}
+#content .scene .article ul.geo.active li.name {cursor: pointer; color: #34cc3d;}
 #content .scene .article ul.info ul.geo {padding: 0; display: inline-block; vertical-align: top; width: auto;}
 #content .scene .article div.geomap {position: relative; z-index: 1; height: 300px; width: 600px; margin-bottom: 20px;}
-#content .scene .article div.geomap iframe {display: block; width: 100%; height: 100%; border: 1px solid #666666; background-color: #ffffff; margin: 0 50px 30px; width: 540px; border-radius: 5px; }
+#content .scene .article div.geomap iframe {display: block; width: 100%; height: 100%; border: 1px solid #666666; background-color: #ffffff; margin: 0 50px 30px; width: 540px; }
 #content .scene .article li div.geomap {}
+
+
+/*s-readstate.css*/
 #content .scene svg.checkmark {position: absolute; top: 0; left: 0;}
-#content .scene h1 svg.checkmark {top: 13px; left: 35px; transform: scale(1.5);}
-#content .scene h2 svg.checkmark {top: 8px; left: 40px; transform: scale(1.2);}
-#content .scene h3 svg.checkmark {top: 3px; left: 45px;}
+#content .scene h1 svg.checkmark {top: 16px; left: 25px; transform: scale(1.5);}
+#content .scene h2 svg.checkmark {top: 8px; left: 25px; transform: scale(1.2);}
+#content .scene h3 svg.checkmark {top: 3px; left: 0;}
 #content .scene svg.checkmark line {stroke: #dedede; stroke-width: 3px;}
 #content .scene svg.checkmark.read line {stroke: #666666;}
-form {
-}
-fieldset {border: none; display: block;}
-div.field {padding: 0 68px 15px; position: relative; font-size: 0; z-index: 1;}
-div.field label {display: none;}
-div.field input,
-div.field select,
-div.field textarea {box-shadow: inset 0 1px 2px #dedede; background: #ffffff; border: 1px solid #dcdcdc; display: inline-block; vertical-align: top; border-radius: 3px; margin: 2px; outline: none; position: relative; z-index: 1;}
-div.field input {width: 366px; height: 24px; padding: 2px 6px;}
-div.field select {width: 381px; height: 33px; color: #333333; padding: 5px 3px 2px 2px;}
-div.field select option {padding: 5px 3px 2px 6px;}
-@media all and (-webkit-min-device-pixel-ratio:0) {
-	div.field select {width: 380px; height: 31px; padding: 2px 3px 2px 7px;
-		background: #ffffff url(../assets/parentnode-skin-default/img/bg_icons.png) no-repeat 360px -977px;
-		-webkit-appearance: none;
-	}
-}
-div.field textarea {width: 372px; height: 100px; overflow: auto; padding: 6px 0 2px 6px;}
-div.field.short textarea {height: 40px;}
-div.field textarea.autoexpand {width: 366px; padding: 6px 6px 2px; overflow: hidden;}
-div.field .pseudolabel {z-index: 2; display: none; position: absolute; font-size: 14px; padding: 2px 5px 2px; margin: 3px 2px; background-color: #ffffff;}
-div.field input.default ~ .pseudolabel {display: inline-block;}
-div.field.checkbox,
-div.field.boolean {}
-div.field.checkbox input,
-div.field.boolean input {display: inline-block; vertical-align: top; width: auto; height: auto; padding: 0; margin: 2px 10px 0 3px; border: 0;}
-div.field.checkbox label,
-div.field.boolean label {width: auto; display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.2em;}
-div.field.radiobuttons {}
-div.field.radiobuttons > label {display: block; font-size: 14px; line-height: 1em; padding: 0 0 0 3px;}
-div.field.radiobuttons > label:after {content: ":";}
-div.field.radiobuttons div.item {padding: 10px 0 0;}
-div.field.radiobuttons div.item input {width: auto; height: auto; padding: 0; margin: 1px 10px 0 3px; border: 0;}
-div.field.radiobuttons div.item label {font-size: 14px; line-height: 1em; display: inline-block; vertical-align: top; text-align: left; width: auto;}
-div.field input[type="integer"],
-div.field input[type="number"] {
-	-moz-appearance: textfield;
-}
-div.field input[type="integer"]::-webkit-inner-spin-button,
-div.field input[type="integer"]::-webkit-outer-spin-button,
-div.field input[type="number"]::-webkit-inner-spin-button,
-div.field input[type="number"]::-webkit-outer-spin-button {margin: 0;
-	-webkit-appearance: none;
-}
-div.field.files {padding: 0; margin: 2px 68px 17px;}
-div.field.files input[type="file"] {z-index: 10; opacity: 0; position: absolute; top: 0; left: 0; width: 384px; border: none; height: 60px; margin: 0; padding: 0; height: 100%; position: absolute; top: 0; left: 0;
-}
-div.field.files ul.filelist {border: 3px dashed #dedede;  text-align: center; display: block; border-radius: 5px; position: relative; padding: 20px 0 !important; margin: 0; overflow: hidden;}
-div.field.files ul.filelist li {box-sizing: border-box; display: block; padding: 2px 0 2px; font-size: 13px; line-height: 17px; text-align: center;}
-div.field.files ul.filelist li.new {font-weight: bold;}
-div.field.files ul.filelist li.label {display: inline-block; padding: 1px 10px 3px; margin: 0 20px 5px; border-radius: 6px; background: #dedede;}
-div.field.files.loading label {display: none;}
-div.field.files.loading {background: transparent url(../assets/parentnode-skin-default/img/gx_loader.gif) no-repeat center center;}
-div.field.focus input,
-div.field.focus textarea {margin: 0;}
-div.field.focus select {padding: 4px 3px 1px 0px;}
-@media all and (-webkit-min-device-pixel-ratio:0) {
-	div.field.focus select {padding: 2px 3px 3px 5px;
-		background-position: 358px -979px;
-	}
-}
-div.field.focus input,
-div.field.focus select,
-div.field.focus textarea {border: 3px solid #5c5c5c;}
-div.field.radiobuttons.focus input,
-div.field.checkbox.focus input,
-div.field.boolean.focus input {margin: 1px 10px 0 3px; border: none;}
-div.field.files.focus {border-color: #c8e183;}
-div.field.files.focus input[type=file] {margin: 0; border: none;}
-div.field.files.focus label {background-color: #c8e183;}
-div.field input.default,
-div.field select.default,
-div.field textarea.default,
-div.field .pseudolabel {color: #aaaaaa;}
-div.field .indicator {position: absolute; top: 4px; left: 455px; width: 25px; height: 25px;}
-div.field.required .indicator {
-	background: transparent url(../assets/parentnode-skin-default/img/bg_icons.png) no-repeat 0 -292px;
-}
-div.field.text.required .indicator {background-position: 0 -296px;}
-div.field.radiobuttons .indicator,
-div.field.checkbox .indicator,
-div.field.boolean .indicator {top: -5px;}
-div.field.files .indicator {left: 404px; top: -1px;}
-div.field.correct .indicator {background-position: 2px -320px;}
-div.field.text.correct .indicator {background-position: 2px -321px;}
-div.field.error input,
-div.field.error textarea {margin: 0;}
-div.field.error select {padding: 3px 3px 2px 0px;}
-div.field.error input,
-div.field.error select,
-div.field.error textarea {border: 3px solid #a62300;}
-@media all and (-webkit-min-device-pixel-ratio:0) {
-	div.field.error select {padding: 2px 3px 3px 5px;
-		background-position: 358px -979px;
-	}
-}
-div.field.radiobuttons.error input,
-div.field.checkbox.error input,
-div.field.boolean.error input {margin: 1px 10px 0 3px; border: none;
-	box-shadow: 0px 0px 0px 1px #df0000;
-}
-div.field.files.error {border-color: #a62300;}
-ul.actions {}
-ul.actions li {width: auto; height: auto; display: inline-block; padding: 0 10px 10px 0; vertical-align: top;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	user-select: none;
-}
-ul.actions input.button {width: auto; height: 30px; padding: 3px 12px; line-height: 14px; display: inline-block; vertical-align: top;
-	-webkit-appearance: none;
-}
-ul.actions a {display: block; height: 16px; padding: 7px 0;}
-ul.actions a.button,
-#content ul.actions a.button {display: block; text-decoration: none; height: 16px; padding: 7px 12px;}
-ul.actions input.button,
-ul.actions a.button,
-#content ul.actions a.button {font-size: 14px; background-color: #dedede; color: #333333; border: none; cursor: pointer; border-radius: 3px;}
-.submitting input[type="submit"].button {
-	padding-left: 40px !important;
-	background-image: url(../assets/parentnode-skin-default/img/gx_loader.gif);
-	background-position: 11px 5px;
-	background-repeat: no-repeat;
-	background-size: 17px auto;
-}
-ul.actions input.button.primary,
-ul.actions a.button.primary,
-#content ul.actions a.button.primary {background-color: #8c9399; color: #ffffff;}
-ul.actions input.button.secondary,
-ul.actions a.button.secondary,
-#content ul.actions a.button.secondary {background-color: #8c9399; color: #ffffff;}
-ul.actions input.button.disabled
-ul.actions a.button.disabled,
-#content ul.actions a.button.disabled {cursor: default !important; color: #aaaaaa !important; background-color: #eeeeee !important;}
-div.field div.help {position: absolute; left: 475px; top: 6px; width: 200px;}
-div.field.files div.help {left: 404px;}
-div.field div.error,
-div.field div.hint {display: none; padding: 5px; border-radius: 3px; font-size: 12px;}
-div.field div.error {border: 1px solid #a62300; color: #a62300; background: #ffddd5;}
-div.field.error div.error {display: block;}
-div.field div.hint {z-index: 9; border: 1px solid #007633; color: #007633; background: #d0f4e0;}
-div.field.focus div.hint,
-div.field.hover div.hint {display: block;}
-div.field.error div.hint {border-bottom-left-radius: 0; border-bottom-right-radius: 0;}
-div.field.focus div.hint+div.error,
-div.field.hover div.hint+div.error {border-top-left-radius: 0; border-top-right-radius: 0; border-top: none;}
-#header .logo:hover,
-#navigation ul li:hover {text-decoration: none;}
-#content .scene a:hover {text-decoration: underline;}
-.terms_notification .accept:hover {background-color: #313942;}
-.terms_notification .details:hover {text-decoration: underline;}
-ul.actions input.button:hover,
-ul.actions a.button:hover,
-#content ul.actions a.button:hover {background-color: #bebebe;}
-ul.actions input.button.primary:hover,
-ul.actions a.button.primary:hover,
-#content ul.actions a.button.primary:hover {background-color: #313942;}
-ul.actions input.button.secondary:hover,
-ul.actions a.button.secondary:hover,
-#content ul.actions a.button.secondary:hover {background-color: #313942;}
-ul.actions input.button.disabled:hover,
-ul.actions a.button.disabled:hover,
-#content ul.actions a.button.disabled:hover {cursor: default !important; color: #aaaaaa !important; background-color: #eeeeee !important;}
-div.field.html ul.options li:hover {background-color: #64ad8e;}
-div.field.html .editor div.tag:hover .drag {display: block;}
-div.field.html .editor div.tag:hover .remove {display: block;}
-body #selection_options ul.actions input.button:hover,
-body #selection_options ul.actions a.button:hover {background-color: #313942;}
-#content .scene.docsindex .search .results .function:hover {background: #ededed;}
-#content .scene div.readstate:hover p {color: #000000;}
-#content .scene div.comments h2:hover,
-#content .scene div.qnas h2:hover {color: #888888;}
-#content .scene div.comments h2:hover svg.arrow line,
-#content .scene div.qnas h2:hover svg.arrow line {stroke: #888888;}
-#content .scene ul.geo.active li.name:hover {text-decoration: underline;}
-#content .scene .pagination .next:hover a,
-#content .scene .pagination .previous:hover a {background-color: #313942; color: #ffffff;}
-#content .scene div.image p a:hover {text-decoration: none;}
-
 
 /*s-form.css*/
 form {
 }
 fieldset {border: none; display: block;}
-div.field {padding: 0 68px 15px; position: relative; font-size: 0; z-index: 1;}
-div.field label {display: none;}
-div.field input,
-div.field select,
-div.field textarea {box-shadow: inset 0 1px 2px #dedede; background: #ffffff; border: 1px solid #dcdcdc; display: inline-block; vertical-align: top; border-radius: 3px; margin: 2px; outline: none; position: relative; z-index: 1;}
-div.field input {width: 366px; height: 24px; padding: 2px 6px;}
-div.field select {width: 381px; height: 33px; color: #333333; padding: 5px 3px 2px 2px;}
-div.field select option {padding: 5px 3px 2px 6px;}
-@media all and (-webkit-min-device-pixel-ratio:0) {
-	div.field select {width: 380px; height: 31px; padding: 2px 3px 2px 7px;
-		background: #ffffff url(../assets/parentnode-skin-default/img/bg_icons.png) no-repeat 360px -977px;
-		-webkit-appearance: none;
-	}
+div.field {padding: 0 48px 8px; position: relative; font-size: 0; z-index: 1;}
+div.field label {display: inline-block; opacity: 0; height: 6px; color: #777777; font-size: 8px; text-transform: uppercase; 
+	margin-left: 10px;
+	padding: 3px 5px 3px 7px;
+	background: #ffffff;
+	position: relative;
+	z-index: 100;
+	border-bottom: none;
+	transition: all 0.2s ease;
+	border-bottom-left-radius: 3px;
+	top: 5px;
 }
-div.field textarea {width: 372px; height: 100px; overflow: auto; padding: 6px 0 2px 6px;}
+div.field.error label {border-color: #a62300;}
+div.field input,
+div.field textarea {width: calc(100% - 3px); box-shadow: inset 0 1px 2px #bbbbbb; background: #ffffff; border: 1px solid #bbbbbb; display: block; box-sizing: border-box; border-radius: 18px; outline: none; position: relative; z-index: 1;}
+div.field input {height: 36px; padding: 2px 14px;}
+div.field textarea {height: 100px; overflow: auto; padding: 6px 14px 2px;}
 div.field.short textarea {height: 40px;}
-div.field textarea.autoexpand {width: 366px; padding: 6px 6px 2px; overflow: hidden;}
-div.field .pseudolabel {z-index: 2; display: none; position: absolute; font-size: 14px; padding: 2px 5px 2px; margin: 3px 2px; background-color: #ffffff;}
+div.field.autoexpand textarea {overflow: hidden; min-height: 100px;}
+div.field .pseudolabel {z-index: 2; display: none; position: absolute; font-size: 14px; padding: 2px 4px; margin: 6px 11px; background-color: #ffffff;}
 div.field input.default ~ .pseudolabel {display: inline-block;}
+div.field select {display: none;}
+div.field.select div.virtual {z-index: 1; box-shadow: inset 0 1px 2px #bbbbbb; background: #ffffff; border: 1px solid #bbbbbb; 
+	display: block; border-radius: 18px; outline: none; position: relative; 
+	box-sizing: border-box;
+	width: calc(100% - 3px);
+	font-size: 0;
+}
+div.field.select div.virtual div.input {display: inline-block; vertical-align: top; width: calc(100% - 36px); height: 34px;
+	position: relative;
+	z-index: 4;
+	box-sizing: border-box; 
+	padding: 10px 14px 0;
+	line-height: 13px;
+	cursor: pointer;
+}
+div.field.select div.virtual div.input:focus {outline: none;}
+div.field.select div.virtual div.button {display: inline-block; vertical-align: top; width: 36px; height: 34px; 
+	cursor: pointer; position: relative;
+	z-index: 4;
+}
+div.field.select div.virtual div.button svg.arrow {
+	stroke: #bdbdbd;
+	stroke-width: 3px;
+	width: 25px;
+	height: 25px;
+	position: absolute;
+	top: 5px;
+	right: 9px;
+}
+div.field.select div.virtual div.options {z-index: 2; position: absolute; top: 18px; left: 0px; 
+	width: calc(100% + 2px); background-color: #ffffff; box-sizing: border-box; height: 0; overflow: hidden;
+	margin-left: -1px;
+	margin-right: -1px;
+}
+div.field.select div.virtual div.options ul.options,
+#content div.field.select div.virtual div.options ul.options {
+	display: block;
+	padding: 18px 0 0;
+	border: 1px solid #5c5c5c;
+	border-top: none;
+	position: relative;
+	z-index: 5;
+	overflow: hidden;
+	border-bottom-left-radius: 18px;
+	border-bottom-right-radius: 18px;
+}
+div.field.select div.virtual div.options ul.options li {
+	padding: 10px 14px;
+	font-size: 14px;
+	white-space: nowrap;
+	cursor: pointer;
+}
+div.field.select div.virtual div.options ul.options li.default {color: #bbbbbb;}
+div.field.select div.virtual div.options ul.options li.hover {background-color: #dedede;}
+div.field.select div.virtual div.options ul.options li.selected {
+	font-weight: bold;
+}
 div.field.checkbox,
-div.field.boolean {}
+div.field.boolean {padding-top: 11px;}
 div.field.checkbox input,
-div.field.boolean input {display: inline-block; vertical-align: top; width: auto; height: auto; padding: 0; margin: 2px 10px 0 3px; border: 0;}
+div.field.boolean input {display: inline-block; vertical-align: top; width: auto; height: auto; padding: 0; margin: 2px 10px 0 3px; border: 0;
+	display: none;
+}
+div.field.checkbox .virtual {display: inline-block; vertical-align: top;}
+div.field.checkbox .virtual .input {box-shadow: inset 0 1px 2px #bbbbbb; background: #ffffff; border: 1px solid #bbbbbb; box-sizing: border-box;
+}
+div.field.checkbox .virtual .input svg.checkbox_checkmark {display: block; width: 25px; height: 25px; stroke-width: 2px;}
+div.field.checkbox .virtual .input svg line.checkmark {stroke: #ffffff;}
+div.field.checkbox.checked .virtual .input svg line.checkmark {stroke: #333333;}
 div.field.checkbox label,
-div.field.boolean label {width: auto; display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.2em;}
-div.field.radiobuttons {}
+div.field.boolean label {width: auto; height: auto; padding: 5px 0 0 8px; margin: 0; text-transform: none; border: 0; border-radius: 0; top: 0; opacity: 1; display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.2em;}
+div.field.radiobuttons {padding-top: 11px;}
 div.field.radiobuttons > label {display: block; font-size: 14px; line-height: 1em; padding: 0 0 0 3px;}
 div.field.radiobuttons > label:after {content: ":";}
 div.field.radiobuttons div.item {padding: 10px 0 0;}
 div.field.radiobuttons div.item input {width: auto; height: auto; padding: 0; margin: 1px 10px 0 3px; border: 0;}
-div.field.radiobuttons div.item label {font-size: 14px; line-height: 1em; display: inline-block; vertical-align: top; text-align: left; width: auto;}
+div.field.radiobuttons div.item label {font-size: 14px; line-height: 1em; height: auto; padding-left: 0; text-transform: none; transform: translate(0, 0); opacity: 1; display: inline-block; vertical-align: top; text-align: left; width: auto;}
+div.field.checkbox + div.field.checkbox,
+div.field.radiobuttons + div.field.radiobuttons,
+div.field.checkbox + div.field.radiobuttons,
+div.field.radiobuttons + div.field.checkbox {padding-top: 0px;}
 div.field input[type="integer"],
 div.field input[type="number"] {
 	-moz-appearance: textfield;
@@ -532,94 +501,117 @@ div.field.files ul.filelist li {box-sizing: border-box; display: block; padding:
 div.field.files ul.filelist li.new {font-weight: bold;}
 div.field.files ul.filelist li.label {display: inline-block; padding: 1px 10px 3px; margin: 0 20px 5px; border-radius: 6px; background: #dedede;}
 div.field.files.loading label {display: none;}
-div.field.files.loading {background: transparent url(../assets/parentnode-skin-default/img/gx_loader.gif) no-repeat center center;}
-div.field.focus input,
-div.field.focus textarea {margin: 0;}
-div.field.focus select {padding: 4px 3px 1px 0px;}
-@media all and (-webkit-min-device-pixel-ratio:0) {
-	div.field.focus select {padding: 2px 3px 3px 5px;
-		background-position: 358px -979px;
-	}
+div.field.files.loading {background: transparent url(../img/gx_loader.gif) no-repeat center center;}
+div.field input.default,
+div.field textarea.default,
+div.field div.virtual div.input.default,
+div.field .pseudolabel {color: #aaaaaa;}
+div.field .indicator {z-index: 50; position: absolute; top: 18px; right: 28px; width: 25px; height: 25px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: 3px 3px;
+	background-size: 18px auto;
+}
+div.field.required .indicator {
+	background-image: url(../img/bg_indicator.png);
+}
+div.field.radiobuttons .indicator,
+div.field.checkbox .indicator,
+div.field.boolean .indicator {top: 2px; right: 0; position: relative; display: inline-block; vertical-align: top;}
+div.field.files .indicator {left: 404px; top: -1px;}
+div.field.correct .indicator {background-position: 2px -82px; background-size: 21px auto;}
+div.field.error label {opacity: 1;
+	transition: all 0.1s ease;
+}
+div.field.error input,
+div.field.error textarea {padding: 2px 12px;}
+div.field.error input,
+div.field.error textarea {border: 3px solid #a62300;}
+div.field.select.error div.virtual {border: 3px solid #a62300;}
+div.field.select.error div.virtual div.input,
+div.field.select.error div.virtual div.button {height: 30px;}
+div.field.select.error div.virtual div.input {padding: 8px 12px 0;}
+div.field.select.error div.virtual div.button svg {top: 3px; right: 7px;}
+div.field.select.error div.virtual div.options {top: 18px;
+	width: calc(100% + 6px);
+	margin-left: -3px;
+	margin-right: -3px;
+}
+div.field.select.error div.virtual div.options ul.options,
+#content div.field.select.error div.virtual div.options ul.options {
+	padding: 18px 0 0;
+	border: 3px solid #5c5c5c;
+	border-top: none;
+}
+div.field.checkbox.error .virtual .input {border: 3px solid #a62300; width: 27px; height: 27px;}
+div.field.checkbox.error .virtual .input svg {position: relative; top: -2px; left: -2px;}
+div.field.error .indicator {background-position: 3px -33px;}
+div.field.files.error {border-color: #a62300;}
+div.field.focus label {opacity: 1;
+	transition: all 0.1s ease;
 }
 div.field.focus input,
-div.field.focus select,
-div.field.focus textarea {border: 3px solid #5c5c5c;}
-div.field.radiobuttons.focus input,
-div.field.checkbox.focus input,
-div.field.boolean.focus input {margin: 1px 10px 0 3px; border: none;}
+div.field.focus textarea {padding: 2px 12px; border: 3px solid #5c5c5c;}
+div.field.select.focus div.virtual {border: 3px solid #5c5c5c;}
+div.field.select.focus div.virtual div.input,
+div.field.select.focus div.virtual div.button {height: 30px;}
+div.field.select.focus div.virtual div.input {padding: 8px 12px 0;}
+div.field.select.focus div.virtual div.button svg {top: 3px; right: 7px; stroke: #5c5c5c;}
+div.field.select.focus div.virtual div.options {top: 18px;
+	width: calc(100% + 6px);
+	margin-left: -3px;
+	margin-right: -3px;
+}
+div.field.select.focus div.virtual div.options ul.options,
+#content div.field.select.focus div.virtual div.options ul.options {
+	padding: 18px 0 0;
+	border: 3px solid #5c5c5c;
+	border-top: none;
+}
+div.field.checkbox.focus .virtual .input {border: 3px solid #5c5c5c; width: 27px; height: 27px; outline: none;}
+div.field.checkbox.focus .virtual .input svg {position: relative; top: -2px; left: -2px;}
 div.field.files.focus {border-color: #c8e183;}
 div.field.files.focus input[type=file] {margin: 0; border: none;}
 div.field.files.focus label {background-color: #c8e183;}
-div.field input.default,
-div.field select.default,
-div.field textarea.default,
-div.field .pseudolabel {color: #aaaaaa;}
-div.field .indicator {position: absolute; top: 4px; left: 455px; width: 25px; height: 25px;}
-div.field.required .indicator {
-	background: transparent url(../assets/parentnode-skin-default/img/bg_icons.png) no-repeat 0 -292px;
-}
-div.field.text.required .indicator {background-position: 0 -296px;}
-div.field.radiobuttons .indicator,
-div.field.checkbox .indicator,
-div.field.boolean .indicator {top: -5px;}
-div.field.files .indicator {left: 404px; top: -1px;}
-div.field.correct .indicator {background-position: 2px -320px;}
-div.field.text.correct .indicator {background-position: 2px -321px;}
-div.field.error input,
-div.field.error textarea {margin: 0;}
-div.field.error select {padding: 3px 3px 2px 0px;}
-div.field.error input,
-div.field.error select,
-div.field.error textarea {border: 3px solid #a62300;}
-@media all and (-webkit-min-device-pixel-ratio:0) {
-	div.field.error select {padding: 2px 3px 3px 5px;
-		background-position: 358px -979px;
-	}
-}
-div.field.radiobuttons.error input,
-div.field.checkbox.error input,
-div.field.boolean.error input {margin: 1px 10px 0 3px; border: none;
-	box-shadow: 0px 0px 0px 1px #df0000;
-}
-div.field.files.error {border-color: #a62300;}
-ul.actions {}
+ul.actions,
+#content ul.actions {padding: 11px 48px 15px;}
 ul.actions li {width: auto; height: auto; display: inline-block; padding: 0 10px 10px 0; vertical-align: top;
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	user-select: none;
 }
-ul.actions input.button {width: auto; height: 30px; padding: 3px 12px; line-height: 14px; display: inline-block; vertical-align: top;
+ul.actions input.button {width: auto; height: 36px; padding: 0 15px; line-height: 14px; display: inline-block; vertical-align: top;
 	-webkit-appearance: none;
 }
-ul.actions a {display: block; height: 16px; padding: 7px 0;}
+ul.actions a {display: block; height: 22px; padding: 7px 0;}
 ul.actions a.button,
-#content ul.actions a.button {display: block; text-decoration: none; height: 16px; padding: 7px 12px;}
+#content ul.actions a.button {display: block; text-decoration: none; height: 22px; line-height: 16px; padding: 10px 15px 4px;}
 ul.actions input.button,
 ul.actions a.button,
-#content ul.actions a.button {font-size: 14px; background-color: #dedede; color: #333333; border: none; cursor: pointer; border-radius: 3px;}
+#content ul.actions a.button {font-size: 14px; background-color: #dedede; color: #333333; border: none; cursor: pointer; border-radius: 18px; outline: none;}
 .submitting input[type="submit"].button {
 	padding-left: 40px !important;
-	background-image: url(../assets/parentnode-skin-default/img/gx_loader.gif);
-	background-position: 11px 5px;
+	background-image: url(../img/gx_loader.gif);
+	background-position: 11px 9px;
 	background-repeat: no-repeat;
 	background-size: 17px auto;
 }
 ul.actions input.button.primary,
 ul.actions a.button.primary,
-#content ul.actions a.button.primary {background-color: #8c9399; color: #ffffff;}
+#content ul.actions a.button.primary {background-color: #34cc3d; color: #ffffff;}
 ul.actions input.button.secondary,
 ul.actions a.button.secondary,
 #content ul.actions a.button.secondary {background-color: #8c9399; color: #ffffff;}
-ul.actions input.button.disabled
+ul.actions input.button.disabled,
 ul.actions a.button.disabled,
 #content ul.actions a.button.disabled {cursor: default !important; color: #aaaaaa !important; background-color: #eeeeee !important;}
-div.field div.help {position: absolute; left: 475px; top: 6px; width: 200px;}
+div.field div.help {position: absolute; right: -170px; top: 6px; width: 200px; background: #ffffff; border-radius: 18px; overflow: hidden;}
 div.field.files div.help {left: 404px;}
 div.field div.error,
-div.field div.hint {display: none; padding: 5px; border-radius: 3px; font-size: 12px;}
+div.field div.hint {display: none; padding: 8px 15px 10px; border-radius: 18px; font-size: 12px;}
 div.field div.error {border: 1px solid #a62300; color: #a62300; background: #ffddd5;}
 div.field.error div.error {display: block;}
-div.field div.hint {z-index: 9; border: 1px solid #007633; color: #007633; background: #d0f4e0;}
+div.field div.hint {z-index: 9; border: 1px solid #26962d; color: #26962d; background: rgba(52, 204, 61, 0.1);}
 div.field.focus div.hint,
 div.field.hover div.hint {display: block;}
 div.field.error div.hint {border-bottom-left-radius: 0; border-bottom-right-radius: 0;}
@@ -628,29 +620,24 @@ div.field.hover div.hint+div.error {border-top-left-radius: 0; border-top-right-
 
 
 /*s-articles.css*/
-#content .scene ul.articles {padding: 0;}
-#content .scene ul.articles li.article {padding: 30px 0 15px; border-top: 1px solid #dedede; position: relative;}
-#content .scene ul.articles li.article ul.tags {padding-bottom: 20px;}
+#content .scene ul.articles li.article { }
+#content .scene ul.articles li.article ul.tags {}
 #content .scene ul.articles li.article div.image p {padding-bottom: 20px;}
 #content .scene ul.articles li.article h2 {padding-bottom: 20px;}
-#content .scene ul.articles li.article ul.info {padding-bottom: 20px;}
 #content .scene ul.articles li.article ul.actions {margin-top: -10px;}
 #content .scene ul.articles li.article ul.actions li {padding-bottom: 0;}
 #content .scene ul.articles li.article > svg.checkmark {position: absolute; top: 14px; left: 45px;}
 #content .scene ul.articles li.article > svg.checkmark line {stroke: #666666; stroke-width: 3px;}
-#content .scene ul.articles.articlePreviewList li.article {padding: 20px 0 15px;}
-#content .scene ul.articles.articlePreviewList li.article ul.tags {padding-bottom: 30px;}
 #content .scene ul.articles.articlePreviewList li.article h3 {padding-bottom: 14px;
 	font-family: "PT Serif", Times, serif;
 }
-#content .scene ul.articles.articlePreviewList li.article ul.info {padding-bottom: 10px;}
 #content .scene ul.articles.articlePreviewList div.description p a.readmore {padding-top: 15px; display: inline-block;}
 #content .scene ul.articles.articlePreviewList div.image img,
-#content .scene ul.articles.articlePreviewList div.media img {margin: 0 50px 16px;}
+#content .scene ul.articles.articlePreviewList div.media img {margin: 0 0 16px; width: 100%;}
 #content .scene ul.articles.articlePreviewList div.image.fullsize img,
 #content .scene ul.articles.articlePreviewList div.media.fullsize img {margin-left: 0; margin-right: 0;}
 #content .scene ul.articles.articlePreviewList div.image p,
-#content .scene ul.articles.articlePreviewList div.media p {margin-top: -13px; padding: 0 70px 19px;}
+#content .scene ul.articles.articlePreviewList div.media p {margin-top: -13px; padding: 0 50px 19px;}
 
 
 /*s-pagination.css*/
@@ -667,17 +654,17 @@ div.field.hover div.hint+div.error {border-top-left-radius: 0; border-top-right-
 #content .scene .pagination li.previous a {display: block; text-decoration: none; height: 16px; padding: 7px 12px; font-size: 14px; background-color: #dedede; color: #333333; border: none; cursor: pointer; border-radius: 3px;}
 #content .scene .pagination li.pages {line-height: 25px;}
 body > div.pagination li.next > svg.arrow {position: absolute; top: 14px; right: 2px;}
-body > div.pagination li.next > svg.arrow line {stroke: #888888; stroke-width: 3px;}
+body > div.pagination li.next > svg.arrow line {stroke: #34cc3d; stroke-width: 3px;}
 body > div.pagination li.previous > svg.arrow {position: absolute; top: 14px; left: 8px;}
-body > div.pagination li.previous > svg.arrow line {stroke: #888888; stroke-width: 3px;}
+body > div.pagination li.previous > svg.arrow line {stroke: #34cc3d; stroke-width: 3px;}
 body > div.pagination li.previous,
-body > div.pagination li.next {z-index: 80; position: fixed; top: 50%; margin-top: -20px; height: 40px; width: 0; overflow: hidden; border: 1px solid #888888; cursor: pointer; background: #ffffff;}
-body > div.pagination li.previous {left: 0; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-left: none; padding-left: 30px;}
-body > div.pagination li.next {right: 0; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-right: none; padding-right: 30px;}
-body > div.pagination li.previous a,
-body > div.pagination li.next a {font-size: 16px; line-height: 16px; display: inline-block; vertical-align: top; padding: 11px 12px 13px; white-space: nowrap; opacity: 0;}
+body > div.pagination li.next {z-index: 80; position: fixed; top: 50%; margin-top: -20px; height: 40px; width: 0; overflow: hidden; border: 1px solid #34cc3d; cursor: pointer; background: #ffffff;}
+body > div.pagination li.previous {left: 0; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-left: none; padding-left: 35px;}
+body > div.pagination li.next {right: 0; border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-right: none; padding-right: 35px;}
+body > div.pagination li a {color: #34cc3d; font-size: 16px; line-height: 16px; display: inline-block; vertical-align: top; padding: 11px 17px 13px; white-space: nowrap; opacity: 0;}
 body > div.pagination li.previous a {padding-left: 0;}
 body > div.pagination li.next a {padding-right: 0;}
+
 
 /*s-sharing.css*/
 #content .scene div.sharing {padding: 0 0 20px; position: relative; height: 40px; overflow: hidden;}
@@ -687,7 +674,7 @@ body > div.pagination li.next a {padding-right: 0;}
 #content .scene div.sharing.hover {z-index: 2; overflow: visible;}
 #content .scene div.sharing.hover h3,
 #content .scene div.sharing.hover p {display: block;}
-#content .scene div.sharing svg {z-index: 0; margin-left: 70px; position: absolute; width: 500px; height: 300px; top: -130px;}
+#content .scene div.sharing svg {z-index: 0; margin-left: 50px; position: absolute; width: 500px; height: 300px; top: -130px;}
 #content .scene div.sharing svg rect {cursor: pointer;}
 #content .scene div.sharing svg circle.primary {stroke: #666666; fill: #ffffff;}
 #content .scene div.sharing svg circle {fill: #ededed; stroke: #bbbbbb; stroke-width: 1px;}
@@ -700,16 +687,16 @@ body > div.pagination li.next a {padding-right: 0;}
 #content .scene div.comments {z-index: 1; position: relative; padding-bottom: 15px;}
 #content .scene div.articlebody + div.comments {padding-top: 20px;}
 #content .scene div.comments h2 {font-size: 20px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
-#content .scene div.comments h2 svg.arrow {position: absolute; top: 6px; left: 45px;}
+#content .scene div.comments h2 svg.arrow {position: absolute; top: 6px; left: 30px;}
 #content .scene div.comments h2 svg.arrow line {stroke: #dedede; stroke-width: 3px;}
 #content .scene div.comments > p,
 #content .scene div.comments ul.comments,
 #content .scene div.comments ul.actions {display: none;}
-#content .scene div.comments.open h2 {color: #888888;}
+#content .scene div.comments.open h2 {color: #34cc3d;}
 #content .scene div.comments.open > p,
 #content .scene div.comments.open ul.comments,
 #content .scene div.comments.open ul.actions {display: block;}
-#content .scene div.comments > p {color: #bbbbbb; font-size: 13px; padding-bottom: 25px;}
+#content .scene div.comments > p {font-size: 13px; padding-bottom: 25px;}
 #content .scene div.comments ul.comments {padding: 0; margin: 0;}
 #content .scene div.comments ul.comments > li {padding-bottom: 10px; padding-left: 0;}
 #content .scene div.comments ul.comments > li ul.info {padding-bottom: 0; margin: 0; list-style: none; display: block;}
@@ -718,6 +705,65 @@ body > div.pagination li.next a {padding-right: 0;}
 #content .scene div.comments ul.comments > li p.comment {padding-bottom: 15px; font-size: 13px;}
 #content .scene div.comments .field {padding-bottom: 10px;}
 
+
+/*s-columns.css*/
+.c {clear: both; font-size: 0;}
+.c300, .c225, .c200, .c175, .c150, .c125, .c100, .c75, .c50, .c-main, .c-sidebar {display: inline-block; min-height: 10px; vertical-align: top;}
+	.c300 {width: 100%;}
+	.c225 {width: 75%;}
+	.c200 {width: 66.6666%;}
+	.c175 {width: 58.3333%;}
+	.c150 {width: 50%;}
+	.c125 {width: 41.6666%;}
+	.c100 {width: 33.3333%;}
+	.c75 {width: 25%;}
+	.c50 {width: 16.6666%;}
+	.c-main {width: 60%;}
+	.c-sidebar {width: 40%;}
+	@media screen and (max-width: 900px) {
+		.c200 {width: calc(100% - 320px);}
+		.c100 {width: 320px;}
+	}
+#content .scene .c h1,
+#content .scene .c h2,
+#content .scene .c h3,
+#content .scene .c h4,
+#content .scene .c h5,
+#content .scene .c h6,
+#content .scene .c p {max-width: none;}
+#content .scene .c div.image.fullsize img,
+#content .scene .c div.media.fullsize img {width: 100%;}
+#content .scene .c ul.articles {}
+#content .scene .c300 div.company h2,
+#content .scene .c300 div.person h2 {max-width: none;}
+#content .scene .c-sidebar div.image img,
+#content .scene .c100 div.image img,
+#content .scene .c100 div.media img,
+#content .scene .c125 div.image img,
+#content .scene .c125 div.media img,
+#content .scene .c150 div.image img,
+#content .scene .c150 div.media img {}
+#content .scene .c-sidebar div.categories ul.tags li,
+#content .scene .c100 div.categories ul.tags li,
+#content .scene .c125 div.categories ul.tags li,
+#content .scene .c150 div.categories ul.tags li {display: block; margin: 0;}
+#content .scene .c100 div.categories ul.tags li.selected,
+#content .scene .c125 div.categories ul.tags li.selected,
+#content .scene .c150 div.categories ul.tags li.selected {margin: 5px -15px;}
+
+
+/*s-search.css*/
+#content .scene ul.articles li.article div.description span.match {font-weight: bold;}
+#content div.search {font-size: 0; padding-bottom: 20px;}
+#content div.search fieldset {display: inline-block; vertical-align: top; width: calc(100% - 100px);}
+#content div.search div.field {padding-right: 0;}
+#content div.search div.field div.indicator {right: 8px;}
+#content div.search ul.actions {display: inline-block; vertical-align: top; padding: 12px 0 0;}
+#content div.search ul.actions li {padding: 0;}
+#content div.search ul.actions input {width: 30px; text-indent: -9999px; 
+	background: transparent url(../img/gx_search.png) no-repeat center 7px;
+	background-size: 18px auto;
+}
 
 /*s-login_overlay.css*/
 #login_overlay {position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); z-index: 10000;}
@@ -733,383 +779,297 @@ body > div.pagination li.next a {padding-right: 0;}
 #login_overlay li.forgot {display: none;}
 
 
-/*s-wishlist.css*/
-#content .scene ul.wishlists {padding-left: 70px; padding-right: 70px;}
-#content .scene ul.wishes {padding-left: 70px; padding-right: 70px;}
-#content .scene ul.wishes > li h3 {padding: 0 0 10px;}
-#content .scene ul.wishes > li div.description p {padding: 0px 0 10px;}
-#content .scene ul.wishes.images > li .image,
-#content .scene ul.wishes.images > li .text {display: inline-block; vertical-align: top;}
-#content .scene ul.wishes.images > li .image {width: 250px; height: 140px; background-position: center center; background-size: 100% auto; background-repeat: no-repeat; margin-bottom: 0px; cursor: default;}
-#content .scene ul.wishes.images > li h3 {padding: 0 25px 10px;}
-#content .scene ul.wishes.images > li div.description p {padding: 0 25px 10px;}
-#content .scene ul.wishes > li div.description p.available,
-#content .scene ul.wishes > li div.description p.reserved {padding-top: 5px;}
-#content .scene ul.wishes > li div.description p.available span
-#content .scene ul.wishes > li div.description p.reserved span {font-style: italic;}
-#content .scene ul.wishes > li div.description p.available span {color: #bbbbbb;}
-#content .scene ul.wishes > li > ul.actions,
-#content .scene ul.wishes > li > .text > ul.actions {position: absolute; top: 20px; right: 0px; padding: 0;}
-#content .scene ul.wishes > li > ul.actions li,
-#content .scene ul.wishes > li > .text > ul.actions li {padding-right: 0;}
-#content .scene ul.wishes > li > ul.actions form div.field,
-#content .scene ul.wishes > li > .text > ul.actions form div.field {display: inline-block; vertical-align: top; padding: 0 10px;}
-#content .scene ul.wishes > li > ul.actions form div.field input,
-#content .scene ul.wishes > li > .text > ul.actions form div.field input {width: 200px; display: none;}
-#content .scene ul.wishes > li > ul.actions form input[type=submit],
-#content .scene ul.wishes > li > .text > ul.actions form input[type=submit] {display: inline-block; vertical-align: top; margin-top: 3px;}
-#content .scene ul.wishes dl.info {padding: 0 25px 10px;}
-#content .scene ul.wishes dl.info dt.price {display: inline-block; vertical-align: top; width: auto;}
-#content .scene ul.wishes dl.info dd.price {display: inline-block; vertical-align: top; width: auto;}
-#content .scene ul.wishes dl.info dt.link {display: none;}
-#content .scene ul.wishes dl.info dd.link {font-size: 13px; display: block; width: auto;}
+/*s-front.css*/
+#content .scene.front {padding: 40px 0;}
+@media screen and (max-width: 900px) {
+	#content .scene.front .c200 {width: 66.666%;}
+	#content .scene.front .c100 {width: 33.333%;}
+}
+@media screen and (max-width: 820px) {
+	#content .scene.front .c200 {width: 100%;}
+	#content .scene.front .c100 {width: 50%;}
+	#content .scene.front .c200 + .c100 {width: 100%;}
+	#content .scene.front .c200 + .c100 div.projects,
+	#content .scene.front .c200 + .c100 div.services {width: 50%; display: inline-block; vertical-align: top;}
+}
+#content .scene.front div.c100 > div h2,
+#content .scene.front div.c200 > div h1 {
+	padding: 13px 20px;
+}
+#content .scene.front div.c200 > div h2,
+#content .scene.front div.c100 > div p,
+#content .scene.front div.c200 > div p,
+#content .scene.front div.c100 > div ul,
+#content .scene.front div.c200 > div ul {
+	padding: 0 20px 13px;
+}
+#content .scene.front div.c200 > div div.sharing {
+}
+#content .scene.front div.c200 > div div.sharing h3 {
+	left: 90px;
+}
+#content .scene.front div.c200 > div div.sharing p {
+	left: 90px;
+	padding: 0;
+}
+#content .scene.front div.c200 > div div.sharing svg {
+	margin-left: 20px;
+}
+#content .scene.front div.sharing svg line {
+	stroke: #ffffff;
+}
+#content .scene.front div.sharing svg circle {
+	stroke: #ffffff;
+}
+#content .scene.front div.c100 > div,
+#content .scene.front div.c200 > div {overflow: hidden; position: relative;
+	transition: all 0.5s ease;
+	background-color: #ffffff;
+}
+#content .scene.front div.c100 > div p,
+#content .scene.front div.c100 > div h3,
+#content .scene.front div.c100 > div ul,
+#content .scene.front div.c200 > div p,
+#content .scene.front div.c200 > div h2,
+#content .scene.front div.c200 > div h3,
+#content .scene.front div.c200 > div ul,
+#content .scene.front div.c200 > div div.sharing {
+	opacity: 0;
+	transform: translate(0, 500px);
+	transition: all 0.5s ease;
+}
+#content .scene.front div.c100 > div ul.actions {position: absolute; bottom: 0; right: 0;}
+#content .scene.front div.c100 > div h2,
+#content .scene.front div.c200 > div h1 {
+	transition: all 0.5s ease;
+}
+#content .scene.front div.c100 > div h2 {
+	transform: translate(0, 50px);
+}
+#content .scene.front div.c200 > div h1 {
+	transform: translate(0, 100px);
+}
+#content .scene.front div.c100 > div.hover p,
+#content .scene.front div.c100 > div.hover h2,
+#content .scene.front div.c100 > div.hover h3,
+#content .scene.front div.c100 > div.hover ul,
+#content .scene.front div.c200 > div.hover p,
+#content .scene.front div.c200 > div.hover h1,
+#content .scene.front div.c200 > div.hover h2,
+#content .scene.front div.c200 > div.hover h3,
+#content .scene.front div.c200 > div.hover ul,
+#content .scene.front div.c200 > div.hover div.sharing {
+	opacity: 1;
+	transform: translate(0, 0);
+	color: #ffffff;
+}
+#content .scene.front div.c100 > div.hover a,
+#content .scene.front div.c200 > div.hover a {color: #ffffff;}
+#content .scene.front div.c100 > div.hover,
+#content .scene.front div.c200 > div.hover {
+	background-color: #26962d;
+}
+#content .scene.front div.article {z-index: 11;  padding: 20px;}
+#content .scene.front div.projects {}
+#content .scene.front div.services {}
+#content .scene.front div.events { }
+#content .scene.front div.events h2 {}
+#content .scene.front div.membership {}
+#content .scene.front div.bulletin {}
+#content .scene.front div.about {}
+#content .scene.front div.blog {}
+#content .scene.front div.contact {}
+#content .scene.front div div:hover ul.actions li a {background-color: #ffffff; color: #26962d; padding: 6px 15px; border-radius: 15px; height: auto; text-decoration: none;}
+#content .scene.front div div:hover ul.actions li a:hover {text-decoration: none; background-color: #34cc3d; color: #ffffff;}
 
-/*s-columns.css*/
-.c {clear: both; font-size: 0;}
-.c300, .c225, .c200, .c175, .c150, .c125, .c100, .c75, .c50, .c-main, .c-sidebar {display: inline-block; min-height: 10px; vertical-align: top;}
-.c300 {width: 1080px;}
-.c225 {width: 810px;}
-.c200 {width: 720px;}
-.c175 {width: 630px;}
-.c150 {width: 540px;}
-.c125 {width: 450px;}
-.c100 {width: 360px;}
-.c75 {width: 270px;}
-.c50 {width: 180px;}
-.c-main {width: 648px;}
-.c-sidebar {width: 432px;}
-@media screen and (max-width: 1080px) {
-	.c300 {width: 100%;}
-	.c225 {width: 75%;}
-	.c200 {width: 66.6666%;}
-	.c175 {width: 58.3333%;}
-	.c150 {width: 50%;}
-	.c125 {width: 41.6666%;}
-	.c100 {width: 33.3333%;}
-	.c75 {width: 25%;}
-	.c50 {width: 16.6666%;}
-	.c-main {width: 60%;}
-	.c-sidebar {width: 40%;}
-	#content .scene .c div.image img,
-	#content .scene .c div.media img {width: calc(100% - 100px);}
-}
-#content .scene .c h1,
-#content .scene .c h2,
-#content .scene .c h3,
-#content .scene .c h4,
-#content .scene .c h5,
-#content .scene .c h6,
-#content .scene .c p {width: auto; max-width: 500px;}
-#content .scene .c div.image.fullsize img,
-#content .scene .c div.media.fullsize img {width: 100%;}
-#content .scene .c ul.articles {max-width: 640px;}
-#content .scene .c300 div.company h2,
-#content .scene .c300 div.person h2 {max-width: none;}
-#content .scene .c-sidebar div.image img,
-#content .scene .c100 div.image img,
-#content .scene .c100 div.media img,
-#content .scene .c125 div.image img,
-#content .scene .c125 div.media img,
-#content .scene .c150 div.image img,
-#content .scene .c150 div.media img {width: calc(100% - 100px);}
-#content .scene .c-sidebar div.categories ul.tags li,
-#content .scene .c100 div.categories ul.tags li,
-#content .scene .c125 div.categories ul.tags li,
-#content .scene .c150 div.categories ul.tags li {display: block; margin: 0;}
-#content .scene .c100 div.categories ul.tags li.selected,
-#content .scene .c125 div.categories ul.tags li.selected,
-#content .scene .c150 div.categories ul.tags li.selected {margin: 5px -10px;}
-#content .scene .c-sidebar div.field input,
-#content .scene .c150 div.field input,
-#content .scene .c125 div.field input,
-#content .scene .c100 div.field input,
-#content .scene .c75 div.field input,
-#content .scene .c50 div.field input {width: calc(100% - 18px)}
-#content .scene .c-sidebar div.field textarea,
-#content .scene .c150 div.field textarea,
-#content .scene .c125 div.field textarea,
-#content .scene .c100 div.field textarea,
-#content .scene .c75 div.field textarea,
-#content .scene .c50 div.field textarea {width: calc(100% - 12px)}
-#content .scene .c-sidebar div.field .indicator,
-#content .scene .c150 div.field .indicator,
-#content .scene .c125 div.field .indicator,
-#content .scene .c100 div.field .indicator,
-#content .scene .c75 div.field .indicator,
-#content .scene .c50 div.field .indicator {left: auto; right: 40px;}
-
-
-/*s-search.css*/
-#content .scene ul.articles li.article div.description span.match {font-weight: bold;}
-#content div.search {font-size: 0; padding-bottom: 20px;}
-#content div.search fieldset {display: inline-block; vertical-align: top; width: calc(100% - 100px);}
-#content div.search div.field {padding-right: 0;}
-#content div.search div.field input {width: calc(100% - 18px);}
-#content div.search ul.actions {display: inline-block; vertical-align: top; padding-left: 0;}
-#content div.search ul.actions li {padding: 0;}
-#content div.search ul.actions input {width: 30px; text-indent: -9999px; 
-	background: transparent url(../img/gx_search.png) no-repeat center 7px;
-	background-size: 18px auto;
-}
-
-/*s-form-field-html.css*/
-div.field.html {z-index: 3;}
-div.field.html.optionsshown {z-index: 60 !important;}
-div.field.html div.html_editor_hint {width: 383px;}
-div.field.html div.html_editor_hint_content {display: none;}
-div.field.html div.html_editor_hint h3,
-div.field.html div.html_editor_hint h4,
-div.field.html div.html_editor_hint p {padding: 0 0 5px;}
-div.field.html div.html_editor_hint p+h3,
-div.field.html div.html_editor_hint p+h4 {padding: 10px 0 5px;}
-div.field.html div.html_editor_hint .open,
-div.field.html div.html_editor_hint .close {font-size: 13px; line-height: 1em; cursor: pointer; vertical-align: top; margin: 3px 3px 0; border-radius: 13px; background-color: #313942; padding: 6px 10px 7px; color: #ffffff; margin: 10px 0 20px; text-align: center;}
-div.field.html > textarea {display: none;}
-div.field.html > textarea.show {display: block; height: 200px;}
-div.field.html > label {display: block; width: 377px;}
-div.field.html > label span {font-size: 0.723em; float: right; padding: 3px 0 0; cursor: pointer;}
-div.field.html > .indicator {top: 33px;}
-div.field.html .viewer {display: none;}
-div.field.html .editor {width: 385px; position: relative; z-index: 3;}
-div.field.html ul.options {height: 40px; display: block; vertical-align: top; width: 30px; position: relative; z-index: 10; padding: 0;}
-div.field.html ul.options li {font-size: 13px; line-height: 1em; cursor: pointer; vertical-align: top; margin: 3px 3px 0; border-radius: 13px; background-color: #313942; padding: 6px 10px 7px; color: #ffffff; width: 330px; display: none;}
-div.field.html ul.options li.add {display: inline-block; font-size: 16px; line-height: 1em; padding: 2px 4px 4px; width: 14px; text-align: center;}
-div.field.html ul.options.show li.add {top: 0; left: 0; background-color: #df0000;}
-div.field.html ul.options.show li {display: inline-block; position: relative; top: -26px; left: 26px;}
-div.field.html .editor div.tag {margin: 0 0 1px; padding: 0 0 0 30px; background-color: #dcdcdc; position: relative; border-radius: 3px; border: 2px solid #f5f7f8;}
-div.field.html .editor div.dragged {z-index: 15;}
-div.field.html .editor div.tag .drag {display: none; position: absolute; top: 0px; left: -20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background: #dedede; width: 30px; height: 30px; cursor: move;}
-div.field.html .editor div.tag .remove {display: none; position: absolute; top: 0px; right: -10px; border-radius: 15px; background: #dedede; width: 30px; height: 30px; cursor: pointer;
-	background: #dedede url(../../../img/bg_icons.png) no-repeat 8px -42px;
-}
-div.field.html .editor div.tag ul.type {display: block; z-index: 5; position: absolute; width: 30px; top: 0px; left: 0px; padding: 0;}
-div.field.html .editor div.tag ul.type li {display: none; text-transform: uppercase; padding: 9px 4px; text-align: center; font-size: 11px; cursor: default;}
-div.field.html .editor div.tag ul.type.clickable li {cursor: pointer;}
-div.field.html .editor div.tag ul.type li.selected {display: block;}
-div.field.html .editor div.tag ul.type.open {z-index: 10; border: 2px solid #5c5c5c; margin: -2px; background-color: #F5F7F8;}
-div.field.html .editor div.tag ul.type.open li {display: block; color: #5c5c5c !important;}
-div.field.html .editor div.tag ul.type.open li:hover {background-color: #dedede;}
-div.field.html .editor div.tag ul.type.open li.selected {background-color: #5c5c5c !important; color: #ffffff !important;}
-div.field.html .editor div.tag ul.type li.code {font-size: 8px; padding-top: 11px;}
-div.field.html .editor div.tag ul.type li.media {font-size: 8px; padding-top: 11px;}
-div.field.html .editor div.tag ul.type li.youtube {font-size: 8px; padding: 7px 5px; max-width: 4.4ch; word-wrap: break-word;}
-div.field.html .editor div.tag ul.type li.vimeo {font-size: 8px; padding-top: 11px;}
-div.field.html .editor div.tag div.text {display: inline-block; vertical-align: top; width: 337px; height: auto; padding: 4px 6px; line-height: 1.375em; border-radius: 3px; background-color: #F5F7F8; color: #333333; box-shadow: inset 0 1px 2px #dedede; background: #ffffff; border: 1px solid #dcdcdc; min-height: 20px;}
-div.field.html .editor div.tag div.text em,
-div.field.html .editor div.tag div.text strong,
-div.field.html .editor div.tag div.text a {background-color: rgba(255, 0, 0, 0.3); cursor: default; font-size: inherit;}
-div.field.html .editor div.tag.focus {background-color: #5c5c5c; padding: 0 0 0 30px; border: 2px solid #5c5c5c;}
-div.field.html .editor div.tag.focus div.text {border-color: #5c5c5c;}
-div.field.html .editor div.tag.focus .drag {background-color: #5c5c5c; top: -2px;}
-div.field.html .editor div.tag.focus ul.type li {color: #ffffff;}
-div.field.html .editor div.tag.h1 div.text {font-size: 36px;}
-div.field.html .editor div.tag.h2 div.text {font-size: 30px;}
-div.field.html .editor div.tag.h3 div.text {font-size: 30px;}
-div.field.html .editor div.tag.h4 div.text {font-size: 16px;}
-div.field.html .editor div.tag.h5 div.text {font-size: 14px;}
-div.field.html .editor div.tag.p div.text {font-size: 14px;}
-div.field.html .editor div.tag.ul {padding-left: 50px;}
-div.field.html .editor div.tag.ol {padding-left: 50px;}
-div.field.html .editor div.tag div.li {font-size: 14px;}
-div.field.html .editor div.tag div.li div.text {width: 317px;}
-div.field.html .editor div.tag.file .text {padding: 0 6px; height: 28px;}
-div.field.html .editor div.tag.file.done .text {color: #aaaaaa; font-size: 13px; padding: 4px 6px; line-height: 20px; height: auto; text-decoration: underline;}
-div.field.html .editor div.tag.file.done.focus .text {color: #333333;}
-div.field.html .editor div.tag.file .text label {padding: 5px 0 0; display: block; text-align: center; font-size: 13px; line-height: 20px; position: absolute; z-index: 1; width: 332px; color: #aaaaaa;}
-div.field.html .editor div.tag.file input {width: 319px; opacity: 0; height: 18px; position: relative; z-index: 2;}
-div.field.html .editor div.tag.media .text {padding: 0 6px; height: 28px;}
-div.field.html .editor div.tag.media.done .text {color: #aaaaaa; font-size: 13px; padding: 4px 6px; line-height: 20px; height: auto;}
-div.field.html .editor div.tag.media.done.focus .text {color: #333333;}
-div.field.html .editor div.tag.media .text label {padding: 5px 0 0; display: block; text-align: center; font-size: 13px; line-height: 20px; position: absolute; z-index: 1; width: 332px; color: #aaaaaa;}
-div.field.html .editor div.tag.media input {width: 319px; opacity: 0; height: 18px; position: relative; z-index: 2;}
-div.field.html .editor div.tag.media img {width: 347px; margin: 2px;}
-div.field.html .editor div.tag.vimeo .text,
-div.field.html .editor div.tag.youtube .text {padding: 0 6px; height: 28px; color: #aaaaaa; font-size: 13px; padding: 4px 6px; line-height: 20px; height: auto;}
-div.field.html .editor div.tag.vimeo.focus .text,
-div.field.html .editor div.tag.youtube.focus .text {color: #333333;}
-body #selection_options {z-index: 1100; position: absolute; background-color: #F5F7F8; border: 3px solid #5c5c5c; margin: 0px 0 0 10px; padding: 15px; border-radius: 5px;}
-body #selection_options h3 {padding: 10px 0 10px; text-align: left; font-size: 13px; margin-top: 10px; border-top: 1px solid #5c5c5c;}
-body #selection_options li {display: block; font-size: 13px; padding: 5px 0; cursor: pointer;}
-body #selection_options li.link {text-decoration: underline;}
-body #selection_options li.em {font-style: italic;}
-body #selection_options li.strong {font-weight: 700;}
-body #selection_options .field {margin-left: -2px;}
-body #selection_options .field label {display: none;}
-body #selection_options .field input {color: #333333; box-shadow: inset 0 1px 2px #dedede; background: #ffffff; border: 1px solid #dcdcdc; display: inline-block; vertical-align: top; border-radius: 3px; margin: 2px; outline: none; position: relative; z-index: 10; width: 150px; height: 24px; padding: 2px 6px;}
-body #selection_options .field.checkbox input {width: auto;}
-body #selection_options .field.checkbox label {display: inline-block; vertical-align: top; padding: 4px 0 0 3px;}
-body #selection_options .field input.default {color: #aaaaaa;}
-body #selection_options .field input.focus {}
-body #selection_options ul.actions {padding: 10px 0 0;}
-body #selection_options ul.actions li {width: auto; height: auto; display: inline-block; padding: 0 5px 0 0; vertical-align: top;}
-body #selection_options ul.actions input.button {width: auto; height: 26px; padding: 3px 12px;}
-@media all and (-webkit-min-device-pixel-ratio:0) {
-	body #selection_options ul.actions input.button {padding-bottom: 5px;}
-}
-body #selection_options ul.actions a.button {display: block; text-decoration: none; height: 14px; padding: 5px 12px 7px;}
-body #selection_options ul.actions input.button,
-body #selection_options ul.actions a.button {background-color: #8c9399; color: #ffffff; border: none; cursor: pointer; border-radius: 3px;}
-.delete_selection {position: absolute; z-index: 1150; top: 0; left: 0; border-radius: 8px; width: 14px; height: 14px; font-size: 10px; line-height: 14px; text-align: center; background: #ffffff; border: 1px solid #000000; cursor: pointer;}
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-	div.field.html .editor div.tag.media input {font-size: 130px;}
-	div.field.html .editor div.tag.file input {font-size: 130px;}
-}
+/*s-bulletin.css*/
+#content .scene.bulletin div.search,
+#content .scene.post div.search {padding-top: 76px;}
+#content .scene.post div.article ul.info {display: block;}
 
 
-/*s-pages.css*/
-#content .scene {opacity: 0;}
-#content .scene h1 span {display: inline-block;}
-#content .scene ul.info {display: none;}
-#content .scene.front {opacity: 1;
-	box-sizing: border-box;
-}
-body.front #header { opacity: 0;}
-body.front #footer {display: none;}
-body.front #page {overflow: hidden;}
-body.front #page.fixed {width: auto; margin: 0;}
-#content .scene.front div.intro {opacity: 0; overflow: hidden; position: relative; 
-	box-sizing: border-box;
-	top: -150px;
-	left: 0;
-	border-radius: 0;
-	-o-user-select: none;
-	-ms-user-select: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	user-select: none;
-}
-#content .scene.front div.intro div.loader {
-	width: 100%; height: 100%; position: absolute; top: 0; left: 0;
-}
-#content .scene.front div.intro div.loader div.dot {
-	width: 50px; height: 50px; position: absolute; top: 50%; left: 50%; margin-top: -25px; margin-left: -25px;
-	border-radius: 50%;
-	background: #26962d;
-}
-#content .scene.front div.intro .text {z-index: 10; position: relative; height: 100%; display: none;}
-#content .scene.front div.intro p,
-#content .scene.front div.intro h2,
-#content .scene.front div.intro h3,
-#content .scene.front div.intro span {display: inline-block; width: auto; color: #ffffff; padding: 0;}
-#content .scene.front div.intro div.bg {position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 9;
-	background-position: center center;
-	background-size: cover;
-	background-repeat: no-repeat;
-	opacity: 0.001;
-	display: block;
-}
-#content .scene.front div.intro div.bg h2 {position: absolute; top: 50%; margin-top: -50px; width: 100%; left: 0; text-align: center;
-	max-width: none;
-	text-shadow: 0px 0px 3px #666666;
-}
-#content .scene.front div.intro div.bg.bg1 {
-	background-image: url(../img/intro/bg_front_1.jpg);
-}
-#content .scene.front div.intro div.bg.bg2 {
-	background-image: url(../img/intro/bg_front_2.jpg);
-}
-#content .scene.front div.intro div.bg.bg3 {
-	background-image: url(../img/intro/bg_front_3.jpg);
-}
-#content .scene.front div.intro div.bg.bg4 {
-	background-image: url(../img/intro/bg_front_4.jpg);
-}
-#content .scene.front div.intro div.bg.bg5 {
-	background-image: url(../img/intro/bg_front_5.jpg);
-}
-#content .scene.front div.intro div.bg.bg6 {
-	background-image: url(../img/intro/bg_front_6.jpg);
-}
-#content .scene.front div.intro div.bg.bg7 {
-	background-image: url(../img/intro/bg_front_7.jpg);
-}
-#content .scene.front div.intro ul.hotspots {
+/*s-contact.css*/
+#content .scene.contact div.map {height: 300px; margin: 0 30px 30px;}
+#content .scene.contact div.teams {padding-top: 76px;}
+#content .scene.contact ul.people {padding: 0 50px 30px; margin-top: 10px;}
+#content .scene.contact ul.items.people li.item.person {padding: 0 0 20px; border: none;}
+#content .scene.contact ul.items.people li.item.person h3 {padding-left: 0; padding-right: 0; font-size: 16px;}
+#content .scene.contact ul.items.people li.item.person ul.info {display: block; padding: 0;}
+#content .scene.contact ul.items.people li.item.person ul.info li {display: block; color: #777777; padding-bottom: 4px;}
+#content .scene.contact ul.items.people li.item.person ul.info li.affiliation {display: none;}
+#content .scene.contact div.company {padding: 0 30px; font-size: 0;}
+#content .scene.contact div.company h2 {border-bottom: 1px solid #dedede; margin-bottom: 30px; padding-left: 20px; padding-right: 20px;}
+#content .scene.contact div.company dl.info {width: 33%; padding: 0 0 30px 20px; box-sizing: border-box; display: inline-block; vertical-align: top;}
+#content .scene.contact div.company dl.info dt,
+#content .scene.contact div.company dl.info dd {display: block; width: auto; text-align: left;}
+#content .scene.contact div.company dl.info dd {padding-bottom: 10px; font-size: 12px;}
+#content .scene.contact div.company dl.info dd ul {padding: 0;}
+#content .scene.contact div.company dl.info dd li {font-size: 12px;}
+
+
+/*s-about.css*/
+#content .scene.about div.teams {padding-top: 76px;}
+#content .scene.about div.teams ul.people {margin: 10px 30px 0; padding: 0 20px 40px; border-top: 1px solid #dedede;}
+#content .scene.about div.teams ul.items.people li.item.person {padding: 20px 0 0; border: none;}
+#content .scene.about div.teams ul.items.people li.item.person h3 {padding-left: 0; padding-right: 0;}
+#content .scene.about div.teams ul.items.people li.item.person h4 {padding-left: 0; padding-right: 0; font-weight: normal; font-size: 16px; padding-bottom: 10px;}
+#content .scene.about div.teams ul.items.people li.item.person ul.info {display: block; padding: 0;}
+#content .scene.about div.teams ul.items.people li.item.person ul.info li {display: block; color: #777777; padding-bottom: 2px;}
+#content .scene.about div.teams ul.items.people li.item.person ul.info li.affiliation {display: none;}
+#content .scene.about div.teams ul.items.people li.item.person .description h2, 
+#content .scene.about div.teams ul.items.people li.item.person .description h3, 
+#content .scene.about div.teams ul.items.people li.item.person .description h4, 
+#content .scene.about div.teams ul.items.people li.item.person .description h5, 
+#content .scene.about div.teams ul.items.people li.item.person .description h6, 
+#content .scene.about div.teams ul.items.people li.item.person .description p {padding-left: 0; padding-right: 0; width: auto;}
+#content .scene.about div.teams ul.items.people li.item.person .description p {font-size: 13px;}
+div#intro ul.hotspots,
+div#outro ul.hotspots {
 	cursor: default;
 	position: absolute;
-	z-index: 15;
-	bottom: 40px;
+	z-index: 95;
+	top: 50%;
 	left: 50%;
-	margin-left: -250px;
-	width: 500px;
+	margin-top: -30px;
+	margin-left: -275px;
+	width: 550px;
+	opacity: 0;
 	text-align: center;
 	white-space: nowrap;
 	padding: 0;
 }
-#content .scene.front div.intro li.hotspot {
+div#intro li.hotspot,
+div#outro li.hotspot {
 	cursor: pointer;
 	display: inline-block;
 	vertical-align: top;
-	font-family: "PT Serif",Times,serif;
-	opacity: 1;
-	width: 25px;
-	height: 25px;
+	font-family: "PT Serif", Times, serif;
+	width: 67px;
+	height: 67px;
+	box-sizing: border-box;
 	border-radius: 50%;
-	background-color: rgba(255,255,255, 0.8);
-	color: #26962d;
-	padding: 9px 10px 11px;
-	margin: 0 5px;
-	font-size: 20px;
-}
-#content .scene.front div.intro li.hotspot.selected {
+	background-color: #26962d;
+	text-align: center;
 	color: #ffffff;
-	background: rgba(38, 150, 45, 0.8);
+	padding: 14px 0 0;
+	margin: 0 4px;
+	font-size: 30px;
 }
-#content .scene.front div.intro li.hotspot.hotspot5 {
-	margin-right: 40px;
+div#intro li.hotspot.hotspot5,
+div#outro li.hotspot.hotspot5 {
+	margin-right: 30px;
 }
-#content .scene.front div.article {z-index: 11; display: none; margin-top: 50px; }
-#content .scene.front div.all_events {display: none; padding-bottom: 50px;}
-#content .scene.front div.all_events h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
-	font-family: "OpenSans", Verdana, Arial, sans-serif;
+div#intro div.bg.about,
+div#outro div.bg.about {
+	opacity: 0;
+	width: 100%;
 }
-#content .scene.front div.all_events ul.events li.event {border-top: none; padding-top: 15px; padding-bottom: 5px;}
-#content .scene.front div.news {display: none;}
-#content .scene.front div.news h2 {padding-bottom: 15px;}
-#content .scene.front div.news h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
-	font-family: "OpenSans", Verdana, Arial, sans-serif;
+
+
+/*s-blog.css*/
+#content .scene.blogs ul.blogs li.blog {padding-top: 30px;}
+#content .scene.blogs ul.blogs li.blog h3,
+#content .scene.blogs ul.blogs li.blog dl.author,
+#content .scene.blogs ul.blogs li.blog p {padding-left: 30px;}
+#content .scene.blogs ul.blogs li.blog h3 {font-size: 30px; padding-bottom: 7px;}
+#content .scene.blogs ul.blogs li.blog dl.author dt:after {content: "";}
+#content .scene.blogs ul.blogs li.blog dl.author dt,
+#content .scene.blogs ul.blogs li.blog dl.author dd {font-style: italic; width: auto;}
+#content .scene.blog h1 {font-size: 54px;}
+#content .scene.blog h2 {font-size: 40px;}
+#content .scene.blog h3 {color: #26962d;}
+#content .scene.blog ul.info {padding-top: 20px; padding-bottom: 46px;}
+#content .scene.blog ul.info li {font-size: 14px; line-height: 14px;}
+#content .scene.blogs .articlebody p,
+#content .scene.blog .articlebody p {font-size: 17px; line-height: 1.6em; padding-bottom: 30px;}
+#content .scene.blog .articlebody li {font-size: 17px; line-height: 1.6em; padding-bottom: 15px;}
+#content .scene.blog div.bio {
+	padding-top: 76px;
 }
-#content .scene.front div.news ul.articles li.article h3 {padding-bottom: 20px; color: #26962d;}
-#content .scene.post div.article ul.info {display: block;}
-#content .scene.contact div.map {height: 300px; margin: 0 50px 30px; width: 540px; border-radius: 5px;}
-#content .scene div.teams {}
-#content .scene div.teams h2 {padding-top: 20px;}
-#content .scene ul.people {padding: 0 70px 30px; margin-top: 10px; padding-right: calc(100% - 570px); border-top: 1px solid #dedede;}
-#content .scene ul.items.people li.item.person {width: 230px; padding: 20px 20px 20px 0; display: inline-block; vertical-align: top; border: none;}
-#content .scene ul.items.people li.item.person h3 {width: auto; padding-left: 0; padding-right: 0;}
-#content .scene ul.items.people li.item.person h4 {width: auto; padding-left: 0; padding-right: 0; font-weight: normal; font-size: 20px; padding-bottom: 10px;}
-#content .scene ul.items.people li.item.person ul.info {display: block; padding: 0 0 20px;}
-#content .scene ul.items.people li.item.person ul.info li {display: block; color: #777777; padding-bottom: 2px;}
-#content .scene ul.items.people li.item.person ul.info li.affiliation {display: none;}
-#content .scene ul.items.people li.item.person .description h2, 
-#content .scene ul.items.people li.item.person .description h3, 
-#content .scene ul.items.people li.item.person .description h4, 
-#content .scene ul.items.people li.item.person .description h5, 
-#content .scene ul.items.people li.item.person .description h6, 
-#content .scene ul.items.people li.item.person .description p {padding-left: 0; padding-right: 0; width: auto;}
-#content .scene ul.items.people li.item.person .description p {font-size: 13px;}
-#content .scene.service div.all_events {padding-bottom: 50px;}
-#content .scene ul.services li.service {padding-bottom: 0;}
-#content .scene ul.services li.service h3 {
-	font-family: "PT Serif",Times,serif;	
+#content .scene.blog dl.author {padding-bottom: 20px; width: auto;}
+#content .scene.blog dl.author dt,
+#content .scene.blog dl.author dd {width: auto; display: block; text-align: left;}
+#content .scene.blog dl.author dt:after {content: "";}
+#content .scene.blog dl.author dd {font-size: 14px; line-height: 1.5em;}
+#content .scene.blog dl.author dt.bio {padding-top: 10px;}
+
+/*s-memberships.css*/
+#content .scene.signup h1 {text-align: center;}
+#content .scene.signup h1 + h2 {text-align: center;}
+#content .scene.signup h1,
+#content .scene.signup h2,
+#content .scene.signup h3,
+#content .scene.signup h4,
+#content .scene.signup p {margin: 0 auto;}
+#content .scene.signup div.sharing {width: 700px; margin: 0 auto;}
+#content .scene.signup div.sharing svg {margin: 0;}
+#content .scene.signup div.sharing h3,
+#content .scene.signup div.sharing p {left: 70px;}
+div.field.range {padding-bottom: 8px;}
+div.field.range label {display: none;}
+div.field.range input {display: block; width: 100%; height: 6px; background: #26962d; outline: none; border-radius: 5px; padding: 0; box-shadow: inset 0 1px 2px #777777; border: none;
+	-webkit-appearance: none;
 }
-#content .scene div.all_services {padding: 0 25px; font-size: 0;}
-#content .scene div.all_services ul.services li.service {padding-bottom: 5px;}
-#content .scene div.all_services div.servicegroup h2,
-#content .scene div.all_services div.servicegroup h3,
-#content .scene div.all_services div.servicegroup p {width: auto;}
-#content .scene div.all_services div.servicegroup {display: inline-block; vertical-align: top; width: 220px; padding: 0 25px;}
-#content .scene div.all_services div.servicegroup ul.services {}
-#content .scene div.all_services div.servicegroup ul.services li.service {padding-left: 20px; padding-right: 20px; padding-bottom: 0;}
-#content .scene div.all_services div.servicegroup > h2 {padding-left: 20px; padding-right: 20px; padding-bottom: 10px;}
-#content .scene div.all_services div.servicegroup > p {font-style: italic; padding-left: 20px; padding-right: 20px; padding-bottom: 30px;}
-#content .scene div.all_services div.servicegroup ul.services h3,
-#content .scene div.all_services div.servicegroup ul.services p {padding-left: 0; padding-right: 0;}
+div.field.focus.range input {background-color: #34cc3d; border-color: #ffffff;}
+div.field.range input::-webkit-slider-runnable-track {width: 100%; height: 10px; cursor: pointer; background: #26962d; border-radius: 5px; padding: 0; box-shadow: inset 0 1px 2px #777777;
+	-webkit-appearance: none;
+}
+div.field.focus.range input::-webkit-slider-runnable-track {background-color: #34cc3d; border-color: #ffffff;}
+div.field.range input::-ms-fill-lower {background: #26962d; border-radius: 0;}
+div.field.range input:focus::-ms-fill-lower {background: #26962d;}
+div.field.range input::-ms-fill-upper {background: #26962d; border-radius: 0;}
+div.field.range input:focus::-ms-fill-upper {background: #26962d;}
+div.field.range input::-webkit-slider-thumb {box-shadow: 1px 1px 5px 0px #8a8a8a; border: 3px solid #26962d; height: 32px; width: 32px; border-radius: 100%; background: #ffffff; cursor: pointer; margin-top: -14px;
+	-webkit-appearance: none;
+}
+div.field.range input::-moz-range-thumb {box-shadow: 1px 1px 5px 0px #8a8a8a; border: 3px solid #26962d; height: 26px; width: 26px; border-radius: 100%; background: #ffffff; cursor: pointer;}
+div.field.range input::-ms-thumb {box-shadow: 1px 1px 5px 0px #8a8a8a; border: 3px solid #26962d; height: 26px; width: 26px; border-radius: 100%; background: #ffffff; cursor: pointer;}
+div.field.range.focus input::-webkit-slider-thumb {border-color: #34cc3d;}
+div.field.range.focus input::-moz-range-thumb {border-color: #34cc3d;}
+div.field.range.focus input::-ms-thumb {border-color: #34cc3d;}
+div.field.range div.input_wrapper {padding: 0 0 30px; width: 300px; margin: 0 auto;}
+div.field.range div.input_wrapper div.input {padding: 20px 22px; text-align: center; font-size: 56px; height: 120px; box-sizing: border-box; border-radius: 60px; border: 1px solid #dcdcdc; box-shadow: inset 0 1px 2px #dedede; outline: none;}
+div.field.range div.input_wrapper div.input.focus {border: 3px solid #5c5c5c; padding: 18px 22px;}
+div.field.range .help {display: none !important;}
+#content .scene.signup div.membership {width: 640px; margin: 0 auto;}
+#content .scene.signup div.membership ul.actions {text-align: center; margin: 20px 0; width: auto;}
+#content .scene.signup div.membership ul.actions li {padding: 0; display: block;}
+#content .scene.signup div.membership ul.actions li input {font-size: 28px; height: 55px; padding: 0 40px 5px; line-height: 50px; border-radius: 30px;}
+#content .scene.signup div.donation {width: 640px; margin: 0 auto;}
+#content .scene.signup h2.center {text-align: center;}
+#content .scene.signup div.donation div.field.range div.input_wrapper {width: 350px;}
+#content .scene.signup div.donation div.field.range div.input_wrapper div.input {font-size: 44px; height: 70px;}
+#content .scene.signup div.donation ul.actions {text-align: center; margin: 20px 0; width: 500px;}
+#content .scene.signup div.donation ul.actions li {padding: 0; display: block;}
+#content .scene.signup div.donation ul.actions li input {font-size: 22px; height: 44px; padding: 0 40px 5px; line-height: 50px; border-radius: 25px;}
+#content .scene.signup .articlebody h2.maillist {padding-bottom: 10px; text-align: center;}
+#content .scene.signup div.maillist {border: 1px solid #26962d; position: relative; margin: 0 auto 50px;
+	 padding: 22px 20px 15px; width: 456px;
+}
+#content .scene.signup div.maillist form.maillist {font-size: 0;}
+#content .scene.signup div.maillist fieldset { margin: 0 0 20px; }
+#content .scene.signup div.maillist ul.actions {padding: 0;}
+#content .scene.signup div.maillist div.field {padding: 0;}
+#content .scene.signup div.maillist div.field.checkbox {margin-top: 10px;}
+#content .scene.signup div.maillist div.field.email .indicator {right: -21px;}
+#content .scene.signup div.maillist div.field .help {left: 475px; }
+#content .scene.signup div.maillist ul.actions li {}
+#content .scene.signup div.maillist ul.actions input {width: 150px;}
+#content .scene.membership ul.offer {padding: 76px 50px 15px;}
+#content .scene.membership ul.offer li.default {font-size: 14px;}
+#content .scene.membership ul.offer li {font-size: 26px; display: block;}
+#content .scene.membership ul.offer li.description {display: none;}
+#content .scene.membership form.signup ul.actions {text-align: center;}
+#content .scene.membership form.signup ul.actions li {padding-right: 0;}
+
+
+/*s-events.css*/
 #content .scene.events div.calendar {
-	height: 700px;
+	height: 650px;
 	box-sizing: border-box;
 	text-align: center;
 	position: relative;
-	padding: 0 70px 50px;
+	padding: 0 50px;
 	font-size: 0;
 }
 #content .scene.events div.calendar span.prev {z-index: 5; position: absolute; top: 4px; left: 50%; margin-left: -110px; width: 25px; height: 22px; cursor: pointer;}
@@ -1117,7 +1077,7 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.events div.calendar span.next {z-index: 5; position: absolute; top: 4px; left: 50%; margin-left: 85px; width: 25px; height: 22px; cursor: pointer;}
 #content .scene.events div.calendar span.next > svg.arrow line {stroke: #34cc3d; stroke-width: 3px;}
 #content .scene.events div.calendar div.month {text-align: center; box-sizing: border-box;}
-#content .scene.events div.calendar div.month h3 {text-align: center; width: auto; font-size: 18px; line-height: 20px; 
+#content .scene.events div.calendar div.month h3 {text-align: center; max-width: none; font-size: 18px; line-height: 20px; 
 	font-weight: 600;
 }
 #content .scene.events div.calendar div.month h3 span {display: inline-block; vertical-align: top; padding: 0 2px 0 0;}
@@ -1165,12 +1125,17 @@ body.front #page.fixed {width: auto; margin: 0;}
 	padding: 5px 8px;
 	box-shadow: 0 1px 1px #888888;
 }
-#content .scene.events div.calendar ul.month li h3 a:first-child {padding-right: 3px;}
+#content .scene.events div.calendar ul.month li h3 a:first-child {padding-right: 3px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	display: block;
+	overflow: hidden;
+}
 #content .scene.events div.calendar ul.month li.day {}
 #content .scene.events div.calendar ul.month li.today > span {background-color: #26962d; color: #ffffff;
 	font-weight: 700; border-bottom-right-radius: 5px;
 }
-#content .scene.events div.calendar ul.month li.weekend {background: #ededed;
+#content .scene.events div.calendar ul.month li.weekend {background: rgba(38, 150, 45, 0.1);
 	font-weight: 100;
 }
 #content .scene.events div.calendar ul.month li.prev_month,
@@ -1178,9 +1143,9 @@ body.front #page.fixed {width: auto; margin: 0;}
 	font-weight: 100;
 }
 #content .scene.events div.calendar ul.month li.empty.weekend {color: #bbbbbb;}
-#content .scene div.all_events {display: none;}
-#content .scene div.all_events h2 {padding-bottom: 15px;}
-#content .scene div.all_events h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
+#content .scene.events div.all_events {display: none;}
+#content .scene.events div.all_events h2 {padding-bottom: 15px;}
+#content .scene.events div.all_events h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
 	font-family: "OpenSans", Verdana, Arial, sans-serif;
 }
 #content .scene ul.events li.event {padding-bottom: 0;}
@@ -1216,193 +1181,60 @@ body.front #page.fixed {width: auto; margin: 0;}
 #content .scene.event div.event ul.location {display: block;}
 #content .scene.event div.event ul.location li.name {padding-bottom: 10px; font-size: 15px;}
 #content .scene.event div.event ul.location ul {padding-left: 0; padding-right: 0;}
-#content .scene.messages ul.info,
-#content .scene.messages ul.info li.modified_at {display: block;}
-#content .scene.signup h1 {text-align: center;}
-#content .scene.signup h1 + h2 {text-align: center;}
-#content .scene.signup h1,
-#content .scene.signup h2,
-#content .scene.signup h3,
-#content .scene.signup h4,
-#content .scene.signup p {margin: 0 auto;}
-#content .scene.signup div.sharing {width: 640px; margin: 0 auto;}
-div.field.range {padding-bottom: 8px;}
-div.field.range input {display: block; width: 100%; height: 6px; background: #26962d; outline: none; border-radius: 5px; padding: 0; box-shadow: none;
-	-webkit-appearance: none;
-}
-div.field.focus.range input {background-color: #34cc3d; border-color: #ffffff;}
-div.field.range input::-webkit-slider-runnable-track {width: 100%; height: 6px; cursor: pointer; background: #26962d; border-radius: 5px; padding: 0;
-	-webkit-appearance: none;
-}
-div.field.focus.range input::-webkit-slider-runnable-track {background-color: #34cc3d; border-color: #ffffff;}
-div.field.range input::-ms-fill-lower {background: #26962d; border-radius: 0;}
-div.field.range input:focus::-ms-fill-lower {background: #26962d;}
-div.field.range input::-ms-fill-upper {background: #26962d; border-radius: 0;}
-div.field.range input:focus::-ms-fill-upper {background: #26962d;}
-div.field.range input::-webkit-slider-thumb {box-shadow: 1px 1px 5px 0px #8a8a8a; border: 3px solid #26962d; height: 32px; width: 32px; border-radius: 100%; background: #ffffff; cursor: pointer; margin-top: -14px;
-	-webkit-appearance: none;
-}
-div.field.range input::-moz-range-thumb {box-shadow: 1px 1px 5px 0px #8a8a8a; border: 3px solid #26962d; height: 26px; width: 26px; border-radius: 100%; background: #ffffff; cursor: pointer;}
-div.field.range input::-ms-thumb {box-shadow: 1px 1px 5px 0px #8a8a8a; border: 3px solid #26962d; height: 26px; width: 26px; border-radius: 100%; background: #ffffff; cursor: pointer;}
-div.field.range.focus input::-webkit-slider-thumb {border-color: #34cc3d;}
-div.field.range.focus input::-moz-range-thumb {border-color: #34cc3d;}
-div.field.range.focus input::-ms-thumb {border-color: #34cc3d;}
-div.field.range div.input_wrapper {padding: 0 0 30px; width: 300px; margin: 0 auto;}
-div.field.range div.input_wrapper div.input {padding: 20px 22px; text-align: center; font-size: 56px; height: 80px; border-radius: 3px; margin: 2px; border: 1px solid #dcdcdc; box-shadow: inset 0 1px 2px #dedede; outline: none;}
-div.field.range div.input_wrapper div.input.focus {margin: 0;border: 3px solid #5c5c5c;}
-div.field.range .help {display: none !important;}
-#content .scene div.membership {width: 640px; margin: 0 auto;}
-#content .scene div.membership ul.actions {text-align: center; margin: 20px 0; width: 500px;}
-#content .scene div.membership ul.actions li {padding: 0; display: block;}
-#content .scene div.membership ul.actions li input {font-size: 28px; height: 55px; padding: 0 40px 5px; line-height: 50px;}
-#content .scene div.donation {width: 640px; margin: 0 auto;}
-#content .scene h2.center {text-align: center;}
-#content .scene div.donation div.field.range div.input_wrapper {width: 350px;}
-#content .scene div.donation div.field.range div.input_wrapper div.input {font-size: 44px; height: 70px;}
-#content .scene div.donation ul.actions {text-align: center; margin: 20px 0; width: 500px;}
-#content .scene div.donation ul.actions li {padding: 0; display: block;}
-#content .scene div.donation ul.actions li input {font-size: 22px; height: 44px; padding: 0 40px 5px; line-height: 50px;}
-#content .scene div.memberships ul.memberships {list-style: none; margin: 0; padding-top: 20px; padding-bottom: 30px; font-size: 0; position: relative; width: auto;}
-#content .scene div.memberships ul.memberships > li {display: inline-block; vertical-align: top; 
-	height: 520px;
-	width: calc(20% - 27px); 
-	padding: 10px; 
-	margin: 0 0 5px;
-	border-left: 1px solid #26962d; 
-	border-top: 1px solid #26962d; 
-	border-bottom: 1px solid #26962d; 
-	position: relative;
-	border-top-left-radius: 5px;
-	border-bottom-left-radius: 5px;
-}
-#content .scene div.memberships ul.memberships > li:nth-child(3) {border-radius: 0;}
-#content .scene div.memberships ul.memberships > li h3 {color: #26962d; padding-bottom: 3px;
-	font-family: "PT Serif", Times, serif;
-}
-#content .scene div.memberships ul.memberships > li h2,
-#content .scene div.memberships ul.memberships > li h3,
-#content .scene div.memberships ul.memberships > li h4,
-#content .scene div.memberships ul.memberships > li p,
-#content .scene div.memberships ul.memberships > li dl {width: auto; padding-left: 0px; padding-right: 0px; text-align: center; white-space: nowrap;}
-#content .scene div.memberships ul.memberships > li ul {padding: 0; width: auto; text-align: center;}
-#content .scene div.memberships ul.memberships > li ul.actions {position: absolute; bottom: 10px; left: 10px; width: calc(100% - 20px);}
-#content .scene div.memberships ul.memberships > li ul.actions li {display: block; padding: 0;}
-#content .scene div.memberships ul.memberships > li ul.actions li.readmore {text-align: center; padding-bottom: 7px;}
-#content .scene div.memberships ul.memberships > li ul.actions li input {display: block; width: 100%;}
-#content .scene div.memberships ul.memberships > li h3 {height: 25px;}
-#content .scene div.memberships ul.memberships > li ul.offer li.price {height: 14px;}
-#content .scene div.memberships ul.memberships > li ul.offer .description p {height: 20px;}
-#content .scene div.memberships ul.memberships > li ul.offer .description ul {list-style: none; margin: 0;}
-#content .scene div.memberships ul.memberships > li ul.offer .description li {border-bottom: 1px solid #26962d;
-	height: 20px; padding: 10px; position: relative;
-	text-indent: -9999px;
-}
-#content .scene div.memberships ul.memberships > li ul.offer .description li:last-child {border: none;}
-#content .scene div.memberships ul.memberships > li ul.offer .description li > svg.checkmark {top: calc(50% - 8px); left: calc(50% - 8px);}
-#content .scene div.memberships ul.memberships > li ul.offer .description li > svg.checkmark line {stroke: #26962d;}
-#content .scene div.memberships ul.memberships > li.benefits ul {padding: 91px 0 0; margin: 0;}
-#content .scene div.memberships ul.memberships > li.benefits {border: none;
-	padding: 10px 5px 10px 0px;
-	width: calc(20% - 5px);
-}
-#content .scene div.memberships ul.memberships > li.benefits li {list-style: none; font-size: 13px; border-bottom: 1px solid #26962d;
-	text-align: right; height: 40px; padding: 0 10px;
-	z-index: 10;
-	position: relative;
-}
-#content .scene div.memberships ul.memberships > li.benefits li:last-child {border: none;}
-#content .scene div.memberships ul.memberships > li.benefits li span.table {display: table; border: none; margin: 0; padding: 0; height: 40px; width: 100%;}
-#content .scene div.memberships ul.memberships > li.benefits li span.cell {display: table-cell; vertical-align: middle; color: #26962d;}
-#content .scene div.memberships ul.memberships > li.benefits li div.explanation {
-	text-align: left;
-	width: 300px;
-	position: absolute;
-	top: 0; left: 20%;
-	padding: 12px;
-	border: 1px solid #777777;
-	background: #ffffff;
-	color: #777777;
-	border-radius: 5px;
-	box-shadow: 0 1px 1px #777777;
-}
-#content .scene div.memberships ul.memberships > li.cowork {
-	border-radius: 5px;
-	border-right: 1px solid #26962d;
-}
-#content .scene div.memberships ul.memberships > li.allin {z-index: 2;  background-color: #ffffff; 
-	width: calc(20% - 7px); padding-top: 15px; margin: -12px -6px 0 -5px; height: 541px;
-	border: 2px solid #26962d; border-radius: 5px;
-}
-#content .scene div.memberships ul.memberships > li.allin h3 {
-	font-size: 24px;
-	height: 30px;
-	padding-bottom: 4px;
-}
-#content .scene div.memberships ul.memberships > li.allin ul.actions {bottom: 10px;}
-#content .scene div.memberships ul.memberships > li.allin ul.actions li input {height: 52px; padding-top: 2px; 
-	font-weight: 600; font-size: 18px;
-}
-#content .scene.signup .articlebody h2.maillist {padding-bottom: 10px;}
-#content .scene.signup div.maillist {border: 1px solid #26962d; position: relative; margin: 0 auto 50px;
-	border-radius: 5px; padding: 22px 20px 15px; width: 456px;
-}
-#content .scene.signup div.maillist form.maillist {font-size: 0;}
-#content .scene.signup div.maillist fieldset { margin: 0 0 20px; }
-#content .scene.signup div.maillist ul.actions {padding: 0;}
-#content .scene.signup div.maillist div.field {padding: 0;}
-#content .scene.signup div.maillist div.field.email > input {width: calc(100% - 40px);}
-#content .scene.signup div.maillist div.field.checkbox {margin-top: 10px;}
-#content .scene.signup div.maillist div.field .indicator {left: auto; right: -10px;}
-#content .scene.signup div.maillist div.field .help {left: 460px; }
-#content .scene.signup div.maillist ul.actions li {}
-#content .scene.signup div.maillist ul.actions input {width: 150px;}
-#content .scene.membership div.article ul.offer {padding: 20px 70px 15px;}
-#content .scene.membership div.article ul.offer li.default {font-size: 14px;}
-#content .scene.membership div.article ul.offer li {font-size: 30px; display: block;}
-#content .scene.membership div.article ul.offer li.description {display: none;}
-#content .scene.membership div.article form {}
-#content .scene.membership ul.memberships li.membership {padding-bottom: 0;}
-#content .scene.membership ul.memberships li.membership h3 {padding-bottom: 5px;}
-#content .scene.membership ul.memberships li.membership ul.offer {padding: 0 70px 10px;}
-#content .scene.membership ul.memberships li.membership ul.offer li {}
-#content .scene.membership ul.memberships li.membership ul.offer li {}
+#content .scene.event div.related {padding-top: 76px;}
+#content .scene.event div.tickets {padding-top: 76px;}
+#content .scene.event div.tickets li.ticket {padding-bottom: 40px;}
+#content .scene.event div.tickets ul.ticket_info {padding: 0;}
+#content .scene.event div.tickets ul.ticket_info li.price {font-size: 34px;}
+#content .scene.event div.tickets ul.ticket_info li.buy ul.actions {padding: 20px 0 0;}
+#content .scene.event div.tickets ul.ticket_info li.buy ul.actions li {padding: 0;}
+
+
+/*s-shop.css*/
 #content .scene.cart .messages {display: none;}
 #content .scene.cart div.all_items h2 {padding-bottom: 15px;}
 #content .scene.cart ul.items > li {padding: 20px 0 10px;}
-#content .scene.cart ul.items li h3 {width: auto; font-size: 16px;}
+#content .scene.cart ul.items li h3 {max-width: none; font-size: 16px;}
 #content .scene.cart ul.items li h3 > span {display: inline-block; vertical-align: top; padding-top: 4px;}
 #content .scene.cart ul.items li h3 form {display: inline-block; vertical-align: top; position: relative;}
 #content .scene.cart ul.items li h3 form div.field {padding: 0;}
+#content .scene.cart ul.items li h3 form div.field label {display: none;}
 #content .scene.cart ul.items li h3 form div.field .indicator {display: none;}
 #content .scene.cart ul.items li h3 form div.field .help {left: 47px; display: none;}
-#content .scene.cart ul.items li h3 form div.field input {height: 20px; width: 25px; text-align: right;}
-#content .scene.cart ul.items li h3 form > ul.actions {padding: 0; right: 45px; top: 0;}
-#content .scene.cart ul.items li h3 form > ul.actions li {padding: 8px 0 0;}
+#content .scene.cart ul.items li h3 form div.field input {height: 25px; width: 45px; text-align: right;}
+#content .scene.cart ul.items li h3 form > ul.actions {padding: 0; right: 50px; top: 0;}
+#content .scene.cart ul.items li h3 form > ul.actions li {padding: 5px 0 0;}
 #content .scene.cart ul.items li h3 form > ul.actions input.button {width: 16px; height: 16px; padding: 0; text-indent: -9999px; border-radius: 15px;
 	background-image: url(../assets/janitor/admin/img/gx_refresh.png);
 	background-position: center center;
 	background-repeat: no-repeat;
 }
-#content .scene.cart ul.items li p {padding-bottom: 10px;}
+#content .scene.cart ul.items li.item h3 {
+	padding-right: 50px;
+}
+#content .scene.cart ul.items li p {padding-bottom: 10px; max-width: none;}
 #content .scene.cart ul.items li p.subscription_method+p.membership {margin-top: -10px;}
 #content .scene.cart ul.items li span.total_price {float: right;}
 #content .scene.cart ul.items li.total {border-top: 1px solid #dedede;}
 #content .scene.cart ul.items li.total h3 {font-size: 20px;}
-#content .scene.cart ul.items li.total p {font-size: 16px; width: auto;}
+#content .scene.cart ul.items li.total p {font-size: 16px;}
 #content .scene.cart ul.items li.total p span.total_vat {float: right;}
-#content .scene.cart ul.items li ul.actions {padding: 0; top: 20px; position: absolute; right: 15px;}
-#content .scene.cart ul.items li ul.actions li.delete input {width: 30px; overflow: hidden; text-indent: -9999px;
+#content .scene.cart ul.items li ul.actions {padding: 0; top: 18px; position: absolute; right: 10px;}
+#content .scene.cart ul.items li ul.actions li.delete {padding: 0;}
+#content .scene.cart ul.items li ul.actions li.delete input {width: 30px; height: 30px; overflow: hidden; text-indent: -9999px;
 	background-image: url(../assets/janitor/admin/img/bg_icons.png);
 	background-position: 8px -42px;
 	background-repeat: no-repeat;
 }
 #content .scene.cart ul.items li ul.actions li.delete input.confirm {width: auto; text-indent: 0; background-image: none;}
 #content .scene.cart div.checkout {padding: 20px 0;}
+#content .scene.checkout .c100 {padding-top: 76px;}
 #content .scene.checkout div.confirm {padding: 20px 0;}
 #content .scene.checkout div.emptycart,
 #content .scene.checkout div.login,
 #content .scene.checkout div.signup,
 #content .scene.checkout div.contact,
+#content .scene.checkout div.delivery,
 #content .scene.checkout div.all_items {padding: 0 0 30px;}
 #content .scene.checkout div.confirm,
 #content .scene.checkout div.payment_method {padding: 20px 0 50px;}
@@ -1416,15 +1248,18 @@ div.field.range .help {display: none !important;}
 #content .scene.checkout div.delivery h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
 	font-family: "OpenSans", Verdana, Arial, sans-serif;
 }
-#content .scene.checkout form li.forgot {padding: 7px 0 0;}
+#content .scene.checkout form.signup {
+	max-width: 600px;
+}
+#content .scene.checkout form li.forgot {padding: 8px 0 0;}
 #content .scene.checkout form li.forgot a {padding: 0; display: inline-block; vertical-align: top;}
 #content .scene.checkout ul.items > li {padding: 20px 0 10px;}
-#content .scene.checkout ul.items li h3 {width: auto; font-size: 16px;}
+#content .scene.checkout ul.items li h3 {max-width: none; font-size: 16px;}
 #content .scene.checkout ul.items li h3 > span {display: inline-block; vertical-align: top; padding-top: 4px;}
-#content .scene.checkout ul.items li p {padding-bottom: 10px;}
+#content .scene.checkout ul.items li p {max-width: none; padding-bottom: 10px;}
 #content .scene.checkout ul.items li p.subscription_method+p.membership {margin-top: -10px;}
 #content .scene.checkout ul.items li span.total_price {float: right;}
-#content .scene.checkout ul.items li.total {border-top: 1px solid #dedede; }
+#content .scene.checkout ul.items li.total {border-top: 1px solid #dedede;}
 #content .scene.checkout ul.items li.total h3 {font-size: 20px;}
 #content .scene.checkout ul.items li.total p {font-size: 16px; width: auto;}
 #content .scene.checkout ul.items li.total p span.total_vat {float: right;}
@@ -1432,16 +1267,20 @@ div.field.range .help {display: none !important;}
 #content .scene.checkout ul.payment_methods li.payment_method {padding-bottom: 10px;}
 #content .scene.checkout ul.payment_methods li.payment_method ul.actions {padding-bottom: 0;}
 #content .scene.checkout ul.payment_methods li.payment_method.stripe p {
-	background: url(../img/gx_creditcards.png) no-repeat 70px top;
+	background: url(../img/gx_creditcards.png) no-repeat 50px top;
 	background-size: auto 17px;
-	padding-left: 170px;
+	padding-left: 150px;
+}
+#content .scene.shopAddress div.addresses {
+	border-bottom: 1px solid #dedede;
 }
 #content .scene.shopAddress ul.addresses {}
-#content .scene.shopAddress ul.addresses > li {display: inline-block; vertical-align: top; width: 250px; padding: 20px 20px 70px; box-sizing: border-box; border-radius: 5px; border: 1px solid #dedede; margin-bottom: 30px; margin-right: 30px; position: relative;}
+#content .scene.shopAddress ul.addresses > li {display: inline-block; vertical-align: top; width: 250px; padding: 20px 20px 70px; box-sizing: border-box; border: 1px solid #dedede; margin-bottom: 30px; margin-right: 30px; position: relative;}
+#content .scene.shopAddress ul.addresses > li.selected {border-color: #26962d; border-width: 3px;}
 #content .scene.shopAddress ul.addresses > li h3 {width: auto; padding-left: 0; padding-right: 0;}
 #content .scene.shopAddress ul.addresses > li > div {color: #777777;}
 #content .scene.shopAddress ul.addresses > li ul.actions {padding: 0; position: absolute; bottom: 10px; left: 20px;}
-#content .scene.shopAddress div.item {border-top: 1px solid #dedede; padding-top: 20px;}
+#content .scene.shopAddress div.item {padding-top: 20px;}
 #content .scene.shopPayment {}
 #content .scene.shopPayment dl.amount {}
 #content .scene.shopPayment dl.amount dt {width: auto; font-size: 18px; display: block; text-align: left;}
@@ -1450,9 +1289,9 @@ div.field.range .help {display: none !important;}
 #content .scene.shopPayment ul.payment_methods li.payment_method {padding-bottom: 10px;}
 #content .scene.shopPayment ul.payment_methods li.payment_method ul.actions {padding-bottom: 0;}
 #content .scene.shopPayment ul.payment_methods li.payment_method.stripe p {
-	background: url(../img/gx_creditcards.png) no-repeat 70px top;
+	background: url(../img/gx_creditcards.png) no-repeat 50px top;
 	background-size: auto 17px;
-	padding-left: 170px;
+	padding-left: 150px;
 }
 #content .scene.shopPayment.stripe h1,
 #content .scene.shopPayment.stripe h2,
@@ -1461,10 +1300,9 @@ div.field.range .help {display: none !important;}
 #content .scene.shopPayment.stripe p.note {padding-top: 10px; padding-bottom: 40px;
 	background: url(../img/gx_creditcards.png) no-repeat center bottom;
 }
-#content .scene.shopPayment.stripe form {width: 200px; margin: 15px auto 20px;}
+#content .scene.shopPayment.stripe form {width: 280px; margin: 15px auto 20px;}
 #content .scene.shopPayment.stripe form div.field {padding-left: 0; padding-right: 0; padding-bottom: 10px;}
-#content .scene.shopPayment.stripe form div.field label {display: block; font-size: 11px; line-height: 11px; padding: 0 0 1px 4px;}
-#content .scene.shopPayment.stripe form div.field.card input {width: 182px;}
+#content .scene.shopPayment.stripe form div.field label {opacity: 1;}
 #content .scene.shopPayment.stripe form div.field.card input.visa {
 	background: url(../img/gx_visa_small.png) no-repeat right 7px;
 }
@@ -1477,32 +1315,32 @@ div.field.range .help {display: none !important;}
 #content .scene.shopPayment.stripe form div.field.exp_month,
 #content .scene.shopPayment.stripe form div.field.exp_year,
 #content .scene.shopPayment.stripe form div.field.cvc {display: inline-block; vertical-align: top;}
-#content .scene.shopPayment.stripe form div.field.exp_month input {width: 24px;}
-#content .scene.shopPayment.stripe form div.field.exp_year input {width: 24px;}
+#content .scene.shopPayment.stripe form div.field.exp_month input {width: 56px;}
+#content .scene.shopPayment.stripe form div.field.exp_year input {width: 56px;}
 #content .scene.shopPayment.stripe form div.field.cvc {float: right;}
-#content .scene.shopPayment.stripe form div.field.cvc input {width: 44px;}
+#content .scene.shopPayment.stripe form div.field.cvc input {width: 66px;}
 #content .scene.shopPayment.stripe form ul.actions {padding: 10px 2px;}
 #content .scene.shopPayment.stripe form ul.actions li {padding: 0; display: block;}
 #content .scene.shopPayment.stripe form ul.actions li input {width: 100%;}
-#content .scene.shopPayment.stripe form div.field.card div.indicator {display: none; left: 203px; top: 16px;}
+#content .scene.shopPayment.stripe form div.field.card div.indicator {display: none; right: -21px; top: 16px;}
 #content .scene.shopPayment.stripe form div.field.card.correct div.indicator {display: block;}
-#content .scene.shopPayment.stripe form div.field.card div.help {left: 225px;}
+#content .scene.shopPayment.stripe form div.field.card div.help {left: 302px;}
 #content .scene.shopPayment.stripe form div.field.exp_month div.indicator {display: none;}
-#content .scene.shopPayment.stripe form div.field.exp_month div.help {left: 225px;}
-#content .scene.shopPayment.stripe form div.field.exp_year div.indicator {display: none; left: 45px; top: 16px;}
+#content .scene.shopPayment.stripe form div.field.exp_month div.help {left: 304px;}
+#content .scene.shopPayment.stripe form div.field.exp_year div.indicator {display: none; left: 55px; top: 16px;}
 #content .scene.shopPayment.stripe form div.field.exp_year.correct div.indicator {display: block;}
-#content .scene.shopPayment.stripe form div.field.exp_year div.help {left: 169px;}
+#content .scene.shopPayment.stripe form div.field.exp_year div.help {left: 234px;}
 #content .scene.shopPayment.stripe form span.slash {display: inline-block; vertical-align: top; padding: 16px 4px 0 0; font-size: 16px;}
-#content .scene.shopPayment.stripe form div.field.cvc div.indicator {display: none; left: 65px; top: 16px;}
+#content .scene.shopPayment.stripe form div.field.cvc div.indicator {display: none; left: 64px; top: 16px;}
 #content .scene.shopPayment.stripe form div.field.cvc.correct div.indicator {display: block;}
-#content .scene.shopPayment.stripe form div.field.cvc div.help {left: 87px;}
+#content .scene.shopPayment.stripe form div.field.cvc div.help {left: 90px;}
 #content .scene.shopPayment.stripe div.field.hover.correct div.hint {display: none;}
 #content .scene.shopPayment.stripe div.field.focus.correct div.hint {display: block;}
-#content .scene.shopPayment.stripe div.cartitems {width: 335px; margin: 15px auto 20px;}
+#content .scene.shopPayment.stripe div.cartitems {width: 380px; margin: 15px auto 20px;}
 #content .scene.shopPayment.stripe div.cartitems ul.cartitems {padding-bottom: 30px;}
 #content .scene.shopPayment.stripe div.cartitems li.modify {display: block; padding-right: 0; text-align: center;}
 #content .scene.shopPayment.stripe div.cartitems h3 {width: auto;}
-#content .scene.shopPayment.stripe div.orderitems {width: 335px; margin: 15px auto 20px;}
+#content .scene.shopPayment.stripe div.orderitems {width: 380px; margin: 15px auto 20px;}
 #content .scene.shopPayment.stripe div.orderitems ul.orderitems {padding-bottom: 30px;}
 #content .scene.shopPayment.stripe div.orderitems h3,
 #content .scene.shopPayment.stripe div.orderitems p {text-align: left; width: auto;}
@@ -1514,41 +1352,12 @@ div.field.range .help {display: none !important;}
 #content .scene.shopReceipt div.membership_info,
 #content .scene.shopReceipt div.activation_info,
 #content .scene.shopReceipt div.order_info {padding: 0 0 20px;}
-#content .scene div.todos {padding-bottom: 15px; position: relative; z-index: 1;}
-#content .scene div.todos h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
-#content .scene div.todos h2 svg.arrow {position: absolute; top: 6px; right: 55px;}
-#content .scene div.todos h2 svg.arrow line {stroke: #dedede; stroke-width: 3px;}
-#content .scene div.todos > p,
-#content .scene div.todos ul.todos,
-#content .scene div.todos ul.actions {display: none;}
-#content .scene div.todos.open h2 {color: #00c90d;}
-#content .scene div.todos.open > p,
-#content .scene div.todos.open ul.todos,
-#content .scene div.todos.open ul.actions {display: block;}
-#content .scene div.todos > p {color: #999999; font-size: 13px; padding-bottom: 25px;}
-#content .scene div.todos ul.todos {padding-bottom: 18px;}
-#content .scene div.todos ul.todos {list-style-position: outside; list-style-type: disc; margin-left: 15px; width: 485px;}
-#content .scene div.todos ul.todos li {font-size: 14px; padding-bottom: 7px; padding-left: 3px;}
-#content .scene div.todos .field {padding-bottom: 10px;}
-#content .scene div.qnas {padding-bottom: 15px; position: relative; z-index: 1;}
-#content .scene div.qnas h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
-#content .scene div.qnas h2 svg.arrow {position: absolute; top: 6px; right: 55px;}
-#content .scene div.qnas h2 svg.arrow line {stroke: #dedede; stroke-width: 3px;}
-#content .scene div.qnas > p,
-#content .scene div.qnas ul.qnas,
-#content .scene div.qnas ul.actions {display: none;}
-#content .scene div.qnas.open h2 {color: #00c90d;}
-#content .scene div.qnas.open > p,
-#content .scene div.qnas.open ul.qnas,
-#content .scene div.qnas.open ul.actions {display: block;}
-#content .scene div.qnas > p {color: #999999; font-size: 13px; padding-bottom: 25px;}
-#content .scene div.qnas ul.qnas {padding: 0; margin: 0;}
-#content .scene div.qnas ul.qnas > li {padding-bottom: 10px; padding-left: 0;}
-#content .scene div.qnas ul.qnas > li ul.info {padding-bottom: 0; margin: 0; list-style: none;}
-#content .scene div.qnas ul.qnas > li ul.info li {display: inline-block; vertical-align: top; color: #999999; font-size: 12px; padding-bottom: 0; padding-left: 0;}
-#content .scene div.qnas ul.qnas > li ul.info li.user:after {content: ",\00a0";}
-#content .scene div.qnas ul.qnas > li p.question {padding-bottom: 15px; font-size: 13px;}
-#content .scene div.qnas .field {padding-bottom: 10px;}
+#content .scene.shopPayment form.login,
+#content .scene.shopPayments form.login {max-width: 500px; margin: 0 auto;}
+#content .scene.verify .c100 {padding-top: 76px;}
+
+
+/*s-tickets.css*/
 #content .scene.tickets div.tickets li.ticket h3 {font-size: 34px;}
 #content .scene.tickets div.tickets li.ticket ul.ticket_info {position: absolute; right: 0px; top: 16px; text-align: right;}
 #content .scene.tickets div.tickets li.ticket ul.ticket_info li.price {font-size: 34px;}
@@ -1557,39 +1366,74 @@ div.field.range .help {display: none !important;}
 #content .scene.ticket div.ticket ul.ticket_info li.price {font-size: 34px;}
 #content .scene.ticket div.ticket ul.ticket_info li.buy ul.actions {padding: 40px 0 0;}
 #content .scene.ticket div.ticket ul.ticket_info li.buy ul.actions li {padding: 0;}
-#content .scene.event div.tickets li.ticket {padding-bottom: 40px;}
-#content .scene.event div.tickets ul.ticket_info {padding: 0;}
-#content .scene.event div.tickets ul.ticket_info li.price {font-size: 34px;}
-#content .scene.event div.tickets ul.ticket_info li.buy ul.actions {padding: 20px 0 0;}
-#content .scene.event div.tickets ul.ticket_info li.buy ul.actions li {padding: 0;}
-#content .scene .articlebody p.quote {
-	font-size: 30px;
-	text-align: center;
-	font-family: "PT Serif", Times, serif;
-	padding-top: 20px;
-	padding-bottom: 40px;
-}
-#content .scene.blogs ul.blogs li.blog h3,
-#content .scene.blogs ul.blogs li.blog dl.author,
-#content .scene.blogs ul.blogs li.blog p {padding-left: 0;}
-#content .scene.blogs ul.blogs li.blog h3 {font-size: 30px; padding-bottom: 7px;}
-#content .scene.blogs ul.blogs li.blog dl.author dt:after {content: "";}
-#content .scene.blogs ul.blogs li.blog dl.author dt,
-#content .scene.blogs ul.blogs li.blog dl.author dd {font-style: italic; width: auto;}
-#content .scene.blog h1 {font-size: 54px;}
-#content .scene.blog h2 {font-size: 40px;}
-#content .scene.blog h3 {color: #26962d;}
-#content .scene.blog ul.info {padding-top: 20px; padding-bottom: 46px;}
-#content .scene.blog ul.info li {font-size: 14px; line-height: 14px;}
-#content .scene.blogs .articlebody p,
-#content .scene.blog .articlebody p {font-size: 17px; line-height: 1.6em; padding-bottom: 30px;}
-#content .scene.blog .articlebody li {font-size: 17px; line-height: 1.6em; padding-bottom: 15px;}
-#content .scene.blog dl.author {padding-bottom: 20px; width: auto;}
-#content .scene.blog dl.author dt,
-#content .scene.blog dl.author dd {width: auto; display: block; text-align: left;}
-#content .scene.blog dl.author dt:after {content: "";}
-#content .scene.blog dl.author dd {font-size: 14px; line-height: 1.5em;}
-#content .scene.blog dl.author dt.bio {padding-top: 10px;}
+
+
+/*s-services.css*/
+#content .scene div.all_services {padding: 0 25px; font-size: 0;}
+#content .scene div.all_services ul.services li.service {padding-top: 30px; padding-bottom: 15px; overflow: hidden;}
+#content .scene div.all_services ul.services li.service div.image {float: left; width: 35%; margin-right: 30px;}
+
+
+/*s-projects.css*/
+#content .scene.projects div.all_projects {padding: 0 25px; font-size: 0;}
+#content .scene.projects div.all_projects ul.projects li.project {padding-top: 30px; padding-bottom: 15px; overflow: hidden;}
+#content .scene div.all_projects ul.projects li.project div.image {float: left; width: 35%; margin-right: 30px;}
+
+
+/*s-wishlist.css*/
+#content .scene ul.wishes {padding-left: 50px; padding-right: 50px;}
+#content .scene ul.wishes > li h3 {padding: 0 0 10px;}
+#content .scene ul.wishes > li div.description p {padding: 0px 0 10px;}
+#content .scene ul.wishes.images > li .image,
+#content .scene ul.wishes.images > li .text {display: inline-block; vertical-align: top;}
+#content .scene ul.wishes.images > li .image {width: 250px; height: 140px; background-position: center center; background-size: 100% auto; background-repeat: no-repeat; margin-bottom: 0px; cursor: default;}
+#content .scene ul.wishes.images > li h3 {padding: 0 25px 10px;}
+#content .scene ul.wishes.images > li div.description p {padding: 0 25px 10px;}
+#content .scene ul.wishes > li div.description p.available,
+#content .scene ul.wishes > li div.description p.reserved {padding-top: 5px;}
+#content .scene ul.wishes > li div.description p.available span
+#content .scene ul.wishes > li div.description p.reserved span {font-style: italic;}
+#content .scene ul.wishes > li div.description p.available span {color: #bbbbbb;}
+#content .scene ul.wishes > li > ul.actions,
+#content .scene ul.wishes > li > .text > ul.actions {position: absolute; top: 20px; right: 0px; padding: 0;}
+#content .scene ul.wishes > li > ul.actions li,
+#content .scene ul.wishes > li > .text > ul.actions li {padding-right: 0;}
+#content .scene ul.wishes > li > ul.actions form div.field,
+#content .scene ul.wishes > li > .text > ul.actions form div.field {display: inline-block; vertical-align: top; padding: 0 10px;}
+#content .scene ul.wishes > li > ul.actions form div.field input,
+#content .scene ul.wishes > li > .text > ul.actions form div.field input {width: 200px; display: none;}
+#content .scene ul.wishes > li > ul.actions form input[type=submit],
+#content .scene ul.wishes > li > .text > ul.actions form input[type=submit] {display: inline-block; vertical-align: top; margin-top: 3px;}
+#content .scene ul.wishes dl.info {padding: 0 25px 10px;}
+#content .scene ul.wishes dl.info dt.price {display: inline-block; vertical-align: top; width: auto;}
+#content .scene ul.wishes dl.info dd.price {display: inline-block; vertical-align: top; width: auto;}
+#content .scene ul.wishes dl.info dt.link {display: none;}
+#content .scene ul.wishes dl.info dd.link {font-size: 13px; display: block; width: auto;}
+
+/*s-messages.css*/
+#content .scene.messages ul.info,
+#content .scene.messages ul.info li.modified_at {display: block;}
+
+
+/*s-black.css*/
+body.black *,
+body.black #header .logo,
+body.black #content .scene a,
+body.black #content .scene p,
+body.black #content .scene div.comments.open h2,
+body.black #footer a {color: #000000;}
+body.black #content .scene a:not(.button) {text-decoration: underline;}
+body.black #content .scene div.article {max-width: 800px; margin: 0 auto;}
+body.black #content .scene ul.actions a.button,
+body.black #content .scene ul.actions input.button {background: #000000 !important; color: #ffffff;}
+body.black #navigation ul,
+body.black #header ul.servicenavigation {display: none;}
+#content .scene ul.articles li[class='item article id:255'] h3 {color: #000000 !important;}
+#content .scene ul.articles li[class='item article id:255'] p {color: #000000;}
+#content .scene ul.articles li[class='item article id:255'] a {color: #000000; text-decoration: underline;}
+
+
+/*s-corona.css*/
 #content .scene.corona {width: 740px; margin: 70px auto 0;}
 #content .scene.corona h1 {font-size: 54px;}
 #content .scene.corona h2 {font-size: 40px; padding-bottom: 60px;}
@@ -1617,24 +1461,14 @@ div.field.range .help {display: none !important;}
 #content .scene.corona div.signees h2 {padding-bottom: 30px;}
 #content .scene.corona div.signees ul.signees {font-size: 0;}
 #content .scene.corona div.signees ul.signees li {font-size: 20px; display: inline-block; vertical-align: top; width: 50%; padding-bottom: 15px;}
-body.black *,
-body.black #header .logo,
-body.black #content .scene a,
-body.black #content .scene p,
-body.black #content .scene div.comments.open h2,
-body.black #footer a {color: #000000;}
-body.black #content .scene a:not(.button) {text-decoration: underline;}
-body.black #content .scene ul.actions a.button,
-body.black #content .scene ul.actions input.button {background: #000000 !important; color: #ffffff;}
-body.black #navigation ul,
-body.black #header ul.servicenavigation {display: none;}
-#content .scene ul.articles li[class='item article id:255'] h3 {color: #000000 !important;}
-#content .scene ul.articles li[class='item article id:255'] p {color: #000000;}
-#content .scene ul.articles li[class='item article id:255'] a {color: #000000; text-decoration: underline;}
+
+
+/*s-verdensborger.css*/
 #content .scene.verdensborger .c .c100 {width: 40%;}
 #content .scene.verdensborger .c .c200 {width: 60%;}
 #content .scene.verdensborger div.signup {padding-bottom: 20px;}
 #content .scene.verdensborger div.signup form {padding-bottom: 20px;}
+#content .scene.verdensborger div.signup form ul.actions input {width: 100px;}
 #content .scene.verdensborger div.practicalities {padding-bottom: 40px;}
 #content .scene.verdensborger div.practicalities ul {list-style: disc; margin-left: 15px;}
 #content .scene.verdensborger div.practicalities ul li {padding-bottom: 10px;}
@@ -1672,212 +1506,52 @@ body.black #header ul.servicenavigation {display: none;}
 #content .scene.verdensborger .overdue,
 #content .scene.verdensborger .overdue a {color: #cdcdcd;}
 #content .scene.verdensborger .extendedpadding {padding-bottom: 35px;}
-#content .scene.eventProposal .c .c100 {width: 40%;}
-#content .scene.eventProposal .c .c200 {width: 60%;}
-#content .scene.eventProposal fieldset {padding-bottom: 30px;}
-#content .scene.eventProposal div.field input {
-	width: calc(100% - 18px);
-}
-#content .scene.eventProposal div.field.checkbox {
-	white-space: nowrap;
-}
-#content .scene.eventProposal div.field.checkbox input {
-	width: auto;
-}
-#content .scene.eventProposal div.field.checkbox label,
-#content .scene.eventProposal div.field.checkbox .help {
-	white-space: normal;
-}
-#content .scene.eventProposal div.field textarea {
-	width: calc(100% - 12px);
-}
-#content .scene.eventProposal div.field select {
-	width: calc(100% - 4px);
-	background-position: calc(100% + 18px) -977px;
-}
-#content .scene.eventProposal div.field.files {
-	width: calc(100% - 140px);
-}
-#content .scene.eventProposal div.field.files input {
-	width: 100%;
-}
-#content .scene.eventProposal div.field div.help {
-	left: auto;
-	right: -150px;
-}
-#content .scene.eventProposal div.field .indicator {
-	left: auto;
-	right: 40px;
-}
-#content .scene.eventProposal .criteria ul li {
-	display: inline-block;
-	width: 100px;
-	height: 100px;
-	margin: 0 10px 10px 0;
-}
-#content .scene.eventProposal .criteria ul li .field {
-	cursor: pointer;
-	padding: 0;
-	width: 100%;
-	height: 100%;
-}
-#content .scene.eventProposal .criteria ul li .field label {
-	text-indent: -1000px;
-	padding: 0;
-	width: 100%;
-	height: 100%;
-}
-#content .scene.eventProposal .criteria ul li .field input {
-	display: none;
-}	
-#content .scene.eventProposal .criteria ul li.criteria .field {
-	background-color: transparent;
-	background-repeat: no-repeat;
-	background-position: center center;
-	background-size: cover;
-}
-#content .scene.eventProposal .criteria ul li.criteria.personal_development .field {
-	background-image: url(../img/proposal/ic-personal_development.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.physical_exercise .field {
-	background-image: url(../img/proposal/ic-physical_exercise.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.brand_new .field {
-	background-image: url(../img/proposal/ic-brand_new.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.recycling_upcycling .field {
-	background-image: url(../img/proposal/ic-recycling_upcycling.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.authentic_relating .field {
-	background-image: url(../img/proposal/ic-authentic_relating.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.collaboration .field {
-	background-image: url(../img/proposal/ic-collaboration.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.community .field {
-	background-image: url(../img/proposal/ic-community.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.disruption .field {
-	background-image: url(../img/proposal/ic-disruption.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.documentary .field {
-	background-image: url(../img/proposal/ic-documentary.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.effective_communication .field {
-	background-image: url(../img/proposal/ic-effective_communication.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.environment .field {
-	background-image: url(../img/proposal/ic-environment.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.equality_fairness .field {
-	background-image: url(../img/proposal/ic-equality_fairness.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.food .field {
-	background-image: url(../img/proposal/ic-food.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.legal_rights .field {
-	background-image: url(../img/proposal/ic-legal_rights.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.maker_culture .field {
-	background-image: url(../img/proposal/ic-maker_culture.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.mindfulness .field {
-	background-image: url(../img/proposal/ic-mindfulness.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.musical_performance .field {
-	background-image: url(../img/proposal/ic-musical_performance.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.not_yet_mainstream .field {
-	background-image: url(../img/proposal/ic-not_yet_mainstream.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.repair_improve .field {
-	background-image: url(../img/proposal/ic-repair_improve.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.resource_sharing .field {
-	background-image: url(../img/proposal/ic-resource_sharing.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.self_sufficiency .field {
-	background-image: url(../img/proposal/ic-self_sufficiency.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.skill_development .field {
-	background-image: url(../img/proposal/ic-skill_development.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.technology .field {
-	background-image: url(../img/proposal/ic-technology.png);
-}
-#content .scene.eventProposal .criteria ul li.criteria.visual_creativity .field {
-	background-image: url(../img/proposal/ic-visual_creativity.png);
-}
-@media print {
-	#header .logo {position: absolute; left: 80px;}
-	#header .servicenavigation {display: none;}
-	#navigation {display: none;}
-	#footer {display: none;}
-	#content .scene.events {padding: 20px;}
-	#content .scene.events .article {display: none;}
-	#content .scene.events ul.events li.event {padding-top: 10px;}
-	#content .scene.events ul.events h3 {padding-bottom: 0; font-size: 18px;}
-	#content .scene.events ul.events p {padding-bottom: 10px; font-size: 12px;}
-}
 
 
-/*s-colorscheme.css*/
-* {color: #26962d;}
-body {}
-#header .logo {color: #34cc3d;}
-#navigation ul li {color: #34cc3d;}
-.front #header .logo,
-#navigation ul li.selected,
-#navigation ul li.path {color: #26962d;}
-#content .scene a,
-#content .scene ul.geo.active li.name {color: #34cc3d;}
-#content .scene hr {border-color: #ccdbcd;}
-ul.actions input.button.primary,
-ul.actions a.button.primary,
-#content ul.actions a.button.primary {background-color: #34cc3d; color: #ffffff;}
-#content .scene div.categories ul.tags li.selected a {background-color: #26962d;}
-#content .scene div.comments.open h2 {color: #34cc3d;}
-#content .scene h3,
-#content .scene h4,
-#content .scene h5,
-#content .scene h6,
-#content .scene p,
-#content .scene li,
-#content .scene dd,
-label,
-body > div#smartphone_switch p {color: #777777;}
-#footer {border-color: #ccdbcd;}
-#footer a {color: #34cc3d;}
-body > div.pagination li.next > svg.arrow line,
-body > div.pagination li.previous > svg.arrow line {stroke: #34cc3d;}
-body > div.pagination li.previous,
-body > div.pagination li.next {border-color: #34cc3d;}
-body > div.pagination li a {color: #34cc3d;}
-.terms_notification {background-color: #26962d;}
-.terms_notification .accept {background-color: #34cc3d;}
+/*s-hovers.css*/
+#header .logo:hover,
+#navigation ul li:hover {text-decoration: none;}
+#header .servicenavigation a:hover,
+#content .scene a:hover {text-decoration: underline;}
 .terms_notification .accept:hover {background-color: #ffffff; color: #26962d;}
-#navigation ul li.membership {color: #ffffff;
-	margin: 5px 10px;
-	padding: 5px 13px;
-	background-color: #34cc3d;
-	border-radius: 5px;
-	text-shadow: none;
-}
-
-
-/*s-pages-hovers.css*/
+.terms_notification .details:hover {text-decoration: underline;}
+ul.actions input.button:hover,
+ul.actions input.button:focus,
+ul.actions a.button:hover,
+ul.actions a.button:focus,
+#content ul.actions a.button:hover,
+#content ul.actions a.button:focus {background-color: #bebebe;}
 ul.actions input.button.primary:hover,
+ul.actions input.button.primary:focus,
 ul.actions a.button.primary:hover,
-#content ul.actions a.button.primary:hover {background-color: #26962d;}
+ul.actions a.button.primary.focus,
+#content ul.actions a.button.primary:hover,
+#content ul.actions a.button.primary.focus {background-color: #26962d;}
+ul.actions input.button.secondary:hover,
+ul.actions input.button.secondary.focus,
+ul.actions a.button.secondary:hover,
+ul.actions a.button.secondary.focus,
+#content ul.actions a.button.secondary:hover,
+#content ul.actions a.button.secondary.focus {background-color: #313942;}
+ul.actions input.button.disabled:hover,
+ul.actions input.button.disabled.focus,
+ul.actions a.button.disabled:hover,
+ul.actions a.button.disabled.focus,
+#content ul.actions a.button.disabled:hover,
+#content ul.actions a.button.disabled.focus {cursor: default !important; color: #aaaaaa !important; background-color: #eeeeee !important;}
+div.field.html ul.options li:hover {background-color: #64ad8e;}
+div.field.html .editor div.tag:hover .drag {display: block;}
+div.field.html .editor div.tag:hover .remove {display: block;}
+body #selection_options ul.actions input.button:hover,
+body #selection_options ul.actions a.button:hover {background-color: #313942;}
+#content .scene div.readstate:hover p {color: #000000;}
+#content .scene ul.geo.active li.name:hover {text-decoration: underline;}
+#content .scene .pagination .next:hover a,
+#content .scene .pagination .previous:hover a {background-color: #313942; color: #ffffff;}
+#content .scene div.image p a:hover {text-decoration: none;}
 #content .scene.front .link:hover {text-decoration: underline;}
-#content .scene ul.articles .article ul.tags li a:hover,
-#content .scene .article ul.tags a:hover {color: #34cc3d;}
 #content .scene div.comments h2:hover {color: #34cc3d;}
 #content .scene div.comments h2:hover svg.arrow line {stroke: #34cc3d;}
-#content .scene div.todos h2:hover {color: #34cc3d;}
-#content .scene div.todos h2:hover svg.arrow line {stroke: #34cc3d;}
-#content .scene div.qnas h2:hover {color: #34cc3d;}
-#content .scene div.qnas h2:hover svg.arrow line {stroke: #34cc3d;}
 body.black #content .scene div.comments h2:hover {color: #000000;}
 body.black #content .scene div.comments h2:hover svg.arrow line {stroke: #000000;}
 

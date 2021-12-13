@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-10-19 11:41:42
+asset-builder @ 2021-12-13 02:23:45
 */
 
 /*seg_smartphone_include.js*/
@@ -9163,6 +9163,10 @@ Util.Modules["defaultEditActions"] = new function() {
 				location.href = location.href.replace(/edit\/.+/, "edit/"+response.cms_object["id"]);
 			}
 		}
+		var bn_delete = u.qs("li.delete", node);
+		if(bn_delete && u.hc(bn_delete, "has_dependencies")) {
+			bn_delete.setAttribute("title", "This item has dependencies and cannot be deleted.");
+		}
 	}
 }
 
@@ -10353,48 +10357,27 @@ Util.Modules["flushUserSession"] = new function() {
 		}
 	}
 }
-Util.Modules["newSubscription"] = new function() {
-	this.init = function(form) {
-		u.f.init(form);
-		u.bug("init")
-		form.inputs["item_id"].changed = function() {
-			location.href = location.href.replace(/new\/([\d]+).+/, "new/$1") + "/" + this.val();
-		}
-		if(form.actions["cancel"]) {
-			form.actions["cancel"].clicked = function(event) {
-				location.href = this.url;
-			}
-		}
-		form.submitted = function(iN) {
-			this.response = function(response) {
-				page.notify(response);
-				if(response.cms_status == "success") {
-					location.href = this.actions["cancel"].url;
-				}
-			}
-			u.request(this, this.action, {"method":"post", "data" : this.getData()});
-		}
-	}
-}
 Util.Modules["unverifiedUsernames"] = new function() {
 	this.init = function(div) {
 		var i, node;
-		div.bn_remind_selected = u.qs("li.remind_selected");
-		div.selectionUpdated = function(response) {
-			if(response.length > 0) {
-				u.rc(this.bn_remind_selected.form[2], "disabled");				
+		u.bug("div", div)
+		div.bn_remind_selected = u.qs("li.remind_selected input[type=submit]");
+		div.selectionUpdated = function(inputs) {
+			u.bug("inputs", inputs, this.bn_remind_selected);
+			if(inputs.length > 0) {
+				u.rc(this.bn_remind_selected, "disabled");
 			}
 			else {
-				u.ac(this.bn_remind_selected.form[2], "disabled");
+				u.ac(this.bn_remind_selected, "disabled");
 			}
 			this.selected_username_ids = [];
-			for(i = 0; i < response.length; i++) {
-				node = response[i].node;
+			for(i = 0; i < inputs.length; i++) {
+				node = inputs[i].node;
 				node.username_id = u.cv(node, "username_id");
 				this.selected_username_ids.push(node.username_id);
 			}
 			this.selected_username_ids = this.selected_username_ids.join();
-			this.bn_remind_selected.form.inputs.selected_username_ids.val(this.selected_username_ids);
+			this.bn_remind_selected._form.inputs.selected_username_ids.val(this.selected_username_ids);
 		}
 		for(i = 0; node = div.nodes[i]; i++) {
 			node.bn_remind = u.qs("ul.actions li.remind", node);
@@ -10425,7 +10408,7 @@ Util.Modules["unverifiedUsernamesSelected"] = new function() {
 	this.init = function(ul) {
 		var bn_remind_selected = u.qs("li.remind_selected", ul);
 		bn_remind_selected.reminded = function(response) {
-			var obj;
+			var obj, i, node;
 			if(response.cms_status == "success") {
 				for(i = 0; i < response.cms_object.length; i++) {
 					obj = response.cms_object[i];
@@ -10465,6 +10448,43 @@ Util.Modules["editDataSection"] = new function() {
 						"display":"block"
 					})
 					u.f.init(this.change_form);
+				}
+			}
+			form.submitted = function() {
+				this.response = function(response) {
+					page.notify(response);
+					if(response && response.cms_status == "success") {
+						location.reload(true);
+					}
+				}
+				u.request(this, this.action, {"method":"post", "data":this.getData()});
+			}
+		}
+	}
+}
+Util.Modules["editComment"] = new function() {
+	this.init = function(div) {
+		var header = u.qs("h2", div);
+		var form = u.qs("form", div);
+		if(header && form) {
+			var action = u.ae(header, "span", {"html":"edit"});
+			action.change_form = form;
+			u.ce(action);
+			u.f.init(form);
+			action.clicked = function(event) {
+				if(this.change_form.is_open) {
+					this.change_form.is_open = false;
+					this.innerHTML = "Edit";
+					u.ass(this.change_form, {
+						"display":"none"
+					})
+				}
+				else {
+					this.change_form.is_open = true;
+					this.innerHTML = "Cancel";
+					u.ass(this.change_form, {
+						"display":"block"
+					})
 				}
 			}
 			form.submitted = function() {
@@ -10955,7 +10975,13 @@ Util.Modules["resetPassword"] = new function() {
 		form.submitted = function() {
 			this.response = function(response) {
 				if(response.cms_status == "success") {
-					location.href = "/login";
+					var login = u.qs("li.user.login a");
+					if(login) {
+						location.href = login.href;
+					}
+					else {
+						location.href = "/login";
+					}
 				}
 				else {
 					page.notify({"isJSON":true, "cms_status":"error", "cms_message":"Password could not be updated"});
