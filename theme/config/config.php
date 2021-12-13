@@ -29,8 +29,7 @@ define("SITE_SIGNUP_URL", "/signup");
 define("SITE_ITEMS", true);
 
 define("SITE_SHOP", true);
-// define("SHOP_ORDER_NOTIFIES", "martin@think.dk,anja@think.dk");
-define("SHOP_ORDER_NOTIFIES", "martin@think.dk");
+define("SHOP_ORDER_NOTIFIES", "martin@think.dk,anja@think.dk");
 
 define("SITE_SUBSCRIPTIONS", true);
 
