@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2021-12-13 02:23:33
+asset-builder @ 2021-12-13 08:52:54
 */
 
 /*seg_tablet_include.css*/
@@ -838,7 +838,6 @@ body > div.pagination li.next a {padding-right: 0;}
 	transform: translate(0, 500px);
 	transition: all 0.5s ease;
 }
-#content .scene.front div.c100 > div ul.actions {position: absolute; bottom: 0; right: 0;}
 #content .scene.front div.c100 > div h2,
 #content .scene.front div.c200 > div h1 {
 	transition: all 0.5s ease;
@@ -869,18 +868,18 @@ body > div.pagination li.next a {padding-right: 0;}
 #content .scene.front div.c200 > div.hover {
 	background-color: #26962d;
 }
-#content .scene.front div.article {z-index: 11;  padding: 20px;}
+#content .scene.front div.c100 > div ul.actions {position: absolute; bottom: 0; right: 0;}
+#content .scene.front div.c100 > div ul.actions li a {background-color: #ffffff; color: #26962d; padding: 6px 15px; border-radius: 15px; height: auto; text-decoration: none;}
+#content .scene.front div.article {z-index: 11; padding: 20px;}
 #content .scene.front div.projects {}
 #content .scene.front div.services {}
-#content .scene.front div.events { }
-#content .scene.front div.events h2 {}
+#content .scene.front div.events {}
 #content .scene.front div.membership {}
 #content .scene.front div.bulletin {}
 #content .scene.front div.about {}
 #content .scene.front div.blog {}
 #content .scene.front div.contact {}
-#content .scene.front div div:hover ul.actions li a {background-color: #ffffff; color: #26962d; padding: 6px 15px; border-radius: 15px; height: auto; text-decoration: none;}
-#content .scene.front div div:hover ul.actions li a:hover {text-decoration: none; background-color: #34cc3d; color: #ffffff;}
+
 
 /*s-bulletin.css*/
 #content .scene.bulletin div.search,
@@ -1508,3 +1507,19 @@ body.black #header ul.servicenavigation {display: none;}
 #content .scene.verdensborger .extendedpadding {padding-bottom: 35px;}
 
 
+/*s-active.css*/
+ul.actions input.button.primary:active,
+ul.actions a.button.primary:active,
+#content ul.actions a.button.primary:active {background-color: #26962d;}
+#content .scene.front .link:active {text-decoration: underline;}
+#content .scene ul.articles .article ul.tags li a:active,
+#content .scene .article ul.tags a:active {color: #34cc3d;}
+#content .scene div.comments h2:active {color: #34cc3d;}
+#content .scene div.comments h2:active svg.arrow line {stroke: #34cc3d;}
+#content .scene div.todos h2:active {color: #34cc3d;}
+#content .scene div.todos h2:active svg.arrow line {stroke: #34cc3d;}
+#content .scene div.qnas h2:active {color: #34cc3d;}
+#content .scene div.qnas h2:active svg.arrow line {stroke: #34cc3d;}
+body.black #content .scene div.comments h2:active {color: #000000;}
+body.black #content .scene div.comments h2:active svg.arrow line {stroke: #000000;}
+#content .scene.front div.c100 > div ul.actions li a:active {text-decoration: none; background-color: #34cc3d; color: #ffffff;}

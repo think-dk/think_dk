@@ -22,13 +22,10 @@ Util.Modules["front"] = new function() {
 			u.wc(this, "div");
 
 			this.div_article = u.qs(".article", this);
-			u.e.hover(this.div_article);
-			this.div_article.over = function() {
-				u.ac(this, "hover");
+			this.div_article.tap = function() {
+				u.tc(this, "hover");
 			}
-			this.div_article.out = function() {
-				u.rc(this, "hover");
-			}
+			u.e.addStartEvent(this.div_article, this.div_article.tap);
 
 			this.boxes = [];
 			this.boxes.push(u.qs(".projects", this));
@@ -41,18 +38,23 @@ Util.Modules["front"] = new function() {
 			this.boxes.push(u.qs(".contact", this));
 
 
-			var i, box;
+			var i, j, box, action, actions;
 			for(i = 0; i < this.boxes.length; i++) {
 				box = this.boxes[i];
 
-				u.e.hover(box);
-				box.over = function() {
-					u.ac(this, "hover");
+				box.tap = function() {
+					u.tc(this, "hover");
 				}
-				box.out = function() {
-					u.rc(this, "hover");
-				}
+				u.e.addStartEvent(box, box.tap);
 
+				actions = u.qsa("ul.actions li", box);
+				for(j = 0; j < actions.length; j++) {
+					action = actions[j];
+					u.ce(action, {"type":"link"});
+					action.inputStarted = function(event) {
+						u.e.kill(event);
+					}
+				}
 			}
 
 			page.resized();

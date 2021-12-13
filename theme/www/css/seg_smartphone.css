@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2021-12-13 02:23:33
+asset-builder @ 2021-12-13 08:52:54
 */
 
 /*seg_smartphone_include.css*/
@@ -608,6 +608,9 @@ body > div.pagination li.next a {padding-right: 0; padding-left: 16px;}
 	background-color: #ffffff;
 }
 #content .scene.front > div > div:not(div.article) {
+	border-top: 1px solid #ffffff;
+}
+#content .scene.front > div > div:not(div.article) {
 	padding-bottom: 60px;
 }
 #content .scene.front > div > div h2 {
@@ -630,10 +633,6 @@ body > div.pagination li.next a {padding-right: 0; padding-left: 16px;}
 	transform: translate(0, 500px);
 	transition: all 0.5s ease;
 }
-#content .scene.front > div > div ul.actions {position: absolute; bottom: 0; right: 0;}
-#content .scene.front > div > div:hover ul.actions li {padding-bottom: 5px;}
-#content .scene.front > div > div:hover ul.actions li a {background-color: #ffffff; color: #26962d; padding: 6px 15px; border-radius: 15px; height: auto; text-decoration: none;}
-#content .scene.front > div > div ul.actions li a:hover {text-decoration: none; background-color: #34cc3d; color: #ffffff;}
 #content .scene.front > div > div:not(div.article) h2,
 #content .scene.front > div > div h1 {
 	transition: all 0.5s ease;
@@ -657,6 +656,10 @@ body > div.pagination li.next a {padding-right: 0; padding-left: 16px;}
 #content .scene.front > div > div.hover {
 	background-color: #26962d;
 }
+#content .scene.front > div > div ul.actions {position: absolute; bottom: 0; right: 0;}
+#content .scene.front > div > div ul.actions li {padding-bottom: 5px;}
+#content .scene.front > div > div ul.actions li a {background-color: #ffffff; color: #26962d; padding: 6px 15px; border-radius: 15px; height: auto; text-decoration: none;}
+#content .scene.front > div > div ul.actions li a:active {text-decoration: none; background-color: #34cc3d; color: #ffffff;}
 
 
 /*s-bulletin.css*/

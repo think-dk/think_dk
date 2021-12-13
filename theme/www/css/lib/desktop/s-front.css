@@ -1,28 +1,7 @@
-
 /* FRONT */
-/*#content .scene.front {opacity: 1;
-	box-sizing: border-box;
-}
-*/
-/* HIDE HEADER AND FOOTER FOR INTRO SEQUENCE */
-/*body.front #header {opacity: 0;}
-body.front #footer {display: none;}
-body.front #page {overflow: hidden;}
-body.front #page.fixed {width: auto; margin: 0;}
-*/
 
 #content .scene.front {padding: 40px 0;}
 
-/*#content .scene.front div.intro {display: none;}*/
-
-
-/*
-div.intro li.hotspot.hotspot6 {
-	top: 85%; left: 40%;
-}
-div.intro li.hotspot.hotspot7 {
-	top: 85%; left: 60%;
-}*/
 
 @media screen and (max-width: 900px) {
 
@@ -96,7 +75,6 @@ div.intro li.hotspot.hotspot7 {
 	transition: all 0.5s ease;
 }
 
-#content .scene.front div.c100 > div ul.actions {position: absolute; bottom: 0; right: 0;}
 
 
 #content .scene.front div.c100 > div h2,
@@ -110,20 +88,6 @@ div.intro li.hotspot.hotspot7 {
 	transform: translate(0, 100px);
 }
 
-
-/*
-#content .scene.front div.c100 > div:hover p,
-#content .scene.front div.c100 > div:hover h2,
-#content .scene.front div.c100 > div:hover h3,
-#content .scene.front div.c100 > div:hover ul,
-
-#content .scene.front div.c200 > div:hover p,
-#content .scene.front div.c200 > div:hover h1,
-#content .scene.front div.c200 > div:hover h2,
-#content .scene.front div.c200 > div:hover h3,
-#content .scene.front div.c200 > div:hover ul,
-#content .scene.front div.c200 > div:hover div.sharing,
-*/
 
 #content .scene.front div.c100 > div.hover p,
 #content .scene.front div.c100 > div.hover h2,
@@ -148,48 +112,21 @@ div.intro li.hotspot.hotspot7 {
 	background-color: #26962d;
 }
 
+#content .scene.front div.c100 > div ul.actions {position: absolute; bottom: 0; right: 0;}
+#content .scene.front div.c100 > div ul.actions li a {background-color: #ffffff; color: #26962d; padding: 6px 15px; border-radius: 15px; height: auto; text-decoration: none;}
+
 
 /* FRONT - ARTICLE */
-#content .scene.front div.article {z-index: 11; /*display: none;*//*margin-top: -70px;*/ padding: 20px;}
-
+#content .scene.front div.article {z-index: 11; padding: 20px;}
 
 
 #content .scene.front div.projects {}
 #content .scene.front div.services {}
-
-
-/* FRONT - EVENTS */
-#content .scene.front div.events {/*display: none;*/ /*padding-bottom: 50px;*/}
-#content .scene.front div.events h2 {}
-/*#content .scene.front div.events ul.events {border-top: 1px solid #dedede; padding: 0 20px 0 70px;}
-#content .scene.front div.events ul.events h3,
-#content .scene.front div.events ul.events dl {padding-left: 0; padding-right: 0; width: auto;}
-#content .scene.front div.events ul.events li.event {border-top: none; padding-top: 15px; padding-bottom: 5px; display: inline-block; vertical-align: top; width: 230px; padding-right: 20px;}
-*/
-/*#content .scene.front div.events ul.events li.event {border-top: none; padding-top: 5px; padding-bottom: 5px;}
-#content .scene.front div.events ul.events li.event h3 {font-size: 14px;
-	font-family: "OpenSans", Verdana, Arial, sans-serif;
-}
-*/
-#content .scene.front div.membership {/*width: auto;*/}
-
-
-
-/* FRONT - NEWS */
-#content .scene.front div.bulletin {/*display: none;*/}
-/*#content .scene.front div.bulletin h2 {padding-bottom: 15px;}*/
-/*#content .scene.front div.bulletin ul.articles li.article {border: none; padding: 0 0 13px;}
-#content .scene.front div.bulletin ul.articles li.article h3 {
-	padding: 0;
-
-	font-size: 14px;
-	font-family: "OpenSans", Verdana, Arial, sans-serif;
-}
-*/
+#content .scene.front div.events {}
+#content .scene.front div.membership {}
+#content .scene.front div.bulletin {}
 #content .scene.front div.about {}
 #content .scene.front div.blog {}
 #content .scene.front div.contact {}
 
 
-#content .scene.front div div:hover ul.actions li a {background-color: #ffffff; color: #26962d; padding: 6px 15px; border-radius: 15px; height: auto; text-decoration: none;}
-#content .scene.front div div:hover ul.actions li a:hover {text-decoration: none; background-color: #34cc3d; color: #ffffff;}

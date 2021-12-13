@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2021-12-13 02:23:33
+asset-builder @ 2021-12-13 08:52:54
 */
 
 /*seg_desktop_include.js*/
@@ -9062,12 +9062,20 @@ Util.Modules["front"] = new function() {
 				]},
 			]);
 			this.div_article = u.qs(".article", this);
-			u.e.hover(this.div_article);
-			this.div_article.over = function() {
-				u.ac(this, "hover");
+			if(u.segment() === "tablet") {
+				this.div_article.tap = function() {
+					u.tc(this, "hover");
+				}
+				u.e.addStartEvent(this.div_article, this.div_article.tap);
 			}
-			this.div_article.out = function() {
-				u.rc(this, "hover");
+			else {
+				u.e.hover(this.div_article);
+				this.div_article.over = function() {
+					u.ac(this, "hover");
+				}
+				this.div_article.out = function() {
+					u.rc(this, "hover");
+				}
 			}
 			this.boxes = [];
 			this.boxes.push(u.qs(".projects", this));
@@ -9081,12 +9089,28 @@ Util.Modules["front"] = new function() {
 			var i, box;
 			for(i = 0; i < this.boxes.length; i++) {
 				box = this.boxes[i];
-				u.e.hover(box);
-				box.over = function() {
-					u.ac(this, "hover");
+				if(u.segment() === "tablet") {
+					box.tap = function() {
+						u.tc(this, "hover");
+					}
+					u.e.addStartEvent(box, box.tap);
+					actions = u.qsa("ul.actions li", box);
+					for(j = 0; j < actions.length; j++) {
+						action = actions[j];
+						u.ce(action, {"type":"link"});
+						action.inputStarted = function(event) {
+							u.e.kill(event);
+						}
+					}
 				}
-				box.out = function() {
-					u.rc(this, "hover");
+				else {
+					u.e.hover(box);
+					box.over = function() {
+						u.ac(this, "hover");
+					}
+					box.out = function() {
+						u.rc(this, "hover");
+					}
 				}
 			}
 			page.resized();

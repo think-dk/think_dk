@@ -70,5 +70,5 @@ body.black #content .scene div.comments h2:hover {color: #000000;}
 body.black #content .scene div.comments h2:hover svg.arrow line {stroke: #000000;}
 
 
-
+#content .scene.front div div ul.actions li a:hover {text-decoration: none; background-color: #34cc3d; color: #ffffff;}
 
