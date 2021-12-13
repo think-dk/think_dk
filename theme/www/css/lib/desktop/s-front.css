@@ -13,7 +13,7 @@ body.front #page.fixed {width: auto; margin: 0;}
 
 #content .scene.front {padding: 40px 0;}
 
-#content .scene.front div.intro {display: none;}
+/*#content .scene.front div.intro {display: none;}*/
 
 
 /*
@@ -166,27 +166,26 @@ div.intro li.hotspot.hotspot7 {
 #content .scene.front div.events ul.events dl {padding-left: 0; padding-right: 0; width: auto;}
 #content .scene.front div.events ul.events li.event {border-top: none; padding-top: 15px; padding-bottom: 5px; display: inline-block; vertical-align: top; width: 230px; padding-right: 20px;}
 */
-#content .scene.front div.events ul.events li.event {border-top: none; padding-top: 5px; padding-bottom: 5px;}
+/*#content .scene.front div.events ul.events li.event {border-top: none; padding-top: 5px; padding-bottom: 5px;}
 #content .scene.front div.events ul.events li.event h3 {font-size: 14px;
 	font-family: "OpenSans", Verdana, Arial, sans-serif;
 }
-
-#content .scene.front div.membership {width: auto;}
+*/
+#content .scene.front div.membership {/*width: auto;*/}
 
 
 
 /* FRONT - NEWS */
 #content .scene.front div.bulletin {/*display: none;*/}
-#content .scene.front div.bulletin h2 {padding-bottom: 15px;}
-#content .scene.front div.bulletin ul.articles li.article {border: none; padding: 0 0 13px;}
+/*#content .scene.front div.bulletin h2 {padding-bottom: 15px;}*/
+/*#content .scene.front div.bulletin ul.articles li.article {border: none; padding: 0 0 13px;}
 #content .scene.front div.bulletin ul.articles li.article h3 {
 	padding: 0;
-/*	padding-bottom: 20px; color: #26962d;*/
-	
+
 	font-size: 14px;
 	font-family: "OpenSans", Verdana, Arial, sans-serif;
 }
-
+*/
 #content .scene.front div.about {}
 #content .scene.front div.blog {}
 #content .scene.front div.contact {}

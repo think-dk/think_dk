@@ -1,0 +1,4 @@
+/* FOOTER */
+#footer {opacity: 0; text-align: center; border-top: 1px solid #ccdbcd; margin: 0;}
+#footer p {padding: 10px; cursor: pointer;}
+#footer a {color: #34cc3d;}

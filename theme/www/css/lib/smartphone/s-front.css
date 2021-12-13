@@ -1,0 +1,109 @@
+/* FRONT */
+#content .scene.front {padding: 0;}
+#content .scene.front > div > div {overflow: hidden; position: relative;
+	transition: all 0.5s ease;
+	background-color: #ffffff;
+}
+#content .scene.front > div > div:not(div.article) {
+	padding-bottom: 60px;
+}
+
+#content .scene.front > div > div h2 {
+	padding: 13px 20px;
+}
+#content .scene.front > div > div h1 {
+	padding: 26px 20px 13px;
+}
+/*#content .scene.front > div > div h2,*/
+#content .scene.front > div > div p,
+#content .scene.front > div > div p,
+#content .scene.front > div > div ul,
+#content .scene.front > div > div ul {
+	padding: 0 20px 13px;
+}
+
+
+#content .scene.front > div > div p,
+#content .scene.front > div > div.article h2,
+#content .scene.front > div > div h3,
+#content .scene.front > div > div ul,
+#content .scene.front > div > div div.sharing {opacity: 0;
+	transform: translate(0, 500px);
+	transition: all 0.5s ease;
+}
+
+#content .scene.front > div > div ul.actions {position: absolute; bottom: 0; right: 0;}
+#content .scene.front > div > div:hover ul.actions li {padding-bottom: 5px;}
+#content .scene.front > div > div:hover ul.actions li a {background-color: #ffffff; color: #26962d; padding: 6px 15px; border-radius: 15px; height: auto; text-decoration: none;}
+#content .scene.front > div > div ul.actions li a:hover {text-decoration: none; background-color: #34cc3d; color: #ffffff;}
+
+#content .scene.front > div > div:not(div.article) h2,
+#content .scene.front > div > div h1 {
+	transition: all 0.5s ease;
+}
+#content .scene.front > div > div:not(div.article) h2 {
+	transform: translate(0, 50px);
+}
+#content .scene.front > div > div h1 {
+	transform: translate(0, 100px);
+}
+
+
+
+#content .scene.front > div > div.hover p,
+#content .scene.front > div > div.hover h1,
+#content .scene.front > div > div.hover h2,
+#content .scene.front > div > div.hover:not(div.article) h2,
+#content .scene.front > div > div.hover h3,
+#content .scene.front > div > div.hover ul,
+#content .scene.front > div > div.hover div.sharing {opacity: 1; color: #ffffff;
+	transform: translate(0, 0);
+}
+#content .scene.front > div > div.hover a {color: #ffffff;}
+
+#content .scene.front > div > div.hover {
+	background-color: #26962d;
+}
+
+/*#content .scene.front {opacity: 1;}*/
+
+
+/* FRONT - INTRO */
+/*#content .scene.front div.intro {opacity: 0; overflow: hidden; text-align: center;
+	-o-user-select: none;
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+#content .scene.front div.intro p,
+#content .scene.front div.intro h2,
+#content .scene.front div.intro h3,
+#content .scene.front div.intro span {display: inline-block; width: auto; color: #26962d; padding: 0;}
+#content .scene.front div.intro p,
+#content .scene.front div.intro h2,
+#content .scene.front div.intro h3 {padding: 0 20px;}
+*/
+
+/* FRONT - ARTICLE*/
+/*#content .scene.front div.article {display: none;}*/
+
+
+/* FRONT - EVENTS */
+/*#content .scene.front div.all_events {display: none; padding-bottom: 50px;}
+
+#content .scene.front div.all_events h2,
+#content .scene.front div.news h2 {padding-bottom: 15px;}
+
+#content .scene.front div.all_events h2 a,
+#content .scene.front div.news h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
+	font-family: "OpenSans";
+}
+#content .scene.front div.all_events ul.events {border-top: 1px solid #dedede;}
+#content .scene.front div.all_events ul.events li.event {margin-top: -1px; padding-top: 15px; padding-bottom: 5px;}
+*/
+
+/* FRONT - NEWS */
+/*#content .scene.front div.news {display: none;}
+#content .scene.front div.news ul.articles li.article h3 {padding-bottom: 15px; color: #26962d;}
+*/

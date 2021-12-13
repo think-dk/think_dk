@@ -144,6 +144,84 @@ Util.Modules["cart"] = new function() {
 }
 
 
+Util.Modules["checkoutSignup"] = new function() {
+	this.init = function(scene) {
+//		u.bug("scene init:", this);
+		
+
+		scene.resized = function() {
+//			u.bug("scene.resized:", this);
+
+
+			// refresh dom
+			//this.offsetHeight;
+		}
+
+		scene.scrolled = function() {
+//			u.bug("scrolled:", this);;
+		}
+
+		scene.ready = function() {
+//			u.bug("scene.ready:", this);
+
+
+			var form_login = u.qs("form.login", this);
+			if(form_login) {
+				u.f.init(form_login);
+			}
+
+
+			var form_signup = u.qs("form.signup", this);
+			if(form_signup) {
+				u.f.init(form_signup);
+
+				form_signup.preSubmitted = function() {
+					this.actions["signup"].value = "Wait";
+					u.ac(this, "submitting");
+					u.ac(this.actions["signup"], "disabled");
+				}
+//				form_signup.submitted = function() {}
+			}
+
+
+			var cart_nodes = u.qsa("ul.items li.item", this);
+
+			if(cart_nodes) {
+
+				var i, node;
+				for(i = 0; node = cart_nodes[i]; i++) {
+				
+
+					node.scene = this;
+					node.item_id = u.cv(node, "id");
+
+					node.h3 = u.qs("h3", node);
+					node.span_a = u.qs("span.a", node);
+					node.unit_price = u.qs("span.unit_price", node);
+					node.total_price = u.qs("span.total_price", node);
+
+					node.div_prices = u.ie(node, "p", {"class":"prices"});
+					u.ae(node.div_prices, node.span_a);
+					u.ae(node.div_prices, node.unit_price);
+					u.ae(node.div_prices, node.total_price);
+
+					u.ie(node, node.h3);
+
+				}
+
+			}
+
+			u.showScene(this);
+
+		}
+
+
+		// Map scene – page will call scene.ready
+		page.cN.scene = scene;
+
+	}
+}
+
 Util.Modules["checkout"] = new function() {
 	this.init = function(scene) {
 //		u.bug("scene init:", this);

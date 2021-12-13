@@ -18,19 +18,6 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 ?>
 <div class="scene front i:front">
 
-<? if(isset($intro) && $intro["html"]): ?>
-	<div class="intro" itemscope itemtype="http://schema.org/CreativeWork">
-
-		<? if($intro["html"]): ?>
-		<div class="text" itemprop="text">
-			<?= $intro["html"] ?>
-		</div>
-		<? endif; ?>
-
-	</div>
-<? endif; ?>
-
-
 <? if($page_item): 
 	$media = $IC->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">

@@ -9,16 +9,10 @@ Util.Modules["page"] = new function() {
 		u.bug_force = false;
 
 
-		// create a generel style rule
-		page.style_tag = document.createElement("style");
-		page.style_tag.setAttribute("media", "all");
-		page.style_tag.setAttribute("type", "text/css");
-		page.style_tag = u.ae(document.head, page.style_tag);
-
-
 		// header reference
 		page.hN = u.qs("#header");
-		page.hN.service = u.qs("ul.servicenavigation", page.hN);
+		page.hN.service = u.qs(".servicenavigation", page.hN);
+		u.e.drag(page.hN, page.hN);
 
 
 		// content reference
@@ -27,16 +21,17 @@ Util.Modules["page"] = new function() {
 
 		// navigation reference
 		page.nN = u.qs("#navigation", page);
-		page.nN = page.insertBefore(page.nN, page.cN);
+		page.nN = u.ie(page.hN, page.nN);
+		page.nN.nav = u.qs("ul.navigation", page.nN)
 
 
 		// footer reference
 		page.fN = u.qs("#footer");
-		page.fN.service = u.qs("ul.servicenavigation", page.fN);
+		page.fN.service = u.qs(".servicenavigation", page.fN);
 
 
 		// global resize handler
-		page.resized = function(event) {
+		page.resized = function() {
 			// u.bug("page resized");
 
 			this.browser_h = u.browserH();
@@ -60,73 +55,66 @@ Util.Modules["page"] = new function() {
 			// refresh DOM
 			this.offsetHeight;
 
+			if(this.bn_nav) {
+
+				// Update navigation if open
+				if (this.bn_nav.is_open) {
+					// Update heights
+					u.ass(page.hN, {
+						"height":window.innerHeight + "px"
+					});
+
+					u.ass(page.nN, {
+						"height":(window.innerHeight - page.hN.service.offsetHeight) + "px"
+					});
+
+					// Update drag coordinates
+					u.e.setDragPosition(page.nN.nav, 0, 0);
+					u.e.setDragBoundaries(page.nN.nav, page.nN);
+				}
+			}
+
+		}
+
+		// iOS scroll fix
+		page.fixiOSScroll = function() {
+
+			u.ass(this.hN, {
+				"position":"absolute",
+			});
+
+
+			u.ass(this.hN, {
+				"position":"fixed",
+			});
+
 		}
 
 		// global scroll handler
-		page.scrolled = function(event) {
+		page.scrolled = function() {
+
+			// Fix issue with fixed element after scroll
+			u.t.resetTimer(this.t_fix);
+			this.t_fix = u.t.setTimer(this, "fixiOSScroll", 200);
+
 
 			this.scrolled_y = u.scrollY();
 
-
-			// reduce logo
-			if(this.scrolled_y < this.logo.top_offset) {
-
-				if(this.logo.is_reduced) {
-					this.logo.is_reduced = false;
-					u.rc(this.logo, "reduced");
-				}
-
-				var reduce_font = (1-(this.logo.top_offset-this.scrolled_y)/this.logo.top_offset) * this.logo.font_size_gap;
-				this.logo.css_rule.style.setProperty("font-size", (this.logo.font_size-reduce_font)+"px", "important");
-
-			}
-			// claim end state, once
-			else if(!this.logo.is_reduced) {
-
-				this.logo.css_rule.style.setProperty("font-size", (this.logo.font_size-this.logo.font_size_gap)+"px", "important");
-
-				this.logo.is_reduced = true;
-				u.ac(this.logo, "reduced");
-
-			}
-
-
-			// reduce navigation
-			if(this.nN.top_offset && this.scrolled_y < this.nN.top_offset) {
-
-				if(this.nN.is_reduced) {
-					this.nN.is_reduced = false;
-					u.rc(this.nN, "reduced");
-				}
-
-				var factor = (1-(this.nN.top_offset-this.scrolled_y)/this.nN.top_offset);
-
-				var reduce_font = factor * this.nN.font_size_gap;
-				this.nN.list.css_rule.style.setProperty("font-size", (this.nN.font_size-reduce_font)+"px", "important");
-
-				var reduce_top = factor * this.nN.top_offset_gap;
-				this.nN.css_rule.style.setProperty("top", (this.nN.top_offset-reduce_top)+"px", "important");
-
-			}
-			// claim end state, once
-			else if(this.nN.top_offset && !this.nN.is_reduced) {
-
-				this.nN.list.css_rule.style.setProperty("font-size", (this.nN.font_size-this.nN.font_size_gap)+"px", "important");
-				this.nN.css_rule.style.setProperty("top", (this.nN.top_offset-this.nN.top_offset_gap)+"px", "important");
-
-				this.nN.is_reduced = true;
-				u.ac(this.nN, "reduced");
-
-			}
-
-
 			// forward scroll event to current scene
 			if(this.cN && this.cN.scene && typeof(this.cN.scene.scrolled) == "function") {
-				this.cN.scene.scrolled(event);
+				this.cN.scene.scrolled();
 			}
 
 		}
 
+		// global orientationchange handler
+		page.orientationchanged = function() {
+
+			// forward scroll event to current scene
+			if(this.cN && this.cN.scene && typeof(this.cN.scene.orientationchanged) == "function") {
+				this.cN.scene.orientationchanged();
+			}
+		}
 
 		// Build page loader (dot)
 		page.buildLoader = function() {
@@ -208,9 +196,9 @@ Util.Modules["page"] = new function() {
 			// Prepare intro HTML and images
 			this.intro = u.ie(this.hN, "div", {"id":"intro"});
 
-			var random_images = this.getRandomBackgrounds(2);
+			var random_images = this.getRandomBackgrounds(1);
 			this.intro.bg_image_1 = random_images[0];
-			this.intro.bg_image_2 = random_images[1];
+			// this.intro.bg_image_2 = random_images[1];
 			this.intro.bg_1 = u.ae(this.intro, "div", {"class":"bg bg1"});
 			this.intro.bg_2 = u.ae(this.intro, "div", {"class":"bg bg2"});
 
@@ -227,13 +215,13 @@ Util.Modules["page"] = new function() {
 					page.showIntro();
 
 					// Find outro images and preload them
-					var random_images = page.getRandomBackgrounds(2);
-					page.intro.bg_image_3 = random_images[0];
-					page.intro.bg_image_4 = random_images[1];
+					var random_images = page.getRandomBackgrounds(1);
+					page.intro.bg_image_2 = random_images[0];
+					// page.intro.bg_image_4 = random_images[1];
 
 					u.preloader(page.intro, [
-						page.intro.bg_image_3,
-						page.intro.bg_image_4,
+						page.intro.bg_image_2,
+						// page.intro.bg_image_4,
 					]);
 				}
 
@@ -260,7 +248,7 @@ Util.Modules["page"] = new function() {
 			}
 			u.preloader(this.loader, [
 				this.intro.bg_image_1,
-				this.intro.bg_image_2,
+				// this.intro.bg_image_2,
 			], {"loaded": "imagesLoaded"});
 
 		}
@@ -280,12 +268,15 @@ Util.Modules["page"] = new function() {
 
 
 			// Set background images
-			u.ass(this.intro.bg_1, {
+			u.ass(this.intro, {
 				"background-image":"url("+this.intro.bg_image_1+")",
 			});
-			u.ass(this.intro.bg_2, {
-				"background-image":"url("+this.intro.bg_image_2+")",
-			});
+			// u.ass(this.intro.bg_1, {
+			// 	"background-image":"url("+this.intro.bg_image_1+")",
+			// });
+			// u.ass(this.intro.bg_2, {
+			// 	"background-image":"url("+this.intro.bg_image_2+")",
+			// });
 
 
 			// Intro is covering page
@@ -308,7 +299,8 @@ Util.Modules["page"] = new function() {
 				// "clipPath": "polygon(0 0, 0 0, -50% 100%, -50% 100%)",
 
 				// 2: reverse
-				"clipPath": "polygon(100% 0, 100% 0, 50% 100%, 50% 100%)",
+				"clipPath": "polygon(0 0, 100% 0, 50% 100%, -50% 100%)",
+				
 
 				// 4: complex
 				// "clipPath": "polygon(100% 0, 75% 50%, 100% 0, 75% 50%, 75% 50%, 50% 100%, 75% 50%, 50% 100%)",
@@ -320,7 +312,8 @@ Util.Modules["page"] = new function() {
 				// "clipPath": "polygon(0 0, 100% 0, 50% 100%, -50% 100%)",
 
 				// 2: reverse
-				"clipPath": "polygon(0 0, 100% 0, 50% 100%, -50% 100%)",
+				"clipPath": "polygon(0% 0, 0% 0, -50% 100%, -50% 100%)",
+				
 
 				// 4: complex
 				// "clipPath": "polygon(100% 0, 0 0, -20% 0, 0 50%, 0 50%, -80% 100%, 0 100%, 50% 100%)",
@@ -331,7 +324,8 @@ Util.Modules["page"] = new function() {
 				// "clipPath": "polygon(150% 0, 150% 0, 100% 100%, 100% 100%)",
 
 				// 2: reverse
-				"clipPath": "polygon(50% 0, 50% 0, 0 100%, 0 100%)",
+				"clipPath": "polygon(50% 0, 150% 0, 100% 100%, 0 100%)",
+				// "clipPath": "polygon(100% 0, 0 0, 0 100%, 50% 100%)",
 
 				// 4: complex
 				// "clipPath": "polygon(50% 0, 25% 50%, 50% 0, 25% 50%, 25% 50%, 0 100%, 25% 50%, 0 100%)",
@@ -343,7 +337,8 @@ Util.Modules["page"] = new function() {
 				// "clipPath": "polygon(50% 0, 150% 0, 100% 100%, 0 100%)",
 
 				// 2: reverse
-				"clipPath": "polygon(50% 0, 150% 0, 100% 100%, 0 100%)",
+				"clipPath": "polygon(150% 0, 150% 0, 100% 100%, 100% 100%)",
+				// "clipPath": "polygon(75% 0, 0 0, 0 100%, 100% 100%)",
 
 				// 4: complex
 				// "clipPath": "polygon(50% 0, 100% 0, 120% 0, 100% 50%, 100% 50%, 120% 100%, 100% 100%, 0 100%)",
@@ -357,12 +352,12 @@ Util.Modules["page"] = new function() {
 		page.finishIntro = function() {
 
 			// Prepare intro for final animation
-			u.ass(this.intro.bg_1, {
-				"clipPath": "polygon(100% 0, 0 0, 0 100%, 50% 100%)",
-			});
-			u.ass(this.intro.bg_2, {
-				"clipPath": "polygon(100% 0, 50% 0, 0 100%, 100% 100%)",
-			});
+			// u.ass(this.intro.bg_1, {
+			// 	"clipPath": "polygon(100% 0, 0 0, 0 100%, 50% 100%)",
+			// });
+			// u.ass(this.intro.bg_2, {
+			// 	"clipPath": "polygon(100% 0, 50% 0, 0 100%, 100% 100%)",
+			// });
 
 			// Intro shrunk into place
 			this.intro.transitioned = function() {
@@ -376,20 +371,21 @@ Util.Modules["page"] = new function() {
 
 			u.ass(this.intro, {
 				"transition": "all 0.6s ease 0.14s",
-				"height": "250px",
+				"height": "80px",
 			});
-			u.ass(this.intro.bg_1, {
-				"transition": "all 0.6s ease",
-				"width": "57.2%",
-				"clipPath": "polygon(75% 0, 0 0, 0 100%, 100% 100%)",
-			});
-			u.ass(this.intro.bg_2, {
-				"transition": "all 0.6s ease",
-				"width": "57.2%",
-				"clipPath": "polygon(100% 0, 0 0, 25% 100%, 100% 100%)",
-			});
+			// u.ass(this.intro.bg_1, {
+			// 	"transition": "all 0.6s ease",
+			// 	"width": "57.2%",
+			// 	"clipPath": "polygon(75% 0, 0 0, 0 100%, 100% 100%)",
+			// });
+			// u.ass(this.intro.bg_2, {
+			// 	"transition": "all 0.6s ease",
+			// 	"width": "57.2%",
+			// 	"clipPath": "polygon(100% 0, 0 0, 25% 100%, 100% 100%)",
+			// });
 
 		}
+
 
 		// Get page ready
 		page.ready = function() {
@@ -405,18 +401,24 @@ Util.Modules["page"] = new function() {
 				u.e.addWindowEvent(this, "resize", this.resized);
 				// set scroll handler
 				u.e.addWindowEvent(this, "scroll", this.scrolled);
+				// set orientation change handler
+				u.e.addWindowEvent(this, "orientationchange", this.orientationchanged);
 
 
 				if(fun(u.notifier)) {
 					u.notifier(this);
 				}
-				if(obj(u.smartphoneSwitch)) {
-					u.smartphoneSwitch.init(this);
+				if(u.getCookie("smartphoneSwitch") == "on") {
+					var bn_switch = u.ae(document.body, "div", {id:"desktop_switch", html:"Back to desktop"});
+					u.ce(bn_switch);
+					bn_switch.clicked = function() {
+						u.saveCookie("smartphoneSwitch", "off");
+						location.href = location.href.replace(/[&]segment\=smartphone|segment\=smartphone[&]?/, "") + (location.href.match(/\?/) ? "&" : "?") + "segment=desktop";
+					}
 				}
 				if(fun(u.navigation)) {
 					u.navigation();
 				}
-
 
 				this.resized();
 
@@ -431,6 +433,13 @@ Util.Modules["page"] = new function() {
 				this.resized();
 
 				this.scrolled();
+
+				// // Start showing the page
+				// if(!fun(this.cN.scene.revealPage)) {
+				// 	this.revealPage();
+				// }
+				//
+				// this.cN.scene.ready();
 
 			}
 		}
@@ -564,25 +573,41 @@ Util.Modules["page"] = new function() {
 			this.outro = u.ae(page, "div", {"id":"outro"});
 			this.outro.ready = false;
 
-			this.outro.bg_1 = u.ae(this.outro, "div", {"class":"bg bg1", "style":"background-image: url("+this.intro.bg_image_3+")"});
-			this.outro.bg_2 = u.ae(this.outro, "div", {"class":"bg bg2", "style":"background-image: url("+this.intro.bg_image_4+")"});
+			// this.outro.bg_1 = u.ae(this.outro, "div", {"class":"bg bg1", "style":"background-image: url("+this.intro.bg_image_3+")"});
+			// this.outro.bg_2 = u.ae(this.outro, "div", {"class":"bg bg2", "style":"background-image: url("+this.intro.bg_image_4+")"});
+
+			this.outro.bg_1 = u.ae(this.outro, "div", {"class":"bg bg1"});
+			this.outro.bg_2 = u.ae(this.outro, "div", {"class":"bg bg2"});
+
+			u.ass(this.outro, {
+				"clipPath": "polygon(100% 0, 100% 0, 50% 100%, 50% 100%)",
+				"background-image":"url("+this.intro.bg_image_2+")",
+			});
 
 			// Outro is in place
-			this.outro.bg_2.transitioned = function() {
+			this.outro.transitioned = function() {
 
-				page.outro.ready = true;
+				if(page.bn_nav.is_open) {
+					page.bn_nav.clicked();
+				}
+				this.ready = true;
 				page.pageLoadController();
 
 			}
+			u.ass(this.outro, {
+				"transition": "all 0.4s ease",
+				"clipPath": "polygon(0 0, 150% 0, 100% 100%, -50% 100%)",
+			});
 
-			u.ass(this.outro.bg_1, {
-				"transition": "all 0.4s ease",
-				"clipPath": "polygon(0 0, 100% 0, 50% 100%, -50% 100%)",
-			});
-			u.ass(this.outro.bg_2, {
-				"transition": "all 0.4s ease",
-				"clipPath": "polygon(50% 0, 150% 0, 100% 100%, 0 100%)",
-			});
+
+			// u.ass(this.outro.bg_1, {
+			// 	"transition": "all 0.4s ease",
+			// 	"clipPath": "polygon(0 0, 100% 0, 50% 100%, -50% 100%)",
+			// });
+			// u.ass(this.outro.bg_2, {
+			// 	"transition": "all 0.4s ease",
+			// 	"clipPath": "polygon(50% 0, 150% 0, 100% 100%, 0 100%)",
+			// });
 
 		}
 
@@ -590,24 +615,28 @@ Util.Modules["page"] = new function() {
 		page.endPageTransition = function() {
 
 			// Prepare outro for final animation
-			u.ass(this.outro.bg_1, {
-				"clipPath": "polygon(100% 0, 0 0, 0 100%, 50% 100%)",
-			});
-			u.ass(this.outro.bg_2, {
-				"clipPath": "polygon(100% 0, 50% 0, 0 100%, 100% 100%)",
-			});
+			// u.ass(this.outro.bg_1, {
+			// 	"clipPath": "polygon(100% 0, 0 0, 0 100%, 50% 100%)",
+			// });
+			// u.ass(this.outro.bg_2, {
+			// 	"clipPath": "polygon(100% 0, 50% 0, 0 100%, 100% 100%)",
+			// });
 
 
 			// Outro is done
 			this.outro.transitioned = function() {
 
 				// Update intro images
-				u.ass(page.intro.bg_1, {
-					"background-image": "url("+page.intro.bg_image_3+")"
+				u.ass(page.intro, {
+					"background-image": "url("+page.intro.bg_image_2+")"
 				});
-				u.ass(page.intro.bg_2, {
-					"background-image": "url("+page.intro.bg_image_4+")"
-				});
+
+				// u.ass(page.intro.bg_1, {
+				// 	"background-image": "url("+page.intro.bg_image_3+")"
+				// });
+				// u.ass(page.intro.bg_2, {
+				// 	"background-image": "url("+page.intro.bg_image_4+")"
+				// });
 
 
 				// Remove outro
@@ -634,13 +663,13 @@ Util.Modules["page"] = new function() {
 
 
 				// Find next outro images and preload them
-				var random_images = page.getRandomBackgrounds(2);
-				page.intro.bg_image_3 = random_images[0];
-				page.intro.bg_image_4 = random_images[1];
+				var random_images = page.getRandomBackgrounds(1);
+				page.intro.bg_image_2 = random_images[0];
+				// page.intro.bg_image_4 = random_images[1];
 
 				u.preloader(page.intro, [
-					page.intro.bg_image_3,
-					page.intro.bg_image_4,
+					page.intro.bg_image_2,
+					// page.intro.bg_image_4,
 				]);
 
 			}
@@ -648,18 +677,18 @@ Util.Modules["page"] = new function() {
 			// Start shrinking animation
 			u.ass(this.outro, {
 				"transition": "all 0.6s ease 0.48s",
-				"height": "250px",
+				"height": "80px",
 			});
-			u.ass(this.outro.bg_1, {
-				"transition": "all 0.6s ease 0.3s",
-				"width": "57.2%",
-				"clipPath": "polygon(75% 0, 0 0, 0 100%, 100% 100%)",
-			});
-			u.ass(this.outro.bg_2, {
-				"transition": "all 0.6s ease 0.3s",
-				"width": "57.2%",
-				"clipPath": "polygon(100% 0, 0 0, 25% 100%, 100% 100%)",
-			});
+			// u.ass(this.outro.bg_1, {
+			// 	"transition": "all 0.6s ease 0.3s",
+			// 	"width": "57.2%",
+			// 	"clipPath": "polygon(75% 0, 0 0, 0 100%, 100% 100%)",
+			// });
+			// u.ass(this.outro.bg_2, {
+			// 	"transition": "all 0.6s ease 0.3s",
+			// 	"width": "57.2%",
+			// 	"clipPath": "polygon(100% 0, 0 0, 25% 100%, 100% 100%)",
+			// });
 
 		}
 
@@ -702,104 +731,166 @@ Util.Modules["page"] = new function() {
 		// initialize header elements
 		page.initHeader = function() {
 
-			// LOGO
 			// add logo to navigation
-			this.logo = u.ae(this.hN, "a", {"class":"logo", "html":"think.dk"});
-			this.logo.url = '/';
-			this.logo.font_size = parseInt(u.gcs(this.logo, "font-size"));
-			this.logo.font_size_gap = this.logo.font_size-14;
-			this.logo.top_offset = u.absY(this.nN) + parseInt(u.gcs(this.nN, "padding-top"));
-
-
-			// create rule for logo
-			this.style_tag.sheet.insertRule("#header a.logo {}", 0);
-			this.logo.css_rule = this.style_tag.sheet.cssRules[0];
+			this.logo = u.ie(this.hN, "a", {"class":"logo", "html":"think.dk", "href": "/"});
 
 		}
 
 		// initialize navigation elements
 		page.initNavigation = function() {
 
-			var i, node, nodes;
 
-			this.nN.list = u.qs("ul", this.nN);
-			if(this.nN.list) {
-				this.nN.list.nodes = u.qsa("li", this.nN.list);
+			this.nN.list = u.qs("ul.navigation", this.nN);
 
-				if(this.nN.list.nodes.length > 1) {
-					// set reducing scope
-					this.nN.font_size = parseInt(u.gcs(this.nN.list.nodes[1], "font-size"));
-					this.nN.font_size_gap = this.nN.font_size-14;
-					this.nN.top_offset = u.absY(this.nN) + parseInt(u.gcs(this.nN, "padding-top"));
-					this.nN.top_offset_gap = this.nN.top_offset-10;
 
-					// create rule for Navigation
-					this.style_tag.sheet.insertRule("#navigation {}", 0);
-					this.nN.css_rule = this.style_tag.sheet.cssRules[0];
+			// create burger menu
+			this.bn_nav = u.qs(".servicenavigation li.navigation", this.hN);
+			if(this.bn_nav) {
+				u.ae(this.bn_nav, "div");
+				u.ae(this.bn_nav, "div");
+				u.ae(this.bn_nav, "div");
 
-					// create rule for Navigation nodes
-					this.style_tag.sheet.insertRule("#navigation ul li {}", 0);
-					this.nN.list.css_rule = this.style_tag.sheet.cssRules[0];
-		//			u.bug("cssText:" + page.nN.css_rule.cssText + ", " + u.nodeId(page.nN));
+				// enable nav link
+				u.ce(this.bn_nav);
+				this.bn_nav.clicked = function(event) {
+
+					// close navigation
+					if(this.is_open) {
+						// Update open state
+						this.is_open = false;
+						u.rc(this, "open");
+
+						var i, node;
+						// set hide animation for nav nodes
+						for(i = 0; node = page.nN.nodes[i]; i++) {
+
+							u.a.transition(node, "all 0.15s ease-in "+(i*50)+"ms");
+							u.ass(node, {
+								"opacity": 0,
+								"transform":"translate(30px, 0)"
+							});
+						}
+
+						// hide navigation when hidden
+						page.hN.transitioned = function() {
+							u.ass(page.nN, {
+								"display": "none"
+							});
+						}
+
+						// collapse header
+						u.a.transition(page.hN, "all 0.3s ease-in "+(page.nN.nodes.length*50)+"ms");
+						u.ass(page.hN, {
+							"height": "80px"
+						});
+
+						// Disable nav scroll 
+						u.ass(page.nN, {
+							"overflow-y":"hidden"
+						});
+
+						// Enable body scroll
+						u.ass(page.parentNode, {
+							"overflow-y":"scroll"
+						});
+
+					}
+					// open navigation
+					else {
+						// Update open state
+						this.is_open = true;
+						u.ac(this, "open");
+
+						// Clear hN transitioned, in order to prevent bugs
+						delete page.hN.transitioned;
+
+						var i, node;
+						// set initial animation state for nav nodes
+						for(i = 0; node = page.nN.nodes[i]; i++) {
+							u.ass(node, {
+								"opacity": 0,
+								"transform":"translate(90px, 0)"
+							});
+						}
+
+						// set animation for header
+						u.a.transition(page.hN, "all 0.3s ease-in");
+
+						// Set height of hN
+						u.ass(page.hN, {
+							"height": window.innerHeight+"px",
+						});
+
+						// Set height on navigation
+						u.ass(page.nN, {
+							"height":(window.innerHeight - page.hN.service.offsetHeight) + "px"
+						});
+
+						u.ass(page.nN, {
+							"display": "block"
+						});
+
+						// set animation for nav nodes
+						for(i = 0; node = page.nN.nodes[i]; i++) {
+
+							u.a.transition(node, "all 0.2s ease-in-out "+(50 + (i*50))+"ms");
+							u.ass(node, {
+								"opacity": 1,
+								"transform":"translate(0, 0)"
+							});
+						}
+						
+						// Enable nav scroll 
+						u.ass(page.nN, {
+							"overflow-y":"scroll"
+						});
+
+						// Disable body scroll
+						u.ass(page.parentNode, {
+							"overflow-y":"hidden"
+						});
+					}
+
+					// Update drag coordinates
+					u.e.setDragPosition(page.nN.nav, 0, 0);
+					u.e.setDragBoundaries(page.nN.nav, page.nN);
+
 				}
+				// enable dragging on navigation
+				u.e.drag(this.nN.nav, this.nN, {"strict":false, "elastica":200, "vertical_lock":true, "overflow":"scroll"});
 			}
 
-			// remove accessibility #navigation anchor from header servicenavigation
-			if(this.hN.service) {
-				var nav_anchor = u.qs("li.navigation", this.hN.service);
-				if(nav_anchor) {
-					this.hN.service.removeChild(nav_anchor);
-				}
-			}
 
-			// insert footer servicenavigation into header servicenavigation
+			var i, node;
+
+			// append footer servicenavigation to header servicenavigation
 			if(this.fN.service) {
 				nodes = u.qsa("li", this.fN.service);
 				for(i = 0; node = nodes[i]; i++) {
-					u.ie(this.hN.service, node);
+					u.ae(this.nN.list, node);
 				}
 				this.fN.removeChild(this.fN.service);
 			}
 
-			// enable navigation link animation where relevant
-			nodes = u.qsa("#navigation li,a.logo,.servicenavigation li", this);
+			// append header servicenavigation to header servicenavigation
+			if(this.hN.service) {
+				nodes = u.qsa("li:not(.navigation)", this.hN.service);
+				for(i = 0; node = nodes[i]; i++) {
+					u.ae(this.nN.list, node);
+				}
+			}
+
+			var i, node, nodes;
+			// enable animation on submenus and logo
+			nodes = u.qsa("#navigation li,a.logo", this.hN);
 			for(i = 0; node = nodes[i]; i++) {
 
-				if(!u.hc(node, "logoff")) {
-					u.ce(node, {"type":"link"});
-				}
+				// build first living proof model of CEL clickableElementLink
+				u.ce(node, {"type":"link"});
 
 				// add over and out animation
 				u.e.hover(node);
 				node.over = function() {
-					u.a.transition(this, "none");
-
-					this.transitioned = function() {
-
-						this.transitioned = function() {
-							this.transitioned = function() {
-								u.a.transition(this, "none");
-							}
-
-							u.a.transition(this, "all 0.1s ease-in-out");
-							u.a.scale(this, 1.2);
-						}
-
-						u.a.transition(this, "all 0.1s ease-in-out");
-						u.a.scale(this, 1.15);
-					}
-
-					if(this._scale != 1.22) {
-						u.a.transition(this, "all 0.1s ease-in-out");
-						u.a.scale(this, 1.22);
-					}
-					else {
-						this.transitioned();
-					}
-				}
-
-				node.out = function() {
-					u.a.transition(this, "none");
 
 					this.transitioned = function() {
 
@@ -807,20 +898,38 @@ Util.Modules["page"] = new function() {
 							u.a.transition(this, "none");
 						}
 
-						u.a.transition(this, "all 0.2s ease-in-out");
+						u.a.transition(this, "all 0.1s ease-in-out");
+						u.a.scale(this, 1.15);
+					}
+
+					u.a.transition(this, "all 0.1s ease-in-out");
+					u.a.scale(this, 1.22);
+				}
+				node.out = function() {
+
+					this.transitioned = function() {
+
+						this.transitioned = function() {
+							u.a.transition(this, "none");
+						}
+
+						u.a.transition(this, "all 0.1s ease-in-out");
 						u.a.scale(this, 1);
 					}
 
-
-					// if(this._scale != 0.8) {
-					// 	u.a.transition(this, "all 0.1s ease-in");
-					// 	u.a.scale(this, 0.8);
-					// }
-					// else {
-						this.transitioned();
-					// }
+					u.a.transition(this, "all 0.1s ease-in-out");
+					u.a.scale(this, 0.9);
 				}
 
+			}
+
+			// get clean set of navigation nodes (for animation on open and close)
+			this.nN.nodes = u.qsa("li", this.nN.list);
+
+			if(this.hN.service) {
+				u.ass(this.hN.service, {
+					"opacity":1
+				});
 			}
 
 		}
@@ -829,19 +938,12 @@ Util.Modules["page"] = new function() {
 		page.initFooter = function() {}
 
 
-		// Show page elements (header servicenavigation, logo, navigation, footer)
+		// Show page elements (header, navigation, footer)
 		page.revealPage = function() {
 			// u.bug("page.revealPage");
 
-			if(this.hN.service) {
-				u.a.transition(this.hN.service, "all 0.3s ease-in");
-				u.ass(this.hN.service, {
-					"opacity":1
-				});
-			}
-
-			u.a.transition(this.logo, "all 0.3s ease-in");
-			u.ass(this.logo, {
+			u.a.transition(this.hN, "all 0.3s ease-in");
+			u.ass(this.hN, {
 				"opacity":1
 			});
 

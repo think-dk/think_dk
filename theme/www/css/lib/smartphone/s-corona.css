@@ -1,0 +1,23 @@
+
+/* CORONA PAGE */
+#content .scene.corona h1 {font-size: 44px;}
+#content .scene.corona h2 {font-size: 30px;}
+#content .scene.corona ul.info {padding-top: 20px; padding-bottom: 46px;}
+#content .scene.corona ul.info li {font-size: 14px; line-height: 14px;}
+#content .scene.corona .articlebody p {font-size: 16px; line-height: 1.6em; padding-bottom: 30px;}
+#content .scene.corona .articlebody h3 {font-size: 20px; color: #26962d;}
+#content .scene.corona .articlebody li {font-size: 16px; line-height: 1.6em; padding-bottom: 15px;}
+
+#content .scene .articlebody h2.quote {text-align: center;}
+#content .scene .articlebody h2.quote span.quotee {font-size: 20px; text-align: right; display: block; padding-top: 15px; color: #777777;
+	font-family: "OpenSans", Verdana, Arial, sans-serif;
+}
+
+#content .scene.corona div.signee {padding-bottom: 50px;}
+#content .scene.corona div.signee h2 {padding-bottom: 20px;}
+
+#content .scene.corona div.signees {padding-bottom: 50px;}
+#content .scene.corona div.signees h2 {padding-bottom: 30px;}
+
+#content .scene.corona div.signees ul.signees {font-size: 0;}
+#content .scene.corona div.signees ul.signees li {font-size: 18px; padding-bottom: 10px;}

@@ -1,0 +1,55 @@
+/* EVENTS */
+#content .scene div.all_events h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
+	font-family: "OpenSans";
+}
+#content .scene ul.events li.event {padding-bottom: 0;}
+#content .scene ul.events li.event h3 {
+	font-family: "PT Serif",Times,serif;	
+}
+#content .scene ul.events li.event span.event_status.eventcancelled {color: #df0000;}
+
+#content .scene ul.events li.event dl.occurs_at {padding-bottom: 0;}
+#content .scene ul.events li.event dd {width: auto; font-size: 12px; padding-bottom: 0; padding-left: 0;}
+#content .scene ul.events li.event dt {display: none;}
+
+#content .scene.event div.event.member h1 {
+	padding-right: 70px;
+	background: transparent url("/img/gx_member_event_smartphone.png") no-repeat right 20px top 0px;
+/*	background-size: 50px auto;*/
+}
+
+#content .scene.event div.event div.description {padding-bottom: 10px;}
+
+#content .scene.event div.event dl.occurs_at {padding-bottom: 0;}
+#content .scene.event div.event dl.occurs_at dt {font-size: 12px; text-align: left;}
+#content .scene.event div.event dl.occurs_at dd {font-size: 16px; padding-bottom: 15px; padding-left: 0;}
+
+#content .scene.event div.event dl.event_status {padding-bottom: 0;}
+#content .scene.event div.event dl.event_status dt {font-size: 12px; text-align: left;}
+#content .scene.event div.event dl.event_status dd {font-size: 16px; padding-bottom: 15px; padding-left: 0;}
+#content .scene.event div.event dl.event_status dd.eventcancelled {font-size: 20px; color: #df0000;}
+
+#content .scene.event div.event dl.event_attendance {padding-bottom: 0;}
+#content .scene.event div.event dl.event_attendance dt {font-size: 12px; text-align: left;}
+#content .scene.event div.event dl.event_attendance dd {font-size: 16px; padding-bottom: 15px; padding-left: 0;}
+
+#content .scene.event div.event div.location {padding-top: 20px;}
+#content .scene.event div.event ul.location {display: block;}
+#content .scene.event div.event ul.location li.name {padding-bottom: 10px; font-size: 15px;}
+#content .scene.event div.event ul.location ul {padding-left: 0; padding-right: 0;}
+
+#content .scene.event div.event div.sponsor.lokaludvalg {padding-top: 20px;
+	background: transparent url("/img/sponsors/logo_obro_lokaludvalg.png") no-repeat 220px 20px;
+/*	background-size: auto 70px;*/
+}
+#content .scene.event div.event div.sponsor.lokaludvalg p {width: 210px; color: #cccccc;}
+
+
+#content .scene div.all_events.past_events {padding-top: 50px;}
+
+#content .scene.event div.tickets li.ticket {padding-bottom: 40px;}
+#content .scene.event div.tickets ul.ticket_info {padding: 0;}
+#content .scene.event div.tickets ul.ticket_info li.price {font-size: 34px;}
+
+#content .scene.event div.tickets ul.ticket_info li.buy ul.actions {padding: 20px 0 0;}
+#content .scene.event div.tickets ul.ticket_info li.buy ul.actions li {padding: 0;}

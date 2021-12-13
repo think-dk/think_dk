@@ -1,0 +1,7 @@
+/* ABOUT */
+#content .scene ul.people {padding-bottom: 30px;}
+#content .scene ul.people li.person {padding-bottom: 10px;}
+#content .scene ul.items.people li.item.person h4 {font-weight: normal; font-size: 16px; padding-bottom: 10px;}
+#content .scene ul.items.people li.item.person ul.info {display: block; padding: 0 20px 20px;}
+#content .scene ul.items.people li.item.person ul.info li {display: block; color: #777777; padding-bottom: 2px;}
+#content .scene ul.items.people li.item.person ul.info li.affiliation {display: none;}

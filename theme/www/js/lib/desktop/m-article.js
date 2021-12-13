@@ -1,7 +1,7 @@
 // Stardard article enabling
 Util.Modules["article"] = new function() {
 	this.init = function(article) {
-		u.bug("article init:", article);
+		// u.bug("article init:", article);
 
 
 		// csrf token for data manipulation
