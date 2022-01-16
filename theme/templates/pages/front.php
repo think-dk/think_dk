@@ -60,7 +60,6 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 
 		<ul class="actions">
 			<li><a href="/projects">Read more</a></li>
-			<li><a href="/projects/join">Join a project</a></li>
 		</ul>
 	</div>
 
@@ -72,7 +71,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 
 		<ul class="actions">
 			<li><a href="/services">Read more</a></li>
-			<li><a href="/services">Offer a service</a></li>
+			<!-- <li><a href="/services">Offer a service</a></li> -->
 		</ul>
 	</div>
 
@@ -83,7 +82,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 
 		<ul class="actions">
 			<li><a href="/events">Calendar</a></li>
-			<li><a href="/events/new-event">Host your event</a></li>
+			<li><a href="/bulletin/our-event-hosting-policy">Host your event</a></li>
 		</ul>
 	</div>
 
@@ -96,7 +95,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 		
 		<ul class="actions">
 			<li><a href="/memberships">Join us</a></li>
-			<li><a href="/memberships">Support us</a></li>
+			<li><a href="/bulletin/tag/Volunteer+Positions">Support us</a></li>
 		</ul>
 	</div>
 
@@ -105,6 +104,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 		<p>Bulletins, latest news, organisational guidelines and all the stuff in-between.</p>
 
 		<ul class="actions">
+			<li><a href="/bulletin/tag/Latest">Latest updates</a></li>
 			<li><a href="/bulletin">Read more</a></li>
 		</ul>
 	</div>
@@ -128,7 +128,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 
 		<ul class="actions">
 			<li><a href="/blog">Read more</a></li>
-			<li><a href="/blog/contribute">Contribute</a></li>
+			<!-- <li><a href="/blog/contribute">Contribute</a></li> -->
 		</ul>
 	</div>
 
