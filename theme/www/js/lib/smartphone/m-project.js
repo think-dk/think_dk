@@ -13,14 +13,14 @@ Util.Modules["project"] = new function() {
 		scene.ready = function() {
 			// u.bug("scene.ready:", this);
 
-			u.columns(this, [
-				{"c200": [
-					"div.article", 
-				]},
-				{"c100": [
-					".projectdetails",
-				]},
-			]);
+			// u.columns(this, [
+			// 	{"c200": [
+			// 		"div.article",
+			// 	]},
+			// 	{"c100": [
+			// 		".projectdetails",
+			// 	]},
+			// ]);
 
 
 			u.showScene(this);
