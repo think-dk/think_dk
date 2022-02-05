@@ -124,7 +124,7 @@ div.field .pseudolabel {color: #aaaaaa;}
 /* VALIDATION */
 div.field .indicator {width: 20px; height: 15px; display: inline-block; margin-bottom: -2px; margin-top: -2px;}
 div.field.required .indicator {
-	background: transparent url(../../../img/bg_icons.png) no-repeat 3px -295px;
+	background-image: url(/img/bg_indicator.png);
 }
 /*div.field.text.required .indicator {background-position: 0 -296px;}*/
 

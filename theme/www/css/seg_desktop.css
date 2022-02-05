@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2021-12-13 08:52:54
+asset-builder @ 2022-02-05 13:25:56
 */
 
 /*seg_desktop_include.css*/
@@ -1463,6 +1463,11 @@ body.black #header ul.servicenavigation {display: none;}
 
 
 /*s-verdensborger.css*/
+#header div.verdensborger_header {height: 250px; width: 100%; position: absolute; top: 0; left: 0; text-align: center;
+	box-sizing: border-box; padding-top: 70px;
+	font-size: 80px;
+	font-family: "PT Serif", Times, serif;
+}
 #content .scene.verdensborger .c .c100 {width: 40%;}
 #content .scene.verdensborger .c .c200 {width: 60%;}
 #content .scene.verdensborger div.signup {padding-bottom: 20px;}

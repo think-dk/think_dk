@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2021-12-13 08:52:54
+asset-builder @ 2022-02-05 13:25:56
 */
 
 /*seg_desktop_include.js*/
@@ -10492,7 +10492,19 @@ Util.Modules["verdensborger"] = new function() {
 					u.scrollTo(window, {"node": this.div_signup, "offset_y":100});
 				}
 			}
+			this.verdensborger_header = u.ae(page.hN, "div", {"class":"verdensborger_header", "html":"Verdensborger"});
+			u.ass(page.intro, {
+				"transition": "all 0.5s ease-in-out",
+				"opacity": 0
+			});
 			u.showScene(this);
+		}
+		scene.destroy = function() {
+			u.ass(page.intro, {
+				"opacity": 1
+			});
+			page.hN.removeChild(this.verdensborger_header);
+			page.cN.removeChild(this);
 		}
 		page.cN.scene = scene;
 	}

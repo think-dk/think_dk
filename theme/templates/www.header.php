@@ -28,8 +28,8 @@ if(defined("SITE_SHOP") && SITE_SHOP) {
 	<link type="text/css" rel="stylesheet" media="all" href="/css/lib/seg_<?= $this->segment() ?>_include.css" />
 	<script type="text/javascript" src="/js/lib/seg_<?= $this->segment() ?>_include.js"></script>
 <? } else { ?>
-	<link type="text/css" rel="stylesheet" media="all" href="/css/seg_<?= $this->segment() ?>.css?rev=20211213-085254" />
-	<script type="text/javascript" src="/js/seg_<?= $this->segment() ?>.js?rev=20211213-085254"></script>
+	<link type="text/css" rel="stylesheet" media="all" href="/css/seg_<?= $this->segment() ?>.css?rev=20220205-132556" />
+	<script type="text/javascript" src="/js/seg_<?= $this->segment() ?>.js?rev=20220205-132556"></script>
 <? } ?>
 
 	<?= $this->headerIncludes() ?>

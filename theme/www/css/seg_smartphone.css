@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2021-12-13 08:52:54
+asset-builder @ 2022-02-05 13:25:56
 */
 
 /*seg_smartphone_include.css*/
@@ -451,7 +451,7 @@ div.field textarea.default,
 div.field .pseudolabel {color: #aaaaaa;}
 div.field .indicator {width: 20px; height: 15px; display: inline-block; margin-bottom: -2px; margin-top: -2px;}
 div.field.required .indicator {
-	background: transparent url(../../../img/bg_icons.png) no-repeat 3px -295px;
+	background-image: url(../img/bg_indicator.png);
 }
 div.field.correct .indicator {background-position: 3px -324px;}
 div.field.error {
@@ -1065,6 +1065,7 @@ body.black #content .scene div.comments h2:active svg.arrow line {stroke: #00000
 
 
 /*s-verdensborger.css*/
+#content .scene.verdensborger {padding-top: 0;}
 #content .scene.verdensborger .overdue,
 #content .scene.verdensborger .overdue a {color: #cdcdcd;}
 #content .scene.verdensborger .extendedpadding {padding-bottom: 35px;}

@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2021-12-13 08:52:54
+asset-builder @ 2022-02-05 13:25:56
 */
 
 /*seg_smartphone_include.js*/
@@ -8726,14 +8726,6 @@ Util.Modules["project"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			u.columns(this, [
-				{"c200": [
-					"div.article", 
-				]},
-				{"c100": [
-					".projectdetails",
-				]},
-			]);
 			u.showScene(this);
 		}
 		page.cN.scene = scene;
@@ -9339,7 +9331,17 @@ Util.Modules["verdensborger"] = new function() {
 			// 	
 			// 		
 			// 			
+			u.ass(page.intro, {
+				"transition": "all 0.5s ease-in-out",
+				"opacity": 0
+			});
 			u.showScene(this);
+		}
+		scene.destroy = function() {
+			u.ass(page.intro, {
+				"opacity": 1
+			});
+			page.cN.removeChild(this);
 		}
 		page.cN.scene = scene;
 	}
