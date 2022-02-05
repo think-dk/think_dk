@@ -141,10 +141,31 @@ Util.Modules["verdensborger"] = new function() {
 				// }
 			}
 
+			this.verdensborger_header = u.ae(page.hN, "div", {"class":"verdensborger_header", "html":"Verdensborger"});
+
+			u.ass(page.intro, {
+				"transition": "all 0.5s ease-in-out",
+				"opacity": 0
+			});
+
 
 			u.showScene(this);
 
 		}
+
+
+		scene.destroy = function() {
+			// u.bug("destroy");
+
+			u.ass(page.intro, {
+				"opacity": 1
+			});
+
+			page.hN.removeChild(this.verdensborger_header);
+			page.cN.removeChild(this);
+
+		}
+
 
 		// Map scene – page will call scene.ready
 		page.cN.scene = scene;

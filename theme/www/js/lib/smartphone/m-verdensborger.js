@@ -128,9 +128,25 @@ Util.Modules["verdensborger"] = new function() {
 			//
 			// }
 
+			u.ass(page.intro, {
+				"transition": "all 0.5s ease-in-out",
+				"opacity": 0
+			});
+
 			u.showScene(this);
 
 			// u.preloader(this, load_queue);
+
+		}
+
+		scene.destroy = function() {
+			// u.bug("destroy");
+
+			u.ass(page.intro, {
+				"opacity": 1
+			});
+
+			page.cN.removeChild(this);
 
 		}
 
