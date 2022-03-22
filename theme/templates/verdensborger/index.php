@@ -85,42 +85,25 @@ $comment = getPost("comment");
 
 	<div class="info_meeting">
 		<h2>Mød os og hør mere på et intromøde</h2>
-		<h3 class="overdue">
+		<h3>
+			29. marts 2022 – online
+		</h3>
+		<p>
+			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-6">læs mere</a>.
+		</p>
+		<h3>
+			26. april 2022 – online
+		</h3>
+		<p>
+			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-7">læs mere</a>.
+		</p>
+		<!-- <h3 class="overdue">
 			9. juni 2021
 		</h3>
 		<p class="overdue">
 			Kl. 19:00-20:00 – <a href="/events/verdensborger-infomoede-2">læs mere</a>.
-		</p>
-		<h3 class="overdue">
-			6. juli 2021
-		</h3>
-		<p class="overdue">
-			Kl. 19:00-20:00 – <a href="/events/verdensborger-infomoede-3">læs mere</a>.
-		</p>
-		<h3 class="overdue">
-			2. august 2021
-		</h3>
-		<p class="overdue">
-			Kl. 19:00-20:00 – <a href="/events/verdensborger-infomoede-4">læs mere</a>.
-		</p>
-		<h3 class="overdue">
-			1. september 2021
-		</h3>
-		<p class="overdue">
-			Kl. 19:30-20:30 – <a href="/events/verdensborger-infomoede-cloned">læs mere</a>.
-		</p>
-		<h3 class="overdue">
-			28. september 2021
-		</h3>
-		<p class="overdue">
-			Kl. 19:00-20:00 – <a href="/events/verdensborger-infomoede-cloned-1">læs mere</a>.
-		</p>
-		<h3>
-			12. oktober 2021
-		</h3>
-		<p>
-			Kl. 19:00-20:00 – <a href="/events/verdensborger-infomoede-5">læs mere</a>.
-		</p>
+		</p> -->
+
 		<p>
 			Alle interesserede er velkomne – skriv derfor til <a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du vil være sikker på en plads – eller opdateres når vi
 			tilføjer nye intromøder til listen. 
@@ -138,7 +121,9 @@ $comment = getPost("comment");
 	<div class="practicalities">
 		<h2>Praktisk info</h2>
 		<p>Forløbet foregår i København, hos think.dk</p>
-		<p>Forløbet løber fra oktober 2021 til maj 2022 og indebærer:</p>
+
+		<h3>2021/2022</h3>
+		<p>Det nuværende forløb, fra oktober 2021 til maj 2022 er fuldt booket og i fuld gang.</p>
 		<ul>
 			<li>16 lørdage fra 10.00-12.00.</li>
 			<li>1 lørdag fra 10:00 til 16:00.</li>
@@ -146,10 +131,16 @@ $comment = getPost("comment");
 			<li>Debatinspirerende oplæg eller tur, hver lørdag, efterfulgt af dialog med de unge.</li>
 			<li>Afslutningsweekend med overgangsritual og ceremoni i maj 2022.</li>
 		</ul>
-		<h3>Corona information</h3>
-		<p>
-			Vi har netop gennemført forløbet under den seneste Corona nedlukning. Vi har derfor allerede erfaringer med hvad det kræver at overholde gældende regler og stadig gennemføre hele forløbet.
-		</p>
+		
+		<h3>2022/2023</h3>
+		<p>Næste forløb, fra oktober 2022 til maj 2023 er åbent for tilmelding.</p>
+		<p>Vi har startet planlægningen, og forløbet vil ligne det vi lige nu er i gang med – bare bedre. Det der ligger helt fast er:</p>
+		<ul>
+			<li>Et antal lørdage, fra kl. 10.</li>
+			<li>Ingen lektioner i skolernes ferier.</li>
+			<li>Debatinspirerende oplæg eller tur, hver lørdag, efterfulgt af dialog med de unge.</li>
+			<li>Afslutningsweekend med overgangsritual og ceremoni i maj 2023.</li>
+		</ul>
 	</div>
 
 	<div class="signup">
@@ -160,7 +151,8 @@ $comment = getPost("comment");
 			<a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du har spørgsmål :)
 		</p>
 		<p>
-			Standardprisen for Verdensborger konfirmationsforløbet er 7.500,- kr. pr. deltager. Der er 12 pladser på holdet.
+			Standardprisen for Verdensborger konfirmationsforløbet 2021/2022 er 7.500,- kr. pr. deltager. Der er 12 pladser på hvert hold. 
+			Prisen for forløbet 2022/2023 er vi i gang med at regne ud.
 		</p>
 
 		<?= $HTML->formStart("tilmelding", ["class" => "signup labelstyle:inject"]); ?>
