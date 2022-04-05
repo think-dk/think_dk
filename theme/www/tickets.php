@@ -6,7 +6,7 @@ if(isset($read_access) && $read_access) {
 
 include_once($_SERVER["FRAMEWORK_PATH"]."/config/init.php");
 
-$page->currency("GBP");
+// $page->currency("GBP");
 
 // debug(["currency", $page->currency()]);
 
