@@ -84,8 +84,8 @@ $comment = getPost("comment");
 	</div>
 
 	<div class="info_meeting">
-		<h2 class="overdue">Mød os og hør mere på et intromøde</h2>
-		<h3>
+		<h2>Mød os og hør mere på et intromøde</h2>
+		<h3 class="overdue">
 			29. marts 2022 – online
 		</h3>
 		<p class="overdue">
