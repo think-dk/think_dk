@@ -84,18 +84,24 @@ $comment = getPost("comment");
 	</div>
 
 	<div class="info_meeting">
-		<h2>Mød os og hør mere på et intromøde</h2>
+		<h2 class="overdue">Mød os og hør mere på et intromøde</h2>
 		<h3>
 			29. marts 2022 – online
 		</h3>
-		<p>
+		<p class="overdue">
 			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-6">læs mere</a>.
 		</p>
+		<h3 class="overdue">
+			25. april 2022 – online
+		</h3>
+		<p class="overdue">
+			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-7">læs mere</a>.
+		</p>
 		<h3>
-			26. april 2022 – online
+			25. maj 2022 – online
 		</h3>
 		<p>
-			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-7">læs mere</a>.
+			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-8">læs mere</a>.
 		</p>
 		<!-- <h3 class="overdue">
 			9. juni 2021
@@ -134,12 +140,12 @@ $comment = getPost("comment");
 		
 		<h3>2022/2023</h3>
 		<p>Næste forløb, fra oktober 2022 til maj 2023 er åbent for tilmelding.</p>
-		<p>Vi har startet planlægningen, og forløbet vil ligne det vi lige nu er i gang med – bare bedre. Det der ligger helt fast er:</p>
 		<ul>
-			<li>Et antal lørdage, fra kl. 10.</li>
+			<li>11 lørdage, fra kl. 10 til 13.</li>
+			<li>1 lørdag fra 10:00 til 16:00 – inkl. tur til X-Jump.</li>
 			<li>Ingen lektioner i skolernes ferier.</li>
 			<li>Debatinspirerende oplæg eller tur, hver lørdag, efterfulgt af dialog med de unge.</li>
-			<li>Afslutningsweekend med overgangsritual og ceremoni i maj 2023.</li>
+			<li>Afslutningsweekend med overgangsritual 5.-6. maj og ceremoni 6. maj 2023.</li>
 		</ul>
 	</div>
 
