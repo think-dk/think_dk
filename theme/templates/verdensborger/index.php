@@ -98,7 +98,7 @@ $comment = getPost("comment");
 			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-7">læs mere</a>.
 		</p>
 		<h3>
-			25. maj 2022 – online
+			23. maj 2022 – online
 		</h3>
 		<p>
 			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-8">læs mere</a>.
