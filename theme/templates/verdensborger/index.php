@@ -75,7 +75,7 @@ $comment = getPost("comment");
 			Konfirmation har været en tradition i Danmark siden 1736, hvor 7.-8. klasseselever bekræfter dåben, gennem en kirkelig handling, udført i regi af folkekirken.
 		</p>
 		<p class="note">
-			Nonfirmation er en begyndende tradition i Danmark, hvor 7.-8. klasseselever i mange tilfælde springer ritualet og dannelsesrejsen over og blot markere overgangen fra barn til voksen med en fest
+			Nonfirmation er en begyndende tradition i Danmark, hvor 7.-8. klasseselever i mange tilfælde springer ritualet og dannelsesrejsen over og blot markerer overgangen fra barn til voksen med en fest.
 		</p>
 		<p class="note">Vi forstår at festen er vigtig, 
 			men overgangen fra barndommen til det gryende voksenliv er vigtigere, og vi ønsker brændende at 
@@ -103,6 +103,18 @@ $comment = getPost("comment");
 		<p>
 			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-8">læs mere</a>.
 		</p>
+		<h3>
+			14. juni 2022 – online
+		</h3>
+		<p>
+			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-9">læs mere</a>.
+		</p>
+		<h3>
+			23. august 2022 – online
+		</h3>
+		<p>
+			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-10">læs mere</a>.
+		</p>
 		<!-- <h3 class="overdue">
 			9. juni 2021
 		</h3>
@@ -111,8 +123,7 @@ $comment = getPost("comment");
 		</p> -->
 
 		<p>
-			Alle interesserede er velkomne – skriv derfor til <a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du vil være sikker på en plads – eller opdateres når vi
-			tilføjer nye intromøder til listen. 
+			Alle interesserede er velkomne – skriv meget gerne til <a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a> hvis I ønsker at deltage. 
 		</p>
 		<p>
 			Møderne foregår enten <a href="https://meet.jit.si/verdensborger">online</a> eller hos Relational Spaces.
@@ -128,16 +139,6 @@ $comment = getPost("comment");
 		<h2>Praktisk info</h2>
 		<p>Forløbet foregår i København, hos think.dk</p>
 
-		<h3>2021/2022</h3>
-		<p>Det nuværende forløb, fra oktober 2021 til maj 2022 er fuldt booket og i fuld gang.</p>
-		<ul>
-			<li>16 lørdage fra 10.00-12.00.</li>
-			<li>1 lørdag fra 10:00 til 16:00.</li>
-			<li>Ingen lektioner i skolernes ferier.</li>
-			<li>Debatinspirerende oplæg eller tur, hver lørdag, efterfulgt af dialog med de unge.</li>
-			<li>Afslutningsweekend med overgangsritual og ceremoni i maj 2022.</li>
-		</ul>
-		
 		<h3>2022/2023</h3>
 		<p>Næste forløb, fra oktober 2022 til maj 2023 er åbent for tilmelding.</p>
 		<ul>
@@ -147,6 +148,17 @@ $comment = getPost("comment");
 			<li>Debatinspirerende oplæg eller tur, hver lørdag, efterfulgt af dialog med de unge.</li>
 			<li>Afslutningsweekend med overgangsritual 5.-6. maj og ceremoni 6. maj 2023.</li>
 		</ul>
+
+		<h3>2021/2022</h3>
+		<p>Det nuværende forløb, fra oktober 2021 til maj 2022 er netop afsluttet.</p>
+		<ul>
+			<li>16 lørdage fra 10.00-12.00.</li>
+			<li>1 lørdag fra 10:00 til 16:00.</li>
+			<li>Ingen lektioner i skolernes ferier.</li>
+			<li>Debatinspirerende oplæg eller tur, hver lørdag, efterfulgt af dialog med de unge.</li>
+			<li>Afslutningsweekend med overgangsritual og ceremoni i maj 2022.</li>
+		</ul>
+		
 	</div>
 
 	<div class="signup">
@@ -157,8 +169,7 @@ $comment = getPost("comment");
 			<a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du har spørgsmål :)
 		</p>
 		<p>
-			Standardprisen for Verdensborger konfirmationsforløbet 2021/2022 er 7.500,- kr. pr. deltager. Der er 12 pladser på hvert hold. 
-			Prisen for forløbet 2022/2023 er vi i gang med at regne ud.
+			Standardprisen for Verdensborger konfirmationsforløbet 2022/23 er 8.000,- kr. pr. deltager. Der er 12 pladser på hvert hold. Der kan ansøges om deltagelse til reduceret pris – kontakt os for mere information.
 		</p>
 
 		<?= $HTML->formStart("tilmelding", ["class" => "signup labelstyle:inject"]); ?>
