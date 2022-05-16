@@ -151,14 +151,7 @@ $comment = getPost("comment");
 
 		<h3>2021/2022</h3>
 		<p>Det nuværende forløb, fra oktober 2021 til maj 2022 er netop afsluttet.</p>
-		<ul>
-			<li>16 lørdage fra 10.00-12.00.</li>
-			<li>1 lørdag fra 10:00 til 16:00.</li>
-			<li>Ingen lektioner i skolernes ferier.</li>
-			<li>Debatinspirerende oplæg eller tur, hver lørdag, efterfulgt af dialog med de unge.</li>
-			<li>Afslutningsweekend med overgangsritual og ceremoni i maj 2022.</li>
-		</ul>
-		
+
 	</div>
 
 	<div class="signup">
