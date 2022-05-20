@@ -162,7 +162,7 @@ $comment = getPost("comment");
 			<a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du har spørgsmål :)
 		</p>
 		<p>
-			Standardprisen for Verdensborger konfirmationsforløbet 2022/23 er 8.000,- kr. pr. deltager. Der er 12 pladser på hvert hold. Der kan ansøges om deltagelse til reduceret pris – kontakt os for mere information.
+			Standardprisen for Verdensborger konfirmationsforløbet 2022/23 er 8.000,- kr. pr. deltager. Der er 12 pladser på hvert hold. Vi ønsker at alle kan være med, uanset økonomisk situation – der kan derfor ansøges om deltagelse til reduceret pris. Kontakt os for mere information.
 		</p>
 
 		<?= $HTML->formStart("tilmelding", ["class" => "signup labelstyle:inject"]); ?>
