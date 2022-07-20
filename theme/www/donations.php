@@ -18,7 +18,7 @@ $page->pageTitle("Donations");
 if($action) {
 
 	# /donations/addToCart
-	if($action[0] == "addToCart" && $page->validateCsrfToken()) {
+	if($action[0] == "addToCart" && security()->validateCsrfToken()) {
 
 		// add membership to new or existing cart
 		$cart = $model->addToCart(array("addToCart"));

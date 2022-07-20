@@ -26,7 +26,7 @@ if($action) {
 	}
 
 	# /maillist/addToMaillist
-	else if($action[0] == "addToMaillist" && $page->validateCsrfToken()) {
+	else if($action[0] == "addToMaillist" && security()->validateCsrfToken()) {
 
 		// create new user
 		$UC = new User();
@@ -55,7 +55,7 @@ if($action) {
 
 
 	// maillist/confirm
-	if($action[0] == "confirm" && $page->validateCsrfToken()) {
+	if($action[0] == "confirm" && security()->validateCsrfToken()) {
 
 		$username = session()->value("signup_email");
 		$verification_code = getPost("verification_code");

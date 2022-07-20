@@ -95,7 +95,7 @@ if($action) {
 		}
 
 		// process payment method for cart
-		else if(count($action) == 5 && $action[2] === "cart" && $action[4] == "process" && $page->validateCsrfToken()) {
+		else if(count($action) == 5 && $action[2] === "cart" && $action[4] == "process" && security()->validateCsrfToken()) {
 
 			$gateway = $action[1];
 			$cart_reference = $action[3];
@@ -158,7 +158,7 @@ if($action) {
 		}
 
 		// process payment method for order
-		else if(count($action) == 5 && $action[2] === "order" && $action[4] == "process" && $page->validateCsrfToken()) {
+		else if(count($action) == 5 && $action[2] === "order" && $action[4] == "process" && security()->validateCsrfToken()) {
 
 			$gateway = $action[1];
 			$order_no = $action[3];
@@ -226,7 +226,7 @@ if($action) {
 		}
 
 		// process payment method for orders
-		else if(count($action) == 5 && $action[2] === "orders" && $action[4] == "process" && $page->validateCsrfToken()) {
+		else if(count($action) == 5 && $action[2] === "orders" && $action[4] == "process" && security()->validateCsrfToken()) {
 
 			$gateway = $action[1];
 			$order_ids = $action[3];
@@ -589,7 +589,7 @@ if($action) {
 
 
 	# /shop/selectPaymentMethodForOrder
-	else if($action[0] == "selectPaymentMethodForOrder" && $page->validateCsrfToken()) {
+	else if($action[0] == "selectPaymentMethodForOrder" && security()->validateCsrfToken()) {
 
 		// register payment method
 		$result = $model->selectPaymentMethodForOrder(array("selectPaymentMethodForOrder"));
@@ -671,7 +671,7 @@ if($action) {
 
 
 	# /shop/selectPaymentMethodForOrders
-	else if($action[0] == "selectPaymentMethodForOrders" && $page->validateCsrfToken()) {
+	else if($action[0] == "selectPaymentMethodForOrders" && security()->validateCsrfToken()) {
 
 		// register payment method
 		$result = $model->selectPaymentMethodForOrders(array("selectPaymentMethodForOrders"));
@@ -827,7 +827,7 @@ if($action) {
 
 
 	# /shop/addToCart
-	else if($action[0] == "addToCart" && $page->validateCsrfToken()) {
+	else if($action[0] == "addToCart" && security()->validateCsrfToken()) {
 
 		// create new user
 		$cart = $model->addToCart(array("addToCart"));
@@ -847,7 +847,7 @@ if($action) {
 	}
 
 	# /shop/updateCartItemQuantity
-	else if($action[0] == "updateCartItemQuantity" && $page->validateCsrfToken()) {
+	else if($action[0] == "updateCartItemQuantity" && security()->validateCsrfToken()) {
 
 		message()->resetMessages();
 
@@ -872,7 +872,7 @@ if($action) {
 	}
 
 	# /shop/updateCartItemQuantity
-	else if($action[0] == "deleteFromCart" && $page->validateCsrfToken()) {
+	else if($action[0] == "deleteFromCart" && security()->validateCsrfToken()) {
 
 		// create new user
 		$cart = $model->deleteFromCart($action);
@@ -892,7 +892,7 @@ if($action) {
 	}
 
 	# /shop/signup
-	else if($action[0] == "signup" && $page->validateCsrfToken()) {
+	else if($action[0] == "signup" && security()->validateCsrfToken()) {
 
 		// create new user
 		$UC = new User();
@@ -933,7 +933,7 @@ if($action) {
 	}
 
 	# /shop/updateProfile
-	else if($action[0] == "updateProfile" && $page->validateCsrfToken()) {
+	else if($action[0] == "updateProfile" && security()->validateCsrfToken()) {
 
 		// create new user
 		$UC = new User();
@@ -945,7 +945,7 @@ if($action) {
 	}
 
 	# /shop/selectAddress
-	else if($action[0] == "selectAddress" && $page->validateCsrfToken()) {
+	else if($action[0] == "selectAddress" && security()->validateCsrfToken()) {
 
 		if($model->updateCart(array("updateCart"))) {
 			// redirect to leave POST state
@@ -962,7 +962,7 @@ if($action) {
 	}
 
 	# /shop/addAddress
-	else if($action[0] == "addAddress" && count($action) == 2 && $page->validateCsrfToken()) {
+	else if($action[0] == "addAddress" && count($action) == 2 && security()->validateCsrfToken()) {
 
 		$UC = new User();
 		$address = $UC->addAddress(array("addAddress"));
@@ -997,7 +997,7 @@ if($action) {
 	else if($action[0] == "verify") {
 
 		// /shop/verify/confirm
-		if(count($action) == 2 && $action[1] == "confirm" && $page->validateCsrfToken()) {
+		if(count($action) == 2 && $action[1] == "confirm" && security()->validateCsrfToken()) {
 
 			$username = session()->value("signup_email");
 			$verification_code = getPost("verification_code");

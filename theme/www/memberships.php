@@ -61,7 +61,7 @@ if($action) {
 	}
 	
 	# /memberships/addToCart
-	else if($action[0] == "addToCart" && $page->validateCsrfToken()) {
+	else if($action[0] == "addToCart" && security()->validateCsrfToken()) {
 
 		$user_id = session()->value("user_id");
 		if($user_id > 1) {
@@ -99,7 +99,7 @@ if($action) {
 
 	}
 	# /memberships/signup
-	else if($action[0] == "signup" && $page->validateCsrfToken()) {
+	else if($action[0] == "signup" && security()->validateCsrfToken()) {
 
 		// create new user
 		$UC = new User();
@@ -130,7 +130,7 @@ if($action) {
 
 
 	# /memberships/signup
-	else if($action[0] == "addToMaillist" && $page->validateCsrfToken()) {
+	else if($action[0] == "addToMaillist" && security()->validateCsrfToken()) {
 
 		// create new user
 		$UC = new User();

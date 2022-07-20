@@ -53,8 +53,8 @@ $related_items = $IC->getRelatedItems($related_pattern);
 	<div class="article i:article id:<?= $item["item_id"] ?> service" itemscope itemtype="http://schema.org/Article"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-readstate="<?= $item["readstate"] ?>"
-		data-readstate-add="<?= $this->validPath("/janitor/admin/profile/addReadstate/".$item["item_id"]) ?>" 
-		data-readstate-delete="<?= $this->validPath("/janitor/admin/profile/deleteReadstate/".$item["item_id"]) ?>" 
+		data-readstate-add="<?= security()->validPath("/janitor/admin/profile/addReadstate/".$item["item_id"]) ?>" 
+		data-readstate-delete="<?= security()->validPath("/janitor/admin/profile/deleteReadstate/".$item["item_id"]) ?>" 
 		>
 
 		<? if($media): ?>
