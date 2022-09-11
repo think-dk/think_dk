@@ -109,11 +109,17 @@ $comment = getPost("comment");
 		<p class="overdue">
 			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-9">læs mere</a>.
 		</p>
-		<h3>
+		<h3 class="overdue">
 			23. august 2022 – online
 		</h3>
-		<p>
+		<p class="overdue">
 			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-10">læs mere</a>.
+		</p>
+		<h3>
+			20. september 2022 – online
+		</h3>
+		<p>
+			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-11">læs mere</a>.
 		</p>
 		<!-- <h3 class="overdue">
 			9. juni 2021
