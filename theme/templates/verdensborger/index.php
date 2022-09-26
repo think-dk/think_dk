@@ -115,11 +115,23 @@ $comment = getPost("comment");
 		<p class="overdue">
 			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-10">læs mere</a>.
 		</p>
-		<h3>
+		<h3 class="overdue">
 			20. september 2022 – online
 		</h3>
-		<p>
+		<p class="overdue">
 			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-11">læs mere</a>.
+		</p>
+		<h3>
+			6. oktober 2022 – online
+		</h3>
+		<p>
+			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-12">læs mere</a>.
+		</p>
+		<h3>
+			18. oktober 2022 – online
+		</h3>
+		<p>
+			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-13">læs mere</a>.
 		</p>
 		<!-- <h3 class="overdue">
 			9. juni 2021
@@ -146,7 +158,7 @@ $comment = getPost("comment");
 		<p>Forløbet foregår i København, hos think.dk</p>
 
 		<h3>2022/2023</h3>
-		<p>Næste forløb, fra oktober 2022 til maj 2023 er åbent for tilmelding.</p>
+		<p>Næste forløb, fra 29. oktober 2022 til 6. maj 2023 er åbent for tilmelding.</p>
 		<ul>
 			<li>11 lørdage, fra kl. 10 til 13.</li>
 			<li>1 lørdag fra 10:00 til 16:00 – inkl. tur til X-Jump.</li>
