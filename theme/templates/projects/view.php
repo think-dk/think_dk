@@ -10,6 +10,7 @@ $pagination_pattern = [
 	"pattern" => [
 		"itemtype" => "project", 
 		"status" => 1, 
+		"order" => "project.position ASC",
 		"extend" => [
 			"tags" => true, 
 			"user" => true, 

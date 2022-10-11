@@ -141,7 +141,7 @@ $owner_items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "orde
 		<? endif; ?>
 
 		<? if($owner_items): ?>
-		<h3>Owners</h3>
+		<h3>Founders</h3>
 		<ul class="items people">
 			<? foreach($owner_items as $item): ?>
 			<li class="item person vcard id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Person">

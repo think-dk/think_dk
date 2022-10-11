@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2022-02-05 13:25:56
+asset-builder @ 2022-10-11 13:48:06
 */
 
 /*seg_desktop_include.js*/
@@ -9321,7 +9321,7 @@ Util.Modules["about"] = new function() {
 			this.intro_is_finished = true;
 		}
 		scene.destroy = function() {
-			if(this.audioPlayer) {
+			if(this.audioPlayer && fun(this.audioPlayer.ended)) {
 				this.audioPlayer.ended();
 			}
 			if(!this.intro_is_finished) {
