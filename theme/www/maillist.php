@@ -35,7 +35,29 @@ if($action) {
 		session()->value("user_id", 1);
 		session()->value("user_nickname", "");
 
+
+		$headers = apache_request_headers();
+		if(
+			isset($headers["X-Requested-With"])
+			&&
+			$headers["X-Requested-With"] === "XMLHttpRequest"
+		) {
+
+
+				
+		}
+
+
 		// user exists
+		// Detected bot signup
+		if(isset($user["BOT_SIGNUP"])) {
+
+			// redirect to leave POST state
+			header("Location: /maillist/receipt");
+			exit();
+
+		}
+
 		if(isset($user["status"]) && $user["status"] == "USER_EXISTS") {
 			header("Location: /maillist/user-exists");
 			exit();

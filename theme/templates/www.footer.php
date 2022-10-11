@@ -16,7 +16,7 @@
 			<?= $HTML->navigationLink(["link" => "/terms", "name" => "Terms", "classname" => "terms", "target" => false, "fallback" => false]); ?>
 		</ul>
 
-		<p>think.dk – Ryesgade 15, 2200 København N – <a href="mailto:start@think.dk">start@think.dk</a></p>
+		<p>think.dk – <a href="mailto:start@think.dk">start@think.dk</a></p>
 	</div>
 
 </div>

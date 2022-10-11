@@ -230,7 +230,7 @@ Util.Modules["about"] = new function() {
 
 		scene.destroy = function() {
 
-			if(this.audioPlayer) {
+			if(this.audioPlayer && fun(this.audioPlayer.ended)) {
 				this.audioPlayer.ended();
 			}
 			// if(!this.intro_is_finished) {

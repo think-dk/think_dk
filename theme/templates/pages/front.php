@@ -1,5 +1,6 @@
 <?
 $IC = new Items();
+$UC = new User();
 
 $intros = $IC->getItems(array("itemtype" => "page", "tags" => "page:intro", "status" => 1, "extend" => true));
 if($intros) {
@@ -75,7 +76,18 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 		</ul>
 	</div>
 
-	<div class="events">
+	<div class="support">
+		<h2>Support</h2>
+		<p>
+			Your donations enable our organization to keep pushing towards a more caring, smarter and better world.
+		</p>
+
+		<ul class="actions">
+			<li><a href="/support">Support us</a></li>
+		</ul>
+	</div>
+
+	<!-- <div class="events">
 		<h2>Events</h2>
 		<p>We arrange and host events that bring people together for a more caring, smarter and better world.</p>
 		<p>You can do yours too.</p>
@@ -92,12 +104,12 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 			We are a membership based community. The membership fees support the establishment and continuation of our
 			projects.
 		</p>
-		
+
 		<ul class="actions">
 			<li><a href="/memberships">Join us</a></li>
 			<li><a href="/bulletin/tag/Volunteer+Positions">Support us</a></li>
 		</ul>
-	</div>
+	</div> -->
 
 	<div class="bulletin">
 		<h2>Bulletin</h2>
@@ -128,7 +140,6 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 
 		<ul class="actions">
 			<li><a href="/blog">Read more</a></li>
-			<!-- <li><a href="/blog/contribute">Contribute</a></li> -->
 		</ul>
 	</div>
 
@@ -142,6 +153,26 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 		<ul class="actions">
 			<li><a href="/contact">Read more</a></li>
 		</ul>
+	</div>
+
+
+	<div class="newsletter">
+		<h2>Newsletter</h2>
+		<p>Sign up for our infrequent newsletter.</p>
+
+		<?= $UC->formStart("/maillist/addToMaillist", array("class" => "maillist labelstyle:inject")) ?>
+			<?= $UC->input("maillist_name", array("value" => "curious", "type" => "hidden")); ?>
+			<?= $UC->input("maillist", array("value" => 1, "type" => "hidden")); ?>
+			<?= $UC->inputRobot(); ?>
+			<fieldset>
+				<?= $UC->input("email", array("required" => true, "hint_message" => "Enter your email")); ?>
+				<?= $UC->input("terms"); ?>
+			</fieldset>
+
+			<ul class="actions">
+				<?= $UC->submit("Sign up", array("class" => "primary", "wrapper" => "li.signup")) ?>
+			</ul>
+		<?= $UC->formEnd() ?>
 	</div>
 
 </div>

@@ -62,6 +62,7 @@
 #content .scene.front div.c100 > div p,
 #content .scene.front div.c100 > div h3,
 #content .scene.front div.c100 > div ul,
+#content .scene.front div.c100 > div form,
 
 #content .scene.front div.c200 > div p,
 #content .scene.front div.c200 > div h2,
@@ -93,6 +94,7 @@
 #content .scene.front div.c100 > div.hover h2,
 #content .scene.front div.c100 > div.hover h3,
 #content .scene.front div.c100 > div.hover ul,
+#content .scene.front div.c100 > div.hover form,
 
 #content .scene.front div.c200 > div.hover p,
 #content .scene.front div.c200 > div.hover h1,
@@ -122,6 +124,8 @@
 
 #content .scene.front div.projects {}
 #content .scene.front div.services {}
+#content .scene.front div.support {}
+#content .scene.front div.newsletter {}
 #content .scene.front div.events {}
 #content .scene.front div.membership {}
 #content .scene.front div.bulletin {}
