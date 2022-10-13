@@ -1,0 +1,70 @@
+
+/* MEMBERSHIP LIST / JOIN */
+/*#content .scene.signup .articlebody p.fullwidth {width: auto;}*/
+
+#content .scene.signup h1 {text-align: center;}
+#content .scene.signup.already_account h1 {text-align: left;}
+#content .scene.signup h1 + h2 {text-align: center;}
+
+#content .scene.signup h1,
+#content .scene.signup h2,
+#content .scene.signup h3,
+#content .scene.signup h4,
+#content .scene.signup p {margin: 0 auto;}
+#content .scene.signup div.sharing {width: 700px; margin: 0 auto;}
+#content .scene.signup div.sharing svg {margin: 0;}
+#content .scene.signup div.sharing h3,
+#content .scene.signup div.sharing p {left: 70px;}
+
+div.field.range {padding-bottom: 30px;}
+div.field.range label {display: none;}
+div.field.range input {display: block; width: 100%; height: 6px; background: #26962d; outline: none; border-radius: 5px; padding: 0; box-shadow: inset 0 1px 2px #777777; border: none;
+	-webkit-appearance: none;
+}
+div.field.focus.range input {background-color: #34cc3d; border-color: #ffffff;}
+
+div.field.range input::-webkit-slider-runnable-track {width: 100%; height: 10px; cursor: pointer; background: #26962d; border-radius: 5px; padding: 0; box-shadow: inset 0 1px 2px #777777;
+	-webkit-appearance: none;
+}
+div.field.focus.range input::-webkit-slider-runnable-track {background-color: #34cc3d; border-color: #ffffff;}
+
+div.field.range input::-ms-fill-lower {background: #26962d; border-radius: 0;}
+div.field.range input:focus::-ms-fill-lower {background: #26962d;}
+div.field.range input::-ms-fill-upper {background: #26962d; border-radius: 0;}
+div.field.range input:focus::-ms-fill-upper {background: #26962d;}
+
+div.field.range input::-webkit-slider-thumb {box-shadow: 1px 1px 5px 0px #8a8a8a; border: 3px solid #26962d; height: 32px; width: 32px; border-radius: 100%; background: #ffffff; cursor: pointer; margin-top: -14px;
+	-webkit-appearance: none;
+}
+div.field.range input::-moz-range-thumb {box-shadow: 1px 1px 5px 0px #8a8a8a; border: 3px solid #26962d; height: 26px; width: 26px; border-radius: 100%; background: #ffffff; cursor: pointer;}
+div.field.range input::-ms-thumb {box-shadow: 1px 1px 5px 0px #8a8a8a; border: 3px solid #26962d; height: 26px; width: 26px; border-radius: 100%; background: #ffffff; cursor: pointer;}
+
+div.field.range.focus input::-webkit-slider-thumb {border-color: #34cc3d;}
+div.field.range.focus input::-moz-range-thumb {border-color: #34cc3d;}
+div.field.range.focus input::-ms-thumb {border-color: #34cc3d;}
+
+div.field.range div.input_wrapper {padding: 0 0 30px; width: 350px; margin: 0 auto;}
+div.field.range div.input_wrapper div.input {padding: 20px 22px; text-align: center; font-size: 56px; height: 120px; box-sizing: border-box; border-radius: 60px; border: 1px solid #dcdcdc; box-shadow: inset 0 1px 2px #dedede; outline: none;}
+div.field.range div.input_wrapper div.input.focus {border: 3px solid #5c5c5c; padding: 18px 22px;}
+div.field.range .help {display: none !important;}
+
+
+#content .scene.signup div.membership {width: 640px; margin: 0 auto;}
+#content .scene.signup div.membership div.field.radiobuttons {text-align: center; font-size: 0;}
+#content .scene.signup div.membership div.field.radiobuttons > label {opacity: 1; line-height: 22px; height: auto; text-align: center; text-transform: none; color: #26962d; font-size: 18px;}
+#content .scene.signup div.membership div.field div.item {display: inline-block; vertical-align: top; width: calc(25% - 10px); margin: 0 5px 10px;}
+#content .scene.signup div.membership div.field div.item label {display: block; font-size: 14px; margin: 0; cursor: pointer;
+	border-radius: 20px; border: 2px solid #26962d; padding: 10px 0; color: #26962d; text-align: center;
+}
+#content .scene.signup div.membership div.field div.item input {display: none;}
+#content .scene.signup div.membership div.field div.item input:checked + label {background: #26962d; color: #ffffff; border-color: #26962d;}
+#content .scene.signup div.membership div.field div.item:nth-child(6) label {border-color: #aaaaaa; color: #aaaaaa;}
+
+#content .scene.signup div.membership div.field.radiobuttons div.indicator {display: none;}
+#content .scene.signup div.membership div.field.radiobuttons div.help {right: 50%; top: 148px !important; margin-right: -200px; width: 400px;}
+
+#content .scene.signup div.membership ul.actions {text-align: center; margin: 20px 0; width: auto;}
+#content .scene.signup div.membership ul.actions li {padding: 0; display: block;}
+#content .scene.signup div.membership ul.actions li input {font-size: 28px; height: 55px; padding: 0 40px 5px; line-height: 50px; border-radius: 30px;}
+
+

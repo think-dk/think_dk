@@ -122,7 +122,9 @@ div.field .pseudolabel {color: #aaaaaa;}
 
 
 /* VALIDATION */
-div.field .indicator {width: 20px; height: 15px; display: inline-block; margin-bottom: -2px; margin-top: -2px;}
+div.field .indicator {width: 20px; height: 15px; display: inline-block; margin-bottom: -2px; margin-top: -2px;
+	background-size: 18px auto;
+}
 div.field.required .indicator {
 	background-image: url(/img/bg_indicator.png);
 }
@@ -140,14 +142,11 @@ div.field.files .indicator {left: 384px; top: -1px;}
 */
 
 /* CORRECT */
-div.field.correct .indicator {background-position: 3px -324px;}
+div.field.correct .indicator {background-position: 3px -72px;}
 
 
 /* ERROR */
-div.field.error {
-
-/*	margin-left: 18px;*/
-}
+div.field.error .indicator {background-position: 3px -36px;}
 
 div.field.error input,
 div.field.error textarea {}

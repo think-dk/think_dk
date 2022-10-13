@@ -50,7 +50,7 @@ if($action) {
 
 		// user exists
 		// Detected bot signup
-		if(isset($user["BOT_SIGNUP"])) {
+		if(isset($user["status"]) && $user["status"] == "BOT_SIGNUP") {
 
 			// redirect to leave POST state
 			header("Location: /maillist/receipt");
@@ -58,7 +58,7 @@ if($action) {
 
 		}
 
-		if(isset($user["status"]) && $user["status"] == "USER_EXISTS") {
+		else if(isset($user["status"]) && $user["status"] == "USER_EXISTS") {
 			header("Location: /maillist/user-exists");
 			exit();
 		}

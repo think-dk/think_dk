@@ -5,25 +5,40 @@ global $model;
 $IC = new Items();
 $UC = new User();
 
-$page_item = $IC->getItem(array("tags" => "page:memberships", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
+$page_item = $IC->getItem(array("tags" => "page:support", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
-$email = $model->getProperty("email", "value");
 
-// $memberships = $IC->getItems(array("itemtype" => "membership", "tags" => "membership:v2", "order" => "position ASC", "status" => 1, "extend" => array("prices" => true, "subscription_method" => true)));
+$memberships = $IC->getItems(array("itemtype" => "membership", "tags" => "membership:v4", "order" => "position ASC", "status" => 1, "extend" => array("prices" => true, "subscription_method" => true)));
+$donations = $IC->getItems(array("itemtype" => "donation", "order" => "position ASC", "status" => 1, "extend" => array("prices" => true)));
+
+$options = array_merge($memberships, $donations);
+foreach($options as $i => $option) {
+	if(!isset($option["subscription_method"])) {
+		$options[$i]["frequency"] = "Only once";
+	}
+	else if($option["subscription_method"]["duration"] === "annually") {
+		$options[$i]["frequency"] = "Every year";
+	}
+	else if($option["subscription_method"]["duration"] === "biannually") {
+		$options[$i]["frequency"] = "Every 6 months";
+	}
+	else if($option["subscription_method"]["duration"] === "quarterly") {
+		$options[$i]["frequency"] = "Every 3 months";
+	}
+	else if($option["subscription_method"]["duration"] === "monthly") {
+		$options[$i]["frequency"] = "Every month";
+	}
+}
 
 
-$membership = $IC->getItem(array("itemtype" => "membership", "tags" => "membership:v3", "order" => "position ASC", "status" => 1, "extend" => array("prices" => true, "subscription_method" => true)));
-
-$donations = $IC->getItems(array("itemtype" => "donation", "order" => "position ASC", "status" => 1, "extend" => array("prices" => true, "subscription_method" => true)));
-
-$donation_options = $HTML->toOptions($donations, "item_id", "name");
+$support_options = $HTML->toOptions($options, "item_id", "frequency");
 // $maillist = session()->value("user_id") === 1 ? true : false;
 
 ?>
-<div class="scene signup i:memberships">
+<div class="scene signup i:support">
 
 <? if($page_item): 
 	$media = $IC->sliceMediae($page_item, "single_media"); ?>
@@ -46,7 +61,7 @@ $donation_options = $HTML->toOptions($donations, "item_id", "name");
 		<? endif; ?>
 
 
-		<?= $HTML->articleInfo($page_item, "/memberships", [
+		<?= $HTML->articleInfo($page_item, "/support", [
 			"media" => $media,
 			"sharing" => true
 		]) ?>
@@ -60,83 +75,33 @@ $donation_options = $HTML->toOptions($donations, "item_id", "name");
 
 	</div>
 <? else:?>
-	<h1>Memberships</h1>
+	<h1>Support our organization</h1>
 <? endif; ?>
-
 
 
 	<?= $HTML->serverMessages() ?>
 
 
 	<div class="membership">
-		<?= $model->formStart("/memberships/addToCart", array("class" => "membership labelstyle:inject")) ?>
+		<?= $model->formStart("/support/addToCart", array("class" => "membership labelstyle:inject")) ?>
 			<?= $model->input("quantity", array("value" => 1, "type" => "hidden")); ?>
-			<?= $model->input("item_id", array("value" => $membership["item_id"], "type" => "hidden")); ?>
 
-			<?= $model->input("custom_price", array("value" => 100, "type" => "range", "min" => 50, "max" => 1000, "step" => 10)); ?>
+
+			<?= $model->input("custom_price", array("value" => 500, "type" => "range", "min" => 50, "max" => 5000, "step" => 10)); ?>
+
+			<?= $model->input("item_id", array(
+				"label" => "Repeat payment", 
+				"required" => true, 
+				"options" => $support_options, 
+				"hint_message" => "Please choose a frequency for your support", 
+				"error_message" => "A frequency for your support must be selected", 
+				"type" => "radiobuttons"
+			)); ?>
 
 			<ul class="actions">
-				<?= $model->submit("Join now", array("class" => "primary", "wrapper" => "li.signup")) ?>
-				<?= $model->link("Read more", "/memberships/".$membership["sindex"], array("wrapper" => "li.readmore")) ?>
+				<?= $model->submit("Yes, I'll do it", array("class" => "primary", "wrapper" => "li.signup")) ?>
 			</ul>
 		<?= $model->formEnd() ?>
-	</div>
-
-
-<? /* if($memberships): ?>
-
-	<div class="memberships">
-
-
-		<ul class="memberships">
-			<? foreach($memberships as $membership): ?>
-			<li class="membership<?= $membership["classname"] ? " ".$membership["classname"] : "" ?>" itemprop="offers">
-				<h3><?= $membership["name"] ?></h3>
-
-				<?= $HTML->frontendOffer($membership, SITE_URL."/memberships", $membership["introduction"]) ?>
-
-				<? if($membership["classname"] == "cowork"): ?>
-
-				<ul class="actions">
-					<?= $model->link("Read more", "/bulletin/co-working-at-think-dk", array("wrapper" => "li.readmore")) ?>
-					<?= $model->link("See options", "/bulletin/co-working-at-think-dk", array("class" => "button primary", "wrapper" => "li.signup")) ?>
-				</ul>
-
-				<? else: ?>
-
-				<?= $model->formStart("/memberships/addToCart", array("class" => "signup labelstyle:inject")) ?>
-					<?= $model->input("quantity", array("value" => 1, "type" => "hidden")); ?>
-					<?= $model->input("item_id", array("value" => $membership["item_id"], "type" => "hidden")); ?>
-
-					<ul class="actions">
-						<?= $model->link("Read more", "/memberships/".$membership["sindex"], array("wrapper" => "li.readmore")) ?>
-						<?= $model->submit("Join", array("class" => "primary", "wrapper" => "li.signup")) ?>
-					</ul>
-				<?= $model->formEnd() ?>
-
-				<? endif; ?>
-
-			</li>
-			<? endforeach; ?>
-		</ul>
-	</div>
-
-<? endif; */ ?>
-
-
-	<div class="maillist">
-		<?= $UC->formStart("/maillist/addToMaillist", array("class" => "maillist labelstyle:inject")) ?>
-			<?= $UC->input("maillist_name", array("value" => "curious", "type" => "hidden")); ?>
-			<?= $UC->input("maillist", array("value" => 1, "type" => "hidden")); ?>
-			<fieldset>
-				<?= $UC->input("email", array("value" => $email, "required" => true, "hint_message" => "Enter your email")); ?>
-				<?= $UC->input("terms"); ?>
-			</fieldset>
-
-			<ul class="actions">
-				<?= $UC->submit("Sign up", array("class" => "primary", "wrapper" => "li.signup")) ?>
-			</ul>
-		<?= $UC->formEnd() ?>
 	</div>
 
 </div>

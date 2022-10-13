@@ -93,7 +93,7 @@ else {
 
 	<div class="account">
 		<h3>Already have an account?</h3>
-		<p>If you already have an account you can change your membership on <a href="/janitor/admin/profile">account profile</a>.</p>
+		<p>If you already have an account you can change your membership or your support level on <a href="/janitor/admin/profile">account profile</a>.</p>
 	</div>
 
 	<div class="why_account">
@@ -124,7 +124,7 @@ else {
 
 	<div class="account">
 		<h3>Already have an account?</h3>
-		<p>If you already have an account you can change your membership on <a href="/janitor/admin/profile">account profile</a>.</p>
+		<p>If you already have an account you can change your membership or your support level on <a href="/janitor/admin/profile">account profile</a>.</p>
 	</div>
 
 <? endif; ?>

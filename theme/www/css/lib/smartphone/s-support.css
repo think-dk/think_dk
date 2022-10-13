@@ -1,0 +1,136 @@
+
+
+#content .scene.signup h1 {text-align: center;}
+#content .scene.signup h1 + h2 {text-align: center;}
+
+#content .scene.signup h1,
+#content .scene.signup h2,
+#content .scene.signup h3,
+#content .scene.signup h4,
+#content .scene.signup p {margin: 0 auto;}
+/*#content .scene.signup div.sharing {width: 640px; margin: 0 auto;}*/
+
+
+div.field.range {padding-bottom: 30px;}
+div.field.range label {display: none;}
+div.field.range input {display: block; width: calc(100% - 6px); height: 6px; background: #26962d; outline: none; border-radius: 5px; padding: 0; box-shadow: none;
+	-webkit-appearance: none;
+}
+div.field.focus.range input {background-color: #34cc3d; border-color: #ffffff;}
+
+div.field.range input::-webkit-slider-runnable-track {width: calc(100% - 6px); height: 6px; cursor: pointer; background: #26962d; border-radius: 5px; padding: 0;
+	-webkit-appearance: none;
+}
+div.field.focus.range input::-webkit-slider-runnable-track {background-color: #34cc3d; border-color: #ffffff;}
+
+div.field.range input::-ms-fill-lower {background: #26962d; border-radius: 0;}
+div.field.range input:focus::-ms-fill-lower {background: #26962d;}
+div.field.range input::-ms-fill-upper {background: #26962d; border-radius: 0;}
+div.field.range input:focus::-ms-fill-upper {background: #26962d;}
+
+div.field.range input::-webkit-slider-thumb {box-shadow: 1px 1px 5px 0px #8a8a8a; border: 3px solid #26962d; height: 32px; width: 32px; border-radius: 100%; background: #ffffff; cursor: pointer; margin-top: -14px;
+	-webkit-appearance: none;
+}
+div.field.range input::-moz-range-thumb {box-shadow: 1px 1px 5px 0px #8a8a8a; border: 3px solid #26962d; height: 26px; width: 26px; border-radius: 100%; background: #ffffff; cursor: pointer;}
+div.field.range input::-ms-thumb {box-shadow: 1px 1px 5px 0px #8a8a8a; border: 3px solid #26962d; height: 26px; width: 26px; border-radius: 100%; background: #ffffff; cursor: pointer;}
+
+div.field.range.focus input::-webkit-slider-thumb {border-color: #34cc3d;}
+div.field.range.focus input::-moz-range-thumb {border-color: #34cc3d;}
+div.field.range.focus input::-ms-thumb {border-color: #34cc3d;}
+
+div.field.range div.input_wrapper {padding: 0 0 30px; width: 260px; margin: 0 auto;}
+div.field.range div.input_wrapper div.input {padding: 20px 22px; text-align: center; font-size: 46px; height: 60px; border-radius: 3px; margin: 2px; border: 1px solid #dcdcdc; box-shadow: inset 0 1px 2px #dedede; outline: none;}
+div.field.range div.input_wrapper div.input.focus {margin: 0;border: 3px solid #5c5c5c;}
+div.field.range .help {display: none !important;}
+
+#content .scene.signup div.membership {/*width: 640px; margin: 0 auto;*/}
+#content .scene.signup div.membership ul.actions {text-align: center; margin: 20px 0;/* width: 500px;*/}
+#content .scene.signup div.membership ul.actions li {padding: 0; display: block;}
+#content .scene.signup div.membership ul.actions li input {font-size: 24px; height: 46px; padding: 0 40px 5px; line-height: 44px; border-radius: 23px;}
+
+#content .scene div.donation {width: 640px; margin: 0 auto;}
+#content .scene h2.center {text-align: center;}
+#content .scene div.donation div.field.range div.input_wrapper {width: 300px;}
+#content .scene div.donation div.field.range div.input_wrapper div.input {font-size: 44px; height: 70px;}
+
+#content .scene div.donation ul.actions {text-align: center; margin: 20px 0; /*width: 500px;*/}
+#content .scene div.donation ul.actions li {padding: 0; display: block;}
+#content .scene div.donation ul.actions li input {font-size: 22px; height: 44px; padding: 0 40px 5px; line-height: 50px;}
+
+
+
+/* MEMBERSHIP LIST / JOIN */
+/*#content .scene.signup div.memberships ul.memberships {list-style: none; margin: 0; padding-bottom: 30px; font-size: 0; position: relative; width: auto;}
+#content .scene.signup div.memberships ul.memberships > li {display: inline-block; vertical-align: top; padding: 10px 10px 70px; margin: 0 0 10px;
+	border-right: 1px solid #26962d; position: relative;
+	width: calc(25% - 21px);
+}
+#content .scene.signup div.memberships ul.memberships > li:last-child {border: none;}
+#content .scene.signup div.memberships ul.memberships > li .articlebody {display: none;}
+#content .scene.signup div.memberships ul.memberships > li ul.offer {padding-bottom: 4px;}
+#content .scene.signup div.memberships ul.memberships > li h2,
+#content .scene.signup div.memberships ul.memberships > li h3,
+#content .scene.signup div.memberships ul.memberships > li h4,
+#content .scene.signup div.memberships ul.memberships > li p,
+#content .scene.signup div.memberships ul.memberships > li dl {width: auto; padding-left: 0px; padding-right: 0px;}
+#content .scene.signup div.memberships ul.memberships > li ul {padding: 0; width: auto;}
+
+#content .scene.signup div.memberships ul.memberships > li ul.actions {position: absolute; bottom: 10px; left: 10px; width: calc(100% - 20px);}
+#content .scene.signup div.memberships ul.memberships > li ul.actions li {display: block; padding: 0; text-align: center; line-height: 1em;}
+#content .scene.signup div.memberships ul.memberships > li ul.actions li.readmore {text-align: center; padding-bottom: 10px;}
+#content .scene.signup div.memberships ul.memberships > li ul.actions li input {display: block; width: 100%;}
+
+#content .scene.signup div.memberships ul.memberships > li h3 {font-size: 14px;
+	font-family: "PT Serif", Times, serif;
+}
+#content .scene.signup div.memberships ul.memberships > li h3 span.table {display: table; height: 35px; width: 100%;}
+#content .scene.signup div.memberships ul.memberships > li h3 span.cell {display: table-cell; vertical-align: middle; text-align: center; color: #26962d;}
+
+#content .scene.signup div.memberships ul.memberships > li ul.offer {padding-bottom: 30px;}
+#content .scene.signup div.memberships ul.memberships > li ul.offer li.price {height: 53px; text-align: center; line-height: 1.1em; padding: 0; display: block;}
+#content .scene.signup div.memberships ul.memberships > li ul.offer li.description {padding: 0;}
+#content .scene.signup div.memberships ul.memberships > li ul.offer li.description p {height: 63px; text-align: center; line-height: 1.2em;}
+#content .scene.signup div.memberships ul.memberships > li ul.offer li.description ul {list-style: none; margin: 0;}
+#content .scene.signup div.memberships ul.memberships > li ul.offer li.description li {border-bottom: 1px solid #26962d;
+	height: 20px; padding: 30px 10px 10px; position: relative;
+	text-indent: -9999px;
+}
+#content .scene.signup div.memberships ul.memberships > li ul.offer .description li:last-child {border: none;}
+
+#content .scene.signup div.memberships ul.memberships > li ul.offer .description li > svg.checkmark {position: absolute; top: calc(50% - 8px); left: calc(50% - 8px);}
+#content .scene.signup div.memberships ul.memberships > li ul.offer .description li > svg.checkmark line {stroke: #26962d; stroke-width: 2px;}
+
+
+#content .scene.signup div.memberships ul.memberships > li.benefits {z-index: 2; border: none; width: 100%;
+	position: absolute;
+	padding: 0;
+	top: 186px; left: 0;
+}
+#content .scene.signup div.memberships ul.memberships > li.benefits ul {padding: 0; list-style: none; margin: 0;}
+#content .scene.signup div.memberships ul.memberships > li.benefits ul li {
+	background-color: #26962d;
+	color: #ffffff;
+	padding: 3px 10px;
+	font-size: 14px; line-height: 1em;
+	margin: 0 20px 40px;
+	text-align: center;
+}
+#content .scene.signup div.maillist {position: relative; padding: 0 0 20px;}
+*/
+
+
+/* MEMBERSHIP VIEW */
+#content .scene.membership div.article ul.offer {padding: 20px 20px 15px;}
+#content .scene.membership div.article ul.offer li.default {font-size: 14px;}
+#content .scene.membership div.article ul.offer li {font-size: 22px; display: block;}
+#content .scene.membership div.article ul.offer li.description {display: none;}
+#content .scene.membership div.article form {}
+
+#content .scene.membership ul.memberships li.membership {padding-bottom: 0;}
+#content .scene.membership ul.memberships li.membership h3 {padding-bottom: 5px;}
+#content .scene.membership ul.memberships li.membership ul.offer {padding: 0 20px 10px;}
+#content .scene.membership ul.memberships li.membership ul.offer li {}
+
+#content .scene.signup div.membership div.field div.item {margin: 5px 0 0;}
+#content .scene.signup div.membership div.field.radiobuttons div.indicator {display: none;}
+#content .scene.signup div.membership div.field.radiobuttons div.help {margin-top: 10px;}

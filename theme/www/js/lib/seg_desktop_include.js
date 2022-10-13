@@ -58,7 +58,8 @@ document.write('<script type="text/javascript" src="/js/lib/desktop/m-blog.js"><
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-bulletin.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-project.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-cart.js"></script>');
-document.write('<script type="text/javascript" src="/js/lib/desktop/m-memberships.js"></script>');
+// document.write('<script type="text/javascript" src="/js/lib/desktop/m-memberships.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/desktop/m-support.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-payment.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-payments.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/desktop/m-stripe.js"></script>');

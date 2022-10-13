@@ -166,7 +166,7 @@ else {
 
 	<div class="emptycart">
 		<h2>Your cart is empty.</h2>
-		<p>Check out our <a href="/memberships">memberships</a> now.</p>
+		<p>Check out our <a href="/support">support memberships</a> now.</p>
 	</div>
 
 	<? endif; ?>
@@ -259,7 +259,7 @@ else {
 			</li>
 		</ul>
 		<? else: ?>
-		<p>You don't have any items in your cart yet. <br />Check out our <a href="/memberships">memberships</a> now.</p>
+		<p>You don't have any items in your cart yet. <br />Check out our <a href="/support">support memberships</a> now.</p>
 		<? endif; ?>
 	</div>
 

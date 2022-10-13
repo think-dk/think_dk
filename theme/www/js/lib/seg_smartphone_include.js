@@ -31,6 +31,7 @@ document.write('<script type="text/javascript" src="/assets/parentnode-skin-defa
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/smartphone/m-login.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/smartphone/u-geolocation.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/smartphone/u-checkmark.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/smartphone/u-form-custom.js"></script>');
 
 
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/u-expandarrow.js"></script>');
@@ -59,7 +60,8 @@ document.write('<script type="text/javascript" src="/js/lib/smartphone/m-blog.js
 document.write('<script type="text/javascript" src="/js/lib/smartphone/m-bulletin.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/m-project.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/m-cart.js"></script>');
-document.write('<script type="text/javascript" src="/js/lib/smartphone/m-memberships.js"></script>');
+// document.write('<script type="text/javascript" src="/js/lib/smartphone/m-memberships.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/smartphone/m-support.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/m-payment.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/m-payments.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/m-stripe.js"></script>');

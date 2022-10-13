@@ -11,6 +11,11 @@ $action = $page->actions();
 $IC = new Items();
 
 
+header("Location: /support");
+exit();
+
+
+
 $page->bodyClass("invest");
 $page->pageTitle("Invest in think.dk");
 

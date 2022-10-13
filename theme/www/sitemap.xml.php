@@ -24,17 +24,47 @@ $item = $IC->getItem(array("tags" => "page:front"));
 		<priority>1</priority>
 	</url>
 <?
-// POSTS
-$items = $IC->getItems(array("itemtype" => "post", "status" => 1)); 
+// PROJECT PAGE
+$item = $IC->getItem(array("tags" => "page:projects"));
+?>
+	<url>
+		<loc><?= SITE_URL ?>/projects</loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>1</priority>
+	</url>
+<?
+// PROJECTS
+$items = $IC->getItems(array("itemtype" => "project", "status" => 1)); 
 foreach($items as $item):
 ?>
 	<url>
-		<loc><?= SITE_URL ?>/bulletin/<?= $item["sindex"] ?></loc>
+		<loc><?= SITE_URL ?>/projects/<?= $item["sindex"] ?></loc>
 		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
 		<changefreq>daily</changefreq>
-		<priority>0.9</priority>
+		<priority>1</priority>
 	</url>
 <? endforeach; ?>
+<?
+// SUPPORT PAGE
+$item = $IC->getItem(array("tags" => "page:support"));
+?>
+	<url>
+		<loc><?= SITE_URL ?>/support</loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>1</priority>
+	</url>
+<?
+// Verdensborger
+$item = $IC->getItem(array("tags" => "page:verdensborger"));
+?>
+	<url>
+		<loc><?= SITE_URL ?>/verdensborger</loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>1</priority>
+	</url>
 <?
 // ABOUT PAGE
 $item = $IC->getItem(array("tags" => "page:about"));
@@ -111,33 +141,15 @@ foreach($items as $item):
 	</url>
 <? endforeach; ?>
 <?
-// WISHLIST PAGE
-$item = $IC->getItem(array("tags" => "page:wishlist"));
+// POSTS
+$items = $IC->getItems(array("itemtype" => "post", "status" => 1)); 
+foreach($items as $item):
 ?>
 	<url>
-		<loc><?= SITE_URL ?>/wishlist</loc>
+		<loc><?= SITE_URL ?>/bulletin/<?= $item["sindex"] ?></loc>
 		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.5</priority>
+		<changefreq>daily</changefreq>
+		<priority>0.9</priority>
 	</url>
-<?
-// MEMBERSHIPS PAGE
-$item = $IC->getItem(array("tags" => "page:Memberships"));
-?>
-	<url>
-		<loc><?= SITE_URL ?>/memberships</loc>
-		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>1</priority>
-	</url>
-<?
-// Verdensborger
-$item = $IC->getItem(array("tags" => "page:Verdensborger"));
-?>
-	<url>
-		<loc><?= SITE_URL ?>/verdensborger</loc>
-		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>1</priority>
-	</url>
+<? endforeach; ?>
 </urlset>

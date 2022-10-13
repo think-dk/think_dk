@@ -15,13 +15,17 @@ $user_id = session()->value("user_id");
 $cart = $model->getCart();
 
 $membership = false;
-// attempt to find membership in cart
+// attempt to find membership or donation in cart
 if($cart && $cart["items"]) {
 
 	foreach($cart["items"] as $cart_item) {
 
 		$item = $IC->getItem(array("id" => $cart_item["item_id"], "extend" => true));
-		if($item["itemtype"] == "membership") {
+		if($item["itemtype"] == "donation") {
+			$donation = $item["name"];
+			break;
+		}
+		else if($item["itemtype"] == "membership") {
 			$membership = $item["name"];
 			break;
 		}
@@ -50,27 +54,28 @@ else {
 }
 
 ?>
-<div class="scene checkout i:<?= $membership ? "checkoutSignup" : "checkout" ?>">
+<div class="scene checkout i:<?= ($membership || $donation) ? "checkoutSignup" : "checkout" ?>">
 	<h1>Sign up</h1>
 
 	<?= $HTML->serverMessages() ?>
 
-<? if($membership): ?>
+<? if($membership || $donation): ?>
 
 	<div class="signup">
-		<? if($membership == "Curious Cat"): ?>
-		<h2>You are signing up for our Newsletter</h2>
-		<? else: ?>
+		<? if($membership): ?>
 		<h2>You are signing up for a <br />&quot;<?= $membership ?>&quot; membership</h2>
+		<p>Enter your details below and create your membership account now.</p>
+		<? else: ?>
+		<h2>You are registrering for a <br />&quot;<?= $donation ?>&quot;</h2>
+		<p>Enter your details below and create your account now.</p>
 		<? endif; ?>
 
-		<p>Enter your details below and create your membership account now.</p>
 		<?= $UC->formStart("signup", array("class" => "signup labelstyle:inject")) ?>
 
-		<? if($membership == "Curious Cat"): ?>
-			<?= $UC->input("maillist_name", array("type" => "hidden", "value" => "curious")); ?>
-		<? else: ?>
+		<? if($membership): ?>
 			<?= $UC->input("maillist_name", array("type" => "hidden", "value" => "paying members")); ?>
+		<? else: ?>
+			<?= $UC->input("maillist_name", array("type" => "hidden", "value" => "curious")); ?>
 		<? endif; ?>
 			<?= $UC->input("maillist", array("type" => "hidden", "value" => 1)); ?>
 
@@ -93,15 +98,19 @@ else {
 
 	<div class="account">
 		<h3>Already have an account?</h3>
-		<p>If you already have an account you can change your membership on <a href="/janitor/admin/profile">account profile</a>.</p>
+		<? if($membership): ?>
+		<p>If you already have an account you can change how you support think.dk on your <a href="/janitor/admin/profile">account profile</a>.</p>
+		<? else: ?>
+		<p>If you already have an account you should <a href="/login?login_forward=/shop/checkout">login</a> to continue.</p>
+		<? endif; ?>
 	</div>
 
 	<div class="why_account">
 		<h3>Why do I need an account?</h3>
 		<p>
-			As a think.dk member, an account is a natural extension of your membership. The account
+			As a think.dk supporter, an account is a natural extension of our connection. The account
 			will also give you access to certain features on this site, that is only available to
-			our members.
+			our members and supporters.
 		</p>
 		<p>
 			For all other purchases we are legally required to keep a minimum set of information
@@ -118,13 +127,13 @@ else {
 <? else: ?>
 
 	<div class="emptycart">
-		<h2>You didn't select a membership yet.</h2>
-		<p>Check out our <a href="/memberships">memberships</a> now.</p>
+		<h2>You don't have any items in your cart yet.</h2>
+		<p>Check out our <a href="/support">support memberships</a> now.</p>
 	</div>
 
 	<div class="account">
 		<h3>Already have an account?</h3>
-		<p>If you already have an account you can change your membership on <a href="/janitor/admin/profile">account profile</a>.</p>
+		<p>If you already have an account you can change your membership or your support level on <a href="/janitor/admin/profile">account profile</a>.</p>
 	</div>
 
 <? endif; ?>

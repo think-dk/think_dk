@@ -59,6 +59,22 @@ Util.Modules["front"] = new function() {
 				}
 			}
 
+
+			// build maillist form
+			if(u.qs(".newsletter", this)) {
+				
+				this.div_newsletter = u.qs("div.newsletter", this);
+
+				this.form_newsletter = u.qs("form", this.div_newsletter);
+				u.e.click(this.form_newsletter);
+				this.form_newsletter.inputStarted = function(event) {
+					event.stopPropagation();
+				}
+				u.f.init(this.form_newsletter);
+
+			}
+
+
 			page.resized();
 
 			u.showScene(this);

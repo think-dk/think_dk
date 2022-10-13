@@ -3,7 +3,7 @@ Util.Modules["verdensborger"] = new function() {
 		// u.bug("scene init:", scene);
 
 
-		u.txt["login_to_comment"] = '<a href="/login">Log ind</a> eller <a href="/memberships">opret en konto</a> for at tilføje kommentarer.';
+		u.txt["login_to_comment"] = '<a href="/login">Log ind</a> eller <a href="/support">opret en konto</a> for at tilføje kommentarer.';
 
 		u.txt["share"] = "Del denne side";
 		u.txt["share-info-headline"] = "(Hvordan deler jer?)";

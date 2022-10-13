@@ -90,15 +90,13 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 	<!-- <div class="events">
 		<h2>Events</h2>
 		<p>We arrange and host events that bring people together for a more caring, smarter and better world.</p>
-		<p>You can do yours too.</p>
 
 		<ul class="actions">
 			<li><a href="/events">Calendar</a></li>
-			<li><a href="/bulletin/our-event-hosting-policy">Host your event</a></li>
 		</ul>
-	</div>
+	</div> -->
 
-	<div class="membership">
+	<!-- <div class="membership">
 		<h2>Membership</h2>
 		<p>
 			We are a membership based community. The membership fees support the establishment and continuation of our
@@ -166,7 +164,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 			<?= $UC->inputRobot(); ?>
 			<fieldset>
 				<?= $UC->input("email", array("required" => true, "hint_message" => "Enter your email")); ?>
-				<?= $UC->input("terms"); ?>
+				<?= $UC->input("terms", ["label" => 'I accept the <a href="/terms">terms</a>.']); ?>
 			</fieldset>
 
 			<ul class="actions">

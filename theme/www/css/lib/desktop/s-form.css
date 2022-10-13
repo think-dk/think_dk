@@ -122,14 +122,14 @@ div.field.checkbox .virtual {display: inline-block; vertical-align: top;}
 div.field.checkbox .virtual .input {box-shadow: inset 0 1px 2px #bbbbbb; background: #ffffff; border: 1px solid #bbbbbb; box-sizing: border-box;
 /*	border-radius: 50%;*/
 }
-div.field.checkbox .virtual .input svg.checkbox_checkmark {display: block; width: 25px; height: 25px; stroke-width: 2px;}
+div.field.checkbox .virtual .input svg.checkbox_checkmark {display: block; width: 20px; height: 20px; stroke-width: 2px;}
 div.field.checkbox .virtual .input svg line.checkmark {stroke: #ffffff;}
 div.field.checkbox.checked .virtual .input svg line.checkmark {stroke: #333333;}
 
 
 
 div.field.checkbox label,
-div.field.boolean label {width: auto; height: auto; padding: 5px 0 0 8px; margin: 0; text-transform: none; border: 0; border-radius: 0; top: 0; opacity: 1; display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.2em;}
+div.field.boolean label {width: auto; height: auto; padding: 3px 0 0 8px; margin: 0; text-transform: none; border: 0; border-radius: 0; top: 0; opacity: 1; display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.2em;}
 
 
 /* RADIO */
@@ -259,7 +259,7 @@ div.field.boolean.error input {margin: 1px 10px 0 3px; border: none;
 	box-shadow: 0px 0px 0px 1px #df0000;
 }
 */
-div.field.checkbox.error .virtual .input {border: 3px solid #a62300; width: 27px; height: 27px;}
+div.field.checkbox.error .virtual .input {border: 3px solid #a62300; width: 22px; height: 22px;}
 div.field.checkbox.error .virtual .input svg {position: relative; top: -2px; left: -2px;}
 
 div.field.error .indicator {background-position: 3px -33px;}
@@ -302,7 +302,7 @@ div.field.select.focus div.virtual div.options ul.options,
 div.field.checkbox.focus input,
 div.field.boolean.focus input {margin: 1px 10px 0 3px; border: none;}
 */
-div.field.checkbox.focus .virtual .input {border: 3px solid #5c5c5c; width: 27px; height: 27px; outline: none;}
+div.field.checkbox.focus .virtual .input {border: 3px solid #5c5c5c; width: 22px; height: 22px; outline: none;}
 div.field.checkbox.focus .virtual .input svg {position: relative; top: -2px; left: -2px;}
 
 /* FOCUS - FILES */

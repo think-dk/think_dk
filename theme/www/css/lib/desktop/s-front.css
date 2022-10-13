@@ -30,7 +30,8 @@
 #content .scene.front div.c100 > div p,
 #content .scene.front div.c200 > div p,
 #content .scene.front div.c100 > div ul,
-#content .scene.front div.c200 > div ul {
+#content .scene.front div.c200 > div ul,
+#content .scene.front div.c100 > div .field {
 	padding: 0 20px 13px;
 }
 #content .scene.front div.c200 > div div.sharing {
@@ -62,7 +63,7 @@
 #content .scene.front div.c100 > div p,
 #content .scene.front div.c100 > div h3,
 #content .scene.front div.c100 > div ul,
-#content .scene.front div.c100 > div form,
+#content .scene.front div.c100 > div fieldset,
 
 #content .scene.front div.c200 > div p,
 #content .scene.front div.c200 > div h2,
@@ -94,7 +95,7 @@
 #content .scene.front div.c100 > div.hover h2,
 #content .scene.front div.c100 > div.hover h3,
 #content .scene.front div.c100 > div.hover ul,
-#content .scene.front div.c100 > div.hover form,
+#content .scene.front div.c100 > div.hover fieldset,
 
 #content .scene.front div.c200 > div.hover p,
 #content .scene.front div.c200 > div.hover h1,
@@ -126,6 +127,13 @@
 #content .scene.front div.services {}
 #content .scene.front div.support {}
 #content .scene.front div.newsletter {}
+#content .scene.front div.newsletter div.field.email label {display: none;}
+#content .scene.front div.newsletter div.field.checkbox label {background-color: transparent; color: #ffffff;}
+#content .scene.front div.newsletter div.field.checkbox label a {text-decoration: underline;}
+#content .scene.front div.newsletter div.field .help {display: none;}
+#content .scene.front div.newsletter div.field.email .indicator {top: 8px;}
+#content .scene.front div.newsletter ul.actions li input {background-color: #ffffff; color: #26962d; padding: 6px 15px; border-radius: 15px; height: auto; font-size: 13px; line-height: 1.25em;}
+
 #content .scene.front div.events {}
 #content .scene.front div.membership {}
 #content .scene.front div.bulletin {}

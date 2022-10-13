@@ -48,7 +48,7 @@ if($page_item) {
 <? else:?>
 
 	<h1>You are already a member</h1>
-	<p>You can change your membership on your <a href="/janitor/admin/profile">account profile</a>.</p>
+	<p>You can change your membership or your support level on your <a href="/janitor/admin/profile">account profile</a>.</p>
 	<p>If you feel this is an error, you can <a href="?logoff=true">reset your session</a> and try again.</p>
 
 <? endif; ?>

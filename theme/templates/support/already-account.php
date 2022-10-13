@@ -10,7 +10,7 @@ if($page_item) {
 }
 
 ?>
-<div class="scene signup i:scene">
+<div class="scene signup already_account i:scene">
 
 <? if($page_item): 
 	$media = $IC->sliceMediae($page_item, "single_media"); ?>
@@ -33,7 +33,7 @@ if($page_item) {
 		<? endif; ?>
 
 
-		<?= $HTML->articleInfo($page_item, "/memberships/already-member", [
+		<?= $HTML->articleInfo($page_item, "/support/already-account", [
 			"media" => $media
 		]) ?>
 
@@ -47,8 +47,8 @@ if($page_item) {
 
 <? else:?>
 
-	<h1>You are already a member</h1>
-	<p>You can change your membership on your <a href="/janitor/admin/profile">account profile</a>.</p>
+	<h1>You already have an account</h1>
+	<p>You can change your membership or your support level on your <a href="/janitor/admin/profile">account profile</a>.</p>
 	<p>If you feel this is an error, you can <a href="?logoff=true">reset your session</a> and try again.</p>
 
 <? endif; ?>

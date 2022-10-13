@@ -9,7 +9,7 @@ u.gapi_key = "AIzaSyAVqnYpqFln-qAYsp5rkEGs84mrhmGQB_I";
 
 
 // dynamic text
-u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/memberships">Join us</a> to add comments.';
+u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/support">Join us</a> to add comments.';
 
 // terms
 u.txt["weekday-1"] = "Monday";

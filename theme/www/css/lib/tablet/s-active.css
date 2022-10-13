@@ -20,4 +20,5 @@ ul.actions a.button.primary:active,
 body.black #content .scene div.comments h2:active {color: #000000;}
 body.black #content .scene div.comments h2:active svg.arrow line {stroke: #000000;}
 
-#content .scene.front div.c100 > div ul.actions li a:active {text-decoration: none; background-color: #34cc3d; color: #ffffff;}
+#content .scene.front div.c100 > div ul.actions li a:active,
+#content .scene.front div div ul.actions li input:active {text-decoration: none; background-color: #34cc3d; color: #ffffff;}
