@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2022-10-11 13:48:06
+asset-builder @ 2022-10-13 16:17:15
 */
 
 /*seg_smartphone_include.css*/
@@ -449,13 +449,14 @@ div.field input.default,
 div.field select.default,
 div.field textarea.default,
 div.field .pseudolabel {color: #aaaaaa;}
-div.field .indicator {width: 20px; height: 15px; display: inline-block; margin-bottom: -2px; margin-top: -2px;}
+div.field .indicator {width: 20px; height: 15px; display: inline-block; margin-bottom: -2px; margin-top: -2px;
+	background-size: 18px auto;
+}
 div.field.required .indicator {
 	background-image: url(../img/bg_indicator.png);
 }
-div.field.correct .indicator {background-position: 3px -324px;}
-div.field.error {
-}
+div.field.correct .indicator {background-position: 3px -72px;}
+div.field.error .indicator {background-position: 3px -36px;}
 div.field.error input,
 div.field.error textarea {}
 div.field.error select {padding: 3px 3px 2px 0px;}
@@ -538,8 +539,14 @@ div.field.correct div.error {display: none;}
 
 
 /*s-pagination.css*/
-#page.paginated #content {padding-top: 110px;}
+#page.paginated #content {padding-top: 80px;}
 #content .scene .pagination.autoload {display: none;}
+#page.paginated #content .scene h1 {padding-top: 50px;}
+#page.paginated #content .scene .tags {padding-top: 50px;}
+#page.paginated #content .scene .image + .tags,
+#page.paginated #content .scene .image + h1,
+#page.paginated #content .scene .tags + h1,
+#page.paginated #content .scene .image + .tags + h1 {padding-top: 0px;}
 #content .scene .pagination ul {text-align: center; padding: 30px 20px;}
 #content .scene .pagination li {width: auto; height: auto; display: inline-block; padding: 0 5px; vertical-align: top;}
 #content .scene .pagination li.next,
@@ -555,9 +562,9 @@ div.field.correct div.error {display: none;}
 #content .scene .pagination li.pages {line-height: 25px;}
 body > div.pagination {z-index: 80; position: fixed; top: 80px; left: 0; width: 100%; height: 50px;  background: #ffffff; border-bottom: 1px solid #34cc3d; }
 body > div.pagination li h2 {display: none;}
-body > div.pagination li.next > svg.arrow {position: absolute; top: 18px; right: 20px;}
+body > div.pagination li.next > svg.arrow {position: absolute; top: 18px; right: 14px;}
 body > div.pagination li.next > svg.arrow line {stroke: #34cc3d; stroke-width: 3px;}
-body > div.pagination li.previous > svg.arrow {position: absolute; top: 18px; left: 20px;}
+body > div.pagination li.previous > svg.arrow {position: absolute; top: 18px; left: 15px;}
 body > div.pagination li.previous > svg.arrow line {stroke: #34cc3d; stroke-width: 3px;}
 body > div.pagination li.previous,
 body > div.pagination li.next {z-index: 100; position: absolute; top: 0; height: 50px; overflow: hidden; cursor: pointer; width: 50%; box-sizing: border-box;}
@@ -566,8 +573,8 @@ body > div.pagination li.previous:active,
 body > div.pagination li.next:active {background-color: #34cc3d; color: #ffffff;}
 body > div.pagination li.previous:active > svg.arrow line,
 body > div.pagination li.next:active > svg.arrow line {stroke: #ffffff;}
-body > div.pagination li.previous {left: 0; text-align: left; border-right: 1px solid #34cc3d; padding-left: 50px;}
-body > div.pagination li.next {right: 0; text-align: right; padding-right: 57px;}
+body > div.pagination li.previous {left: 0; text-align: left; border-right: 1px solid #34cc3d; padding-left: 40px;}
+body > div.pagination li.next {right: 0; text-align: right; padding-right: 47px;}
 body > div.pagination li a {color: #34cc3d;}
 body > div.pagination li.previous a,
 body > div.pagination li.next a {font-size: 13px; line-height: 16px; display: inline-block; vertical-align: top; padding: 16px 0 16px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; max-width: 100%; box-sizing: border-box;}
@@ -622,13 +629,15 @@ body > div.pagination li.next a {padding-right: 0; padding-left: 16px;}
 #content .scene.front > div > div p,
 #content .scene.front > div > div p,
 #content .scene.front > div > div ul,
-#content .scene.front > div > div ul {
+#content .scene.front > div > div ul,
+#content .scene.front > div > div div.field {
 	padding: 0 20px 13px;
 }
 #content .scene.front > div > div p,
 #content .scene.front > div > div.article h2,
 #content .scene.front > div > div h3,
 #content .scene.front > div > div ul,
+#content .scene.front > div > div fieldset,
 #content .scene.front > div > div div.sharing {opacity: 0;
 	transform: translate(0, 500px);
 	transition: all 0.5s ease;
@@ -649,6 +658,7 @@ body > div.pagination li.next a {padding-right: 0; padding-left: 16px;}
 #content .scene.front > div > div.hover:not(div.article) h2,
 #content .scene.front > div > div.hover h3,
 #content .scene.front > div > div.hover ul,
+#content .scene.front > div > div.hover fieldset,
 #content .scene.front > div > div.hover div.sharing {opacity: 1; color: #ffffff;
 	transform: translate(0, 0);
 }
@@ -659,7 +669,14 @@ body > div.pagination li.next a {padding-right: 0; padding-left: 16px;}
 #content .scene.front > div > div ul.actions {position: absolute; bottom: 0; right: 0;}
 #content .scene.front > div > div ul.actions li {padding-bottom: 5px;}
 #content .scene.front > div > div ul.actions li a {background-color: #ffffff; color: #26962d; padding: 6px 15px; border-radius: 15px; height: auto; text-decoration: none;}
-#content .scene.front > div > div ul.actions li a:active {text-decoration: none; background-color: #34cc3d; color: #ffffff;}
+#content .scene.front > div > div ul.actions li a:active,
+#content .scene.front > div > div ul.actions li input:active {text-decoration: none; background-color: #34cc3d; color: #ffffff;}
+#content .scene.front div.newsletter div.field.email label {display: none;}
+#content .scene.front div.newsletter div.field.checkbox label {background-color: transparent; color: #ffffff;}
+#content .scene.front div.newsletter div.field.checkbox label a {text-decoration: underline;}
+#content .scene.front div.newsletter div.field .help {display: none;}
+#content .scene.front div.newsletter div.field .indicator {top: 8px;}
+#content .scene.front div.newsletter ul.actions li input {background-color: #ffffff; color: #26962d; padding: 6px 15px; border-radius: 15px; height: auto; font-size: 13px; line-height: 1.25em;}
 
 
 /*s-bulletin.css*/
@@ -702,7 +719,7 @@ body > div.pagination li.next a {padding-right: 0; padding-left: 16px;}
 #content .scene.blog dl.author dt.bio {padding-top: 10px; line-height: 1.5em;}
 
 
-/*s-memberships.css*/
+/*s-support.css*/
 #content .scene.signup h1 {text-align: center;}
 #content .scene.signup h1 + h2 {text-align: center;}
 #content .scene.signup h1,
@@ -710,7 +727,7 @@ body > div.pagination li.next a {padding-right: 0; padding-left: 16px;}
 #content .scene.signup h3,
 #content .scene.signup h4,
 #content .scene.signup p {margin: 0 auto;}
-div.field.range {padding-bottom: 8px;}
+div.field.range {padding-bottom: 30px;}
 div.field.range label {display: none;}
 div.field.range input {display: block; width: calc(100% - 6px); height: 6px; background: #26962d; outline: none; border-radius: 5px; padding: 0; box-shadow: none;
 	-webkit-appearance: none;
@@ -747,56 +764,6 @@ div.field.range .help {display: none !important;}
 #content .scene div.donation ul.actions {text-align: center; margin: 20px 0; }
 #content .scene div.donation ul.actions li {padding: 0; display: block;}
 #content .scene div.donation ul.actions li input {font-size: 22px; height: 44px; padding: 0 40px 5px; line-height: 50px;}
-#content .scene.signup div.memberships ul.memberships {list-style: none; margin: 0; padding-bottom: 30px; font-size: 0; position: relative; width: auto;}
-#content .scene.signup div.memberships ul.memberships > li {display: inline-block; vertical-align: top; padding: 10px 10px 70px; margin: 0 0 10px; 
-	border-right: 1px solid #26962d; position: relative;
-	width: calc(25% - 21px); 
-}
-#content .scene.signup div.memberships ul.memberships > li:last-child {border: none;}
-#content .scene.signup div.memberships ul.memberships > li .articlebody {display: none;}
-#content .scene.signup div.memberships ul.memberships > li ul.offer {padding-bottom: 4px;}
-#content .scene.signup div.memberships ul.memberships > li h2,
-#content .scene.signup div.memberships ul.memberships > li h3,
-#content .scene.signup div.memberships ul.memberships > li h4,
-#content .scene.signup div.memberships ul.memberships > li p,
-#content .scene.signup div.memberships ul.memberships > li dl {width: auto; padding-left: 0px; padding-right: 0px;}
-#content .scene.signup div.memberships ul.memberships > li ul {padding: 0; width: auto;}
-#content .scene.signup div.memberships ul.memberships > li ul.actions {position: absolute; bottom: 10px; left: 10px; width: calc(100% - 20px);}
-#content .scene.signup div.memberships ul.memberships > li ul.actions li {display: block; padding: 0; text-align: center; line-height: 1em;}
-#content .scene.signup div.memberships ul.memberships > li ul.actions li.readmore {text-align: center; padding-bottom: 10px;}
-#content .scene.signup div.memberships ul.memberships > li ul.actions li input {display: block; width: 100%;}
-#content .scene.signup div.memberships ul.memberships > li h3 {font-size: 14px;
-	font-family: "PT Serif", Times, serif;
-}
-#content .scene.signup div.memberships ul.memberships > li h3 span.table {display: table; height: 35px; width: 100%;}
-#content .scene.signup div.memberships ul.memberships > li h3 span.cell {display: table-cell; vertical-align: middle; text-align: center; color: #26962d;}
-#content .scene.signup div.memberships ul.memberships > li ul.offer {padding-bottom: 30px;}
-#content .scene.signup div.memberships ul.memberships > li ul.offer li.price {height: 53px; text-align: center; line-height: 1.1em; padding: 0; display: block;}
-#content .scene.signup div.memberships ul.memberships > li ul.offer li.description {padding: 0;}
-#content .scene.signup div.memberships ul.memberships > li ul.offer li.description p {height: 63px; text-align: center; line-height: 1.2em;}
-#content .scene.signup div.memberships ul.memberships > li ul.offer li.description ul {list-style: none; margin: 0;}
-#content .scene.signup div.memberships ul.memberships > li ul.offer li.description li {border-bottom: 1px solid #26962d;
-	height: 20px; padding: 30px 10px 10px; position: relative;
-	text-indent: -9999px;
-}
-#content .scene.signup div.memberships ul.memberships > li ul.offer .description li:last-child {border: none;}
-#content .scene.signup div.memberships ul.memberships > li ul.offer .description li > svg.checkmark {position: absolute; top: calc(50% - 8px); left: calc(50% - 8px);}
-#content .scene.signup div.memberships ul.memberships > li ul.offer .description li > svg.checkmark line {stroke: #26962d; stroke-width: 2px;}
-#content .scene.signup div.memberships ul.memberships > li.benefits {z-index: 2; border: none; width: 100%;
-	position: absolute;
-	padding: 0;
-	top: 186px; left: 0;
-}
-#content .scene.signup div.memberships ul.memberships > li.benefits ul {padding: 0; list-style: none; margin: 0;}
-#content .scene.signup div.memberships ul.memberships > li.benefits ul li {
-	background-color: #26962d;
-	color: #ffffff;
-	padding: 3px 10px;
-	font-size: 14px; line-height: 1em;
-	margin: 0 20px 40px;
-	text-align: center;
-}
-#content .scene.signup div.maillist {position: relative; padding: 0 0 20px;}
 #content .scene.membership div.article ul.offer {padding: 20px 20px 15px;}
 #content .scene.membership div.article ul.offer li.default {font-size: 14px;}
 #content .scene.membership div.article ul.offer li {font-size: 22px; display: block;}
@@ -806,6 +773,9 @@ div.field.range .help {display: none !important;}
 #content .scene.membership ul.memberships li.membership h3 {padding-bottom: 5px;}
 #content .scene.membership ul.memberships li.membership ul.offer {padding: 0 20px 10px;}
 #content .scene.membership ul.memberships li.membership ul.offer li {}
+#content .scene.signup div.membership div.field div.item {margin: 5px 0 0;}
+#content .scene.signup div.membership div.field.radiobuttons div.indicator {display: none;}
+#content .scene.signup div.membership div.field.radiobuttons div.help {margin-top: 10px;}
 
 
 /*s-events.css*/

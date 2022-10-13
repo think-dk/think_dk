@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2022-10-11 13:48:06
+asset-builder @ 2022-10-13 16:17:15
 */
 
 /*seg_tablet_include.css*/
@@ -468,11 +468,11 @@ div.field.boolean input {display: inline-block; vertical-align: top; width: auto
 div.field.checkbox .virtual {display: inline-block; vertical-align: top;}
 div.field.checkbox .virtual .input {box-shadow: inset 0 1px 2px #bbbbbb; background: #ffffff; border: 1px solid #bbbbbb; box-sizing: border-box;
 }
-div.field.checkbox .virtual .input svg.checkbox_checkmark {display: block; width: 25px; height: 25px; stroke-width: 2px;}
+div.field.checkbox .virtual .input svg.checkbox_checkmark {display: block; width: 20px; height: 20px; stroke-width: 2px;}
 div.field.checkbox .virtual .input svg line.checkmark {stroke: #ffffff;}
 div.field.checkbox.checked .virtual .input svg line.checkmark {stroke: #333333;}
 div.field.checkbox label,
-div.field.boolean label {width: auto; height: auto; padding: 5px 0 0 8px; margin: 0; text-transform: none; border: 0; border-radius: 0; top: 0; opacity: 1; display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.2em;}
+div.field.boolean label {width: auto; height: auto; padding: 3px 0 0 8px; margin: 0; text-transform: none; border: 0; border-radius: 0; top: 0; opacity: 1; display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.2em;}
 div.field.radiobuttons {padding-top: 11px;}
 div.field.radiobuttons > label {display: block; font-size: 14px; line-height: 1em; padding: 0 0 0 3px;}
 div.field.radiobuttons > label:after {content: ":";}
@@ -543,7 +543,7 @@ div.field.select.error div.virtual div.options ul.options,
 	border: 3px solid #5c5c5c;
 	border-top: none;
 }
-div.field.checkbox.error .virtual .input {border: 3px solid #a62300; width: 27px; height: 27px;}
+div.field.checkbox.error .virtual .input {border: 3px solid #a62300; width: 22px; height: 22px;}
 div.field.checkbox.error .virtual .input svg {position: relative; top: -2px; left: -2px;}
 div.field.error .indicator {background-position: 3px -33px;}
 div.field.files.error {border-color: #a62300;}
@@ -568,7 +568,7 @@ div.field.select.focus div.virtual div.options ul.options,
 	border: 3px solid #5c5c5c;
 	border-top: none;
 }
-div.field.checkbox.focus .virtual .input {border: 3px solid #5c5c5c; width: 27px; height: 27px; outline: none;}
+div.field.checkbox.focus .virtual .input {border: 3px solid #5c5c5c; width: 22px; height: 22px; outline: none;}
 div.field.checkbox.focus .virtual .input svg {position: relative; top: -2px; left: -2px;}
 div.field.files.focus {border-color: #c8e183;}
 div.field.files.focus input[type=file] {margin: 0; border: none;}
@@ -800,7 +800,8 @@ body > div.pagination li.next a {padding-right: 0;}
 #content .scene.front div.c100 > div p,
 #content .scene.front div.c200 > div p,
 #content .scene.front div.c100 > div ul,
-#content .scene.front div.c200 > div ul {
+#content .scene.front div.c200 > div ul,
+#content .scene.front div.c100 > div .field {
 	padding: 0 20px 13px;
 }
 #content .scene.front div.c200 > div div.sharing {
@@ -829,6 +830,7 @@ body > div.pagination li.next a {padding-right: 0;}
 #content .scene.front div.c100 > div p,
 #content .scene.front div.c100 > div h3,
 #content .scene.front div.c100 > div ul,
+#content .scene.front div.c100 > div fieldset,
 #content .scene.front div.c200 > div p,
 #content .scene.front div.c200 > div h2,
 #content .scene.front div.c200 > div h3,
@@ -852,6 +854,7 @@ body > div.pagination li.next a {padding-right: 0;}
 #content .scene.front div.c100 > div.hover h2,
 #content .scene.front div.c100 > div.hover h3,
 #content .scene.front div.c100 > div.hover ul,
+#content .scene.front div.c100 > div.hover fieldset,
 #content .scene.front div.c200 > div.hover p,
 #content .scene.front div.c200 > div.hover h1,
 #content .scene.front div.c200 > div.hover h2,
@@ -873,6 +876,14 @@ body > div.pagination li.next a {padding-right: 0;}
 #content .scene.front div.article {z-index: 11; padding: 20px;}
 #content .scene.front div.projects {}
 #content .scene.front div.services {}
+#content .scene.front div.support {}
+#content .scene.front div.newsletter {}
+#content .scene.front div.newsletter div.field.email label {display: none;}
+#content .scene.front div.newsletter div.field.checkbox label {background-color: transparent; color: #ffffff;}
+#content .scene.front div.newsletter div.field.checkbox label a {text-decoration: underline;}
+#content .scene.front div.newsletter div.field .help {display: none;}
+#content .scene.front div.newsletter div.field.email .indicator {top: 8px;}
+#content .scene.front div.newsletter ul.actions li input {background-color: #ffffff; color: #26962d; padding: 6px 15px; border-radius: 15px; height: auto; font-size: 13px; line-height: 1.25em;}
 #content .scene.front div.events {}
 #content .scene.front div.membership {}
 #content .scene.front div.bulletin {}
@@ -992,8 +1003,9 @@ div#outro div.bg.about {
 #content .scene.blog dl.author dd {font-size: 14px; line-height: 1.5em;}
 #content .scene.blog dl.author dt.bio {padding-top: 10px;}
 
-/*s-memberships.css*/
+/*s-support.css*/
 #content .scene.signup h1 {text-align: center;}
+#content .scene.signup.already_account h1 {text-align: left;}
 #content .scene.signup h1 + h2 {text-align: center;}
 #content .scene.signup h1,
 #content .scene.signup h2,
@@ -1004,7 +1016,7 @@ div#outro div.bg.about {
 #content .scene.signup div.sharing svg {margin: 0;}
 #content .scene.signup div.sharing h3,
 #content .scene.signup div.sharing p {left: 70px;}
-div.field.range {padding-bottom: 8px;}
+div.field.range {padding-bottom: 30px;}
 div.field.range label {display: none;}
 div.field.range input {display: block; width: 100%; height: 6px; background: #26962d; outline: none; border-radius: 5px; padding: 0; box-shadow: inset 0 1px 2px #777777; border: none;
 	-webkit-appearance: none;
@@ -1026,40 +1038,25 @@ div.field.range input::-ms-thumb {box-shadow: 1px 1px 5px 0px #8a8a8a; border: 3
 div.field.range.focus input::-webkit-slider-thumb {border-color: #34cc3d;}
 div.field.range.focus input::-moz-range-thumb {border-color: #34cc3d;}
 div.field.range.focus input::-ms-thumb {border-color: #34cc3d;}
-div.field.range div.input_wrapper {padding: 0 0 30px; width: 300px; margin: 0 auto;}
+div.field.range div.input_wrapper {padding: 0 0 30px; width: 350px; margin: 0 auto;}
 div.field.range div.input_wrapper div.input {padding: 20px 22px; text-align: center; font-size: 56px; height: 120px; box-sizing: border-box; border-radius: 60px; border: 1px solid #dcdcdc; box-shadow: inset 0 1px 2px #dedede; outline: none;}
 div.field.range div.input_wrapper div.input.focus {border: 3px solid #5c5c5c; padding: 18px 22px;}
 div.field.range .help {display: none !important;}
 #content .scene.signup div.membership {width: 640px; margin: 0 auto;}
+#content .scene.signup div.membership div.field.radiobuttons {text-align: center; font-size: 0;}
+#content .scene.signup div.membership div.field.radiobuttons > label {opacity: 1; line-height: 22px; height: auto; text-align: center; text-transform: none; color: #26962d; font-size: 18px;}
+#content .scene.signup div.membership div.field div.item {display: inline-block; vertical-align: top; width: calc(25% - 10px); margin: 0 5px 10px;}
+#content .scene.signup div.membership div.field div.item label {display: block; font-size: 14px; margin: 0; cursor: pointer;
+	border-radius: 20px; border: 2px solid #26962d; padding: 10px 0; color: #26962d; text-align: center;
+}
+#content .scene.signup div.membership div.field div.item input {display: none;}
+#content .scene.signup div.membership div.field div.item input:checked + label {background: #26962d; color: #ffffff; border-color: #26962d;}
+#content .scene.signup div.membership div.field div.item:nth-child(6) label {border-color: #aaaaaa; color: #aaaaaa;}
+#content .scene.signup div.membership div.field.radiobuttons div.indicator {display: none;}
+#content .scene.signup div.membership div.field.radiobuttons div.help {right: 50%; top: 148px !important; margin-right: -200px; width: 400px;}
 #content .scene.signup div.membership ul.actions {text-align: center; margin: 20px 0; width: auto;}
 #content .scene.signup div.membership ul.actions li {padding: 0; display: block;}
 #content .scene.signup div.membership ul.actions li input {font-size: 28px; height: 55px; padding: 0 40px 5px; line-height: 50px; border-radius: 30px;}
-#content .scene.signup div.donation {width: 640px; margin: 0 auto;}
-#content .scene.signup h2.center {text-align: center;}
-#content .scene.signup div.donation div.field.range div.input_wrapper {width: 350px;}
-#content .scene.signup div.donation div.field.range div.input_wrapper div.input {font-size: 44px; height: 70px;}
-#content .scene.signup div.donation ul.actions {text-align: center; margin: 20px 0; width: 500px;}
-#content .scene.signup div.donation ul.actions li {padding: 0; display: block;}
-#content .scene.signup div.donation ul.actions li input {font-size: 22px; height: 44px; padding: 0 40px 5px; line-height: 50px; border-radius: 25px;}
-#content .scene.signup .articlebody h2.maillist {padding-bottom: 10px; text-align: center;}
-#content .scene.signup div.maillist {border: 1px solid #26962d; position: relative; margin: 0 auto 50px;
-	 padding: 22px 20px 15px; width: 456px;
-}
-#content .scene.signup div.maillist form.maillist {font-size: 0;}
-#content .scene.signup div.maillist fieldset { margin: 0 0 20px; }
-#content .scene.signup div.maillist ul.actions {padding: 0;}
-#content .scene.signup div.maillist div.field {padding: 0;}
-#content .scene.signup div.maillist div.field.checkbox {margin-top: 10px;}
-#content .scene.signup div.maillist div.field.email .indicator {right: -21px;}
-#content .scene.signup div.maillist div.field .help {left: 475px; }
-#content .scene.signup div.maillist ul.actions li {}
-#content .scene.signup div.maillist ul.actions input {width: 150px;}
-#content .scene.membership ul.offer {padding: 76px 50px 15px;}
-#content .scene.membership ul.offer li.default {font-size: 14px;}
-#content .scene.membership ul.offer li {font-size: 26px; display: block;}
-#content .scene.membership ul.offer li.description {display: none;}
-#content .scene.membership form.signup ul.actions {text-align: center;}
-#content .scene.membership form.signup ul.actions li {padding-right: 0;}
 
 
 /*s-events.css*/
@@ -1527,4 +1524,6 @@ ul.actions a.button.primary:active,
 #content .scene div.qnas h2:active svg.arrow line {stroke: #34cc3d;}
 body.black #content .scene div.comments h2:active {color: #000000;}
 body.black #content .scene div.comments h2:active svg.arrow line {stroke: #000000;}
-#content .scene.front div.c100 > div ul.actions li a:active {text-decoration: none; background-color: #34cc3d; color: #ffffff;}
+#content .scene.front div.c100 > div ul.actions li a:active,
+#content .scene.front div div ul.actions li input:active {text-decoration: none; background-color: #34cc3d; color: #ffffff;}
+

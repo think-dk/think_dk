@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2022-10-11 13:48:06
+asset-builder @ 2022-10-13 16:17:15
 */
 
 /*seg_tablet_include.js*/
@@ -374,7 +374,7 @@ Util.saveCookie = function(name, value, _options) {
 		return;
 	}
 	if(expires === false) {
-		expires = ";expires=Mon, 04-Apr-2020 05:00:00 GMT";
+		expires = ";expires="+(new Date((new Date()).getTime() + (1000*60*60*24*365))).toGMTString();
 	}
 	else if(str(expires)) {
 		expires = ";expires="+expires;
@@ -1551,13 +1551,13 @@ u.e.addWindowStartEvent = function(node, action) {
 			}
 		}
 	};
-	eval('window["_OnWindowEvent_' + id + '"].eventCallback = function(event) {window["_OnWindowStartEvent_'+ id + '"].callback(event);}');
-	u.e.addEvent(window, type, window["_OnWindowStartEvent_" + id].eventCallback);
+	eval('window["_OnWindowStartEvent_' + id + '"].eventCallback = function(event) {window["_OnWindowStartEvent_'+ id + '"].callback(event);}');
+	u.e.addStartEvent(window, window["_OnWindowStartEvent_" + id].eventCallback);
 	return id;
 }
 u.e.removeWindowStartEvent = function(id) {
 	if(window["_OnWindowStartEvent_" + id]) {
-		u.e.removeEvent(window, window["_OnWindowStartEvent_"+id].type, window["_OnWindowStartEvent_"+id].eventCallback);
+		u.e.removeStartEvent(window, window["_OnWindowStartEvent_"+id].eventCallback);
 		delete window["_OnWindowStartEvent_"+id];
 	}
 }
@@ -1577,12 +1577,12 @@ u.e.addWindowMoveEvent = function(node, action) {
 		}
 	};
 	eval('window["_OnWindowMoveEvent_' + id + '"].eventCallback = function(event) {window["_OnWindowMoveEvent_'+ id + '"].callback(event);}');
-	u.e.addEvent(window, type, window["_OnWindowMoveEvent_" + id].eventCallback);
+	u.e.addMoveEvent(window, type, window["_OnWindowMoveEvent_" + id].eventCallback);
 	return id;
 }
 u.e.removeWindowMoveEvent = function(id) {
 	if(window["_OnWindowMoveEvent_" + id]) {
-		u.e.removeEvent(window, window["_OnWindowMoveEvent_"+id].type, window["_OnWindowMoveEvent_"+id].eventCallback);
+		u.e.removeMoveEvent(window, window["_OnWindowMoveEvent_"+id].eventCallback);
 		delete window["_OnWindowMoveEvent_"+id];
 	}
 }
@@ -1778,6 +1778,32 @@ Util.Form = u.f = new function() {
 				u.e.addEvent(field.input, "change", this._changed);
 				this.activateInput(field.input);
 			}
+			else if(u.hc(field, "json")) {
+				field.type = "json";
+				field.input = u.qs("textarea", field);
+				field.input._form = _form;
+				field.input.label = u.qs("label[for='"+field.input.id+"']", field);
+				field.input.field = field;
+				field.input.val = this._value;
+				if(u.hc(field, "autoexpand")) {
+					u.ass(field.input, {
+						"overflow": "hidden"
+					});
+					field.input.setHeight = function() {
+						u.ass(this, {
+							height: "auto"
+						});
+						u.ass(this, {
+							height: (this.scrollHeight) + "px"
+						});
+					}
+					u.e.addEvent(field.input, "input", field.input.setHeight);
+					field.input.setHeight();
+				}
+				u.e.addEvent(field.input, "keyup", this._updated);
+				u.e.addEvent(field.input, "change", this._changed);
+				this.activateInput(field.input);
+			}
 			else if(u.hc(field, "select")) {
 				field.type = "select";
 				field.input = u.qs("select", field);
@@ -1836,8 +1862,6 @@ Util.Form = u.f = new function() {
 				field.uploaded_files = u.qsa("li.uploaded", field.filelist);
 				this._update_filelist.bind(field.input)();
 				u.e.addEvent(field.input, "change", this._update_filelist);
-				u.e.addEvent(field.input, "change", this._updated);
-				u.e.addEvent(field.input, "change", this._changed);
 				if(u.e.event_support != "touch") {
 					u.e.addEvent(field.input, "dragenter", this._focus);
 					u.e.addEvent(field.input, "dragleave", this._blur);
@@ -1859,7 +1883,10 @@ Util.Form = u.f = new function() {
 			field.virtual_input.setAttribute("tabindex", 0);
 			field.input.setAttribute("tabindex", 0);
 		}
-		else if(!field.input.tabindex) {
+		else if(field.input && field.input.getAttribute("readonly")) {
+			field.input.setAttribute("tabindex", -1);
+		}
+		else if(field.input && !field.input.tabindex) {
 			field.input.setAttribute("tabindex", 0);
 		}
 	}
@@ -2048,12 +2075,50 @@ Util.Form = u.f = new function() {
 		var i;
 		var files = this.val();
 		this.field.filelist.innerHTML = "";
-		u.ae(this.field.filelist, "li", {html:this.field.hint ? u.text(this.field.hint) : u.text(this.label), class:"label"})
+		this.e_updated = event;
+		u.ae(this.field.filelist, "li", {
+			"html":this.field.hint ? u.text(this.field.hint) : u.text(this.label), class:"label",
+		});
 		if(files && files.length) {
 			u.ac(this.field, "has_new_files");
-			var i;
+			var i, file, li_file;
+			this.field.filelist.load_queue = 0;
 			for(i = 0; i < files.length; i++) {
-				u.ae(this.field.filelist, "li", {html:files[i].name, class:"new"})
+				file = files[i];
+				li_file = u.ae(this.field.filelist, "li", {"html":file.name, "class":"new format:"+file.name.substring(file.name.lastIndexOf(".")+1).toLowerCase()})
+				li_file.input = this;
+				if(file.type.match(/image/)) {
+					li_file.image = new Image();
+					li_file.image.li = li_file;
+					u.ac(li_file, "loading");
+					this.field.filelist.load_queue++;
+					li_file.image.onload = function() {
+						u.ac(this.li, "width:"+this.width);
+						u.ac(this.li, "height:"+this.height);
+						u.rc(this.li, "loading");
+						this.li.input.field.filelist.load_queue--;
+						delete this.li.image;
+						u.f.filelistUpdated(this.li.input);
+					}
+					li_file.image.src = URL.createObjectURL(file);
+				}
+				else if(file.type.match(/video/)) {
+					li_file.video = document.createElement("video");
+					li_file.video.preload = "metadata";
+					li_file.video.li = li_file;
+					u.ac(li_file, "loading");
+					this.field.filelist.load_queue++;
+					li_file.video.onloadedmetadata = function() {
+						u.bug("loaded", this);
+						u.ac(this.li, "width:"+this.videoWidth);
+						u.ac(this.li, "height:"+this.videoHeight);
+						u.rc(this.li, "loading");
+						this.li.input.field.filelist.load_queue--;
+						delete this.li.video;
+						u.f.filelistUpdated(this.li.input);
+					}
+					li_file.video.src = URL.createObjectURL(file);
+				}
 			}
 			if(this.multiple) {
 				for(i = 0; i < this.field.uploaded_files.length; i++) {
@@ -2063,6 +2128,7 @@ Util.Form = u.f = new function() {
 			else {
 				this.field.uploaded_files = [];
 			}
+			u.f.filelistUpdated(this);
 		}
 		else if(this.field.uploaded_files && this.field.uploaded_files.length) {
 			u.rc(this.field, "has_new_files");
@@ -2073,6 +2139,57 @@ Util.Form = u.f = new function() {
 		}
 		else {
 			u.rc(this.field, "has_new_files");
+		}
+	}
+	this.filelistUpdated = function(input) {
+		if(input.field.filelist.load_queue === 0) {
+			this._changed.bind(input.field.input)(input.e_updated);
+			this._updated.bind(input.field.input)(input.e_updated);
+			delete input.e_updated;
+		}
+	}
+	this.updateFilelistStatus = function(form, response) {
+		if(form && form.inputs && response && response.cms_status == "success" && response.cms_object && response.cms_object.mediae) {
+			var mediae = JSON.parse(JSON.stringify(response.cms_object.mediae));
+			var filelists = u.qsa("div.field.files ul.filelist", form);
+			var i, j, k, filelist, old_files, old_file, new_files, new_files;
+			for(i = 0; i < filelists.length; i++) {
+				filelist = filelists[i];
+				new_files = u.qsa("li.new", filelist);
+				if(new_files.length) {
+					old_files = u.qsa("li.uploaded", filelist);
+					if(old_files.length) {
+						for(j in mediae) {
+							media = mediae[j];
+							if(media.variant.match("^" + filelist.field.input.name.replace(/\[\]$/, "") + "(\-|$)")) {
+								for(k = 0; k < old_files.length; k++) {
+									old_file = old_files[k];
+									if(u.cv(old_file, "media_id") == media.id) {
+										delete mediae[j];
+									}
+								}
+							}
+						}
+					}
+					if(Object.keys(mediae).length) {
+						for(j in mediae) {
+							media = mediae[j];
+							if(media.variant.match("^"+filelist.field.input.name.replace(/\[\]$/, "")+"(\-|$)")) {
+								for(k = 0; k < new_files.length; k++) {
+									new_file = new_files[k];
+									if(u.text(new_file) == media.name || u.text(new_file)+".zip" == media.name) {
+										new_file.innerHTML = media.name;
+										u.rc(new_file, "new");
+										u.ac(new_file, "uploaded media_id:"+media.id+" variant:"+media.variant+" format:"+media.format+" width:"+media.width+" height:"+media.height);
+										delete mediae[j];
+									}
+								}
+							}
+						}
+					}
+				}
+				filelist.field.uploaded_files = u.qsa("li.uploaded", filelist);
+			}
 		}
 	}
 	this._mouseenter = function(event) {
@@ -2259,50 +2376,6 @@ Util.Form = u.f = new function() {
 			u.ass(field.help, {
 				"top": help_top + "px"
 			});
-		}
-	}
-	this.updateFilelistStatus = function(form, response) {
-		if(form && form.inputs && response && response.cms_status == "success" && response.cms_object && response.cms_object.mediae) {
-			var mediae = JSON.parse(JSON.stringify(response.cms_object.mediae));
-			var filelists = u.qsa("div.field.files ul.filelist", form);
-			var i, j, k, filelist, old_files, old_file, new_files, new_files;
-			for(i = 0; i < filelists.length; i++) {
-				filelist = filelists[i];
-				new_files = u.qsa("li.new", filelist);
-				if(new_files.length) {
-					old_files = u.qsa("li.uploaded", filelist);
-					if(old_files.length) {
-						for(j in mediae) {
-							media = mediae[j];
-							if(media.variant.match("^" + filelist.field.input.name.replace(/\[\]$/, "") + "(\-|$)")) {
-								for(k = 0; k < old_files.length; k++) {
-									old_file = old_files[k];
-									if(u.cv(old_file, "media_id") == media.id) {
-										delete mediae[j];
-									}
-								}
-							}
-						}
-					}
-					if(Object.keys(mediae).length) {
-						for(j in mediae) {
-							media = mediae[j];
-							if(media.variant.match("^"+filelist.field.input.name.replace(/\[\]$/, "")+"(\-|$)")) {
-								for(k = 0; k < new_files.length; k++) {
-									new_file = new_files[k];
-									if(u.text(new_file) == media.name || u.text(new_file)+".zip" == media.name) {
-										new_file.innerHTML = media.name;
-										u.rc(new_file, "new");
-										u.ac(new_file, "uploaded media_id:"+media.id+" variant:"+media.variant+" format:"+media.format+" width:"+media.width+" height:"+media.height);
-										delete mediae[j];
-									}
-								}
-							}
-						}
-					}
-				}
-				filelist.field.uploaded_files = u.qsa("li.uploaded", filelist);
-			}
 		}
 	}
 	this.inputHasError = function(iN) {
@@ -2545,6 +2618,30 @@ Util.Form = u.f = new function() {
 					this.inputHasError(iN);
 				}
 			}
+			else if(u.hc(iN.field, "json")) {
+				min = Number(u.cv(iN.field, "min"));
+				max = Number(u.cv(iN.field, "max"));
+				min = min ? min : 2;
+				max = max ? max : 10000000;
+				if(
+					iN.val().length >= min && 
+					iN.val().length <= max && 
+					(function(value) {
+						try {
+							JSON.parse(value);
+							return true;
+						}
+						catch(exception) {
+							return false;
+						}
+					}(iN.val()))
+				) {
+					this.inputIsCorrect(iN);
+				}
+				else {
+					this.inputHasError(iN);
+				}
+			}
 			else if(u.hc(iN.field, "date")) {
 				min = u.cv(iN.field, "min");
 				max = u.cv(iN.field, "max");
@@ -2589,21 +2686,35 @@ Util.Form = u.f = new function() {
 				min = min ? min : 1;
 				max = max ? max : 10000000;
 				pattern = iN.getAttribute("accept");
-				var i, value = iN.val(), files = [];
-				if(iN.field.uploaded_files && iN.field.uploaded_files.length) {
-					for(i = 0; i < iN.field.uploaded_files.length; i++) {
-						files.push("." + u.cv(iN.field.uploaded_files[i], "format").toLowerCase());
-					}
+				if(pattern) {
+					pattern = pattern.split(",");
 				}
-				if(value && value.length) {
-					for(i = 0; i < value.length; i++) {
-						files.push(value[i].name.substring(value[i].name.lastIndexOf(".")).toLowerCase());
+				var i, files = Array.prototype.slice.call(u.qsa("li:not(.label)", iN.field.filelist));
+				var min_width = Number(iN.getAttribute("data-min-width"));
+				var min_height = Number(iN.getAttribute("data-min-height"));
+				var allowed_sizes = iN.getAttribute("data-allowed-sizes");
+				if(allowed_sizes) {
+					allowed_sizes = allowed_sizes.split(",");
+				}
+				var allowed_proportions = iN.getAttribute("data-allowed-proportions");
+				if(allowed_proportions) {
+					allowed_proportions = allowed_proportions.split(",");
+					for(i = 0; i < allowed_proportions.length; i++) {
+						allowed_proportions[i] = u.round(eval(allowed_proportions[i]), 4);
 					}
 				}
 				if(
 					(files.length >= min && files.length <= max)
 					&&
-					(!pattern || files.every(function(v) {return pattern.split(",").indexOf(v) !== -1}))
+					(!pattern || files.every(function(node) {return pattern.indexOf("."+u.cv(node, "format")) !== -1}))
+					&&
+					(!min_width || files.every(function(node) {return u.cv(node, "width") >= min_width}))
+					&&
+					(!min_height || files.every(function(node) {return u.cv(node, "height") >= min_height}))
+					&&
+					(!allowed_sizes || files.every(function(node) {return allowed_sizes.indexOf(u.cv(node, "width")+"x"+u.cv(node, "height")) !== -1}))
+					&&
+					(!allowed_proportions || files.every(function(node) {return allowed_proportions.indexOf(u.round(Number(u.cv(node, "width"))/Number(u.cv(node, "height")), 4)) !== -1}))
 				) {
 					this.inputIsCorrect(iN);
 				}
@@ -4132,13 +4243,11 @@ u.navigation = function(_options) {
 			if(location.hash.length < 2) {
 				window._man_nav_path = u.h.getCleanUrl(location.href);
 				u.h.navigate(window._man_nav_path);
-				u.init(initialization_scope);
 			}
 			else if(location.hash.match(/^#\//) && u.h.getCleanHash(location.hash) != u.h.getCleanUrl(location.href)) {
 				callback_after_init = u.h.getCleanHash(location.hash);
 			}
 			else {
-				u.init(initialization_scope);
 			}
 		}
 		else {
@@ -4148,7 +4257,6 @@ u.navigation = function(_options) {
 				callback_after_init = window._man_nav_path;
 			}
 			else {
-				u.init(initialization_scope);
 			}
 		}
 		var random_string = u.randomString(8);
@@ -4337,7 +4445,7 @@ u.terms_version = "terms_v1";
 u.ga_account = 'UA-10756281-1';
 u.ga_domain = 'think.dk';
 u.gapi_key = "AIzaSyAVqnYpqFln-qAYsp5rkEGs84mrhmGQB_I";
-u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/memberships">Join us</a> to add comments.';
+u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/support">Join us</a> to add comments.';
 u.txt["weekday-1"] = "Monday";
 u.txt["weekday-2"] = "Tuesday";
 u.txt["weekday-3"] = "Wednesday";
@@ -4926,10 +5034,10 @@ Util.Modules["oneButtonForm"] = new function() {
 					this.response = function(response) {
 						u.rc(this, "submitting");
 						u.rc(this._ob_submit_button, "disabled");
-						if(obj(page) && fun(page.notify)) {
+						if(typeof(page) !== 'undefined' && obj(page) && fun(page.notify)) {
 							page.notify(response);
 						}
-						else if(obj(app) && fun(app.notify)) {
+						else if(typeof(app) !== 'undefined' && obj(app) && fun(app.notify)) {
 							app.notify(response);
 						}
 						this.restore();
@@ -5274,6 +5382,7 @@ Util.mediaPlayer = function(_options) {
 	player._autoplay = false;
 	player._muted = false;
 	player._loop = false;
+	player._preload = false;
 	player._playsinline = false;
 	player._crossorigin = "anonymous";
 	player._controls = false;
@@ -5368,10 +5477,12 @@ Util.mediaPlayer = function(_options) {
 			}
 		}
 		player.mute = function() {
+			this._muted = true;
 			this.media.muted = true;
 		}
 		player.unmute = function() {
-			this.media.removeAttribute(muted);
+			this._muted = false;
+			this.media.muted = false;
 		}
 	}
 	else {
@@ -5396,6 +5507,7 @@ u.setupMedia = function(player, _options) {
 				case "autoplay"     : player._autoplay               = _options[_argument]; break;
 				case "muted"        : player._muted                  = _options[_argument]; break;
 				case "loop"         : player._loop                   = _options[_argument]; break;
+				case "preload"      : player._preload                = _options[_argument]; break;
 				case "playsinline"  : player._playsinline            = _options[_argument]; break;
 				case "controls"     : player._controls               = _options[_argument]; break;
 				case "ff_skip"      : player._ff_skip                = _options[_argument]; break;
@@ -5408,6 +5520,7 @@ u.setupMedia = function(player, _options) {
 	player.media.muted = player._muted;
 	player.media.playsinline = player._playsinline;
 	player.media.setAttribute("playsinline", player._playsinline);
+	player.media.setAttribute("preload", player._preload);
 	player.media.setAttribute("crossorigin", player._crossorigin);
 	u.setupMediaControls(player, player._controls);
 	player.currentTime = 0;
@@ -5493,8 +5606,8 @@ u.setupMedia = function(player, _options) {
 	}
 }
 u.correctMediaSource = function(player, src) {
-	var param = src.match(/\?[^$]+/) ? src.match(/(\?[^$]+)/)[1] : "";
-	src = src.replace(/\?[^$]+/, "");
+	var param = src.match(/(\?|\#)[^$]+/) ? src.match(/((\?|\#)[^$]+)/)[1] : "";
+	src = src.replace(/(\?|\#)[^$]+/, "");
 	if(player.type == "video") {
 		src = src.replace(/(\.m4v|\.mp4|\.webm|\.ogv|\.3gp|\.mov)$/, "");
 		if(player.flash) {
@@ -6687,29 +6800,37 @@ u.googlemaps = new function() {
 	this.api_loaded = false;
 	this.api_load_queue = [];
 	this.map = function(map, center, _options) {
-		map._maps_streetview = false;
-		map._maps_zoom = 10;
-		map._maps_scrollwheel = true;
-		map._maps_zoom = 10;
 		map._center_latitude = center[0];
 		map._center_longitude = center[1];
+		map._zoom = 10;
+		map._streetview = false;
+		map._scrollwheel = true;
 		map._styles = false;
 		map._disable_ui = false;
+		map._fullscreenControl = false;
+		map._zoomControl = true;
+		map._zoomControlOptions = false;
+		map._keyboardShortcuts = false;
 		if(obj(_options)) {
 			var _argument;
 			for(_argument in _options) {
 				switch(_argument) {
-					case "zoom"           : map._maps_zoom               = _options[_argument]; break;
-					case "scrollwheel"    : map._maps_scrollwheel        = _options[_argument]; break;
-					case "streetview"     : map._maps_streetview         = _options[_argument]; break;
-					case "styles"         : map._styles                  = _options[_argument]; break;
-					case "disableUI"      : map._disable_ui              = _options[_argument]; break;
+					case "zoom"                  : map._zoom                    = _options[_argument]; break;
+					case "scrollwheel"           : map._scrollwheel             = _options[_argument]; break;
+					case "streetview"            : map._streetview              = _options[_argument]; break;
+					case "styles"                : map._styles                  = _options[_argument]; break;
+					case "disableUI"             : map._disable_ui              = _options[_argument]; break;
+					case "fullscreenControl"     : map._fullscreenControl       = _options[_argument]; break;
+					case "zoomControl"           : map._zoomControl             = _options[_argument]; break;
+					case "zoomControlOptions"    : map._zoomControlOptions      = _options[_argument]; break;
+					case "keyboardShortcuts"     : map._keyboardShortcuts       = _options[_argument]; break;
 				}
 			}
 		}
 		var map_key = u.randomString(8);
 		window[map_key] = function() {
 			u.googlemaps.api_loaded = true;
+			u.googlemaps.api_loading = false;
 			var map;
 			while(u.googlemaps.api_load_queue.length) {
 				map = u.googlemaps.api_load_queue.shift();
@@ -6717,7 +6838,18 @@ u.googlemaps = new function() {
 			}
 		}
 		map.init = function() {
-			var mapOptions = {center: new google.maps.LatLng(center[0], center[1]), zoom: this._maps_zoom, scrollwheel: this._maps_scrollwheel, streetViewControl: this._maps_streetview, zoomControlOptions: {position: google.maps.ControlPosition.LEFT_TOP}, styles: this._styles, disableDefaultUI: this._disable_ui};
+			var mapOptions = {
+				center: new google.maps.LatLng(this._center_latitude, this._center_longitude), 
+				zoom: this._zoom, 
+				scrollwheel: this._scrollwheel, 
+				streetViewControl: this._streetview, 
+				zoomControl: this._zoomControl, 
+				zoomControlOptions: this._zoomControlOptions ? this._zoomControlOptions : {position: google.maps.ControlPosition.LEFT_TOP}, 
+				styles: this._styles, 
+				disableDefaultUI: this._disable_ui,
+				fullscreenControl: this._fullscreenControl,
+				keyboardShortcuts: this._keyboardShortcuts,
+			};
 			this.g_map = new google.maps.Map(this, mapOptions);
 			this.g_map.m_map = this
 			if(fun(this.APIloaded)) {
@@ -9005,6 +9137,26 @@ Util.Modules["scene"] = new function() {
 		scene.ready = function() {
 			u.showScene(this);
 		}
+		scene.destroy = function() {
+			var i;
+			var list, article_lists = u.qsa(".articlePreviewList");
+			if(article_lists) {
+				for(i = 0; i < article_lists.length; i++) {
+					list = article_lists[i];
+					list.destroy();
+				}
+			}
+			var pagination, paginations = u.qsa(".pagination");
+			if(paginations) {
+				for(i = 0; i < paginations.length; i++) {
+					pagination = paginations[i];
+					if(fun(pagination.destroy)) {
+						pagination.destroy();
+					}
+				}
+			}
+			page.cN.removeChild(this);
+		}
 		page.cN.scene = scene;
 	}
 }
@@ -9042,10 +9194,10 @@ Util.Modules["front"] = new function() {
 				]},
 				{"c300": [
 					{"c100": [
-						"div.events",
+						"div.newsletter",
 					]},
 					{"c100": [
-						"div.membership",
+						"div.support",
 					]},
 					{"c100": [
 						"div.bulletin",
@@ -9080,8 +9232,8 @@ Util.Modules["front"] = new function() {
 			this.boxes = [];
 			this.boxes.push(u.qs(".projects", this));
 			this.boxes.push(u.qs(".services", this));
-			this.boxes.push(u.qs(".events", this));
-			this.boxes.push(u.qs(".membership", this));
+			this.boxes.push(u.qs(".newsletter", this));
+			this.boxes.push(u.qs(".support", this));
 			this.boxes.push(u.qs(".bulletin", this));
 			this.boxes.push(u.qs(".about", this));
 			this.boxes.push(u.qs(".blog", this));
@@ -9112,6 +9264,11 @@ Util.Modules["front"] = new function() {
 						u.rc(this, "hover");
 					}
 				}
+			}
+			if(u.qs(".newsletter", this)) {
+				this.div_newsletter = u.qs("div.newsletter", this);
+				this.form_newsletter = u.qs("form", this.div_newsletter);
+				u.f.init(this.form_newsletter);
 			}
 			page.resized();
 			u.showScene(this);
@@ -9866,6 +10023,26 @@ Util.Modules["project"] = new function() {
 			]);
 			u.showScene(this);
 		}
+		scene.destroy = function() {
+			var i;
+			var list, article_lists = u.qsa(".articlePreviewList");
+			if(article_lists) {
+				for(i = 0; i < article_lists.length; i++) {
+					list = article_lists[i];
+					list.destroy();
+				}
+			}
+			var pagination, paginations = u.qsa(".pagination");
+			if(paginations) {
+				for(i = 0; i < paginations.length; i++) {
+					pagination = paginations[i];
+					if(fun(pagination.destroy)) {
+						pagination.destroy();
+					}
+				}
+			}
+			page.cN.removeChild(this);
+		}
 		page.cN.scene = scene;
 	}
 }
@@ -10075,9 +10252,10 @@ Util.Modules["shopAddress"] = new function() {
 }
 
 
-/*m-memberships.js*/
-Util.Modules["memberships"] = new function() {
+/*m-support.js*/
+Util.Modules["support"] = new function() {
 	this.init = function(scene) {
+		u.bug("scene init:", this);
 		scene.resized = function() {
 			if(this.membership_nodes) {
 			}
@@ -10085,143 +10263,19 @@ Util.Modules["memberships"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			this.div_memberships = false;
-			this.div_membership = u.qs("div.membership", this);
-			var place_holder = u.qs("div.articlebody .placeholder.memberships", this);
-			if(this.div_membership && place_holder) {
-				place_holder.parentNode.replaceChild(this.div_membership, place_holder);
-				this.form_membership = u.qs("form.membership", this.div_membership);
+			// 
+			// 
+			// 
+			// 
+			// 
+				this.form_membership = u.qs("form.membership", this);
 				u.f.init(this.form_membership);
-			}
-			this.div_donation = u.qs("div.donation", this);
-			var place_holder = u.qs("div.articlebody .placeholder.donations", this);
-			if(this.div_donation && place_holder) {
-				place_holder.parentNode.replaceChild(this.div_donation, place_holder);
-				this.form_donation = u.qs("form.donation", this.div_donation);
-				u.f.init(this.form_donation);
-			}
-			if(this.div_memberships) {
-				this.membership_nodes = u.qsa("li.membership", this.div_memberships);
-				var total_benefits = [];
-				var i, node, benefit, j, li, table, txt;
-				for(i = 0; node = this.membership_nodes[i]; i++) {
-					node.benefits = u.qsa(".description li", node);
-					for(j = 0; j < node.benefits.length; j++) {
-						txt = node.benefits[j].innerHTML;
-						if(total_benefits.indexOf(txt) === -1) {
-							total_benefits.push(txt);
-						}
-					}
-				}
-				if(total_benefits.length) {
-					this.ul_memberships = u.qs("ul.memberships", this.div_memberships);
-					var benefits_node = u.ie(this.ul_memberships, "li", {"class":"benefits"})
-					var ul = u.ae(benefits_node, "ul");
-					for(i = 0; benefit = total_benefits[i]; i++) {
-						li = u.ae(ul, "li");
-						table = u.ae(li, "span", {"class":"table"});
-						u.ae(table, "span", {"class":"cell", "html":benefit});
-						li.explanation = u.qs("p.hint_"+ u.superNormalize(benefit).replace(/-/g, "_"), this);
-						if(li.explanation) {
-							u.e.hover(li);
-							li.over = function() {
-								this.div_explanation = u.ae(this, "div", {"class":"explanation", "html":this.explanation.innerHTML});
-								u.ass(this.div_explanation, {
-									"left": (this.offsetWidth + 20) + "px",
-									"top": (this.offsetHeight / 2) - (this.div_explanation.offsetHeight / 2) + "px"
-								});
-							}
-							li.out = function() {
-								if(this.div_explanation) {
-									this.removeChild(this.div_explanation);
-									delete this.div_explanation;
-								}
-							}
-						}
-					}
-					this.benefits = u.qsa("li", ul);
-				}
-				for(i = 0; node = this.membership_nodes[i]; i++) {
-					var j, benefit, not_included;
-					for(j = 0; j < this.benefits.length; j++) {
-						benefit = node.benefits[j];
-						if(!benefit) {
-							if(!node.benefits.length) {
-								u.ae(u.ae(u.qs("li.description", node), "ul"), "li", {"class":"no"});
-								node.benefits = u.qsa(".description li", node);
-							}
-							else {
-								u.ae(node.benefits[0].parentNode, "li", {"class":"no"});
-							}
-						}
-						else if(u.text(benefit) != u.text(this.benefits[j])) {
-							not_included = u.ae(benefit.parentNode, "li", {"class":"no"});
-							benefit.parentNode.insertBefore(not_included, benefit);
-							node.benefits = u.qsa(".description li", node);
-						}
-						else if(benefit) {
-							benefit.checkmark = u.svg({
-								"name":"checkmark",
-								"node":benefit,
-								"class":"checkmark",
-								"width":17,
-								"height":17,
-								"shapes":[
-									{
-										"type": "line",
-										"x1": 2,
-										"y1": 8,
-										"x2": 7,
-										"y2": 15
-									},
-									{
-										"type": "line",
-										"x1": 6,
-										"y1": 15,
-										"x2": 12,
-										"y2": 2
-									}
-								]
-							});
-						}
-					}
-				}
-			}
-			this.div_maillist = u.qs("div.maillist", this);
-			var maillist_place_holder = u.qs("div.articlebody .placeholder.maillist", this);
-			if(this.div_maillist && maillist_place_holder) {
-				maillist_place_holder.parentNode.replaceChild(this.div_maillist, maillist_place_holder);
-			}
-			if(this.div_maillist) {
-				this.div_maillist.form = u.qs("form.maillist", this.div_maillist);
-				u.f.init(this.div_maillist.form);
-			}
 			u.showScene(this);
 		}
 		page.cN.scene = scene;
 	}
 }
-Util.Modules["membership"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			u.columns(this, [
-				{"c200": [
-					"div.article", 
-				]},
-				{"c100": [
-					"ul.offer",
-					"form.signup",
-				]},
-			]);
-			u.showScene(this);
-		}
-		page.cN.scene = scene;
-	}
-}
+
 
 /*m-payment.js*/
 Util.Modules["payment"] = new function() {
@@ -10445,7 +10499,7 @@ Util.Modules["black"] = new function() {
 /*m-verdensborger.js*/
 Util.Modules["verdensborger"] = new function() {
 	this.init = function(scene) {
-		u.txt["login_to_comment"] = '<a href="/login">Log ind</a> eller <a href="/memberships">opret en konto</a> for at tilføje kommentarer.';
+		u.txt["login_to_comment"] = '<a href="/login">Log ind</a> eller <a href="/support">opret en konto</a> for at tilføje kommentarer.';
 		u.txt["share"] = "Del denne side";
 		u.txt["share-info-headline"] = "(Hvordan deler jer?)";
 		u.txt["share-info-txt"] = "Vi har med vilje ikke inkluderet social media plugins, fordi disse ofte misbruges til at indsamle data om dig. Vi ønsker heller ikke at promovere nogle kanaler over andre. I stedet kan du blot kopiere det viste link og selv dele det, dér hvor du finder det relevant.";
@@ -10460,7 +10514,7 @@ Util.Modules["verdensborger"] = new function() {
 		scene.scrolled = function() {
 		}
 		scene.ready = function() {
-			u.txt["login_to_comment"] = '<a href="/login">Log ind</a> eller <a href="/memberships">Opret en konto</a> for at tilføje kommentarer.';
+			u.txt["login_to_comment"] = '<a href="/login">Log ind</a> eller <a href="/support">Opret en konto</a> for at tilføje kommentarer.';
 			u.columns(this, [
 				{"c300":[
 					{"c200": [
