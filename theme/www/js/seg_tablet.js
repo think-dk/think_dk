@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2022-10-13 16:17:15
+asset-builder @ 2022-10-13 20:35:33
 */
 
 /*seg_tablet_include.js*/
@@ -10265,8 +10265,9 @@ Util.Modules["support"] = new function() {
 		scene.ready = function() {
 			// 
 			// 
-			// 
-			// 
+			this.div_membership = u.qs("div.membership", this);
+			var place_holder = u.qs("div.articlebody .placeholder.membership", this);
+			place_holder.parentNode.replaceChild(this.div_membership, place_holder);
 			// 
 				this.form_membership = u.qs("form.membership", this);
 				u.f.init(this.form_membership);

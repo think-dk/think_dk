@@ -180,6 +180,11 @@ Util.Modules["support"] = new function() {
 //
 // 			}
 
+			this.div_membership = u.qs("div.membership", this);
+			var place_holder = u.qs("div.articlebody .placeholder.membership", this);
+			place_holder.parentNode.replaceChild(this.div_membership, place_holder);
+
+
 			this.form_membership = u.qs("form.membership", this);
 			u.f.init(this.form_membership);
 
