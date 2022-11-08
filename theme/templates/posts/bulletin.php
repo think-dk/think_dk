@@ -123,7 +123,7 @@ $items = $IC->paginate($pagination_pattern);
 <? endif; ?>
 
 
-	<?= $HTML->search("/bulletin/search", [
+	<?= $HTML->searchBox("/bulletin/search", [
 		"headline" => "Search posts",
 		"pattern" => $pagination_pattern["pattern"]
 	]) ?>
@@ -134,7 +134,7 @@ $items = $IC->paginate($pagination_pattern);
 
 		<h2>All posts</h2>
 
-		<?= $HTML->pagination($items, [
+		<?= $HTML->frontendPagination($items, [
 			"base_url" => "/bulletin", 
 			"direction" => "prev",
 			"show_total" => false,
@@ -178,7 +178,7 @@ $items = $IC->paginate($pagination_pattern);
 			<? endforeach; ?>
 		</ul>
 
-		<?= $HTML->pagination($items, [
+		<?= $HTML->frontendPagination($items, [
 			"base_url" => "/bulletin",
 			"direction" => "next",
 			"show_total" => false,

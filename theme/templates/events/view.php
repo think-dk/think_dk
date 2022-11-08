@@ -250,7 +250,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 		<? endif; ?>
 
 
-		<?= $HTML->pagination($pagination_items, [
+		<?= $HTML->frontendPagination($pagination_items, [
 			"class" => "pagination i:pagination",
 			"type" => "sindex",
 			"base_url" => "/events", 

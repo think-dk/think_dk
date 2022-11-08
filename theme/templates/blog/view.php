@@ -118,7 +118,7 @@ else {
 	<div class="articles">
 		<h2><?= pluralize($items["total"], "post", "posts") ?></h2>
 
-		<?= $HTML->pagination($items, [
+		<?= $HTML->frontendPagination($items, [
 			"base_url" => "/blog/".$sindex, 
 			"direction" => "prev",
 			"show_total" => false,
@@ -162,7 +162,7 @@ else {
 	<?	endforeach; ?>
 		</ul>
 
-		<?= $HTML->pagination($items, [
+		<?= $HTML->frontendPagination($items, [
 			"base_url" => "/blog/".$sindex,
 			"direction" => "next",
 			"show_total" => false,

@@ -240,7 +240,7 @@ class HTML extends HTMLCore {
 	/**
 	* Create search input HTML snippet
 	*/
-	function search($url, $_options = false) {
+	function searchBox($url, $_options = false) {
 
 		$headline = "Search";
 		$pattern = false;
@@ -285,8 +285,9 @@ class HTML extends HTMLCore {
 
 
 	// Create pagination element
-	function pagination($pagination_items, $_options = false) {
+	function frontendPagination($pagination_items, $_options = false) {
 
+		debug(["pagination", $_options, $pagination_items]);
 
 		// Make links for page or sindex
 		$type = "page";

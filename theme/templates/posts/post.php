@@ -111,7 +111,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 	</div>
 
-	<?= $HTML->pagination($pagination_items, [
+	<?= $HTML->frontendPagination($pagination_items, [
 		"class" => "pagination i:pagination",
 		"type" => "sindex",
 		"base_url" => "/bulletin", 
@@ -174,7 +174,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 <? endif; ?>
 
 
-	<?= $HTML->search("/bulletin/search", [
+	<?= $HTML->searchBox("/bulletin/search", [
 		"headline" => "Search posts",
 		"pattern" => $pagination_pattern["pattern"],
 	]) ?>

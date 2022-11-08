@@ -105,7 +105,7 @@ if($pagination_items && $pagination_items["range_items"]) {
 
 	</div>
 
-	<?= $HTML->pagination($pagination_items, [
+	<?= $HTML->frontendPagination($pagination_items, [
 		"class" => "pagination i:pagination",
 		"type" => "sindex",
 		"base_url" => "/blog/".$blog_sindex, 
