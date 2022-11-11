@@ -53,7 +53,7 @@ $pagination_pattern = [
 // Get posts
 $items = $IC->paginate($pagination_pattern);
 
-
+// debug([$items]);
 
 
 

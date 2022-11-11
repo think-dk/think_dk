@@ -9,6 +9,7 @@ $itemtype = "post";
 if(count($action) === 3) {
 	$page = $action[2];
 	$query = session()->value("post-search-query");
+	$selected_tag = session()->value("post-search-tag");
 	$pattern = session()->value("post-search-pattern");
 }
 // Default list
@@ -16,7 +17,10 @@ else {
 	$page = false;
 	$query = getPost("query");
 	session()->value("post-search-query", $query);
-	
+
+	$selected_tag = getPost("tag");
+	session()->value("post-search-tag", $selected_tag);
+
 	$pattern = json_decode(stripslashes(getPost("pattern")), true);
 	session()->value("post-search-pattern", $pattern);
 }
@@ -27,8 +31,8 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 // perf()->add("Before");
 
-$items = $IC->search(["pattern" => $pattern, "query" => $query]);
-// debug([$items]);
+$items = $IC->paginate(["pattern" => $pattern, "query" => $query, "tags" => $selected_tag]);
+// debug(["pattern", $pattern, $items]);
 
 // perf()->add("After");
 // perf()->dump();
@@ -47,7 +51,8 @@ $items = $IC->search(["pattern" => $pattern, "query" => $query]);
 	<?= $HTML->searchBox("/bulletin/search", [
 		"headline" => "Search posts",
 		"pattern" => $pattern,
-		"query" => $query
+		"query" => $query,
+		"tag" => $selected_tag
 	]) ?>
 
 
@@ -57,8 +62,15 @@ $items = $IC->search(["pattern" => $pattern, "query" => $query]);
 
 		<h2>Matching posts</h2>
 
+		<?= $HTML->frontendPagination($items, [
+			"base_url" => "/bulletin/search", 
+			"direction" => "prev",
+			"show_total" => false,
+			"labels" => ["prev" => "Previous posts"]
+		]) ?>
+
 		<ul class="items articles articlePreviewList i:articlePreviewList">
-			<? foreach($items as $item): ?>
+			<? foreach($items["range_items"] as $item): ?>
 			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle">
 
 				<h3 itemprop="headline"><a href="/bulletin/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
@@ -104,6 +116,13 @@ $items = $IC->search(["pattern" => $pattern, "query" => $query]);
 			<? endforeach; ?>
 		</ul>
 
+		<?= $HTML->frontendPagination($items, [
+			"base_url" => "/bulletin/search",
+			"direction" => "next",
+			"show_total" => false,
+			"labels" => ["next" => "Next posts"]
+		]) ?>
+
 <? else: ?>
 		<p>No posts</p>
 <? endif; ?>
@@ -114,7 +133,7 @@ $items = $IC->search(["pattern" => $pattern, "query" => $query]);
 		<h2>Categories</h2>
 		<ul class="tags">
 			<? foreach($categories as $tag): ?>
-			<li><a href="/bulletin/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
+			<li<?= ($tag["context"].":".$tag["value"]) === $selected_tag ? ' class="selected"' : '' ?>><a href="/bulletin/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
 			<? endforeach; ?>
 			<li class="all"><a href="/bulletin">All postings</a></li>
 		</ul>

@@ -45,7 +45,6 @@ $pagination_pattern = [
 	"pattern" => [
 		"itemtype" => $itemtype, 
 		"status" => 1, 
-		"tags" => $itemtype.":".addslashes($selected_tag), 
 		"extend" => [
 			"tags" => true, 
 			"user" => true, 
@@ -54,6 +53,7 @@ $pagination_pattern = [
 		]
 	],
 	"page" => $page,
+	"tags" => $itemtype.":".addslashes($selected_tag), 
 	"limit" => 5
 ];
 
@@ -177,7 +177,8 @@ $items = $IC->paginate($pagination_pattern);
 
 	<?= $HTML->searchBox("/bulletin/search", [
 		"headline" => "Search posts",
-		"pattern" => $pagination_pattern["pattern"]
+		"pattern" => $pagination_pattern["pattern"],
+		"tag" => $itemtype.":".$selected_tag
 	]) ?>
 
 

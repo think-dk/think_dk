@@ -247,6 +247,7 @@ class HTML extends HTMLCore {
 		$label = "3 chars min.";
 		$button = "Search";
 		$query = "";
+		$tag = "";
 
 
 		if($_options !== false) {
@@ -255,6 +256,7 @@ class HTML extends HTMLCore {
 					case "headline"           : $headline             = $_value; break;
 					case "pattern"            : $pattern              = $_value; break;
 					case "query"              : $query                = $_value; break;
+					case "tag"                : $tag                  = $_value; break;
 
 					case "label"              : $label                = $_value; break;
 					case "button"             : $button               = $_value; break;
@@ -271,6 +273,7 @@ class HTML extends HTMLCore {
 		$_ .= '<h2>'.$headline.'</h2>';
 		$_ .= $this->formStart($url, ["class" => "labelstyle:inject"]);
 			$_ .= $this->input("pattern", ["type" => "hidden", "value" => ($pattern ? json_encode($pattern) : "")]);
+			$_ .= $this->input("tag", ["type" => "hidden", "value" => $tag]);
 			$_ .= '<fieldset>';
 				$_ .= $this->input("query", ["type" => "string", "label" => $label, "min" => 3, "required" => true, "value" => $query]);
 			$_ .= '</fieldset>';
@@ -287,7 +290,7 @@ class HTML extends HTMLCore {
 	// Create pagination element
 	function frontendPagination($pagination_items, $_options = false) {
 
-		debug(["pagination", $_options, $pagination_items]);
+		// debug(["pagination", $_options, $pagination_items]);
 
 		// Make links for page or sindex
 		$type = "page";

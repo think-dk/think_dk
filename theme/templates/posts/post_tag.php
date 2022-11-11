@@ -20,6 +20,7 @@ $pagination_pattern = [
 			"comments" => true
 		]
 	],
+	"tags" => $itemtype.":".addslashes($selected_tag), 
 	"sindex" => $sindex,
 	"limit" => 1
 ];
@@ -186,6 +187,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 	<?= $HTML->searchBox("/bulletin/search", [
 		"headline" => "Search posts",
 		"pattern" => $pagination_pattern["pattern"],
+		"tag" => $itemtype.":".$selected_tag
 	]) ?>
 
 
