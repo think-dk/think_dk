@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2022-10-13 20:35:16
+asset-builder @ 2022-11-14 11:07:17
 */
 
 /*seg_desktop_include.css*/
@@ -657,6 +657,7 @@ body.invoice #content div.scene .payment_info {position: absolute; bottom: 50px;
 #content .defaultList.userList > ul.actions li.online {float: right; padding: 0 0 10px 10px;}
 #content .defaultList.userList > ul.actions li.unverified_usernames {float: right; padding: 0 0 10px 10px;}
 #content .defaultEdit.userEdit > ul.actions li.cancel {float: right; padding: 0 0 10px 10px;}
+#content .defaultEdit.userEdit > ul.actions li.notice {float: right; padding: 8px 0 10px 10px;}
 #content .scene.userEdit > div.usernames {border-bottom: 1px solid #bbbbbb;}
 #content .scene.userEdit > div.usernames div.email {padding-bottom: 20px; position: relative;}
 #content .scene.userEdit > div.usernames form.email {font-size: 0; display: inline-block; vertical-align: top;}
@@ -758,6 +759,11 @@ body.invoice #content div.scene .payment_info {position: absolute; bottom: 50px;
 #content .defaultEdit.userMember ul.actions li.user {float: right; padding: 0 0 10px 10px;}
 #content .defaultEdit.userMember div.orders {border-bottom: 1px solid #bbbbbb;}
 #content .defaultEdit.userMember div.orders ul.items {padding-bottom: 25px;}
+#content .scene.memberList ul.items > li dl.info dt.custom_price {display: none;}
+#content .scene.memberList ul.items > li dl.info dd.custom_price {position: absolute; top: 10px; right: 90px; font-size: 22px;}
+#content .scene.memberList ul.items > li dl.info dt.price {display: none;}
+#content .scene.memberList ul.items > li dl.info dd.price {position: absolute; top: 10px; right: 90px; font-size: 22px;}
+#content .scene.memberList ul.items > li dl.info dd.custom_price ~ dd.price {text-decoration: line-through; top: 40px; font-size: 18px;}
 #content .defaultList.userContentList div.comments ul.items > li {}
 #content .defaultList.usersNotVerified > ul.actions li.remind_selected,
 #content .defaultList.usersNotVerified > ul.actions li.remind {float: right; padding: 0 0 10px 10px;}
@@ -877,15 +883,15 @@ body.invoice #content div.scene .payment_info {position: absolute; bottom: 50px;
 #content div.all_items ul.items > li ul.info+ul.actions li,
 #content div.all_items ul.items > li p+ul.actions li,
 #content div.all_items ul.items > li ul.tags+ul.actions li {padding-top: 10px;}
-#content div.all_items div.filter {padding: 10px 0 4px; min-height: 28px; background: #f5f7f8; border-bottom: 1px solid #bbbbbb; position: relative; overflow: hidden;}
-#content div.all_items div.filter ul.tags {padding-bottom: 0; padding-right: 150px;}
-#content div.all_items div.filter ul.tags li {font-size: 12px; background-color: #dedede; color: #333333; cursor: pointer;}
-#content div.all_items div.filter ul.tags li.selected,
-#content div.all_items div.filter ul.tags li:hover {background-color: #313942; color: #ffffff;}
-#content div.all_items div.filter.filtering {background: red;}
-#content div.all_items div.filter form {position: absolute; right: 30px; top: 9px;}
-#content div.all_items div.filter .field {padding: 0 0 6px;}
-#content div.all_items div.filter .field input {width: 100px; height: 16px; font-size: 12px;}
+#content div.filter {padding: 10px 0 4px; min-height: 28px; background: #f5f7f8; border-bottom: 1px solid #bbbbbb; position: relative; overflow: hidden;}
+#content div.filter ul.tags {padding-bottom: 0; padding-right: 150px;}
+#content div.filter ul.tags li {font-size: 12px; background-color: #dedede; color: #333333; cursor: pointer;}
+#content div.filter ul.tags li.selected,
+#content div.filter ul.tags li:hover {background-color: #313942; color: #ffffff;}
+#content div.filter.filtering {background: red;}
+#content div.filter form {position: absolute; right: 30px; top: 9px;}
+#content div.filter .field {padding: 0 0 6px;}
+#content div.filter .field input {width: 100px; height: 16px; font-size: 12px;}
 #content div.all_items.sortable ul.items > li.item div.drag {width: 30px; height: 30px; position: absolute; top: 0px; left: 15px; 
 	background: transparent url(../assets/janitor/admin/img/bg_icons2.png) no-repeat 10px -440px; cursor: move;
 }
@@ -918,8 +924,8 @@ body.invoice #content div.scene .payment_info {position: absolute; bottom: 50px;
 #content div.all_items.selectable ul.items > li.all div.range span {display: inline-block; vertical-align: top; font-size: 12px; padding: 0 5px;}
 #content div.all_items.selectable ul.items > li.all div.range > input {width: 30px; height: 14px; margin-top: -4px; font-size: 12px;}
 #content div.all_items.selectable ul.items > li h3 {padding-left: 50px;}
-#content div.pagination {min-height: 28px;}
-#content div.pagination ul {text-align:center; margin-top: 22px;}
+#content div.pagination {min-height: 28px; border-bottom: 1px solid #bbbbbb;}
+#content div.pagination ul {text-align:center; margin-top: 11px;}
 #content div.pagination ul li a {padding: 4px 12px 6px; font-size: 1rem; line-height: 1.2em; background-color: #8c9399; color: #ffffff; border: none; cursor: pointer; border-radius: 3px; text-decoration: none;}
 #content div.pagination ul li {padding: 0 10px 0 0}
 #content div.pagination ul li a.disabled {cursor: default !important; color: #aaaaaa !important; background-color: #eeeeee !important;}
