@@ -33,7 +33,6 @@ if($page_item) {
 	$pagination_pattern = [
 		"pattern" => [
 			"itemtype" => "post",
-			"tags" => "blog:" . $page_item["name"],
 			"status" => 1,
 			"extend" => [
 				"tags" => true,
@@ -44,6 +43,7 @@ if($page_item) {
 			]
 		],
 		"page" => $page,
+		"tags" => "blog:" . $page_item["name"],
 		"limit" => 5
 	];
 
