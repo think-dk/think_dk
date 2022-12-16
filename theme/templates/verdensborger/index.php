@@ -72,10 +72,10 @@ $comment = getPost("comment");
 	<div class="konfirmation">
 		<h2>Konfirmation og Nonfirmation</h2>
 		<p class="note">
-			Konfirmation har været en tradition i Danmark siden 1736, hvor 7.-8. klasseselever bekræfter dåben, gennem en kirkelig handling, udført i regi af folkekirken.
+			Konfirmation har været en tradition i Danmark siden 1736, hvor 7.-8. klasseselever bekræfter dåben, gennem en kirkelig handling, udført i regi af folkekirken eller lignende.
 		</p>
 		<p class="note">
-			Nonfirmation er en begyndende tradition i Danmark, hvor 7.-8. klasseselever i mange tilfælde springer ritualet og dannelsesrejsen over og blot markerer overgangen fra barn til voksen med en fest.
+			Nonfirmation er en begyndende tradition i Danmark, hvor 7.-8. klasseselever, i mange tilfælde, springer ritualet og dannelsesrejsen over og blot markerer overgangen fra barn til voksen med en fest.
 		</p>
 		<p class="note">Vi forstår at festen er vigtig, 
 			men overgangen fra barndommen til det gryende voksenliv er vigtigere, og vi ønsker brændende at 
@@ -85,90 +85,53 @@ $comment = getPost("comment");
 
 	<div class="info_meeting">
 		<h2>Mød os og hør mere på et intromøde</h2>
-		<h3 class="overdue">
-			29. marts 2022 – online
+		<h3>
+			16. februar 2023 – online
 		</h3>
-		<p class="overdue">
-			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-6">læs mere</a>.
+		<p>
+			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-14">læs mere</a>.
 		</p>
-		<h3 class="overdue">
+		<!--h3 class="overdue">
 			25. april 2022 – online
 		</h3>
 		<p class="overdue">
 			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-7">læs mere</a>.
-		</p>
-		<h3 class="overdue">
-			23. maj 2022 – online
-		</h3>
-		<p class="overdue">
-			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-8">læs mere</a>.
-		</p>
-		<h3 class="overdue">
-			14. juni 2022 – online
-		</h3>
-		<p class="overdue">
-			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-9">læs mere</a>.
-		</p>
-		<h3 class="overdue">
-			23. august 2022 – online
-		</h3>
-		<p class="overdue">
-			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-10">læs mere</a>.
-		</p>
-		<h3 class="overdue">
-			20. september 2022 – online
-		</h3>
-		<p class="overdue">
-			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-11">læs mere</a>.
-		</p>
-		<h3 class="overdue">
-			6. oktober 2022 – online
-		</h3>
-		<p class="overdue">
-			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-12">læs mere</a>.
-		</p>
-		<h3>
-			18. oktober 2022 – online
-		</h3>
-		<p>
-			Kl. 19:30-20:00 – <a href="/events/verdensborger-infomoede-13">læs mere</a>.
-		</p>
-		<!-- <h3 class="overdue">
-			9. juni 2021
-		</h3>
-		<p class="overdue">
-			Kl. 19:00-20:00 – <a href="/events/verdensborger-infomoede-2">læs mere</a>.
-		</p> -->
+		</p-->
+
 
 		<p>
 			Alle interesserede er velkomne – skriv meget gerne til <a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a> hvis I ønsker at deltage. 
 		</p>
 		<p>
-			Møderne foregår enten <a href="https://meet.jit.si/verdensborger">online</a> eller hos Relational Spaces.
-		</p>
-		<p>
-			Adresse:<br />
-			Ryesgade 15<br />
-			2200 København N
+			Intromøderne foregår <a href="https://meet.jit.si/verdensborger">online</a>.
 		</p>
 	</div>
 
 	<div class="practicalities">
 		<h2>Praktisk info</h2>
-		<p>Forløbet foregår i København, hos think.dk</p>
+		<p>I 2023 starter vi også et hold på Stevns.</p>
+		<p>Forløbet foregår derfor på to hold, ét i København og ét på Stevns.</p>
 
-		<h3>2022/2023</h3>
-		<p>Næste forløb, fra 29. oktober 2022 til 6. maj 2023 er åbent for tilmelding.</p>
+		<h3>2023/2024</h3>
+		<p>Næste forløb, fra oktober 2023 til maj 2024 er åbent for tilmelding.</p>
 		<ul>
 			<li>11 lørdage, fra kl. 10 til 13.</li>
-			<li>1 lørdag fra 10:00 til 16:00 – inkl. tur til X-Jump.</li>
+			<li>1 lørdag fra 10:00 til 16:00 – inkl. tur til Xjump.</li>
 			<li>Ingen lektioner i skolernes ferier.</li>
 			<li>Debatinspirerende oplæg eller tur, hver lørdag, efterfulgt af dialog med de unge.</li>
-			<li>Afslutningsweekend med overgangsritual 5.-6. maj og ceremoni 6. maj 2023.</li>
+			<li>Afslutningsweekend med overgangsritual og ceremoni i maj 2023.</li>
+			<li>Endelige datoer er ikke fastlagt – skriv eller ring for mere information.</li>
 		</ul>
 
+
+		<h3>2022/2023</h3>
+		<p>Forløbet er i gang og afsluttes i maj 2023. Forløbet er lukket for nye tilmeldinger.</p>
+
 		<h3>2021/2022</h3>
-		<p>Det nuværende forløb, fra oktober 2021 til maj 2022 er netop afsluttet.</p>
+		<p>Forløbet er afsluttet med konfirmation i 2022.</p>
+
+		<h3>2020/2021</h3>
+		<p>Forløbet er afsluttet med konfirmation i 2021.</p>
 
 	</div>
 
@@ -180,7 +143,7 @@ $comment = getPost("comment");
 			<a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du har spørgsmål :)
 		</p>
 		<p>
-			Standardprisen for Verdensborger konfirmationsforløbet 2022/23 er 8.000,- kr. pr. deltager. Der er 12 pladser på hvert hold. Vi ønsker at alle kan være med, uanset økonomisk situation – der kan derfor ansøges om deltagelse til reduceret pris. Kontakt os for mere information.
+			Standardprisen for Verdensborger konfirmationsforløbet 2023/24 er 8.000,- kr. pr. deltager. Der er 12 pladser på hvert hold. Vi ønsker at alle kan være med, uanset økonomisk situation – der kan derfor ansøges om deltagelse til reduceret pris. Kontakt os for mere information.
 		</p>
 
 		<?= $HTML->formStart("tilmelding", ["class" => "signup labelstyle:inject"]); ?>
