@@ -83,13 +83,13 @@ $daily_items = $IC->getItems(array("itemtype" => "person", "status" => 1, "order
 			<dt class="location">Address</dt>
 			<dd class="location" itemprop="location" itemscope itemtype="http://schema.org/Place">
 				<ul class="address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-					<li class="streetaddress" itemprop="streetAddress">Ryesgade 15</li>
-					<li class="city"><span class="postal" itemprop="postalCode">2200</span> <span class="locality" itemprop="addressLocality">København N</span></li>
+					<li class="streetaddress" itemprop="streetAddress">Mindehøjvej 4</li>
+					<li class="city"><span class="postal" itemprop="postalCode">4673</span> <span class="locality" itemprop="addressLocality">Rødvig Stevns</span></li>
 					<li class="country" itemprop="addressCountry">Denmark</li>
 				</ul>
 				<ul class="geo" itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
-					<li class="latitude" itemprop="latitude" content="55.6912109"></li>
-					<li class="longitude" itemprop="longitude" content="12.5631139"></li>
+					<li class="latitude" itemprop="latitude" content="55.26795"></li>
+					<li class="longitude" itemprop="longitude" content="12.3392616"></li>
 				</ul>
 			</dd>
 			<dt class="cvr">CVR</dt>
@@ -108,7 +108,6 @@ $daily_items = $IC->getItems(array("itemtype" => "person", "status" => 1, "order
 			<dd class="social">
 				<ul>
 					<li class="facebook"><a itemprop="sameAs" href="https://www.facebook.com/thinkcopenhagen" target="_blank">Facebook</a></li>
-					<li class="meetup"><a itemprop="sameAs" href="https://www.meetup.com/think-dk" target="_blank">Meetup</a></li>
 					<li class="twitter"><a itemprop="sameAs" href="https://twitter.com/think_denmark" target="_blank">Twitter</a></li>
 					<li class="instagram"><a itemprop="sameAs" href="https://www.instagram.com/think.dk" target="_blank">Instagram</a></li>
 					<li class="linkedin"><a itemprop="sameAs" href="https://www.linkedin.com/company/think-dk" target="_blank">LinkedIn</a></li>

@@ -119,7 +119,7 @@ $comment = getPost("comment");
 			<li>1 lørdag fra 10:00 til 16:00 – inkl. tur til Xjump.</li>
 			<li>Ingen lektioner i skolernes ferier.</li>
 			<li>Debatinspirerende oplæg eller tur, hver lørdag, efterfulgt af dialog med de unge.</li>
-			<li>Afslutningsweekend med overgangsritual og ceremoni i maj 2023.</li>
+			<li>Afslutningsweekend med overgangsritual og ceremoni i maj 2024.</li>
 			<li>Endelige datoer er ikke fastlagt – skriv eller ring for mere information.</li>
 		</ul>
 
