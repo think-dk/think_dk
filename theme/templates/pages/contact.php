@@ -88,8 +88,8 @@ $daily_items = $IC->getItems(array("itemtype" => "person", "status" => 1, "order
 					<li class="country" itemprop="addressCountry">Denmark</li>
 				</ul>
 				<ul class="geo" itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
-					<li class="latitude" itemprop="latitude" content="55.26795"></li>
-					<li class="longitude" itemprop="longitude" content="12.3392616"></li>
+					<li class="latitude" itemprop="latitude" content="55.26796026700916"></li>
+					<li class="longitude" itemprop="longitude" content="12.341453787195988"></li>
 				</ul>
 			</dd>
 			<dt class="cvr">CVR</dt>

@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2022-11-14 11:07:05
+asset-builder @ 2023-01-19 22:36:56
 */
 
 /*seg_tablet_include.js*/
@@ -9314,13 +9314,19 @@ Util.Modules["contact"] = new function() {
 			this.article = u.qs("div.article", this);
 			if(this.article) {
 				var injection_point = u.ns(u.qs("h1", this.article));
-				this.map = u.ae(this, "div", {"class":"map"});
-				this.map.loaded = function() {
-					u.googlemaps.addMarker(this, [55.6912109,12.5631139]);
-					delete this.loaded;
+				var li_lng = u.qs("ul.geo li.longitude");
+				var li_lat = u.qs("ul.geo li.latitude");
+				if(li_lng && li_lat) {
+					this.map = u.ae(this, "div", {"class":"map"});
+					this.map.lng = li_lng.getAttribute("content");
+					this.map.lat = li_lat.getAttribute("content");
+					this.map.loaded = function() {
+						u.googlemaps.addMarker(this, [this.lat, this.lng]);
+						delete this.loaded;
+					}
+					injection_point.parentNode.insertBefore(this.map, injection_point);
+					u.googlemaps.map(this.map, [this.map.lat, this.map.lng], {"zoom":14});
 				}
-				injection_point.parentNode.insertBefore(this.map, injection_point);
-				u.googlemaps.map(this.map, [55.6912109,12.5631139], {"zoom":14});
 			}
 			u.showScene(this);
 		}
