@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2023-01-19 22:36:56
+asset-builder @ 2023-01-31 11:36:40
 */
 
 /*seg_mobile_include.js*/
@@ -5142,7 +5142,7 @@ Util.Modules["memberships"] = new function() {
 /*u-settings.js*/
 u.site_name = "think.dk";
 u.terms_version = "terms_v1";
-u.ga_account = 'UA-10756281-1';
+u.ga_account = 'G-W1R9CTGPPC';
 u.ga_domain = 'think.dk';
 u.gapi_key = "AIzaSyAVqnYpqFln-qAYsp5rkEGs84mrhmGQB_I";
 u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/support">Join us</a> to add comments.';

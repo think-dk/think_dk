@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2023-01-19 22:36:56
+asset-builder @ 2023-01-31 11:36:40
 */
 
 /*seg_desktop_light_include.js*/
@@ -5054,7 +5054,7 @@ Util.Modules["login"] = new function() {
 /*u-settings.js*/
 u.site_name = "think.dk";
 u.terms_version = "terms_v1";
-u.ga_account = 'UA-10756281-1';
+u.ga_account = 'G-W1R9CTGPPC';
 u.ga_domain = 'think.dk';
 u.gapi_key = "AIzaSyAVqnYpqFln-qAYsp5rkEGs84mrhmGQB_I";
 u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/support">Join us</a> to add comments.';
@@ -5088,16 +5088,17 @@ u.txt["month-12"] = "December";
 
 /*u-googleanalytics.js*/
 u.includeGoogleAnalytics = function() {
-	if(typeof(ga) !== "function") {
-	    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	    m=s.getElementsByTagName(o)[0];a.async=1;a.defer=true;a.src=g;m.parentNode.insertBefore(a,m)
-	    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-	    ga('create', u.ga_account, u.ga_domain);
-	    ga('send', 'pageview');
+	if(typeof(gtag) !== "function") {
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', u.ga_account);
+		var script = document.createElement("script");
+		script.src = "https://www.googletagmanager.com/gtag/js?id="+u.ga_account;
+		script.async = true;
+		document.head.appendChild(script);
 		u.stats = new function() {
 			this.pageView = function(url) {
-				ga('send', 'pageview', url);
 			}
 			this.event = function(node, _options) {
 				var event = false;
@@ -5136,21 +5137,14 @@ u.includeGoogleAnalytics = function() {
 				else if(!eventLabel) {
 					eventLabel = this.nodeSnippet(node);
 				}
-				ga('send', 'event', {
+				gtag({
+					"event": eventAction, 
 					"eventCategory": eventCategory, 
 					"eventAction": eventAction,
 					"eventLabel": eventLabel,
 					"eventValue": eventValue,
-					"nonInteraction": nonInteraction,
-					"hitCallback": hitCallback
 				});
 			}
-			// 	
-			// 	//       slot,		
-			// 	//       name,		
-			// 	//       value,	
-			// 	//       scope		
-			// 	
 			this.nodeSnippet = function(node) {
 				if(node.id) {
 					return node.id;
