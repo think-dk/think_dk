@@ -15,7 +15,7 @@ $phone = getPost("phone");
 $comment = getPost("comment");
 
 ?>
-<div class="scene verdensborger i:verdensborger" lang="da">
+<div class="scene verdensborger i:verdensborger" lang="DA">
 
 <? if($page_item):
 	$media = $IC->sliceMediae($page_item, "single_media"); ?>
@@ -72,6 +72,11 @@ $comment = getPost("comment");
 	<div class="konfirmation">
 		<h2>Konfirmation og Nonfirmation</h2>
 		<p class="note">
+			Kært barn har mange navne – Konfirmation, Nonfirmation, alternativ, borgerlig eller humanistisk konfirmation – overgangsritual og dannelsesrejse. 
+			Alt sammen udspringer de af ønsket om at markere overgangen fra barn til tidlig voksen og ritualet har af gode grunde eksisteret i mere end 1000 år. 
+			Det markerer nemlig en både meget vigtig og meget svær overgang i vores liv.
+		</p>
+		<p class="note">
 			Konfirmation har været en tradition i Danmark siden 1736, hvor 7.-8. klasseselever bekræfter dåben, gennem en kirkelig handling, udført i regi af folkekirken eller lignende.
 		</p>
 		<p class="note">
@@ -80,6 +85,9 @@ $comment = getPost("comment");
 		<p class="note">Vi forstår at festen er vigtig, 
 			men overgangen fra barndommen til det gryende voksenliv er vigtigere, og vi ønsker brændende at 
 			klæde de unge bedre på til denne nye og udfordrende fase af deres liv.
+		</p>
+		<p class="note">
+			Vi kalder Verdensborger forløbet for en alternativ konfirmation – vi bekræfter lysten til livet, vores forståelse af os selv og vores omverden og vores vilje til at tage ansvar for vores eget liv.
 		</p>
 	</div>
 
@@ -115,11 +123,11 @@ $comment = getPost("comment");
 		<h3>2023/2024</h3>
 		<p>Næste forløb, fra oktober 2023 til maj 2024 er åbent for tilmelding.</p>
 		<ul>
-			<li>11 lørdage, fra kl. 10 til 13.</li>
 			<li>1 lørdag fra 10:00 til 16:00 – inkl. tur til Xjump.</li>
-			<li>Ingen lektioner i skolernes ferier.</li>
-			<li>Debatinspirerende oplæg eller tur, hver lørdag, efterfulgt af dialog med de unge.</li>
+			<li>11 lørdage, fra kl. 10 til 13.</li>
 			<li>Afslutningsweekend med overgangsritual og ceremoni i maj 2024.</li>
+			<li>Ingen lektioner i skolernes ferier.</li>
+			<li>Debatinspirerende oplæg eller tur, efterfulgt af dialog med de unge.</li>
 			<li>Endelige datoer er ikke fastlagt – skriv eller ring for mere information.</li>
 		</ul>
 
@@ -139,11 +147,10 @@ $comment = getPost("comment");
 		<h2>Tilmelding</h2>
 
 		<p>
-			Du kan tilmelde dig forløbet <em>Verdensborger</em> ved at udfylde formularen herunder. Du er også meget velkommen til at skrive til os på 
-			<a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du har spørgsmål :)
+			Du kan tilmelde dig forløbet <em>Verdensborger</em> ved at udfylde formularen herunder.
 		</p>
 		<p>
-			Standardprisen for Verdensborger konfirmationsforløbet 2023/24 er 8.000,- kr. pr. deltager. Der er 12 pladser på hvert hold. Vi ønsker at alle kan være med, uanset økonomisk situation – der kan derfor ansøges om deltagelse til reduceret pris. Kontakt os for mere information.
+			Standardprisen for Verdensborger konfirmationsforløbet 2023/24 er 6.500,- kr. pr. deltager. Der er 12 pladser på hvert hold. Vi ønsker at alle kan være med, uanset økonomisk situation – der kan derfor ansøges om deltagelse til reduceret pris. Kontakt os for mere information.
 		</p>
 
 		<?= $HTML->formStart("tilmelding", ["class" => "signup labelstyle:inject"]); ?>
@@ -160,6 +167,11 @@ $comment = getPost("comment");
 				<?= $HTML->submit("Send", ["class" => "primary", "wrapper" => "li.send"]) ?>
 			</ul>
 		<?= $HTML->formEnd(); ?>
+		
+		<p>
+			Du er også meget velkommen til at skrive til os på 
+						<a href="mailto:start@think.dk?subject=Verdensborger">start@think.dk</a>, hvis du har spørgsmål :)
+		</p>
 
 
 		<!--h3>Fra 1.000,- til 8.000,- kr.?</h3>

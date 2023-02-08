@@ -52,9 +52,14 @@ else if(count($action) && $action[0] == "kvittering") {
 
 }
 
+// Test if this language setting helps with getting seen on Google
+$page->language("DA");
+
 $page->page(array(
 	"templates" => "verdensborger/index.php"
 ));
+
+$page->language("EN");
 
 ?>
  
