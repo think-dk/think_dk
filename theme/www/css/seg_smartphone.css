@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2023-01-31 11:36:40
+asset-builder @ 2023-02-08 23:18:40
 */
 
 /*seg_smartphone_include.css*/
@@ -1023,7 +1023,8 @@ body.black #content .scene div.comments h2:active svg.arrow line {stroke: #00000
 #content .scene.corona .articlebody h3 {font-size: 20px; color: #26962d;}
 #content .scene.corona .articlebody li {font-size: 16px; line-height: 1.6em; padding-bottom: 15px;}
 #content .scene .articlebody h2.quote {text-align: center;}
-#content .scene .articlebody h2.quote span.quotee {font-size: 20px; text-align: right; display: block; padding-top: 15px; color: #777777;
+#content .scene .articlebody h2.quote span.quotee {font-size: 18px; text-align: right; display: block; padding-top: 15px; color: #777777;
+	font-style: italic;
 	font-family: "OpenSans", Verdana, Arial, sans-serif;
 }
 #content .scene.corona div.signee {padding-bottom: 50px;}
