@@ -4,6 +4,10 @@ if(isset($read_access) && $read_access) {
 	return;
 }
 
+header("Location: https:///verdensborger.dk");
+exit();
+
+
 include_once($_SERVER["FRAMEWORK_PATH"]."/config/init.php");
 
 
