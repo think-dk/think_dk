@@ -56,16 +56,6 @@ $item = $IC->getItem(array("tags" => "page:support"));
 		<priority>1</priority>
 	</url>
 <?
-// Verdensborger
-$item = $IC->getItem(array("tags" => "page:verdensborger"));
-?>
-	<url>
-		<loc><?= SITE_URL ?>/verdensborger</loc>
-		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>1</priority>
-	</url>
-<?
 // ABOUT PAGE
 $item = $IC->getItem(array("tags" => "page:about"));
 ?>
