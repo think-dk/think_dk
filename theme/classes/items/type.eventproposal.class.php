@@ -6,6 +6,16 @@
 
 class TypeEventproposal extends Itemtype {
 
+
+	public $db;
+
+	public $event_attendance_mode_options;
+	public $event_attendance_mode_schema_values;
+	public $event_location_type_options;
+	public $part_of_week;
+	public $event_types;
+
+
 	/**
 	* Init, set varnames, validation rules
 	*/
