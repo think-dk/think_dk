@@ -44,7 +44,7 @@ $items = $IC->paginate(["pattern" => $pattern, "query" => $query, "tags" => $sel
 
 	<div class="article">
 		<h1>Searching for:</h1>
-		<h2><span class="query"><?= $query ?></span></h2>
+		<h2><span class="query"><?= $query ?></span><?= $selected_tag ? " in '".preg_replace("/^[^:]+:/", "", $selected_tag)."'" : "" ?></h2>
 	</div>
 
 

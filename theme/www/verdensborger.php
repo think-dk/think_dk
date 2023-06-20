@@ -4,7 +4,7 @@ if(isset($read_access) && $read_access) {
 	return;
 }
 
-header("Location: https:///verdensborger.dk", true, 301);
+header("Location: https://verdensborger.dk", true, 301);
 exit();
 
 

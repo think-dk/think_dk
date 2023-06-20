@@ -11,7 +11,6 @@ $pagination_pattern = [
 	"pattern" => [
 		"itemtype" => $itemtype, 
 		"status" => 1, 
-		"tags" => $itemtype.":".addslashes($selected_tag), 
 		"extend" => [
 			"tags" => true, 
 			"user" => true, 
