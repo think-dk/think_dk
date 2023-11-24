@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2023-06-27 08:07:06
+asset-builder @ 2023-11-24 15:01:53
 */
 
 /*seg_smartphone_include.js*/
@@ -9301,69 +9301,29 @@ Util.Modules["verify"] = new function() {
 			if(form_verify) {
 				u.f.init(form_verify);
 			}
-			form_verify.submitted = function() {
-				var data = this.getData();
-				this.is_submitting = true; 
-				u.ac(this, "submitting");
-				u.ac(this.actions["verify"], "disabled");
-				u.ac(this.actions["skip"], "disabled");
-				this.response = function(response, request_id) {
-					if (u.qs(".scene.login", response)) {
-						scene.replaceScene(response);
-						u.h.navigate("/login", false, true);
-					}
-					else if (u.qs(".scene.confirmed", response)) {
-						scene.replaceScene(response);
-						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
-						u.h.navigate(url_actions, false, true);
-					}
-					else {
-						if (this.is_submitting) {
-							this.is_submitting = false; 
-							u.rc(this, "submitting");
-							u.rc(this.actions["verify"], "disabled");
-							u.rc(this.actions["skip"], "disabled");
-						}
-						if (this.error) {
-							this.error.parentNode.removeChild(this.error);
-						}
-						this.error = scene.showMessage(this, response);
-						u.ass(this.error, {
-							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
-							opacity:0
-						});
-						u.a.transition(this.error, "all .6s ease");
-						u.ass(this.error, {
-							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
-							opacity:1
-						});
-					}
-				}
-				u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
-			}
-			page.acceptCookies();
+			// 
+			// 	
+			// 		
+			// 		
+			// 			
+			// 			
+			// 			
+			// 		
+			// 			
+			// 			
+			// 			
+			// 			
+			// 			
+			// 	
+			// 
 			u.showScene(this);
 			page.resized();
 		}
-		scene.replaceScene = function(response) {
-			var current_scene = u.qs(".scene", page);
-			var new_scene = u.qs(".scene", response);
-			page.cN.replaceChild(new_scene, current_scene); 
-			u.init();
-			new_scene.ready();
-			return new_scene;
-		}
-		scene.showMessage = function(form, response) {
-			var new_error = (u.qs("p.errormessage", response) || u.qs("p.error", response));
-			var current_error = (u.qs("p.errormessage", form) || u.qs("p.error", form));
-			if (!current_error) {
-				u.ie(form, new_error);
-			}
-			else {
-				form.replaceChild(new_error, current_error);
-			}
-			return new_error;
-		}
+		// 	page.cN.replaceChild(new_scene, current_scene); 
+		// 	
+		// 	
+		// 	
+		// 	
 		page.cN.scene = scene;
 	}
 }
