@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2023-11-24 15:02:03
+asset-builder @ 2023-12-11 11:42:13
 */
 
 /*seg_desktop_include.css*/
@@ -435,10 +435,9 @@ div.field.html.focus > textarea {margin: 2px; border: 1px solid #dcdcdc;}
 div.field.html > textarea.show {display: block; height: 200px; width: 470px;}
 div.field.html > label {display: block;  width: 477px; font-size: 12px;}
 div.field.html > label span {font-size: 10px; float: right; padding: 1px 0 0; cursor: pointer;}
-div.field.html > .indicator {top: 33px;}
+div.field.html > .indicator {top: 37px; left: 515px;}
 div.field.html .viewer {display: none;}
 div.field.html .editor { width: 482px; position: relative; z-index: 3;}
-div.field.html .editor .indicator {left: 485px;}
 div.field.html ul.new_tag_options {display: block; vertical-align: top; position: relative; z-index: 1; padding: 0 0 10px !important; margin: 0 !important;}
 div.field.html ul.new_tag_options li {font-size: 1rem; line-height: 1em !important; color: #000000; cursor: pointer; margin: 3px 3px 0; border-radius: 13px; background-color: #dedede; padding: 6px 10px 7px !important;  display: block;}
 div.field.html ul.new_tag_options li:hover {background-color: #5c5c5c; color: #ffffff;}
@@ -524,7 +523,8 @@ div.field.html .editor div.tag.media .text label {padding: 5px 0 0; display: blo
 div.field.html .editor div.tag.media input {width: 416px; opacity: 0; height: 18px; position: relative; z-index: 2;
 	font-size: 130px;
 }
-div.field.html .editor div.tag.media img {width: 444px; margin: 2px;}
+div.field.html .editor div.tag.media img,
+div.field.html .editor div.tag.media video {width: 444px; margin: 2px;}
 div.field.html .editor div.tag.vimeo .text,
 div.field.html .editor div.tag.youtube .text {padding: 0 6px; height: 28px; color: #aaaaaa; font-size: 13px; padding: 4px 6px; line-height: 1.461em; height: auto;}
 div.field.html .editor div.tag.vimeo.focus .text,

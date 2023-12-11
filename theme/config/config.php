@@ -8,7 +8,7 @@ header("Content-type: text/html; charset=UTF-8");
 error_reporting(E_ALL);
 
 define("VERSION", "0.7.9.2");
-define("UI_BUILD", "20231124-150203");
+define("UI_BUILD", "20231211-114213");
 
 define("SITE_UID", "TNK");
 define("SITE_NAME", "think.dk");
