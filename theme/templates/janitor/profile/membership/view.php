@@ -21,19 +21,22 @@ if(defined("SITE_SHOP") && SITE_SHOP) {
 }
 
 
-$price = $SC->getPrice($membership["item_id"]);
-$subscription = $SubscriptionClass->getSubscriptions(["item_id" => $membership["item_id"], "user_id" => $membership["user_id"]]);
+if($membership && $membership["item_id"] && $membership["user_id"]) {
 
-$payment_method = $model->getPaymentMethodForSubscription(["subscription_id" => $subscription["id"]]);
+	$price = $SC->getPrice($membership["item_id"]);
+	$subscription = $SubscriptionClass->getSubscriptions(["item_id" => $membership["item_id"], "user_id" => $membership["user_id"]]);
 
-if($subscription["custom_price"] || $subscription["custom_price"] === "0") {
-	$custom_price = $price;
-	$custom_price["price"] = $subscription["custom_price"];
+	$payment_method = $model->getPaymentMethodForSubscription(["subscription_id" => $subscription["id"]]);
+
+	if($subscription["custom_price"] || $subscription["custom_price"] === "0") {
+		$custom_price = $price;
+		$custom_price["price"] = $subscription["custom_price"];
+	}
+	else {
+		$custom_price = false;
+	}
+
 }
-else {
-	$custom_price = false;
-}
-
 
 // FOR TESTING EMAIL SENDING
 // $subscription = $SubscriptionClass->getSubscriptions(array("subscription_id" => $membership["subscription_id"]));
@@ -87,9 +90,9 @@ else {
 			?>
 		
 			<? if($custom_price): ?>
-			<dt class="price default">Normal price</dt>
-			<dd class="price default"><?= formatPrice($membership["item"]["prices"][$default]).($membership["item"]["subscription_method"] ? " / " . $membership["item"]["subscription_method"]["name"] : "") ?></dd>
-			<dt class="price custom">Your price</dt>
+			<!--dt class="price default">Normal price</dt>
+			<dd class="price default"><?= formatPrice($membership["item"]["prices"][$default]).($membership["item"]["subscription_method"] ? " / " . $membership["item"]["subscription_method"]["name"] : "") ?></dd-->
+			<dt class="price custom">Your contribution</dt>
 			<dd class="price custom"><span class="price"><?= formatPrice($custom_price) ?></span><?= ($membership["item"]["subscription_method"] ? " / " . $membership["item"]["subscription_method"]["name"] : "") ?></dd>
 			<? elseif($offer !== false && $default !== false): ?>
 			<dt class="price default">Normal price</dt>
@@ -97,7 +100,7 @@ else {
 			<dt class="price offer">Special offer</dt>
 			<dd class="price offer"><span class="price"><?= formatPrice($membership["item"]["prices"][$offer]) ?></span><?= ($membership["item"]["subscription_method"] ? " / " . $membership["item"]["subscription_method"]["name"] : "") ?></dd>
 			<? elseif($default !== false): ?>
-			<dt class="price">Price</dt>
+			<dt class="price">Contribution</dt>
 			<dd class="price"><span class="price"><?= formatPrice($membership["item"]["prices"][$default]) ?></span><?= ($membership["item"]["subscription_method"] ? " / " . $membership["item"]["subscription_method"]["name"] : "") ?></dd>
 			<? endif; ?>
 
@@ -161,7 +164,7 @@ else {
 		</div>
 	</div>
 
-	<? if($membership["order"]): ?>
+	<? /* if($membership["order"]): ?>
 	<div class="changeprice item i:collapseHeader open i:customPrice">
 		<h2>Change membership price</h2>
 
@@ -196,7 +199,7 @@ else {
 		<?= $MC->formEnd() ?>
 
 	</div>
-	<? endif; ?>
+	<? endif; */ ?>
 
 
 	<div class="change i:collapseHeader">

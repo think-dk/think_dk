@@ -56,240 +56,64 @@ if($action) {
 
 	}
 
-	// /shop/payment-gateway/#gateway#/cart/#cart_reference#/[process]
-	// /shop/payment-gateway/#gateway#/order/#order_no#/[process]
-	// /shop/payment-gateway/#gateway#/orders/#order_ids#/[process]
 	else if($action[0] == "payment-gateway") {
 
-		// specific gateway payment window for cart
-		if(count($action) == 4 && $action[2] === "cart") {
 
-			$page->page(array(
-				"type" => "payment",
-				"templates" => "shop/gateway/".$action[1]."-cart.php"
-			));
-			exit();
+		// process payment session response
+		// /shop/payment-gateway/#gateway#/success/#session_id#
+		if(count($action) == 4 && $action[2] == "success") {
 
-		}
 
-		// specific gateway payment window for order
-		else if(count($action) == 4 && $action[2] === "order") {
+			$result = payments()->processPaymentSession($action);
 
-			$page->page(array(
-				"type" => "payment",
-				"templates" => "shop/gateway/".$action[1]."-order.php"
-			));
-			exit();
 
-		}
+			if($result["status"] === "PAYMENT_CAPTURED") {
 
-		// specific gateway payment window for orders
-		else if(count($action) == 4 && $action[2] === "orders") {
+				// redirect to leave POST state
+				header("Location: ".$result["return_url"]."/?payment_intent=".$result["payment_intent_id"]);
+				exit();
 
-			$page->page(array(
-				"type" => "payment",
-				"templates" => "shop/gateway/".$action[1]."-orders.php"
-			));
-			exit();
+			}
+			else if($result["status"] === "PAYMENT_READY") {
 
-		}
+				// redirect to leave POST state
+				header("Location: ".$result["return_url"]."/?payment_intent=".$result["payment_intent_id"]);
+				exit();
 
-		// process payment method for cart
-		else if(count($action) == 5 && $action[2] === "cart" && $action[4] == "process" && security()->validateCsrfToken()) {
+			}
+			else if($result["status"] === "ACTION_REQUIRED") {
 
-			$gateway = $action[1];
-			$cart_reference = $action[3];
+				// redirect to leave POST state
+				header("Location: ".$result["action"]);
+				exit();
+	
+			}
 
-			$payment_method_result = $model->processCardForCart($action);
-			if($payment_method_result) {
+			else if($result["status"] === "STRIPE_ERROR" || $result["status"] === "CARD_NOT_FOUND" || $result["status"] === "REFERENCE_NOT_FOUND") {
 
-				if($payment_method_result["status"] === "success") {
+				// Some error from Stripe
+				message()->addMessage($result["message"], ["type" => "error"]);
 
-					$return_url = str_replace("{GATEWAY}", $gateway, SITE_PAYMENT_REGISTER_INTENT);
-					$result = payments()->requestPaymentIntentForCart($payment_method_result["cart"], $payment_method_result["card"]["id"], $return_url);
-					if($result) {
-
-						if($result["status"] === "PAYMENT_READY") {
-
-							// redirect to leave POST state
-							header("Location: $return_url/?payment_intent=".$result["payment_intent_id"]);
-							exit();
-
-						}
-						else if($result["status"] === "ACTION_REQUIRED") {
-
-							// redirect to leave POST state
-							header("Location: ".$result["action"]);
-							exit();
-					
-						}
-
-						else if($result["status"] === "error") {
-
-							// Some error from Stripe
-							message()->addMessage($result["message"], ["type" => "error"]);
-							// redirect to leave POST state
-							header("Location: /shop/payment-gateway/".$gateway."/cart/".$cart_reference);
-							exit();
-
-						}
-
+				if(isset($result["reference"])) {
+					if($result["reference"] === "order") {
+						header("Location: /shop/payment/".$result["order_no"]);
+						exit();
+					}
+					else if($result["reference"] === "orders") {
+						header("Location: /shop/payments");
+						exit();
 					}
 
 				}
-				else if($payment_method_result["status"] === "STRIPE_ERROR" || $payment_method_result["status"] === "CART_NOT_FOUND" || $payment_method_result["status"] === "CARD_ERROR") {
 
-					message()->addMessage($payment_method_result["message"], ["type" => "error"]);
-					// redirect to leave POST state
-					header("Location: /shop/checkout");
-					exit();
-
-				}
+				header("Location: /shop/checkout");
+				exit();
 
 			}
 
-			// Janitor Validation failed
-			// redirect to leave POST state
-			// debug([$payment_method_result, "messages", message()->getMessages()]);
-
-			header("Location: /shop/payment-gateway/".$gateway."/cart/".$cart_reference);
+			message()->addMessage("Unknown gateway error. Please try again.", ["type" => "error"]);
+			header("Location: /shop/checkout");
 			exit();
-
-		}
-
-		// process payment method for order
-		else if(count($action) == 5 && $action[2] === "order" && $action[4] == "process" && security()->validateCsrfToken()) {
-
-			$gateway = $action[1];
-			$order_no = $action[3];
-
-
-			$payment_method_result = $model->processCardForOrder($action);
-			if($payment_method_result) {
-
-				if($payment_method_result["status"] === "success") {
-
-					$return_url = str_replace("{GATEWAY}", $gateway, SITE_PAYMENT_REGISTER_PAID_INTENT);
-					$result = payments()->requestPaymentIntentForOrder(
-						$payment_method_result["order"], 
-						$payment_method_result["card"]["id"], 
-						$return_url
-					);
-					if($result) {
-
-						if($result["status"] === "PAYMENT_CAPTURED") {
-
-							// redirect to leave POST state
-							header("Location: $return_url/?payment_intent=".$result["payment_intent_id"]);
-							exit();
-
-						}
-						else if($result["status"] === "ACTION_REQUIRED") {
-
-							// redirect to leave POST state
-							header("Location: ".$result["action"]);
-							exit();
-					
-						}
-
-						else if($result["status"] === "CARD_ERROR") {
-
-							// Janitor Validation failed
-							message()->addMessage($result["message"], ["type" => "error"]);
-							// redirect to leave POST state
-							header("Location: /shop/payment-gateway/".$gateway."/order/".$order_no);
-							exit();
-
-						}
-
-					}
-
-				}
-				else if($payment_method_result["status"] === "STRIPE_ERROR" || $payment_method_result["status"] === "ORDER_NOT_FOUND") {
-
-					message()->addMessage($result["message"], ["type" => "error"]);
-					// redirect to leave POST state
-					header("Location: /shop/payment/$order_no");
-					exit();
-
-				}
-
-			}
-
-
-			// Janitor Validation failed
-			message()->addMessage($payment_method_result["message"], ["type" => "error"]);
-			// redirect to leave POST state
-			header("Location: /shop/payment/$order_no");
-			exit();				
-
-		}
-
-		// process payment method for orders
-		else if(count($action) == 5 && $action[2] === "orders" && $action[4] == "process" && security()->validateCsrfToken()) {
-
-			$gateway = $action[1];
-			$order_ids = $action[3];
-
-
-			$payment_method_result = $model->processCardForOrders($action);
-			if($payment_method_result) {
-
-				if($payment_method_result["status"] === "success") {
-
-					$return_url = str_replace("{GATEWAY}", $gateway, SITE_PAYMENT_REGISTER_PAID_INTENT);
-					$result = payments()->requestPaymentIntentForOrders(
-						$payment_method_result["orders"],
-						$payment_method_result["card"]["id"], 
-						$return_url
-					);
-					if($result) {
-
-						if($result["status"] === "PAYMENT_CAPTURED") {
-
-							// redirect to leave POST state
-							header("Location: $return_url/?payment_intent=".$result["payment_intent_id"]);
-							exit();
-
-						}
-						else if($result["status"] === "ACTION_REQUIRED") {
-
-							// redirect to leave POST state
-							header("Location: ".$result["action"]);
-							exit();
-					
-						}
-
-						else if($result["status"] === "CARD_ERROR") {
-
-							// Janitor Validation failed
-							message()->addMessage($result["message"], ["type" => "error"]);
-							// redirect to leave POST state
-							header("Location: /shop/payment-gateway/".$gateway."/orders/".$order_ids);
-							exit();
-
-						}
-
-					}
-
-				}
-				else if($payment_method_result["status"] === "STRIPE_ERROR" || $payment_method_result["status"] === "ORDER_NOT_FOUND") {
-
-					message()->addMessage($result["message"], ["type" => "error"]);
-					// redirect to leave POST state
-					header("Location: /shop/payments");
-					exit();
-
-				}
-
-			}
-
-
-			// Janitor Validation failed
-			message()->addMessage($payment_method_result["message"], ["type" => "error"]);
-			// redirect to leave POST state
-			header("Location: /shop/payments");
-			exit();				
 
 		}
 
@@ -489,9 +313,34 @@ if($action) {
 
 			if($result["status"] === "PROCEED_TO_GATEWAY") {
 
-				// redirect to leave POST state
-				header("Location: /shop/payment-gateway/".$result["payment_gateway"]."/cart/".$result["cart_reference"]);
-				exit();
+				$success_url = SITE_URL . "/shop/payment-gateway/".$result["payment_gateway"]."/success/{CHECKOUT_SESSION_ID}";
+				$cancel_url = SITE_URL . "/shop/checkout";
+
+				$session = $model->createCartPaymentSession($result["cart_reference"], $success_url, $cancel_url);
+
+				// Redirect to gateway
+				if($session && $session["url"]) {
+
+					header("Location: ".$session["url"], true, 303);
+					exit();
+
+				}
+				else if($session["status"] === "CART_NOT_FOUND" || $session["status"] === "STRIPE_ERROR") {
+
+					// Some error from Stripe
+					message()->addMessage($result["message"], ["type" => "error"]);
+					header("Location: /shop/checkout");
+					exit();
+
+				}
+				else {
+
+					// redirect to leave POST state
+					message()->addMessage("We could not get Payment gateway session from ".ucfirst($result["payment_gateway"])." – please try again.", ["type" => "error"]);
+					header("Location: /shop/checkout");
+					exit();
+
+				}
 
 			}
 			else if($result["status"] === "PROCEED_TO_RECEIPT") {
@@ -524,58 +373,50 @@ if($action) {
 
 		// register payment method
 		$payment_method_result = $model->selectUserPaymentMethodForCart(["selectUserPaymentMethodForCart"]);
-		if($payment_method_result && $payment_method_result["status"] === "PROCEED_TO_INTENT") {
+		if($payment_method_result) {
 
-			$return_url = str_replace("{GATEWAY}", $payment_method_result["payment_gateway"], SITE_PAYMENT_REGISTER_INTENT);
-			$result = payments()->requestPaymentIntentForCart(
-				$payment_method_result["cart"], 
-				$payment_method_result["gateway_payment_method_id"], 
-				$return_url
-			);
-			if($result) {
+			if($payment_method_result["status"] === "PROCEED_TO_INTENT") {
 
-				if($result["status"] === "PAYMENT_READY") {
+				$return_url = str_replace("{GATEWAY}", $payment_method_result["payment_gateway"], SITE_PAYMENT_REGISTER_INTENT);
+				$result = payments()->requestPaymentIntentForCart(
+					$payment_method_result["cart"], 
+					$payment_method_result["gateway_payment_method_id"], 
+					$return_url
+				);
+				if($result) {
 
-					// redirect to leave POST state
-					header("Location: $return_url/?payment_intent=".$result["payment_intent_id"]);
-					exit();
+					if($result["status"] === "PAYMENT_READY") {
 
-				}
-				else if($result["status"] === "ACTION_REQUIRED") {
+						// redirect to leave POST state
+						header("Location: $return_url/?payment_intent=".$result["payment_intent_id"]);
+						exit();
 
-					// redirect to leave POST state
-					header("Location: ".$result["action"]);
-					exit();
+					}
+					else if($result["status"] === "ACTION_REQUIRED") {
+
+						// redirect to leave POST state
+						header("Location: ".$result["action"]);
+						exit();
 			
-				}
-
-
-				else if($result["status"] === "CARD_ERROR") {
-
-					// Janitor Validation failed
-					message()->addMessage($result["message"], ["type" => "error"]);
-					// redirect to leave POST state
-					header("Location: /shop/payment-gateway/".$gateway."/cart/".$cart_reference);
-					exit();
+					}
 
 				}
+			}
+			else if($payment_method_result["status"] === "PROCEED_TO_RECEIPT") {
+
+				// redirect to leave POST state
+				header("Location: /shop/receipt/order/".$payment_method_result["order_no"]."/".superNormalize($payment_method_result["payment_name"]));
+				exit();
 
 			}
-		}
+			else if($payment_method_result["status"] === "ORDER_FAILED") {
 
-		else if($payment_method_result["status"] === "PROCEED_TO_RECEIPT") {
+				// redirect to leave POST state
+				message()->addMessage("Could not create order – please try again.", ["type" => "error"]);
+				header("Location: /shop/checkout");
+				exit();
 
-			// redirect to leave POST state
-			header("Location: /shop/receipt/order/".$payment_method_result["order_no"]."/".superNormalize($payment_method_result["payment_name"]));
-			exit();
-
-		}
-		else if($payment_method_result["status"] === "ORDER_FAILED") {
-
-			// redirect to leave POST state
-			message()->addMessage("Could not create order – please try again.", ["type" => "error"]);
-			header("Location: /shop/checkout");
-			exit();
+			}
 
 		}
 
@@ -593,24 +434,53 @@ if($action) {
 
 		// register payment method
 		$result = $model->selectPaymentMethodForOrder(array("selectPaymentMethodForOrder"));
-		if($result["status"] === "PROCEED_TO_GATEWAY") {
+		if($result) {
 
-			// redirect to leave POST state
-			header("Location: /shop/payment-gateway/".$result["payment_gateway"]."/order/".$result["order_no"]);
-			exit();
+			if($result["status"] === "PROCEED_TO_GATEWAY") {
 
-		}
-		else if($result["status"] === "PROCEED_TO_RECEIPT") {
+				$success_url = SITE_URL . "/shop/payment-gateway/".$result["payment_gateway"]."/success/{CHECKOUT_SESSION_ID}";
+				$cancel_url = SITE_URL . "/shop/payment/".$result["order_no"];
 
-			// redirect to leave POST state
-			header("Location: /shop/receipt/order/".$result["order_no"]."/".superNormalize($result["payment_name"]));
-			exit();
+				$session = $model->createOrderPaymentSession($result["order_no"], $success_url, $cancel_url);
+
+				// Redirect to gateway
+				if($session && $session["url"]) {
+
+					header("Location: ".$session["url"], true, 303);
+					exit();
+
+				}
+				else if($session["status"] === "ORDER_NOT_FOUND") {
+
+					// Some error from Stripe
+					message()->addMessage($result["message"], ["type" => "error"]);
+					header("Location: /shop/payment/".$result["order_no"]);
+					exit();
+
+				}
+				else {
+
+					// redirect to leave POST state
+					message()->addMessage("We could not get Payment gateway session from ".ucfirst($result["payment_gateway"])." – please try again.", ["type" => "error"]);
+					header("Location: /shop/payment/".$result["order_no"]);
+					exit();
+
+				}
+
+			}
+			else if($result["status"] === "PROCEED_TO_RECEIPT") {
+
+				// redirect to leave POST state
+				header("Location: /shop/receipt/order/".$result["order_no"]."/".superNormalize($result["payment_name"]));
+				exit();
+
+			}
 
 		}
 
 		// redirect to leave POST state
 		message()->addMessage("Unrecognized payment method – please try again.", ["type" => "error"]);
-		header("Location: /shop/payments");
+		header("Location: /shop/payment/".$result["order_no"]);
 		exit();
 
 	}
@@ -620,44 +490,43 @@ if($action) {
 
 		// register payment method
 		$payment_method_result = $model->selectUserPaymentMethodForOrder(["selectUserPaymentMethodForOrder"]);
-		if($payment_method_result && $payment_method_result["status"] === "PROCEED_TO_INTENT") {
+		if($payment_method_result) {
 
-			$return_url = str_replace("{GATEWAY}", $payment_method_result["payment_gateway"], SITE_PAYMENT_REGISTER_PAID_INTENT);
-			$result = payments()->requestPaymentIntentForOrder(
-				$payment_method_result["order"], 
-				$payment_method_result["gateway_payment_method_id"], 
-				$return_url
-			);
-			if($result) {
+			if($payment_method_result["status"] === "PROCEED_TO_INTENT") {
 
-				if($result["status"] === "PAYMENT_CAPTURED") {
+				$return_url = str_replace("{GATEWAY}", $payment_method_result["payment_gateway"], SITE_PAYMENT_REGISTER_PAID_INTENT);
+				$result = payments()->requestPaymentIntentForOrder(
+					$payment_method_result["order"], 
+					$payment_method_result["gateway_payment_method_id"], 
+					$return_url
+				);
+				if($result) {
 
-					// redirect to leave POST state
-					header("Location: $return_url/?payment_intent=".$result["payment_intent_id"]);
-					exit();
+					if($result["status"] === "PAYMENT_CAPTURED") {
 
-				}
-				else if($result["status"] === "ACTION_REQUIRED") {
+						// redirect to leave POST state
+						header("Location: $return_url/?payment_intent=".$result["payment_intent_id"]);
+						exit();
 
-					// redirect to leave POST state
-					header("Location: ".$result["action"]);
-					exit();
+					}
+					else if($result["status"] === "ACTION_REQUIRED") {
+
+						// redirect to leave POST state
+						header("Location: ".$result["action"]);
+						exit();
 			
+					}
+
 				}
 
 			}
+			else if($payment_method_result["status"] === "PROCEED_TO_RECEIPT") {
 
-			// redirect to leave POST state
-			message()->addMessage("Unrecognized payment method – please try again.", ["type" => "error"]);
-			header("Location: /shop/payments");
-			exit();
-		}
+				// redirect to leave POST state
+				header("Location: /shop/receipt/order/".$payment_method_result["order_no"]."/".superNormalize($payment_method_result["payment_name"]));
+				exit();
 
-		else if($payment_method_result["status"] === "PROCEED_TO_RECEIPT") {
-
-			// redirect to leave POST state
-			header("Location: /shop/receipt/order/".$payment_method_result["order_no"]."/".superNormalize($payment_method_result["payment_name"]));
-			exit();
+			}
 
 		}
 
@@ -675,18 +544,47 @@ if($action) {
 
 		// register payment method
 		$result = $model->selectPaymentMethodForOrders(array("selectPaymentMethodForOrders"));
-		if($result["status"] === "PROCEED_TO_GATEWAY") {
+		if($result) {
 
-			// redirect to leave POST state
-			header("Location: /shop/payment-gateway/".$result["payment_gateway"]."/orders/".$result["order_ids"]);
-			exit();
+			if($result["status"] === "PROCEED_TO_GATEWAY") {
 
-		}
-		else if($result["status"] === "PROCEED_TO_RECEIPT") {
+				$success_url = SITE_URL . "/shop/payment-gateway/".$result["payment_gateway"]."/success/{CHECKOUT_SESSION_ID}";
+				$cancel_url = SITE_URL . "/shop/payments";
 
-			// redirect to leave POST state
-			header("Location: /shop/receipt/orders/".$result["order_nos"]."/".superNormalize($result["payment_name"]));
-			exit();
+				$session = $model->createOrdersPaymentSession($result["order_ids"], $success_url, $cancel_url);
+
+				// Redirect to gateway
+				if($session && $session["url"]) {
+
+					header("Location: ".$session["url"], true, 303);
+					exit();
+
+				}
+				else if($session["status"] === "ORDERS_NOT_FOUND") {
+
+					// Some error from Stripe
+					message()->addMessage($result["message"], ["type" => "error"]);
+					header("Location: /shop/payments");
+					exit();
+
+				}
+				else {
+
+					// redirect to leave POST state
+					message()->addMessage("We could not get Payment gateway session from ".ucfirst($result["payment_gateway"])." – please try again.", ["type" => "error"]);
+					header("Location: /shop/payments");
+					exit();
+
+				}
+
+			}
+			else if($result["status"] === "PROCEED_TO_RECEIPT") {
+
+				// redirect to leave POST state
+				header("Location: /shop/receipt/orders/".$result["order_nos"]."/".superNormalize($result["payment_name"]));
+				exit();
+
+			}
 
 		}
 
@@ -702,44 +600,43 @@ if($action) {
 
 		// register payment method
 		$payment_method_result = $model->selectUserPaymentMethodForOrders(["selectUserPaymentMethodForOrders"]);
-		if($payment_method_result && $payment_method_result["status"] === "PROCEED_TO_INTENT") {
+		if($payment_method_result) {
 
-			$return_url = str_replace("{GATEWAY}", $payment_method_result["payment_gateway"], SITE_PAYMENT_REGISTER_PAID_INTENT);
-			$result = payments()->requestPaymentIntentForOrders(
-				$payment_method_result["orders"], 
-				$payment_method_result["gateway_payment_method_id"], 
-				$return_url
-			);
-			if($result) {
+			if($payment_method_result["status"] === "PROCEED_TO_INTENT") {
 
-				if($result["status"] === "PAYMENT_CAPTURED") {
+				$return_url = str_replace("{GATEWAY}", $payment_method_result["payment_gateway"], SITE_PAYMENT_REGISTER_PAID_INTENT);
+				$result = payments()->requestPaymentIntentForOrders(
+					$payment_method_result["orders"], 
+					$payment_method_result["gateway_payment_method_id"], 
+					$return_url
+				);
+				if($result) {
 
-					// redirect to leave POST state
-					header("Location: $return_url/?payment_intent=".$result["payment_intent_id"]);
-					exit();
+					if($result["status"] === "PAYMENT_CAPTURED") {
 
-				}
-				else if($result["status"] === "ACTION_REQUIRED") {
+						// redirect to leave POST state
+						header("Location: $return_url/?payment_intent=".$result["payment_intent_id"]);
+						exit();
 
-					// redirect to leave POST state
-					header("Location: ".$result["action"]);
-					exit();
+					}
+					else if($result["status"] === "ACTION_REQUIRED") {
+
+						// redirect to leave POST state
+						header("Location: ".$result["action"]);
+						exit();
 			
+					}
+
 				}
 
 			}
+			else if($payment_method_result["status"] === "PROCEED_TO_RECEIPT") {
 
-			// redirect to leave POST state
-			message()->addMessage("Unrecognized payment method – please try again.", ["type" => "error"]);
-			header("Location: /shop/payments");
-			exit();
-		}
+				// redirect to leave POST state
+				header("Location: /shop/receipt/orders/".$payment_method_result["order_nos"]."/".superNormalize($payment_method_result["payment_name"]));
+				exit();
 
-		else if($payment_method_result["status"] === "PROCEED_TO_RECEIPT") {
-
-			// redirect to leave POST state
-			header("Location: /shop/receipt/orders/".$payment_method_result["order_nos"]."/".superNormalize($payment_method_result["payment_name"]));
-			exit();
+			}
 
 		}
 

@@ -271,7 +271,6 @@ else {
 
 	<div class="payment_method">
 		<h2>Choose a payment method</h2>
-
 		<? if($user_payment_methods): ?>
 			<h3>Your payment methods</h3>
 			<p>Choose one of your existing payment methods to continue processing this order.</p>
@@ -285,7 +284,7 @@ else {
 				<li class="payment_method user_payment_method<?= $user_payment_method["classname"] ? " ".$user_payment_method["classname"] : "" ?>">
 					<ul class="actions">
 						<?= $HTML->oneButtonForm(
-						"Pay order with card ending in " . $card["last4"], 
+						"Confirm order and pay with card ending in " . $card["last4"], 
 						"/shop/confirmCartAndSelectUserPaymentMethod",
 						array(
 							"inputs" => array(
@@ -310,7 +309,7 @@ else {
 				<li class="payment_method user_payment_method<?= $user_payment_method["classname"] ? " ".$user_payment_method["classname"] : "" ?>">
 					<ul class="actions">
 						<?= $HTML->oneButtonForm(
-						"Pay order with " . $user_payment_method["name"], 
+						"Confirm order and pay with " . $user_payment_method["name"], 
 						"/shop/confirmCartAndSelectUserPaymentMethod",
 						array(
 							"inputs" => array(
@@ -347,7 +346,7 @@ else {
 
 					<ul class="actions">
 						<?= $HTML->oneButtonForm(
-						"Pay with " . $payment_method["name"], 
+						"Confirm order and pay with " . $payment_method["name"], 
 						"/shop/confirmCartAndSelectPaymentMethod", 
 						array(
 							"inputs" => array(

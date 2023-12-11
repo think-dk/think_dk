@@ -32,7 +32,7 @@ if($order && $order["payment_status"] != 2 && $order["status"] != 3) {
 ?>
 <div class="scene shopPayment i:payment">
 
-<? if($order && $remaining_order_price["price"]): ?>
+<? if($order && $remaining_order_price && $remaining_order_price["price"]): ?>
 
 	<h1>Your order, <?= $order["order_no"]  ?>, has been confirmed.</h1>
 	<p>
@@ -40,7 +40,7 @@ if($order && $order["payment_status"] != 2 && $order["status"] != 3) {
 		You will receive a confirmation email shortly.
 	</p>
 	<p>
-		We will start processing your order as soon as we receive your payments.
+		We will start processing your order as soon as we receive your payment.
 	</p>
 
 	<dl class="amount">

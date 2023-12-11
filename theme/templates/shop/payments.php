@@ -179,36 +179,6 @@ if($orders && $total_payment): ?>
 	</div>
 
 
-	<!--h2>Please choose a payment method:</h2>
-
-	<ul class="payment_methods">
-
-	<? foreach($payment_methods as $payment_method): ?>
-		<? if($payment_method["state"] === "public"): ?>
-
-		<li class="payment_method<?= $payment_method["classname"] ? " ".$payment_method["classname"] : "" ?>">
-
-			<ul class="actions">
-				<?= $HTML->oneButtonForm("Pay with " . $payment_method["name"], "/shop/selectBulkPaymentMethod", array(
-					"inputs" => array(
-						"order_ids" => implode(",", $order_list), 
-						"payment_method" => $payment_method["id"]
-					),
-					"confirm-value" => false,
-					"static" => true,
-					"class" => "primary",
-					"name" => "continue",
-					"wrapper" => "li.continue.".$payment_method["classname"],
-				)) ?>
-			</ul>
-			<p><?= $payment_method["description"] ?></p>
-
-		</li>
-		<? endif; ?>
-	<? endforeach; ?>
-
-	</ul-->
-
 <? 
 // No payments
 elseif($user_id > 1): ?>

@@ -102,9 +102,9 @@ if($membership && $membership["item_id"]) {
 			?>
 
 			<? if(isset($custom_price) && $custom_price !== false): ?>
-			<dt class="price default">Normal price</dt>
-			<dd class="price default"><?= formatPrice($membership["item"]["prices"][$default]).($membership["item"]["subscription_method"] ? " / " . $membership["item"]["subscription_method"]["name"] : "") ?></dd>
-			<dt class="price custom">Your price</dt>
+			<!--dt class="price default">Normal price</dt>
+			<dd class="price default"><?= formatPrice($membership["item"]["prices"][$default]).($membership["item"]["subscription_method"] ? " / " . $membership["item"]["subscription_method"]["name"] : "") ?></dd-->
+			<dt class="price custom">Your contribution</dt>
 			<dd class="price custom"><span class="price"><?= formatPrice($custom_price) ?></span><?= ($membership["item"]["subscription_method"] ? " / " . $membership["item"]["subscription_method"]["name"] : "") ?></dd>
 			<? elseif($offer !== false && $default !== false): ?>
 			<dt class="price default">Normal price</dt>
@@ -112,7 +112,7 @@ if($membership && $membership["item_id"]) {
 			<dt class="price offer">Special offer</dt>
 			<dd class="price offer"><span class="price"><?= formatPrice($membership["item"]["prices"][$offer]) ?></span><?=($membership["item"]["subscription_method"] ? " / " . $membership["item"]["subscription_method"]["name"] : "") ?></dd>
 			<? elseif($default !== false): ?>
-			<dt class="price">Price</dt>
+			<dt class="price">Contribution</dt>
 			<dd class="price"><span class="price"><?= formatPrice($membership["item"]["prices"][$default]) ?></span><?= ($membership["item"]["subscription_method"] ? " / " . $membership["item"]["subscription_method"]["name"] : "") ?></dd>
 			<? endif; ?>
 
@@ -188,7 +188,7 @@ if($membership && $membership["item_id"]) {
 		</div>
 	</div>
 
-	<? if($membership["order"]): ?>
+	<? /* if($membership["order"]): ?>
 	<div class="changeprice item i:collapseHeader open i:customPrice">
 		<h2>Change membership price</h2>
 
@@ -220,7 +220,7 @@ if($membership && $membership["item_id"]) {
 		<?= $model->formEnd() ?>
 
 	</div>
-	<? endif; ?>
+	<? endif; */ ?>
 
 	<div class="change i:collapseHeader">
 		<h2>Change membership</h2>

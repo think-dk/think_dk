@@ -138,7 +138,7 @@ if($order && $order["payment_status"] != 2 && $order["status"] != 3) {
 
 					<ul class="actions">
 						<?= $HTML->oneButtonForm(
-						"Pay with " . $payment_method["name"], 
+						"Pay now with " . $payment_method["name"], 
 						"/shop/selectPaymentMethodForOrder", 
 						array(
 							"inputs" => array(
