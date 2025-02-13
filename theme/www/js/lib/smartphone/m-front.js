@@ -31,12 +31,12 @@ Util.Modules["front"] = new function() {
 			this.boxes.push(u.qs(".projects", this));
 			this.boxes.push(u.qs(".services", this));
 			this.boxes.push(u.qs(".newsletter", this));
-			this.boxes.push(u.qs(".support", this));
+			// this.boxes.push(u.qs(".support", this));
 			// this.boxes.push(u.qs(".events", this));
 			// this.boxes.push(u.qs(".membership", this));
-			this.boxes.push(u.qs(".bulletin", this));
+			// this.boxes.push(u.qs(".bulletin", this));
 			this.boxes.push(u.qs(".about", this));
-			this.boxes.push(u.qs(".blog", this));
+			// this.boxes.push(u.qs(".blog", this));
 			this.boxes.push(u.qs(".contact", this));
 
 

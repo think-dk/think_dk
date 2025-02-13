@@ -76,7 +76,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 		</ul>
 	</div>
 
-	<div class="support">
+	<!--div class="support">
 		<h2>Support</h2>
 		<p>
 			Your donations enable our organization to keep pushing towards a more caring, smarter and better world.
@@ -85,7 +85,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 		<ul class="actions">
 			<li><a href="/support">Support us</a></li>
 		</ul>
-	</div>
+	</div-->
 
 	<!-- <div class="events">
 		<h2>Events</h2>
@@ -109,7 +109,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 		</ul>
 	</div> -->
 
-	<div class="bulletin">
+	<!--div class="bulletin">
 		<h2>Bulletin</h2>
 		<p>Bulletins, latest news, organisational guidelines and all the stuff in-between.</p>
 
@@ -117,7 +117,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 			<li><a href="/bulletin/tag/Latest">Latest updates</a></li>
 			<li><a href="/bulletin">Read more</a></li>
 		</ul>
-	</div>
+	</div-->
 
 	<div class="about">
 		<h2>About</h2>
@@ -130,7 +130,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 		</ul>
 	</div>
 
-	<div class="blog">
+	<!--div class="blog">
 		<h2>Blog</h2>
 		<p>
 			Personal reflections on society, politics and life in general.
@@ -139,7 +139,7 @@ $event_items = $IC->getItems(array("itemtype" => "event", "where" => "event.star
 		<ul class="actions">
 			<li><a href="/blog">Read more</a></li>
 		</ul>
-	</div>
+	</div-->
 
 	<div class="contact">
 		<h2>Contact</h2>
